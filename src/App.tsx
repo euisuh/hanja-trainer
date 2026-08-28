@@ -8,7 +8,7 @@ import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
-const sessionScreens = new Set<Screen>(["placement", "lesson", "session-complete"]);
+const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete"]);
 
 export function App() {
   const { pathname } = useLocation();

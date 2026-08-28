@@ -79,7 +79,9 @@ export function buildQueue({
   const pairs = characters.flatMap((character) => character.tracks
     .filter((entry) => enabled.has(entry.track))
     .map((entry) => ({ character, track: entry.track, state: reviewStates.get(reviewKey(character.id, entry.track)) })));
-  const due = pairs.filter((pair) => pair.state && isDue(pair.state, now));
+  const due = pairs
+    .filter((pair) => pair.state && isDue(pair.state, now))
+    .sort((a, b) => a.state!.due.getTime() - b.state!.due.getTime());
   const fresh = pairs.filter((pair) => !pair.state);
   const available = mode === "review" ? due : pairs;
   if (available.length === 0) return [];
@@ -99,7 +101,7 @@ export function buildQueue({
   let fallbackIndex = 0;
   let readingIndex = 0;
   for (let index = 0; index < length; index += 1) {
-    if (mode !== "placement" && (index + 1) % COMPARE_CADENCE === 0 && compareCharacters.length > 0) {
+    if (mode === "lesson" && (index + 1) % COMPARE_CADENCE === 0 && compareCharacters.length > 0) {
       const character = compareCharacters[Math.floor(index / COMPARE_CADENCE) % compareCharacters.length];
       const track = character.tracks.find((entry) => enabled.has(entry.track))?.track ?? character.tracks[0].track;
       queue.push({ kind: "compare", character, track });

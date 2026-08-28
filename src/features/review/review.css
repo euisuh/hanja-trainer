@@ -1,0 +1,129 @@
+.review-screen h1 {
+  margin-bottom: 6px;
+  font-size: 30px;
+}
+
+.review-screen > p {
+  color: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.review-start {
+  display: flex;
+  width: min(100%, 460px);
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+  padding: 18px;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-medium);
+  background: var(--gold);
+  box-shadow: var(--shadow-6);
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.due-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.due-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 2px solid var(--border-tan);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 3px 0 var(--border-tan);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.due-row__glyph {
+  flex: 0 0 42px;
+  font-family: var(--due-font);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.due-row__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.due-row__copy strong,
+.due-row__copy small {
+  display: block;
+}
+
+.due-row__copy strong {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.due-row__copy small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.due-row__copy .due-row__overdue { color: var(--overdue); }
+
+.due-row__stability {
+  margin-left: auto;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: var(--chip-bg);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.due-list__more {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.review-empty {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 24px;
+  border: 2px solid var(--border-tan);
+  border-radius: var(--radius-large);
+  background: var(--card);
+}
+
+.review-empty__glyph {
+  font-family: var(--font-kr);
+  font-size: 52px;
+  font-weight: 700;
+}
+
+.review-empty strong { font-size: 18px; }
+
+.review-empty a {
+  margin-top: 6px;
+  color: var(--kr-accent);
+  font-weight: 800;
+}
+
+@media (max-width: 430px) {
+  .due-list { grid-template-columns: 1fr; }
+}

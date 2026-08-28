@@ -52,11 +52,14 @@ describe("buildQueue", () => {
 
   it("uses only enabled tracks and due items in review mode", () => {
     const now = new Date("2026-01-02T00:00:00Z");
-    const due = { ...initialState(now), due: new Date("2026-01-01T00:00:00Z") };
-    const states = new Map([[reviewKey(4, "cn"), due]]);
-    const queue = buildQueue({ characters, enabledTracks: ["cn"], length: 3, mode: "review", reviewStates: states, now });
+    const states = new Map([
+      [reviewKey(4, "cn"), { ...initialState(now), due: new Date("2026-01-01T00:00:00Z") }],
+      [reviewKey(5, "cn"), { ...initialState(now), due: new Date("2025-12-29T00:00:00Z") }],
+    ]);
+    const queue = buildQueue({ characters, enabledTracks: ["cn"], length: 2, mode: "review", reviewStates: states, now });
 
-    expect(queue).toHaveLength(3);
-    expect(queue.every((item) => item.track === "cn" && item.character.id === 4)).toBe(true);
+    expect(queue).toHaveLength(2);
+    expect(queue.every((item) => item.kind === "reading" && item.track === "cn")).toBe(true);
+    expect(queue.map((item) => item.character.id)).toEqual([5, 4]);
   });
 });

@@ -18,6 +18,7 @@ export type Screen =
   | "home"
   | "lesson"
   | "review"
+  | "review-session"
   | "session-complete"
   | "detail"
   | "stats"
@@ -36,6 +37,7 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "home", path: "/home", Component: HomeScreen },
   { screen: "lesson", path: "/lesson", Component: LessonScreen },
   { screen: "review", path: "/review", Component: ReviewScreen },
+  { screen: "review-session", path: "/review/session", Component: ReviewScreen },
   { screen: "session-complete", path: "/session-complete", Component: SessionCompleteScreen },
   { screen: "detail", path: "/detail/:char", Component: DetailScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },

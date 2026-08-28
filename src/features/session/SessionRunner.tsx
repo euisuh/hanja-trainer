@@ -89,10 +89,10 @@ export function SessionRunner({
     const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current));
     const key = reviewKey(item.character.id, item.track);
     const previous = states.get(key) ?? initialState(new Date());
-    const result = schedule(previous, gradeFromAnswer(isCorrect, elapsedMs), new Date());
     setSaving(true);
     setPersistenceError("");
     try {
+      const result = schedule(previous, gradeFromAnswer(isCorrect, elapsedMs), new Date());
       await onPersist({
         characterId: item.character.id,
         track: item.track,
