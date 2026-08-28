@@ -93,6 +93,10 @@ p {
   font-weight: 700;
 }
 
+.metric svg { flex: 0 0 auto; }
+.metric__flame { fill: var(--flame); }
+.metric__bolt { fill: var(--gold); }
+
 .daily-goal {
   display: flex;
   align-items: center;
@@ -109,26 +113,31 @@ p {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: conic-gradient(var(--gold) 60%, var(--body) 0);
+  background: conic-gradient(var(--gold) var(--goal-degrees), var(--goal-remainder) 0);
+}
+
+.bottom-nav-shell {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  pointer-events: none;
 }
 
 .bottom-nav {
-  position: fixed;
-  right: 12px;
-  bottom: 12px;
-  left: 12px;
-  z-index: 30;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px;
-  width: fit-content;
-  max-width: calc(100% - 24px);
-  margin-inline: auto;
   padding: 8px;
   border-radius: var(--radius-large);
   background: var(--ink);
-  box-shadow: var(--shadow-6);
+  box-shadow: var(--shadow-nav);
+  pointer-events: auto;
 }
 
 .bottom-nav a {
@@ -137,14 +146,14 @@ p {
   gap: 8px;
   padding: 11px 16px;
   border-radius: var(--radius-nav-item);
-  color: var(--paper);
+  color: var(--nav-muted);
   font-size: 13px;
   font-weight: 800;
   text-decoration: none;
 }
 
 .bottom-nav a.active {
-  background: var(--gold);
+  background: var(--paper);
   color: var(--ink);
 }
 

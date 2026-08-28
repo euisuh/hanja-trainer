@@ -14,6 +14,10 @@ export const colors = {
   lockedBorder: "#D3C9B4",
   lockedText: "#A79C88",
   gold: "#E8B33D",
+  flame: "#E8873D",
+  goalRemainder: "#3B372F",
+  navMuted: "#C9C0B2",
+  keyOverlay: "rgba(0, 0, 0, .28)",
   correct: "#12855A",
   correctBg: "#E4F6EC",
   correctFg: "#0E6B48",
@@ -52,6 +56,7 @@ export const shadows = {
   hard5: `0 5px 0 ${colors.ink}`,
   hard6: `0 6px 0 ${colors.ink}`,
   hard7: `0 7px 0 ${colors.ink}`,
+  nav: "0 6px 24px rgba(22, 19, 15, .32)",
 } as const;
 
 export const cssVariables = {
@@ -70,6 +75,10 @@ export const cssVariables = {
   "--locked-border": colors.lockedBorder,
   "--locked-text": colors.lockedText,
   "--gold": colors.gold,
+  "--flame": colors.flame,
+  "--goal-remainder": colors.goalRemainder,
+  "--nav-muted": colors.navMuted,
+  "--key-overlay": colors.keyOverlay,
   "--correct": colors.correct,
   "--correct-bg": colors.correctBg,
   "--correct-fg": colors.correctFg,
@@ -99,4 +108,5 @@ export const cssVariables = {
   "--shadow-5": shadows.hard5,
   "--shadow-6": shadows.hard6,
   "--shadow-7": shadows.hard7,
+  "--shadow-nav": shadows.nav,
 } as const;

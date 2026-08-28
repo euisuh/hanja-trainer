@@ -9,12 +9,14 @@ const items = [
 
 export function BottomNav() {
   return (
-    <nav className="bottom-nav" aria-label="주요 화면">
-      {items.map((item) => (
-        <NavLink key={item.to} to={item.to} className={({ isActive }) => isActive ? "active" : undefined}>
-          {item.label}<kbd>{item.key}</kbd>
-        </NavLink>
-      ))}
-    </nav>
+    <div className="bottom-nav-shell">
+      <nav className="bottom-nav" aria-label="주요 화면">
+        {items.map((item) => (
+          <NavLink key={item.to} to={item.to} className={({ isActive }) => isActive ? "active" : undefined}>
+            {item.label}<kbd>{item.key}</kbd>
+          </NavLink>
+        ))}
+      </nav>
+    </div>
   );
 }
