@@ -40,7 +40,7 @@ export function HomeScreen() {
         const node = nodes[focusedIndex];
         if (!node || node.state === "locked") return;
         event.preventDefault();
-        navigate(`/detail/${encodeURIComponent(node.character.key)}`);
+        navigate(`/detail/${encodeURIComponent(node.character.key)}`, { state: { from: "/home" } });
       } else if (event.key === "Enter" && !(target instanceof HTMLElement && target.matches("button, a"))) {
         event.preventDefault();
         navigate("/lesson");
@@ -58,7 +58,7 @@ export function HomeScreen() {
           focusedIndex={focusedIndex}
           nodes={nodes}
           onFocus={setFocusedIndex}
-          onOpen={(node) => navigate(`/detail/${encodeURIComponent(node.character.key)}`)}
+          onOpen={(node) => navigate(`/detail/${encodeURIComponent(node.character.key)}`, { state: { from: "/home" } })}
           title={theme.title}
           unit={theme.unit}
         />

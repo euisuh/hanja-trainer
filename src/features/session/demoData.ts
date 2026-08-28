@@ -2,7 +2,7 @@ import sampleSeed from "../../../data/characters.sample.json";
 import cnSentences from "../../../data/sentences/cn-hsk1.json";
 import jpSentences from "../../../data/sentences/jp-kanken-10.json";
 import krSentences from "../../../data/sentences/kr-8geup.json";
-import { initialState, schedule, type ReviewState } from "../../shared/fsrs";
+import { initialState, schedule, type ReviewLogEntry, type ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, SeedCharacterEntry, TrackEntry } from "../../shared/types";
 import type { PersistedAnswer } from "./SessionRunner";
 import { reviewKey } from "./buildQueue";
@@ -19,7 +19,11 @@ type SourceSentence = {
 };
 
 const rawSentences = [...krSentences.sentences, ...jpSentences.sentences, ...cnSentences.sentences] as SourceSentence[];
-const sentenceByPair = new Map(rawSentences.filter((sentence) => sentence.rank === 0).map((sentence) => [`${sentence.character_key}:${sentence.track}`, sentence]));
+const sentencesByPair = new Map<string, SourceSentence[]>();
+for (const sentence of rawSentences) {
+  const key = `${sentence.character_key}:${sentence.track}`;
+  sentencesByPair.set(key, [...(sentencesByPair.get(key) ?? []), sentence]);
+}
 
 function sentenceOffset(track: "kr" | "jp" | "cn"): number {
   return track === "kr" ? 1 : track === "jp" ? 2 : 3;
@@ -33,10 +37,8 @@ export const demoCharacters: CharacterEntry[] = (sampleSeed as SeedCharacterEntr
     delete track.sentences;
     return track as TrackEntry;
   });
-  const sentences = tracks.flatMap((entry) => {
-    const source = sentenceByPair.get(`${character.key}:${entry.track}`);
-    return source ? [{
-      id: id * 10 + sentenceOffset(entry.track),
+  const sentences = tracks.flatMap((entry) => (sentencesByPair.get(`${character.key}:${entry.track}`) ?? []).map((source) => ({
+      id: id * 100 + sentenceOffset(entry.track) * 10 + source.rank,
       characterId: id,
       track: entry.track,
       text: source.text,
@@ -45,13 +47,14 @@ export const demoCharacters: CharacterEntry[] = (sampleSeed as SeedCharacterEntr
       sourceKind: source.source_kind,
       targetIndex: source.target_index,
       rank: source.rank,
-    }] : [];
-  });
+    })));
   return { id, key: character.key, meaningEn: character.meaningEn, meaningKo: character.meaningKo, variants: character.variants, strokeCount: character.strokeCount, createdAt: 0, tracks, sentences };
 });
 
 type StoredState = Omit<ReviewState, "due" | "lastReview"> & { due: string; lastReview: string | null };
 const storageKey = "hanja-trainer.review-states";
+const logStorageKey = "hanja-trainer.review-logs";
+type StoredLog = Omit<ReviewLogEntry, "answeredAt"> & { answeredAt: string };
 
 function parseStoredState(state: StoredState): ReviewState {
   return { ...state, due: new Date(state.due), lastReview: state.lastReview ? new Date(state.lastReview) : null };
@@ -83,4 +86,22 @@ export function persistDemoAnswer(answer: PersistedAnswer) {
     lastReview: answer.state.lastReview?.toISOString() ?? null,
   };
   localStorage.setItem(storageKey, JSON.stringify(stored));
+  let logs: Record<string, StoredLog[]> = {};
+  try {
+    logs = JSON.parse(localStorage.getItem(logStorageKey) ?? "{}") as Record<string, StoredLog[]>;
+  } catch {
+    localStorage.removeItem(logStorageKey);
+  }
+  const key = reviewKey(answer.characterId, answer.track);
+  logs[key] = [...(logs[key] ?? []), { ...answer.log, answeredAt: answer.log.answeredAt.toISOString() }];
+  localStorage.setItem(logStorageKey, JSON.stringify(logs));
+}
+
+export function loadDemoLogs(characterId: number, track: "kr" | "jp" | "cn"): ReviewLogEntry[] {
+  try {
+    const logs = JSON.parse(localStorage.getItem(logStorageKey) ?? "{}") as Record<string, StoredLog[]>;
+    return (logs[reviewKey(characterId, track)] ?? []).map((log) => ({ ...log, answeredAt: new Date(log.answeredAt) }));
+  } catch {
+    return [];
+  }
 }

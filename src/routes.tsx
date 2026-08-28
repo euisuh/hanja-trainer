@@ -40,7 +40,7 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "review", path: "/review", Component: ReviewScreen },
   { screen: "review-session", path: "/review/session", Component: ReviewScreen },
   { screen: "session-complete", path: "/session-complete", Component: SessionCompleteScreen },
-  { screen: "detail", path: "/detail/:char", Component: DetailScreen },
+  { screen: "detail", path: "/detail/:key", Component: DetailScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
   { screen: "settings", path: "/settings", Component: SettingsScreen },
 ];

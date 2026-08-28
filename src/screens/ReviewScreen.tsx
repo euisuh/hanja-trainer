@@ -55,7 +55,7 @@ export function ReviewScreen() {
       ) : (
         <>
           <button className="review-start" onClick={() => navigate("/review/session")} type="button">{due.length}장 복습 시작 <kbd>ENTER</kbd></button>
-          <DueList items={due} onOpen={(item) => navigate(`/detail/${encodeURIComponent(item.character.key)}`)} />
+          <DueList items={due} onOpen={(item) => navigate(`/detail/${encodeURIComponent(item.character.key)}`, { state: { from: "/review" } })} />
         </>
       )}
     </section>
