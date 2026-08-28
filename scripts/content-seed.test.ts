@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { parseSeed } from "./seed.ts";
-import type { Track } from "../src/shared/types.ts";
+import { parseSeed, parseSentenceSeed } from "./seed.ts";
+import type { SeedSentenceEntry, Track } from "../src/shared/types.ts";
 
 const files = {
   "data/characters/kr-8geup.json": 50,
@@ -35,4 +35,47 @@ test("curated character files validate and cross-link", async () => {
   }
 
   assert.ok([...linked.values()].filter((tracks) => tracks.size >= 2).length >= 30);
+});
+
+test("sourced sentence files resolve to their exact target glyph", async () => {
+  const glyphs = new Map<string, string>();
+  const trackCounts = new Map<string, Set<Track>>();
+  for (const path of Object.keys(files)) {
+    for (const character of parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown).characters) {
+      const tracks = trackCounts.get(character.key) ?? new Set<Track>();
+      for (const entry of character.tracks) {
+        glyphs.set(`${character.key}:${entry.track}`, entry.glyph);
+        tracks.add(entry.track);
+      }
+      trackCounts.set(character.key, tracks);
+    }
+  }
+
+  const byIdentity = new Map<string, SeedSentenceEntry>();
+  for (const path of Object.keys(files)) {
+    const sentencePath = path.replace("/characters/", "/sentences/");
+    const document = parseSentenceSeed(JSON.parse(await readFile(sentencePath, "utf8")) as unknown);
+    for (const entry of document.sentences) {
+      const glyph = glyphs.get(`${entry.characterKey}:${entry.track}`);
+      assert.ok(glyph, `${sentencePath}: unknown ${entry.characterKey}:${entry.track}`);
+      assert.equal(Array.from(entry.text)[entry.targetIndex], glyph, `${sentencePath}: ${entry.characterKey}`);
+      assert.match(entry.source, /^Tatoeba #\d+$/u, `${sentencePath}: ${entry.characterKey}`);
+      if (entry.track === "kr") {
+        assert.match(entry.text, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul`);
+        assert.match(entry.text, /\p{Script=Han}/u, `${sentencePath}: ${entry.characterKey} Hanja`);
+      }
+      const identity = `${entry.characterKey}:${entry.track}:${entry.rank}`;
+      const existing = byIdentity.get(identity);
+      if (existing) assert.deepEqual(entry, existing, `${sentencePath}: conflicting duplicate ${identity}`);
+      byIdentity.set(identity, entry);
+    }
+  }
+
+  assert.equal(byIdentity.size, 598);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 164);
+  for (const [key, tracks] of trackCounts) {
+    if (tracks.size === 3) {
+      assert.ok([...byIdentity.values()].filter((entry) => entry.characterKey === key).length >= 2, key);
+    }
+  }
 });

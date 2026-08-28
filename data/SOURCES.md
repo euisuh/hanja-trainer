@@ -60,3 +60,13 @@ into an unrelated beginner level.
 Curriculum units group 8–10 characters by dictionary meaning into localized
 themes such as `수와 시간`, `自然`, and `学习与语言`; mixed boundary units name
 both represented themes.
+
+# Example sentence sources
+
+Retrieved 2026-08-28 through the public [Tatoeba sentence search API](https://api.tatoeba.org/). Every row links back to its immutable sentence identifier through `https://tatoeba.org/sentences/show/{id}`; that page supplies the sentence, contributor attribution, translations, and license record.
+
+Tatoeba exports are released under [CC BY 2.0 FR](https://creativecommons.org/licenses/by/2.0/fr/), with some individual entries under CC0. The seed keeps only source text and a contributor-written Korean translation. It contains no machine translation, generated prose, textbook excerpt, or past-paper excerpt. `source_kind` is therefore `corpus` for every shipped row.
+
+Selection required an exact target-glyph match, an approved Korean translation for Japanese and Chinese, no more than 24 Unicode code points, and `Hans` script metadata for Chinese. Korean rows were accepted only when the source itself used mixed Hangul and Hanja; because the source is already Korean, its Korean text is retained as `translation_ko` without transliteration or paraphrase.
+
+The frozen retrieval covers 597 of 761 unique `(character, track)` pairs (693 rows across level files before 95 repeated HSK memberships are deduplicated, including one second example): 2 Korean, 232 Japanese, and 363 Chinese. The remaining 164 pairs have no qualifying Tatoeba row and intentionally have no sentence, following the no-fabrication rule. The UI must continue to tolerate missing examples.

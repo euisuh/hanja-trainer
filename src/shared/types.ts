@@ -106,3 +106,12 @@ export interface SeedDocument {
   characters: SeedCharacterEntry[];
   curriculumUnits?: SeedCurriculumUnit[];
 }
+
+export interface SeedSentenceEntry extends SeedSentence {
+  characterKey: string;
+  track: Track;
+}
+
+export interface SeedSentenceDocument {
+  sentences: SeedSentenceEntry[];
+}

@@ -1,0 +1,794 @@
+{
+  "sentences": [
+    {
+      "character_key": "一",
+      "track": "jp",
+      "text": "お腹一杯！",
+      "translation_ko": "배 부르다!",
+      "source": "Tatoeba #342167",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "二",
+      "track": "jp",
+      "text": "一石二鳥。",
+      "translation_ko": "일석이조",
+      "source": "Tatoeba #190377",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "九",
+      "track": "jp",
+      "text": "もう九時です。",
+      "translation_ko": "벌써 아홉시다.",
+      "source": "Tatoeba #1483516",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "七",
+      "track": "jp",
+      "text": "七歳です。",
+      "translation_ko": "일곱 살이에요.",
+      "source": "Tatoeba #13128674",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "人",
+      "track": "jp",
+      "text": "あの人誰？",
+      "translation_ko": "저 사람 누구죠?",
+      "source": "Tatoeba #230689",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "入",
+      "track": "jp",
+      "text": "気に入った？",
+      "translation_ko": "좋아해?",
+      "source": "Tatoeba #183266",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "八",
+      "track": "jp",
+      "text": "八十歳です。",
+      "translation_ko": "여든이세요.",
+      "source": "Tatoeba #13225054",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "力",
+      "track": "jp",
+      "text": "知識は力なり。",
+      "translation_ko": "아는 것이 힘이다.",
+      "source": "Tatoeba #127044",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "十",
+      "track": "jp",
+      "text": "八十歳です。",
+      "translation_ko": "여든이세요.",
+      "source": "Tatoeba #13225054",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "三",
+      "track": "jp",
+      "text": "七時三十分だった。",
+      "translation_ko": "일곱 시 반이었다.",
+      "source": "Tatoeba #149633",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "上",
+      "track": "jp",
+      "text": "立ち上がれ！",
+      "translation_ko": "일어서!",
+      "source": "Tatoeba #13563757",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "下",
+      "track": "jp",
+      "text": "下がって。",
+      "translation_ko": "물러서.",
+      "source": "Tatoeba #3488166",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "口",
+      "track": "jp",
+      "text": "口を出すな。",
+      "translation_ko": "그것으로부터 바깥에 있어라.",
+      "source": "Tatoeba #173912",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "大",
+      "track": "jp",
+      "text": "大っ嫌い！",
+      "translation_ko": "너 싫어!",
+      "source": "Tatoeba #13164555",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "女",
+      "track": "jp",
+      "text": "彼女いる？",
+      "translation_ko": "여친 있어?",
+      "source": "Tatoeba #13224678",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "山",
+      "track": "jp",
+      "text": "その山は緑です。",
+      "translation_ko": "산이 파랗습니다.",
+      "source": "Tatoeba #963704",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "川",
+      "track": "jp",
+      "text": "この川の名前は何？",
+      "translation_ko": "이 강은 이름이 뭐야?",
+      "source": "Tatoeba #2684301",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "土",
+      "track": "jp",
+      "text": "あれは土星です。",
+      "translation_ko": "저것은 토성이에요.",
+      "source": "Tatoeba #13541131",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "千",
+      "track": "jp",
+      "text": "千円で足りる？",
+      "translation_ko": "1000엔으로 충분한가요?",
+      "source": "Tatoeba #8733219",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "夕",
+      "track": "jp",
+      "text": "夕飯はもう食べたの？",
+      "translation_ko": "아직 저녁을 안 드셨나요?",
+      "source": "Tatoeba #11242897",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "子",
+      "track": "jp",
+      "text": "息子です。",
+      "translation_ko": "내 아들이에요.",
+      "source": "Tatoeba #4562142",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "小",
+      "track": "jp",
+      "text": "この小説は退屈だ。",
+      "translation_ko": "이 소설 재미 없어.",
+      "source": "Tatoeba #221152",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "中",
+      "track": "jp",
+      "text": "中にいるの？",
+      "translation_ko": "안에 있어?",
+      "source": "Tatoeba #10489229",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "五",
+      "track": "jp",
+      "text": "五日待ってくれ。",
+      "translation_ko": "저에게 닷새의 시간을 주십시오.",
+      "source": "Tatoeba #235115",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "六",
+      "track": "jp",
+      "text": "十六歳ですよ。",
+      "translation_ko": "나는 열여섯 살입니다.",
+      "source": "Tatoeba #8865844",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "圓",
+      "track": "jp",
+      "text": "千円で足りる？",
+      "translation_ko": "1000엔으로 충분한가요?",
+      "source": "Tatoeba #8733219",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "天",
+      "track": "jp",
+      "text": "天に月がある。",
+      "translation_ko": "하늘에 달이 있다.",
+      "source": "Tatoeba #2970662",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "手",
+      "track": "jp",
+      "text": "手伝おうか？",
+      "translation_ko": "도와드릴까요?",
+      "source": "Tatoeba #3878008",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "文",
+      "track": "jp",
+      "text": "本、注文した？",
+      "translation_ko": "책 주문했어?",
+      "source": "Tatoeba #1944414",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "日",
+      "track": "jp",
+      "text": "誕生日いつ？",
+      "translation_ko": "생일이 언제예요?",
+      "source": "Tatoeba #3073578",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "月",
+      "track": "jp",
+      "text": "12月です。",
+      "translation_ko": "12월입니다.",
+      "source": "Tatoeba #11303233",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "木",
+      "track": "jp",
+      "text": "木が燃える。",
+      "translation_ko": "나무가 탄다.",
+      "source": "Tatoeba #80140",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "水",
+      "track": "jp",
+      "text": "水は十分ある。",
+      "translation_ko": "우리는 물이 충분히 있다.",
+      "source": "Tatoeba #143758",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "火",
+      "track": "jp",
+      "text": "花火を見た？",
+      "translation_ko": "불꽃놀이 봤어?",
+      "source": "Tatoeba #9415265",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "犬",
+      "track": "jp",
+      "text": "犬が嫌い。",
+      "translation_ko": "나는 개가 싫다.",
+      "source": "Tatoeba #3557593",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "王",
+      "track": "jp",
+      "text": "苗字は王です。",
+      "translation_ko": "성은 왕이에요.",
+      "source": "Tatoeba #13198953",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "出",
+      "track": "jp",
+      "text": "金を出せ！",
+      "translation_ko": "돈을 줘!",
+      "source": "Tatoeba #3272096",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "右",
+      "track": "jp",
+      "text": "右に曲がって。",
+      "translation_ko": "우회전해.",
+      "source": "Tatoeba #5253130",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "四",
+      "track": "jp",
+      "text": "一、二、三、四、五。",
+      "translation_ko": "하나, 둘, 셋, 넷, 다섯.",
+      "source": "Tatoeba #12993390",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "左",
+      "track": "jp",
+      "text": "左に曲がって。",
+      "translation_ko": "좌회전해.",
+      "source": "Tatoeba #5253128",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "本",
+      "track": "jp",
+      "text": "それ本当？",
+      "translation_ko": "정말이야?",
+      "source": "Tatoeba #3488459",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "正",
+      "track": "jp",
+      "text": "あなたは正しい。",
+      "translation_ko": "맞아요.",
+      "source": "Tatoeba #5188",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "玉",
+      "track": "jp",
+      "text": "玉ねぎはじゃが芋よりも火が通りやすい。",
+      "translation_ko": "양파는 감자보다 빨리 익는다.",
+      "source": "Tatoeba #10107038",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "田",
+      "track": "jp",
+      "text": "田舎には娯楽がない。",
+      "translation_ko": "시골에는 오락이 없다.",
+      "source": "Tatoeba #1771684",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "白",
+      "track": "jp",
+      "text": "面白くない。",
+      "translation_ko": "재미없어요.",
+      "source": "Tatoeba #1751989",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "目",
+      "track": "jp",
+      "text": "駄目です。",
+      "translation_ko": "안 돼요.",
+      "source": "Tatoeba #10901725",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "石",
+      "track": "jp",
+      "text": "一石二鳥。",
+      "translation_ko": "일석이조",
+      "source": "Tatoeba #190377",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "立",
+      "track": "jp",
+      "text": "立ち上がれ！",
+      "translation_ko": "일어서!",
+      "source": "Tatoeba #13563757",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "休",
+      "track": "jp",
+      "text": "休みたい。",
+      "translation_ko": "쉬고 싶다.",
+      "source": "Tatoeba #3552065",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "先",
+      "track": "jp",
+      "text": "先生です。",
+      "translation_ko": "그녀는 선생님입니다.",
+      "source": "Tatoeba #13536216",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "名",
+      "track": "jp",
+      "text": "名前は何？",
+      "translation_ko": "이름이 뭐예요?",
+      "source": "Tatoeba #4002090",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "字",
+      "track": "jp",
+      "text": "苗字は王です。",
+      "translation_ko": "성은 왕이에요.",
+      "source": "Tatoeba #13198953",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "年",
+      "track": "jp",
+      "text": "よいお年を。",
+      "translation_ko": "새해 복 많이 받아.",
+      "source": "Tatoeba #192926",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "早",
+      "track": "jp",
+      "text": "早く来い。",
+      "translation_ko": "빨리 와!",
+      "source": "Tatoeba #140535",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "氣",
+      "track": "jp",
+      "text": "元気でね！",
+      "translation_ko": "잘 있어!",
+      "source": "Tatoeba #11256131",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "百",
+      "track": "jp",
+      "text": "百合は宿根草です。",
+      "translation_ko": "백합은 여러해살이 식물이야.",
+      "source": "Tatoeba #10650876",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "竹",
+      "track": "jp",
+      "text": "新竹は風が強いため、「風の街」という美称がある。",
+      "translation_ko": "신주는 바람이 매우 강해서 \"바람의 도시\"라는 아름다운 별명이 있다.",
+      "source": "Tatoeba #13545832",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "耳",
+      "track": "jp",
+      "text": "耳を澄ませてごらん。",
+      "translation_ko": "주의깊게 들어.",
+      "source": "Tatoeba #150152",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "蟲",
+      "track": "jp",
+      "text": "クモが昆虫でないというのはよく知られた事実だ。",
+      "translation_ko": "거미가 곤충이 아니라는 것은 잘 알려진 사실이야.",
+      "source": "Tatoeba #982235",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "村",
+      "track": "jp",
+      "text": "私の兄は、小さな村に住んでいます。",
+      "translation_ko": "내 동생은 한 작은 마을에 살고 있어.",
+      "source": "Tatoeba #163823",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "男",
+      "track": "jp",
+      "text": "私は男だ。",
+      "translation_ko": "나는 남자다.",
+      "source": "Tatoeba #155143",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "町",
+      "track": "jp",
+      "text": "町で用があるんだ。",
+      "translation_ko": "동네에 볼일이 있다.",
+      "source": "Tatoeba #11105425",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "花",
+      "track": "jp",
+      "text": "花火を見た？",
+      "translation_ko": "불꽃놀이 봤어?",
+      "source": "Tatoeba #9415265",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "見",
+      "track": "jp",
+      "text": "見つけた！",
+      "translation_ko": "찾았다!",
+      "source": "Tatoeba #7577266",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "貝",
+      "track": "jp",
+      "text": "貝殻を拾いながら、波打ち際を歩いた。",
+      "translation_ko": "조개껍데기를 주우면서 물가를 걸었다.",
+      "source": "Tatoeba #13146683",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "赤",
+      "track": "jp",
+      "text": "リンゴは赤い。",
+      "translation_ko": "사과는 빨개.",
+      "source": "Tatoeba #10667328",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "足",
+      "track": "jp",
+      "text": "足が寒い。",
+      "translation_ko": "나는 발이 차다.",
+      "source": "Tatoeba #10588114",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "車",
+      "track": "jp",
+      "text": "駐車禁止！",
+      "translation_ko": "주차 금지!",
+      "source": "Tatoeba #13177727",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "學",
+      "track": "jp",
+      "text": "君は学生？",
+      "translation_ko": "학생이야?",
+      "source": "Tatoeba #13172381",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "林",
+      "track": "jp",
+      "text": "林檎は幾つですか？",
+      "translation_ko": "사과가 몇 개인가요?",
+      "source": "Tatoeba #774817",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "空",
+      "track": "jp",
+      "text": "空は青い。",
+      "translation_ko": "하늘은푸른이에요.",
+      "source": "Tatoeba #179417",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "金",
+      "track": "jp",
+      "text": "金を出せ！",
+      "translation_ko": "돈을 줘!",
+      "source": "Tatoeba #3272096",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "雨",
+      "track": "jp",
+      "text": "雨降ってる？",
+      "translation_ko": "비와?",
+      "source": "Tatoeba #2562842",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "青",
+      "track": "jp",
+      "text": "空は青い。",
+      "translation_ko": "하늘은푸른이에요.",
+      "source": "Tatoeba #179417",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "草",
+      "track": "jp",
+      "text": "百合は宿根草です。",
+      "translation_ko": "백합은 여러해살이 식물이야.",
+      "source": "Tatoeba #10650876",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "音",
+      "track": "jp",
+      "text": "今の音何？",
+      "translation_ko": "지금 이 소리는 뭐지?",
+      "source": "Tatoeba #3550819",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "校",
+      "track": "jp",
+      "text": "学校だよ。",
+      "translation_ko": "난 학교에 있어.",
+      "source": "Tatoeba #10756861",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "森",
+      "track": "jp",
+      "text": "野獣は森に住んでいる。",
+      "translation_ko": "숲에는 야생동물들이 있다.",
+      "source": "Tatoeba #79595",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "生",
+      "track": "jp",
+      "text": "君は学生？",
+      "translation_ko": "학생이야?",
+      "source": "Tatoeba #13172381",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    }
+  ]
+}

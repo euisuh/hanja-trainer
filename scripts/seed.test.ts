@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { getCharacter, listByTrackLevel, listByUnit, searchDistractors } from "../worker/db/characters.ts";
 import type { SeedDocument, SeedTrackEntry } from "../src/shared/types.ts";
-import { emitSeedSql, levelOrdFor, parseSeed } from "./seed.ts";
+import { emitSeedSql, emitSentenceSeedSql, levelOrdFor, parseSeed, parseSentenceSeed } from "./seed.ts";
 
 function d1(sqlite: DatabaseSync): D1Database {
   const adapter = {
@@ -118,6 +119,37 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
     sqlite.exec(emitSeedSql(oneTrack));
     assert.equal((await getCharacter(db, "只"))?.tracks.length, 1);
     assert.deepEqual((await listByUnit(db, 1)).map((entry) => entry.key), ["只"]);
+  } finally {
+    sqlite.close();
+  }
+});
+
+test("standalone sentence seeds validate and remain idempotent", () => {
+  const document = parseSentenceSeed({ sentences: [{
+    character_key: "學", track: "jp", text: "学校へ行く。", translation_ko: "학교에 간다.",
+    source: "Tatoeba #1", source_kind: "corpus", target_index: 0, rank: 0,
+  }] });
+  assert.deepEqual(document.sentences[0], {
+    characterKey: "學", track: "jp", text: "学校へ行く。", translationKo: "학교에 간다.",
+    source: "Tatoeba #1", sourceKind: "corpus", targetIndex: 0, rank: 0,
+  });
+  assert.throws(() => parseSentenceSeed({ sentences: [{
+    character_key: "學", track: "jp", text: "学校へ行く。", translation_ko: "학교에 간다.",
+    source: "Tatoeba #1", source_kind: "corpus", target_index: 20, rank: 0,
+  }] }), /outside text/);
+
+  const sqlite = new DatabaseSync(":memory:");
+  try {
+    sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
+    const character = parseSeed([{
+      key: "學", meaningEn: "study", meaningKo: "배우다", variants: { jp: "学" }, strokeCount: 16,
+      tracks: [{ track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 12 }],
+    }]);
+    sqlite.exec(emitSeedSql(character));
+    const sql = emitSentenceSeedSql(document);
+    sqlite.exec(sql);
+    sqlite.exec(sql);
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS count FROM example_sentences").get()?.count, 1);
   } finally {
     sqlite.close();
   }

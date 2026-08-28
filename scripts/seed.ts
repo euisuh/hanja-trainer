@@ -9,6 +9,8 @@ import {
   type SeedCurriculumUnit,
   type SeedDocument,
   type SeedSentence,
+  type SeedSentenceDocument,
+  type SeedSentenceEntry,
   type SeedTrackEntry,
   type SourceKind,
   type Track,
@@ -178,6 +180,31 @@ export function parseSeed(value: unknown): SeedDocument {
   };
 }
 
+export function parseSentenceSeed(value: unknown): SeedSentenceDocument {
+  const rows = array(record(value, "seed").sentences, "seed.sentences");
+  const sentences: SeedSentenceEntry[] = rows.map((value, index) => {
+    const path = `sentences[${index}]`;
+    const input = record(value, path);
+    const text = string(input.text, `${path}.text`);
+    const targetIndex = integer(input.target_index, `${path}.target_index`);
+    if (Array.from(text).length > 24) throw new Error(`${path}.text: expected at most 24 characters`);
+    if (Array.from(text)[targetIndex] === undefined) throw new Error(`${path}.target_index: outside text`);
+    return {
+      characterKey: string(input.character_key, `${path}.character_key`),
+      track: track(input.track, `${path}.track`),
+      text,
+      translationKo: string(input.translation_ko, `${path}.translation_ko`),
+      source: string(input.source, `${path}.source`),
+      sourceKind: sourceKind(input.source_kind, `${path}.source_kind`),
+      targetIndex,
+      rank: integer(input.rank, `${path}.rank`),
+    };
+  });
+  const identities = sentences.map((entry) => `${entry.characterKey}:${entry.track}:${entry.rank}`);
+  if (new Set(identities).size !== identities.length) throw new Error("seed.sentences: duplicate character, track, and rank");
+  return { sentences };
+}
+
 function quote(value: string): string {
   return `'${value.replaceAll("'", "''")}'`;
 }
@@ -211,16 +238,27 @@ export function emitSeedSql(document: SeedDocument): string {
   return `${sql.join("\n")}\n`;
 }
 
+export function emitSentenceSeedSql(document: SeedSentenceDocument): string {
+  return `${[
+    "PRAGMA foreign_keys = ON;",
+    ...document.sentences.map((entry) => `INSERT INTO example_sentences (character_id, track, text, translation_ko, source, source_kind, target_index, rank) VALUES ((SELECT id FROM characters WHERE key=${quote(entry.characterKey)}), ${quote(entry.track)}, ${quote(entry.text)}, ${quote(entry.translationKo)}, ${quote(entry.source)}, ${quote(entry.sourceKind)}, ${entry.targetIndex}, ${entry.rank}) ON CONFLICT(character_id, track, rank) DO UPDATE SET text=excluded.text, translation_ko=excluded.translation_ko, source=excluded.source, source_kind=excluded.source_kind, target_index=excluded.target_index;`),
+  ].join("\n")}\n`;
+}
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const mode = args.includes("--remote") ? "--remote" : "--local";
   const files = args.filter((arg) => !arg.startsWith("--"));
   const paths = files.length > 0 ? files : ["data/characters.sample.json"];
-  const documents = await Promise.all(paths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const documents = await Promise.all(paths.map(async (path) => {
+    const value = JSON.parse(await readFile(path, "utf8")) as unknown;
+    const isSentenceDocument = typeof value === "object" && value !== null && "sentences" in value;
+    return isSentenceDocument ? emitSentenceSeedSql(parseSentenceSeed(value)) : emitSeedSql(parseSeed(value));
+  }));
   const directory = await mkdtemp(join(tmpdir(), "hanja-seed-"));
   const sqlPath = join(directory, "seed.sql");
   try {
-    await writeFile(sqlPath, documents.map(emitSeedSql).join("\n"));
+    await writeFile(sqlPath, documents.join("\n"));
     const result = spawnSync(process.platform === "win32" ? "npx.cmd" : "npx", ["wrangler", "d1", "execute", "hanja", mode, "--file", sqlPath], { stdio: "inherit" });
     if (result.error) throw result.error;
     if (result.status !== 0) throw new Error(`wrangler exited with status ${result.status}`);

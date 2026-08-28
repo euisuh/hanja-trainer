@@ -1,0 +1,24 @@
+{
+  "sentences": [
+    {
+      "character_key": "二",
+      "track": "kr",
+      "text": "일석이조 (一石二鳥).",
+      "translation_ko": "일석이조 (一石二鳥).",
+      "source": "Tatoeba #907715",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "一",
+      "track": "kr",
+      "text": "일석이조 (一石二鳥).",
+      "translation_ko": "일석이조 (一石二鳥).",
+      "source": "Tatoeba #907715",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    }
+  ]
+}
