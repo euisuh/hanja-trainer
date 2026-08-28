@@ -28,10 +28,10 @@ export function HomeScreen() {
     const controller = new AbortController();
     Promise.all([
       apiClient.curriculum(track, controller.signal),
-      apiClient.startSession({ mode: "review", tracks: enabledTracks, limit: 50 }, controller.signal),
+      apiClient.dueReviews(enabledTracks, 50, controller.signal),
     ]).then(([content, review]) => {
       setCurriculum(content);
-      setDueCount(review.cards.length);
+      setDueCount(review.total);
       setError("");
       setFocusedIndex(Math.max(0, content.units[0]?.nodes.findIndex((node) => node.state === "current") ?? 0));
     }).catch((caught: unknown) => {

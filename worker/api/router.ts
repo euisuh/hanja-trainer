@@ -2,6 +2,8 @@ import { TRACKS, type Track } from "../../src/shared/types";
 import type { ApiErrorBody, SessionMode, StartSessionRequest } from "../../src/shared/api";
 import { startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent } from "./content";
+import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
+import { createSession, getProfile, parseSessionRequest } from "./sessions";
 
 function error(status: number, code: string, message: string): Response {
   return Response.json({ error: { code, message } } satisfies ApiErrorBody, { status });
@@ -58,8 +60,47 @@ export async function routeApiRequest(request: Request, env: Env): Promise<Respo
       return Response.json(await startSession(env.DB, input));
     }
 
+    if (request.method === "POST" && (pathname === "/api/reviews" || pathname === "/api/reviews/batch")) {
+      let value: unknown;
+      try {
+        value = await request.json();
+      } catch {
+        return error(400, "invalid_json", "request body must be valid JSON");
+      }
+      if (pathname.endsWith("/batch")) {
+        if (!Array.isArray(value) || value.length < 1 || value.length > 100) return error(400, "invalid_review_batch", "body must be an array of 1 to 100 reviews");
+        const inputs = value.map(parseReviewRequest);
+        if (inputs.some((input) => input === null)) return error(400, "invalid_review", "review fields are invalid");
+        return Response.json({ results: await submitReviewBatch(env.DB, inputs as NonNullable<(typeof inputs)[number]>[]) });
+      }
+      const input = parseReviewRequest(value);
+      if (!input) return error(400, "invalid_review", "review fields are invalid");
+      return Response.json(await submitReview(env.DB, input));
+    }
+
+    if (request.method === "GET" && pathname === "/api/reviews/due") {
+      const input = parseDueRequest(url.searchParams);
+      if (!input) return error(400, "invalid_due_request", "tracks or limit is invalid");
+      return Response.json(await getDueReviews(env.DB, input.tracks, input.limit));
+    }
+
+    if (request.method === "POST" && pathname === "/api/sessions") {
+      let value: unknown;
+      try {
+        value = await request.json();
+      } catch {
+        return error(400, "invalid_json", "request body must be valid JSON");
+      }
+      const input = parseSessionRequest(value);
+      if (!input) return error(400, "invalid_session_summary", "session fields are invalid");
+      return Response.json(await createSession(env.DB, input));
+    }
+
+    if (request.method === "GET" && pathname === "/api/profile") return Response.json(await getProfile(env.DB));
+
     return error(404, "not_found", "API route was not found");
   } catch (caught) {
+    if (caught instanceof ReviewTargetNotFound) return error(404, "character_not_found", "character track was not found");
     console.error(caught);
     return error(500, "internal_error", "request could not be completed");
   }

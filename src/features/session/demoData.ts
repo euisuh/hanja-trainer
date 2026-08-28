@@ -4,7 +4,6 @@ import jpSentences from "../../../data/sentences/jp-kanken-10.json";
 import krSentences from "../../../data/sentences/kr-8geup.json";
 import { initialState, schedule, type ReviewLogEntry, type ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, SeedCharacterEntry, TrackEntry } from "../../shared/types";
-import type { PersistedAnswer } from "./SessionRunner";
 import { reviewKey } from "./buildQueue";
 
 type SourceSentence = {
@@ -76,25 +75,6 @@ export function loadDemoStates(): Map<string, ReviewState> {
     states.set(reviewKey(1, "jp"), { ...known, due: new Date(now.getTime() + 86_400_000) });
   }
   return states;
-}
-
-export function persistDemoAnswer(answer: PersistedAnswer) {
-  const stored = JSON.parse(localStorage.getItem(storageKey) ?? "{}") as Record<string, StoredState>;
-  stored[reviewKey(answer.characterId, answer.track)] = {
-    ...answer.state,
-    due: answer.state.due.toISOString(),
-    lastReview: answer.state.lastReview?.toISOString() ?? null,
-  };
-  localStorage.setItem(storageKey, JSON.stringify(stored));
-  let logs: Record<string, StoredLog[]> = {};
-  try {
-    logs = JSON.parse(localStorage.getItem(logStorageKey) ?? "{}") as Record<string, StoredLog[]>;
-  } catch {
-    localStorage.removeItem(logStorageKey);
-  }
-  const key = reviewKey(answer.characterId, answer.track);
-  logs[key] = [...(logs[key] ?? []), { ...answer.log, answeredAt: answer.log.answeredAt.toISOString() }];
-  localStorage.setItem(logStorageKey, JSON.stringify(logs));
 }
 
 export function loadDemoLogs(characterId: number, track: "kr" | "jp" | "cn"): ReviewLogEntry[] {

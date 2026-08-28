@@ -15,6 +15,8 @@ export interface StoredReviewLog extends ReviewLogEntry {
   correct: boolean;
   elapsedMs: number;
   mode: ReviewMode;
+  sessionId?: string;
+  cardIndex?: number;
 }
 
 export interface CharacterReviewStats {
@@ -98,7 +100,11 @@ export async function upsertState(
   track: Track,
   state: ReviewState,
 ): Promise<void> {
-  await db.prepare(`
+  await prepareUpsertState(db, characterId, track, state).run();
+}
+
+export function prepareUpsertState(db: D1Database, characterId: number, track: Track, state: ReviewState): D1PreparedStatement {
+  return db.prepare(`
     INSERT INTO review_states (
       character_id, track, stability, difficulty, elapsed_days, scheduled_days,
       learning_steps, reps, lapses, state, last_review, due, correct_count, total_count
@@ -131,15 +137,19 @@ export async function upsertState(
     state.due.getTime(),
     state.correctCount,
     state.totalCount,
-  ).run();
+  );
 }
 
 export async function appendLog(db: D1Database, log: StoredReviewLog): Promise<void> {
-  await db.prepare(`
+  await prepareAppendLog(db, log).run();
+}
+
+export function prepareAppendLog(db: D1Database, log: StoredReviewLog): D1PreparedStatement {
+  return db.prepare(`
     INSERT INTO review_log (
       character_id, track, rating, answered_at, correct, elapsed_ms,
-      scheduled_days_before, scheduled_days_after, mode
-    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+      scheduled_days_before, scheduled_days_after, mode, session_id, card_index
+    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)
   `).bind(
     log.characterId,
     log.track,
@@ -150,7 +160,9 @@ export async function appendLog(db: D1Database, log: StoredReviewLog): Promise<v
     log.scheduledDaysBefore,
     log.scheduledDaysAfter,
     log.mode,
-  ).run();
+    log.sessionId ?? null,
+    log.cardIndex ?? null,
+  );
 }
 
 export async function getDueQueue(

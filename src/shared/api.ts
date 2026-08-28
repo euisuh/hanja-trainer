@@ -77,3 +77,52 @@ export type SessionCard = {
 
 export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number };
 export type StartSessionResponse = { sessionId: string; cards: SessionCard[] };
+
+export type SubmitReviewRequest = {
+  sessionId: string;
+  cardIndex: number;
+  characterKey: string;
+  track: Track;
+  correct: boolean;
+  elapsedMs: number;
+  mode: SessionMode;
+};
+
+export type SubmitReviewResponse = {
+  due: string;
+  scheduledDays: number;
+  stability: number;
+  difficulty: number;
+  dueLabel: string;
+};
+
+export type DueReviewCard = {
+  characterKey: string;
+  track: Track;
+  glyph: string;
+  reading: string;
+  dueAt: string;
+  overdueDays: number;
+  stability: number;
+};
+
+export type DueReviewsResponse = { total: number; cards: DueReviewCard[] };
+
+export type CreateSessionRequest = {
+  mode: SessionMode;
+  startedAt: string;
+  endedAt: string;
+  answered: number;
+  correct: number;
+  bestCombo: number;
+  xp: number;
+};
+
+export type ProfileResponse = {
+  xp: number;
+  todayXp: number;
+  goal: number;
+  streak: number;
+  longestStreak: number;
+  enabledTracks: Track[];
+};

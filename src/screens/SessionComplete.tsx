@@ -22,6 +22,7 @@ export function SessionComplete({ result, onHome }: { result: SessionResult; onH
         <div><small>최고 콤보</small><strong>{result.bestCombo}×</strong></div>
         <div><small>다음 복습</small><strong>{result.nextReview}</strong></div>
       </div>
+      {result.profile && <p>누적 {result.profile.xp.toLocaleString()} XP · 오늘 {result.profile.todayXp}/{result.profile.goal} XP · {result.profile.streak}일 연속</p>}
       <button onClick={onHome} type="button">지도로 돌아가기 <kbd>ENTER</kbd></button>
     </section>
   );
