@@ -26,7 +26,7 @@ function sentenceOffset(track: "kr" | "jp" | "cn"): number {
 }
 
 // ponytail: compact real-data demo; replace with #14's curriculum/session endpoint.
-export const demoCharacters: CharacterEntry[] = (sampleSeed as SeedCharacterEntry[]).slice(0, 8).map((character, index) => {
+export const demoCharacters: CharacterEntry[] = (sampleSeed as SeedCharacterEntry[]).map((character, index) => {
   const id = index + 1;
   const tracks = character.tracks.map((entry) => {
     const track = { ...entry, characterId: id };

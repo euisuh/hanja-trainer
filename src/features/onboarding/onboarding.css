@@ -1,0 +1,139 @@
+.onboarding-screen,
+.placement-result {
+  padding: 36px 4px 0;
+  animation: om-rise .35s ease-out;
+}
+
+.onboarding-eyebrow {
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.onboarding-screen h1 {
+  max-width: 16ch;
+  margin-bottom: 8px;
+  font-size: 38px;
+  line-height: 1.05;
+}
+
+.onboarding-copy {
+  max-width: 56ch;
+  margin-bottom: 26px;
+  color: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.track-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.track-card {
+  --track-accent: var(--track-off);
+  --track-soft: var(--card);
+  --track-font: var(--font-ui);
+  padding: 20px;
+  border: 3px solid var(--track-accent);
+  border-radius: var(--radius-large);
+  background: var(--card);
+  box-shadow: 0 5px 0 var(--track-accent);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.track-card--kr { --enabled-accent: var(--kr-accent); --enabled-soft: var(--kr-soft); --track-font: var(--font-kr); }
+.track-card--jp { --enabled-accent: var(--jp-accent); --enabled-soft: var(--jp-soft); --track-font: var(--font-jp); }
+.track-card--cn { --enabled-accent: var(--cn-accent); --enabled-soft: var(--cn-soft); --track-font: var(--font-cn); }
+.track-card--checked { --track-accent: var(--enabled-accent); background: var(--enabled-soft); }
+
+.track-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.track-card__glyph {
+  color: var(--enabled-accent);
+  font-family: var(--track-font);
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.track-card__check {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--card);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.track-card--checked .track-card__check { background: var(--enabled-accent); }
+.track-card > strong,
+.track-card__detail { display: block; }
+.track-card > strong { font-size: 19px; font-weight: 800; }
+.track-card__detail { margin-top: 3px; color: var(--muted); font-size: 13px; font-weight: 600; }
+.track-card > kbd { display: inline-flex; margin-top: 12px; padding: 4px 9px; }
+
+.onboarding-cta,
+.placement-result__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 3px solid var(--ink);
+  background: var(--gold);
+  box-shadow: var(--shadow-6);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.onboarding-cta {
+  width: 100%;
+  max-width: 420px;
+  padding: 18px;
+  border-radius: var(--radius-medium);
+  font-size: 17px;
+  animation: om-pulse 2.4s infinite;
+}
+
+.onboarding-footnote { margin-top: 14px; color: var(--muted); font-size: 13px; font-weight: 600; }
+
+.placement-result { padding-top: 40px; }
+.placement-result h1 { margin-bottom: 24px; font-size: 34px; }
+.placement-result__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.placement-result__card { --result-accent: var(--ink); padding: 20px; border: 3px solid var(--result-accent); border-radius: var(--radius-medium); background: var(--card); box-shadow: 0 5px 0 var(--result-accent); }
+.placement-result__card--kr { --result-accent: var(--kr-accent); }
+.placement-result__card--jp { --result-accent: var(--jp-accent); }
+.placement-result__card--cn { --result-accent: var(--cn-accent); }
+.placement-result__card small,
+.placement-result__card strong,
+.placement-result__card span { display: block; }
+.placement-result__card small { color: var(--result-accent); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.placement-result__card strong { margin: 6px 0 2px; font-size: 40px; font-weight: 800; }
+.placement-result__card span { color: var(--muted); font-size: 13px; font-weight: 600; }
+.placement-result__cta { padding: 16px 26px; border-radius: 18px; font-size: 16px; }
+
+@media (max-width: 560px) {
+  .track-picker,
+  .placement-result__grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-cta { animation: none; }
+}

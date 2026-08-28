@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { tracks } from "../../design/tokens";
+import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../placement/adaptive";
 import { gradeFromAnswer, initialState, schedule, type ReviewLogEntry, type ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { AnswerOptions } from "./AnswerOptions";
-import { buildQueue, reviewKey } from "./buildQueue";
+import { buildQueue, buildReadingItem, reviewKey } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { ParticleBurst } from "./ParticleBurst";
@@ -29,6 +30,7 @@ export type SessionResult = {
   accuracy: number;
   bestCombo: number;
   nextReview: string;
+  placement?: PlacementResult[];
 };
 
 type Props = {
@@ -37,7 +39,7 @@ type Props = {
   enabledTracks: Track[];
   length?: number;
   initialReviewStates?: ReadonlyMap<string, ReviewState>;
-  onPersist: (answer: PersistedAnswer) => void | Promise<void>;
+  onPersist?: (answer: PersistedAnswer) => void | Promise<void>;
   onComplete: (result: SessionResult) => void;
   onQuit: () => void;
 };
@@ -50,14 +52,20 @@ export function SessionRunner({
   mode,
   characters,
   enabledTracks,
-  length = mode === "placement" ? 6 : 8,
+  length = mode === "placement" ? 15 : 8,
   initialReviewStates = new Map(),
   onPersist,
   onComplete,
   onQuit,
 }: Props) {
   const [states] = useState(() => new Map(initialReviewStates));
-  const queue = useMemo(() => buildQueue({ characters, enabledTracks, length, mode, reviewStates: states }), [characters, enabledTracks, length, mode, states]);
+  const queue = useMemo(() => mode === "placement" ? [] : buildQueue({ characters, enabledTracks, length, mode, reviewStates: states }), [characters, enabledTracks, length, mode, states]);
+  const [adaptiveState, setAdaptiveState] = useState(() => createPlacementState(characters, enabledTracks, length));
+  const [placementItem, setPlacementItem] = useState(() => {
+    const state = createPlacementState(characters, enabledTracks, length);
+    const item = nextPlacementItem(state, characters);
+    return item ? buildReadingItem(item.character, item.track, characters, item.character.id) : undefined;
+  });
   const [index, setIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -73,7 +81,8 @@ export function SessionRunner({
   const [burstKey, setBurstKey] = useState(0);
   const startedAt = useRef(0);
   const answerLocked = useRef(false);
-  const item = queue[index];
+  const item = mode === "placement" ? placementItem : queue[index];
+  const queueLength = mode === "placement" ? length : queue.length;
   const compare = item?.kind === "compare";
   const answered = selectedIndex !== null;
   const correct = item?.kind === "reading" && selectedIndex === item.answerIndex;
@@ -87,22 +96,30 @@ export function SessionRunner({
     answerLocked.current = true;
     const isCorrect = choice === item.answerIndex;
     const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current));
-    const key = reviewKey(item.character.id, item.track);
-    const previous = states.get(key) ?? initialState(new Date());
     setSaving(true);
     setPersistenceError("");
     try {
-      const result = schedule(previous, gradeFromAnswer(isCorrect, elapsedMs), new Date());
-      await onPersist({
-        characterId: item.character.id,
-        track: item.track,
-        mode,
-        correct: isCorrect,
-        elapsedMs,
-        state: result.next,
-        log: result.log,
-      });
-      states.set(key, result.next);
+      let interval = "—";
+      if (mode === "placement") {
+        const entry = item.character.tracks.find((candidate) => candidate.track === item.track);
+        if (!entry) throw new Error("배치 문항의 트랙 정보를 찾을 수 없습니다.");
+        setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
+      } else {
+        const key = reviewKey(item.character.id, item.track);
+        const previous = states.get(key) ?? initialState(new Date());
+        const result = schedule(previous, gradeFromAnswer(isCorrect, elapsedMs), new Date());
+        await onPersist?.({
+          characterId: item.character.id,
+          track: item.track,
+          mode,
+          correct: isCorrect,
+          elapsedMs,
+          state: result.next,
+          log: result.log,
+        });
+        states.set(key, result.next);
+        interval = intervalLabel(result.next.scheduledDays);
+      }
       const gained = isCorrect ? 10 + Math.min(10, combo * 2) : 0;
       const nextCombo = isCorrect ? combo + 1 : 0;
       setSelectedIndex(choice);
@@ -112,7 +129,7 @@ export function SessionRunner({
       setBestCombo((value) => Math.max(value, nextCombo));
       setCorrectCount((value) => value + Number(isCorrect));
       setAnsweredCount((value) => value + 1);
-      setNextInterval(intervalLabel(result.next.scheduledDays));
+      setNextInterval(interval);
       if (isCorrect) setBurstKey((value) => value + 1);
     } catch (error) {
       answerLocked.current = false;
@@ -124,7 +141,20 @@ export function SessionRunner({
 
   function advance() {
     if (!item || (item.kind === "reading" && selectedIndex === null)) return;
-    if (index + 1 >= queue.length) {
+    if (mode === "placement") {
+      const next = nextPlacementItem(adaptiveState, characters);
+      if (isPlacementComplete(adaptiveState) || !next) {
+        onComplete({
+          xp,
+          accuracy: answeredCount === 0 ? 0 : Math.round(correctCount / answeredCount * 100),
+          bestCombo,
+          nextReview: "—",
+          placement: placementResults(adaptiveState),
+        });
+        return;
+      }
+      setPlacementItem(buildReadingItem(next.character, next.track, characters, index + next.character.id + 1));
+    } else if (index + 1 >= queue.length) {
       onComplete({
         xp,
         accuracy: answeredCount === 0 ? 0 : Math.round(correctCount / answeredCount * 100),
@@ -156,6 +186,8 @@ export function SessionRunner({
   const source = item.character.sentences.find((sentence) => sentence.track === item.track)?.source;
   const feedbackNote = compare
     ? "이미 아는 글자를 다른 트랙과 함께 확인합니다."
+    : mode === "placement"
+      ? answered ? "응답에 맞춰 시작 급수를 조정했습니다." : "정답에 따라 다음 문항 난이도가 바뀝니다."
     : !answered
       ? source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
       : correct
@@ -171,14 +203,14 @@ export function SessionRunner({
     <section className="session-runner" style={style}>
       <div className="session-chrome">
         <button aria-label="세션 일시정지" onClick={() => setPaused(true)} type="button">esc</button>
-        <div aria-label={`진행률 ${index + 1}/${queue.length}`} className="session-progress" role="progressbar" aria-valuemax={queue.length} aria-valuemin={0} aria-valuenow={index + 1}>
-          <span style={{ width: `${(index + 1) / queue.length * 100}%` }} />
+        <div aria-label={`진행률 ${index + 1}/${queueLength}`} className="session-progress" role="progressbar" aria-valuemax={queueLength} aria-valuemin={0} aria-valuenow={index + 1}>
+          <span style={{ width: `${(index + 1) / queueLength * 100}%` }} />
         </div>
-        <strong>{index + 1}/{queue.length}</strong>
+        <strong>{index + 1}/{queueLength}</strong>
         <ComboBadge combo={combo} />
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} track={item.track} />
+        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} promptOverride={mode === "placement" ? `배치 문항 ${index + 1}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
           <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={item.options} selectedIndex={selectedIndex} />
         )}
@@ -188,7 +220,7 @@ export function SessionRunner({
           correct={correct}
           correctIndex={item.kind === "reading" ? item.answerIndex : 0}
           error={persistenceError}
-          last={index + 1 === queue.length}
+          last={index + 1 === queueLength}
           note={feedbackNote}
           onNext={advance}
           xp={lastXp}

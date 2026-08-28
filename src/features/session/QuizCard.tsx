@@ -36,9 +36,10 @@ type Props = {
   compare: boolean;
   answered: boolean;
   correct: boolean;
+  promptOverride?: string;
 };
 
-export function QuizCard({ character, track, compare, answered, correct }: Props) {
+export function QuizCard({ character, track, compare, answered, correct, promptOverride }: Props) {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) return null;
   const sentence = character.sentences.find((candidate) => candidate.track === track);
@@ -47,7 +48,7 @@ export function QuizCard({ character, track, compare, answered, correct }: Props
       <div className="quiz-card__badges">
         <span>{compare ? "교차 강화 · 한 글자 세 소리" : trackLabels[track].badge}</span>
         <span>{levelLabel(entry)}</span>
-        <strong>{compare ? "Enter로 계속" : trackLabels[track].prompt}</strong>
+        <strong>{promptOverride ?? (compare ? "Enter로 계속" : trackLabels[track].prompt)}</strong>
       </div>
       <div className="quiz-card__body">
         <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`}>{entry.glyph}</div>

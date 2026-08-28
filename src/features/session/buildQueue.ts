@@ -66,6 +66,10 @@ function optionsFor(character: CharacterEntry, track: Track, characters: Charact
   return { options: rotated, answerIndex: rotated.findIndex((option) => option.label === correct.label) };
 }
 
+export function buildReadingItem(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number): ReadingQueueItem {
+  return { kind: "reading", character, track, ...optionsFor(character, track, characters, offset) };
+}
+
 export function buildQueue({
   characters,
   enabledTracks,
@@ -111,8 +115,7 @@ export function buildQueue({
       ? (readingIndex % 2 === 0 ? fresh[freshIndex++] : due[dueIndex++])
       : undefined;
     const pair = preferred ?? available[fallbackIndex++ % available.length];
-    const { options, answerIndex } = optionsFor(pair.character, pair.track, characters, index + pair.character.id);
-    queue.push({ kind: "reading", character: pair.character, track: pair.track, options, answerIndex });
+    queue.push(buildReadingItem(pair.character, pair.track, characters, index + pair.character.id));
     readingIndex += 1;
   }
   return queue;
