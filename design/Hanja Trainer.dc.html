@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;600;700&family=Noto+Serif+JP:wght@500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #EFEAE0; }
+  * { box-sizing: border-box; }
+  a { color: #3B5BDB; text-decoration: none; }
+  a:hover { color: #16130F; }
+  button { font: inherit; }
+  @keyframes om-pop { 0% { transform: scale(.4); opacity: 0 } 55% { transform: scale(1.25) } 100% { transform: scale(1); opacity: 1 } }
+  @keyframes om-burst { 0% { transform: translate(0,0) scale(1); opacity: 1 } 100% { transform: translate(var(--tx), var(--ty)) scale(.2); opacity: 0 } }
+  @keyframes om-shake { 0%,100% { transform: translateX(0) } 15% { transform: translateX(-10px) } 30% { transform: translateX(9px) } 45% { transform: translateX(-6px) } 60% { transform: translateX(4px) } 80% { transform: translateX(-2px) } }
+  @keyframes om-rise { 0% { transform: translateY(14px); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
+  @keyframes om-glyph { 0% { transform: scale(1) } 40% { transform: scale(1.09) } 100% { transform: scale(1) } }
+  @keyframes om-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(232,179,61,.55) } 50% { box-shadow: 0 0 0 12px rgba(232,179,61,0) } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#EFEAE0;font-family:'Plus Jakarta Sans','Noto Sans KR',sans-serif;color:#16130F;display:flex;flex-direction:column;align-items:center">
+
+  <div style="width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 18px;background:#16130F;color:#EFEAE0;position:sticky;top:0;z-index:40">
+    <span style="font-weight:800;font-size:13px;letter-spacing:.16em;text-transform:uppercase">漢字 Trainer</span>
+    <span style="font-size:12px;color:#9E958A;flex:1;min-width:120px">{{ screenName }} · sample content</span>
+    <div style="display:flex;gap:6px">
+      <button onClick="{{ setDesktop }}" style="padding:6px 12px;border-radius:999px;border:1px solid #3B372F;background:{{ deskBg }};color:{{ deskFg }};font-size:12px;font-weight:700;cursor:pointer">Desktop</button>
+      <button onClick="{{ setMobile }}" style="padding:6px 12px;border-radius:999px;border:1px solid #3B372F;background:{{ mobBg }};color:{{ mobFg }};font-size:12px;font-weight:700;cursor:pointer">Mobile</button>
+    </div>
+    <span style="font-size:12px;color:#9E958A;font-weight:600">1–4 answer · Enter next · Esc pause · H R T ,</span>
+  </div>
+
+  <div style="width:100%;max-width:{{ frameMax }};padding:0 14px 120px;position:relative;transition:max-width .25s">
+
+    <sc-if value="{{ showHeader }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:18px 4px 14px">
+        <div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#FFFFFF;border:2px solid #16130F;border-radius:999px;box-shadow:0 3px 0 #16130F">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#E8873D"><path d="M12 2c1 4-3 5-3 9a3 3 0 006 0c0-1-1-2-1-3 2 1 4 4 4 7a6 6 0 01-12 0C6 9 12 8 12 2z"/></svg>
+          <span style="font-weight:800;font-size:15px">{{ streak }}</span>
+          <span style="font-size:11px;color:#6E675C;font-weight:700">연속</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:7px;padding:8px 14px;background:#FFFFFF;border:2px solid #16130F;border-radius:999px;box-shadow:0 3px 0 #16130F">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B33D"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+          <span style="font-weight:800;font-size:15px">{{ xpLabel }}</span>
+          <span style="font-size:11px;color:#6E675C;font-weight:700">XP</span>
+        </div>
+        <div style="flex:1;min-width:8px"></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;background:#16130F;color:#EFEAE0;border-radius:999px">
+          <span style="width:26px;height:26px;border-radius:50%;background:conic-gradient(#E8B33D {{ goalDeg }}, #3B372F 0);display:inline-block"></span>
+          <span style="font-size:12px;font-weight:700">오늘 {{ today }}/{{ goal }} XP</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isOnboarding }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="01 Onboarding" style="padding:36px 4px 0;animation:om-rise .35s ease-out">
+        <p style="margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#6E675C">Step 1 / 2 · 트랙 선택</p>
+        <h1 style="margin:0 0 8px;font-size:38px;line-height:1.05;font-weight:800;max-width:16ch;text-wrap:pretty">한 글자, 세 개의 시험.</h1>
+        <p style="margin:0 0 26px;font-size:16px;line-height:1.5;color:#4A443B;max-width:56ch;text-wrap:pretty">같은 글자를 급수·漢検·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:28px">
+          <button onClick="{{ toggleKr }}" style="text-align:left;padding:20px;border-radius:22px;cursor:pointer;background:{{ krCardBg }};border:3px solid {{ krCardBorder }};box-shadow:0 5px 0 {{ krCardBorder }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <span style="font-family:'Noto Serif KR',serif;font-size:44px;font-weight:700;line-height:1;color:#3B5BDB">漢</span>
+              <span style="width:26px;height:26px;border-radius:8px;border:2px solid #16130F;background:{{ krTick }};color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ krMark }}</span>
+            </div>
+            <div style="font-size:19px;font-weight:800">한국 · 한자</div>
+            <div style="font-size:13px;color:#6E675C;margin-top:3px;font-weight:600">한자능력검정 8급 → 특급</div>
+            <div style="margin-top:12px;display:inline-flex;padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">1</div>
+          </button>
+          <button onClick="{{ toggleJp }}" style="text-align:left;padding:20px;border-radius:22px;cursor:pointer;background:{{ jpCardBg }};border:3px solid {{ jpCardBorder }};box-shadow:0 5px 0 {{ jpCardBorder }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <span style="font-family:'Noto Serif JP',serif;font-size:44px;font-weight:700;line-height:1;color:#E14B32">漢</span>
+              <span style="width:26px;height:26px;border-radius:8px;border:2px solid #16130F;background:{{ jpTick }};color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ jpMark }}</span>
+            </div>
+            <div style="font-size:19px;font-weight:800">日本 · 漢字</div>
+            <div style="font-size:13px;color:#6E675C;margin-top:3px;font-weight:600">漢検 10級 → 1級 · JLPT N5→N1</div>
+            <div style="margin-top:12px;display:inline-flex;padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">2</div>
+          </button>
+          <button onClick="{{ toggleCn }}" style="text-align:left;padding:20px;border-radius:22px;cursor:pointer;background:{{ cnCardBg }};border:3px solid {{ cnCardBorder }};box-shadow:0 5px 0 {{ cnCardBorder }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <span style="font-family:'Noto Serif SC',serif;font-size:44px;font-weight:700;line-height:1;color:#0E9F6E">汉</span>
+              <span style="width:26px;height:26px;border-radius:8px;border:2px solid #16130F;background:{{ cnTick }};color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ cnMark }}</span>
+            </div>
+            <div style="font-size:19px;font-weight:800">中国 · 汉字</div>
+            <div style="font-size:13px;color:#6E675C;margin-top:3px;font-weight:600">HSK 1 → 7-9 · 通用规范汉字表</div>
+            <div style="margin-top:12px;display:inline-flex;padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">3</div>
+          </button>
+        </div>
+
+        <button onClick="{{ startPlacement }}" style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;max-width:420px;padding:18px;border-radius:20px;border:3px solid #16130F;background:#E8B33D;box-shadow:0 6px 0 #16130F;cursor:pointer;font-size:17px;font-weight:800;animation:om-pulse 2.4s infinite">
+          배치 테스트 시작
+          <span style="padding:3px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">ENTER</span>
+        </button>
+        <p style="margin:14px 0 0;font-size:13px;color:#6E675C;font-weight:600">약 15문항 적응형 · 이미 아는 급수는 건너뜁니다.</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPlacementDone }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="02 Placement result" style="padding:40px 4px;animation:om-rise .35s ease-out">
+        <p style="margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#6E675C">Step 2 / 2 · 배치 결과</p>
+        <h1 style="margin:0 0 24px;font-size:34px;font-weight:800">시작 지점이 정해졌습니다.</h1>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px">
+          <div style="padding:20px;background:#FFFFFF;border:3px solid #3B5BDB;border-radius:20px;box-shadow:0 5px 0 #3B5BDB">
+            <div style="font-size:12px;font-weight:800;color:#3B5BDB;letter-spacing:.1em">한자 · 급수</div>
+            <div style="font-size:40px;font-weight:800;margin:6px 0 2px">7급</div>
+            <div style="font-size:13px;color:#6E675C;font-weight:600">148/300자 인식 · 8급 완료</div>
+          </div>
+          <div style="padding:20px;background:#FFFFFF;border:3px solid #E14B32;border-radius:20px;box-shadow:0 5px 0 #E14B32">
+            <div style="font-size:12px;font-weight:800;color:#E14B32;letter-spacing:.1em">漢検 · JLPT</div>
+            <div style="font-size:40px;font-weight:800;margin:6px 0 2px">9級</div>
+            <div style="font-size:13px;color:#6E675C;font-weight:600">音読み 정확도 62% · N5 수준</div>
+          </div>
+          <div style="padding:20px;background:#FFFFFF;border:3px solid #0E9F6E;border-radius:20px;box-shadow:0 5px 0 #0E9F6E">
+            <div style="font-size:12px;font-weight:800;color:#0E9F6E;letter-spacing:.1em">HSK · 汉字</div>
+            <div style="font-size:40px;font-weight:800;margin:6px 0 2px">HSK 2</div>
+            <div style="font-size:13px;color:#6E675C;font-weight:600">拼音 정확도 48% · 声调 취약</div>
+          </div>
+        </div>
+        <button onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;padding:16px 26px;border-radius:18px;border:3px solid #16130F;background:#E8B33D;box-shadow:0 6px 0 #16130F;cursor:pointer;font-size:16px;font-weight:800">
+          학습 지도로 <span style="padding:3px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px">ENTER</span>
+        </button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="03 Home path map">
+        <div style="display:flex;gap:8px;padding:2px 2px 16px;flex-wrap:wrap">
+          <button onClick="{{ pickKr }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabKrBg }};color:{{ tabKrFg }};border:2px solid #3B5BDB;box-shadow:{{ tabKrShadow }}">한자 · 급수</button>
+          <button onClick="{{ pickJp }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabJpBg }};color:{{ tabJpFg }};border:2px solid #E14B32;box-shadow:{{ tabJpShadow }}">漢字 · 漢検</button>
+          <button onClick="{{ pickCn }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabCnBg }};color:{{ tabCnFg }};border:2px solid #0E9F6E;box-shadow:{{ tabCnShadow }}">汉字 · HSK</button>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+          <div style="flex:1 1 300px;min-width:280px;background:#FFFFFF;border:3px solid #16130F;border-radius:26px;box-shadow:0 6px 0 #16130F;padding:20px 16px 26px;position:relative;overflow:hidden">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:{{ accent }}">{{ unitLabel }}</span>
+              <span style="font-size:12px;font-weight:700;color:#6E675C">{{ unitProgress }}</span>
+            </div>
+            <h2 style="margin:0 0 20px;font-size:23px;font-weight:800">{{ unitTitle }}</h2>
+
+            <sc-for list="{{ nodes }}" as="node" hint-placeholder-count="6">
+              <div style="display:flex;justify-content:{{ node.align }};padding:7px 0">
+                <button onClick="{{ node.open }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;padding:0">
+                  <span style="width:74px;height:74px;border-radius:26px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:34px;font-weight:700;background:{{ node.bg }};color:{{ node.fg }};border:3px solid {{ node.border }};box-shadow:{{ node.shadow }};outline:{{ node.ring }};outline-offset:4px;transition:outline .12s">{{ node.glyph }}</span>
+                  <span style="font-size:11px;font-weight:800;color:{{ node.labelColor }}">{{ node.label }}</span>
+                </button>
+              </div>
+            </sc-for>
+            <p style="margin:18px 0 0;text-align:center;font-size:12px;font-weight:700;color:#6E675C">↑ ↓ 이동 · Enter 열기</p>
+          </div>
+
+          <div style="flex:1 1 260px;min-width:250px;display:flex;flex-direction:column;gap:14px">
+            <button onClick="{{ startLesson }}" style="text-align:left;padding:22px;border-radius:24px;border:3px solid #16130F;background:{{ accent }};color:#FFFFFF;box-shadow:0 7px 0 #16130F;cursor:pointer">
+              <div style="font-size:12px;font-weight:800;letter-spacing:.14em;opacity:.85">오늘의 학습</div>
+              <div style="font-size:26px;font-weight:800;margin:6px 0 10px">레슨 시작</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700">신규 4자 + 복습 {{ dueCount }}장 <span style="padding:3px 9px;border-radius:7px;background:rgba(0,0,0,.28);font-size:11px">ENTER</span></div>
+            </button>
+            <button onClick="{{ goReview }}" style="text-align:left;padding:20px;border-radius:22px;border:3px solid #16130F;background:#FFFFFF;box-shadow:0 5px 0 #16130F;cursor:pointer">
+              <div style="font-size:12px;font-weight:800;letter-spacing:.14em;color:#6E675C">FSRS 복습 큐</div>
+              <div style="font-size:22px;font-weight:800;margin:5px 0 8px">{{ dueCount }}장 만기</div>
+              <div style="font-size:13px;font-weight:700;color:#6E675C">가장 급한 카드부터 <span style="padding:3px 8px;border-radius:6px;background:#16130F;color:#EFEAE0;font-size:11px;margin-left:4px">R</span></div>
+            </button>
+            <div style="padding:20px;border-radius:22px;border:2px dashed #C4B9A4;background:#F6F2E9">
+              <div style="font-size:12px;font-weight:800;letter-spacing:.14em;color:#6E675C;margin-bottom:10px">시험 기준 진도</div>
+              <div style="font-size:15px;font-weight:800;margin-bottom:6px">{{ scaleGoal }}</div>
+              <div style="height:12px;border-radius:999px;background:#E2DAC9;overflow:hidden;border:1px solid #C4B9A4">
+                <div style="height:100%;width:{{ scalePct }};background:{{ accent }}"></div>
+              </div>
+              <div style="font-size:12px;font-weight:700;color:#6E675C;margin-top:8px">{{ scaleNote }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isReviewQueue }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="04 Review queue">
+        <h1 style="margin:6px 0 4px;font-size:30px;font-weight:800">복습 큐</h1>
+        <p style="margin:0 0 18px;font-size:14px;color:#4A443B;font-weight:600">FSRS 만기 카드만 뽑습니다. 신규 학습과 분리된 세션입니다.</p>
+        <button onClick="{{ startReview }}" style="display:flex;align-items:center;gap:12px;width:100%;max-width:460px;padding:18px;border-radius:20px;border:3px solid #16130F;background:#E8B33D;box-shadow:0 6px 0 #16130F;cursor:pointer;font-size:17px;font-weight:800;margin-bottom:22px">
+          {{ dueCount }}장 복습 시작 <span style="padding:3px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px">ENTER</span>
+        </button>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px">
+          <sc-for list="{{ dueList }}" as="row" hint-placeholder-count="5">
+            <button onClick="{{ row.open }}" style="display:flex;align-items:center;gap:14px;text-align:left;padding:14px;border-radius:18px;background:#FFFFFF;border:2px solid #E2DAC9;box-shadow:0 3px 0 #E2DAC9;cursor:pointer">
+              <span style="font-family:'Noto Serif KR',serif;font-size:34px;font-weight:700;line-height:1">{{ row.glyph }}</span>
+              <span style="flex:1;min-width:0">
+                <span style="display:block;font-size:14px;font-weight:800">{{ row.reading }}</span>
+                <span style="display:block;font-size:12px;font-weight:700;color:{{ row.dueColor }};margin-top:2px">{{ row.dueLabel }}</span>
+              </span>
+              <span style="font-size:11px;font-weight:800;color:#6E675C">{{ row.stability }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ inSession }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="05 Lesson / quiz" style="padding-top:14px;position:relative">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <button onClick="{{ pause }}" style="width:38px;height:38px;border-radius:12px;border:2px solid #16130F;background:#FFFFFF;box-shadow:0 3px 0 #16130F;cursor:pointer;font-weight:800;font-size:13px">esc</button>
+          <div style="flex:1;height:16px;border-radius:999px;background:#DFD7C6;border:2px solid #16130F;overflow:hidden">
+            <div style="height:100%;width:{{ sessionPct }};background:{{ accent }};transition:width .3s"></div>
+          </div>
+          <div style="font-size:13px;font-weight:800;color:#6E675C">{{ sessionCount }}</div>
+          {{ comboBadge }}
+        </div>
+
+        <div style="background:#FFFFFF;border:3px solid #16130F;border-radius:28px;box-shadow:0 7px 0 #16130F;padding:26px 22px;animation:{{ cardAnim }}">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px">
+            <span style="padding:5px 11px;border-radius:8px;background:{{ accentSoft }};color:{{ accent }};font-size:11px;font-weight:800;letter-spacing:.1em">{{ trackBadge }}</span>
+            <span style="padding:5px 11px;border-radius:8px;background:#F1ECE1;color:#6E675C;font-size:11px;font-weight:800">{{ levelBadge }}</span>
+            <span style="flex:1"></span>
+            <span style="font-size:12px;font-weight:800;color:#6E675C">{{ promptLabel }}</span>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:center">
+            <div style="flex:0 0 auto;margin:0 auto">
+              <div style="font-family:{{ glyphFont }};font-size:{{ glyphSize }};font-weight:700;line-height:1;text-align:center;animation:{{ glyphAnim }}">{{ glyph }}</div>
+            </div>
+            <div style="flex:1 1 260px;min-width:240px">
+              <div style="padding:16px;border-radius:16px;background:#F6F2E9;border:2px solid #E2DAC9">
+                <div style="font-size:11px;font-weight:800;color:#6E675C;letter-spacing:.12em;margin-bottom:8px">예문 · {{ sourceLabel }}</div>
+                <div style="font-family:{{ glyphFont }};font-size:21px;font-weight:600;line-height:1.6">{{ sentBefore }}<span style="color:{{ accent }};border-bottom:3px solid {{ accent }}">{{ sentTarget }}</span>{{ sentAfter }}</div>
+                <div style="font-size:13px;font-weight:600;color:{{ transColor }};margin-top:10px">{{ sentTrans }}</div>
+              </div>
+            </div>
+          </div>
+
+          <sc-if value="{{ isCompare }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+              <div style="padding:14px;border-radius:16px;border:2px solid #3B5BDB;background:#EEF1FD">
+                <div style="font-size:11px;font-weight:800;color:#3B5BDB;letter-spacing:.1em">한국 · 훈음</div>
+                <div style="font-size:22px;font-weight:800;margin-top:5px">{{ cmpKr }}</div>
+                <div style="font-size:12px;font-weight:700;color:#6E675C;margin-top:2px">{{ cmpKrLv }}</div>
+              </div>
+              <div style="padding:14px;border-radius:16px;border:2px solid #E14B32;background:#FDEEEB">
+                <div style="font-size:11px;font-weight:800;color:#E14B32;letter-spacing:.1em">日本 · 音/訓</div>
+                <div style="font-size:22px;font-weight:800;margin-top:5px">{{ cmpJp }}</div>
+                <div style="font-size:12px;font-weight:700;color:#6E675C;margin-top:2px">{{ cmpJpLv }}</div>
+              </div>
+              <div style="padding:14px;border-radius:16px;border:2px solid #0E9F6E;background:#E7F6F0">
+                <div style="font-size:11px;font-weight:800;color:#0E9F6E;letter-spacing:.1em">中国 · 拼音</div>
+                <div style="font-size:22px;font-weight:800;margin-top:5px">{{ cmpCn }}</div>
+                <div style="font-size:12px;font-weight:700;color:#6E675C;margin-top:2px">{{ cmpCnLv }}</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ hasOptions }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px">
+            <sc-for list="{{ options }}" as="opt" hint-placeholder-count="4">
+              <button onClick="{{ opt.pick }}" style="display:flex;align-items:center;gap:13px;text-align:left;padding:15px 16px;border-radius:18px;cursor:pointer;background:{{ opt.bg }};border:3px solid {{ opt.border }};box-shadow:{{ opt.shadow }};transform:{{ opt.transform }};transition:transform .1s,background .12s;animation:{{ opt.anim }}">
+                <span style="width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:{{ opt.keyBg }};color:{{ opt.keyFg }};display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">{{ opt.n }}</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-size:19px;font-weight:800;font-family:'Noto Sans KR',sans-serif">{{ opt.label }}</span>
+                  <span style="display:block;font-size:12px;font-weight:700;color:#6E675C;margin-top:2px">{{ opt.sub }}</span>
+                </span>
+                <span style="font-size:18px;font-weight:800;color:{{ opt.markColor }}">{{ opt.mark }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:16px 18px;border-radius:20px;background:{{ feedbackBg }};border:3px solid {{ feedbackBorder }};animation:{{ feedbackAnim }}">
+          <span style="font-size:15px;font-weight:800;color:{{ feedbackFg }}">{{ feedbackText }}</span>
+          <span style="flex:1;min-width:20px;font-size:13px;font-weight:600;color:#4A443B">{{ feedbackNote }}</span>
+          <button onClick="{{ advance }}" style="display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:14px;border:3px solid #16130F;background:{{ nextBg }};color:{{ nextFg }};box-shadow:0 4px 0 #16130F;cursor:pointer;font-size:14px;font-weight:800">
+            {{ nextLabel }} <span style="padding:2px 8px;border-radius:6px;background:rgba(0,0,0,.22);font-size:11px">ENTER</span>
+          </button>
+        </div>
+        {{ burst }}
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPaused }}" hint-placeholder-val="{{ false }}">
+      <div style="position:fixed;inset:0;background:rgba(22,19,15,.72);z-index:60;display:flex;align-items:center;justify-content:center;padding:20px">
+        <div style="background:#EFEAE0;border:3px solid #16130F;border-radius:26px;box-shadow:0 8px 0 #16130F;padding:26px;max-width:380px;width:100%">
+          <h2 style="margin:0 0 8px;font-size:26px;font-weight:800">일시정지</h2>
+          <p style="margin:0 0 18px;font-size:14px;font-weight:600;color:#4A443B">지금 나가도 답한 카드의 FSRS 상태는 저장됩니다.</p>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button onClick="{{ resume }}" style="display:flex;justify-content:space-between;padding:14px 16px;border-radius:16px;border:3px solid #16130F;background:#E8B33D;box-shadow:0 4px 0 #16130F;cursor:pointer;font-size:15px;font-weight:800">계속하기 <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#16130F;color:#EFEAE0">ESC</span></button>
+            <button onClick="{{ quitSession }}" style="display:flex;justify-content:space-between;padding:14px 16px;border-radius:16px;border:3px solid #16130F;background:#FFFFFF;box-shadow:0 4px 0 #16130F;cursor:pointer;font-size:15px;font-weight:800">세션 종료 <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:#16130F;color:#EFEAE0">Q</span></button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="06 Session complete" style="padding:34px 4px;animation:om-rise .35s ease-out">
+        <div style="font-family:'Noto Serif KR',serif;font-size:74px;font-weight:700;line-height:1;animation:om-pop .5s ease-out">完</div>
+        <h1 style="margin:12px 0 20px;font-size:32px;font-weight:800">세션 완료 · +{{ doneXp }} XP</h1>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:620px;margin-bottom:22px">
+          <div style="padding:18px;border-radius:18px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F">
+            <div style="font-size:12px;font-weight:800;color:#6E675C">정확도</div>
+            <div style="font-size:30px;font-weight:800">{{ doneAcc }}</div>
+          </div>
+          <div style="padding:18px;border-radius:18px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F">
+            <div style="font-size:12px;font-weight:800;color:#6E675C">최고 콤보</div>
+            <div style="font-size:30px;font-weight:800">{{ doneCombo }}</div>
+          </div>
+          <div style="padding:18px;border-radius:18px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F">
+            <div style="font-size:12px;font-weight:800;color:#6E675C">다음 복습</div>
+            <div style="font-size:30px;font-weight:800">{{ doneNext }}</div>
+          </div>
+        </div>
+        <button onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;padding:16px 24px;border-radius:18px;border:3px solid #16130F;background:#E8B33D;box-shadow:0 6px 0 #16130F;cursor:pointer;font-size:16px;font-weight:800">지도로 돌아가기 <span style="padding:3px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px">ENTER</span></button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="07 Character detail">
+        <button onClick="{{ back }}" style="margin:4px 0 14px;padding:9px 14px;border-radius:12px;border:2px solid #16130F;background:#FFFFFF;box-shadow:0 3px 0 #16130F;cursor:pointer;font-size:13px;font-weight:800">← 뒤로 (Esc)</button>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:stretch">
+          <div style="flex:0 0 220px;min-width:200px;background:#FFFFFF;border:3px solid #16130F;border-radius:26px;box-shadow:0 6px 0 #16130F;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div style="font-family:'Noto Serif KR',serif;font-size:120px;font-weight:700;line-height:1">{{ dGlyph }}</div>
+            <div style="font-size:14px;font-weight:800;margin-top:12px">{{ dMeaning }}</div>
+            <div style="font-size:12px;font-weight:700;color:#6E675C;margin-top:4px">{{ dVariants }}</div>
+          </div>
+          <div style="flex:1 1 320px;min-width:280px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px">
+            <div style="padding:18px;border-radius:20px;background:#EEF1FD;border:3px solid #3B5BDB">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:#3B5BDB">한국 · 한자</div>
+              <div style="font-size:26px;font-weight:800;margin:8px 0 4px">{{ dKrReading }}</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span style="padding:4px 9px;border-radius:7px;background:#3B5BDB;color:#fff;font-size:11px;font-weight:800">{{ dKrLevel }}</span></div>
+              <div style="font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;line-height:1.5">{{ dKrSent }}</div>
+              <div style="font-size:12px;font-weight:600;color:#4A443B;margin-top:5px">{{ dKrTrans }}</div>
+            </div>
+            <div style="padding:18px;border-radius:20px;background:#FDEEEB;border:3px solid #E14B32">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:#E14B32">日本 · 漢字</div>
+              <div style="font-size:26px;font-weight:800;margin:8px 0 4px">{{ dJpOn }}</div>
+              <div style="font-size:14px;font-weight:700;color:#4A443B;margin-bottom:8px">訓 {{ dJpKun }}</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span style="padding:4px 9px;border-radius:7px;background:#E14B32;color:#fff;font-size:11px;font-weight:800">{{ dJpKanken }}</span><span style="padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">{{ dJpJlpt }}</span></div>
+              <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;line-height:1.5">{{ dJpSent }}</div>
+              <div style="font-size:12px;font-weight:600;color:#4A443B;margin-top:5px">{{ dJpTrans }}</div>
+            </div>
+            <div style="padding:18px;border-radius:20px;background:#E7F6F0;border:3px solid #0E9F6E">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:#0E9F6E">中国 · 汉字</div>
+              <div style="font-size:26px;font-weight:800;margin:8px 0 4px">{{ dCnPinyin }}</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span style="padding:4px 9px;border-radius:7px;background:#0E9F6E;color:#fff;font-size:11px;font-weight:800">{{ dCnHsk }}</span><span style="padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">{{ dCnTier }}</span></div>
+              <div style="font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;line-height:1.5">{{ dCnSent }}</div>
+              <div style="font-size:12px;font-weight:600;color:#4A443B;margin-top:5px">{{ dCnTrans }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:16px">
+          <div style="flex:1 1 320px;min-width:280px;padding:20px;border-radius:22px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+              <span style="font-size:13px;font-weight:800">복습 간격 성장</span>
+              <span style="font-size:12px;font-weight:700;color:#6E675C">안정도 {{ dStability }}</span>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:110px">
+              <sc-for list="{{ dBars }}" as="bar" hint-placeholder-count="7">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+                  <span style="width:100%;border-radius:7px 7px 3px 3px;height:{{ bar.h }};background:{{ bar.bg }};border:2px solid #16130F"></span>
+                  <span style="font-size:10px;font-weight:800;color:#6E675C">{{ bar.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="flex:1 1 220px;min-width:210px;padding:20px;border-radius:22px;background:#F6F2E9;border:2px dashed #C4B9A4">
+            <div style="font-size:13px;font-weight:800;margin-bottom:12px">개인 기록</div>
+            <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;font-weight:700;color:#4A443B">
+              <div style="display:flex;justify-content:space-between"><span>정확도</span><span style="font-weight:800;color:#16130F">{{ dAcc }}</span></div>
+              <div style="display:flex;justify-content:space-between"><span>총 복습</span><span style="font-weight:800;color:#16130F">{{ dReps }}</span></div>
+              <div style="display:flex;justify-content:space-between"><span>다음 만기</span><span style="font-weight:800;color:#16130F">{{ dDue }}</span></div>
+              <div style="display:flex;justify-content:space-between"><span>난이도</span><span style="font-weight:800;color:#16130F">{{ dDiff }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStats }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="08 Stats dashboard">
+        <h1 style="margin:6px 0 18px;font-size:30px;font-weight:800">통계</h1>
+        <div style="padding:20px;border-radius:22px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+            <span style="font-size:13px;font-weight:800">최근 18주 학습 기록</span>
+            <span style="font-size:12px;font-weight:700;color:#6E675C">연속 {{ streak }}일 · 최장 41일</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(18,1fr);gap:4px">
+            <sc-for list="{{ cal }}" as="cell" hint-placeholder-count="126">
+              <span style="aspect-ratio:1;border-radius:4px;background:{{ cell.bg }}"></span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+          <sc-for list="{{ trackStats }}" as="ts" hint-placeholder-count="3">
+            <div style="padding:20px;border-radius:22px;background:#FFFFFF;border:3px solid {{ ts.accent }};box-shadow:0 5px 0 {{ ts.accent }}">
+              <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:{{ ts.accent }}">{{ ts.label }}</div>
+              <div style="font-size:30px;font-weight:800;margin:8px 0 2px">{{ ts.pct }}</div>
+              <div style="font-size:13px;font-weight:700;color:#6E675C;margin-bottom:12px">{{ ts.goal }}</div>
+              <div style="height:12px;border-radius:999px;background:#EFEAE0;border:1px solid #E2DAC9;overflow:hidden">
+                <div style="height:100%;width:{{ ts.pct }};background:{{ ts.accent }}"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#6E675C;margin-top:10px"><span>{{ ts.now }}</span><span>{{ ts.next }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="09 Settings">
+        <h1 style="margin:6px 0 18px;font-size:30px;font-weight:800">설정</h1>
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <div style="flex:1 1 300px;min-width:280px;padding:22px;border-radius:22px;background:#16130F;color:#EFEAE0">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.14em;margin-bottom:16px;color:#9E958A">키보드 단축키</div>
+            <sc-for list="{{ shortcuts }}" as="sc" hint-placeholder-count="7">
+              <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #2B2721">
+                <span style="min-width:74px;padding:5px 10px;border-radius:8px;background:#EFEAE0;color:#16130F;font-size:12px;font-weight:800;text-align:center">{{ sc.key }}</span>
+                <span style="font-size:14px;font-weight:600">{{ sc.desc }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1 1 280px;min-width:260px;display:flex;flex-direction:column;gap:14px">
+            <div style="padding:20px;border-radius:22px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F">
+              <div style="font-size:13px;font-weight:800;margin-bottom:14px">트랙 사용</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <button onClick="{{ toggleKr }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #3B5BDB;background:{{ krCardBg }};cursor:pointer;font-size:14px;font-weight:800">한자 · 급수 <span style="font-size:12px;color:#3B5BDB">{{ krState }}</span></button>
+                <button onClick="{{ toggleJp }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #E14B32;background:{{ jpCardBg }};cursor:pointer;font-size:14px;font-weight:800">漢字 · 漢検 <span style="font-size:12px;color:#E14B32">{{ jpState }}</span></button>
+                <button onClick="{{ toggleCn }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #0E9F6E;background:{{ cnCardBg }};cursor:pointer;font-size:14px;font-weight:800">汉字 · HSK <span style="font-size:12px;color:#0E9F6E">{{ cnState }}</span></button>
+              </div>
+            </div>
+            <div style="padding:20px;border-radius:22px;background:#FFFFFF;border:3px solid #16130F;box-shadow:0 5px 0 #16130F">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+                <span style="font-size:13px;font-weight:800">일일 목표</span>
+                <span style="font-size:20px;font-weight:800">{{ goal }} XP</span>
+              </div>
+              <input type="range" min="10" max="120" step="10" value="{{ goal }}" onChange="{{ setGoal }}" style="width:100%;accent-color:#E8B33D" />
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:#6E675C;margin-top:6px"><span>가볍게 10</span><span>집중 120</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:12px;pointer-events:none">
+      <div style="display:flex;gap:6px;padding:8px;border-radius:22px;background:#16130F;box-shadow:0 6px 24px rgba(22,19,15,.32);pointer-events:auto;flex-wrap:wrap;justify-content:center">
+        <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+          <button onClick="{{ item.go }}" style="display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:15px;border:none;cursor:pointer;background:{{ item.bg }};color:{{ item.fg }};font-size:13px;font-weight:800">
+            {{ item.label }}
+            <span style="padding:2px 7px;border-radius:6px;background:{{ item.keyBg }};color:{{ item.keyFg }};font-size:10px;font-weight:800">{{ item.key }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showKeyHints&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;sessionLength&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:8,&quot;min&quot;:4,&quot;max&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;burstIntensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;subtle&quot;,&quot;juicy&quot;,&quot;max&quot;],&quot;default&quot;:&quot;juicy&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feedback&quot;}}">
+class Component extends DCLogic {
+  chars = [
+    { c:'山', v:'山 / 山 / 山', meaning:'뫼 · mountain',
+      kr:{r:'뫼 산', lv:'8급', s:'登山은 건강에 좋다.', t:'등산은 건강에 좋다.', src:'8급 기출 어휘'},
+      jp:{on:'サン', kun:'やま', kanken:'10級', jlpt:'N5', s:'高い山に登る。', t:'높은 산에 오른다.', src:'漢検10級 例文'},
+      cn:{p:'shān', m:'mountain', hsk:'HSK 1', tier:'一级字', s:'这座山很高。', t:'이 산은 매우 높다.', src:'HSK1 教材'},
+      fsrs:{stab:'62일', due:-2, reps:14, acc:'93%', diff:'4.1', bars:[1,2,4,9,21,45,62] } },
+    { c:'水', v:'水 / 水 / 水', meaning:'물 · water',
+      kr:{r:'물 수', lv:'8급', s:'生水를 마시지 마세요.', t:'생수를 마시지 마세요.', src:'8급 기출 어휘'},
+      jp:{on:'スイ', kun:'みず', kanken:'10級', jlpt:'N5', s:'水を飲む。', t:'물을 마신다.', src:'漢検10級 例文'},
+      cn:{p:'shuǐ', m:'water', hsk:'HSK 1', tier:'一级字', s:'我要喝水。', t:'나는 물을 마시고 싶다.', src:'HSK1 教材'},
+      fsrs:{stab:'38일', due:0, reps:11, acc:'88%', diff:'4.6', bars:[1,2,5,11,19,30,38] } },
+    { c:'日', v:'日 / 日 / 日', meaning:'날 · day, sun',
+      kr:{r:'날 일', lv:'8급', s:'日記를 매일 쓴다.', t:'일기를 매일 쓴다.', src:'8급 기출 어휘'},
+      jp:{on:'ニチ・ジツ', kun:'ひ・か', kanken:'10級', jlpt:'N5', s:'日曜日は休みだ。', t:'일요일은 휴일이다.', src:'漢検10級 例文'},
+      cn:{p:'rì', m:'day, sun', hsk:'HSK 1', tier:'一级字', s:'今天是几月几日？', t:'오늘은 몇 월 며칠입니까?', src:'HSK1 教材'},
+      fsrs:{stab:'71일', due:-5, reps:16, acc:'95%', diff:'3.8', bars:[1,3,6,14,28,52,71] } },
+    { c:'火', v:'火 / 火 / 火', meaning:'불 · fire',
+      kr:{r:'불 화', lv:'8급', s:'火災를 예방합시다.', t:'화재를 예방합시다.', src:'8급 기출 어휘'},
+      jp:{on:'カ', kun:'ひ', kanken:'10級', jlpt:'N5', s:'火を消してください。', t:'불을 꺼 주세요.', src:'漢検10級 例文'},
+      cn:{p:'huǒ', m:'fire', hsk:'HSK 2', tier:'一级字', s:'请小心火。', t:'불을 조심하세요.', src:'HSK2 教材'},
+      fsrs:{stab:'21일', due:1, reps:8, acc:'75%', diff:'5.9', bars:[1,2,4,7,12,17,21] } },
+    { c:'人', v:'人 / 人 / 人', meaning:'사람 · person',
+      kr:{r:'사람 인', lv:'8급', s:'人間은 사회적 동물이다.', t:'인간은 사회적 동물이다.', src:'8급 기출 어휘'},
+      jp:{on:'ジン・ニン', kun:'ひと', kanken:'10級', jlpt:'N5', s:'人が多い。', t:'사람이 많다.', src:'漢検10級 例文'},
+      cn:{p:'rén', m:'person', hsk:'HSK 1', tier:'一级字', s:'这里人很多。', t:'여기는 사람이 많다.', src:'HSK1 教材'},
+      fsrs:{stab:'84일', due:-1, reps:19, acc:'97%', diff:'3.4', bars:[2,4,8,17,34,60,84] } },
+    { c:'學', v:'學 (KR) / 学 (JP) / 学 (CN)', meaning:'배울 · learn',
+      kr:{r:'배울 학', lv:'8급', s:'學校에서 공부한다.', t:'학교에서 공부한다.', src:'8급 기출 어휘'},
+      jp:{on:'ガク', kun:'まな-ぶ', kanken:'10級', jlpt:'N5', s:'学校へ行く。', t:'학교에 간다.', src:'漢検10級 例文'},
+      cn:{p:'xué', m:'to study', hsk:'HSK 1', tier:'一级字', s:'我在学校学习。', t:'나는 학교에서 공부한다.', src:'HSK1 教材'},
+      fsrs:{stab:'29일', due:0, reps:10, acc:'82%', diff:'5.2', bars:[1,2,4,9,15,22,29] } },
+    { c:'時', v:'時 / 時 / 时', meaning:'때 · time',
+      kr:{r:'때 시', lv:'7급', s:'時間이 부족하다.', t:'시간이 부족하다.', src:'7급 기출 어휘'},
+      jp:{on:'ジ', kun:'とき', kanken:'9級', jlpt:'N5', s:'時間がない。', t:'시간이 없다.', src:'漢検9級 例文'},
+      cn:{p:'shí', m:'time', hsk:'HSK 1', tier:'一级字', s:'时间不多了。', t:'시간이 많지 않다.', src:'HSK1 教材'},
+      fsrs:{stab:'16일', due:2, reps:7, acc:'71%', diff:'6.3', bars:[1,2,3,6,10,13,16] } },
+    { c:'心', v:'心 / 心 / 心', meaning:'마음 · heart, mind',
+      kr:{r:'마음 심', lv:'7급', s:'安心하고 기다리세요.', t:'안심하고 기다리세요.', src:'7급 기출 어휘'},
+      jp:{on:'シン', kun:'こころ', kanken:'9級', jlpt:'N3', s:'心が広い人だ。', t:'마음이 넓은 사람이다.', src:'漢検9級 例文'},
+      cn:{p:'xīn', m:'heart, mind', hsk:'HSK 2', tier:'一级字', s:'我很关心你。', t:'나는 너를 매우 걱정한다.', src:'HSK2 教材'},
+      fsrs:{stab:'12일', due:0, reps:6, acc:'67%', diff:'6.8', bars:[1,1,2,4,7,9,12] } },
+    { c:'明', v:'明 / 明 / 明', meaning:'밝을 · bright',
+      kr:{r:'밝을 명', lv:'6급', s:'說明을 잘 들었다.', t:'설명을 잘 들었다.', src:'6급 기출 어휘'},
+      jp:{on:'メイ・ミョウ', kun:'あか-るい', kanken:'9級', jlpt:'N4', s:'明るい部屋が好きだ。', t:'밝은 방이 좋다.', src:'漢検9級 例文'},
+      cn:{p:'míng', m:'bright, clear', hsk:'HSK 2', tier:'一级字', s:'明天见。', t:'내일 봐요.', src:'HSK2 教材'},
+      fsrs:{stab:'9일', due:3, reps:5, acc:'60%', diff:'7.1', bars:[1,1,2,3,5,7,9] } },
+    { c:'森', v:'森 / 森 / 森', meaning:'수풀 · forest',
+      kr:{r:'수풀 삼', lv:'7급', s:'森林을 보호해야 한다.', t:'삼림을 보호해야 한다.', src:'7급 기출 어휘'},
+      jp:{on:'シン', kun:'もり', kanken:'9級', jlpt:'N3', s:'森を歩く。', t:'숲을 걷는다.', src:'漢検9級 例文'},
+      cn:{p:'sēn', m:'forest', hsk:'HSK 5', tier:'二级字', s:'这片森林很大。', t:'이 숲은 매우 크다.', src:'HSK5 教材'},
+      fsrs:{stab:'6일', due:0, reps:4, acc:'50%', diff:'7.6', bars:[1,1,2,3,4,5,6] } },
+    { c:'藥', v:'藥 (KR) / 薬 (JP) / 药 (CN)', meaning:'약 · medicine',
+      kr:{r:'약 약', lv:'6급', s:'藥局에 다녀왔다.', t:'약국에 다녀왔다.', src:'6급 기출 어휘'},
+      jp:{on:'ヤク', kun:'くすり', kanken:'8級', jlpt:'N3', s:'薬を飲む。', t:'약을 먹는다.', src:'漢検8級 例文'},
+      cn:{p:'yào', m:'medicine', hsk:'HSK 3', tier:'一级字', s:'我要买药。', t:'나는 약을 사려고 한다.', src:'HSK3 教材'},
+      fsrs:{stab:'4일', due:0, reps:3, acc:'44%', diff:'8.0', bars:[1,1,1,2,3,3,4] } },
+    { c:'憂', v:'憂 (KR/JP) / 忧 (CN)', meaning:'근심 · worry',
+      kr:{r:'근심 우', lv:'3급', s:'憂鬱한 날씨가 이어진다.', t:'우울한 날씨가 이어진다.', src:'3급 기출 어휘'},
+      jp:{on:'ユウ', kun:'うれ-い', kanken:'準2級', jlpt:'N1', s:'一抹の憂いが残る。', t:'한 줄기 근심이 남는다.', src:'漢検準2級 過去問'},
+      cn:{p:'yōu', m:'anxiety, worry', hsk:'HSK 7-9', tier:'二级字', s:'他很忧虑。', t:'그는 매우 근심한다.', src:'HSK7-9 语料'},
+      fsrs:{stab:'2일', due:0, reps:2, acc:'33%', diff:'8.7', bars:[1,1,1,1,2,2,2] } }
+  ];
+
+  tk = {
+    kr:{ label:'한자 · 급수', badge:'한국 · 한자', accent:'#3B5BDB', soft:'#EEF1FD',
+      font:"'Noto Serif KR',serif", prompt:'훈음을 고르세요', scale:'620/1000자 · 한자 3급',
+      pct:'62%', note:'현재 7급 · 다음 관문 6급 (150자 남음)', unit:'8급 · UNIT 3', title:'자연과 사람' },
+    jp:{ label:'漢字 · 漢検', badge:'日本 · 漢字', accent:'#E14B32', soft:'#FDEEEB',
+      font:"'Noto Serif JP',serif", prompt:'音読みを選べ', scale:'440/640字 · 漢検 8級',
+      pct:'69%', note:'現在 9級 · JLPT N4 相当', unit:'10級 · UNIT 3', title:'自然と人' },
+    cn:{ label:'汉字 · HSK', badge:'中国 · 汉字', accent:'#0E9F6E', soft:'#E7F6F0',
+      font:"'Noto Serif SC',serif", prompt:'选择正确的拼音', scale:'510/900字 · HSK 4',
+      pct:'57%', note:'当前 HSK 2 · 声调是弱点', unit:'HSK 1 · UNIT 3', title:'自然与人' }
+  };
+
+  state = {
+    view:'desktop', screen:'onboarding', tracks:{kr:true,jp:true,cn:true}, track:'kr',
+    streak:23, xp:4820, today:24, goal:40, detail:0, mapFocus:2,
+    session:null, paused:false, burstKey:0, comboKey:0, shakeKey:0, lastResult:null
+  };
+
+  componentDidMount() {
+    this.kh = (e) => this.onKey(e);
+    window.addEventListener('keydown', this.kh);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this.kh); }
+
+  get keyHints() { return this.props.showKeyHints !== false; }
+  get sessionLength() { return this.props.sessionLength || 8; }
+
+  onKey(e) {
+    const s = this.state, k = e.key, lk = (k || '').toLowerCase();
+    if (s.paused) {
+      if (k === 'Escape' || k === 'Enter') { e.preventDefault(); this.setState({paused:false}); }
+      else if (lk === 'q') { e.preventDefault(); this.quit(); }
+      return;
+    }
+    if (s.session) {
+      if ('1234'.indexOf(k) >= 0) { e.preventDefault(); this.pick(parseInt(k,10) - 1); return; }
+      if (k === 'Enter' || k === ' ') { e.preventDefault(); this.advance(); return; }
+      if (k === 'Escape') { e.preventDefault(); this.setState({paused:true}); return; }
+      return;
+    }
+    if (s.screen === 'onboarding') {
+      if ('123'.indexOf(k) >= 0) { e.preventDefault(); this.toggle(['kr','jp','cn'][parseInt(k,10)-1]); return; }
+      if (k === 'Enter') { e.preventDefault(); this.startSession('placement'); return; }
+    }
+    if (s.screen === 'placementDone' || s.screen === 'done') {
+      if (k === 'Enter') { e.preventDefault(); this.go('home'); return; }
+    }
+    if (s.screen === 'home') {
+      if (k === 'ArrowDown') { e.preventDefault(); this.setState({mapFocus:Math.min(this.chars.length-1, s.mapFocus+1)}); return; }
+      if (k === 'ArrowUp') { e.preventDefault(); this.setState({mapFocus:Math.max(0, s.mapFocus-1)}); return; }
+      if (k === 'ArrowRight' || k === 'ArrowLeft') {
+        e.preventDefault();
+        const list = ['kr','jp','cn'], i = list.indexOf(s.track);
+        this.setState({track:list[(i + (k === 'ArrowRight' ? 1 : 2)) % 3]});
+        return;
+      }
+      if (k === 'Enter') { e.preventDefault(); this.startSession('lesson'); return; }
+      if (lk === 'd') { e.preventDefault(); this.openDetail(s.mapFocus); return; }
+    }
+    if (s.screen === 'review' && k === 'Enter') { e.preventDefault(); this.startSession('review'); return; }
+    if (s.screen === 'detail' && k === 'Escape') { e.preventDefault(); this.go('home'); return; }
+    if (lk === 'h') { this.go('home'); }
+    else if (lk === 'r') { this.go('review'); }
+    else if (lk === 't') { this.go('stats'); }
+    else if (k === ',') { this.go('settings'); }
+  }
+
+  go(screen) { this.setState({screen, session:null, paused:false}); }
+  openDetail(i) { this.setState({screen:'detail', detail:i, session:null}); }
+  toggle(t) {
+    const tracks = Object.assign({}, this.state.tracks);
+    tracks[t] = !tracks[t];
+    if (!tracks.kr && !tracks.jp && !tracks.cn) tracks[t] = true;
+    const track = tracks[this.state.track] ? this.state.track : ['kr','jp','cn'].filter(x => tracks[x])[0];
+    this.setState({tracks, track});
+  }
+
+  activeTracks() { return ['kr','jp','cn'].filter(t => this.state.tracks[t]); }
+  dueChars() { return this.chars.map((c,i) => ({c,i})).filter(x => x.c.fsrs.due <= 0); }
+
+  reading(ch, t) {
+    if (t === 'kr') return {label: ch.kr.r, sub: '훈 + 음'};
+    if (t === 'jp') return {label: ch.jp.on, sub: '訓 ' + ch.jp.kun};
+    return {label: ch.cn.p, sub: ch.cn.m};
+  }
+
+  buildQueue(mode) {
+    const acts = this.activeTracks();
+    const pool = mode === 'review' ? this.dueChars().map(x => x.i) : this.chars.map((c,i) => i);
+    const n = mode === 'placement' ? 6 : this.sessionLength;
+    const q = [];
+    for (let j = 0; j < n; j++) {
+      const idx = pool[(j * 5 + 3) % pool.length];
+      const track = acts[j % acts.length];
+      const kind = (mode !== 'placement' && j > 0 && j % 4 === 3) ? 'compare' : 'reading';
+      const ch = this.chars[idx];
+      let opts = [this.reading(ch, track)];
+      let step = 1;
+      while (opts.length < 4) {
+        const alt = this.chars[(idx + step * 3 + 1) % this.chars.length];
+        const r = this.reading(alt, track);
+        if (!opts.some(o => o.label === r.label)) opts.push(r);
+        step++;
+      }
+      const shift = (j + idx) % 4;
+      const shuffled = opts.slice(shift).concat(opts.slice(0, shift));
+      q.push({idx, track, kind, answer: shuffled.indexOf(opts[0]), opts: shuffled});
+    }
+    return q;
+  }
+
+  startSession(mode) {
+    const queue = this.buildQueue(mode);
+    this.setState({
+      screen: mode === 'placement' ? 'placement' : 'session',
+      paused: false,
+      session: {mode, queue, i:0, choice:null, combo:0, best:0, right:0, answered:0, xp:0},
+      track: queue[0].track
+    });
+  }
+
+  pick(n) {
+    const s = this.state.session;
+    if (!s || s.choice !== null) return;
+    const card = s.queue[s.i];
+    if (card.kind === 'compare') return;
+    if (n >= card.opts.length) return;
+    const ok = n === card.answer;
+    const ns = Object.assign({}, s, {
+      choice: n,
+      combo: ok ? s.combo + 1 : 0,
+      best: ok ? Math.max(s.best, s.combo + 1) : s.best,
+      right: s.right + (ok ? 1 : 0),
+      answered: s.answered + 1,
+      xp: s.xp + (ok ? 10 + Math.min(10, s.combo * 2) : 0)
+    });
+    this.setState({
+      session: ns,
+      lastResult: ok ? 'right' : 'wrong',
+      burstKey: ok ? this.state.burstKey + 1 : this.state.burstKey,
+      comboKey: ok ? this.state.comboKey + 1 : this.state.comboKey,
+      shakeKey: ok ? this.state.shakeKey : this.state.shakeKey + 1,
+      today: ok ? Math.min(this.state.goal, this.state.today + 10) : this.state.today,
+      xp: ok ? this.state.xp + 10 : this.state.xp
+    });
+  }
+
+  advance() {
+    const s = this.state.session;
+    if (!s) return;
+    const card = s.queue[s.i];
+    if (card.kind !== 'compare' && s.choice === null) return;
+    if (s.i + 1 >= s.queue.length) {
+      if (s.mode === 'placement') { this.setState({screen:'placementDone', session:null, lastResult:null}); return; }
+      this.setState({screen:'done', session:null, lastResult:null, doneStats:{xp:s.xp, acc:s.answered ? Math.round(s.right/s.answered*100)+'%' : '—', best:s.best}});
+      return;
+    }
+    const next = s.queue[s.i + 1];
+    this.setState({session: Object.assign({}, s, {i:s.i+1, choice:null}), lastResult:null, track:next.track});
+  }
+
+  quit() { this.setState({screen:'home', session:null, paused:false, lastResult:null}); }
+
+  cal() {
+    const out = [];
+    for (let i = 0; i < 126; i++) {
+      const v = (i * 37 % 11);
+      const recent = i > 100;
+      const lvl = recent ? Math.max(2, v % 4) : v % 4;
+      out.push({bg: ['#EFEAE0','#DCE3F8','#93A9EE','#3B5BDB'][lvl]});
+    }
+    return out;
+  }
+
+  renderVals() {
+    const s = this.state, ses = s.session, t = this.tk[s.track];
+    const screenNames = {onboarding:'온보딩 · 트랙 선택', placement:'배치 테스트', placementDone:'배치 결과', home:'학습 지도', session:'레슨', review:'복습 큐', done:'세션 완료', detail:'글자 상세', stats:'통계', settings:'설정'};
+    const chip = (on, accent, soft) => ({bg: on ? soft : '#FFFFFF', border: on ? accent : '#D8D0BE'});
+    const kr = chip(s.tracks.kr, '#3B5BDB', '#EEF1FD'), jp = chip(s.tracks.jp, '#E14B32', '#FDEEEB'), cn = chip(s.tracks.cn, '#0E9F6E', '#E7F6F0');
+    const due = this.dueChars();
+    const inSession = !!ses;
+
+    const v = {
+      screenName: screenNames[s.screen] || '',
+      frameMax: s.view === 'mobile' ? '430px' : '1080px',
+      setDesktop: () => this.setState({view:'desktop'}),
+      setMobile: () => this.setState({view:'mobile'}),
+      deskBg: s.view === 'desktop' ? '#EFEAE0' : 'transparent',
+      deskFg: s.view === 'desktop' ? '#16130F' : '#9E958A',
+      mobBg: s.view === 'mobile' ? '#EFEAE0' : 'transparent',
+      mobFg: s.view === 'mobile' ? '#16130F' : '#9E958A',
+
+      isOnboarding: s.screen === 'onboarding',
+      isPlacementDone: s.screen === 'placementDone',
+      isHome: s.screen === 'home',
+      isReviewQueue: s.screen === 'review',
+      isDetail: s.screen === 'detail',
+      isStats: s.screen === 'stats',
+      isSettings: s.screen === 'settings',
+      isDone: s.screen === 'done',
+      inSession: inSession,
+      isPaused: s.paused,
+      showHeader: ['home','review','stats','settings','detail'].indexOf(s.screen) >= 0,
+      showNav: ['onboarding','placement','placementDone'].indexOf(s.screen) < 0 && !inSession,
+
+      streak: s.streak,
+      xpLabel: s.xp.toLocaleString(),
+      today: s.today, goal: s.goal,
+      goalDeg: Math.round(360 * s.today / s.goal) + 'deg',
+      accent: t.accent, accentSoft: t.soft, glyphFont: t.font,
+
+      krCardBg: kr.bg, krCardBorder: kr.border, krTick: s.tracks.kr ? '#3B5BDB' : '#FFFFFF', krMark: s.tracks.kr ? '✓' : '',
+      jpCardBg: jp.bg, jpCardBorder: jp.border, jpTick: s.tracks.jp ? '#E14B32' : '#FFFFFF', jpMark: s.tracks.jp ? '✓' : '',
+      cnCardBg: cn.bg, cnCardBorder: cn.border, cnTick: s.tracks.cn ? '#0E9F6E' : '#FFFFFF', cnMark: s.tracks.cn ? '✓' : '',
+      krState: s.tracks.kr ? '사용 중' : '꺼짐', jpState: s.tracks.jp ? '使用中' : 'OFF', cnState: s.tracks.cn ? '开启' : '关闭',
+      toggleKr: () => this.toggle('kr'), toggleJp: () => this.toggle('jp'), toggleCn: () => this.toggle('cn'),
+      startPlacement: () => this.startSession('placement'),
+      goHome: () => this.go('home'), goReview: () => this.go('review'), back: () => this.go('home'),
+      startLesson: () => this.startSession('lesson'), startReview: () => this.startSession('review'),
+      pause: () => this.setState({paused:true}), resume: () => this.setState({paused:false}), quitSession: () => this.quit(),
+      advance: () => this.advance(),
+      setGoal: (e) => this.setState({goal: parseInt(e.target.value, 10)}),
+      pickKr: () => this.setState({track:'kr'}), pickJp: () => this.setState({track:'jp'}), pickCn: () => this.setState({track:'cn'}),
+
+      tabKrBg: s.track === 'kr' ? '#3B5BDB' : '#FFFFFF',
+      tabKrFg: s.track === 'kr' ? '#FFFFFF' : '#3B5BDB',
+      tabKrShadow: s.track === 'kr' ? '0 4px 0 #16130F' : 'none',
+      tabJpBg: s.track === 'jp' ? '#E14B32' : '#FFFFFF',
+      tabJpFg: s.track === 'jp' ? '#FFFFFF' : '#E14B32',
+      tabJpShadow: s.track === 'jp' ? '0 4px 0 #16130F' : 'none',
+      tabCnBg: s.track === 'cn' ? '#0E9F6E' : '#FFFFFF',
+      tabCnFg: s.track === 'cn' ? '#FFFFFF' : '#0E9F6E',
+      tabCnShadow: s.track === 'cn' ? '0 4px 0 #16130F' : 'none',
+
+      dueCount: due.length,
+      unitLabel: t.unit, unitTitle: t.title, unitProgress: '7 / 12 자',
+      scaleGoal: t.scale, scalePct: t.pct, scaleNote: t.note,
+
+      nav: [
+        {label:'지도', key:'H', go:() => this.go('home'), on:s.screen === 'home'},
+        {label:'복습', key:'R', go:() => this.go('review'), on:s.screen === 'review'},
+        {label:'통계', key:'T', go:() => this.go('stats'), on:s.screen === 'stats'},
+        {label:'설정', key:',', go:() => this.go('settings'), on:s.screen === 'settings'}
+      ].map(n => ({
+        label:n.label, key:n.key, go:n.go,
+        bg: n.on ? '#EFEAE0' : 'transparent', fg: n.on ? '#16130F' : '#C9C0B2',
+        keyBg: n.on ? '#16130F' : '#2B2721', keyFg: n.on ? '#EFEAE0' : '#9E958A'
+      })),
+
+      shortcuts: [
+        {key:'1 – 4', desc:'보기 선택'},
+        {key:'Enter / Space', desc:'확인 · 다음 카드'},
+        {key:'Esc', desc:'세션 일시정지 / 뒤로'},
+        {key:'↑ ↓', desc:'학습 지도 노드 이동'},
+        {key:'← →', desc:'트랙 전환 (KR / JP / CN)'},
+        {key:'D', desc:'선택한 글자 상세 열기'},
+        {key:'H R T ,', desc:'지도 · 복습 · 통계 · 설정'}
+      ],
+
+      cal: this.cal(),
+      trackStats: [
+        {label:'한자 · 급수', accent:'#3B5BDB', pct:'62%', goal:'620/1000자 · 한자 3급까지', now:'현재 7급', next:'다음 6급'},
+        {label:'漢字 · 漢検', accent:'#E14B32', pct:'69%', goal:'440/640字 · 漢検 8級まで', now:'現在 9級', next:'次 8級'},
+        {label:'汉字 · HSK', accent:'#0E9F6E', pct:'57%', goal:'510/900字 · HSK 4 目标', now:'当前 HSK 2', next:'下一 HSK 3'}
+      ],
+
+      nodes: this.chars.slice(0, 8).map((c, i) => {
+        const state = i < 4 ? 'done' : i === 4 ? 'current' : 'locked';
+        const focused = i === s.mapFocus;
+        return {
+          glyph: c.c,
+          label: state === 'locked' ? '잠김' : this.reading(c, s.track).label,
+          align: ['flex-start','center','flex-end','center'][i % 4],
+          bg: state === 'done' ? t.accent : state === 'current' ? '#E8B33D' : '#E6DFCF',
+          fg: state === 'locked' ? '#A79C88' : state === 'done' ? '#FFFFFF' : '#16130F',
+          border: state === 'locked' ? '#D3C9B4' : '#16130F',
+          shadow: state === 'locked' ? 'none' : '0 5px 0 #16130F',
+          labelColor: state === 'locked' ? '#A79C88' : '#4A443B',
+          ring: focused ? '3px dashed #16130F' : '0px solid transparent',
+          open: () => this.openDetail(i)
+        };
+      }),
+
+      dueList: due.map(x => ({
+        glyph: x.c.c,
+        reading: this.reading(x.c, s.track).label,
+        dueLabel: x.c.fsrs.due < 0 ? Math.abs(x.c.fsrs.due) + '일 지남' : '오늘 만기',
+        dueColor: x.c.fsrs.due < 0 ? '#C2410C' : '#6E675C',
+        stability: 'S ' + x.c.fsrs.stab,
+        open: () => this.openDetail(this.chars.indexOf(x.c))
+      })),
+
+      doneXp: (s.doneStats && s.doneStats.xp) || 0,
+      doneAcc: (s.doneStats && s.doneStats.acc) || '—',
+      doneCombo: ((s.doneStats && s.doneStats.best) || 0) + '×',
+      doneNext: '3일 후'
+    };
+
+    const d = this.chars[s.detail];
+    Object.assign(v, {
+      dGlyph: d.c, dMeaning: d.meaning, dVariants: d.v,
+      dKrReading: d.kr.r, dKrLevel: '한자 ' + d.kr.lv, dKrSent: d.kr.s, dKrTrans: d.kr.t,
+      dJpOn: '音 ' + d.jp.on, dJpKun: d.jp.kun, dJpKanken: '漢検 ' + d.jp.kanken, dJpJlpt: d.jp.jlpt, dJpSent: d.jp.s, dJpTrans: d.jp.t,
+      dCnPinyin: d.cn.p, dCnHsk: d.cn.hsk, dCnTier: d.cn.tier, dCnSent: d.cn.s, dCnTrans: d.cn.t,
+      dStability: d.fsrs.stab, dAcc: d.fsrs.acc, dReps: d.fsrs.reps + '회',
+      dDue: d.fsrs.due <= 0 ? '지금' : d.fsrs.due + '일 후', dDiff: d.fsrs.diff + ' / 10',
+      dBars: d.fsrs.bars.map((b, i) => ({
+        h: Math.max(8, Math.round(100 * b / d.fsrs.bars[d.fsrs.bars.length-1])) + '%',
+        bg: i === d.fsrs.bars.length-1 ? '#E8B33D' : this.tk[s.track].accent,
+        label: '+' + b + 'd'
+      }))
+    });
+
+    if (!inSession) {
+      Object.assign(v, {
+        hasOptions:false, options:[], isCompare:false, glyph:'', sentBefore:'', sentTarget:'', sentAfter:'',
+        sentTrans:'', feedbackText:'', feedbackNote:'', nextLabel:'', comboBadge:null, burst:null,
+        sessionPct:'0%', sessionCount:'', trackBadge:'', levelBadge:'', promptLabel:'', sourceLabel:'',
+        glyphSize:'96px', cardAnim:'none', glyphAnim:'none', feedbackAnim:'none',
+        feedbackBg:'transparent', feedbackBorder:'transparent', feedbackFg:'#16130F',
+        nextBg:'#FFFFFF', nextFg:'#16130F', transColor:'transparent',
+        cmpKr:'', cmpKrLv:'', cmpJp:'', cmpJpLv:'', cmpCn:'', cmpCnLv:''
+      });
+      return v;
+    }
+
+    const card = ses.queue[ses.i], ch = this.chars[card.idx], tt = this.tk[card.track];
+    const answered = card.choice !== undefined ? null : null;
+    const chosen = ses.choice;
+    const isCompare = card.kind === 'compare';
+    const sent = card.track === 'kr' ? ch.kr.s : card.track === 'jp' ? ch.jp.s : ch.cn.s;
+    const trans = card.track === 'kr' ? ch.kr.t : card.track === 'jp' ? ch.jp.t : ch.cn.t;
+    const src = card.track === 'kr' ? ch.kr.src : card.track === 'jp' ? ch.jp.src : ch.cn.src;
+    const glyphInSent = card.track === 'cn' ? (ch.cn.s.indexOf(ch.c) >= 0 ? ch.c : ch.c) : ch.c;
+    const pos = sent.indexOf(glyphInSent);
+    const revealed = chosen !== null || isCompare;
+    const ok = chosen !== null && chosen === card.answer;
+    const level = card.track === 'kr' ? '한자 ' + ch.kr.lv : card.track === 'jp' ? '漢検 ' + ch.jp.kanken + ' · ' + ch.jp.jlpt : ch.cn.hsk + ' · ' + ch.cn.tier;
+
+    Object.assign(v, {
+      accent: tt.accent, accentSoft: tt.soft, glyphFont: tt.font,
+      isCompare: isCompare,
+      hasOptions: !isCompare,
+      glyph: ch.c,
+      glyphSize: s.view === 'mobile' ? '108px' : '150px',
+      trackBadge: isCompare ? '교차 강화 · 한 글자 세 소리' : tt.badge,
+      levelBadge: level,
+      promptLabel: isCompare ? 'Enter로 계속' : (ses.mode === 'placement' ? '배치 문항 ' + (ses.i+1) + '/' + ses.queue.length : tt.prompt),
+      sourceLabel: src,
+      sentBefore: pos >= 0 ? sent.slice(0, pos) : sent,
+      sentTarget: pos >= 0 ? glyphInSent : '',
+      sentAfter: pos >= 0 ? sent.slice(pos + glyphInSent.length) : '',
+      sentTrans: revealed ? trans : '정답 후 번역이 공개됩니다',
+      transColor: revealed ? '#4A443B' : '#A79C88',
+      sessionPct: Math.round(100 * ses.i / ses.queue.length) + '%',
+      sessionCount: (ses.i + 1) + '/' + ses.queue.length,
+      cardAnim: s.lastResult === 'wrong' ? 'om-shake .45s' : 'none',
+      glyphAnim: s.lastResult === 'right' ? 'om-glyph .45s' : 'none',
+      cmpKr: ch.kr.r, cmpKrLv: '한자 ' + ch.kr.lv,
+      cmpJp: ch.jp.on + ' · ' + ch.jp.kun, cmpJpLv: '漢検 ' + ch.jp.kanken + ' · ' + ch.jp.jlpt,
+      cmpCn: ch.cn.p, cmpCnLv: ch.cn.hsk,
+      options: isCompare ? [] : card.opts.map((o, i) => {
+        const picked = chosen === i, correct = chosen !== null && i === card.answer;
+        return {
+          n: i + 1, label: o.label, sub: o.sub, pick: () => this.pick(i),
+          bg: correct ? '#E4F6EC' : picked ? '#FCE9E4' : '#FFFFFF',
+          border: correct ? '#12855A' : picked ? '#D93A16' : '#16130F',
+          shadow: chosen !== null ? 'none' : '0 4px 0 #16130F',
+          transform: chosen !== null ? 'translateY(3px)' : 'translateY(0)',
+          anim: correct && chosen !== null ? 'om-pop .4s' : 'none',
+          keyBg: correct ? '#12855A' : picked ? '#D93A16' : '#F1ECE1',
+          keyFg: correct || picked ? '#FFFFFF' : '#6E675C',
+          mark: correct ? '✓' : picked ? '✕' : '',
+          markColor: correct ? '#12855A' : '#D93A16'
+        };
+      }),
+      feedbackBg: isCompare ? '#F6F2E9' : chosen === null ? '#F6F2E9' : ok ? '#E4F6EC' : '#FCE9E4',
+      feedbackBorder: isCompare ? '#E2DAC9' : chosen === null ? '#E2DAC9' : ok ? '#12855A' : '#D93A16',
+      feedbackFg: chosen === null ? '#6E675C' : ok ? '#0E6B48' : '#A42D10',
+      feedbackText: isCompare ? '한 글자, 세 소리.' : chosen === null ? '숫자키 1–4로 답하세요' : ok ? '정확합니다 · +' + (10 + Math.min(10, (ses.combo-1) * 2)) + ' XP' : '오답 · 정답 ' + (card.answer + 1) + '번',
+      feedbackNote: isCompare ? '이미 아는 트랙의 글자가 다른 트랙에서 다시 나옵니다.' : chosen === null ? src + '에서 발췌' : ok ? '다음 복습: ' + ch.fsrs.stab + ' 후' : ch.c + ' = ' + ch.meaning,
+      nextLabel: ses.i + 1 >= ses.queue.length ? '세션 마치기' : '다음 카드',
+      nextBg: chosen === null && !isCompare ? '#F1ECE1' : '#E8B33D',
+      nextFg: '#16130F',
+      feedbackAnim: chosen !== null || isCompare ? 'om-rise .25s ease-out' : 'none',
+      comboBadge: ses.combo > 1 ? React.createElement('span', {
+        key: 'combo' + s.comboKey,
+        style: {display:'flex', alignItems:'center', gap:'5px', padding:'6px 12px', borderRadius:'999px',
+          background:'#16130F', color:'#E8B33D', fontSize:'14px', fontWeight:800, animation:'om-pop .4s ease-out'}
+      }, ses.combo + '× 콤보') : null,
+      burst: s.lastResult === 'right' ? React.createElement('div', {
+        key: 'burst' + s.burstKey,
+        style: {position:'absolute', left:'50%', top:'42%', pointerEvents:'none', zIndex:5}
+      }, Array.from({length:14}).map((_, i) => {
+        const a = (i / 14) * Math.PI * 2, dist = 90 + (i % 3) * 46;
+        return React.createElement('span', {
+          key: i,
+          style: {
+            position:'absolute', width: (i % 3 === 0 ? 16 : 10) + 'px', height: (i % 3 === 0 ? 16 : 10) + 'px',
+            borderRadius: i % 2 ? '50%' : '3px',
+            background: ['#E8B33D','#12855A', tt.accent, '#16130F'][i % 4],
+            '--tx': Math.round(Math.cos(a) * dist) + 'px',
+            '--ty': Math.round(Math.sin(a) * dist) + 'px',
+            animation: 'om-burst .72s cubic-bezier(.2,.7,.3,1) forwards'
+          }
+        });
+      })) : null
+    });
+    return v;
+  }
+}
+
+</script>
+</body>
+</html>
