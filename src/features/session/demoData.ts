@@ -105,3 +105,12 @@ export function loadDemoLogs(characterId: number, track: "kr" | "jp" | "cn"): Re
     return [];
   }
 }
+
+export function loadAllDemoLogs(): ReviewLogEntry[] {
+  try {
+    const logs = JSON.parse(localStorage.getItem(logStorageKey) ?? "{}") as Record<string, StoredLog[]>;
+    return Object.values(logs).flat().map((log) => ({ ...log, answeredAt: new Date(log.answeredAt) }));
+  } catch {
+    return [];
+  }
+}
