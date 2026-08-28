@@ -187,7 +187,7 @@ function nullable(value: string | null): string {
 }
 
 export function emitSeedSql(document: SeedDocument): string {
-  const sql = ["PRAGMA foreign_keys = ON;", "BEGIN TRANSACTION;"];
+  const sql = ["PRAGMA foreign_keys = ON;"];
   for (const item of document.characters) {
     sql.push(`INSERT INTO characters (key, meaning_en, meaning_ko, variants, stroke_count) VALUES (${quote(item.key)}, ${quote(item.meaningEn)}, ${quote(item.meaningKo)}, ${quote(JSON.stringify(item.variants))}, ${item.strokeCount ?? "NULL"}) ON CONFLICT(key) DO UPDATE SET meaning_en=excluded.meaning_en, meaning_ko=excluded.meaning_ko, variants=excluded.variants, stroke_count=excluded.stroke_count;`);
     for (const itemTrack of item.tracks) {
@@ -208,7 +208,6 @@ export function emitSeedSql(document: SeedDocument): string {
       sql.push(`INSERT INTO curriculum_unit_members (unit_id, character_id, ord) VALUES ((SELECT id FROM curriculum_units WHERE track=${quote(unit.track)} AND level=${quote(unit.level)} AND ord=${unit.ord}), (SELECT id FROM characters WHERE key=${quote(member.key)}), ${member.ord}) ON CONFLICT(unit_id, character_id) DO UPDATE SET ord=excluded.ord;`);
     }
   }
-  sql.push("COMMIT;");
   return `${sql.join("\n")}\n`;
 }
 

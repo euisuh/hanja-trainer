@@ -59,7 +59,9 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
   const sqlite = new DatabaseSync(":memory:");
   try {
     sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
-    sqlite.exec(emitSeedSql(document));
+    const sql = emitSeedSql(document);
+    assert.doesNotMatch(sql, /\b(?:BEGIN|COMMIT)\b/);
+    sqlite.exec(sql);
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
     sqlite.exec(emitSeedSql(document));
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
