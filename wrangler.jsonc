@@ -4,6 +4,13 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-08-28",
   "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "hanja.uiseoya.com",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./dist/client",
     "binding": "ASSETS",
@@ -14,7 +21,7 @@
     {
       "binding": "DB",
       "database_name": "hanja",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "469e0815-fbeb-465b-8804-c118845b0f3d",
       "migrations_dir": "migrations"
     }
   ]
