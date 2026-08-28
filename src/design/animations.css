@@ -1,0 +1,6 @@
+@keyframes om-pop { 0% { transform: scale(.4); opacity: 0 } 55% { transform: scale(1.25) } 100% { transform: scale(1); opacity: 1 } }
+@keyframes om-burst { 0% { transform: translate(0,0) scale(1); opacity: 1 } 100% { transform: translate(var(--tx), var(--ty)) scale(.2); opacity: 0 } }
+@keyframes om-shake { 0%,100% { transform: translateX(0) } 15% { transform: translateX(-10px) } 30% { transform: translateX(9px) } 45% { transform: translateX(-6px) } 60% { transform: translateX(4px) } 80% { transform: translateX(-2px) } }
+@keyframes om-rise { 0% { transform: translateY(14px); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
+@keyframes om-glyph { 0% { transform: scale(1) } 40% { transform: scale(1.09) } 100% { transform: scale(1) } }
+@keyframes om-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(232,179,61,.55) } 50% { box-shadow: 0 0 0 12px rgba(232,179,61,0) } }
