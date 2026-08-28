@@ -1,18 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { loadOnboardingProfile } from "../features/onboarding/tracks";
 import { DueList, buildDueItems } from "../features/review/DueList";
 import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { demoCharacters, loadDemoStates, persistDemoAnswer } from "../features/session/demoData";
 
 export const REVIEW_SESSION_LENGTH = 20;
-const enabledTracks = ["kr", "jp", "cn"] as const;
 
 export function ReviewScreen() {
   const location = useLocation();
   const navigate = useNavigate();
+  const enabledTracks = useMemo(() => loadOnboardingProfile().enabledTracks, []);
   const states = loadDemoStates();
-  const due = buildDueItems(demoCharacters, states, [...enabledTracks]);
+  const due = buildDueItems(demoCharacters, states, enabledTracks);
   const inSession = location.pathname === "/review/session";
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export function ReviewScreen() {
     return (
       <SessionRunner
         characters={demoCharacters}
-        enabledTracks={[...enabledTracks]}
+        enabledTracks={enabledTracks}
         initialReviewStates={states}
         length={Math.min(REVIEW_SESSION_LENGTH, due.length)}
         mode="review"

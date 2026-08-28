@@ -1,16 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { GLOBAL_DESTINATIONS } from "./shortcuts";
 
 type GlobalHotkeyOptions = {
   sessionActive: boolean;
   modalOpen: boolean;
-};
-
-const destinations: Record<string, string> = {
-  h: "/home",
-  r: "/review",
-  t: "/stats",
-  ",": "/settings",
 };
 
 export function useGlobalHotkeys({ sessionActive, modalOpen }: GlobalHotkeyOptions) {
@@ -23,7 +17,7 @@ export function useGlobalHotkeys({ sessionActive, modalOpen }: GlobalHotkeyOptio
       if (modalOpen) return;
       if (sessionActive) return;
 
-      const destination = destinations[event.key.toLowerCase()];
+      const destination = GLOBAL_DESTINATIONS[event.key.toLowerCase()];
       if (!destination) return;
 
       event.preventDefault();

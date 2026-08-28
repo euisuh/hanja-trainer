@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { loadAllDemoLogs } from "../features/session/demoData";
 import { streakSummary } from "../features/stats/calendar";
+import { loadOnboardingProfile, SETTINGS_CHANGED_EVENT } from "../features/onboarding/tracks";
 
 type Props = { streak?: number; xp?: number; today?: number; goal?: number };
 
@@ -8,8 +10,15 @@ export function goalDegrees(today: number, goal: number): number {
 }
 
 // ponytail: #16 will replace these local solo-profile metrics.
-export function AppHeader({ streak, xp = 4_820, today = 24, goal = 40 }: Props) {
-  const degrees = goalDegrees(today, goal);
+export function AppHeader({ streak, xp = 4_820, today = 24, goal }: Props) {
+  const [, refreshSettings] = useState(0);
+  useEffect(() => {
+    const refresh = () => refreshSettings((version) => version + 1);
+    window.addEventListener(SETTINGS_CHANGED_EVENT, refresh);
+    return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, refresh);
+  }, []);
+  const dailyGoal = goal ?? loadOnboardingProfile().dailyGoal;
+  const degrees = goalDegrees(today, dailyGoal);
   const currentStreak = streak ?? streakSummary(loadAllDemoLogs()).current;
   return (
     <header className="app-header" aria-label="오늘의 학습 현황">
@@ -23,7 +32,7 @@ export function AppHeader({ streak, xp = 4_820, today = 24, goal = 40 }: Props) 
       </div>
       <div className="daily-goal">
         <span className="daily-goal__ring" role="img" aria-label={`일일 목표 ${Math.round(degrees / 3.6)}% 달성`} style={{ "--goal-degrees": `${degrees}deg` } as React.CSSProperties} />
-        <strong>오늘 {today}/{goal} XP</strong>
+        <strong>오늘 {today}/{dailyGoal} XP</strong>
       </div>
     </header>
   );
