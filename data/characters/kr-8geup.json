@@ -1,0 +1,1229 @@
+{
+  "characters": [
+    {
+      "key": "校",
+      "meaningEn": "school",
+      "meaningKo": "학교",
+      "variants": {
+        "kr": "校",
+        "jp": "校",
+        "cn": "校"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "校",
+          "reading": "학교 교",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "敎",
+      "meaningEn": "teach",
+      "meaningKo": "가르칠",
+      "variants": {
+        "kr": "敎"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "敎",
+          "reading": "가르칠 교",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "九",
+      "meaningEn": "nine",
+      "meaningKo": "아홉",
+      "variants": {
+        "kr": "九",
+        "jp": "九",
+        "cn": "九"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "九",
+          "reading": "아홉 구",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "國",
+      "meaningEn": "nation, country, nation-state",
+      "meaningKo": "나라",
+      "variants": {
+        "kr": "國",
+        "jp": "国",
+        "cn": "国"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "國",
+          "reading": "나라 국",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "軍",
+      "meaningEn": "army, military",
+      "meaningKo": "군사",
+      "variants": {
+        "kr": "軍"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "軍",
+          "reading": "군사 군",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "金",
+      "meaningEn": "gold",
+      "meaningKo": "쇠",
+      "variants": {
+        "kr": "金",
+        "jp": "金"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "金",
+          "reading": "쇠 금",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "南",
+      "meaningEn": "south",
+      "meaningKo": "남녘",
+      "variants": {
+        "kr": "南",
+        "jp": "南"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "南",
+          "reading": "남녘 남",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "女",
+      "meaningEn": "woman, girl",
+      "meaningKo": "여자",
+      "variants": {
+        "kr": "女",
+        "jp": "女",
+        "cn": "女"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "女",
+          "reading": "여자 녀(여)",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "年",
+      "meaningEn": "year",
+      "meaningKo": "해",
+      "variants": {
+        "kr": "年",
+        "jp": "年",
+        "cn": "年"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "年",
+          "reading": "해 년(연)",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "大",
+      "meaningEn": "big, great, vast, large, high",
+      "meaningKo": "클",
+      "variants": {
+        "kr": "大",
+        "jp": "大",
+        "cn": "大"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "大",
+          "reading": "클 대/큰 대",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "東",
+      "meaningEn": "east, eastern, eastward",
+      "meaningKo": "동녘",
+      "variants": {
+        "kr": "東",
+        "jp": "東",
+        "cn": "东"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "東",
+          "reading": "동녘 동",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "六",
+      "meaningEn": "number six",
+      "meaningKo": "여섯",
+      "variants": {
+        "kr": "六",
+        "jp": "六",
+        "cn": "六"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "六",
+          "reading": "여섯 륙(육)",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "萬",
+      "meaningEn": "ten thousand",
+      "meaningKo": "일만",
+      "variants": {
+        "kr": "萬",
+        "jp": "万",
+        "cn": "万"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "萬",
+          "reading": "일만 만",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "母",
+      "meaningEn": "mother",
+      "meaningKo": "어머니",
+      "variants": {
+        "kr": "母",
+        "jp": "母"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "母",
+          "reading": "어머니 모",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "木",
+      "meaningEn": "tree",
+      "meaningKo": "나무",
+      "variants": {
+        "kr": "木",
+        "jp": "木"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "木",
+          "reading": "나무 목",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "門",
+      "meaningEn": "gate, door, entrance, opening",
+      "meaningKo": "문",
+      "variants": {
+        "kr": "門",
+        "jp": "門",
+        "cn": "门"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "門",
+          "reading": "문 문",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "民",
+      "meaningEn": "people, subjects, citizens",
+      "meaningKo": "백성",
+      "variants": {
+        "kr": "民"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "民",
+          "reading": "백성 민",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "白",
+      "meaningEn": "white",
+      "meaningKo": "흰",
+      "variants": {
+        "kr": "白",
+        "jp": "白",
+        "cn": "白"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "白",
+          "reading": "흰 백/아뢸 백",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "父",
+      "meaningEn": "father",
+      "meaningKo": "아버지",
+      "variants": {
+        "kr": "父",
+        "jp": "父"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "父",
+          "reading": "아버지 부/아비 부",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "北",
+      "meaningEn": "north",
+      "meaningKo": "북녘",
+      "variants": {
+        "kr": "北",
+        "jp": "北"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "北",
+          "reading": "북녘 북",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "四",
+      "meaningEn": "four",
+      "meaningKo": "넉",
+      "variants": {
+        "kr": "四",
+        "jp": "四",
+        "cn": "四"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "四",
+          "reading": "넉 사",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "山",
+      "meaningEn": "mountain, hill, peak",
+      "meaningKo": "메",
+      "variants": {
+        "kr": "山",
+        "jp": "山"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "山",
+          "reading": "메 산",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "三",
+      "meaningEn": "three",
+      "meaningKo": "석",
+      "variants": {
+        "kr": "三",
+        "jp": "三",
+        "cn": "三"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "三",
+          "reading": "석 삼",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "生",
+      "meaningEn": "life, living, lifetime",
+      "meaningKo": "날",
+      "variants": {
+        "kr": "生",
+        "jp": "生",
+        "cn": "生"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "生",
+          "reading": "날 생",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "西",
+      "meaningEn": "west(ern)",
+      "meaningKo": "서녘",
+      "variants": {
+        "kr": "西",
+        "jp": "西",
+        "cn": "西"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "西",
+          "reading": "서녘 서",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "先",
+      "meaningEn": "first, former, previous",
+      "meaningKo": "먼저",
+      "variants": {
+        "kr": "先",
+        "jp": "先",
+        "cn": "先"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "先",
+          "reading": "먼저 선",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "小",
+      "meaningEn": "small, tiny, insignificant",
+      "meaningKo": "작을",
+      "variants": {
+        "kr": "小",
+        "jp": "小",
+        "cn": "小"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "小",
+          "reading": "작을 소",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "水",
+      "meaningEn": "water, liquid, lotion, juice",
+      "meaningKo": "물",
+      "variants": {
+        "kr": "水",
+        "jp": "水",
+        "cn": "水"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "水",
+          "reading": "물 수",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "室",
+      "meaningEn": "room, home, house, chamber",
+      "meaningKo": "집",
+      "variants": {
+        "kr": "室",
+        "jp": "室",
+        "cn": "室"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "室",
+          "reading": "집 실",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "十",
+      "meaningEn": "ten, tenth",
+      "meaningKo": "열",
+      "variants": {
+        "kr": "十",
+        "jp": "十",
+        "cn": "十"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "十",
+          "reading": "열 십",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "五",
+      "meaningEn": "five",
+      "meaningKo": "다섯",
+      "variants": {
+        "kr": "五",
+        "jp": "五",
+        "cn": "五"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "五",
+          "reading": "다섯 오",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "王",
+      "meaningEn": "king, ruler",
+      "meaningKo": "임금",
+      "variants": {
+        "kr": "王",
+        "jp": "王"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "王",
+          "reading": "임금 왕",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "外",
+      "meaningEn": "out, outside, external",
+      "meaningKo": "바깥",
+      "variants": {
+        "kr": "外",
+        "jp": "外",
+        "cn": "外"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "外",
+          "reading": "바깥 외",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "月",
+      "meaningEn": "moon",
+      "meaningKo": "달",
+      "variants": {
+        "kr": "月",
+        "jp": "月",
+        "cn": "月"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "月",
+          "reading": "달 월",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "二",
+      "meaningEn": "two",
+      "meaningKo": "두",
+      "variants": {
+        "kr": "二",
+        "jp": "二",
+        "cn": "二"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "二",
+          "reading": "두 이",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "人",
+      "meaningEn": "man",
+      "meaningKo": "사람",
+      "variants": {
+        "kr": "人",
+        "jp": "人",
+        "cn": "人"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "人",
+          "reading": "사람 인",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "一",
+      "meaningEn": "one",
+      "meaningKo": "한",
+      "variants": {
+        "kr": "一",
+        "jp": "一",
+        "cn": "一"
+      },
+      "strokeCount": 1,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "一",
+          "reading": "한 일",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "日",
+      "meaningEn": "sun",
+      "meaningKo": "날",
+      "variants": {
+        "kr": "日",
+        "jp": "日",
+        "cn": "日"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "日",
+          "reading": "날 일",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "長",
+      "meaningEn": "long",
+      "meaningKo": "길",
+      "variants": {
+        "kr": "長",
+        "jp": "長",
+        "cn": "长"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "長",
+          "reading": "길 장/어른 장",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "弟",
+      "meaningEn": "young brother",
+      "meaningKo": "아우",
+      "variants": {
+        "kr": "弟",
+        "jp": "弟",
+        "cn": "弟"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "弟",
+          "reading": "아우 제",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "中",
+      "meaningEn": "central",
+      "meaningKo": "가운데",
+      "variants": {
+        "kr": "中",
+        "jp": "中",
+        "cn": "中"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "中",
+          "reading": "가운데 중",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "靑",
+      "meaningEn": "blue, green",
+      "meaningKo": "푸를",
+      "variants": {
+        "kr": "靑"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "靑",
+          "reading": "푸를 청",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "寸",
+      "meaningEn": "inch",
+      "meaningKo": "마디",
+      "variants": {
+        "kr": "寸"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "寸",
+          "reading": "마디 촌",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "七",
+      "meaningEn": "seven",
+      "meaningKo": "일곱",
+      "variants": {
+        "kr": "七",
+        "jp": "七",
+        "cn": "七"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "七",
+          "reading": "일곱 칠",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "土",
+      "meaningEn": "soil, earth",
+      "meaningKo": "흙",
+      "variants": {
+        "kr": "土",
+        "jp": "土"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "土",
+          "reading": "흙 토",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "八",
+      "meaningEn": "eight",
+      "meaningKo": "여덟",
+      "variants": {
+        "kr": "八",
+        "jp": "八",
+        "cn": "八"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "八",
+          "reading": "여덟 팔",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "學",
+      "meaningEn": "learning, knowledge",
+      "meaningKo": "배울",
+      "variants": {
+        "kr": "學",
+        "jp": "学",
+        "cn": "学"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "學",
+          "reading": "배울 학",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "韓",
+      "meaningEn": "fence",
+      "meaningKo": "한국",
+      "variants": {
+        "kr": "韓"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "韓",
+          "reading": "한국 한/나라 한",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "兄",
+      "meaningEn": "elder brother",
+      "meaningKo": "형",
+      "variants": {
+        "kr": "兄",
+        "jp": "兄"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "兄",
+          "reading": "형 형",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    },
+    {
+      "key": "火",
+      "meaningEn": "fire, flame",
+      "meaningKo": "불",
+      "variants": {
+        "kr": "火",
+        "jp": "火",
+        "cn": "火"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "火",
+          "reading": "불 화",
+          "level": "8급",
+          "levelOrd": 1
+        }
+      ]
+    }
+  ],
+  "curriculumUnits": [
+    {
+      "track": "kr",
+      "level": "8급",
+      "ord": 1,
+      "title": "움직임·일상 1",
+      "subtitle": "10자",
+      "members": [
+        {
+          "key": "金",
+          "ord": 1
+        },
+        {
+          "key": "大",
+          "ord": 2
+        },
+        {
+          "key": "門",
+          "ord": 3
+        },
+        {
+          "key": "民",
+          "ord": 4
+        },
+        {
+          "key": "先",
+          "ord": 5
+        },
+        {
+          "key": "中",
+          "ord": 6
+        },
+        {
+          "key": "寸",
+          "ord": 7
+        },
+        {
+          "key": "韓",
+          "ord": 8
+        },
+        {
+          "key": "敎",
+          "ord": 9
+        },
+        {
+          "key": "學",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "8급",
+      "ord": 2,
+      "title": "자연·수와 시간 2",
+      "subtitle": "10자",
+      "members": [
+        {
+          "key": "木",
+          "ord": 1
+        },
+        {
+          "key": "山",
+          "ord": 2
+        },
+        {
+          "key": "水",
+          "ord": 3
+        },
+        {
+          "key": "月",
+          "ord": 4
+        },
+        {
+          "key": "日",
+          "ord": 5
+        },
+        {
+          "key": "土",
+          "ord": 6
+        },
+        {
+          "key": "火",
+          "ord": 7
+        },
+        {
+          "key": "九",
+          "ord": 8
+        },
+        {
+          "key": "年",
+          "ord": 9
+        },
+        {
+          "key": "六",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "8급",
+      "ord": 3,
+      "title": "수와 시간 3",
+      "subtitle": "10자",
+      "members": [
+        {
+          "key": "萬",
+          "ord": 1
+        },
+        {
+          "key": "四",
+          "ord": 2
+        },
+        {
+          "key": "三",
+          "ord": 3
+        },
+        {
+          "key": "生",
+          "ord": 4
+        },
+        {
+          "key": "十",
+          "ord": 5
+        },
+        {
+          "key": "五",
+          "ord": 6
+        },
+        {
+          "key": "二",
+          "ord": 7
+        },
+        {
+          "key": "一",
+          "ord": 8
+        },
+        {
+          "key": "七",
+          "ord": 9
+        },
+        {
+          "key": "八",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "8급",
+      "ord": 4,
+      "title": "사람과 가족·장소와 방향 4",
+      "subtitle": "10자",
+      "members": [
+        {
+          "key": "女",
+          "ord": 1
+        },
+        {
+          "key": "母",
+          "ord": 2
+        },
+        {
+          "key": "父",
+          "ord": 3
+        },
+        {
+          "key": "人",
+          "ord": 4
+        },
+        {
+          "key": "弟",
+          "ord": 5
+        },
+        {
+          "key": "兄",
+          "ord": 6
+        },
+        {
+          "key": "校",
+          "ord": 7
+        },
+        {
+          "key": "國",
+          "ord": 8
+        },
+        {
+          "key": "南",
+          "ord": 9
+        },
+        {
+          "key": "東",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "8급",
+      "ord": 5,
+      "title": "장소와 방향·성질과 상태 5",
+      "subtitle": "10자",
+      "members": [
+        {
+          "key": "北",
+          "ord": 1
+        },
+        {
+          "key": "西",
+          "ord": 2
+        },
+        {
+          "key": "室",
+          "ord": 3
+        },
+        {
+          "key": "外",
+          "ord": 4
+        },
+        {
+          "key": "白",
+          "ord": 5
+        },
+        {
+          "key": "小",
+          "ord": 6
+        },
+        {
+          "key": "長",
+          "ord": 7
+        },
+        {
+          "key": "靑",
+          "ord": 8
+        },
+        {
+          "key": "軍",
+          "ord": 9
+        },
+        {
+          "key": "王",
+          "ord": 10
+        }
+      ]
+    }
+  ]
+}
