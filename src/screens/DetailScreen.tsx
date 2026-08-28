@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { IntervalChart } from "../features/detail/IntervalChart";
 import { PersonalRecord } from "../features/detail/PersonalRecord";
 import { TrackPanel } from "../features/detail/TrackPanel";
-import { loadOnboardingProfile } from "../features/onboarding/tracks";
+import { useSettings } from "../features/settings/useSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient, ApiClientError } from "../lib/apiClient";
 import type { ApiReviewState, CharacterDetailResponse } from "../shared/api";
@@ -20,7 +20,7 @@ export function DetailScreen() {
   const { key } = useParams<{ key: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const enabled = useMemo(() => loadOnboardingProfile().enabledTracks, []);
+  const { enabledTracks: enabled } = useSettings();
   const [character, setCharacter] = useState<CharacterDetailResponse | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [loadError, setLoadError] = useState("");

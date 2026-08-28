@@ -4,6 +4,9 @@ import { startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
 import { createSession, getProfile, parseSessionRequest } from "./sessions";
+import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
+import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
+import { getStats } from "./stats";
 
 function error(status: number, code: string, message: string): Response {
   return Response.json({ error: { code, message } } satisfies ApiErrorBody, { status });
@@ -97,6 +100,27 @@ export async function routeApiRequest(request: Request, env: Env): Promise<Respo
     }
 
     if (request.method === "GET" && pathname === "/api/profile") return Response.json(await getProfile(env.DB));
+
+    if (request.method === "POST" && pathname === "/api/placement/score") {
+      let value: unknown;
+      try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
+      const answers = parsePlacementAnswers(value);
+      if (!answers) return error(400, "invalid_placement", "placement answers are invalid");
+      return Response.json(await scoreAndSavePlacement(env.DB, answers));
+    }
+
+    if (request.method === "GET" && pathname === "/api/settings") return Response.json(await getSettings(env.DB));
+
+    if (request.method === "PATCH" && pathname === "/api/settings") {
+      let value: unknown;
+      try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
+      const patch = parseSettingsPatch(value);
+      if (!patch) return error(400, "invalid_settings", "settings fields are invalid");
+      return Response.json(await patchSettings(env.DB, patch));
+    }
+
+    if (request.method === "GET" && pathname === "/api/stats") return Response.json(await getStats(env.DB));
+    if (request.method === "GET" && pathname === "/api/onboarding-state") return Response.json(await getOnboardingState(env.DB));
 
     return error(404, "not_found", "API route was not found");
   } catch (caught) {

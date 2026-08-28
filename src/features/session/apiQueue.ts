@@ -2,18 +2,18 @@ import type { SessionCard, SessionCompareEntry } from "../../shared/api";
 import type { CharacterEntry, ExampleSentence, Track, TrackEntry } from "../../shared/types";
 import type { SessionQueueItem } from "./buildQueue";
 
-function trackEntry(track: Track, card: Pick<SessionCard, "glyph" | "levelBadge">, reading: string, sub: string, characterId: number): TrackEntry {
-  if (track === "kr") return { characterId, track, glyph: card.glyph, reading, level: card.levelBadge.replace(/^한자 /u, ""), levelOrd: 1 };
+function trackEntry(track: Track, card: Pick<SessionCard, "glyph" | "levelBadge" | "levelOrd">, reading: string, sub: string, characterId: number): TrackEntry {
+  if (track === "kr") return { characterId, track, glyph: card.glyph, reading, level: card.levelBadge.replace(/^한자 /u, ""), levelOrd: card.levelOrd };
   if (track === "jp") {
     const [kanken = "—", jlpt = "—"] = card.levelBadge.replace(/^漢検 /u, "").split(" · ");
-    return { characterId, track, glyph: card.glyph, on: reading.replace(/^音 /u, ""), kun: sub.replace(/^訓 /u, ""), kanken, jlpt, levelOrd: 1 };
+    return { characterId, track, glyph: card.glyph, on: reading.replace(/^音 /u, ""), kun: sub.replace(/^訓 /u, ""), kanken, jlpt, levelOrd: card.levelOrd };
   }
   const [hsk = "—", tier = "—"] = card.levelBadge.split(" · ");
-  return { characterId, track, glyph: card.glyph, pinyin: reading, meaning: sub, hsk, tier, levelOrd: 1 };
+  return { characterId, track, glyph: card.glyph, pinyin: reading, meaning: sub, hsk, tier, levelOrd: card.levelOrd };
 }
 
 function compareTrack(track: Track, entry: SessionCompareEntry, characterId: number): TrackEntry {
-  return trackEntry(track, { glyph: entry.glyph, levelBadge: entry.levelBadge }, entry.reading, "", characterId);
+  return trackEntry(track, { glyph: entry.glyph, levelBadge: entry.levelBadge, levelOrd: 1 }, entry.reading, "", characterId);
 }
 
 function characterFor(card: SessionCard, characterId: number): CharacterEntry {

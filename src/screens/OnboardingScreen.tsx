@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { loadOnboardingProfile, saveEnabledTracks } from "../features/onboarding/tracks";
+import { apiClient } from "../lib/apiClient";
 import { TRACKS, type Track } from "../shared/types";
 import "../features/onboarding/onboarding.css";
 
@@ -11,9 +11,10 @@ const cards = {
 } as const;
 
 export function OnboardingScreen() {
-  const profile = loadOnboardingProfile();
   const navigate = useNavigate();
-  const [enabled, setEnabled] = useState<Track[]>(profile.enabledTracks);
+  const [enabled, setEnabled] = useState<Track[]>([...TRACKS]);
+  const [onboarded, setOnboarded] = useState(false);
+  const [ready, setReady] = useState(false);
 
   function toggle(track: Track) {
     setEnabled((current) => current.includes(track)
@@ -21,10 +22,20 @@ export function OnboardingScreen() {
       : [...current, track]);
   }
 
-  function start() {
-    saveEnabledTracks(enabled);
+  async function start() {
+    await apiClient.patchSettings({ enabledTracks: enabled, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
     navigate("/placement");
   }
+
+  useEffect(() => {
+    const controller = new AbortController();
+    Promise.all([apiClient.settings(controller.signal), apiClient.onboardingState(controller.signal)]).then(([settings, state]) => {
+      setEnabled(settings.enabledTracks);
+      setOnboarded(state.onboarded);
+      setReady(true);
+    }).catch(() => { if (!controller.signal.aborted) setReady(true); });
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -33,15 +44,14 @@ export function OnboardingScreen() {
         toggle(TRACKS[Number(event.key) - 1]);
       } else if (event.key === "Enter" && !(event.target instanceof HTMLElement && event.target.matches("button, a"))) {
         event.preventDefault();
-        saveEnabledTracks(enabled);
-        navigate("/placement");
+        void apiClient.patchSettings({ enabledTracks: enabled, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }).then(() => navigate("/placement"));
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [enabled, navigate]);
 
-  if (profile.completed) return <Navigate replace to="/home" />;
+  if (ready && onboarded) return <Navigate replace to="/home" />;
   return (
     <section className="onboarding-screen">
       <p className="onboarding-eyebrow">Step 1 / 2 · 트랙 선택</p>
@@ -61,7 +71,7 @@ export function OnboardingScreen() {
           );
         })}
       </div>
-      <button className="onboarding-cta" onClick={start} type="button">배치 테스트 시작 <kbd>ENTER</kbd></button>
+      <button className="onboarding-cta" disabled={!ready} onClick={() => void start()} type="button">배치 테스트 시작 <kbd>ENTER</kbd></button>
       <p className="onboarding-footnote">약 15문항 적응형 · 이미 아는 급수는 건너뜁니다.</p>
     </section>
   );

@@ -34,6 +34,8 @@ function setup() {
   const sqlite = new DatabaseSync(":memory:");
   sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
   const now = Date.now();

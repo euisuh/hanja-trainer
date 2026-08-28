@@ -59,6 +59,7 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
     track: item.track,
     glyph: entry.glyph,
     levelBadge: levelBadge(entry),
+    levelOrd: entry.levelOrd,
     trackBadge: labels[item.track].badge,
     prompt: item.kind === "compare" ? "한 글자, 세 소리" : labels[item.track].prompt,
     sentence: sentence ? { text: sentence.text, translation: sentence.translationKo, source: sentence.source, targetIndex: sentence.targetIndex } : null,

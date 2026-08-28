@@ -1,4 +1,5 @@
-import type { CharacterEntry, Track } from "../../shared/types";
+import type { PlacementAnswer } from "../../shared/api";
+import { TRACKS, type CharacterEntry, type Track } from "../../shared/types";
 
 export const PLACEMENT_ITEM_BUDGET = 15;
 
@@ -34,6 +35,20 @@ export type PlacementResult = {
   total: number;
   accuracy: number;
 };
+
+export type PlacementScore = { track: Track; levelOrd: number; knownCount: number; totalSeen: number; accuracy: number };
+
+export function scorePlacementAnswers(answers: PlacementAnswer[]): PlacementScore[] {
+  return TRACKS.flatMap((track) => {
+    const seen = answers.filter((answer) => answer.track === track);
+    if (seen.length === 0) return [];
+    const floor = Math.min(...seen.map((answer) => answer.levelOrd));
+    const ceiling = Math.max(...seen.map((answer) => answer.levelOrd));
+    const knownCount = seen.filter((answer) => answer.correct).length;
+    const accuracy = Math.round(knownCount / seen.length * 100);
+    return [{ track, levelOrd: Math.round(floor + (ceiling - floor) * accuracy / 100), knownCount, totalSeen: seen.length, accuracy }];
+  });
+}
 
 function boundsFor(characters: CharacterEntry[], track: Track) {
   const levels = characters.flatMap((character) => character.tracks

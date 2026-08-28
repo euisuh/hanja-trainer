@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { CharacterEntry, Track } from "../../shared/types";
-import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "./adaptive";
+import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, scorePlacementAnswers } from "./adaptive";
 
 function characters(): CharacterEntry[] {
   return Array.from({ length: 5 }, (_, index) => {
@@ -28,6 +28,12 @@ function run(answers: (index: number) => boolean) {
 }
 
 describe("adaptive placement", () => {
+  it("scores all-correct high, all-wrong at the floor, and mixed between", () => {
+    const answers = (correct: boolean[]) => correct.map((value, index) => ({ characterKey: `${index}`, track: "kr" as const, correct: value, levelOrd: index + 1 }));
+    expect(scorePlacementAnswers(answers([true, true, true, true]))[0].levelOrd).toBe(4);
+    expect(scorePlacementAnswers(answers([false, false, false, false]))[0].levelOrd).toBe(1);
+    expect(scorePlacementAnswers(answers([true, false, true, false]))[0].levelOrd).toBe(3);
+  });
   it("converges upward when every answer is correct", () => {
     expect(run(() => true).result.levelOrd).toBe(5);
   });

@@ -1,4 +1,4 @@
-import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, ProfileResponse, StartSessionRequest, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
@@ -8,6 +8,7 @@ export class ApiClientError extends Error {
 }
 
 export const PROFILE_UPDATED_EVENT = "hanja-trainer:profile-updated";
+export const SETTINGS_UPDATED_EVENT = "hanja-trainer:settings-updated";
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, init);
@@ -46,4 +47,18 @@ export const apiClient = {
     window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
     return profile;
   },
+  settings: (signal?: AbortSignal) => requestJson<SettingsResponse>("/api/settings", { signal }),
+  patchSettings: async (body: PatchSettingsRequest): Promise<SettingsResponse> => {
+    const settings = await requestJson<SettingsResponse>("/api/settings", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    window.dispatchEvent(new Event(SETTINGS_UPDATED_EVENT));
+    window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    return settings;
+  },
+  scorePlacement: async (answers: PlacementAnswer[]): Promise<PlacementScoreResponse> => {
+    const result = await requestJson<PlacementScoreResponse>("/api/placement/score", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ answers }) });
+    window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    return result;
+  },
+  stats: (signal?: AbortSignal) => requestJson<StatsResponse>("/api/stats", { signal }),
+  onboardingState: (signal?: AbortSignal) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }),
 };

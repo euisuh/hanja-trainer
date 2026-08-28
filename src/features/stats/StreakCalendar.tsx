@@ -1,17 +1,16 @@
-import type { ReviewLogEntry } from "../../shared/fsrs";
-import { buildCalendar, streakSummary } from "./calendar";
+import type { StatsCalendarDay } from "../../shared/api";
+import { CALENDAR_BUCKET_THRESHOLDS } from "./calendar";
 
-export function StreakCalendar({ logs }: { logs: ReviewLogEntry[] }) {
-  const days = buildCalendar(logs);
-  const streak = streakSummary(logs);
+export function StreakCalendar({ calendar, streak, longestStreak }: { calendar: StatsCalendarDay[]; streak: number; longestStreak: number }) {
   return (
     <section className="streak-calendar">
-      <header><strong>최근 18주 학습 기록</strong><span>연속 {streak.current}일 · 최장 {streak.longest}일</span></header>
+      <header><strong>최근 18주 학습 기록</strong><span>연속 {streak}일 · 최장 {longestStreak}일</span></header>
       <div className="streak-calendar__scroll">
         <div className="streak-calendar__grid">
-          {days.map((day) => {
-            const label = `${day.key} · 복습 ${day.count}회`;
-            return <span aria-label={label} className={`streak-calendar__day streak-calendar__day--${day.level}`} key={day.key} role="img" tabIndex={0} title={label} />;
+          {calendar.map((day) => {
+            const level = day.count >= CALENDAR_BUCKET_THRESHOLDS[2] ? 3 : day.count >= CALENDAR_BUCKET_THRESHOLDS[1] ? 2 : day.count >= CALENDAR_BUCKET_THRESHOLDS[0] ? 1 : 0;
+            const label = `${day.date} · 복습 ${day.count}회`;
+            return <span aria-label={label} className={`streak-calendar__day streak-calendar__day--${level}`} key={day.date} role="img" tabIndex={0} title={label} />;
           })}
         </div>
       </div>

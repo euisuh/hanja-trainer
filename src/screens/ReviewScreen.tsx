@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { loadOnboardingProfile } from "../features/onboarding/tracks";
+import { useSettings } from "../features/settings/useSettings";
 import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
@@ -15,7 +15,7 @@ export const REVIEW_SESSION_LENGTH = 20;
 export function ReviewScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const enabledTracks = useMemo(() => loadOnboardingProfile().enabledTracks, []);
+  const { enabledTracks, ready } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [due, setDue] = useState<DueReviewsResponse | null>(null);
   const [error, setError] = useState("");
@@ -27,6 +27,7 @@ export function ReviewScreen() {
   }, [inSession]);
 
   useEffect(() => {
+    if (!ready) return;
     const controller = new AbortController();
     Promise.all([
       apiClient.startSession({ mode: "review", tracks: enabledTracks, limit: REVIEW_SESSION_LENGTH }, controller.signal),
@@ -37,7 +38,7 @@ export function ReviewScreen() {
     })
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "복습 큐를 불러오지 못했습니다."); });
     return () => controller.abort();
-  }, [enabledTracks]);
+  }, [enabledTracks, ready]);
 
   useEffect(() => {
     if (inSession || !session || session.queue.length === 0) return;
@@ -52,7 +53,7 @@ export function ReviewScreen() {
   }, [inSession, navigate, session]);
 
   if (error) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">{error}</p></section>;
-  if (!session || !due) return <p>복습 큐를 불러오는 중…</p>;
+  if (!ready || !session || !due) return <p>복습 큐를 불러오는 중…</p>;
 
   if (inSession) {
     return (

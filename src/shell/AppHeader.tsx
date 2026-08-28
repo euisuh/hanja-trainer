@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { loadOnboardingProfile, SETTINGS_CHANGED_EVENT } from "../features/onboarding/tracks";
-import { apiClient, PROFILE_UPDATED_EVENT } from "../lib/apiClient";
+import { apiClient, PROFILE_UPDATED_EVENT, SETTINGS_UPDATED_EVENT } from "../lib/apiClient";
 import type { ProfileResponse } from "../shared/api";
 
 type Props = { streak?: number; xp?: number; today?: number; goal?: number };
@@ -15,15 +14,15 @@ export function AppHeader({ streak, xp, today, goal }: Props) {
     let active = true;
     const refresh = () => void apiClient.profile().then((value) => { if (active) setProfile(value); }).catch(() => undefined);
     refresh();
-    window.addEventListener(SETTINGS_CHANGED_EVENT, refresh);
+    window.addEventListener(SETTINGS_UPDATED_EVENT, refresh);
     window.addEventListener(PROFILE_UPDATED_EVENT, refresh);
     return () => {
       active = false;
-      window.removeEventListener(SETTINGS_CHANGED_EVENT, refresh);
+      window.removeEventListener(SETTINGS_UPDATED_EVENT, refresh);
       window.removeEventListener(PROFILE_UPDATED_EVENT, refresh);
     };
   }, []);
-  const dailyGoal = goal ?? profile?.goal ?? loadOnboardingProfile().dailyGoal;
+  const dailyGoal = goal ?? profile?.goal ?? 40;
   const todayXp = today ?? profile?.todayXp ?? 0;
   const totalXp = xp ?? profile?.xp ?? 0;
   const degrees = goalDegrees(todayXp, dailyGoal);

@@ -17,7 +17,10 @@ interface CurriculumRow {
   jp_on: string | null;
   cn_pinyin: string | null;
   stability: number | null;
+  level_ord: number;
 }
+
+type PlacementRow = { level_ord: number };
 
 function rowReading(row: CurriculumRow, track: Track): string {
   const reading = track === "kr" ? row.kr_reading : track === "jp" ? row.jp_on : row.cn_pinyin;
@@ -26,10 +29,10 @@ function rowReading(row: CurriculumRow, track: Track): string {
 }
 
 export async function getCurriculumContent(db: D1Database, track: Track): Promise<CurriculumResponse> {
-  const result = await db.prepare(`
+  const [result, placementResult] = await db.batch([db.prepare(`
     SELECT cu.id AS unit_id, cu.level, cu.ord AS unit_ord, cu.title, cu.subtitle,
       cum.ord AS member_ord, c.key, ct.glyph, ct.kr_reading, ct.jp_on, ct.cn_pinyin,
-      rs.stability
+      rs.stability, ct.level_ord
     FROM curriculum_units cu
     JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
     JOIN characters c ON c.id = cum.character_id
@@ -37,24 +40,32 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
     LEFT JOIN review_states rs ON rs.character_id = c.id AND rs.track = cu.track
     WHERE cu.track = ?1
     ORDER BY cu.ord, cum.ord
-  `).bind(track).all<CurriculumRow>();
+  `).bind(track), db.prepare("SELECT level_ord FROM placement_results WHERE track = ?1 ORDER BY taken_at DESC, id DESC LIMIT 1").bind(track)]);
   const units = new Map<number, CurriculumResponse["units"][number]>();
-  for (const row of result.results) {
+  const unitLevels = new Map<number, number>();
+  for (const row of result.results as unknown as CurriculumRow[]) {
     let unit = units.get(row.unit_id);
     if (!unit) {
-      unit = { id: row.unit_id, level: row.level, ord: row.unit_ord, title: row.title, subtitle: row.subtitle, progress: { known: 0, total: 0 }, nodes: [] };
+      unit = { id: row.unit_id, level: row.level, ord: row.unit_ord, title: row.title, subtitle: row.subtitle, progress: { known: 0, total: 0 }, nodes: [], current: false };
       units.set(row.unit_id, unit);
     }
+    unitLevels.set(row.unit_id, Math.min(unitLevels.get(row.unit_id) ?? row.level_ord, row.level_ord));
     const mastered = (row.stability ?? 0) >= MASTERY_STABILITY_DAYS;
     if (mastered) unit.progress.known += 1;
     unit.progress.total += 1;
     unit.nodes.push({ key: row.key, glyph: row.glyph, reading: rowReading(row, track), state: mastered ? "done" : "locked" });
   }
-  for (const unit of units.values()) {
-    const current = unit.nodes.find((node) => node.state !== "done");
-    if (current) current.state = "current";
+  const ordered = [...units.values()];
+  const placementLevel = Number((placementResult.results[0] as unknown as PlacementRow | undefined)?.level_ord ?? 1);
+  const matchedIndex = ordered.findIndex((unit) => (unitLevels.get(unit.id) ?? 1) >= placementLevel);
+  const startIndex = matchedIndex < 0 ? Math.max(0, ordered.length - 1) : matchedIndex;
+  const active = ordered.slice(startIndex).find((unit) => unit.nodes.some((node) => node.state !== "done")) ?? ordered.at(-1);
+  if (active) {
+    active.current = true;
+    const node = active.nodes.find((candidate) => candidate.state !== "done");
+    if (node) node.state = "current";
   }
-  return { units: [...units.values()] };
+  return { units: ordered };
 }
 
 export async function getCharacterContent(db: D1Database, key: string): Promise<CharacterDetailResponse | null> {

@@ -2,8 +2,9 @@ import type { CreateSessionRequest, ProfileResponse } from "../../src/shared/api
 import { TRACKS } from "../../src/shared/types";
 
 const DAY_MS = 86_400_000;
-type NumberRow = { value: number | null };
-type DayRow = { day: string };
+type ProfileRow = { enabled_tracks: string; daily_goal: number; timezone: string; xp: number };
+type SessionRow = { ended_at: number; xp: number };
+type LogRow = { answered_at: number };
 
 function record(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null && !Array.isArray(value) ? value as Record<string, unknown> : null;
@@ -48,23 +49,38 @@ export function streaks(days: string[], now: Date): { streak: number; longestStr
   return { streak, longestStreak };
 }
 
+export function zonedDayKey(date: Date, timezone: string): string {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date);
+  const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+
 export async function getProfile(db: D1Database, now = new Date()): Promise<ProfileResponse> {
-  const dayStart = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-  const [xpResult, todayResult, daysResult] = await db.batch([
-    db.prepare("SELECT COALESCE(SUM(xp), 0) AS value FROM sessions"),
-    db.prepare("SELECT COALESCE(SUM(xp), 0) AS value FROM sessions WHERE ended_at >= ?1 AND ended_at < ?2").bind(dayStart, dayStart + DAY_MS),
-    db.prepare("SELECT DISTINCT strftime('%Y-%m-%d', ended_at / 1000, 'unixepoch') AS day FROM sessions ORDER BY day"),
+  const [profileResult, sessionsResult, logsResult] = await db.batch([
+    db.prepare("SELECT enabled_tracks, daily_goal, timezone, xp FROM profile WHERE id = 1"),
+    db.prepare("SELECT ended_at, xp FROM sessions"),
+    db.prepare("SELECT answered_at FROM review_log"),
   ]);
-  const xp = Number((xpResult.results[0] as unknown as NumberRow | undefined)?.value ?? 0);
-  const todayXp = Number((todayResult.results[0] as unknown as NumberRow | undefined)?.value ?? 0);
-  const days = (daysResult.results as unknown as DayRow[]).map((row) => row.day);
-  return { xp, todayXp, goal: 40, ...streaks(days, now), enabledTracks: [...TRACKS] };
+  const profile = profileResult.results[0] as unknown as ProfileRow | undefined;
+  if (!profile) throw new Error("Profile row is missing");
+  const parsed = JSON.parse(profile.enabled_tracks) as unknown;
+  const enabledTracks = Array.isArray(parsed) ? TRACKS.filter((track) => parsed.includes(track)) : [...TRACKS];
+  const today = zonedDayKey(now, profile.timezone);
+  const todayXp = (sessionsResult.results as unknown as SessionRow[]).filter((row) => zonedDayKey(new Date(row.ended_at), profile.timezone) === today).reduce((sum, row) => sum + row.xp, 0);
+  const days = [
+    ...(sessionsResult.results as unknown as SessionRow[]).map((row) => zonedDayKey(new Date(row.ended_at), profile.timezone)),
+    ...(logsResult.results as unknown as LogRow[]).map((row) => zonedDayKey(new Date(row.answered_at), profile.timezone)),
+  ];
+  return { xp: profile.xp, todayXp, goal: profile.daily_goal, ...streaks(days, new Date(`${today}T12:00:00Z`)), enabledTracks };
 }
 
 export async function createSession(db: D1Database, input: CreateSessionRequest, now = new Date()): Promise<ProfileResponse> {
-  await db.prepare(`
-    INSERT INTO sessions (mode, started_at, ended_at, answered, correct, best_combo, xp)
-    VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
-  `).bind(input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.bestCombo, input.xp).run();
+  await db.batch([
+    db.prepare(`
+      INSERT INTO sessions (mode, started_at, ended_at, answered, correct, best_combo, xp)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
+    `).bind(input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.bestCombo, input.xp),
+    db.prepare("UPDATE profile SET xp = xp + ?1, updated_at = ?2 WHERE id = 1").bind(input.xp, now.getTime()),
+  ]);
   return getProfile(db, now);
 }

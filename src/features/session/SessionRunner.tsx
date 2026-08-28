@@ -3,7 +3,7 @@ import { tracks } from "../../design/tokens";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../placement/adaptive";
 import { gradeFromAnswer, initialState, schedule, type ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
-import type { ProfileResponse } from "../../shared/api";
+import type { PlacementAnswer, ProfileResponse } from "../../shared/api";
 import { AnswerOptions } from "./AnswerOptions";
 import { buildQueue, buildReadingItem, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
@@ -26,6 +26,7 @@ export type SessionResult = {
   correct: number;
   profile?: ProfileResponse;
   placement?: PlacementResult[];
+  placementAnswers?: PlacementAnswer[];
 };
 
 type Props = {
@@ -76,6 +77,7 @@ export function SessionRunner({
   const [lastXp, setLastXp] = useState(0);
   const [nextInterval, setNextInterval] = useState("—");
   const [burstKey, setBurstKey] = useState(0);
+  const [placementAnswers, setPlacementAnswers] = useState<PlacementAnswer[]>([]);
   const startedAt = useRef(0);
   const answerLocked = useRef(false);
   const completing = useRef(false);
@@ -104,6 +106,7 @@ export function SessionRunner({
         return;
       }
       setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
+      setPlacementAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, levelOrd: entry.levelOrd }]);
     } else {
       const key = reviewKey(item.character.id, item.track);
       const previous = states.get(key) ?? initialState(new Date());
@@ -143,6 +146,7 @@ export function SessionRunner({
           answered: answeredCount,
           correct: correctCount,
           placement: placementResults(adaptiveState),
+          placementAnswers,
         });
         return;
       }
@@ -158,6 +162,7 @@ export function SessionRunner({
         answered: answeredCount,
         correct: correctCount,
         placement: mode === "placement" ? placementResults(adaptiveState) : undefined,
+        placementAnswers: mode === "placement" ? placementAnswers : undefined,
       });
       return;
     }

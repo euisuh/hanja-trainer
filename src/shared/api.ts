@@ -17,6 +17,7 @@ export type CurriculumUnitPayload = {
   subtitle: string;
   progress: { known: number; total: number };
   nodes: CurriculumNode[];
+  current: boolean;
 };
 
 export type CurriculumResponse = { units: CurriculumUnitPayload[] };
@@ -67,6 +68,7 @@ export type SessionCard = {
   track: Track;
   glyph: string;
   levelBadge: string;
+  levelOrd: number;
   trackBadge: string;
   prompt: string;
   sentence: { text: string; translation: string; source: string; targetIndex: number } | null;
@@ -126,3 +128,15 @@ export type ProfileResponse = {
   longestStreak: number;
   enabledTracks: Track[];
 };
+
+export type PlacementAnswer = { characterKey: string; track: Track; correct: boolean; levelOrd: number };
+export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; detail: string };
+export type PlacementScoreResponse = { results: PlacementScoreResult[] };
+
+export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string };
+export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number; timezone?: string };
+export type OnboardingStateResponse = { onboarded: boolean };
+
+export type StatsCalendarDay = { date: string; count: number };
+export type StatsTrack = { track: Track; known: number; total: number; pct: number; currentLevel: string; nextLevel?: string };
+export type StatsResponse = { streak: number; longestStreak: number; calendar: StatsCalendarDay[]; tracks: StatsTrack[] };

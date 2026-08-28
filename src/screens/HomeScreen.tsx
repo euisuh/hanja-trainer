@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { loadOnboardingProfile } from "../features/onboarding/tracks";
+import { useSettings } from "../features/settings/useSettings";
 import { progressPercent, type PathNodeModel } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
@@ -12,33 +12,36 @@ import "../features/path-map/pathMap.css";
 
 export function HomeScreen() {
   const navigate = useNavigate();
-  const enabledTracks = useMemo(() => loadOnboardingProfile().enabledTracks, []);
+  const { enabledTracks, ready } = useSettings();
   const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
   const [error, setError] = useState("");
-  const theme = trackThemes[track];
-  const unit = curriculum?.units[0];
+  const selectedTrack = enabledTracks.includes(track) ? track : enabledTracks[0] ?? "kr";
+  const theme = trackThemes[selectedTrack];
+  const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
   const masteredCount = curriculum?.units.reduce((sum, item) => sum + item.progress.known, 0) ?? 0;
   const scalePercent = progressPercent(masteredCount, theme.scaleTotal);
 
   useEffect(() => {
+    if (!ready) return;
     const controller = new AbortController();
     Promise.all([
-      apiClient.curriculum(track, controller.signal),
+      apiClient.curriculum(selectedTrack, controller.signal),
       apiClient.dueReviews(enabledTracks, 50, controller.signal),
     ]).then(([content, review]) => {
       setCurriculum(content);
       setDueCount(review.total);
       setError("");
-      setFocusedIndex(Math.max(0, content.units[0]?.nodes.findIndex((node) => node.state === "current") ?? 0));
+      const activeUnit = content.units.find((item) => item.current) ?? content.units[0];
+      setFocusedIndex(Math.max(0, activeUnit?.nodes.findIndex((node) => node.state === "current") ?? 0));
     }).catch((caught: unknown) => {
       if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "학습 지도를 불러오지 못했습니다.");
     });
     return () => controller.abort();
-  }, [enabledTracks, track]);
+  }, [enabledTracks, ready, selectedTrack]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -70,7 +73,7 @@ export function HomeScreen() {
 
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
-      <TrackTabs active={track} enabled={enabledTracks} onChange={setTrack} />
+      <TrackTabs active={selectedTrack} enabled={enabledTracks} onChange={setTrack} />
       {error && <p role="alert">{error}</p>}
       {!error && !unit && <p>학습 지도를 불러오는 중…</p>}
       {unit && (

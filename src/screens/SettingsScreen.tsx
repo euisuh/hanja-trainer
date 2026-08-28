@@ -6,6 +6,7 @@ import "../features/settings/settings.css";
 
 export function SettingsScreen() {
   const settings = useSettings();
+  if (!settings.ready) return <p>설정을 불러오는 중…</p>;
   return (
     <section className="settings-screen">
       <h1>설정</h1>

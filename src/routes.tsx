@@ -10,7 +10,6 @@ import { ReviewScreen } from "./screens/ReviewScreen";
 import { SessionCompleteScreen } from "./screens/SessionCompleteScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { StatsScreen } from "./screens/StatsScreen";
-import { loadOnboardingProfile } from "./features/onboarding/tracks";
 
 export type Screen =
   | "onboarding"
@@ -46,9 +45,8 @@ export const routes: readonly ScreenRoute[] = [
 ];
 
 export function AppRoutes() {
-  const startPath = loadOnboardingProfile().completed ? "/home" : "/onboarding";
   return useRoutes([
     ...routes.map(({ path, Component }) => ({ path, element: <Component /> })),
-    { path: "*", element: <Navigate to={startPath} replace /> },
+    { path: "*", element: <Navigate to="/onboarding" replace /> },
   ]);
 }
