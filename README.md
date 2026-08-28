@@ -19,6 +19,8 @@ Real corpus/textbook example sentences only, no AI-generated content.
 
 ```sh
 npm install
+npx wrangler d1 migrations apply hanja --local
+npm run seed:local
 npm run dev
 ```
 
@@ -30,24 +32,41 @@ one origin; verify the Worker with `curl http://localhost:8787/api/health`.
 ```sh
 npm run typecheck
 npm run lint
+npm run lint:colors
+npm test
+npx playwright install chromium
+npm run e2e
 npm run build
 npx wrangler deploy --dry-run
 ```
 
+The Playwright suite resets the local profile and learning history, reseeds the
+local D1 database, and drives all happy paths with keyboard events. Responsive
+screenshots are written under `test-results/`.
+
 ## D1 migrations
 
-Issue #3 adds the first migration. Apply migrations locally or remotely with:
-
 ```sh
-npx wrangler d1 migrations apply hanja-trainer --local
-npx wrangler d1 migrations apply hanja-trainer --remote
+npx wrangler d1 migrations apply hanja --local
+npm run seed:local
 ```
+
+The seed is idempotent and loads all checked-in character, curriculum, and
+sentence datasets.
 
 ## Deploy
 
-Replace the placeholder D1 `database_id` in `wrangler.jsonc` with the deployed
-database ID, then run:
-
 ```sh
+npx wrangler whoami
+npx wrangler d1 migrations apply hanja --remote
+npm run seed:remote
 npm run deploy
+curl -i https://hanja.uiseoya.com/api/health
+curl -i https://hanja.uiseoya.com/detail/%E4%B8%80
 ```
+
+Run remote migrations and the seed before deploying Worker code that depends
+on them. Verify the root SPA, one deep link, and `/api/health` after deploy.
+Cloudflare Access is the access-control layer in front of the Worker; the app
+does not implement authentication. An unauthenticated `curl` may therefore
+return the Access login response even while the deployment is healthy.

@@ -16,6 +16,8 @@ export function useSettings() {
   const [enabledTracks, setEnabledTracks] = useState<Track[]>([...TRACKS]);
   const [dailyGoal, setDailyGoal] = useState(DEFAULT_DAILY_GOAL);
   const [ready, setReady] = useState(false);
+  const [error, setError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
   const timer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -23,18 +25,24 @@ export function useSettings() {
     apiClient.settings(controller.signal).then((settings) => {
       setEnabledTracks(settings.enabledTracks);
       setDailyGoal(settings.dailyGoal);
+      setError("");
       setReady(true);
       const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (!timezoneSent && settings.timezone !== detectedTimezone) {
         timezoneSent = true;
         void apiClient.patchSettings({ timezone: detectedTimezone }).catch(() => { timezoneSent = false; });
       }
-    }).catch(() => { if (!controller.signal.aborted) setReady(true); });
+    }).catch((caught: unknown) => {
+      if (!controller.signal.aborted) {
+        setError(caught instanceof Error ? caught.message : "설정을 불러오지 못했습니다.");
+        setReady(true);
+      }
+    });
     return () => {
       controller.abort();
       window.clearTimeout(timer.current);
     };
-  }, []);
+  }, [retryKey]);
 
   function persist(tracks: Track[], goal: number) {
     setEnabledTracks(tracks);
@@ -54,7 +62,9 @@ export function useSettings() {
   return {
     enabledTracks,
     dailyGoal,
+    error,
     ready,
+    retry: () => setRetryKey((value) => value + 1),
     toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal),
     setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal)),
   };

@@ -8,6 +8,7 @@ const pending = new Map<string, PendingReview>();
 const listeners = new Set<() => void>();
 let flushing = false;
 let retryTimer: number | undefined;
+let syncFailed = false;
 
 function keyOf(input: SubmitReviewRequest): string {
   return `${input.sessionId}:${input.cardIndex}`;
@@ -28,12 +29,14 @@ async function flush() {
   const entries = [...pending.entries()].slice(0, 100);
   try {
     const response = await apiClient.submitReviews(entries.map(([, item]) => item.input));
+    syncFailed = false;
     entries.forEach(([key, item], index) => {
       if (pending.get(key) !== item) return;
       pending.delete(key);
       item.onSynced?.(response.results[index]);
     });
   } catch {
+    syncFailed = true;
     scheduleRetry();
   } finally {
     flushing = false;
@@ -44,8 +47,12 @@ async function flush() {
 
 export function useAnswerSubmit(sessionId: string) {
   const [pendingCount, setPendingCount] = useState(0);
+  const [failed, setFailed] = useState(syncFailed);
   useEffect(() => {
-    const update = () => setPendingCount([...pending.values()].filter((item) => item.input.sessionId === sessionId).length);
+    const update = () => {
+      setPendingCount([...pending.values()].filter((item) => item.input.sessionId === sessionId).length);
+      setFailed(syncFailed);
+    };
     const online = () => void flush();
     listeners.add(update);
     window.addEventListener("online", online);
@@ -62,5 +69,5 @@ export function useAnswerSubmit(sessionId: string) {
     void flush();
   }, [sessionId]);
 
-  return { submit, pendingCount };
+  return { failed, pendingCount, retry: flush, submit };
 }

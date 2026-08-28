@@ -28,6 +28,10 @@ export const colors = {
   wrongBg: "#FCE9E4",
   wrongFg: "#A42D10",
   overdue: "#C2410C",
+  progressTrack: "#DFD7C6",
+  sessionOverlay: "rgba(22, 19, 15, .72)",
+  pulseGold: "rgba(232, 179, 61, .55)",
+  pulseGoldClear: "rgba(232, 179, 61, 0)",
 } as const;
 
 export const fonts = {
@@ -92,6 +96,10 @@ export const cssVariables = {
   "--wrong-bg": colors.wrongBg,
   "--wrong-fg": colors.wrongFg,
   "--overdue": colors.overdue,
+  "--progress-track": colors.progressTrack,
+  "--session-overlay": colors.sessionOverlay,
+  "--pulse-gold": colors.pulseGold,
+  "--pulse-gold-clear": colors.pulseGoldClear,
   "--kr-accent": tracks.kr.accent,
   "--kr-soft": tracks.kr.soft,
   "--jp-accent": tracks.jp.accent,

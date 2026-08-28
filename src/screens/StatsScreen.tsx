@@ -7,12 +7,17 @@ import type { StatsResponse } from "../shared/api";
 
 export function StatsScreen() {
   const [stats, setStats] = useState<StatsResponse | null>(null);
+  const [error, setError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   useEffect(() => {
     const controller = new AbortController();
-    apiClient.stats(controller.signal).then(setStats).catch(() => undefined);
+    apiClient.stats(controller.signal).then(setStats).catch((caught: unknown) => {
+      if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "통계를 불러오지 못했습니다.");
+    });
     return () => controller.abort();
-  }, []);
+  }, [retryKey]);
+  if (error) return <section className="stats-screen"><h1>통계</h1><p role="alert">통계를 불러오지 못했습니다. {error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></section>;
   if (!stats) return <p>통계를 불러오는 중…</p>;
   return (
     <section className="stats-screen">

@@ -16,6 +16,7 @@ body,
 
 body {
   min-width: 320px;
+  overflow-x: hidden;
 }
 
 button,
@@ -48,6 +49,17 @@ main,
 main {
   padding: 44px 4px;
   animation: om-rise .35s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }
 
 h1 {

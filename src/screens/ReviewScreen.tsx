@@ -15,10 +15,11 @@ export const REVIEW_SESSION_LENGTH = 20;
 export function ReviewScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { enabledTracks, ready } = useSettings();
+  const { enabledTracks, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [due, setDue] = useState<DueReviewsResponse | null>(null);
   const [error, setError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
   const inSession = location.pathname === "/review/session";
   const startedAt = useRef(new Date());
 
@@ -38,7 +39,7 @@ export function ReviewScreen() {
     })
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "복습 큐를 불러오지 못했습니다."); });
     return () => controller.abort();
-  }, [enabledTracks, ready]);
+  }, [enabledTracks, ready, retryKey]);
 
   useEffect(() => {
     if (inSession || !session || session.queue.length === 0) return;
@@ -52,7 +53,8 @@ export function ReviewScreen() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [inSession, navigate, session]);
 
-  if (error) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">{error}</p></section>;
+  if (settingsError) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></section>;
+  if (error) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></section>;
   if (!ready || !session || !due) return <p>복습 큐를 불러오는 중…</p>;
 
   if (inSession) {

@@ -10,9 +10,10 @@ type LoadedSession = { id: string; queue: SessionQueueItem[] };
 
 export function LessonScreen() {
   const navigate = useNavigate();
-  const { enabledTracks, ready } = useSettings();
+  const { enabledTracks, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [error, setError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
   const startedAt = useRef(new Date());
   useEffect(() => {
     if (!ready) return;
@@ -21,8 +22,9 @@ export function LessonScreen() {
       .then((result) => setSession({ id: result.sessionId, queue: apiCardsToQueue(result.cards) }))
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "레슨을 불러오지 못했습니다."); });
     return () => controller.abort();
-  }, [enabledTracks, ready]);
-  if (error) return <div className="session-empty"><h1>레슨을 불러오지 못했습니다.</h1><p role="alert">{error}</p><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
+  }, [enabledTracks, ready, retryKey]);
+  if (settingsError) return <div className="session-empty"><h1>설정을 불러오지 못했습니다.</h1><p role="alert">{settingsError}</p><button onClick={retrySettings}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
+  if (error) return <div className="session-empty"><h1>레슨을 불러오지 못했습니다.</h1><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
   if (!ready || !session) return <p>레슨을 불러오는 중…</p>;
   return (
     <SessionRunner

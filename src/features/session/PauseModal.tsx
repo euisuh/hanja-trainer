@@ -7,6 +7,7 @@ export function PauseModal({ onResume, onQuit }: Props) {
 
   useEffect(() => {
     const panel = panelRef.current;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const controls = panel?.querySelectorAll<HTMLElement>("button") ?? [];
     controls[0]?.focus();
     function onKeyDown(event: KeyboardEvent) {
@@ -29,7 +30,10 @@ export function PauseModal({ onResume, onQuit }: Props) {
       }
     }
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      previousFocus?.focus();
+    };
   }, [onQuit, onResume]);
 
   return (

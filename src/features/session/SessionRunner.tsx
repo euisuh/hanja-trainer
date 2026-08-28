@@ -82,7 +82,7 @@ export function SessionRunner({
   const answerLocked = useRef(false);
   const completing = useRef(false);
   const currentIndex = useRef(0);
-  const { submit, pendingCount } = useAnswerSubmit(sessionId);
+  const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
   const item = mode === "placement" && !externalQueue ? placementItem : queue[index];
   const queueLength = externalQueue ? queue.length : mode === "placement" ? length : queue.length;
   const compare = item?.kind === "compare";
@@ -211,7 +211,9 @@ export function SessionRunner({
         </div>
         <strong>{index + 1}/{queueLength}</strong>
         <ComboBadge combo={combo} />
-        {pendingCount > 0 && <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>}
+        {pendingCount > 0 && (syncFailed
+          ? <button className="session-sync" onClick={() => void retry()} type="button">저장 재시도 · {pendingCount}</button>
+          : <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>)}
       </div>
       <div className="session-card-wrap" key={index}>
         <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} promptOverride={mode === "placement" ? `배치 문항 ${index + 1}/${queueLength}` : undefined} track={item.track} />

@@ -20,10 +20,11 @@ export function DetailScreen() {
   const { key } = useParams<{ key: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const { enabledTracks: enabled } = useSettings();
+  const { enabledTracks: enabled, error: settingsError, retry: retrySettings } = useSettings();
   const [character, setCharacter] = useState<CharacterDetailResponse | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [loadError, setLoadError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
   const [now] = useState(() => Date.now());
   const available = character?.tracks.filter((entry) => enabled.includes(entry.track)) ?? [];
   const tracks = available.map((entry) => entry.track);
@@ -47,7 +48,7 @@ export function DetailScreen() {
       else setLoadError(caught instanceof Error ? caught.message : "글자 정보를 불러오지 못했습니다.");
     });
     return () => controller.abort();
-  }, [enabled, key]);
+  }, [enabled, key, retryKey]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -69,7 +70,8 @@ export function DetailScreen() {
   if (notFound) {
     return <section className="detail-not-found"><button className="detail-back" onClick={back} type="button">← 뒤로 (Esc)</button><h1>글자를 찾을 수 없습니다.</h1><p>주소의 글자 키를 확인해 주세요.</p></section>;
   }
-  if (loadError) return <section className="detail-not-found"><button className="detail-back" onClick={back} type="button">← 뒤로 (Esc)</button><h1>글자 정보를 불러오지 못했습니다.</h1><p role="alert">{loadError}</p></section>;
+  if (settingsError) return <section className="detail-not-found"><button className="detail-back" onClick={back} type="button">← 뒤로 (Esc)</button><h1>설정을 불러오지 못했습니다.</h1><p role="alert">{settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></section>;
+  if (loadError) return <section className="detail-not-found"><button className="detail-back" onClick={back} type="button">← 뒤로 (Esc)</button><h1>글자 정보를 불러오지 못했습니다.</h1><p role="alert">{loadError}</p><button onClick={() => { setLoadError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></section>;
   if (!character) return <p>글자 정보를 불러오는 중…</p>;
   const stateByTrack = new Map<Track, ApiReviewState>(available.flatMap((entry) => {
     const state = entry.review_state;

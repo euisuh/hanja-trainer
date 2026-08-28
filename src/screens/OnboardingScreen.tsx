@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { apiClient } from "../lib/apiClient";
 import { TRACKS, type Track } from "../shared/types";
@@ -15,6 +15,8 @@ export function OnboardingScreen() {
   const [enabled, setEnabled] = useState<Track[]>([...TRACKS]);
   const [onboarded, setOnboarded] = useState(false);
   const [ready, setReady] = useState(false);
+  const [error, setError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
 
   function toggle(track: Track) {
     setEnabled((current) => current.includes(track)
@@ -22,34 +24,44 @@ export function OnboardingScreen() {
       : [...current, track]);
   }
 
-  async function start() {
-    await apiClient.patchSettings({ enabledTracks: enabled, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
-    navigate("/placement");
-  }
+  const start = useCallback(async () => {
+    try {
+      await apiClient.patchSettings({ enabledTracks: enabled, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+      navigate("/placement");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "트랙 설정을 저장하지 못했습니다.");
+    }
+  }, [enabled, navigate]);
 
   useEffect(() => {
     const controller = new AbortController();
     Promise.all([apiClient.settings(controller.signal), apiClient.onboardingState(controller.signal)]).then(([settings, state]) => {
       setEnabled(settings.enabledTracks);
       setOnboarded(state.onboarded);
+      setError("");
       setReady(true);
-    }).catch(() => { if (!controller.signal.aborted) setReady(true); });
+    }).catch((caught: unknown) => {
+      if (!controller.signal.aborted) {
+        setError(caught instanceof Error ? caught.message : "초기 설정을 불러오지 못했습니다.");
+        setReady(true);
+      }
+    });
     return () => controller.abort();
-  }, []);
+  }, [retryKey]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (/^[1-3]$/u.test(event.key)) {
         event.preventDefault();
         toggle(TRACKS[Number(event.key) - 1]);
-      } else if (event.key === "Enter" && !(event.target instanceof HTMLElement && event.target.matches("button, a"))) {
+      } else if (event.key === "Enter" && ready && !error && !(event.target instanceof HTMLElement && event.target.matches("button, a"))) {
         event.preventDefault();
-        void apiClient.patchSettings({ enabledTracks: enabled, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }).then(() => navigate("/placement"));
+        void start();
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [enabled, navigate]);
+  }, [enabled, error, ready, start]);
 
   if (ready && onboarded) return <Navigate replace to="/home" />;
   return (
@@ -57,6 +69,7 @@ export function OnboardingScreen() {
       <p className="onboarding-eyebrow">Step 1 / 2 · 트랙 선택</p>
       <h1>한 글자, 세 개의 시험.</h1>
       <p className="onboarding-copy">같은 글자를 급수·漢検·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
+      {error && <div><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
       <div className="track-picker">
         {TRACKS.map((track) => {
           const card = cards[track];
@@ -71,7 +84,7 @@ export function OnboardingScreen() {
           );
         })}
       </div>
-      <button className="onboarding-cta" disabled={!ready} onClick={() => void start()} type="button">배치 테스트 시작 <kbd>ENTER</kbd></button>
+      <button className="onboarding-cta" disabled={!ready || Boolean(error)} onClick={() => void start()} type="button">배치 테스트 시작 <kbd>ENTER</kbd></button>
       <p className="onboarding-footnote">약 15문항 적응형 · 이미 아는 급수는 건너뜁니다.</p>
     </section>
   );

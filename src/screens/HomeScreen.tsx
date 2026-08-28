@@ -12,12 +12,13 @@ import "../features/path-map/pathMap.css";
 
 export function HomeScreen() {
   const navigate = useNavigate();
-  const { enabledTracks, ready } = useSettings();
+  const { enabledTracks, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
   const [error, setError] = useState("");
+  const [retryKey, setRetryKey] = useState(0);
   const selectedTrack = enabledTracks.includes(track) ? track : enabledTracks[0] ?? "kr";
   const theme = trackThemes[selectedTrack];
   const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
@@ -35,13 +36,12 @@ export function HomeScreen() {
       setCurriculum(content);
       setDueCount(review.total);
       setError("");
-      const activeUnit = content.units.find((item) => item.current) ?? content.units[0];
-      setFocusedIndex(Math.max(0, activeUnit?.nodes.findIndex((node) => node.state === "current") ?? 0));
+      setFocusedIndex(0);
     }).catch((caught: unknown) => {
       if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "학습 지도를 불러오지 못했습니다.");
     });
     return () => controller.abort();
-  }, [enabledTracks, ready, selectedTrack]);
+  }, [enabledTracks, ready, retryKey, selectedTrack]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -59,7 +59,7 @@ export function HomeScreen() {
         });
       } else if (event.key.toLowerCase() === "d") {
         const node = nodes[focusedIndex];
-        if (!node || node.state === "locked") return;
+        if (!node) return;
         event.preventDefault();
         navigate(`/detail/${encodeURIComponent(node.characterKey)}`, { state: { from: "/home" } });
       } else if (event.key === "Enter" && !(target instanceof HTMLElement && target.matches("button, a"))) {
@@ -74,9 +74,11 @@ export function HomeScreen() {
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
       <TrackTabs active={selectedTrack} enabled={enabledTracks} onChange={setTrack} />
-      {error && <p role="alert">{error}</p>}
-      {!error && !unit && <p>학습 지도를 불러오는 중…</p>}
-      {unit && (
+      {settingsError && <div><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></div>}
+      {error && <div><p role="alert">학습 지도를 불러오지 못했습니다. {error}</p><button onClick={() => { setCurriculum(null); setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
+      {!error && !curriculum && <p>학습 지도를 불러오는 중…</p>}
+      {!error && curriculum && !unit && <div><p>이 트랙에는 아직 학습 콘텐츠가 없습니다.</p><button onClick={() => setRetryKey((value) => value + 1)} type="button">다시 확인</button></div>}
+      {!settingsError && !error && unit && (
       <div className="home-layout">
         <PathMap
           focusedIndex={focusedIndex}
