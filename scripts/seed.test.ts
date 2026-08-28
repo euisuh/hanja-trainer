@@ -1,0 +1,122 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+import { DatabaseSync, type SQLInputValue } from "node:sqlite";
+import { getCharacter, listByTrackLevel, listByUnit, searchDistractors } from "../worker/db/characters.ts";
+import type { SeedDocument, SeedTrackEntry } from "../src/shared/types.ts";
+import { emitSeedSql, levelOrdFor, parseSeed } from "./seed.ts";
+
+function d1(sqlite: DatabaseSync): D1Database {
+  const adapter = {
+    prepare(query: string) {
+      let values: SQLInputValue[] = [];
+      const prepared = {
+        bind(...next: unknown[]) {
+          values = next.map((value) => {
+            if (typeof value === "string" || typeof value === "number" || typeof value === "bigint" || value === null) return value;
+            throw new Error(`Unsupported test binding: ${String(value)}`);
+          });
+          return prepared;
+        },
+        async all<T>() {
+          return { results: sqlite.prepare(query).all(...values) as T[] };
+        },
+      };
+      return prepared;
+    },
+  };
+  return adapter as D1Database;
+}
+
+function comparableTrack(track: SeedTrackEntry): Record<string, unknown> {
+  const fields: Record<string, unknown> = { ...track };
+  delete fields.sentences;
+  delete fields.characterId;
+  return fields;
+}
+
+test("seed validation, round-trip, idempotency, and queries", async () => {
+  assert.equal(levelOrdFor("kr", "8급"), 1);
+  assert.equal(levelOrdFor("kr", "특급"), 15);
+  assert.equal(levelOrdFor("jp", "10級"), 1);
+  assert.equal(levelOrdFor("jp", "1級"), 12);
+  assert.equal(levelOrdFor("cn", "HSK 7-9"), 7);
+  assert.throws(() => levelOrdFor("cn", "HSK 10"), /Unknown cn level/);
+
+  const sample: unknown = JSON.parse(await readFile("data/characters.sample.json", "utf8"));
+  const document = parseSeed(sample);
+  assert.equal(document.characters.length, 12);
+  assert.equal(document.characters.flatMap((entry) => entry.tracks).length, 36);
+
+  assert.throws(
+    () => parseSeed([{
+      key: "壞", meaningEn: "", meaningKo: "나쁠", variants: { kr: "壞" }, strokeCount: null,
+      tracks: [{ track: "kr", glyph: "壞", reading: "무너질 괴", level: "3급", levelOrd: 11 }],
+    }]),
+    /entry "壞"\.meaningEn/,
+  );
+
+  const sqlite = new DatabaseSync(":memory:");
+  try {
+    sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
+    sqlite.exec(emitSeedSql(document));
+    const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
+    sqlite.exec(emitSeedSql(document));
+    assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
+
+    const db = d1(sqlite);
+    for (const source of document.characters) {
+      const loaded = await getCharacter(db, source.key);
+      assert.ok(loaded);
+      assert.equal(loaded.meaningEn, source.meaningEn);
+      assert.equal(loaded.meaningKo, source.meaningKo);
+      assert.equal(loaded.strokeCount, source.strokeCount);
+      assert.deepEqual(loaded.variants, source.variants);
+      assert.deepEqual(loaded.tracks.map(comparableTrack), source.tracks.map(comparableTrack));
+      for (const sourceTrack of source.tracks) {
+        assert.deepEqual(
+          loaded.sentences.filter((sentence) => sentence.track === sourceTrack.track).map((sentence) => ({
+            text: sentence.text,
+            translationKo: sentence.translationKo,
+            source: sentence.source,
+            sourceKind: sentence.sourceKind,
+            targetIndex: sentence.targetIndex,
+            rank: sentence.rank,
+          })),
+          sourceTrack.sentences ?? [],
+        );
+      }
+    }
+
+    const learning = await getCharacter(db, "學");
+    assert.deepEqual(learning?.tracks.map((entry) => entry.glyph), ["學", "学", "学"]);
+
+    const krLevelOne = await listByTrackLevel(db, "kr", 1);
+    assert.equal(krLevelOne.length, 6);
+    assert.ok(krLevelOne.every((entry) => entry.tracks.length === 3));
+
+    const mountain = await getCharacter(db, "山");
+    assert.ok(mountain);
+    const distractors = await searchDistractors(db, "kr", 1, mountain.id, 3);
+    const readings = distractors.map((entry) => entry.track === "kr" ? entry.reading : "");
+    assert.equal(distractors.length, 3);
+    assert.equal(new Set(readings).size, 3);
+    assert.ok(!readings.includes("뫼 산"));
+
+    const oneTrack: SeedDocument = {
+      characters: [{
+        key: "只", meaningEn: "only", meaningKo: "다만", variants: { kr: "只" }, strokeCount: 5,
+        tracks: [{ track: "kr", glyph: "只", reading: "다만 지", level: "3급", levelOrd: 11 }],
+      }],
+      curriculumUnits: [{
+        track: "kr", level: "3급", ord: 1, title: "표현", subtitle: "3급 · UNIT 1",
+        members: [{ key: "只", ord: 1 }],
+      }],
+    };
+    sqlite.exec(emitSeedSql(oneTrack));
+    assert.equal((await getCharacter(db, "只"))?.tracks.length, 1);
+    assert.deepEqual((await listByUnit(db, 1)).map((entry) => entry.key), ["只"]);
+  } finally {
+    sqlite.close();
+  }
+});

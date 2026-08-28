@@ -1,0 +1,98 @@
+[
+  {
+    "key": "山", "meaningEn": "mountain", "meaningKo": "뫼", "variants": { "kr": "山", "jp": "山", "cn": "山" }, "strokeCount": 3,
+    "tracks": [
+      { "track": "kr", "glyph": "山", "reading": "뫼 산", "level": "8급", "levelOrd": 1, "sentences": [{ "text": "登山은 건강에 좋다.", "translationKo": "등산은 건강에 좋다.", "source": "8급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 1, "rank": 0 }] },
+      { "track": "jp", "glyph": "山", "on": "サン", "kun": "やま", "kanken": "10級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "高い山に登る。", "translationKo": "높은 산에 오른다.", "source": "漢検10級 例文", "sourceKind": "textbook", "targetIndex": 2, "rank": 0 }] },
+      { "track": "cn", "glyph": "山", "pinyin": "shān", "meaning": "mountain", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "这座山很高。", "translationKo": "이 산은 매우 높다.", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 2, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "水", "meaningEn": "water", "meaningKo": "물", "variants": { "kr": "水", "jp": "水", "cn": "水" }, "strokeCount": 4,
+    "tracks": [
+      { "track": "kr", "glyph": "水", "reading": "물 수", "level": "8급", "levelOrd": 1, "sentences": [{ "text": "生水를 마시지 마세요.", "translationKo": "생수를 마시지 마세요.", "source": "8급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 1, "rank": 0 }] },
+      { "track": "jp", "glyph": "水", "on": "スイ", "kun": "みず", "kanken": "10級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "水を飲む。", "translationKo": "물을 마신다.", "source": "漢検10級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "水", "pinyin": "shuǐ", "meaning": "water", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "我要喝水。", "translationKo": "나는 물을 마시고 싶다.", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 3, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "日", "meaningEn": "day, sun", "meaningKo": "날", "variants": { "kr": "日", "jp": "日", "cn": "日" }, "strokeCount": 4,
+    "tracks": [
+      { "track": "kr", "glyph": "日", "reading": "날 일", "level": "8급", "levelOrd": 1, "sentences": [{ "text": "日記를 매일 쓴다.", "translationKo": "일기를 매일 쓴다.", "source": "8급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "日", "on": "ニチ・ジツ", "kun": "ひ・か", "kanken": "10級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "日曜日は休みだ。", "translationKo": "일요일은 휴일이다.", "source": "漢検10級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "日", "pinyin": "rì", "meaning": "day, sun", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "今天是几月几日？", "translationKo": "오늘은 몇 월 며칠입니까?", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 6, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "火", "meaningEn": "fire", "meaningKo": "불", "variants": { "kr": "火", "jp": "火", "cn": "火" }, "strokeCount": 4,
+    "tracks": [
+      { "track": "kr", "glyph": "火", "reading": "불 화", "level": "8급", "levelOrd": 1, "sentences": [{ "text": "火災를 예방합시다.", "translationKo": "화재를 예방합시다.", "source": "8급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "火", "on": "カ", "kun": "ひ", "kanken": "10級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "火を消してください。", "translationKo": "불을 꺼 주세요.", "source": "漢検10級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "火", "pinyin": "huǒ", "meaning": "fire", "hsk": "HSK 2", "tier": "一级字", "levelOrd": 2, "sentences": [{ "text": "请小心火。", "translationKo": "불을 조심하세요.", "source": "HSK2 教材", "sourceKind": "textbook", "targetIndex": 3, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "人", "meaningEn": "person", "meaningKo": "사람", "variants": { "kr": "人", "jp": "人", "cn": "人" }, "strokeCount": 2,
+    "tracks": [
+      { "track": "kr", "glyph": "人", "reading": "사람 인", "level": "8급", "levelOrd": 1, "sentences": [{ "text": "人間은 사회적 동물이다.", "translationKo": "인간은 사회적 동물이다.", "source": "8급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "人", "on": "ジン・ニン", "kun": "ひと", "kanken": "10級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "人が多い。", "translationKo": "사람이 많다.", "source": "漢検10級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "人", "pinyin": "rén", "meaning": "person", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "这里人很多。", "translationKo": "여기는 사람이 많다.", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 2, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "學", "meaningEn": "learn", "meaningKo": "배울", "variants": { "kr": "學", "jp": "学", "cn": "学" }, "strokeCount": 16,
+    "tracks": [
+      { "track": "kr", "glyph": "學", "reading": "배울 학", "level": "8급", "levelOrd": 1, "sentences": [{ "text": "學校에서 공부한다.", "translationKo": "학교에서 공부한다.", "source": "8급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "学", "on": "ガク", "kun": "まな-ぶ", "kanken": "10級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "学校へ行く。", "translationKo": "학교에 간다.", "source": "漢検10級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "学", "pinyin": "xué", "meaning": "to study", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "我在学校学习。", "translationKo": "나는 학교에서 공부한다.", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 2, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "時", "meaningEn": "time", "meaningKo": "때", "variants": { "kr": "時", "jp": "時", "cn": "时" }, "strokeCount": 10,
+    "tracks": [
+      { "track": "kr", "glyph": "時", "reading": "때 시", "level": "7급", "levelOrd": 3, "sentences": [{ "text": "時間이 부족하다.", "translationKo": "시간이 부족하다.", "source": "7급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "時", "on": "ジ", "kun": "とき", "kanken": "9級", "jlpt": "N5", "levelOrd": 2, "sentences": [{ "text": "時間がない。", "translationKo": "시간이 없다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "时", "pinyin": "shí", "meaning": "time", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "时间不多了。", "translationKo": "시간이 많지 않다.", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "心", "meaningEn": "heart, mind", "meaningKo": "마음", "variants": { "kr": "心", "jp": "心", "cn": "心" }, "strokeCount": 4,
+    "tracks": [
+      { "track": "kr", "glyph": "心", "reading": "마음 심", "level": "7급", "levelOrd": 3, "sentences": [{ "text": "安心하고 기다리세요.", "translationKo": "안심하고 기다리세요.", "source": "7급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 1, "rank": 0 }] },
+      { "track": "jp", "glyph": "心", "on": "シン", "kun": "こころ", "kanken": "9級", "jlpt": "N3", "levelOrd": 2, "sentences": [{ "text": "心が広い人だ。", "translationKo": "마음이 넓은 사람이다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "心", "pinyin": "xīn", "meaning": "heart, mind", "hsk": "HSK 2", "tier": "一级字", "levelOrd": 2, "sentences": [{ "text": "我很关心你。", "translationKo": "나는 너를 매우 걱정한다.", "source": "HSK2 教材", "sourceKind": "textbook", "targetIndex": 3, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "明", "meaningEn": "bright", "meaningKo": "밝을", "variants": { "kr": "明", "jp": "明", "cn": "明" }, "strokeCount": 8,
+    "tracks": [
+      { "track": "kr", "glyph": "明", "reading": "밝을 명", "level": "6급", "levelOrd": 5, "sentences": [{ "text": "說明을 잘 들었다.", "translationKo": "설명을 잘 들었다.", "source": "6급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 1, "rank": 0 }] },
+      { "track": "jp", "glyph": "明", "on": "メイ・ミョウ", "kun": "あか-るい", "kanken": "9級", "jlpt": "N4", "levelOrd": 2, "sentences": [{ "text": "明るい部屋が好きだ。", "translationKo": "밝은 방이 좋다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "明", "pinyin": "míng", "meaning": "bright, clear", "hsk": "HSK 2", "tier": "一级字", "levelOrd": 2, "sentences": [{ "text": "明天见。", "translationKo": "내일 봐요.", "source": "HSK2 教材", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "森", "meaningEn": "forest", "meaningKo": "수풀", "variants": { "kr": "森", "jp": "森", "cn": "森" }, "strokeCount": 12,
+    "tracks": [
+      { "track": "kr", "glyph": "森", "reading": "수풀 삼", "level": "7급", "levelOrd": 3, "sentences": [{ "text": "森林을 보호해야 한다.", "translationKo": "삼림을 보호해야 한다.", "source": "7급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "森", "on": "シン", "kun": "もり", "kanken": "9級", "jlpt": "N3", "levelOrd": 2, "sentences": [{ "text": "森を歩く。", "translationKo": "숲을 걷는다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "森", "pinyin": "sēn", "meaning": "forest", "hsk": "HSK 5", "tier": "二级字", "levelOrd": 5, "sentences": [{ "text": "这片森林很大。", "translationKo": "이 숲은 매우 크다.", "source": "HSK5 教材", "sourceKind": "textbook", "targetIndex": 2, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "藥", "meaningEn": "medicine", "meaningKo": "약", "variants": { "kr": "藥", "jp": "薬", "cn": "药" }, "strokeCount": 18,
+    "tracks": [
+      { "track": "kr", "glyph": "藥", "reading": "약 약", "level": "6급", "levelOrd": 5, "sentences": [{ "text": "藥局에 다녀왔다.", "translationKo": "약국에 다녀왔다.", "source": "6급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "薬", "on": "ヤク", "kun": "くすり", "kanken": "8級", "jlpt": "N3", "levelOrd": 3, "sentences": [{ "text": "薬を飲む。", "translationKo": "약을 먹는다.", "source": "漢検8級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0 }] },
+      { "track": "cn", "glyph": "药", "pinyin": "yào", "meaning": "medicine", "hsk": "HSK 3", "tier": "一级字", "levelOrd": 3, "sentences": [{ "text": "我要买药。", "translationKo": "나는 약을 사려고 한다.", "source": "HSK3 教材", "sourceKind": "textbook", "targetIndex": 3, "rank": 0 }] }
+    ]
+  },
+  {
+    "key": "憂", "meaningEn": "worry", "meaningKo": "근심", "variants": { "kr": "憂", "jp": "憂", "cn": "忧" }, "strokeCount": 15,
+    "tracks": [
+      { "track": "kr", "glyph": "憂", "reading": "근심 우", "level": "3급", "levelOrd": 11, "sentences": [{ "text": "憂鬱한 날씨가 이어진다.", "translationKo": "우울한 날씨가 이어진다.", "source": "3급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0 }] },
+      { "track": "jp", "glyph": "憂", "on": "ユウ", "kun": "うれ-い", "kanken": "準2級", "jlpt": "N1", "levelOrd": 9, "sentences": [{ "text": "一抹の憂いが残る。", "translationKo": "한 줄기 근심이 남는다.", "source": "漢検準2級 過去問", "sourceKind": "past_paper", "targetIndex": 3, "rank": 0 }] },
+      { "track": "cn", "glyph": "忧", "pinyin": "yōu", "meaning": "anxiety, worry", "hsk": "HSK 7-9", "tier": "二级字", "levelOrd": 7, "sentences": [{ "text": "他很忧虑。", "translationKo": "그는 매우 근심한다.", "source": "HSK7-9 语料", "sourceKind": "corpus", "targetIndex": 2, "rank": 0 }] }
+    ]
+  }
+]
