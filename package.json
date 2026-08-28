@@ -9,7 +9,7 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.node.json",
     "lint": "eslint .",
-    "test": "node --import tsx --test scripts/*.test.ts && vitest run src/shared/fsrs.test.ts src/features/session/buildQueue.test.ts src/features/review/DueList.test.ts src/features/placement/adaptive.test.ts src/features/path-map/homeModel.test.ts src/features/detail/detailModel.test.ts src/features/stats/calendar.test.ts src/features/stats/levelProgress.test.ts src/features/settings/settings.test.ts worker/db/reviews.test.ts",
+    "test": "node --import tsx --test scripts/*.test.ts && vitest run src/shared/fsrs.test.ts src/features/session/buildQueue.test.ts src/features/review/DueList.test.ts src/features/placement/adaptive.test.ts src/features/path-map/homeModel.test.ts src/features/detail/detailModel.test.ts src/features/stats/calendar.test.ts src/features/stats/levelProgress.test.ts src/features/settings/settings.test.ts worker/db/reviews.test.ts worker/api/content.test.ts",
     "seed:local": "tsx scripts/seed.ts --local",
     "seed:remote": "tsx scripts/seed.ts --remote",
     "deploy": "npm run build && wrangler deploy"

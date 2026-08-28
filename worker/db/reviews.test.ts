@@ -42,6 +42,7 @@ function d1(sqlite: DatabaseSync): D1Database {
     };
     return prepared;
   };
+  adapter.batch = async <T>(statements: D1PreparedStatement[]) => Promise.all(statements.map((statement) => statement.all<T>()));
   return adapter;
 }
 

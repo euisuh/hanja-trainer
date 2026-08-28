@@ -1,13 +1,14 @@
 import type { ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { readingFor, reviewKey } from "../session/buildQueue";
+import { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
 
-export const MASTERY_STABILITY_DAYS = 7;
+export { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
 
 export type PathNodeState = "done" | "current" | "locked";
 
 export type PathNodeModel = {
-  character: CharacterEntry;
+  characterKey: string;
   glyph: string;
   label: string;
   state: PathNodeState;
@@ -21,7 +22,7 @@ export function buildPathNodes(characters: CharacterEntry[], track: Track, state
   const currentIndex = entries.findIndex((entry) => !entry.mastered);
   return entries.map(({ character, entry, mastered }, index) => {
     const state = mastered ? "done" : index === currentIndex ? "current" : "locked";
-    return { character, glyph: entry.glyph, label: state === "locked" ? "잠김" : readingFor(entry).label, state };
+    return { characterKey: character.key, glyph: entry.glyph, label: state === "locked" ? "잠김" : readingFor(entry).label, state };
   });
 }
 

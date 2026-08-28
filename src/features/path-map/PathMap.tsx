@@ -21,7 +21,7 @@ export function PathMap({ nodes, focusedIndex, unit, title, onFocus, onOpen }: P
       <h2>{title}</h2>
       <div className="path-map__nodes">
         {nodes.map((node, index) => (
-          <PathNode focused={focusedIndex === index} key={`${node.character.id}:${node.glyph}`} node={node} onFocus={() => onFocus(index)} onOpen={() => onOpen(node)} />
+          <PathNode focused={focusedIndex === index} key={`${node.characterKey}:${node.glyph}`} node={node} onFocus={() => onFocus(index)} onOpen={() => onOpen(node)} />
         ))}
       </div>
       <p className="path-map__hint">↑ ↓ 이동 · Enter 열기</p>

@@ -3,10 +3,13 @@ import type { CharacterEntry, Track } from "../../shared/types";
 
 export type IntervalBar = { days: number; height: number };
 
-export function buildIntervalBars(logs: ReviewLogEntry[]): IntervalBar[] {
-  const intervals = intervalHistory(logs);
+export function buildIntervalValues(intervals: number[]): IntervalBar[] {
   const largest = Math.max(...intervals, 1);
   return intervals.map((days) => ({ days, height: Math.max(8, days / largest * 82) }));
+}
+
+export function buildIntervalBars(logs: ReviewLogEntry[]): IntervalBar[] {
+  return buildIntervalValues(intervalHistory(logs));
 }
 
 export function variantsLabel(character: CharacterEntry, tracks: Track[]): string {

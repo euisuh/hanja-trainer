@@ -62,4 +62,14 @@ describe("buildQueue", () => {
     expect(queue.every((item) => item.kind === "reading" && item.track === "cn")).toBe(true);
     expect(queue.map((item) => item.character.id)).toEqual([5, 4]);
   });
+
+  it("does not duplicate due items to fill a review limit", () => {
+    const now = new Date("2026-01-02T00:00:00Z");
+    const states = new Map([
+      [reviewKey(4, "cn"), { ...initialState(now), due: new Date("2026-01-01T00:00:00Z") }],
+      [reviewKey(5, "cn"), { ...initialState(now), due: new Date("2025-12-29T00:00:00Z") }],
+    ]);
+
+    expect(buildQueue({ characters, enabledTracks: ["cn"], length: 8, mode: "review", reviewStates: states, now })).toHaveLength(2);
+  });
 });

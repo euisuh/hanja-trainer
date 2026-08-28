@@ -1,26 +1,44 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadOnboardingProfile } from "../features/onboarding/tracks";
-import { buildPathNodes, progressPercent } from "../features/path-map/homeModel";
+import { progressPercent, type PathNodeModel } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
-import { buildDueItems } from "../features/review/DueList";
-import { demoCharacters, loadDemoStates } from "../features/session/demoData";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
 import type { Track } from "../shared/types";
+import type { CurriculumResponse } from "../shared/api";
+import { apiClient } from "../lib/apiClient";
 import "../features/path-map/pathMap.css";
 
 export function HomeScreen() {
   const navigate = useNavigate();
   const enabledTracks = useMemo(() => loadOnboardingProfile().enabledTracks, []);
-  const states = useMemo(() => loadDemoStates(), []);
   const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
   const [focusedIndex, setFocusedIndex] = useState(0);
+  const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
+  const [dueCount, setDueCount] = useState(0);
+  const [error, setError] = useState("");
   const theme = trackThemes[track];
-  const nodes = buildPathNodes(demoCharacters, track, states);
-  const dueCount = buildDueItems(demoCharacters, states, enabledTracks).length;
-  const masteredCount = nodes.filter((node) => node.state === "done").length;
+  const unit = curriculum?.units[0];
+  const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
+  const masteredCount = curriculum?.units.reduce((sum, item) => sum + item.progress.known, 0) ?? 0;
   const scalePercent = progressPercent(masteredCount, theme.scaleTotal);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    Promise.all([
+      apiClient.curriculum(track, controller.signal),
+      apiClient.startSession({ mode: "review", tracks: enabledTracks, limit: 50 }, controller.signal),
+    ]).then(([content, review]) => {
+      setCurriculum(content);
+      setDueCount(review.cards.length);
+      setError("");
+      setFocusedIndex(Math.max(0, content.units[0]?.nodes.findIndex((node) => node.state === "current") ?? 0));
+    }).catch((caught: unknown) => {
+      if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "학습 지도를 불러오지 못했습니다.");
+    });
+    return () => controller.abort();
+  }, [enabledTracks, track]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -40,7 +58,7 @@ export function HomeScreen() {
         const node = nodes[focusedIndex];
         if (!node || node.state === "locked") return;
         event.preventDefault();
-        navigate(`/detail/${encodeURIComponent(node.character.key)}`, { state: { from: "/home" } });
+        navigate(`/detail/${encodeURIComponent(node.characterKey)}`, { state: { from: "/home" } });
       } else if (event.key === "Enter" && !(target instanceof HTMLElement && target.matches("button, a"))) {
         event.preventDefault();
         navigate("/lesson");
@@ -53,14 +71,17 @@ export function HomeScreen() {
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
       <TrackTabs active={track} enabled={enabledTracks} onChange={setTrack} />
+      {error && <p role="alert">{error}</p>}
+      {!error && !unit && <p>학습 지도를 불러오는 중…</p>}
+      {unit && (
       <div className="home-layout">
         <PathMap
           focusedIndex={focusedIndex}
           nodes={nodes}
           onFocus={setFocusedIndex}
-          onOpen={(node) => navigate(`/detail/${encodeURIComponent(node.character.key)}`, { state: { from: "/home" } })}
-          title={theme.title}
-          unit={theme.unit}
+          onOpen={(node) => navigate(`/detail/${encodeURIComponent(node.characterKey)}`, { state: { from: "/home" } })}
+          title={unit.title}
+          unit={`${unit.level} · UNIT ${unit.ord}`}
         />
         <aside className="home-rail">
           <button className="lesson-cta" onClick={() => navigate("/lesson")} type="button">
@@ -77,6 +98,7 @@ export function HomeScreen() {
           </section>
         </aside>
       </div>
+      )}
     </section>
   );
 }

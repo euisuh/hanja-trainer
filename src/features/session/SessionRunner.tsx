@@ -4,7 +4,7 @@ import { createPlacementState, isPlacementComplete, nextPlacementItem, placement
 import { gradeFromAnswer, initialState, schedule, type ReviewLogEntry, type ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { AnswerOptions } from "./AnswerOptions";
-import { buildQueue, buildReadingItem, reviewKey } from "./buildQueue";
+import { buildQueue, buildReadingItem, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { ParticleBurst } from "./ParticleBurst";
@@ -42,6 +42,7 @@ type Props = {
   onPersist?: (answer: PersistedAnswer) => void | Promise<void>;
   onComplete: (result: SessionResult) => void;
   onQuit: () => void;
+  queueOverride?: SessionQueueItem[];
 };
 
 function intervalLabel(days: number): string {
@@ -57,9 +58,11 @@ export function SessionRunner({
   onPersist,
   onComplete,
   onQuit,
+  queueOverride,
 }: Props) {
   const [states] = useState(() => new Map(initialReviewStates));
-  const queue = useMemo(() => mode === "placement" ? [] : buildQueue({ characters, enabledTracks, length, mode, reviewStates: states }), [characters, enabledTracks, length, mode, states]);
+  const externalQueue = queueOverride !== undefined;
+  const queue = useMemo(() => queueOverride ?? (mode === "placement" ? [] : buildQueue({ characters, enabledTracks, length, mode, reviewStates: states })), [characters, enabledTracks, length, mode, queueOverride, states]);
   const [adaptiveState, setAdaptiveState] = useState(() => createPlacementState(characters, enabledTracks, length));
   const [placementItem, setPlacementItem] = useState(() => {
     const state = createPlacementState(characters, enabledTracks, length);
@@ -81,8 +84,8 @@ export function SessionRunner({
   const [burstKey, setBurstKey] = useState(0);
   const startedAt = useRef(0);
   const answerLocked = useRef(false);
-  const item = mode === "placement" ? placementItem : queue[index];
-  const queueLength = mode === "placement" ? length : queue.length;
+  const item = mode === "placement" && !externalQueue ? placementItem : queue[index];
+  const queueLength = externalQueue ? queue.length : mode === "placement" ? length : queue.length;
   const compare = item?.kind === "compare";
   const answered = selectedIndex !== null;
   const correct = item?.kind === "reading" && selectedIndex === item.answerIndex;
@@ -141,7 +144,7 @@ export function SessionRunner({
 
   function advance() {
     if (!item || (item.kind === "reading" && selectedIndex === null)) return;
-    if (mode === "placement") {
+    if (mode === "placement" && !externalQueue) {
       const next = nextPlacementItem(adaptiveState, characters);
       if (isPlacementComplete(adaptiveState) || !next) {
         onComplete({
@@ -160,6 +163,7 @@ export function SessionRunner({
         accuracy: answeredCount === 0 ? 0 : Math.round(correctCount / answeredCount * 100),
         bestCombo,
         nextReview: nextInterval,
+        placement: mode === "placement" ? placementResults(adaptiveState) : undefined,
       });
       return;
     }

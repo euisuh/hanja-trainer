@@ -185,6 +185,18 @@ export async function listByTrackLevel(db: D1Database, track: Track, levelOrd: n
   return hydrate(result.results);
 }
 
+export async function listForTracks(db: D1Database, tracks: Track[]): Promise<CharacterEntry[]> {
+  if (tracks.length === 0) return [];
+  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
+  const result = await db.prepare(`${SELECT_ENTRIES}
+    WHERE EXISTS (
+      SELECT 1 FROM character_tracks selected
+      WHERE selected.character_id = c.id AND selected.track IN (${placeholders})
+    )
+    ORDER BY c.id, CASE ct.track WHEN 'kr' THEN 1 WHEN 'jp' THEN 2 ELSE 3 END, es.rank`).bind(...tracks).all<CharacterRow>();
+  return hydrate(result.results);
+}
+
 export async function searchDistractors(
   db: D1Database,
   track: Track,

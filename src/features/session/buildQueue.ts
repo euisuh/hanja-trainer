@@ -100,11 +100,12 @@ export function buildQueue({
   const compareCharacters = characters.filter((character) => knownTracks.has(character.id));
 
   const queue: SessionQueueItem[] = [];
+  const queueLength = mode === "review" ? Math.min(length, available.length) : length;
   let dueIndex = 0;
   let freshIndex = 0;
   let fallbackIndex = 0;
   let readingIndex = 0;
-  for (let index = 0; index < length; index += 1) {
+  for (let index = 0; index < queueLength; index += 1) {
     if (mode === "lesson" && (index + 1) % COMPARE_CADENCE === 0 && compareCharacters.length > 0) {
       const character = compareCharacters[Math.floor(index / COMPARE_CADENCE) % compareCharacters.length];
       const track = character.tracks.find((entry) => enabled.has(entry.track))?.track ?? character.tracks[0].track;

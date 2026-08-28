@@ -23,6 +23,7 @@ export interface CharacterReviewStats {
   total: number;
   accuracy: number;
   intervals: number[];
+  intervalHistory: Map<Track, number[]>;
 }
 
 interface StateRow {
@@ -44,6 +45,7 @@ interface StateRow {
 
 interface LogRow {
   scheduled_days_after: number;
+  track?: Track;
 }
 
 const SELECT_STATE = `
@@ -173,16 +175,21 @@ export async function getStatsForCharacter(
   db: D1Database,
   characterId: number,
 ): Promise<CharacterReviewStats> {
-  const [statesResult, logsResult] = await Promise.all([
-    db.prepare(`${SELECT_STATE} WHERE character_id = ?1 ORDER BY track`).bind(characterId).all<StateRow>(),
+  const [statesResult, logsResult] = await db.batch([
+    db.prepare(`${SELECT_STATE} WHERE character_id = ?1 ORDER BY track`).bind(characterId),
     db.prepare(`
-      SELECT scheduled_days_after
+      SELECT track, scheduled_days_after
       FROM review_log
       WHERE character_id = ?1
       ORDER BY answered_at, id
-    `).bind(characterId).all<LogRow>(),
+    `).bind(characterId),
   ]);
-  const states = statesResult.results.map(hydrate);
+  const states = (statesResult.results as unknown as StateRow[]).map(hydrate);
+  const logs = logsResult.results as unknown as LogRow[];
+  const intervalHistory = new Map<Track, number[]>();
+  for (const row of logs) {
+    if (row.track) intervalHistory.set(row.track, [...(intervalHistory.get(row.track) ?? []), row.scheduled_days_after]);
+  }
   const correct = states.reduce((sum, state) => sum + state.correctCount, 0);
   const total = states.reduce((sum, state) => sum + state.totalCount, 0);
   return {
@@ -190,6 +197,14 @@ export async function getStatsForCharacter(
     correct,
     total,
     accuracy: total === 0 ? 0 : correct / total,
-    intervals: logsResult.results.map((row) => row.scheduled_days_after),
+    intervals: logs.map((row) => row.scheduled_days_after),
+    intervalHistory,
   };
+}
+
+export async function listStatesForTracks(db: D1Database, tracks: Track[]): Promise<StoredReviewState[]> {
+  if (tracks.length === 0) return [];
+  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
+  const result = await db.prepare(`${SELECT_STATE} WHERE track IN (${placeholders}) ORDER BY due`).bind(...tracks).all<StateRow>();
+  return result.results.map(hydrate);
 }

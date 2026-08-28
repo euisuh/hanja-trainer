@@ -1,0 +1,1 @@
+export const MASTERY_STABILITY_DAYS = 7;
