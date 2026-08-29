@@ -1,4 +1,4 @@
-export const PIN_ITERATIONS = 600_000;
+export const PIN_ITERATIONS = 100_000;
 export const PIN_SESSION_MS = 2 * 60 * 60 * 1_000;
 export const PIN_COOKIE = "hanja_pin";
 

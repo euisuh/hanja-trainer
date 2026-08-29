@@ -47,7 +47,7 @@ describe("device PIN", () => {
   const databases: DatabaseSync[] = [];
   afterEach(() => { for (const database of databases.splice(0)) database.close(); });
 
-  it("stores a 600k PBKDF2 hash and gates every non-unlock API route", async () => {
+  it("stores a Workers-compatible PBKDF2 hash and gates every non-unlock API route", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect(await (await routeApiRequest(request("/api/pin/state"), fixture.env)).json()).toEqual({ enabled: false, locked: false, lockedUntil: null });
     expect((await routeApiRequest(request("/api/health"), fixture.env)).status).toBe(200);
@@ -57,6 +57,7 @@ describe("device PIN", () => {
     const stored = await readPinRecord(fixture.env.DB);
     expect(stored.pin_hash).not.toContain("1234");
     expect(stored.pin_iterations).toBe(PIN_ITERATIONS);
+    expect(PIN_ITERATIONS).toBeLessThanOrEqual(100_000);
     expect(atob(stored.pin_salt!)).toHaveLength(16);
     expect(atob(stored.pin_secret!)).toHaveLength(32);
 
