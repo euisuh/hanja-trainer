@@ -1,7 +1,7 @@
 import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../src/shared/api";
 import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
 import { buildQueue, readingFor, reviewKey } from "../../src/features/session/buildQueue";
-import { listForTracks, listFreshForTracks } from "../db/characters";
+import { listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
 
 const labels = {
@@ -70,15 +70,15 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
 }
 
 export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID()): Promise<StartSessionResponse> {
-  const [characters, states, freshRows] = await Promise.all([
+  const [characters, states, candidateRows] = await Promise.all([
     listForTracks(db, input.tracks),
     listStatesForTracks(db, input.tracks),
-    input.mode === "lesson" ? listFreshForTracks(db, input.tracks, input) : Promise.resolve([]),
+    input.mode === "lesson" ? listFreshForTracks(db, input.tracks, input) : input.mode === "placement" ? listPlacementMembersForTracks(db, input.tracks) : Promise.resolve([]),
   ]);
   const stateMap = new Map(states.map((state) => [reviewKey(state.characterId, state.track), state]));
-  const freshKeys = new Set(freshRows.map((row) => reviewKey(row.character_id, row.track)));
+  const candidateKeys = new Set(candidateRows.map((row) => reviewKey(row.character_id, row.track)));
   const random = seededRandom(hashSeed(sessionId));
-  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys, random });
+  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys: input.mode === "lesson" ? candidateKeys : undefined, placementKeys: input.mode === "placement" ? candidateKeys : undefined, random });
   return {
     sessionId,
     cards: queue.map(toCard).map((card) => shuffleOptions(card, random)),

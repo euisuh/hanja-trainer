@@ -222,6 +222,18 @@ describe("content API", () => {
     expect(anchored.cards[0].characterKey).toBe(unit.key);
   });
 
+  it("keeps legacy non-curriculum rows out of placement questions", async () => {
+    const fixture = setupSeeds(["data/characters.sample.json", ...CHARACTER_FILES]); databases.push(fixture.sqlite);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM character_tracks WHERE track = 'jp' AND level_ord = 9").get()).toEqual({ count: 1 });
+    expect((await listForTracks(fixture.env.DB, ["jp"])).some((character) => character.key === "憂")).toBe(true);
+
+    const placement = await startSession(fixture.env.DB, { mode: "placement", tracks: ["jp"], limit: 15 }, "legacy-placement");
+
+    expect(placement.cards).toHaveLength(15);
+    expect(placement.cards.some((card) => card.characterKey === "憂")).toBe(false);
+    expect([...new Set(placement.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+  });
+
   it("reports JLPT kanji coverage from review mastery for JP only", async () => {
     const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
     const load = async () => await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json() as StatsResponse;

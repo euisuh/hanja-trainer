@@ -101,6 +101,15 @@ describe("buildQueue", () => {
     }
   });
 
+  it("uses non-curriculum entries as placement distractors, not questions", () => {
+    const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 1, mode: "placement", placementKeys: new Set([reviewKey(1, "kr")]) });
+    const item = queue[0];
+
+    expect(item?.character.id).toBe(1);
+    expect(item?.kind).toBe("reading");
+    if (item?.kind === "reading") expect(new Set(item.options.map((option) => option.label))).toEqual(new Set(["훈 1", "훈 2", "훈 3", "훈 4"]));
+  });
+
   it("uses only enabled tracks and due items in review mode", () => {
     const now = new Date("2026-01-02T00:00:00Z");
     const states = new Map([

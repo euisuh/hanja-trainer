@@ -202,6 +202,18 @@ export async function listForTracks(db: D1Database, tracks: Track[]): Promise<Ch
   return hydrate(result.results);
 }
 
+export async function listPlacementMembersForTracks(db: D1Database, tracks: Track[]): Promise<FreshRow[]> {
+  if (tracks.length === 0) return [];
+  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
+  const result = await db.prepare(`
+    SELECT DISTINCT cum.character_id, cu.track
+    FROM curriculum_unit_members cum
+    JOIN curriculum_units cu ON cu.id = cum.unit_id
+    WHERE cu.track IN (${placeholders})
+  `).bind(...tracks).all<FreshRow>();
+  return result.results;
+}
+
 export async function listFreshForTracks(db: D1Database, tracks: Track[], anchor: CurriculumAnchor): Promise<FreshRow[]> {
   if (tracks.length === 0) return [];
   const unit = anchor.unitId === undefined ? null : await db.prepare(`

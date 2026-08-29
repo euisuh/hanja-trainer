@@ -33,6 +33,7 @@ export type BuildQueueOptions = {
   mode: "lesson" | "review" | "placement";
   reviewStates?: ReadonlyMap<string, ReviewState>;
   freshKeys?: ReadonlySet<string>;
+  placementKeys?: ReadonlySet<string>;
   now?: Date;
   random?: () => number;
 };
@@ -203,6 +204,7 @@ export function buildQueue({
   mode,
   reviewStates = new Map(),
   freshKeys,
+  placementKeys,
   now = new Date(),
   random = () => 0.5,
 }: BuildQueueOptions): SessionQueueItem[] {
@@ -215,7 +217,8 @@ export function buildQueue({
     .filter((pair) => pair.state && isDue(pair.state, now))
     .sort((a, b) => a.state!.due.getTime() - b.state!.due.getTime());
   const fresh = pairs.filter((pair) => !pair.state && (!freshKeys || freshKeys.has(reviewKey(pair.character.id, pair.track))));
-  const available = mode === "review" ? due : mode === "lesson" ? [...due, ...fresh] : placementPairs(pairs, enabledTracks, length);
+  const placement = placementKeys ? pairs.filter((pair) => placementKeys.has(reviewKey(pair.character.id, pair.track))) : pairs;
+  const available = mode === "review" ? due : mode === "lesson" ? [...due, ...fresh] : placementPairs(placement, enabledTracks, length);
   if (available.length === 0) return [];
 
   const compareCharacters = characters
