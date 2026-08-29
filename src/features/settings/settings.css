@@ -9,6 +9,7 @@
 .settings-card { padding: 20px; border: 3px solid var(--ink); border-radius: var(--radius-large); background: var(--card); box-shadow: var(--shadow-5); }
 .settings-card > header { margin-bottom: 14px; font-size: 13px; font-weight: 800; }
 .track-toggles > div { display: flex; flex-direction: column; gap: 10px; }
+.track-toggles > p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
 .track-toggles button { display: flex; align-items: center; justify-content: space-between; padding: 13px 15px; border: 2px solid var(--settings-accent); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-size: 14px; font-weight: 800; }
 .track-toggles button[aria-pressed="true"] { background: var(--settings-soft); }
 .track-toggles button small { color: var(--settings-accent-text); font-size: 12px; font-weight: 800; }

@@ -19,6 +19,7 @@ export function TrackToggles({ enabled, onToggle }: { enabled: Track[]; onToggle
           return <button aria-pressed={active} key={track} lang={theme.lang} onClick={() => onToggle(track)} style={{ "--settings-accent": theme.accent, "--settings-accent-text": theme.accentText, "--settings-soft": theme.soft } as CSSProperties} type="button"><span>{theme.label}</span><small>{active ? states[track].on : states[track].off}</small></button>;
         })}
       </div>
+      <p>교차 트랙 비교 카드는 트랙을 두 개 이상 켰을 때 표시됩니다.</p>
     </section>
   );
 }

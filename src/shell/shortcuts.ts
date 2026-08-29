@@ -1,5 +1,6 @@
 export const SHORTCUTS = [
   { id: "answers", keys: "1 – 4", description: "보기 선택" },
+  { id: "skip", keys: "0", description: "모름" },
   { id: "advance", keys: "Enter / Space", description: "확인 · 다음 카드" },
   { id: "escape", keys: "Esc / Q", description: "세션 일시정지 / 뒤로 · 종료" },
   { id: "map", keys: "↑ ↓", description: "학습 지도 노드 이동" },

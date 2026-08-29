@@ -107,6 +107,10 @@ export function gradeFromAnswer(correct: boolean, elapsedMs: number): Grade {
   return "good";
 }
 
+export function gradeFromReview(correct: boolean, skipped: boolean, elapsedMs: number): Grade {
+  return skipped ? "again" : gradeFromAnswer(correct, elapsedMs);
+}
+
 export function isDue(state: ReviewState, now: Date): boolean {
   return state.due.getTime() <= now.getTime();
 }

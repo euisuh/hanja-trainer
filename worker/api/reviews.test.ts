@@ -33,7 +33,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -48,7 +48,7 @@ describe("review and session API", () => {
 
   it("schedules once per session card and exposes the state immediately", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    const input: SubmitReviewRequest = { sessionId: "session-a", cardIndex: 0, characterKey: "金", track: "kr", correct: true, elapsedMs: 4_000, mode: "lesson" };
+    const input: SubmitReviewRequest = { sessionId: "session-a", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 4_000, mode: "lesson" };
     const first = await post("/api/reviews", input, fixture.env);
     expect(first.status).toBe(200);
     const response = await first.json() as SubmitReviewResponse;
@@ -65,7 +65,7 @@ describe("review and session API", () => {
 
   it("logs placement without creating state and returns ordered, uncapped due totals", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    await post("/api/reviews", { sessionId: "placement", cardIndex: 0, characterKey: "金", track: "kr", correct: true, elapsedMs: 2_000, mode: "placement" }, fixture.env);
+    await post("/api/reviews", { sessionId: "placement", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 2_000, mode: "placement" }, fixture.env);
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log").get()).toEqual({ count: 1 });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 0 });
 
@@ -80,14 +80,30 @@ describe("review and session API", () => {
     expect(due.cards[0].characterKey).toBe(ids[0].key);
   });
 
+  it("records skips separately and rejects correct skips", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    await post("/api/reviews", { sessionId: "wrong", cardIndex: 0, characterKey: "金", track: "kr", correct: false, skipped: false, elapsedMs: 1, mode: "lesson" }, fixture.env);
+    await post("/api/reviews", { sessionId: "skip", cardIndex: 0, characterKey: "大", track: "kr", correct: false, skipped: true, elapsedMs: 999_999, mode: "lesson" }, fixture.env);
+    const rows = fixture.sqlite.prepare("SELECT rating, correct, skipped, scheduled_days_after FROM review_log ORDER BY id").all();
+
+    expect(rows).toEqual([
+      { rating: 1, correct: 0, skipped: 0, scheduled_days_after: 0 },
+      { rating: 1, correct: 0, skipped: 1, scheduled_days_after: 0 },
+    ]);
+    expect((await post("/api/reviews", { sessionId: "invalid", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: true, elapsedMs: 1, mode: "lesson" }, fixture.env)).status).toBe(400);
+    const stats = await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json();
+    expect(stats).toMatchObject({ answered: 2, skipped: 1, skipRate: 50 });
+  });
+
   it("computes XP and streaks across a day boundary", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const now = new Date("2026-08-29T12:00:00Z");
     for (const endedAt of ["2026-08-27T12:00:00Z", "2026-08-28T12:00:00Z"]) {
-      await createSession(fixture.env.DB, { mode: "lesson", startedAt: endedAt, endedAt, answered: 1, correct: 1, bestCombo: 1, xp: 10 }, now);
+      await createSession(fixture.env.DB, { mode: "lesson", startedAt: endedAt, endedAt, answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10 }, now);
     }
-    const profile = await createSession(fixture.env.DB, { mode: "review", startedAt: now.toISOString(), endedAt: now.toISOString(), answered: 2, correct: 1, bestCombo: 1, xp: 12 }, now);
+    const profile = await createSession(fixture.env.DB, { mode: "review", startedAt: now.toISOString(), endedAt: now.toISOString(), answered: 2, correct: 1, skipped: 1, bestCombo: 1, xp: 12 }, now);
     expect(profile).toMatchObject<Partial<ProfileResponse>>({ xp: 32, todayXp: 12, streak: 3, longestStreak: 3 });
+    expect(fixture.sqlite.prepare("SELECT skipped FROM sessions ORDER BY id DESC LIMIT 1").get()).toEqual({ skipped: 1 });
   });
 
   it("rejects malformed review, batch, due, and session inputs", async () => {
@@ -96,6 +112,8 @@ describe("review and session API", () => {
     expect((await post("/api/reviews/batch", [], fixture.env)).status).toBe(400);
     expect((await routeApiRequest(new Request("https://test/api/reviews/due?tracks=xx&limit=-1"), fixture.env)).status).toBe(400);
     expect((await post("/api/sessions", { mode: "lesson", startedAt: "nope" }, fixture.env)).status).toBe(400);
+    expect((await post("/api/sessions", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 0, skipped: 2, bestCombo: 0, xp: 0 }, fixture.env)).status).toBe(400);
+    expect((await post("/api/sessions", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 1, skipped: 1, bestCombo: 0, xp: 0 }, fixture.env)).status).toBe(400);
   });
 });
 

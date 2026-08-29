@@ -13,7 +13,7 @@ export function parsePlacementAnswers(value: unknown): PlacementAnswer[] | null 
     if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
     const answer = value as Record<string, unknown>;
     if (typeof answer.characterKey !== "string" || answer.characterKey.length < 1 || answer.characterKey.length > 16) return null;
-    if (typeof answer.track !== "string" || !TRACKS.includes(answer.track as Track) || typeof answer.correct !== "boolean") return null;
+    if (typeof answer.track !== "string" || !TRACKS.includes(answer.track as Track) || typeof answer.correct !== "boolean" || typeof answer.skipped !== "boolean" || answer.skipped && answer.correct) return null;
     if (!Number.isInteger(answer.levelOrd) || (answer.levelOrd as number) < 1 || (answer.levelOrd as number) > 1_000) return null;
     parsed.push(answer as PlacementAnswer);
   }

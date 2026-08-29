@@ -5,6 +5,7 @@ import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse,
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import type { Track } from "../../src/shared/types";
 import { listForTracks } from "../db/characters";
+import { startSession } from "./cards";
 import { routeApiRequest } from "./router";
 
 const CHARACTER_FILES = [
@@ -48,6 +49,7 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-kanken-10.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
@@ -65,6 +67,8 @@ function setupSeeds(files: string[]) {
   sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -126,9 +130,11 @@ describe("content API", () => {
     const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
     const lesson = await (await post({ mode: "lesson", tracks: ["kr"], limit: 6 })).json() as StartSessionResponse;
     expect(lesson.cards).toHaveLength(6);
+    expect(lesson.cards.every((card) => card.meaningKo.length > 0)).toBe(true);
     for (const card of lesson.cards.filter((item) => item.kind === "reading")) {
       expect(card.options).toHaveLength(4);
       expect(new Set(card.options.map((option) => option.label)).size).toBe(4);
+      expect(card.options.every((option) => Object.keys(option).join() === "label")).toBe(true);
       expect(card.answerIndex).toBeGreaterThanOrEqual(0);
       expect(card.options[card.answerIndex]).toBeDefined();
     }
@@ -138,6 +144,38 @@ describe("content API", () => {
     expect(review.cards.map((card) => card.characterKey)).toEqual(keys);
     const placement = await (await post({ mode: "placement", tracks: ["kr"], limit: 5 })).json() as StartSessionResponse;
     expect(placement.cards).toHaveLength(5);
+  });
+
+  it.each([1, 2, 3, 4])("returns a clean session response for a %i-character track", async (count) => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    fixture.sqlite.prepare(`DELETE FROM character_tracks WHERE track = 'kr' AND character_id NOT IN (SELECT character_id FROM character_tracks WHERE track = 'kr' ORDER BY character_id LIMIT ?)` ).run(count);
+    const response = await routeApiRequest(new Request("https://test/api/session/start", {
+      method: "POST",
+      body: JSON.stringify({ mode: "lesson", tracks: ["kr"], limit: 8 }),
+    }), fixture.env);
+    const session = await response.json() as StartSessionResponse;
+
+    expect(response.status).toBe(200);
+    expect(session.cards).toHaveLength(count < 4 ? 0 : count);
+    expect(session.shortage?.code).toBe(count < 4 ? "insufficient_content" : undefined);
+    expect(session.shortage?.tracks).toEqual(count < 4 ? ["kr"] : undefined);
+  });
+
+  it("varies distractor sets between session seeds", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    fixture.sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/cn-hsk1.json", "utf8")) as unknown)));
+    const input = { mode: "lesson" as const, tracks: ["cn" as const], limit: 50 };
+    const first = await startSession(fixture.env.DB, input, "session-a");
+    const second = await startSession(fixture.env.DB, input, "session-b");
+    const secondByKey = new Map(second.cards.filter((card) => card.kind === "reading").map((card) => [card.characterKey, card]));
+
+    expect(first.cards.some((card) => {
+      const other = secondByKey.get(card.characterKey);
+      if (card.kind !== "reading" || !other || other.kind !== "reading") return false;
+      const wrong = card.options.filter((_, index) => index !== card.answerIndex).map((option) => option.label).sort();
+      const otherWrong = other.options.filter((_, index) => index !== other.answerIndex).map((option) => option.label).sort();
+      return wrong.join() !== otherWrong.join();
+    })).toBe(true);
   });
 
   it("rejects invalid tracks, limits, and malformed bodies as JSON 400s", async () => {

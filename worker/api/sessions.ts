@@ -17,10 +17,10 @@ export function parseSessionRequest(value: unknown): CreateSessionRequest | null
   const started = Date.parse(body.startedAt);
   const ended = Date.parse(body.endedAt);
   if (!Number.isFinite(started) || !Number.isFinite(ended) || ended < started) return null;
-  for (const field of ["answered", "correct", "bestCombo", "xp"] as const) {
+  for (const field of ["answered", "correct", "skipped", "bestCombo", "xp"] as const) {
     if (!Number.isInteger(body[field]) || (body[field] as number) < 0) return null;
   }
-  if ((body.answered as number) > 10_000 || (body.correct as number) > (body.answered as number) || (body.bestCombo as number) > (body.answered as number) || (body.xp as number) > 1_000_000) return null;
+  if ((body.answered as number) > 10_000 || (body.correct as number) + (body.skipped as number) > (body.answered as number) || (body.bestCombo as number) > (body.answered as number) || (body.xp as number) > 1_000_000) return null;
   return body as CreateSessionRequest;
 }
 
@@ -77,9 +77,9 @@ export async function getProfile(db: D1Database, now = new Date()): Promise<Prof
 export async function createSession(db: D1Database, input: CreateSessionRequest, now = new Date()): Promise<ProfileResponse> {
   await db.batch([
     db.prepare(`
-      INSERT INTO sessions (mode, started_at, ended_at, answered, correct, best_combo, xp)
-      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
-    `).bind(input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.bestCombo, input.xp),
+      INSERT INTO sessions (mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+    `).bind(input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.skipped, input.bestCombo, input.xp),
     db.prepare("UPDATE profile SET xp = xp + ?1, updated_at = ?2 WHERE id = 1").bind(input.xp, now.getTime()),
   ]);
   return getProfile(db, now);

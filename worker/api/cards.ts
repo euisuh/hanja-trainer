@@ -56,6 +56,7 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
   const base = {
     kind: item.kind,
     characterKey: item.character.key,
+    meaningKo: item.character.meaningKo,
     track: item.track,
     glyph: entry.glyph,
     levelBadge: levelBadge(entry),
@@ -65,10 +66,10 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
     sentence: sentence ? { text: sentence.text, translation: sentence.translationKo, source: sentence.source, targetIndex: sentence.targetIndex } : null,
   } as const;
   if (item.kind === "compare") return { ...base, kind: "compare", options: [], answerIndex: -1, compare: comparison(item.character) };
-  return { ...base, kind: "reading", options: item.options.map((option) => ({ label: option.label, sub: option.sublabel })), answerIndex: item.answerIndex };
+  return { ...base, kind: "reading", options: item.options, answerIndex: item.answerIndex };
 }
 
-export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }): Promise<StartSessionResponse> {
+export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID()): Promise<StartSessionResponse> {
   const [characters, states, freshRows] = await Promise.all([
     listForTracks(db, input.tracks),
     listStatesForTracks(db, input.tracks),
@@ -76,8 +77,17 @@ export async function startSession(db: D1Database, input: StartSessionRequest & 
   ]);
   const stateMap = new Map(states.map((state) => [reviewKey(state.characterId, state.track), state]));
   const freshKeys = new Set(freshRows.map((row) => reviewKey(row.character_id, row.track)));
-  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys });
-  const sessionId = crypto.randomUUID();
   const random = seededRandom(hashSeed(sessionId));
-  return { sessionId, cards: queue.map(toCard).map((card) => shuffleOptions(card, random)) };
+  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys, random });
+  return {
+    sessionId,
+    cards: queue.map(toCard).map((card) => shuffleOptions(card, random)),
+    ...(queue.length === 0 && input.mode !== "review" ? {
+      shortage: {
+        code: "insufficient_content" as const,
+        tracks: input.tracks,
+        message: `Not enough distinct ${input.tracks.join(", ")} readings to build four-option cards`,
+      },
+    } : {}),
+  };
 }

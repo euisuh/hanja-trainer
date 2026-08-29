@@ -31,7 +31,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-kanken-10.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -64,11 +64,12 @@ describe("profile, placement, and stats API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     fixture.sqlite.exec("UPDATE character_tracks SET level_ord = 2 WHERE track = 'kr' AND character_id IN (SELECT cum.character_id FROM curriculum_unit_members cum JOIN curriculum_units cu ON cu.id = cum.unit_id WHERE cu.track = 'kr' AND cu.ord >= 2)");
     const response = await routeApiRequest(request("/api/placement/score", "POST", { answers: [
-      { characterKey: "金", track: "kr", correct: true, levelOrd: 2 },
-      { characterKey: "大", track: "kr", correct: false, levelOrd: 2 },
+      { characterKey: "金", track: "kr", correct: true, skipped: false, levelOrd: 2 },
+      { characterKey: "大", track: "kr", correct: false, skipped: false, levelOrd: 2 },
     ] }), fixture.env);
     const placement = await response.json() as PlacementScoreResponse;
     expect(placement.results[0]).toMatchObject({ track: "kr", knownCount: 1, totalSeen: 2, accuracy: 50, levelBadge: "8급" });
+    expect((await routeApiRequest(request("/api/placement/score", "POST", { answers: [{ characterKey: "金", track: "kr", correct: true, skipped: true, levelOrd: 2 }] }), fixture.env)).status).toBe(400);
     expect(await (await routeApiRequest(request("/api/onboarding-state"), fixture.env)).json()).toEqual({ onboarded: true });
     const curriculum = await (await routeApiRequest(request("/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
     expect(curriculum.units.filter((unit) => unit.current)).toHaveLength(1);

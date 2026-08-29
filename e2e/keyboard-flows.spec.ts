@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
-type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; track: keyof typeof languages };
+type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; options: Array<{ label: string }>; track: keyof typeof languages };
 type SessionResponse = { cards: Card[] };
 
 async function expectClosestLang(locator: Locator, lang: string) {
@@ -14,10 +14,13 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, verifyLanguages = false, progressOffset = 0) {
+type FinishOptions = { progressOffset?: number; skipFirst?: boolean; verifyLanguages?: boolean };
+
+async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
+  let skipped = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
-    if (verifyLanguages) {
+    if (options.verifyLanguages) {
       await expectClosestLang(page.locator(".quiz-card__glyph"), languages[card.track]);
       if (card.kind === "reading") {
         await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[card.track]);
@@ -35,13 +38,33 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         }
       }
     }
-    if (card.kind === "reading") await page.keyboard.press(String(card.answerIndex + 1));
+    if (card.kind === "reading") {
+      const shouldSkip = Boolean(options.skipFirst) && !skipped;
+      await page.keyboard.press(shouldSkip ? "0" : String(card.answerIndex + 1));
+      if (shouldSkip) {
+        skipped = true;
+        await expect(page.locator(".feedback-bar")).toContainText(/모름 · 정답 \S/u);
+        await expect(page.locator(".feedback-bar")).toContainText(/= \S/u);
+      }
+    } else {
+      const progress = await page.getByRole("progressbar", { name: /진행률/u }).getAttribute("aria-valuenow");
+      await page.keyboard.press("1");
+      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", progress ?? "0");
+    }
     await page.keyboard.press("Enter");
     if (index + 1 < cards.length) {
-      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(progressOffset + index + 2));
+      const completed = (options.progressOffset ?? 0) + cards.slice(0, index + 1).filter((item) => item.kind === "reading").length;
+      const next = cards[index + 1];
+      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(completed + Number(next.kind === "reading")));
     }
   }
   await expect(page.getByRole("heading", { name: completion })).toBeVisible();
+}
+
+function expectReadingOnly(cards: Card[]) {
+  for (const card of cards.filter((item) => item.kind === "reading")) {
+    expect(card.options.every((option) => Object.keys(option).join() === "label")).toBe(true);
+  }
 }
 
 async function checkLayout(page: Page, name: string, testInfo: TestInfo) {
@@ -50,6 +73,27 @@ async function checkLayout(page: Page, name: string, testInfo: TestInfo) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
     await page.screenshot({ fullPage: true, path: testInfo.outputPath(`${name}-${width}.png`) });
   }
+}
+
+async function checkAnswerGrid(page: Page) {
+  for (const width of [561, 720, 900, 1080, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    const boxes = await page.locator(".answer-option").evaluateAll((options) => options.map((option) => {
+      const box = option.getBoundingClientRect();
+      return { x: box.x, y: box.y, height: box.height };
+    }));
+    expect(boxes).toHaveLength(4);
+    expect(boxes[0].y).toBe(boxes[1].y);
+    expect(boxes[2].y).toBe(boxes[3].y);
+    expect(boxes[2].y).toBeGreaterThan(boxes[0].y);
+    expect(boxes[0].x).toBe(boxes[2].x);
+    expect(boxes[0].height).toBe(boxes[1].height);
+    expect(boxes[2].height).toBe(boxes[3].height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  }
+  await page.setViewportSize({ width: 430, height: 900 });
+  const mobile = await page.locator(".answer-option").evaluateAll((options) => options.map((option) => option.getBoundingClientRect().y));
+  expect(new Set(mobile).size).toBe(4);
 }
 
 test.describe.serial("keyboard-only product flows", () => {
@@ -64,7 +108,9 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.getByRole("button", { name: /日本/u })).toHaveAttribute("aria-pressed", "false");
     const placement = await sessionStarted(page, () => page.keyboard.press("Enter"));
     expect(placement.cards).toHaveLength(15);
+    expectReadingOnly(placement.cards);
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
+    await checkAnswerGrid(page);
     await checkLayout(page, "placement", testInfo);
     await finishSession(page, placement.cards, /시작 지점/u);
     await expect(page.getByRole("heading", { name: "시작 지점이 정해졌습니다." })).toBeVisible();
@@ -84,6 +130,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const lesson = await sessionStarted(page, () => page.keyboard.press("Enter"));
+    expectReadingOnly(lesson.cards);
+    await checkAnswerGrid(page);
     await page.setViewportSize({ width: 1080, height: 900 });
     await expect(page.locator(".quiz-card__glyph")).toHaveCSS("font-size", "150px");
     await page.setViewportSize({ width: 430, height: 900 });
@@ -112,7 +160,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.locator(".answer-option").first()).toBeFocused();
     await page.getByRole("button", { name: /다음 카드/u }).click();
 
-    await finishSession(page, lesson.cards.slice(1), /세션 완료/u, true, 1);
+    await finishSession(page, lesson.cards.slice(1), /세션 완료/u, { progressOffset: 1, skipFirst: true, verifyLanguages: true });
+    await expect.poll(async () => (await (await page.request.get("/api/stats")).json() as { skipped: number }).skipped).toBeGreaterThan(0);
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
@@ -121,6 +170,7 @@ test.describe.serial("keyboard-only product flows", () => {
   test("review queue decreases and reaches its empty state", async ({ page }, testInfo) => {
     await page.goto("/home");
     const review = await sessionStarted(page, () => page.keyboard.press("R"));
+    expectReadingOnly(review.cards);
     const before = await page.request.get("/api/reviews/due?tracks=kr,cn&limit=100");
     const beforeTotal = (await before.json() as { total: number }).total;
     expect(beforeTotal).toBeGreaterThan(0);
@@ -138,6 +188,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "review", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
+    await checkAnswerGrid(page);
     await finishSession(page, review.cards);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();

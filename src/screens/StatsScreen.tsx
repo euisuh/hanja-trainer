@@ -22,6 +22,7 @@ export function StatsScreen() {
   return (
     <section className="stats-screen">
       <h1>통계</h1>
+      <p className="stats-skip"><strong>모름 {stats.skipped}회</strong> · 전체 답변의 {Math.round(stats.skipRate)}%</p>
       <StreakCalendar calendar={stats.calendar} longestStreak={stats.longestStreak} streak={stats.streak} />
       <div className="track-mastery-grid">
         {stats.tracks.map((progress, index) => (

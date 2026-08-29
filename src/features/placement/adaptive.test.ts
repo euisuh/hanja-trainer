@@ -29,7 +29,7 @@ function run(answers: (index: number) => boolean) {
 
 describe("adaptive placement", () => {
   it("scores all-correct high, all-wrong at the floor, and mixed between", () => {
-    const answers = (correct: boolean[]) => correct.map((value, index) => ({ characterKey: `${index}`, track: "kr" as const, correct: value, levelOrd: index + 1 }));
+    const answers = (correct: boolean[]) => correct.map((value, index) => ({ characterKey: `${index}`, track: "kr" as const, correct: value, skipped: false, levelOrd: index + 1 }));
     expect(scorePlacementAnswers(answers([true, true, true, true]))[0].levelOrd).toBe(4);
     expect(scorePlacementAnswers(answers([false, false, false, false]))[0].levelOrd).toBe(1);
     expect(scorePlacementAnswers(answers([true, false, true, false]))[0].levelOrd).toBe(3);

@@ -5,11 +5,12 @@ type Options = {
   answered: boolean;
   compare: boolean;
   onPick: (index: number) => void;
+  onSkip: () => void;
   onAdvance: () => void;
   onPause: () => void;
 };
 
-export function useSessionKeys({ active, answered, compare, onPick, onAdvance, onPause }: Options) {
+export function useSessionKeys({ active, answered, compare, onPick, onSkip, onAdvance, onPause }: Options) {
   useEffect(() => {
     if (!active) return;
     function onKeyDown(event: KeyboardEvent) {
@@ -21,13 +22,16 @@ export function useSessionKeys({ active, answered, compare, onPick, onAdvance, o
       } else if (/^[1-4]$/u.test(event.key) && !answered && !compare) {
         event.preventDefault();
         onPick(Number(event.key) - 1);
+      } else if (event.key === "0" && !answered && !compare) {
+        event.preventDefault();
+        onSkip();
       } else if ((event.key === "Enter" || event.key === " ") && (answered || compare)) {
-        if (target instanceof HTMLElement && target.matches(".feedback-bar button, .answer-option[aria-disabled=true]")) return;
+        if (target instanceof HTMLElement && target.matches(".feedback-bar button, .answer-option[aria-disabled=true], .skip-answer[aria-disabled=true]")) return;
         event.preventDefault();
         onAdvance();
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [active, answered, compare, onAdvance, onPause, onPick]);
+  }, [active, answered, compare, onAdvance, onPause, onPick, onSkip]);
 }

@@ -18,7 +18,9 @@ export function SessionComplete({ result, onHome }: { result: SessionResult; onH
       <div aria-hidden="true" className="session-complete__glyph">完</div>
       <h1>세션 완료 · +{result.xp} XP</h1>
       <div className="session-complete__stats">
+        <div><small>응답</small><strong>{result.answered}</strong></div>
         <div><small>정확도</small><strong>{result.accuracy}%</strong></div>
+        <div><small>모름</small><strong>{result.skipped}회</strong></div>
         <div><small>최고 콤보</small><strong>{result.bestCombo}×</strong></div>
         <div><small>다음 복습</small><strong>{result.nextReview}</strong></div>
       </div>

@@ -6,7 +6,7 @@ import { streaks, zonedDayKey } from "./sessions";
 const CALENDAR_DAYS = 126;
 const DAY_MS = 86_400_000;
 type ProfileRow = { enabled_tracks: string; timezone: string };
-type LogRow = { answered_at: number };
+type LogRow = { answered_at: number; skipped: number };
 type MasteryRow = { track: Track; known: number; total: number };
 type LevelRow = { track: Track; level_ord: number; level_badge: string };
 type PlacementRow = { track: Track; level_badge: string; level_ord: number };
@@ -42,7 +42,7 @@ function addDays(key: string, amount: number): string {
 export async function getStats(db: D1Database, now = new Date()): Promise<StatsResponse> {
   const [profileResult, logsResult, masteryResult, levelsResult, placementResult, sessionsResult, jlptResult] = await db.batch([
     db.prepare("SELECT enabled_tracks, timezone FROM profile WHERE id = 1"),
-    db.prepare("SELECT answered_at FROM review_log ORDER BY answered_at"),
+    db.prepare("SELECT answered_at, skipped FROM review_log ORDER BY answered_at"),
     db.prepare(`
       SELECT ct.track, COUNT(*) AS total,
         SUM(CASE WHEN rs.stability >= ?1 THEN 1 ELSE 0 END) AS known
@@ -104,5 +104,7 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
       ...(track === "jp" ? { secondaryScale: jlptProgress(jlptResult.results as unknown as JlptRow[]) } : {}),
     };
   });
-  return { streak: streak.streak, longestStreak: streak.longestStreak, calendar, tracks };
+  const logs = logsResult.results as unknown as LogRow[];
+  const skipped = logs.reduce((sum, row) => sum + row.skipped, 0);
+  return { streak: streak.streak, longestStreak: streak.longestStreak, calendar, tracks, answered: logs.length, skipped, skipRate: logs.length === 0 ? 0 : skipped / logs.length * 100 };
 }

@@ -13,6 +13,7 @@ export interface StoredReviewLog extends ReviewLogEntry {
   characterId: number;
   track: Track;
   correct: boolean;
+  skipped: boolean;
   elapsedMs: number;
   mode: ReviewMode;
   sessionId?: string;
@@ -148,8 +149,8 @@ export function prepareAppendLog(db: D1Database, log: StoredReviewLog): D1Prepar
   return db.prepare(`
     INSERT INTO review_log (
       character_id, track, rating, answered_at, correct, elapsed_ms,
-      scheduled_days_before, scheduled_days_after, mode, session_id, card_index
-    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)
+      scheduled_days_before, scheduled_days_after, mode, session_id, card_index, skipped
+    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
   `).bind(
     log.characterId,
     log.track,
@@ -162,6 +163,7 @@ export function prepareAppendLog(db: D1Database, log: StoredReviewLog): D1Prepar
     log.mode,
     log.sessionId ?? null,
     log.cardIndex ?? null,
+    Number(log.skipped),
   );
 }
 

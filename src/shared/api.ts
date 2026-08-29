@@ -60,12 +60,13 @@ export type CharacterDetailResponse = {
 };
 
 export type SessionMode = "lesson" | "review" | "placement";
-export type SessionOption = { label: string; sub: string };
+export type SessionOption = { label: string };
 export type SessionCompareEntry = { glyph: string; reading: string; levelBadge: string };
 
 export type SessionCard = {
   kind: "reading" | "compare";
   characterKey: string;
+  meaningKo: string;
   track: Track;
   glyph: string;
   levelBadge: string;
@@ -79,7 +80,11 @@ export type SessionCard = {
 };
 
 export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number; unitId?: number; levelOrd?: number };
-export type StartSessionResponse = { sessionId: string; cards: SessionCard[] };
+export type StartSessionResponse = {
+  sessionId: string;
+  cards: SessionCard[];
+  shortage?: { code: "insufficient_content"; tracks: Track[]; message: string };
+};
 
 export type SubmitReviewRequest = {
   sessionId: string;
@@ -87,6 +92,7 @@ export type SubmitReviewRequest = {
   characterKey: string;
   track: Track;
   correct: boolean;
+  skipped: boolean;
   elapsedMs: number;
   mode: SessionMode;
 };
@@ -117,6 +123,7 @@ export type CreateSessionRequest = {
   endedAt: string;
   answered: number;
   correct: number;
+  skipped: number;
   bestCombo: number;
   xp: number;
 };
@@ -130,7 +137,7 @@ export type ProfileResponse = {
   enabledTracks: Track[];
 };
 
-export type PlacementAnswer = { characterKey: string; track: Track; correct: boolean; levelOrd: number };
+export type PlacementAnswer = { characterKey: string; track: Track; correct: boolean; skipped: boolean; levelOrd: number };
 export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; detail: string };
 export type PlacementScoreResponse = { results: PlacementScoreResult[] };
 
@@ -141,4 +148,4 @@ export type OnboardingStateResponse = { onboarded: boolean };
 export type StatsCalendarDay = { date: string; count: number };
 export type StatsSecondaryScale = { name: "JLPT"; level: string; known: number; total: number; nextLevel?: string };
 export type StatsTrack = { track: Track; known: number; total: number; pct: number; currentLevel: string; nextLevel?: string; secondaryScale?: StatsSecondaryScale };
-export type StatsResponse = { streak: number; longestStreak: number; calendar: StatsCalendarDay[]; tracks: StatsTrack[] };
+export type StatsResponse = { streak: number; longestStreak: number; calendar: StatsCalendarDay[]; tracks: StatsTrack[]; answered: number; skipped: number; skipRate: number };

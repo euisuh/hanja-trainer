@@ -68,7 +68,7 @@ export function ReviewScreen() {
         onyomiScript={onyomiScript}
         onComplete={async (result) => {
           try {
-            const profile = await apiClient.createSession({ mode: "review", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, bestCombo: result.bestCombo, xp: result.xp });
+            const profile = await apiClient.createSession({ mode: "review", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
             navigate("/session-complete", { state: { ...result, profile } });
           } catch {
             navigate("/session-complete", { state: result });

@@ -35,7 +35,7 @@ export function PlacementScreen() {
       onComplete={async (result) => {
         try {
           const placement = await apiClient.scorePlacement(result.placementAnswers ?? []);
-          await apiClient.createSession({ mode: "placement", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, bestCombo: result.bestCombo, xp: result.xp });
+          await apiClient.createSession({ mode: "placement", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
           navigate("/placement-result", { state: placement });
         } catch {
           setError("배치 결과를 저장하지 못했습니다. 다시 시도해 주세요.");

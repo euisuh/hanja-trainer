@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { Link } from "react-router-dom";
 import { tracks } from "../../design/tokens";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../placement/adaptive";
-import { gradeFromAnswer, initialState, schedule, type ReviewState } from "../../shared/fsrs";
+import { gradeFromReview, initialState, schedule, type ReviewState } from "../../shared/fsrs";
 import { toHiragana } from "../../shared/kana";
 import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
@@ -13,6 +14,7 @@ import { FeedbackBar } from "./FeedbackBar";
 import { ParticleBurst } from "./ParticleBurst";
 import { PauseModal } from "./PauseModal";
 import { QuizCard } from "./QuizCard";
+import { SkipAnswer } from "./SkipAnswer";
 import { useSessionKeys } from "./useSessionKeys";
 import { useAnswerSubmit } from "./useAnswerSubmit";
 import "./session.css";
@@ -26,6 +28,7 @@ export type SessionResult = {
   nextReview: string;
   answered: number;
   correct: number;
+  skipped: number;
   profile?: ProfileResponse;
   placement?: PlacementResult[];
   placementAnswers?: PlacementAnswer[];
@@ -72,11 +75,13 @@ export function SessionRunner({
   });
   const [index, setIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [skipped, setSkipped] = useState(false);
   const [paused, setPaused] = useState(false);
   const [combo, setCombo] = useState(0);
   const [bestCombo, setBestCombo] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);
+  const [skippedCount, setSkippedCount] = useState(0);
   const [xp, setXp] = useState(0);
   const [lastXp, setLastXp] = useState(0);
   const [nextInterval, setNextInterval] = useState("—");
@@ -88,18 +93,21 @@ export function SessionRunner({
   const currentIndex = useRef(0);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
   const item = mode === "placement" && !externalQueue ? placementItem : queue[index];
-  const queueLength = externalQueue ? queue.length : mode === "placement" ? length : queue.length;
+  const queueLength = mode === "placement" && !externalQueue ? length : queue.filter((entry) => entry.kind === "reading").length;
+  const completedBefore = mode === "placement" && !externalQueue ? index : queue.slice(0, index).filter((entry) => entry.kind === "reading").length;
   const compare = item?.kind === "compare";
-  const answered = selectedIndex !== null;
+  const progress = completedBefore + Number(item?.kind === "reading");
+  const answered = selectedIndex !== null || skipped;
   const correct = item?.kind === "reading" && selectedIndex === item.answerIndex;
 
   useEffect(() => {
     startedAt.current = performance.now();
   }, [index]);
 
-  function pick(choice: number) {
+  function pick(choice: number | null) {
     if (!item || item.kind !== "reading" || selectedIndex !== null || answerLocked.current) return;
     answerLocked.current = true;
+    const isSkipped = choice === null;
     const isCorrect = choice === item.answerIndex;
     const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current));
     let interval = "—";
@@ -110,33 +118,35 @@ export function SessionRunner({
         return;
       }
       setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
-      setPlacementAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, levelOrd: entry.levelOrd }]);
+      setPlacementAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, levelOrd: entry.levelOrd }]);
     } else {
       const key = reviewKey(item.character.id, item.track);
       const previous = states.get(key) ?? initialState(new Date());
-      const result = schedule(previous, gradeFromAnswer(isCorrect, elapsedMs), new Date());
+      const result = schedule(previous, gradeFromReview(isCorrect, isSkipped, elapsedMs), new Date());
       states.set(key, result.next);
       interval = intervalLabel(result.next.scheduledDays);
     }
     const answeredIndex = index;
-    submit({ cardIndex: index, characterKey: item.character.key, track: item.track, correct: isCorrect, elapsedMs, mode }, (response) => {
+    submit({ cardIndex: index, characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
       if (currentIndex.current === answeredIndex && mode !== "placement") setNextInterval(response.dueLabel);
     });
     const gained = isCorrect ? 10 + Math.min(10, combo * 2) : 0;
     const nextCombo = isCorrect ? combo + 1 : 0;
     setSelectedIndex(choice);
+    setSkipped(isSkipped);
     setLastXp(gained);
     setXp((value) => value + gained);
     setCombo(nextCombo);
     setBestCombo((value) => Math.max(value, nextCombo));
     setCorrectCount((value) => value + Number(isCorrect));
     setAnsweredCount((value) => value + 1);
+    setSkippedCount((value) => value + Number(isSkipped));
     setNextInterval(interval);
     if (isCorrect) setBurstKey((value) => value + 1);
   }
 
   function advance() {
-    if (!item || (item.kind === "reading" && selectedIndex === null)) return;
+    if (!item || (item.kind === "reading" && !answered)) return;
     if (mode === "placement" && !externalQueue) {
       const next = nextPlacementItem(adaptiveState, characters);
       if (isPlacementComplete(adaptiveState) || !next) {
@@ -149,6 +159,7 @@ export function SessionRunner({
           nextReview: "—",
           answered: answeredCount,
           correct: correctCount,
+          skipped: skippedCount,
           placement: placementResults(adaptiveState),
           placementAnswers,
         });
@@ -165,6 +176,7 @@ export function SessionRunner({
         nextReview: nextInterval,
         answered: answeredCount,
         correct: correctCount,
+        skipped: skippedCount,
         placement: mode === "placement" ? placementResults(adaptiveState) : undefined,
         placementAnswers: mode === "placement" ? placementAnswers : undefined,
       });
@@ -174,6 +186,7 @@ export function SessionRunner({
     currentIndex.current += 1;
     answerLocked.current = false;
     setSelectedIndex(null);
+    setSkipped(false);
     setLastXp(0);
     startedAt.current = performance.now();
   }
@@ -183,12 +196,15 @@ export function SessionRunner({
     answered,
     compare,
     onPick: pick,
+    onSkip: () => pick(null),
     onAdvance: advance,
     onPause: () => setPaused(true),
   });
 
   if (!item) {
-    return <div className="session-empty"><h1>복습할 카드가 없습니다.</h1><button onClick={onQuit}>지도로 돌아가기</button></div>;
+    if (mode === "lesson") return <div className="session-empty"><h1>활성화된 트랙에 학습할 콘텐츠가 부족합니다.</h1><p>설정에서 다른 트랙을 활성화하거나 복습 큐를 확인해 주세요.</p><Link to="/settings">설정으로 가기</Link><Link to="/review">복습 큐로 가기</Link><button onClick={onQuit} type="button">지도로 돌아가기</button></div>;
+    if (mode === "placement") return <div className="session-empty"><h1>배치에 필요한 콘텐츠가 부족합니다.</h1><p>트랙 선택을 바꾼 뒤 다시 시작해 주세요.</p><button onClick={onQuit} type="button">트랙 선택으로 돌아가기</button></div>;
+    return <div className="session-empty"><h1>복습할 카드가 없습니다.</h1><button onClick={onQuit} type="button">복습 큐로 돌아가기</button></div>;
   }
   const source = item.character.sentences.find((sentence) => sentence.track === item.track)?.source;
   const feedbackNote = compare
@@ -214,27 +230,31 @@ export function SessionRunner({
     <section className="session-runner" style={style}>
       <div className="session-chrome">
         <button aria-label="세션 일시정지" onClick={() => setPaused(true)} type="button">esc</button>
-        <div aria-label={`진행률 ${index + 1}/${queueLength}`} className="session-progress" role="progressbar" aria-valuemax={queueLength} aria-valuemin={0} aria-valuenow={index + 1}>
-          <span style={{ width: `${(index + 1) / queueLength * 100}%` }} />
+        <div aria-label={`진행률 ${progress}/${queueLength}`} className="session-progress" role="progressbar" aria-valuemax={queueLength} aria-valuemin={0} aria-valuenow={progress}>
+          <span style={{ width: `${progress / queueLength * 100}%` }} />
         </div>
-        <strong>{index + 1}/{queueLength}</strong>
+        <strong>{progress}/{queueLength}</strong>
         <ComboBadge combo={combo} />
         {pendingCount > 0 && (syncFailed
           ? <button className="session-sync" onClick={() => void retry()} type="button">저장 재시도 · {pendingCount}</button>
           : <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>)}
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${index + 1}/${queueLength}` : undefined} track={item.track} />
+        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
-          <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} track={item.track} />
+          <>
+            <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} track={item.track} />
+            <SkipAnswer disabled={answered} onSkip={() => pick(null)} />
+          </>
         )}
         <FeedbackBar
           answered={answered}
           compare={compare}
           correct={correct}
+          skipped={skipped}
           correctAnswer={item.kind === "reading" ? displayOptions[item.answerIndex]?.label : undefined}
           correctIndex={item.kind === "reading" ? item.answerIndex : 0}
-          last={index + 1 === queueLength}
+          last={mode === "placement" && !externalQueue ? index + 1 === length : index + 1 === queue.length}
           note={feedbackNote}
           onNext={advance}
           xp={lastXp}

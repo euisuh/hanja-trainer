@@ -4,6 +4,7 @@ import {
   dueSort,
   formatDueLabel,
   gradeFromAnswer,
+  gradeFromReview,
   initialState,
   intervalHistory,
   isDue,
@@ -59,6 +60,15 @@ describe("FSRS scheduling", () => {
     expect(gradeFromAnswer(true, ANSWER_SPEED_MS.fast)).toBe("easy");
     expect(gradeFromAnswer(true, ANSWER_SPEED_MS.fast + 1)).toBe("good");
     expect(gradeFromAnswer(true, ANSWER_SPEED_MS.slow)).toBe("hard");
+  });
+
+  it("schedules skips as again regardless of timing", () => {
+    const wrong = schedule(initialState(start), gradeFromReview(false, false, 1), start).next;
+    const fastSkip = schedule(initialState(start), gradeFromReview(false, true, 1), start).next;
+    const slowSkip = schedule(initialState(start), gradeFromReview(false, true, 999_999), start).next;
+
+    expect(fastSkip).toEqual(wrong);
+    expect(slowSkip).toEqual(wrong);
   });
 
   it("formats overdue, current, and future due labels", () => {

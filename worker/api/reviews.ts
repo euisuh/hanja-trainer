@@ -1,4 +1,4 @@
-import { gradeFromAnswer, initialState, schedule } from "../../src/shared/fsrs";
+import { gradeFromReview, initialState, schedule } from "../../src/shared/fsrs";
 import type { DueReviewsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
 import { TRACKS, type Track } from "../../src/shared/types";
 import { getState, prepareAppendLog, prepareUpsertState } from "../db/reviews";
@@ -31,6 +31,7 @@ export function parseReviewRequest(value: unknown): SubmitReviewRequest | null {
   if (typeof body.characterKey !== "string" || body.characterKey.length < 1 || body.characterKey.length > 16) return null;
   if (typeof body.track !== "string" || !TRACKS.includes(body.track as Track)) return null;
   if (typeof body.correct !== "boolean") return null;
+  if (typeof body.skipped !== "boolean" || body.skipped && body.correct) return null;
   if (!Number.isInteger(body.elapsedMs) || (body.elapsedMs as number) < 0 || (body.elapsedMs as number) > 3_600_000) return null;
   if (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "placement") return null;
   return body as SubmitReviewRequest;
@@ -72,7 +73,7 @@ export async function submitReview(db: D1Database, input: SubmitReviewRequest, n
   `).bind(input.characterKey, input.track).first<CharacterRow>();
   if (!character) throw new ReviewTargetNotFound();
 
-  const grade = gradeFromAnswer(input.correct, input.elapsedMs);
+  const grade = gradeFromReview(input.correct, input.skipped, input.elapsedMs);
   const previous = input.mode === "placement" ? initialState(now) : await getState(db, character.id, input.track) ?? initialState(now);
   const scheduled = schedule(previous, grade, now);
   const response = input.mode === "placement"
@@ -85,6 +86,7 @@ export async function submitReview(db: D1Database, input: SubmitReviewRequest, n
       characterId: character.id,
       track: input.track,
       correct: input.correct,
+      skipped: input.skipped,
       elapsedMs: input.elapsedMs,
       mode: input.mode,
       sessionId: input.sessionId,
