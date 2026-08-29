@@ -1,9 +1,20 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse } from "../../src/shared/api";
+import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse } from "../../src/shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
+import type { Track } from "../../src/shared/types";
+import { listForTracks } from "../db/characters";
 import { routeApiRequest } from "./router";
+
+const CHARACTER_FILES = [
+  "data/characters/cn-hsk1.json",
+  "data/characters/cn-hsk2.json",
+  "data/characters/jp-kanken-10.json",
+  "data/characters/jp-kanken-9.json",
+  "data/characters/kr-7geup.json",
+  "data/characters/kr-8geup.json",
+];
 
 function d1Result<T>(results: T[]): D1Result<T> {
   return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: 0, last_row_id: 0, changed_db: false, changes: 0 } };
@@ -46,6 +57,44 @@ function setup() {
   insertState.run(members[1].character_id, 2, now - 86_400_000, now - 86_400_000);
   sqlite.prepare("INSERT INTO review_log (character_id, track, rating, answered_at, correct, elapsed_ms, scheduled_days_before, scheduled_days_after, mode) VALUES (?, 'kr', 3, ?, 1, 2000, 1, 2, 'lesson')").run(members[0].character_id, now - 86_400_000);
   return { sqlite, env: { DB: d1(sqlite) } as Env, members };
+}
+
+function setupSeeds(files: string[]) {
+  const sqlite = new DatabaseSync(":memory:");
+  sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
+  for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
+  return { sqlite, env: { DB: d1(sqlite) } as Env };
+}
+
+function expectedOrder(track: Track): string[] {
+  const entries = new Map<string, { levelOrd: number; unitOrd: number; memberOrd: number }>();
+  for (const file of CHARACTER_FILES) {
+    const document = parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown);
+    for (const character of document.characters) {
+      const entry = character.tracks.find((candidate) => candidate.track === track);
+      if (entry) {
+        const existing = entries.get(character.key);
+        if (existing) existing.levelOrd = entry.levelOrd;
+        else entries.set(character.key, { levelOrd: entry.levelOrd, unitOrd: Infinity, memberOrd: Infinity });
+      }
+    }
+    for (const unit of document.curriculumUnits ?? []) {
+      if (unit.track !== track) continue;
+      for (const member of unit.members) {
+        const entry = entries.get(member.key)!;
+        if (unit.ord < entry.unitOrd || (unit.ord === entry.unitOrd && member.ord < entry.memberOrd)) {
+          entry.unitOrd = unit.ord;
+          entry.memberOrd = member.ord;
+        }
+      }
+    }
+  }
+  return [...entries].sort(([keyA, a], [keyB, b]) =>
+    a.levelOrd - b.levelOrd || a.unitOrd - b.unitOrd || a.memberOrd - b.memberOrd || keyA.localeCompare(keyB),
+  ).map(([key]) => key);
 }
 
 describe("content API", () => {
@@ -94,13 +143,51 @@ describe("content API", () => {
   it("rejects invalid tracks, limits, and malformed bodies as JSON 400s", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect((await routeApiRequest(new Request("https://test/api/curriculum?track=xx"), fixture.env)).status).toBe(400);
-    for (const body of [{ mode: "lesson", tracks: ["xx"] }, { mode: "lesson", tracks: ["kr"], limit: -1 }, { mode: "lesson", tracks: ["kr"], limit: 51 }]) {
+    for (const body of [{ mode: "lesson", tracks: ["xx"] }, { mode: "lesson", tracks: ["kr"], limit: -1 }, { mode: "lesson", tracks: ["kr"], limit: 51 }, { mode: "lesson", tracks: ["kr"], unitId: 1, levelOrd: 1 }]) {
       const response = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", body: JSON.stringify(body) }), fixture.env);
       expect(response.status).toBe(400);
       expect(response.headers.get("content-type")).toContain("application/json");
     }
     const malformed = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", body: "{" }), fixture.env);
     expect(malformed.status).toBe(400);
+  });
+
+  it("orders every track by level and curriculum independent of seed order", async () => {
+    const forward = setupSeeds(CHARACTER_FILES); databases.push(forward.sqlite);
+    const reverse = setupSeeds([...CHARACTER_FILES].reverse()); databases.push(reverse.sqlite);
+
+    for (const track of ["kr", "jp", "cn"] as const) {
+      const expected = expectedOrder(track);
+      expect((await listForTracks(forward.env.DB, [track])).map((entry) => entry.key)).toEqual(expected);
+      expect((await listForTracks(reverse.env.DB, [track])).map((entry) => entry.key)).toEqual(expected);
+    }
+    expect(expectedOrder("kr").slice(0, 50)).toEqual(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown).curriculumUnits!.flatMap((unit) => unit.members.map((member) => member.key)));
+  });
+
+  it("starts fresh lessons at placement levels and requested units", async () => {
+    const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
+    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    fixture.sqlite.prepare("INSERT INTO placement_results (track, level_ord, level_badge, accuracy, detail, taken_at) VALUES ('kr', 2, '7급II', 90, '', 1)").run();
+    const placed = await (await post({ mode: "lesson", tracks: ["kr"], limit: 4 })).json() as StartSessionResponse;
+    expect(placed.cards[0].levelOrd).toBe(2);
+
+    const unit = fixture.sqlite.prepare("SELECT cu.id, c.key FROM curriculum_units cu JOIN curriculum_unit_members cum ON cum.unit_id = cu.id JOIN characters c ON c.id = cum.character_id WHERE cu.track = 'kr' AND cu.level = '8급' AND cu.ord = 3 ORDER BY cum.ord LIMIT 1").get() as { id: number; key: string };
+    const anchored = await (await post({ mode: "lesson", tracks: ["kr"], limit: 4, unitId: unit.id })).json() as StartSessionResponse;
+    expect(anchored.cards[0].characterKey).toBe(unit.key);
+  });
+
+  it("reports JLPT kanji coverage from review mastery for JP only", async () => {
+    const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
+    const load = async () => await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json() as StatsResponse;
+    const initial = await load();
+    expect(initial.tracks.find((track) => track.track === "jp")?.secondaryScale).toMatchObject({ name: "JLPT", level: "開始前", known: 0, nextLevel: "N5" });
+    expect(initial.tracks.filter((track) => track.track !== "jp").every((track) => track.secondaryScale === undefined)).toBe(true);
+
+    const n5 = fixture.sqlite.prepare("SELECT character_id FROM character_tracks WHERE track = 'jp' AND jp_jlpt = 'N5'").all() as Array<{ character_id: number }>;
+    const insert = fixture.sqlite.prepare("INSERT INTO review_states (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count) VALUES (?, 'jp', 7, 5, 1, 2, 0, 2, 0, 2, 1, 1, 2, 2)");
+    for (const row of n5.slice(0, Math.ceil(n5.length * 0.8))) insert.run(row.character_id);
+
+    expect((await load()).tracks.find((track) => track.track === "jp")?.secondaryScale).toMatchObject({ name: "JLPT", level: "N5", known: 0, nextLevel: "N4" });
   });
 
   it("keeps every Japanese API payload canonical when display setting is hiragana", async () => {

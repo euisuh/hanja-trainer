@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
-import { progressPercent, type PathNodeModel } from "../features/path-map/homeModel";
+import type { PathNodeModel } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
 import type { Track } from "../shared/types";
-import type { CurriculumResponse } from "../shared/api";
+import type { CurriculumResponse, StatsResponse } from "../shared/api";
 import { apiClient } from "../lib/apiClient";
 import "../features/path-map/pathMap.css";
 
@@ -16,6 +16,7 @@ export function HomeScreen() {
   const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
+  const [stats, setStats] = useState<StatsResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -23,8 +24,8 @@ export function HomeScreen() {
   const theme = trackThemes[selectedTrack];
   const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
-  const masteredCount = curriculum?.units.reduce((sum, item) => sum + item.progress.known, 0) ?? 0;
-  const scalePercent = progressPercent(masteredCount, theme.scaleTotal);
+  const progress = stats?.tracks.find((item) => item.track === selectedTrack);
+  const scalePercent = progress?.pct ?? 0;
 
   useEffect(() => {
     if (!ready) return;
@@ -32,9 +33,11 @@ export function HomeScreen() {
     Promise.all([
       apiClient.curriculum(selectedTrack, controller.signal),
       apiClient.dueReviews(enabledTracks, 50, controller.signal),
-    ]).then(([content, review]) => {
+      apiClient.stats(controller.signal),
+    ]).then(([content, review, nextStats]) => {
       setCurriculum(content);
       setDueCount(review.total);
+      setStats(nextStats);
       setError("");
       setFocusedIndex(0);
     }).catch((caught: unknown) => {
@@ -64,19 +67,19 @@ export function HomeScreen() {
         navigate(`/detail/${encodeURIComponent(node.characterKey)}`, { state: { from: "/home" } });
       } else if (event.key === "Enter" && !(target instanceof HTMLElement && target.matches("button, a"))) {
         event.preventDefault();
-        navigate("/lesson");
+        if (unit) navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } });
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [enabledTracks, focusedIndex, navigate, nodes]);
+  }, [enabledTracks, focusedIndex, navigate, nodes, selectedTrack, unit]);
 
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
       <TrackTabs active={selectedTrack} enabled={enabledTracks} onChange={setTrack} />
       {settingsError && <div><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></div>}
       {error && <div><p role="alert">학습 지도를 불러오지 못했습니다. {error}</p><button onClick={() => { setCurriculum(null); setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
-      {!error && !curriculum && <p>학습 지도를 불러오는 중…</p>}
+      {!error && (!curriculum || !stats) && <p>학습 지도를 불러오는 중…</p>}
       {!error && curriculum && !unit && <div><p>이 트랙에는 아직 학습 콘텐츠가 없습니다.</p><button onClick={() => setRetryKey((value) => value + 1)} type="button">다시 확인</button></div>}
       {!settingsError && !error && unit && (
       <div className="home-layout">
@@ -91,7 +94,7 @@ export function HomeScreen() {
           unit={`${unit.level} · UNIT ${unit.ord}`}
         />
         <aside className="home-rail">
-          <button className="lesson-cta" onClick={() => navigate("/lesson")} type="button">
+          <button className="lesson-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } })} type="button">
             <small>오늘의 학습</small><strong>레슨 시작</strong><span>신규 4자 + 복습 {dueCount}장 <kbd>ENTER</kbd></span>
           </button>
           <button className="review-cta" onClick={() => navigate("/review")} type="button">
@@ -99,9 +102,10 @@ export function HomeScreen() {
           </button>
           <section className="exam-progress">
             <small>시험 기준 진도</small>
-            <strong>{masteredCount}/{theme.scaleTotal}자 · {theme.scaleGoal}</strong>
+            <strong>{progress?.known ?? 0}/{progress?.total ?? 0}자</strong>
             <div aria-label={`시험 기준 진도 ${Math.round(scalePercent)}%`} className="exam-progress__bar" role="progressbar" aria-valuemax={100} aria-valuemin={0} aria-valuenow={Math.round(scalePercent)}><span style={{ width: `${scalePercent}%` }} /></div>
-            <p>{theme.scaleNote}</p>
+            <p>{progress?.currentLevel ?? "시작 전"}{progress?.nextLevel ? ` → ${progress.nextLevel}` : ""}</p>
+            {progress?.secondaryScale && <p title="JLPT 한자 범위 기반 추정치이며 시험 점수나 합격 예측이 아닙니다.">JLPT {progress.secondaryScale.level} 漢字 · {progress.secondaryScale.known}/{progress.secondaryScale.total}{progress.secondaryScale.nextLevel ? ` → ${progress.secondaryScale.nextLevel}` : ""}</p>}
           </section>
         </aside>
       </div>

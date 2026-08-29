@@ -47,6 +47,10 @@ interface DistractorRow {
   cn_tier: string | null;
 }
 
+type CurriculumAnchor = Pick<import("../../src/shared/api").StartSessionRequest, "unitId" | "levelOrd">;
+type FreshRow = { character_id: number; track: Track };
+type UnitAnchorRow = { track: Track; level_ord: number; unit_ord: number };
+
 const SELECT_ENTRIES = `
   SELECT c.id, c.key, c.meaning_en, c.meaning_ko, c.variants, c.stroke_count, c.created_at,
     ct.track, ct.glyph, ct.level_ord, ct.kr_reading, ct.kr_level,
@@ -189,12 +193,54 @@ export async function listForTracks(db: D1Database, tracks: Track[]): Promise<Ch
   if (tracks.length === 0) return [];
   const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
   const result = await db.prepare(`${SELECT_ENTRIES}
-    WHERE EXISTS (
-      SELECT 1 FROM character_tracks selected
-      WHERE selected.character_id = c.id AND selected.track IN (${placeholders})
-    )
-    ORDER BY c.id, CASE ct.track WHEN 'kr' THEN 1 WHEN 'jp' THEN 2 ELSE 3 END, es.rank`).bind(...tracks).all<CharacterRow>();
+    JOIN character_tracks selected ON selected.character_id = c.id AND selected.track IN (${placeholders})
+    LEFT JOIN curriculum_unit_members cum ON cum.character_id = c.id
+      AND cum.unit_id IN (SELECT id FROM curriculum_units WHERE track = selected.track)
+    LEFT JOIN curriculum_units cu ON cu.id = cum.unit_id
+    ORDER BY selected.level_ord, CASE WHEN cu.id IS NULL THEN 1 ELSE 0 END,
+      cu.ord, cum.ord, c.key, CASE ct.track WHEN 'kr' THEN 1 WHEN 'jp' THEN 2 ELSE 3 END, es.rank`).bind(...tracks).all<CharacterRow>();
   return hydrate(result.results);
+}
+
+export async function listFreshForTracks(db: D1Database, tracks: Track[], anchor: CurriculumAnchor): Promise<FreshRow[]> {
+  if (tracks.length === 0) return [];
+  const unit = anchor.unitId === undefined ? null : await db.prepare(`
+    SELECT cu.track, MIN(ct.level_ord) AS level_ord, cu.ord AS unit_ord
+    FROM curriculum_units cu
+    JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
+    JOIN character_tracks ct ON ct.character_id = cum.character_id AND ct.track = cu.track
+    WHERE cu.id = ?1
+    GROUP BY cu.id
+  `).bind(anchor.unitId).first<UnitAnchorRow>();
+  if (anchor.unitId !== undefined && !unit) return [];
+
+  const clauses: string[] = [];
+  const values: Array<string | number> = [];
+  for (const track of tracks) {
+    const trackParam = `?${values.push(track)}`;
+    const floor = anchor.levelOrd ?? (unit?.track === track ? unit.level_ord : null);
+    const floorSql = floor === null
+      ? `COALESCE((SELECT level_ord FROM placement_results WHERE track = ${trackParam} ORDER BY taken_at DESC, id DESC LIMIT 1), (SELECT MIN(level_ord) FROM character_tracks WHERE track = ${trackParam}))`
+      : `?${values.push(floor)}`;
+    let clause = `(selected.track = ${trackParam} AND selected.level_ord >= ${floorSql}`;
+    if (unit?.track === track) {
+      const unitOrdParam = `?${values.push(unit.unit_ord)}`;
+      const unitLevelParam = `?${values.push(unit.level_ord)}`;
+      clause += ` AND (selected.level_ord > ${unitLevelParam} OR cu.id IS NULL OR cu.ord >= ${unitOrdParam})`;
+    }
+    clauses.push(`${clause})`);
+  }
+  const result = await db.prepare(`
+    SELECT selected.character_id, selected.track
+    FROM character_tracks selected
+    LEFT JOIN curriculum_unit_members cum ON cum.character_id = selected.character_id
+      AND cum.unit_id IN (SELECT id FROM curriculum_units WHERE track = selected.track)
+    LEFT JOIN curriculum_units cu ON cu.id = cum.unit_id
+    WHERE ${clauses.join(" OR ")}
+    ORDER BY selected.level_ord, CASE WHEN cu.id IS NULL THEN 1 ELSE 0 END,
+      cu.ord, cum.ord, selected.character_id
+  `).bind(...values).all<FreshRow>();
+  return result.results;
 }
 
 export async function searchDistractors(

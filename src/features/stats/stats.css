@@ -54,6 +54,7 @@
 .track-mastery-card__bar { height: 12px; margin-top: 12px; overflow: hidden; border: 1px solid var(--border-tan); border-radius: var(--radius-pill); background: var(--paper); }
 .track-mastery-card__bar span { display: block; height: 100%; background: var(--stats-accent); }
 .track-mastery-card footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 9px; color: var(--body); font-size: 12px; font-weight: 700; }
+.track-mastery-card__secondary { padding-top: 8px; border-top: 1px dashed var(--border-tan); }
 
 @media (max-width: 560px) {
   .track-mastery-grid { grid-template-columns: 1fr; }

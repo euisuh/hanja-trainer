@@ -39,7 +39,7 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
     JOIN character_tracks ct ON ct.character_id = c.id AND ct.track = cu.track
     LEFT JOIN review_states rs ON rs.character_id = c.id AND rs.track = cu.track
     WHERE cu.track = ?1
-    ORDER BY cu.ord, cum.ord
+    ORDER BY MIN(ct.level_ord) OVER (PARTITION BY cu.id), cu.ord, cum.ord
   `).bind(track), db.prepare("SELECT level_ord FROM placement_results WHERE track = ?1 ORDER BY taken_at DESC, id DESC LIMIT 1").bind(track)]);
   const units = new Map<number, CurriculumResponse["units"][number]>();
   const unitLevels = new Map<number, number>();

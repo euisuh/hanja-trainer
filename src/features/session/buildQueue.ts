@@ -32,6 +32,7 @@ export type BuildQueueOptions = {
   length: number;
   mode: "lesson" | "review" | "placement";
   reviewStates?: ReadonlyMap<string, ReviewState>;
+  freshKeys?: ReadonlySet<string>;
   now?: Date;
 };
 
@@ -78,6 +79,7 @@ export function buildQueue({
   length,
   mode,
   reviewStates = new Map(),
+  freshKeys,
   now = new Date(),
 }: BuildQueueOptions): SessionQueueItem[] {
   if (length <= 0 || enabledTracks.length === 0) return [];
@@ -88,8 +90,8 @@ export function buildQueue({
   const due = pairs
     .filter((pair) => pair.state && isDue(pair.state, now))
     .sort((a, b) => a.state!.due.getTime() - b.state!.due.getTime());
-  const fresh = pairs.filter((pair) => !pair.state);
-  const available = mode === "review" ? due : pairs;
+  const fresh = pairs.filter((pair) => !pair.state && (!freshKeys || freshKeys.has(reviewKey(pair.character.id, pair.track))));
+  const available = mode === "review" ? due : mode === "lesson" ? [...due, ...fresh] : pairs;
   if (available.length === 0) return [];
 
   const knownTracks = new Map<number, Set<Track>>();

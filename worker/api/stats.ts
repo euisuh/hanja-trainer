@@ -1,4 +1,4 @@
-import type { StatsResponse } from "../../src/shared/api";
+import type { StatsResponse, StatsSecondaryScale } from "../../src/shared/api";
 import { MASTERY_STABILITY_DAYS } from "../../src/shared/mastery";
 import { TRACKS, type Track } from "../../src/shared/types";
 import { streaks, zonedDayKey } from "./sessions";
@@ -11,6 +11,28 @@ type MasteryRow = { track: Track; known: number; total: number };
 type LevelRow = { track: Track; level_ord: number; level_badge: string };
 type PlacementRow = { track: Track; level_badge: string; level_ord: number };
 type SessionRow = { ended_at: number };
+type JlptRow = { level: string; stability: number | null };
+
+const JLPT_LEVELS = ["N5", "N4", "N3", "N2", "N1"] as const;
+
+export function jlptProgress(rows: JlptRow[]): StatsSecondaryScale {
+  const counts = new Map(JLPT_LEVELS.map((level) => [level, { known: 0, total: 0 }]));
+  for (const row of rows) {
+    const count = counts.get(row.level as (typeof JLPT_LEVELS)[number]);
+    if (!count) continue;
+    count.total += 1;
+    if ((row.stability ?? 0) >= MASTERY_STABILITY_DAYS) count.known += 1;
+  }
+  let current = "開始前";
+  for (const level of JLPT_LEVELS) {
+    const count = counts.get(level)!;
+    if (count.total === 0 || count.known / count.total < 0.8) {
+      return { name: "JLPT", level: current, ...count, nextLevel: level };
+    }
+    current = level;
+  }
+  return { name: "JLPT", level: current, ...counts.get("N1")! };
+}
 
 function addDays(key: string, amount: number): string {
   const date = new Date(`${key}T00:00:00Z`);
@@ -18,7 +40,7 @@ function addDays(key: string, amount: number): string {
 }
 
 export async function getStats(db: D1Database, now = new Date()): Promise<StatsResponse> {
-  const [profileResult, logsResult, masteryResult, levelsResult, placementResult, sessionsResult] = await db.batch([
+  const [profileResult, logsResult, masteryResult, levelsResult, placementResult, sessionsResult, jlptResult] = await db.batch([
     db.prepare("SELECT enabled_tracks, timezone FROM profile WHERE id = 1"),
     db.prepare("SELECT answered_at FROM review_log ORDER BY answered_at"),
     db.prepare(`
@@ -38,6 +60,13 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
       WHERE pr.id = (SELECT latest.id FROM placement_results latest WHERE latest.track = pr.track ORDER BY latest.taken_at DESC, latest.id DESC LIMIT 1)
     `),
     db.prepare("SELECT ended_at FROM sessions"),
+    // Kanji-coverage approximation only; provenance and post-2010 caveat: data/SOURCES.md.
+    db.prepare(`
+      SELECT ct.jp_jlpt AS level, rs.stability
+      FROM character_tracks ct
+      LEFT JOIN review_states rs ON rs.character_id = ct.character_id AND rs.track = ct.track
+      WHERE ct.track = 'jp' AND ct.jp_jlpt IS NOT NULL
+    `),
   ]);
   const profile = profileResult.results[0] as unknown as ProfileRow | undefined;
   if (!profile) throw new Error("Profile row is missing");
@@ -65,7 +94,15 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
     const currentIndex = currentPlacement ? trackLevels.findIndex((level) => level.level_ord >= currentPlacement.level_ord) : 0;
     const current = currentPlacement?.level_badge ?? trackLevels[Math.max(0, currentIndex)]?.level_badge ?? "시작 전";
     const nextLevel = trackLevels[Math.max(0, currentIndex) + 1]?.level_badge;
-    return { track, known: progress.known, total: progress.total, pct: progress.total === 0 ? 0 : progress.known / progress.total * 100, currentLevel: current, ...(nextLevel ? { nextLevel } : {}) };
+    return {
+      track,
+      known: progress.known,
+      total: progress.total,
+      pct: progress.total === 0 ? 0 : progress.known / progress.total * 100,
+      currentLevel: current,
+      ...(nextLevel ? { nextLevel } : {}),
+      ...(track === "jp" ? { secondaryScale: jlptProgress(jlptResult.results as unknown as JlptRow[]) } : {}),
+    };
   });
   return { streak: streak.streak, longestStreak: streak.longestStreak, calendar, tracks };
 }

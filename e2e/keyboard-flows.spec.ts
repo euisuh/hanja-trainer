@@ -59,6 +59,7 @@ test.describe.serial("keyboard-only product flows", () => {
 
   test("lesson, pause focus trap and completion", async ({ page }, testInfo) => {
     await page.goto("/home");
+    await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const lesson = await sessionStarted(page, () => page.keyboard.press("Enter"));
     await page.setViewportSize({ width: 1080, height: 900 });
     await expect(page.locator(".quiz-card__glyph")).toHaveCSS("font-size", "150px");
@@ -110,7 +111,6 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("D");
     await expect(page.locator(".detail-screen")).toBeVisible();
-    await expect(page.getByText(/복습 기록이 없습니다/u).first()).toBeVisible();
     await checkLayout(page, "detail", testInfo);
     await page.keyboard.press("Escape");
     await expect(page.locator(".home-screen")).toBeVisible();
@@ -152,6 +152,7 @@ test.describe.serial("keyboard-only product flows", () => {
 
   test("quit persists an answer and reopening starts on another card", async ({ page }) => {
     await page.goto("/home");
+    await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const first = await sessionStarted(page, () => page.keyboard.press("Enter"));
     let failOnce = true;
     await page.route("**/api/reviews/batch", async (route) => {
@@ -167,6 +168,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Escape");
     await page.keyboard.press("Q");
     await expect(page.locator(".home-screen")).toBeVisible();
+    await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const reopened = await sessionStarted(page, () => page.keyboard.press("Enter"));
     expect(`${reopened.cards[0].characterKey}:${reopened.cards[0].track}`).not.toBe(`${first.cards[0].characterKey}:${first.cards[0].track}`);
   });

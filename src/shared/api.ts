@@ -78,7 +78,7 @@ export type SessionCard = {
   compare?: Partial<Record<Track, SessionCompareEntry>>;
 };
 
-export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number };
+export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number; unitId?: number; levelOrd?: number };
 export type StartSessionResponse = { sessionId: string; cards: SessionCard[] };
 
 export type SubmitReviewRequest = {
@@ -139,5 +139,6 @@ export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number
 export type OnboardingStateResponse = { onboarded: boolean };
 
 export type StatsCalendarDay = { date: string; count: number };
-export type StatsTrack = { track: Track; known: number; total: number; pct: number; currentLevel: string; nextLevel?: string };
+export type StatsSecondaryScale = { name: "JLPT"; level: string; known: number; total: number; nextLevel?: string };
+export type StatsTrack = { track: Track; known: number; total: number; pct: number; currentLevel: string; nextLevel?: string; secondaryScale?: StatsSecondaryScale };
 export type StatsResponse = { streak: number; longestStreak: number; calendar: StatsCalendarDay[]; tracks: StatsTrack[] };

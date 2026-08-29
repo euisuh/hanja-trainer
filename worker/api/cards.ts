@@ -1,7 +1,7 @@
 import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../src/shared/api";
 import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
 import { buildQueue, readingFor, reviewKey } from "../../src/features/session/buildQueue";
-import { listForTracks } from "../db/characters";
+import { listForTracks, listFreshForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
 
 const labels = {
@@ -68,13 +68,15 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
   return { ...base, kind: "reading", options: item.options.map((option) => ({ label: option.label, sub: option.sublabel })), answerIndex: item.answerIndex };
 }
 
-export async function startSession(db: D1Database, input: Required<StartSessionRequest>): Promise<StartSessionResponse> {
-  const [characters, states] = await Promise.all([
+export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }): Promise<StartSessionResponse> {
+  const [characters, states, freshRows] = await Promise.all([
     listForTracks(db, input.tracks),
     listStatesForTracks(db, input.tracks),
+    input.mode === "lesson" ? listFreshForTracks(db, input.tracks, input) : Promise.resolve([]),
   ]);
   const stateMap = new Map(states.map((state) => [reviewKey(state.characterId, state.track), state]));
-  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap });
+  const freshKeys = new Set(freshRows.map((row) => reviewKey(row.character_id, row.track)));
+  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys });
   const sessionId = crypto.randomUUID();
   const random = seededRandom(hashSeed(sessionId));
   return { sessionId, cards: queue.map(toCard).map((card) => shuffleOptions(card, random)) };
