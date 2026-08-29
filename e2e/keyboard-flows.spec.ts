@@ -1,7 +1,12 @@
-import { expect, test, type Page, type TestInfo } from "@playwright/test";
+import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
-type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; track: string };
+const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
+type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; track: keyof typeof languages };
 type SessionResponse = { cards: Card[] };
+
+async function expectClosestLang(locator: Locator, lang: string) {
+  expect(await locator.evaluate((node) => node.closest("[lang]")?.getAttribute("lang"))).toBe(lang);
+}
 
 async function sessionStarted(page: Page, action: () => Promise<void>): Promise<SessionResponse> {
   const response = page.waitForResponse((candidate) => candidate.url().endsWith("/api/session/start") && candidate.ok());
@@ -9,13 +14,31 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u) {
+async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, verifyLanguages = false, progressOffset = 0) {
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
+    if (verifyLanguages) {
+      await expectClosestLang(page.locator(".quiz-card__glyph"), languages[card.track]);
+      if (card.kind === "reading") {
+        await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[card.track]);
+        if (await page.locator(".quiz-card__sentence p").count() > 0) {
+          await expectClosestLang(page.locator(".quiz-card__sentence p"), languages[card.track]);
+          await expectClosestLang(page.locator(".quiz-card__sentence small"), languages.kr);
+        }
+      } else {
+        const panels = page.locator(".compare-card__panel");
+        for (let panelIndex = 0; panelIndex < await panels.count(); panelIndex += 1) {
+          const panel = panels.nth(panelIndex);
+          const panelTrack = (await panel.getAttribute("class"))?.match(/compare-card__panel--(kr|jp|cn)/u)?.[1] as keyof typeof languages | undefined;
+          expect(panelTrack).toBeTruthy();
+          if (panelTrack) await expectClosestLang(panel, languages[panelTrack]);
+        }
+      }
+    }
     if (card.kind === "reading") await page.keyboard.press(String(card.answerIndex + 1));
     await page.keyboard.press("Enter");
     if (index + 1 < cards.length) {
-      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(index + 2));
+      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(progressOffset + index + 2));
     }
   }
   await expect(page.getByRole("heading", { name: completion })).toBeVisible();
@@ -77,7 +100,19 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Escape");
     expect(await page.evaluate(() => (document.activeElement as HTMLElement | null)?.getAttribute("aria-label"))).toBe(opener);
 
-    await finishSession(page, lesson.cards);
+    await expectClosestLang(page.locator(".quiz-card__glyph"), languages[lesson.cards[0].track]);
+    await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[lesson.cards[0].track]);
+    const clickedAnswer = page.locator(".answer-option").nth(1);
+    await clickedAnswer.click();
+    await expect(clickedAnswer).toBeFocused();
+    await expect(clickedAnswer).toHaveAttribute("aria-disabled", "true");
+    await clickedAnswer.press("Enter");
+    await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", "1");
+    await clickedAnswer.press("Shift+Tab");
+    await expect(page.locator(".answer-option").first()).toBeFocused();
+    await page.getByRole("button", { name: /다음 카드/u }).click();
+
+    await finishSession(page, lesson.cards.slice(1), /세션 완료/u, true, 1);
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
@@ -90,6 +125,16 @@ test.describe.serial("keyboard-only product flows", () => {
     const beforeTotal = (await before.json() as { total: number }).total;
     expect(beforeTotal).toBeGreaterThan(0);
     await expect(page.getByRole("button", { name: /복습 시작/u })).toBeVisible();
+    const dueGlyphs = page.locator(".due-row__glyph");
+    for (let index = 0; index < await dueGlyphs.count(); index += 1) {
+      const glyph = dueGlyphs.nth(index);
+      const track = (await glyph.getAttribute("class"))?.match(/due-row__glyph--(kr|jp|cn)/u)?.[1] as keyof typeof languages | undefined;
+      expect(track).toBeTruthy();
+      if (track) {
+        await expectClosestLang(glyph, languages[track]);
+        await expectClosestLang(page.locator(".due-row__copy small").nth(index), languages[track]);
+      }
+    }
     await checkLayout(page, "review", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
@@ -107,11 +152,21 @@ test.describe.serial("keyboard-only product flows", () => {
   test("path detail opens and exits by keyboard", async ({ page }, testInfo) => {
     await page.goto("/home");
     await expect(page.locator(".path-node").first()).toBeVisible();
+    await expectClosestLang(page.locator(".path-node__glyph").first(), languages.kr);
+    await page.keyboard.press("ArrowRight");
+    await expect(page.locator(".path-node__glyph").first()).toHaveAttribute("lang", languages.cn);
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("D");
     await expect(page.locator(".detail-screen")).toBeVisible();
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"] } })).ok()).toBe(true);
+    await page.goto("/detail/%E4%B9%9D");
+    await expect(page.locator('.track-panel[lang="ko"]')).toHaveCount(1);
+    await expect(page.locator('.track-panel[lang="ja"]')).toHaveCount(1);
+    await expect(page.locator('.track-panel[lang="zh-Hans"]')).toHaveCount(1);
+    await expectClosestLang(page.locator('.track-panel[lang="zh-Hans"] .track-panel__sentence small').first(), languages.kr);
     await checkLayout(page, "detail", testInfo);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
     await page.keyboard.press("Escape");
     await expect(page.locator(".home-screen")).toBeVisible();
   });

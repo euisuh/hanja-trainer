@@ -5,6 +5,7 @@ import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
 import type { SessionQueueItem } from "../features/session/buildQueue";
+import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
 import type { DueReviewsResponse } from "../shared/api";
 import { toHiragana } from "../shared/kana";
@@ -93,7 +94,7 @@ export function ReviewScreen() {
       ) : (
         <>
           <button className="review-start" onClick={() => navigate("/review/session")} type="button">{due.total}장 복습 시작 <kbd>ENTER</kbd></button>
-          <div className="due-list">{due.cards.map((item) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`}>{item.glyph}</span><span className="due-row__copy"><strong>{item.characterKey}</strong><small>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
+          <div className="due-list">{due.cards.map((item) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
     </section>

@@ -12,8 +12,9 @@ export function TrackTabs({ active, enabled, onChange }: { active: Track; enable
             aria-pressed={active === track}
             className="track-tab"
             key={track}
+            lang={theme.lang}
             onClick={() => onChange(track)}
-            style={{ "--track-accent": theme.accent } as CSSProperties}
+            style={{ "--track-accent": theme.accent, "--track-accent-text": theme.accentText } as CSSProperties}
             type="button"
           >{theme.label}</button>
         );

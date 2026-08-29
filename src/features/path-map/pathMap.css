@@ -1,5 +1,6 @@
 .home-screen {
   --home-accent: var(--kr-accent);
+  --home-accent-text: var(--kr-accent-text);
   --home-soft: var(--kr-soft);
   --home-font: var(--font-kr);
 }
@@ -18,7 +19,7 @@
   border: 2px solid var(--track-accent);
   border-radius: 16px;
   background: var(--card);
-  color: var(--track-accent);
+  color: var(--track-accent-text);
   cursor: pointer;
   font-size: 14px;
   font-weight: 800;
@@ -57,7 +58,7 @@
 }
 
 .path-map__heading span {
-  color: var(--home-accent);
+  color: var(--home-accent-text);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .14em;

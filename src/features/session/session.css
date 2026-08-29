@@ -105,7 +105,7 @@ button.session-sync {
 
 .quiz-card__badges span:first-child {
   background: var(--session-soft);
-  color: var(--session-accent);
+  color: var(--session-accent-text);
   letter-spacing: .1em;
 }
 
@@ -170,7 +170,7 @@ button.session-sync {
 .quiz-card__sentence mark {
   border-bottom: 3px solid var(--session-accent);
   background: transparent;
-  color: var(--session-accent);
+  color: var(--session-accent-text);
 }
 
 .quiz-card__sentence small {
@@ -225,9 +225,9 @@ button.session-sync {
 .compare-card__panel--kr { border-color: var(--kr-accent); background: var(--kr-soft); }
 .compare-card__panel--kr > div { color: var(--kr-accent); }
 .compare-card__panel--jp { border-color: var(--jp-accent); background: var(--jp-soft); }
-.compare-card__panel--jp > div { color: var(--jp-accent); }
+.compare-card__panel--jp > div { color: var(--jp-accent-text); }
 .compare-card__panel--cn { border-color: var(--cn-accent); background: var(--cn-soft); }
-.compare-card__panel--cn > div { color: var(--cn-accent); }
+.compare-card__panel--cn > div { color: var(--cn-accent-text); }
 
 .answer-options {
   display: grid;
@@ -251,7 +251,7 @@ button.session-sync {
   transition: transform .1s, background .12s;
 }
 
-.answer-option:disabled {
+.answer-option[aria-disabled="true"] {
   box-shadow: none;
   cursor: default;
   opacity: 1;

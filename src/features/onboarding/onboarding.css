@@ -49,9 +49,9 @@
   text-align: left;
 }
 
-.track-card--kr { --enabled-accent: var(--kr-accent); --enabled-soft: var(--kr-soft); --track-font: var(--font-kr); }
-.track-card--jp { --enabled-accent: var(--jp-accent); --enabled-soft: var(--jp-soft); --track-font: var(--font-jp); }
-.track-card--cn { --enabled-accent: var(--cn-accent); --enabled-soft: var(--cn-soft); --track-font: var(--font-cn); }
+.track-card--kr { --enabled-accent: var(--kr-accent); --enabled-accent-text: var(--kr-accent-text); --enabled-soft: var(--kr-soft); --track-font: var(--font-kr); }
+.track-card--jp { --enabled-accent: var(--jp-accent); --enabled-accent-text: var(--jp-accent-text); --enabled-soft: var(--jp-soft); --track-font: var(--font-jp); }
+.track-card--cn { --enabled-accent: var(--cn-accent); --enabled-accent-text: var(--cn-accent-text); --enabled-soft: var(--cn-soft); --track-font: var(--font-cn); }
 .track-card--checked { --track-accent: var(--enabled-accent); background: var(--enabled-soft); }
 
 .track-card__top {
@@ -62,7 +62,7 @@
 }
 
 .track-card__glyph {
-  color: var(--enabled-accent);
+  color: var(--enabled-accent-text);
   font-family: var(--track-font);
   font-size: 44px;
   font-weight: 700;
@@ -117,14 +117,14 @@
 .placement-result { padding-top: 40px; }
 .placement-result h1 { margin-bottom: 24px; font-size: 34px; }
 .placement-result__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 26px; }
-.placement-result__card { --result-accent: var(--ink); padding: 20px; border: 3px solid var(--result-accent); border-radius: var(--radius-medium); background: var(--card); box-shadow: 0 5px 0 var(--result-accent); }
-.placement-result__card--kr { --result-accent: var(--kr-accent); }
-.placement-result__card--jp { --result-accent: var(--jp-accent); }
-.placement-result__card--cn { --result-accent: var(--cn-accent); }
+.placement-result__card { --result-accent: var(--ink); --result-accent-text: var(--ink); padding: 20px; border: 3px solid var(--result-accent); border-radius: var(--radius-medium); background: var(--card); box-shadow: 0 5px 0 var(--result-accent); }
+.placement-result__card--kr { --result-accent: var(--kr-accent); --result-accent-text: var(--kr-accent-text); }
+.placement-result__card--jp { --result-accent: var(--jp-accent); --result-accent-text: var(--jp-accent-text); }
+.placement-result__card--cn { --result-accent: var(--cn-accent); --result-accent-text: var(--cn-accent-text); }
 .placement-result__card small,
 .placement-result__card strong,
 .placement-result__card span { display: block; }
-.placement-result__card small { color: var(--result-accent); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.placement-result__card small { color: var(--result-accent-text); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .placement-result__card strong { margin: 6px 0 2px; font-size: 40px; font-weight: 800; }
 .placement-result__card span { color: var(--muted); font-size: 13px; font-weight: 600; }
 .placement-result__cta { padding: 16px 26px; border-radius: 18px; font-size: 16px; }

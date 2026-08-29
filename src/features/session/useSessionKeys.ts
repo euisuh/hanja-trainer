@@ -22,7 +22,7 @@ export function useSessionKeys({ active, answered, compare, onPick, onAdvance, o
         event.preventDefault();
         onPick(Number(event.key) - 1);
       } else if ((event.key === "Enter" || event.key === " ") && (answered || compare)) {
-        if (target instanceof HTMLElement && target.matches(".feedback-bar button")) return;
+        if (target instanceof HTMLElement && target.matches(".feedback-bar button, .answer-option[aria-disabled=true]")) return;
         event.preventDefault();
         onAdvance();
       }

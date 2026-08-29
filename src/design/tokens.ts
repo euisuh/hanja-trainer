@@ -3,7 +3,7 @@ export const colors = {
   ink: "#16130F",
   body: "#4A443B",
   muted: "#6E675C",
-  faint: "#9E958A",
+  faint: "#6F685F",
   card: "#FFFFFF",
   panel: "#F6F2E9",
   chipBg: "#F1ECE1",
@@ -12,7 +12,7 @@ export const colors = {
   dashed: "#C4B9A4",
   lockedBg: "#E6DFCF",
   lockedBorder: "#D3C9B4",
-  lockedText: "#A79C88",
+  lockedText: "#686154",
   gold: "#E8B33D",
   flame: "#E8873D",
   goalRemainder: "#3B372F",
@@ -42,10 +42,16 @@ export const fonts = {
 } as const;
 
 export const tracks = {
-  kr: { accent: "#3B5BDB", soft: "#EEF1FD", font: fonts.kr },
-  jp: { accent: "#E14B32", soft: "#FDEEEB", font: fonts.jp },
-  cn: { accent: "#0E9F6E", soft: "#E7F6F0", font: fonts.cn },
+  kr: { accent: "#3B5BDB", accentText: "#3B5BDB", soft: "#EEF1FD", font: fonts.kr },
+  jp: { accent: "#E14B32", accentText: "#C23F29", soft: "#FDEEEB", font: fonts.jp },
+  cn: { accent: "#0E9F6E", accentText: "#0B7D56", soft: "#E7F6F0", font: fonts.cn },
 } as const;
+
+/*
+ * WCAG AA text deltas from wireframe: faint #9E958A -> #6F685F,
+ * lockedText #A79C88 -> #686154, JP #E14B32 -> #C23F29,
+ * CN #0E9F6E -> #0B7D56. Identity accents remain unchanged for graphics.
+ */
 
 export const radii = {
   keycap: "7px",
@@ -101,10 +107,13 @@ export const cssVariables = {
   "--pulse-gold": colors.pulseGold,
   "--pulse-gold-clear": colors.pulseGoldClear,
   "--kr-accent": tracks.kr.accent,
+  "--kr-accent-text": tracks.kr.accentText,
   "--kr-soft": tracks.kr.soft,
   "--jp-accent": tracks.jp.accent,
+  "--jp-accent-text": tracks.jp.accentText,
   "--jp-soft": tracks.jp.soft,
   "--cn-accent": tracks.cn.accent,
+  "--cn-accent-text": tracks.cn.accentText,
   "--cn-soft": tracks.cn.soft,
   "--font-ui": fonts.ui,
   "--font-kr": fonts.kr,

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { apiClient } from "../lib/apiClient";
 import { TRACKS, type Track } from "../shared/types";
+import { trackThemes } from "../features/tracks/trackTheme";
 import "../features/onboarding/onboarding.css";
 
 const cards = {
@@ -75,7 +76,7 @@ export function OnboardingScreen() {
           const card = cards[track];
           const checked = enabled.includes(track);
           return (
-            <button aria-pressed={checked} className={`track-card track-card--${track}${checked ? " track-card--checked" : ""}`} key={track} onClick={() => toggle(track)} type="button">
+            <button aria-pressed={checked} className={`track-card track-card--${track}${checked ? " track-card--checked" : ""}`} key={track} lang={trackThemes[track].lang} onClick={() => toggle(track)} type="button">
               <span className="track-card__top"><span className="track-card__glyph">{card.glyph}</span><span aria-hidden="true" className="track-card__check">{checked ? "✓" : ""}</span></span>
               <strong>{card.name}</strong>
               <span className="track-card__detail">{card.detail}</span>

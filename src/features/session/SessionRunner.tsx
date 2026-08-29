@@ -202,6 +202,7 @@ export function SessionRunner({
         : `${item.character.tracks.find((entry) => entry.track === item.track)?.glyph} = ${item.character.meaningKo}`;
   const style = {
     "--session-accent": tracks[item.track].accent,
+    "--session-accent-text": tracks[item.track].accentText,
     "--session-soft": tracks[item.track].soft,
     "--session-font": tracks[item.track].font,
   } as CSSProperties;
@@ -225,7 +226,7 @@ export function SessionRunner({
       <div className="session-card-wrap" key={index}>
         <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${index + 1}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
-          <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} />
+          <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} track={item.track} />
         )}
         <FeedbackBar
           answered={answered}

@@ -16,7 +16,7 @@ export function TrackToggles({ enabled, onToggle }: { enabled: Track[]; onToggle
         {TRACKS.map((track) => {
           const active = enabled.includes(track);
           const theme = trackThemes[track];
-          return <button aria-pressed={active} key={track} onClick={() => onToggle(track)} style={{ "--settings-accent": theme.accent, "--settings-soft": theme.soft } as CSSProperties} type="button"><span>{theme.label}</span><small>{active ? states[track].on : states[track].off}</small></button>;
+          return <button aria-pressed={active} key={track} lang={theme.lang} onClick={() => onToggle(track)} style={{ "--settings-accent": theme.accent, "--settings-accent-text": theme.accentText, "--settings-soft": theme.soft } as CSSProperties} type="button"><span>{theme.label}</span><small>{active ? states[track].on : states[track].off}</small></button>;
         })}
       </div>
     </section>

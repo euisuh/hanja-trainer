@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { trackThemes } from "../features/tracks/trackTheme";
 import type { PlacementScoreResponse } from "../shared/api";
 import "../features/onboarding/onboarding.css";
 
@@ -29,8 +30,8 @@ export function PlacementResultScreen() {
       <div className="placement-result__grid">
         {results.map((result) => (
             <article className={`placement-result__card placement-result__card--${result.track}`} key={result.track}>
-              <small>{labels[result.track]}</small>
-              <strong>{result.levelBadge}</strong>
+              <small lang={trackThemes[result.track].lang}>{labels[result.track]}</small>
+              <strong lang={trackThemes[result.track].lang}>{result.levelBadge}</strong>
               <span>{result.detail}</span>
             </article>
         ))}

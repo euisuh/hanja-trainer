@@ -12,7 +12,7 @@ export function PersonalRecord({ active, states, tracks, onChange, now }: { acti
     <section className="personal-record">
       <header>개인 기록</header>
       <div className="personal-record__tracks" aria-label="기록 트랙">
-        {tracks.map((track) => <button aria-pressed={active === track} key={track} onClick={() => onChange(track)} style={{ "--detail-accent": trackThemes[track].accent } as CSSProperties} type="button">{track.toUpperCase()}</button>)}
+        {tracks.map((track) => <button aria-pressed={active === track} key={track} onClick={() => onChange(track)} style={{ "--detail-accent": trackThemes[track].accent, "--detail-accent-text": trackThemes[track].accentText } as CSSProperties} type="button">{track.toUpperCase()}</button>)}
       </div>
       {!state ? <p className="detail-empty">이 트랙은 아직 복습 기록이 없습니다.</p> : (
         <dl>

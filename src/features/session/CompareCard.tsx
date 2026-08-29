@@ -1,6 +1,7 @@
 import { toHiragana } from "../../shared/kana";
 import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, TrackEntry } from "../../shared/types";
+import { trackThemes } from "../tracks/trackTheme";
 
 function reading(entry: TrackEntry, onyomiScript: OnyomiScript): string {
   if (entry.track === "kr") return entry.reading;
@@ -20,7 +21,7 @@ export function CompareCard({ character, onyomiScript }: { character: CharacterE
   return (
     <div className="compare-card" aria-label="교차 트랙 비교">
       {character.tracks.map((entry) => (
-        <section className={`compare-card__panel compare-card__panel--${entry.track}`} key={entry.track}>
+        <section className={`compare-card__panel compare-card__panel--${entry.track}`} key={entry.track} lang={trackThemes[entry.track].lang}>
           <div>{labels[entry.track]}</div>
           <strong>{reading(entry, onyomiScript)}</strong>
           <small>{level(entry)}</small>

@@ -52,7 +52,7 @@
   background: var(--detail-soft);
 }
 
-.track-panel > header { color: var(--detail-accent); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.track-panel > header { color: var(--detail-accent-text); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 .track-panel > strong { display: block; margin: 8px 0 4px; font-size: 26px; font-weight: 800; }
 .track-panel__subreading { margin-bottom: 8px; color: var(--body); font-size: 14px; font-weight: 700; }
 .track-panel__badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
@@ -78,7 +78,7 @@
 .personal-record { flex: 1 1 220px; min-width: 210px; padding: 20px; border: 2px dashed var(--dashed); border-radius: var(--radius-large); background: var(--panel); }
 .personal-record > header { margin-bottom: 10px; font-size: 13px; font-weight: 800; }
 .personal-record__tracks { display: flex; gap: 6px; margin-bottom: 12px; }
-.personal-record__tracks button { padding: 5px 9px; border: 2px solid var(--detail-accent); border-radius: var(--radius-keycap); background: var(--card); color: var(--detail-accent); cursor: pointer; font-size: 11px; font-weight: 800; }
+.personal-record__tracks button { padding: 5px 9px; border: 2px solid var(--detail-accent); border-radius: var(--radius-keycap); background: var(--card); color: var(--detail-accent-text); cursor: pointer; font-size: 11px; font-weight: 800; }
 .personal-record__tracks button[aria-pressed="true"] { background: var(--detail-accent); color: var(--card); }
 .personal-record dl { display: flex; margin: 0; flex-direction: column; gap: 9px; }
 .personal-record dl div { display: flex; justify-content: space-between; gap: 12px; color: var(--body); font-size: 13px; font-weight: 700; }
