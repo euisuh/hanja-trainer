@@ -10,9 +10,10 @@ type Props = {
   last: boolean;
   error?: string;
   onNext: () => void;
+  autoAdvance?: boolean;
 };
 
-export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, note, last, error, onNext }: Props) {
+export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, note, last, error, onNext, autoAdvance = false }: Props) {
   const state = error ? "wrong" : compare ? "compare" : !answered ? "idle" : skipped ? "skipped" : correct ? "correct" : "wrong";
   const text = error
     ? "저장하지 못했습니다"
@@ -27,12 +28,14 @@ export function FeedbackBar({ answered, compare, correct, skipped, correctIndex,
           : `오답 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`;
   const canAdvance = compare || answered;
   return (
-    <div className={`feedback-bar feedback-bar--${state}`} aria-live="polite">
+    <div className={`feedback-bar feedback-bar--${state}`} aria-live={autoAdvance ? "off" : "polite"}>
       <strong>{text}</strong>
       <span>{error ?? note}</span>
-      <button disabled={!canAdvance} onClick={onNext} type="button">
-        {last ? "세션 마치기" : "다음 카드"} <kbd>ENTER</kbd>
-      </button>
+      {!autoAdvance && (
+        <button disabled={!canAdvance} onClick={onNext} type="button">
+          {last ? "세션 마치기" : "다음 카드"} <kbd>ENTER</kbd>
+        </button>
+      )}
     </div>
   );
 }

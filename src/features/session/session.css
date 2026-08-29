@@ -72,6 +72,29 @@ button.session-sync {
   animation: om-pop .4s ease-out;
 }
 
+.unit-test-hearts {
+  display: flex;
+  gap: 3px;
+  color: var(--wrong-fg);
+  font-size: 22px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.unit-test-heart--lost { color: var(--locked-text); }
+
+.session-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
 .session-card-wrap {
   position: relative;
 }
@@ -528,6 +551,8 @@ button.session-sync {
 
 @media (max-width: 560px) {
   .session-runner { padding-top: 0; }
+  .session-runner--unit-test { margin-top: -24px; }
+  .session-runner--unit-test .session-chrome { margin-bottom: 8px; }
   .session-chrome { gap: 8px; }
   .combo-badge { padding-inline: 9px; font-size: 12px; }
   .quiz-card { padding: 22px 18px; }

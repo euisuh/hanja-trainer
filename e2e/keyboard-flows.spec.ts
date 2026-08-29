@@ -15,11 +15,10 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-type FinishOptions = { progressOffset?: number; skipFirst?: boolean; verifyLanguages?: boolean; wrongFirst?: boolean };
+type FinishOptions = { progressOffset?: number; skipFirst?: boolean; verifyLanguages?: boolean };
 
 async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
   let skipped = false;
-  let answeredWrong = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
     if (options.verifyLanguages) {
@@ -43,9 +42,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     }
     if (card.kind === "reading") {
       const shouldSkip = Boolean(options.skipFirst) && !skipped;
-      const shouldAnswerWrong = Boolean(options.wrongFirst) && !answeredWrong;
-      await page.keyboard.press(shouldSkip ? "0" : String((shouldAnswerWrong ? (card.answerIndex + 1) % card.options.length : card.answerIndex) + 1));
-      if (shouldAnswerWrong) answeredWrong = true;
+      await page.keyboard.press(shouldSkip ? "0" : String(card.answerIndex + 1));
       if (shouldSkip) {
         skipped = true;
         await expect(page.locator(".feedback-bar")).toContainText(/모름 · 정답 \S/u);
@@ -64,6 +61,23 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     }
   }
   await expect(page.getByRole("heading", { name: completion })).toBeVisible();
+}
+
+async function answerUnitCard(page: Page, cards: Card[], correct: boolean, input: "keyboard" | "mouse" = "keyboard"): Promise<number> {
+  const options = page.locator(".answer-option__copy strong");
+  const labels = await options.allTextContents();
+  const cardIndex = cards.findIndex((card) => card.options.map((option) => option.label).join("\u0000") === labels.join("\u0000"));
+  expect(cardIndex).toBeGreaterThanOrEqual(0);
+  const answerIndex = cards[cardIndex].answerIndex;
+  const choice = correct ? answerIndex : (answerIndex + 1) % labels.length;
+  if (input === "mouse") await page.locator(".answer-option").nth(choice).click();
+  else await page.keyboard.press(String(choice + 1));
+  await expect(page.locator(".answer-option").first()).toHaveAttribute("aria-disabled", "true");
+  return cardIndex;
+}
+
+async function waitForUnitAdvance(page: Page) {
+  await expect(page.locator(".answer-option").first()).toHaveAttribute("aria-disabled", "false");
 }
 
 function expectReadingOnly(cards: Card[]) {
@@ -198,6 +212,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await launch.focus();
     const first = await sessionStarted(page, () => page.keyboard.press("Enter"));
     expect((await firstRequest).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["kr"], unitId: current.id, testOut: true });
+    await page.setViewportSize({ width: 430, height: 900 });
+    expect((await page.locator(".session-runner").boundingBox())?.y).toBeLessThan(32);
     expect(first.cards.length).toBeGreaterThan(0);
     expect(first.cards.length % 2).toBe(0);
     expect(first.cards.every((card) => card.kind === "reading" && card.track === "kr")).toBe(true);
@@ -223,8 +239,18 @@ test.describe.serial("keyboard-only product flows", () => {
 
     const failed = await sessionStarted(page, () => page.getByRole("button", { name: /이 유닛 건너뛰기/u }).press("Enter"));
     const failedCompletion = page.waitForRequest((request) => request.url().includes(`/api/curriculum/units/${current.id}/test-out`));
-    await finishSession(page, failed.cards, /유닛 테스트 실패/u, { wrongFirst: true });
-    expect((await failedCompletion).postDataJSON()).toMatchObject({ sessionId: failed.sessionId });
+    const failedResponse = page.waitForResponse((response) => response.url().includes(`/api/curriculum/units/${current.id}/test-out`));
+    await expect(page.locator(".unit-test-hearts")).toHaveAccessibleName("남은 하트 3개");
+    await expect(page.locator(".feedback-bar").getByRole("button")).toHaveCount(0);
+    for (let mistake = 1; mistake <= 3; mistake += 1) {
+      await answerUnitCard(page, failed.cards, false);
+      await expect(page.locator(".unit-test-hearts")).toHaveAccessibleName(`남은 하트 ${3 - mistake}개`);
+      if (mistake < 3) await waitForUnitAdvance(page);
+    }
+    await expect(page.getByRole("heading", { name: /유닛 테스트 실패/u })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /유닛 테스트 실패/u })).toBeFocused();
+    expect((await failedCompletion).postDataJSON()).toMatchObject({ sessionId: failed.sessionId, answers: expect.arrayContaining([expect.objectContaining({ selectedIndex: expect.any(Number) })]) });
+    expect(await (await failedResponse).json()).toMatchObject({ passed: false, mistakes: 3 });
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     const afterFailure = await (await page.request.get("/api/curriculum?track=kr")).json() as typeof before;
@@ -233,7 +259,28 @@ test.describe.serial("keyboard-only product flows", () => {
     expect((await (await page.request.get("/api/profile")).json() as { xp: number }).xp).toBe(xpBefore);
 
     const second = await sessionStarted(page, () => page.getByRole("button", { name: /이 유닛 건너뛰기/u }).press("Space"));
-    await finishSession(page, second.cards, /유닛 건너뛰기 성공/u);
+    const recoveredCard = await answerUnitCard(page, second.cards, false, "mouse");
+    await expect(page.locator(".unit-test-hearts")).toHaveAccessibleName("남은 하트 2개");
+    await expect(page.locator(".feedback-bar")).toContainText("틀린 문항은 뒤에서 다시 나옵니다.");
+    await expect(page.locator(".session-announcement")).toContainText(`정답은 ${second.cards[recoveredCard].options[second.cards[recoveredCard].answerIndex].label}`);
+    await waitForUnitAdvance(page);
+    await expect(page.locator(".session-announcement")).toContainText("오답입니다");
+    const cleared = new Set<number>();
+    const correctOrder: number[] = [];
+    let responses = 1;
+    while (cleared.size < second.cards.length) {
+      const cardIndex = await answerUnitCard(page, second.cards, true);
+      cleared.add(cardIndex);
+      correctOrder.push(cardIndex);
+      responses += 1;
+      if (cleared.size < second.cards.length) await waitForUnitAdvance(page);
+    }
+    expect(cleared.size).toBe(second.cards.length);
+    expect(responses).toBe(second.cards.length + 1);
+    expect([...cleared].includes(recoveredCard)).toBe(true);
+    expect(correctOrder.indexOf(recoveredCard)).toBeGreaterThan(0);
+    await expect(page.getByRole("heading", { name: /유닛 건너뛰기 성공/u })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /유닛 건너뛰기 성공/u })).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     const afterSuccess = await (await page.request.get("/api/curriculum?track=kr")).json() as typeof before;

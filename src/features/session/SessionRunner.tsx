@@ -7,6 +7,7 @@ import { toHiragana } from "../../shared/kana";
 import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
 import type { PlacementAnswer, ProfileResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
+import { unitTestRetryOffset } from "../../shared/unitTestRetry";
 import { AnswerOptions } from "./AnswerOptions";
 import { buildQueue, buildReadingItem, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
@@ -90,16 +91,23 @@ export function SessionRunner({
   const [burstKey, setBurstKey] = useState(0);
   const [assessmentAnswers, setAssessmentAnswers] = useState<PlacementAnswer[]>([]);
   const [unitTestAnswers, setUnitTestAnswers] = useState<UnitTestAnswer[]>([]);
+  const [unitTestQueue, setUnitTestQueue] = useState(() => mode === "unit-test" ? queue.map((entry, cardIndex) => ({ entry, cardIndex })) : []);
+  const [unitTestMistakes, setUnitTestMistakes] = useState(0);
+  const [clearedUnitTestCards, setClearedUnitTestCards] = useState<Set<number>>(() => new Set());
+  const [unitTestAnnouncement, setUnitTestAnnouncement] = useState({ sequence: 0, text: "" });
   const startedAt = useRef(0);
   const answerLocked = useRef(false);
   const completing = useRef(false);
   const currentIndex = useRef(0);
+  const advanceRef = useRef<() => void>(() => undefined);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
-  const item = mode === "placement" && !externalQueue ? placementItem : queue[index];
-  const queueLength = mode === "placement" && !externalQueue ? length : queue.filter((entry) => entry.kind === "reading").length;
+  const issuedUnitTestCard = mode === "unit-test" ? unitTestQueue[index] : undefined;
+  const item = mode === "placement" && !externalQueue ? placementItem : issuedUnitTestCard?.entry ?? queue[index];
+  const requiredUnitTestCards = queue.filter((entry) => entry.kind === "reading").length;
+  const queueLength = mode === "placement" && !externalQueue ? length : mode === "unit-test" ? requiredUnitTestCards : queue.filter((entry) => entry.kind === "reading").length;
   const completedBefore = mode === "placement" && !externalQueue ? index : queue.slice(0, index).filter((entry) => entry.kind === "reading").length;
   const compare = item?.kind === "compare";
-  const progress = completedBefore + Number(item?.kind === "reading");
+  const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(item?.kind === "reading");
   const answered = selectedIndex !== null || skipped;
   const correct = item?.kind === "reading" && selectedIndex === item.answerIndex;
 
@@ -124,7 +132,36 @@ export function SessionRunner({
         setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
         setAssessmentAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, levelOrd: entry.levelOrd }]);
       } else {
-        setUnitTestAnswers((current) => [...current, { cardIndex: index, characterKey: item.character.key, selectedIndex: choice }]);
+        const cardIndex = issuedUnitTestCard?.cardIndex ?? index;
+        const mistakes = unitTestMistakes + Number(!isCorrect);
+        const answer = item.options[item.answerIndex]?.label ?? "";
+        const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
+        setUnitTestAnswers((current) => [...current, { cardIndex, characterKey: item.character.key, selectedIndex: choice }]);
+        setUnitTestAnnouncement((current) => ({
+          sequence: current.sequence + 1,
+          text: isCorrect
+            ? "정답입니다. 다음 문항으로 이동합니다."
+            : `${isSkipped ? "모름을 선택했습니다." : "오답입니다."} 정답은 ${displayedAnswer}입니다. 남은 하트 ${Math.max(0, 3 - mistakes)}개. ${mistakes >= 3 ? "유닛 테스트를 종료합니다." : "이 문항은 뒤에서 다시 나옵니다."}`,
+        }));
+        if (isCorrect) {
+          setClearedUnitTestCards((current) => new Set(current).add(cardIndex));
+        } else {
+          setUnitTestMistakes(mistakes);
+          if (mistakes < 3) {
+            setUnitTestQueue((current) => {
+              const retry = current[index];
+              if (!retry) return current;
+              const insertAt = index + 1 + unitTestRetryOffset({
+                sessionId,
+                originalCardIndex: cardIndex,
+                mistakeNumber: mistakes,
+                currentQueuePosition: index,
+                remainingLength: current.length - index - 1,
+              });
+              return [...current.slice(0, insertAt), retry, ...current.slice(insertAt)];
+            });
+          }
+        }
       }
     } else {
       const key = reviewKey(item.character.id, item.track);
@@ -173,7 +210,7 @@ export function SessionRunner({
         return;
       }
       setPlacementItem(buildReadingItem(next.character, next.track, characters, index + next.character.id + 1));
-    } else if (index + 1 >= queue.length) {
+    } else if (mode === "unit-test" ? unitTestMistakes >= 3 || index + 1 >= unitTestQueue.length : index + 1 >= queue.length) {
       if (completing.current) return;
       completing.current = true;
       onComplete({
@@ -199,9 +236,19 @@ export function SessionRunner({
     startedAt.current = performance.now();
   }
 
+  useEffect(() => {
+    advanceRef.current = advance;
+  });
+
+  useEffect(() => {
+    if (mode !== "unit-test" || !answered || paused) return;
+    const timer = window.setTimeout(() => advanceRef.current(), correct ? 250 : 450);
+    return () => window.clearTimeout(timer);
+  }, [answered, correct, index, mode, paused]);
+
   useSessionKeys({
     active: Boolean(item) && !paused,
-    answered,
+    answered: mode === "unit-test" ? false : answered,
     compare,
     onPick: pick,
     onSkip: () => pick(null),
@@ -219,7 +266,9 @@ export function SessionRunner({
   const feedbackNote = compare
     ? "이미 아는 글자를 다른 트랙과 함께 확인합니다."
     : mode === "unit-test"
-      ? answered ? "두 번 모두 맞혀야 유닛을 건너뜁니다." : "같은 글자도 다른 보기로 다시 출제됩니다."
+      ? answered
+        ? correct ? "좋아요. 바로 다음 문항으로 넘어갑니다." : unitTestMistakes >= 3 ? "하트를 모두 사용했습니다." : "틀린 문항은 뒤에서 다시 나옵니다."
+        : "같은 글자도 다른 보기로 다시 출제됩니다."
     : mode === "placement"
       ? answered ? "응답에 맞춰 시작 급수를 조정했습니다." : "정답에 따라 다음 문항 난이도가 바뀝니다."
     : !answered
@@ -238,18 +287,27 @@ export function SessionRunner({
     : item.kind === "reading" ? item.options : [];
 
   return (
-    <section className="session-runner" style={style}>
+    <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} style={style}>
       <div className="session-chrome">
         <button aria-label="세션 일시정지" onClick={() => setPaused(true)} type="button">esc</button>
         <div aria-label={`진행률 ${progress}/${queueLength}`} className="session-progress" role="progressbar" aria-valuemax={queueLength} aria-valuemin={0} aria-valuenow={progress}>
           <span style={{ width: `${progress / queueLength * 100}%` }} />
         </div>
         <strong>{progress}/{queueLength}</strong>
-        <ComboBadge combo={combo} />
+        {mode === "unit-test" ? (
+          <div aria-label={`남은 하트 ${Math.max(0, 3 - unitTestMistakes)}개`} className="unit-test-hearts" role="img">
+            {[0, 1, 2].map((heart) => <span aria-hidden="true" className={heart < 3 - unitTestMistakes ? "" : "unit-test-heart--lost"} key={heart}>{heart < 3 - unitTestMistakes ? "♥" : "♡"}</span>)}
+          </div>
+        ) : <ComboBadge combo={combo} />}
         {pendingCount > 0 && (syncFailed
           ? <button className="session-sync" onClick={() => void retry()} type="button">저장 재시도 · {pendingCount}</button>
           : <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>)}
       </div>
+      {mode === "unit-test" && (
+        <div aria-atomic="true" aria-live="polite" className="session-announcement">
+          {unitTestAnnouncement.text} {unitTestAnnouncement.sequence > 0 ? `응답 알림 ${unitTestAnnouncement.sequence}` : ""}
+        </div>
+      )}
       <div className="session-card-wrap" key={index}>
         <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
@@ -269,6 +327,7 @@ export function SessionRunner({
           note={feedbackNote}
           onNext={advance}
           xp={lastXp}
+          autoAdvance={mode === "unit-test"}
         />
         {answered && correct && <ParticleBurst key={burstKey} track={item.track} />}
       </div>

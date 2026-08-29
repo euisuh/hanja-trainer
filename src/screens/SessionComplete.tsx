@@ -1,9 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { SessionResult } from "../features/session/SessionRunner";
 import "../features/session/session.css";
 
 export function SessionComplete({ result, onHome }: { result: SessionResult; onHome: () => void }) {
   const unitTest = result.unitTest;
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Enter") return;
@@ -17,8 +23,8 @@ export function SessionComplete({ result, onHome }: { result: SessionResult; onH
   return (
     <section className="session-complete">
       <div aria-hidden="true" className="session-complete__glyph">{unitTest ? "跳" : "完"}</div>
-      <h1>{unitTest ? unitTest.passed ? "유닛 건너뛰기 성공" : "유닛 테스트 실패" : `세션 완료 · +${result.xp} XP`}</h1>
-      {unitTest && <p>정답 {unitTest.correct}/{unitTest.total} · 각 글자를 두 번 모두 맞혀야 통과합니다.</p>}
+      <h1 ref={headingRef} tabIndex={-1}>{unitTest ? unitTest.passed ? "유닛 건너뛰기 성공" : "유닛 테스트 실패" : `세션 완료 · +${result.xp} XP`}</h1>
+      {unitTest && <p>필수 정답 {unitTest.correct}/{unitTest.required} · 실수 {unitTest.mistakes}/3</p>}
       <div className="session-complete__stats">
         <div><small>응답</small><strong>{result.answered}</strong></div>
         <div><small>정확도</small><strong>{result.accuracy}%</strong></div>

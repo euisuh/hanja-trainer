@@ -1,5 +1,6 @@
 import type { UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
 import { TRACKS, type Track } from "../../src/shared/types";
+import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
 import { getCurriculumContent } from "./content";
 
 type UnitRow = { track: Track };
@@ -85,6 +86,39 @@ function decodeExpected(json: string): ExpectedAnswer[] {
   return value as ExpectedAnswer[];
 }
 
+function scoreUnitTestEvents(sessionId: string, expected: ExpectedAnswer[], answers: UnitTestAnswer[]): UnitTestResult | null {
+  const pending = expected.map((_, index) => index);
+  let correct = 0;
+  let mistakes = 0;
+  let ended = false;
+  for (let currentQueuePosition = 0; currentQueuePosition < answers.length; currentQueuePosition += 1) {
+    if (ended) return null;
+    const answer = answers[currentQueuePosition];
+    const originalCardIndex = pending.shift();
+    if (originalCardIndex === undefined || answer.cardIndex !== originalCardIndex) return null;
+    const issued = expected[originalCardIndex];
+    if (issued.characterKey !== answer.characterKey) return null;
+    if (answer.selectedIndex === issued.answerIndex) {
+      correct += 1;
+      continue;
+    }
+    mistakes += 1;
+    if (mistakes >= 3) {
+      ended = true;
+      continue;
+    }
+    const offset = unitTestRetryOffset({ sessionId, originalCardIndex, mistakeNumber: mistakes, currentQueuePosition, remainingLength: pending.length });
+    pending.splice(offset, 0, originalCardIndex);
+  }
+  return {
+    passed: pending.length === 0 && !ended && correct === expected.length,
+    correct,
+    total: answers.length,
+    required: expected.length,
+    mistakes,
+  };
+}
+
 async function consumeAttempt(db: D1Database, attempt: AttemptRow, members: MemberRow[], passed: boolean, now: number): Promise<void> {
   const token = crypto.randomUUID();
   const statements = [db.prepare(`
@@ -143,16 +177,12 @@ export async function completeUnitTest(db: D1Database, unitId: number, sessionId
     throw new UnitTestError(409, "unit_test_stale", "Curriculum unit membership changed; start a new test");
   }
 
-  const forged = answers.length !== expected.length || answers.some((answer, index) =>
-    answer.cardIndex !== index || answer.characterKey !== expected[index].characterKey,
-  );
-  if (forged) {
+  const score = scoreUnitTestEvents(sessionId, expected, answers);
+  if (!score) {
     await consumeAttempt(db, attempt, [], false, now);
     throw new UnitTestError(400, "unit_test_answers_mismatch", "Unit test answers do not match the issued challenge");
   }
 
-  const correct = answers.filter((answer, index) => answer.selectedIndex === expected[index].answerIndex).length;
-  const passed = correct === expected.length;
-  await consumeAttempt(db, attempt, members.results, passed, now);
-  return { passed, correct, total: answers.length, required: expected.length };
+  await consumeAttempt(db, attempt, members.results, score.passed, now);
+  return score;
 }

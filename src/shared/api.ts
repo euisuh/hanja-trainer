@@ -88,7 +88,7 @@ export type StartSessionResponse = {
 };
 
 export type UnitTestAnswer = { cardIndex: number; characterKey: string; selectedIndex: number | null };
-export type UnitTestResult = { passed: boolean; correct: number; total: number; required: number };
+export type UnitTestResult = { passed: boolean; correct: number; total: number; required: number; mistakes: number };
 
 export type SubmitReviewRequest = {
   sessionId: string;

@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import type { Track } from "../../src/shared/types";
+import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
 import { listForTracks } from "../db/characters";
 import { startSession } from "./cards";
 import { routeApiRequest } from "./router";
@@ -103,6 +104,25 @@ function expectedOrder(track: Track): string[] {
   return [...entries].sort(([keyA, a], [keyB, b]) =>
     a.levelOrd - b.levelOrd || a.unitOrd - b.unitOrd || a.memberOrd - b.memberOrd || keyA.localeCompare(keyB),
   ).map(([key]) => key);
+}
+
+function recoveredUnitTestAnswers(session: StartSessionResponse, mistakeLimit: number): UnitTestAnswer[] {
+  const pending = session.cards.map((_, index) => index);
+  const answers: UnitTestAnswer[] = [];
+  let mistakes = 0;
+  while (pending.length > 0) {
+    const originalCardIndex = pending.shift()!;
+    const card = session.cards[originalCardIndex];
+    const shouldMiss = originalCardIndex === 0 && mistakes < mistakeLimit;
+    answers.push({ cardIndex: originalCardIndex, characterKey: card.characterKey, selectedIndex: shouldMiss ? null : card.answerIndex });
+    if (!shouldMiss) continue;
+    mistakes += 1;
+    if (mistakes >= 3) break;
+    const currentQueuePosition = answers.length - 1;
+    const offset = unitTestRetryOffset({ sessionId: session.sessionId, originalCardIndex, mistakeNumber: mistakes, currentQueuePosition, remainingLength: pending.length });
+    pending.splice(offset, 0, originalCardIndex);
+  }
+  return answers;
 }
 
 describe("content API", () => {
@@ -238,13 +258,55 @@ describe("content API", () => {
     const superseded = await post(unit.id, forgedSession.sessionId, answersFor(forgedSession));
     expect(superseded.status).toBe(404);
     expect(await superseded.json()).toMatchObject({ error: { code: "unit_test_attempt_not_found" } });
-    const failedAnswers = answersFor(failedSession);
-    failedAnswers[0] = { ...failedAnswers[0], selectedIndex: (failedAnswers[0].selectedIndex! + 1) % 4 };
+    const recoverableAnswers = recoveredUnitTestAnswers(failedSession, 1);
+    const recoveryIndex = recoverableAnswers.findIndex((answer, index) => index > 0 && answer.cardIndex === 0);
+    const failedAnswers = recoverableAnswers.slice(0, recoveryIndex);
     const failed = await (await post(unit.id, failedSession.sessionId, failedAnswers)).json() as UnitTestResult;
-    expect(failed).toEqual({ passed: false, correct: failedAnswers.length - 1, total: failedAnswers.length, required: failedAnswers.length });
+    expect(failed).toEqual({ passed: false, correct: failedAnswers.length - 1, total: failedAnswers.length, required: failedSession.cards.length, mistakes: 1 });
     const failedReplay = await post(unit.id, failedSession.sessionId, answersFor(failedSession));
     expect(failedReplay.status).toBe(409);
     expect(await failedReplay.json()).toMatchObject({ error: { code: "unit_test_replayed" } });
+
+    const invalidIndexSession = await start(unit.id, "invalid-index");
+    const invalidIndexAnswers = answersFor(invalidIndexSession);
+    invalidIndexAnswers[0] = { ...invalidIndexAnswers[0], cardIndex: invalidIndexAnswers.length };
+    const invalidIndex = await post(unit.id, invalidIndexSession.sessionId, invalidIndexAnswers);
+    expect(invalidIndex.status).toBe(400);
+    expect(await invalidIndex.json()).toMatchObject({ error: { code: "unit_test_answers_mismatch" } });
+
+    const outOfOrderSession = await start(unit.id, "out-of-order");
+    const outOfOrderAnswers = answersFor(outOfOrderSession);
+    const outOfOrder = await post(unit.id, outOfOrderSession.sessionId, [outOfOrderAnswers[1]]);
+    expect(outOfOrder.status).toBe(400);
+    expect(await outOfOrder.json()).toMatchObject({ error: { code: "unit_test_answers_mismatch" } });
+
+    const immediateRetrySession = await start(unit.id, "immediate-retry");
+    const immediateRetryAnswers = answersFor(immediateRetrySession);
+    const immediateRetry = await post(unit.id, immediateRetrySession.sessionId, [
+      { ...immediateRetryAnswers[0], selectedIndex: null },
+      immediateRetryAnswers[0],
+    ]);
+    expect(immediateRetry.status).toBe(400);
+    expect(await immediateRetry.json()).toMatchObject({ error: { code: "unit_test_answers_mismatch" } });
+
+    const invalidSequenceSession = await start(unit.id, "invalid-sequence");
+    const invalidSequenceAnswers = answersFor(invalidSequenceSession);
+    invalidSequenceAnswers.splice(1, 0, invalidSequenceAnswers[0]);
+    const invalidSequence = await post(unit.id, invalidSequenceSession.sessionId, invalidSequenceAnswers);
+    expect(invalidSequence.status).toBe(400);
+    expect(await invalidSequence.json()).toMatchObject({ error: { code: "unit_test_answers_mismatch" } });
+
+    const thirdMistakeSession = await start(unit.id, "third-mistake");
+    const thirdMistakeAnswers = recoveredUnitTestAnswers(thirdMistakeSession, 3);
+    const thirdMistake = await (await post(unit.id, thirdMistakeSession.sessionId, thirdMistakeAnswers)).json() as UnitTestResult;
+    expect(thirdMistake).toEqual({ passed: false, correct: thirdMistakeAnswers.filter((answer) => answer.selectedIndex !== null).length, total: thirdMistakeAnswers.length, required: thirdMistakeSession.cards.length, mistakes: 3 });
+
+    const afterEndSession = await start(unit.id, "after-end");
+    const afterEndAnswers = recoveredUnitTestAnswers(afterEndSession, 3);
+    afterEndAnswers.push(answersFor(afterEndSession)[0]);
+    const afterEnd = await post(unit.id, afterEndSession.sessionId, afterEndAnswers);
+    expect(afterEnd.status).toBe(400);
+    expect(await afterEnd.json()).toMatchObject({ error: { code: "unit_test_answers_mismatch" } });
 
     fixture.sqlite.prepare(`
       INSERT INTO curriculum_unit_test_attempts
@@ -262,7 +324,7 @@ describe("content API", () => {
 
     const passedSession = await start(unit.id, "passed");
     const passedAnswers = answersFor(passedSession);
-    expect(await (await post(unit.id, passedSession.sessionId, passedAnswers)).json()).toEqual({ passed: true, correct: passedAnswers.length, total: passedAnswers.length, required: passedAnswers.length });
+    expect(await (await post(unit.id, passedSession.sessionId, passedAnswers)).json()).toEqual({ passed: true, correct: passedAnswers.length, total: passedAnswers.length, required: passedAnswers.length, mistakes: 0 });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM curriculum_unit_completion_members WHERE unit_id = ?").get(unit.id)).toEqual({ count: passedAnswers.length / 2 });
     const passedReplay = await post(unit.id, passedSession.sessionId, passedAnswers);
     expect(passedReplay.status).toBe(409);
@@ -289,7 +351,25 @@ describe("content API", () => {
 
     const expanded = await start(unit.id, "expanded-membership");
     const expandedAnswers = answersFor(expanded);
-    expect(await (await post(unit.id, expanded.sessionId, expandedAnswers)).json()).toEqual({ passed: true, correct: expandedAnswers.length, total: expandedAnswers.length, required: expandedAnswers.length });
+    expect(await (await post(unit.id, expanded.sessionId, expandedAnswers)).json()).toEqual({ passed: true, correct: expandedAnswers.length, total: expandedAnswers.length, required: expandedAnswers.length, mistakes: 0 });
+    expect(fixture.sqlite.prepare("SELECT * FROM review_states ORDER BY character_id, track").all()).toEqual(beforeReviews);
+  });
+
+  it.each([1, 2])("passes a complete issued challenge after recovering from %i mistake(s)", async (mistakes) => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const unit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY ord LIMIT 1").get() as { id: number };
+    const beforeReviews = fixture.sqlite.prepare("SELECT * FROM review_states ORDER BY character_id, track").all();
+    const session = await startSession(fixture.env.DB, { mode: "lesson", tracks: ["kr"], limit: 8, unitId: unit.id, testOut: true }, `recovered-${mistakes}`);
+    const answers = recoveredUnitTestAnswers(session, mistakes);
+    const response = await routeApiRequest(new Request(`https://test/api/curriculum/units/${unit.id}/test-out`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ sessionId: session.sessionId, answers }),
+    }), fixture.env);
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ passed: true, correct: session.cards.length, total: session.cards.length + mistakes, required: session.cards.length, mistakes });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM curriculum_unit_completion_members WHERE unit_id = ?").get(unit.id)).toEqual({ count: session.cards.length / 2 });
     expect(fixture.sqlite.prepare("SELECT * FROM review_states ORDER BY character_id, track").all()).toEqual(beforeReviews);
   });
 
