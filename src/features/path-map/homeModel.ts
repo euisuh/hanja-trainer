@@ -1,5 +1,5 @@
 import type { ReviewState } from "../../shared/fsrs";
-import type { CharacterEntry, Track } from "../../shared/types";
+import { TRACKS, type CharacterEntry, type Track } from "../../shared/types";
 import { readingFor, reviewKey } from "../session/buildQueue";
 import { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
 
@@ -13,6 +13,25 @@ export type PathNodeModel = {
   label: string;
   state: PathNodeState;
 };
+
+export type TrackSnoozes = Partial<Record<Track, number>>;
+
+const MIN_LEADER_MASTERY = 20;
+const LAGGING_RATIO = 0.5;
+
+export function trackImbalance(tracks: readonly { track: Track; known: number }[], snoozes: TrackSnoozes, now: number): Track | undefined {
+  const enabled = TRACKS.flatMap((track) => {
+    const progress = tracks.find((candidate) => candidate.track === track);
+    return progress ? [progress] : [];
+  });
+  if (enabled.length < 2) return undefined;
+  const leader = enabled.reduce((best, candidate) => candidate.known > best.known ? candidate : best);
+  if (leader.known < MIN_LEADER_MASTERY) return undefined;
+  const lagging = enabled
+    .filter((candidate) => candidate.track !== leader.track && candidate.known <= leader.known * LAGGING_RATIO)
+    .reduce<(typeof enabled)[number] | undefined>((lowest, candidate) => !lowest || candidate.known < lowest.known ? candidate : lowest, undefined);
+  return lagging && (snoozes[lagging.track] ?? 0) <= now ? lagging.track : undefined;
+}
 
 export function buildPathNodes(characters: CharacterEntry[], track: Track, states: ReadonlyMap<string, ReviewState>): PathNodeModel[] {
   const entries = characters.flatMap((character) => {

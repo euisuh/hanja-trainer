@@ -31,6 +31,27 @@
   color: var(--card);
 }
 
+.track-imbalance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  border: 2px solid var(--nudge-accent);
+  border-radius: var(--radius-large);
+  background: var(--nudge-soft);
+}
+
+.track-imbalance p { color: var(--body); font-size: 14px; }
+.track-imbalance p strong { color: var(--ink); }
+.track-imbalance__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.track-imbalance__actions button { padding: 9px 12px; border: 2px solid var(--nudge-accent); border-radius: var(--radius-small); cursor: pointer; font-size: 12px; font-weight: 800; }
+.track-imbalance__start { background: var(--nudge-accent); color: var(--card); }
+.track-imbalance__start kbd { margin-left: 5px; background: var(--key-overlay); }
+.track-imbalance__dismiss { background: var(--card); color: var(--nudge-accent); }
+
 .home-layout {
   display: flex;
   flex-wrap: wrap;

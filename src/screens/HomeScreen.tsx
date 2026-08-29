@@ -1,14 +1,29 @@
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
-import type { PathNodeModel } from "../features/path-map/homeModel";
+import { trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
-import type { Track } from "../shared/types";
+import { TRACKS, type Track } from "../shared/types";
 import type { CurriculumResponse, StatsResponse } from "../shared/api";
 import { apiClient } from "../lib/apiClient";
 import "../features/path-map/pathMap.css";
+
+const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
+const DAY_MS = 86_400_000;
+
+// ponytail: localStorage — single-user app, and a missed nudge costs nothing.
+// Move to the profile table if he starts using two devices.
+function readSnoozes(): TrackSnoozes {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(NUDGE_SNOOZES_KEY) ?? "{}");
+    if (!parsed || typeof parsed !== "object") return {};
+    return Object.fromEntries(TRACKS.flatMap((track) => typeof (parsed as Record<string, unknown>)[track] === "number" ? [[track, (parsed as Record<string, number>)[track]]] : []));
+  } catch {
+    return {};
+  }
+}
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -18,26 +33,50 @@ export function HomeScreen() {
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
+  const [snoozes, setSnoozes] = useState<TrackSnoozes>(readSnoozes);
+  const [now] = useState(Date.now);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
+  const statsRequest = useRef<Promise<StatsResponse | null> | null>(null);
   const selectedTrack = enabledTracks.includes(track) ? track : enabledTracks[0] ?? "kr";
   const theme = trackThemes[selectedTrack];
   const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
   const progress = stats?.tracks.find((item) => item.track === selectedTrack);
   const scalePercent = progress?.pct ?? 0;
+  const laggingTrack = !settingsError && stats ? trackImbalance(stats.tracks, snoozes, now) : undefined;
 
+  const snooze = useCallback((track: Track, days: number) => {
+    setSnoozes((current) => {
+      const next = { ...current, [track]: Date.now() + days * DAY_MS };
+      try { localStorage.setItem(NUDGE_SNOOZES_KEY, JSON.stringify(next)); } catch { /* Session state still hides the nudge. */ }
+      return next;
+    });
+  }, []);
+
+  const startLaggingLesson = useCallback(() => {
+    if (!laggingTrack) return;
+    snooze(laggingTrack, 14);
+    navigate("/lesson", { state: { tracks: [laggingTrack] } });
+  }, [laggingTrack, navigate, snooze]);
+
+  useEffect(() => {
+    if (!laggingTrack) return;
+    const next = { ...readSnoozes(), [laggingTrack]: Date.now() + 7 * DAY_MS };
+    try { localStorage.setItem(NUDGE_SNOOZES_KEY, JSON.stringify(next)); } catch { /* Cooldown can fail without blocking the nudge. */ }
+  }, [laggingTrack]);
   useEffect(() => {
     if (!ready) return;
     const controller = new AbortController();
+    statsRequest.current ??= apiClient.stats().catch(() => null);
     Promise.all([
       apiClient.curriculum(selectedTrack, controller.signal),
       apiClient.dueReviews(enabledTracks, 50, controller.signal),
-      apiClient.stats(controller.signal),
-    ]).then(([content, review, nextStats]) => {
+      statsRequest.current,
+    ]).then(([content, review, homeStats]) => {
       setCurriculum(content);
       setDueCount(review.total);
-      setStats(nextStats);
+      setStats(homeStats);
       setError("");
       setFocusedIndex(0);
     }).catch((caught: unknown) => {
@@ -65,6 +104,9 @@ export function HomeScreen() {
         if (!node) return;
         event.preventDefault();
         navigate(`/detail/${encodeURIComponent(node.characterKey)}`, { state: { from: "/home" } });
+      } else if (event.key.toLowerCase() === "l" && laggingTrack && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault();
+        startLaggingLesson();
       } else if (event.key === "Enter" && !(target instanceof HTMLElement && target.matches("button, a"))) {
         event.preventDefault();
         if (unit) navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } });
@@ -72,14 +114,23 @@ export function HomeScreen() {
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [enabledTracks, focusedIndex, navigate, nodes, selectedTrack, unit]);
+  }, [enabledTracks, focusedIndex, laggingTrack, navigate, nodes, selectedTrack, startLaggingLesson, unit]);
 
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-accent-text": theme.accentText, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
       <TrackTabs active={selectedTrack} enabled={enabledTracks} onChange={setTrack} />
+      {laggingTrack && (
+        <aside className="track-imbalance" style={{ "--nudge-accent": trackThemes[laggingTrack].accent, "--nudge-soft": trackThemes[laggingTrack].soft } as CSSProperties}>
+          <p><strong>{trackThemes[laggingTrack].label} 트랙이 한동안 조용해요.</strong> 오늘 짧게 시작해 볼까요?</p>
+          <div className="track-imbalance__actions">
+            <button className="track-imbalance__start" onClick={startLaggingLesson} type="button">이 트랙 학습 <kbd>L</kbd></button>
+            <button className="track-imbalance__dismiss" onClick={() => snooze(laggingTrack, 7)} type="button">이번 주 숨기기</button>
+          </div>
+        </aside>
+      )}
       {settingsError && <div><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></div>}
       {error && <div><p role="alert">학습 지도를 불러오지 못했습니다. {error}</p><button onClick={() => { setCurriculum(null); setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
-      {!error && (!curriculum || !stats) && <p>학습 지도를 불러오는 중…</p>}
+      {!error && !curriculum && <p>학습 지도를 불러오는 중…</p>}
       {!error && curriculum && !unit && <div><p>이 트랙에는 아직 학습 콘텐츠가 없습니다.</p><button onClick={() => setRetryKey((value) => value + 1)} type="button">다시 확인</button></div>}
       {!settingsError && !error && unit && (
       <div className="home-layout">

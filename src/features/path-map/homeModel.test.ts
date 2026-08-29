@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { initialState } from "../../shared/fsrs";
-import type { CharacterEntry } from "../../shared/types";
+import type { CharacterEntry, Track } from "../../shared/types";
+import { lessonTracks } from "../../screens/LessonScreen";
 import { reviewKey } from "../session/buildQueue";
-import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent } from "./homeModel";
+import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, trackImbalance } from "./homeModel";
 
 function character(id: number): CharacterEntry {
   return {
@@ -22,5 +23,45 @@ describe("home path model", () => {
   it("keeps progress finite for empty totals", () => {
     expect(progressPercent(0, 0)).toBe(0);
     expect(progressPercent(12, 10)).toBe(100);
+  });
+});
+
+describe("track imbalance", () => {
+  const now = Date.parse("2026-08-29T00:00:00Z");
+  const progress = (...entries: Array<[Track, number]>) => entries.map(([track, known]) => ({ track, known }));
+
+  it("enforces the leader floor and ratio boundaries", () => {
+    expect(trackImbalance(progress(["kr", 19], ["jp", 9]), {}, now)).toBeUndefined();
+    expect(trackImbalance(progress(["kr", 20], ["jp", 10]), {}, now)).toBe("jp");
+    expect(trackImbalance(progress(["kr", 20], ["jp", 11]), {}, now)).toBeUndefined();
+  });
+
+  it("never nudges one enabled track", () => {
+    expect(trackImbalance(progress(["kr", 100]), {}, now)).toBeUndefined();
+  });
+
+  it("chooses the lowest lagging track and breaks ties in TRACKS order", () => {
+    expect(trackImbalance(progress(["kr", 30], ["jp", 12], ["cn", 5]), {}, now)).toBe("cn");
+    expect(trackImbalance(progress(["cn", 5], ["jp", 5], ["kr", 30]), {}, now)).toBe("jp");
+  });
+
+  it("honors 7-day and 14-day snoozes against an injected clock", () => {
+    const tracks = progress(["kr", 20], ["cn", 10]);
+    const day = 86_400_000;
+    expect(trackImbalance(tracks, { cn: now + 7 * day }, now + 7 * day - 1)).toBeUndefined();
+    expect(trackImbalance(tracks, { cn: now + 7 * day }, now + 7 * day)).toBe("cn");
+    expect(trackImbalance(tracks, { cn: now + 14 * day }, now + 14 * day - 1)).toBeUndefined();
+    expect(trackImbalance(tracks, { cn: now + 14 * day }, now + 14 * day)).toBe("cn");
+  });
+});
+
+describe("lesson track scope", () => {
+  it("uses an enabled request and falls back for absent, malformed, or disabled state", () => {
+    expect(lessonTracks("cn", ["kr", "cn"])).toEqual(["cn"]);
+    expect(lessonTracks(["cn"], ["kr", "cn"])).toEqual(["cn"]);
+    expect(lessonTracks(undefined, ["kr", "cn"])).toEqual(["kr", "cn"]);
+    expect(lessonTracks("invalid" as Track, ["kr", "cn"])).toEqual(["kr", "cn"]);
+    expect(lessonTracks("jp", ["kr", "cn"])).toEqual(["kr", "cn"]);
+    expect(lessonTracks(["jp"], ["kr", "cn"])).toEqual(["kr", "cn"]);
   });
 });

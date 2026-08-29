@@ -3,6 +3,7 @@ import { expect, test, type Locator, type Page, type TestInfo } from "@playwrigh
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
 type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; options: Array<{ label: string }>; track: keyof typeof languages };
 type SessionResponse = { cards: Card[] };
+const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 
 async function expectClosestLang(locator: Locator, lang: string) {
   expect(await locator.evaluate((node) => node.closest("[lang]")?.getAttribute("lang"))).toBe(lang);
@@ -129,7 +130,9 @@ test.describe.serial("keyboard-only product flows", () => {
   test("lesson, pause focus trap and completion", async ({ page }, testInfo) => {
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
+    const startRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
     const lesson = await sessionStarted(page, () => page.keyboard.press("Enter"));
+    expect((await startRequest).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["kr"], limit: 8, unitId: expect.any(Number) });
     expectReadingOnly(lesson.cards);
     await checkAnswerGrid(page);
     await page.setViewportSize({ width: 1080, height: 900 });
@@ -165,6 +168,112 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
+  });
+
+  test("track imbalance quick-start scopes every CTA path and snoozes", async ({ page }) => {
+    let statsRequests = 0;
+    let statsFail = false;
+    let tracks = [
+      { track: "kr", known: 20, total: 150, pct: 13.3, currentLevel: "8급" },
+      { track: "cn", known: 10, total: 466, pct: 2.1, currentLevel: "HSK 1" },
+    ];
+    await page.route("**/api/stats", async (route) => {
+      statsRequests += 1;
+      if (statsFail) await route.fulfill({ status: 500, contentType: "application/json", body: JSON.stringify({ error: { message: "temporary" } }) });
+      else await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ streak: 0, longestStreak: 0, calendar: [], tracks }) });
+    });
+
+    const sessionBodies: unknown[] = [];
+    page.on("request", (request) => {
+      if (request.url().endsWith("/api/session/start")) sessionBodies.push(request.postDataJSON());
+    });
+    const nudge = page.locator(".track-imbalance");
+    const quickStart = page.getByRole("button", { name: /이 트랙 학습/u });
+
+    async function expectScopedStart(action: () => Promise<void>) {
+      const request = page.waitForRequest((candidate) => candidate.url().endsWith("/api/session/start"));
+      await action();
+      expect((await request).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["cn"], limit: 8 });
+      await expect(page.locator(".quiz-card")).toBeVisible();
+    }
+
+    async function reloadWithStats() {
+      const response = page.waitForResponse((candidate) => candidate.url().endsWith("/api/stats"));
+      await page.reload();
+      await response;
+    }
+
+    async function showNudgeAgain() {
+      await page.goto("/home");
+      await page.evaluate((key) => localStorage.setItem(key, JSON.stringify({ cn: Date.now() - 1 })), NUDGE_SNOOZES_KEY);
+      await reloadWithStats();
+      await expect(nudge).toBeVisible();
+    }
+
+    await page.goto("/home");
+    await expect(nudge).toContainText("汉字 · HSK");
+    await page.keyboard.press("ArrowRight");
+    expect(statsRequests).toBe(1);
+
+    for (const modifier of ["metaKey", "ctrlKey", "altKey"]) {
+      await page.dispatchEvent("body", "keydown", { key: "l", [modifier]: true });
+    }
+    expect(sessionBodies).toHaveLength(0);
+    await expectScopedStart(() => page.keyboard.press("L"));
+    const actedRemaining = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "{}").cn - Date.now(), NUDGE_SNOOZES_KEY);
+    expect(actedRemaining).toBeGreaterThan(14 * 86_400_000 - 5_000);
+    expect(actedRemaining).toBeLessThanOrEqual(14 * 86_400_000);
+
+    await showNudgeAgain();
+    for (let tabs = 0; tabs < 10 && !(await quickStart.evaluate((node) => node === document.activeElement)); tabs += 1) await page.keyboard.press("Tab");
+    await expect(quickStart).toBeFocused();
+    await expectScopedStart(() => page.keyboard.press("Enter"));
+
+    await showNudgeAgain();
+    await expectScopedStart(() => quickStart.click());
+
+    await page.goto("/home");
+    await expect(nudge).toHaveCount(0);
+    await page.keyboard.press("L");
+    expect(sessionBodies).toHaveLength(3);
+
+    tracks = [
+      { track: "kr", known: 20, total: 150, pct: 13.3, currentLevel: "8급" },
+      { track: "cn", known: 11, total: 466, pct: 2.4, currentLevel: "HSK 1" },
+    ];
+    await page.evaluate((key) => localStorage.removeItem(key), NUDGE_SNOOZES_KEY);
+    await reloadWithStats();
+    await expect(nudge).toHaveCount(0);
+    await page.keyboard.press("L");
+    expect(sessionBodies).toHaveLength(3);
+
+    tracks = [{ track: "kr", known: 100, total: 150, pct: 66.7, currentLevel: "8급" }];
+    await reloadWithStats();
+    await expect(nudge).toHaveCount(0);
+
+    tracks = [
+      { track: "kr", known: 19, total: 150, pct: 12.7, currentLevel: "8급" },
+      { track: "cn", known: 0, total: 466, pct: 0, currentLevel: "HSK 1" },
+    ];
+    await reloadWithStats();
+    await expect(nudge).toHaveCount(0);
+
+    tracks[0].known = 20;
+    await reloadWithStats();
+    await expect(nudge).toBeVisible();
+    await page.getByRole("button", { name: "이번 주 숨기기" }).click();
+    await expect(nudge).toHaveCount(0);
+    const remaining = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "{}").cn - Date.now(), NUDGE_SNOOZES_KEY);
+    expect(remaining).toBeGreaterThan(7 * 86_400_000 - 5_000);
+    expect(remaining).toBeLessThanOrEqual(7 * 86_400_000);
+    await reloadWithStats();
+    await expect(nudge).toHaveCount(0);
+
+    statsFail = true;
+    await page.evaluate((key) => localStorage.removeItem(key), NUDGE_SNOOZES_KEY);
+    await reloadWithStats();
+    await expect(page.locator(".path-map")).toBeVisible();
+    await expect(nudge).toHaveCount(0);
   });
 
   test("review queue decreases and reaches its empty state", async ({ page }, testInfo) => {
