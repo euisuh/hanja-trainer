@@ -159,6 +159,8 @@ button.session-sync {
   letter-spacing: .12em;
 }
 
+.quiz-card__sentence a { color: inherit; }
+
 .quiz-card__sentence p {
   color: var(--ink);
   font-family: var(--session-font);
@@ -463,6 +465,7 @@ button.session-sync {
 }
 
 .session-complete__glyph {
+  width: fit-content;
   font-family: var(--font-kr);
   font-size: 74px;
   font-weight: 700;

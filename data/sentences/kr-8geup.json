@@ -1,23 +1,483 @@
 {
   "sentences": [
     {
-      "character_key": "二",
+      "character_key": "校",
       "track": "kr",
-      "text": "일석이조 (一石二鳥).",
-      "translation_ko": "일석이조 (一石二鳥).",
-      "source": "Tatoeba #907715",
+      "text": "國立서울大學校 內에는 左記 大學을 設置함.",
+      "translation_ko": "國立서울大學校 內에는 左記 大學을 設置함.",
+      "source": "군정법령 제102호 #456156",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "敎",
+      "track": "kr",
+      "text": "모든國民은均等하게敎育을받을權利가있다",
+      "translation_ko": "모든國民은均等하게敎育을받을權利가있다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "九",
+      "track": "kr",
+      "text": "그가 九百 三十歲를 享壽하고 죽었더라",
+      "translation_ko": "그가 九百 三十歲를 享壽하고 죽었더라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "國",
+      "track": "kr",
+      "text": "居留人과 他國 품軍은 먹지 못하리라",
+      "translation_ko": "居留人과 他國 품軍은 먹지 못하리라",
+      "source": "개역간이국한문한글판 #393092",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "軍",
+      "track": "kr",
+      "text": "이에 軍士들이 거룻줄을 끊어 떼어 버리니라",
+      "translation_ko": "이에 軍士들이 거룻줄을 끊어 떼어 버리니라",
+      "source": "개역간이국한문한글판 #394026",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "金",
+      "track": "kr",
+      "text": "저가 金으로 그룹에 입혔더라",
+      "translation_ko": "저가 金으로 그룹에 입혔더라",
+      "source": "개역간이국한문한글판 #393354",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "南",
+      "track": "kr",
+      "text": "그 바다는 殿 右便 東南方에 두었더라",
+      "translation_ko": "그 바다는 殿 右便 東南方에 두었더라",
+      "source": "개역간이국한문한글판 #393798",
+      "source_kind": "corpus",
+      "target_index": 12,
+      "rank": 0
+    },
+    {
+      "character_key": "女",
+      "track": "kr",
+      "text": "에셀의 子女는 빌한과 사아완과 아간이요",
+      "translation_ko": "에셀의 子女는 빌한과 사아완과 아간이요",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "年",
+      "track": "kr",
+      "text": "다니엘은 고레스 王 元年까지 있으니라",
+      "translation_ko": "다니엘은 고레스 王 元年까지 있으니라",
+      "source": "개역간이국한문한글판 #393911",
+      "source_kind": "corpus",
+      "target_index": 12,
+      "rank": 0
+    },
+    {
+      "character_key": "大",
+      "track": "kr",
+      "text": "에서 곧 에돔의 大略이 이러하니라",
+      "translation_ko": "에서 곧 에돔의 大略이 이러하니라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "東",
+      "track": "kr",
+      "text": "主께서 東風으로 다시스의 배를 깨뜨리시도다",
+      "translation_ko": "主께서 東風으로 다시스의 배를 깨뜨리시도다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "六",
+      "track": "kr",
+      "text": "물도 힌 六分 一씩 되어서 때를 따라 마시라",
+      "translation_ko": "물도 힌 六分 一씩 되어서 때를 따라 마시라",
+      "source": "개역간이국한문한글판 #393904",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "萬",
+      "track": "kr",
+      "text": "이는 萬民 앞에 豫備하신 것이요",
+      "translation_ko": "이는 萬民 앞에 豫備하신 것이요",
+      "source": "개역간이국한문한글판 #394008",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "母",
+      "track": "kr",
+      "text": "하지 말라, 네 父母를 恭敬하라 하였느니라",
+      "translation_ko": "하지 말라, 네 父母를 恭敬하라 하였느니라",
+      "source": "개역간이국한문한글판 #394008",
+      "source_kind": "corpus",
+      "target_index": 10,
+      "rank": 0
+    },
+    {
+      "character_key": "木",
+      "track": "kr",
+      "text": "우리 집은 柏香木 들보, 잣나무 석가래로구나",
+      "translation_ko": "우리 집은 柏香木 들보, 잣나무 석가래로구나",
+      "source": "개역간이국한문한글판 #393850",
       "source_kind": "corpus",
       "target_index": 8,
       "rank": 0
     },
     {
+      "character_key": "門",
+      "track": "kr",
+      "text": "예루살렘아 우리 발이 네 城門 안에 섰도다",
+      "translation_ko": "예루살렘아 우리 발이 네 城門 안에 섰도다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 15,
+      "rank": 0
+    },
+    {
+      "character_key": "民",
+      "track": "kr",
+      "text": "모든國民은法律의定하는바에依하여納稅의義務를진다",
+      "translation_ko": "모든國民은法律의定하는바에依하여納稅의義務를진다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "白",
+      "track": "kr",
+      "text": "세째 줄은 琥珀 白瑪瑙 紫水晶이요",
+      "translation_ko": "세째 줄은 琥珀 白瑪瑙 紫水晶이요",
+      "source": "개역간이국한문한글판 #393092",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "父",
+      "track": "kr",
+      "text": "하지 말라, 네 父母를 恭敬하라 하였느니라",
+      "translation_ko": "하지 말라, 네 父母를 恭敬하라 하였느니라",
+      "source": "개역간이국한문한글판 #394008",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "北",
+      "track": "kr",
+      "text": "누가 能히 鐵 곧 北方의 鐵과 놋을 꺾으리요",
+      "translation_ko": "누가 能히 鐵 곧 北方의 鐵과 놋을 꺾으리요",
+      "source": "개역간이국한문한글판 #393895",
+      "source_kind": "corpus",
+      "target_index": 10,
+      "rank": 0
+    },
+    {
+      "character_key": "四",
+      "track": "kr",
+      "text": "예수의 所聞이 곧 온 갈릴리 四方에 퍼지더라",
+      "translation_ko": "예수의 所聞이 곧 온 갈릴리 四方에 퍼지더라",
+      "source": "개역간이국한문한글판 #393999",
+      "source_kind": "corpus",
+      "target_index": 16,
+      "rank": 0
+    },
+    {
+      "character_key": "山",
+      "track": "kr",
+      "text": "이에 에서 곧 에돔이 세일山에 居하니라",
+      "translation_ko": "이에 에서 곧 에돔이 세일山에 居하니라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "三",
+      "track": "kr",
+      "text": "그들을 다 함께 三日을 가두었더라",
+      "translation_ko": "그들을 다 함께 三日을 가두었더라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "生",
+      "track": "kr",
+      "text": "生鮮을 달라 하면 뱀을 줄 사람이 있겠느냐",
+      "translation_ko": "生鮮을 달라 하면 뱀을 줄 사람이 있겠느냐",
+      "source": "개역간이국한문한글판 #393986",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "西",
+      "track": "kr",
+      "text": "東西南北 各 地方에서부터 모으셨도다",
+      "translation_ko": "東西南北 各 地方에서부터 모으셨도다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "先",
+      "track": "kr",
+      "text": "先知者 하나냐가 그 해 七月에 죽었더라",
+      "translation_ko": "先知者 하나냐가 그 해 七月에 죽었더라",
+      "source": "개역간이국한문한글판 #393895",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "水",
+      "track": "kr",
+      "text": "여호와께서 河水를 치신 後 七日이 지나니라",
+      "translation_ko": "여호와께서 河水를 치신 後 七日이 지나니라",
+      "source": "개역간이국한문한글판 #393092",
+      "source_kind": "corpus",
+      "target_index": 7,
+      "rank": 0
+    },
+    {
+      "character_key": "室",
+      "track": "kr",
+      "text": "皇室은 卽 우리 二千萬 兄弟의 宗家이시니라",
+      "translation_ko": "皇室은 卽 우리 二千萬 兄弟의 宗家이시니라",
+      "source": "노동야학독본 #425566",
+      "source_kind": "textbook",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "十",
+      "track": "kr",
+      "text": "四十日을 밤낮으로 禁食하신 後에 주리신지라",
+      "translation_ko": "四十日을 밤낮으로 禁食하신 後에 주리신지라",
+      "source": "개역간이국한문한글판 #393986",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "五",
+      "track": "kr",
+      "text": "이 에스라가 올라왔으니 王의 七年 五月이라",
+      "translation_ko": "이 에스라가 올라왔으니 王의 七年 五月이라",
+      "source": "개역간이국한문한글판 #393803",
+      "source_kind": "corpus",
+      "target_index": 19,
+      "rank": 0
+    },
+    {
+      "character_key": "王",
+      "track": "kr",
+      "text": "하나는 에글론 王이요 하나는 게셀 王이요",
+      "translation_ko": "하나는 에글론 王이요 하나는 게셀 王이요",
+      "source": "개역간이국한문한글판 #393297",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "外",
+      "track": "kr",
+      "text": "나 外에는 爲하는 神들을 네게 있게 말지니라",
+      "translation_ko": "나 外에는 爲하는 神들을 네게 있게 말지니라",
+      "source": "개역간이국한문한글판 #393281",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "月",
+      "track": "kr",
+      "text": "月朔과 月望과 우리의 節日에 나팔을 불지어다",
+      "translation_ko": "月朔과 月望과 우리의 節日에 나팔을 불지어다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "二",
+      "track": "kr",
+      "text": "드린 놋은 七十 달란트와 二千 四百 세겔이라",
+      "translation_ko": "드린 놋은 七十 달란트와 二千 四百 세겔이라",
+      "source": "개역간이국한문한글판 #393092",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "人",
+      "track": "kr",
+      "text": "네가 惡人의 밟던 옛적 길을 지키려느냐",
+      "translation_ko": "네가 惡人의 밟던 옛적 길을 지키려느냐",
+      "source": "개역간이국한문한글판 #393817",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
       "character_key": "一",
       "track": "kr",
-      "text": "일석이조 (一石二鳥).",
-      "translation_ko": "일석이조 (一石二鳥).",
-      "source": "Tatoeba #907715",
+      "text": "물이 一百 五十日을 땅에 漲溢하였더라",
+      "translation_ko": "물이 一百 五十日을 땅에 漲溢하였더라",
+      "source": "개역간이국한문한글판 #393095",
       "source_kind": "corpus",
-      "target_index": 6,
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "日",
+      "track": "kr",
+      "text": "終日토록 손을 돌이켜 자주자주 나를 치시도다",
+      "translation_ko": "終日토록 손을 돌이켜 자주자주 나를 치시도다",
+      "source": "개역간이국한문한글판 #393900",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "長",
+      "track": "kr",
+      "text": "이는 네가 잘 되고 땅에서 長壽하리라",
+      "translation_ko": "이는 네가 잘 되고 땅에서 長壽하리라",
+      "source": "개역간이국한문한글판 #394063",
+      "source_kind": "corpus",
+      "target_index": 15,
+      "rank": 0
+    },
+    {
+      "character_key": "弟",
+      "track": "kr",
+      "text": "거룩하게 입맞춤으로 모든 兄弟에게 問安하라",
+      "translation_ko": "거룩하게 입맞춤으로 모든 兄弟에게 問安하라",
+      "source": "개역간이국한문한글판 #394088",
+      "source_kind": "corpus",
+      "target_index": 15,
+      "rank": 0
+    },
+    {
+      "character_key": "中",
+      "track": "kr",
+      "text": "그것이 空中에서 내려 사람 위에 쏟아지느니라",
+      "translation_ko": "그것이 空中에서 내려 사람 위에 쏟아지느니라",
+      "source": "개역간이국한문한글판 #393817",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "靑",
+      "track": "kr",
+      "text": "靑年 男子와 處女와 老人과 아이들아",
+      "translation_ko": "靑年 男子와 處女와 老人과 아이들아",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "七",
+      "track": "kr",
+      "text": "三月에 쌓기를 始作하여 七月에 마친지라",
+      "translation_ko": "三月에 쌓기를 始作하여 七月에 마친지라",
+      "source": "개역간이국한문한글판 #393798",
+      "source_kind": "corpus",
+      "target_index": 13,
+      "rank": 0
+    },
+    {
+      "character_key": "土",
+      "track": "kr",
+      "text": "일곱해 豊年에 土地 所出이 甚히 많은지라",
+      "translation_ko": "일곱해 豊年에 土地 所出이 甚히 많은지라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "八",
+      "track": "kr",
+      "text": "第 八日에는 그 아이의 陽皮를 벨 것이요",
+      "translation_ko": "第 八日에는 그 아이의 陽皮를 벨 것이요",
+      "source": "개역간이국한문한글판 #393105",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "學",
+      "track": "kr",
+      "text": "國立서울大學校 內에는 左記 大學을 設置함.",
+      "translation_ko": "國立서울大學校 內에는 左記 大學을 設置함.",
+      "source": "군정법령 제102호 #456156",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "韓",
+      "track": "kr",
+      "text": "大韓民國의國民되는要件은法律로써定한다",
+      "translation_ko": "大韓民國의國民되는要件은法律로써定한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "兄",
+      "track": "kr",
+      "text": "요한의 兄弟 야고보를 칼로 죽이니",
+      "translation_ko": "요한의 兄弟 야고보를 칼로 죽이니",
+      "source": "개역간이국한문한글판 #394026",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "火",
+      "track": "kr",
+      "text": "여호와의 소리가 火焰을 가르시도다",
+      "translation_ko": "여호와의 소리가 火焰을 가르시도다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 9,
       "rank": 0
     }
   ]

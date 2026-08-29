@@ -61,6 +61,8 @@
 .track-panel__sentence + .track-panel__sentence { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--detail-accent); }
 .track-panel__sentence p { color: var(--ink); font-family: var(--detail-font); font-size: 15px; font-weight: 600; line-height: 1.5; }
 .track-panel__sentence small { display: block; margin-top: 5px; color: var(--body); font-size: 12px; font-weight: 600; }
+.track-panel__sentence .track-panel__source { color: var(--muted); font-size: 11px; }
+.track-panel__source a { color: inherit; }
 .track-panel__empty { color: var(--muted); font-size: 12px; font-weight: 600; }
 .track-panel__more { margin-top: 10px; padding: 5px 9px; border: 2px solid var(--ink); border-radius: var(--radius-keycap); background: var(--card); color: var(--ink); cursor: pointer; font-size: 11px; font-weight: 800; }
 

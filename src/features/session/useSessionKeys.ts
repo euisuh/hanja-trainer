@@ -26,7 +26,7 @@ export function useSessionKeys({ active, answered, compare, onPick, onSkip, onAd
         event.preventDefault();
         onSkip();
       } else if ((event.key === "Enter" || event.key === " ") && (answered || compare)) {
-        if (target instanceof HTMLElement && target.matches(".feedback-bar button, .answer-option[aria-disabled=true], .skip-answer[aria-disabled=true]")) return;
+        if (target instanceof HTMLElement && target.matches("a, .feedback-bar button, .answer-option[aria-disabled=true], .skip-answer[aria-disabled=true]")) return;
         event.preventDefault();
         onAdvance();
       }

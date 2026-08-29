@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
-import { parseSeed, parseSentenceSeed } from "./seed.ts";
+import { sentenceAttribution } from "../src/shared/sentenceAttribution.ts";
+import { emitSeedSql, emitSentenceSeedSql, parseSeed, parseSentenceSeed } from "./seed.ts";
 import type { SeedSentenceEntry, Track } from "../src/shared/types.ts";
 
 const files = {
@@ -59,10 +61,13 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
       const glyph = glyphs.get(`${entry.characterKey}:${entry.track}`);
       assert.ok(glyph, `${sentencePath}: unknown ${entry.characterKey}:${entry.track}`);
       assert.equal(Array.from(entry.text)[entry.targetIndex], glyph, `${sentencePath}: ${entry.characterKey}`);
-      assert.match(entry.source, /^Tatoeba #\d+$/u, `${sentencePath}: ${entry.characterKey}`);
+      assert.equal(entry.text.codePointAt(entry.targetIndex), glyph.codePointAt(0), `${sentencePath}: ${entry.characterKey} code point`);
+      assert.match(entry.source, /^(?:Tatoeba|개역간이국한문한글판|대한민국헌법|노동야학독본|국민 소학 독본|산중신곡|3·1독립선언서|군정법령 제\d+호) #\d+$/u, `${sentencePath}: ${entry.characterKey}`);
+      assert.ok(sentenceAttribution(entry.source), `${sentencePath}: ${entry.characterKey} attribution`);
       if (entry.track === "kr") {
         assert.match(entry.text, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul`);
-        assert.match(entry.text, /\p{Script=Han}/u, `${sentencePath}: ${entry.characterKey} Hanja`);
+        assert.ok(entry.text.includes(glyph), `${sentencePath}: ${entry.characterKey} Hanja`);
+        assert.equal(entry.sourceKind, entry.source.includes("독본") ? "textbook" : "corpus", `${sentencePath}: ${entry.characterKey} source kind`);
       }
       const identity = `${entry.characterKey}:${entry.track}:${entry.rank}`;
       const existing = byIdentity.get(identity);
@@ -71,11 +76,49 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
     }
   }
 
-  assert.equal(byIdentity.size, 598);
-  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 164);
+  const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
+  assert.equal(krCovered.length, 127);
+  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 127);
+  assert.equal(byIdentity.size, 723);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 39);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3) {
       assert.ok([...byIdentity.values()].filter((entry) => entry.characterKey === key).length >= 2, key);
     }
   }
+});
+
+test("full content seed loads cleanly and is idempotent", async () => {
+  const sqlite = new DatabaseSync(":memory:");
+  try {
+    sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
+    const characterSql = await Promise.all(Object.keys(files).map(async (path) => (
+      emitSeedSql(parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))
+    )));
+    const sentenceSql = await Promise.all(Object.keys(files).map(async (path) => (
+      emitSentenceSeedSql(parseSentenceSeed(JSON.parse(await readFile(path.replace("/characters/", "/sentences/"), "utf8")) as unknown))
+    )));
+    const sql = [...characterSql, ...sentenceSql].join("\n");
+    sqlite.exec(sql);
+    const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
+    sqlite.exec(sql);
+    assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
+    assert.equal(counts?.sentences, 723);
+  } finally {
+    sqlite.close();
+  }
+});
+
+test("sentence attribution links source revisions and licenses", () => {
+  assert.deepEqual(sentenceAttribution("Tatoeba #907715"), {
+    sourceUrl: "https://tatoeba.org/sentences/show/907715",
+    license: "CC BY 2.0 FR",
+    licenseUrl: "https://creativecommons.org/licenses/by/2.0/fr/",
+  });
+  assert.deepEqual(sentenceAttribution("대한민국헌법 #418801"), {
+    sourceUrl: "https://ko.wikisource.org/w/index.php?oldid=418801",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+  });
+  assert.equal(sentenceAttribution("알 수 없는 출처 #123"), null);
 });

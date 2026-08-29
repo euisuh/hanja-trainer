@@ -1,5 +1,6 @@
 import type { CharacterEntry, ExampleSentence, Track, TrackEntry } from "../../shared/types";
 import type { OnyomiScript } from "../../shared/settings";
+import { SourceAttribution } from "../source/SourceAttribution";
 import { trackThemes } from "../tracks/trackTheme";
 import { CompareCard } from "./CompareCard";
 
@@ -20,15 +21,17 @@ function SentencePanel({ sentence, revealed }: { sentence: ExampleSentence; reve
   const theme = trackThemes[sentence.track];
   return (
     <div className="quiz-card__sentence" lang={theme.lang}>
-      <div lang={trackThemes.kr.lang}>예문 · {sentence.source}</div>
+      <div lang={trackThemes.kr.lang}>예문 · <SourceAttribution source={sentence.source} /></div>
       <p>
         {points.slice(0, sentence.targetIndex).join("")}
         <mark>{points[sentence.targetIndex]}</mark>
         {points.slice(sentence.targetIndex + 1).join("")}
       </p>
-      <small className={revealed ? "quiz-card__translation--revealed" : ""} lang={trackThemes.kr.lang}>
-        {revealed ? sentence.translationKo : "정답 후 번역이 공개됩니다"}
-      </small>
+      {sentence.translationKo !== sentence.text && (
+        <small className={revealed ? "quiz-card__translation--revealed" : ""} lang={trackThemes.kr.lang}>
+          {revealed ? sentence.translationKo : "정답 후 번역이 공개됩니다"}
+        </small>
+      )}
     </div>
   );
 }

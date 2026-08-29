@@ -27,7 +27,8 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[card.track]);
         if (await page.locator(".quiz-card__sentence p").count() > 0) {
           await expectClosestLang(page.locator(".quiz-card__sentence p"), languages[card.track]);
-          await expectClosestLang(page.locator(".quiz-card__sentence small"), languages.kr);
+          const translation = page.locator(".quiz-card__sentence small");
+          if (await translation.count() > 0) await expectClosestLang(translation, languages.kr);
         }
       } else {
         const panels = page.locator(".compare-card__panel");
@@ -159,6 +160,16 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(clickedAnswer).toHaveAttribute("aria-disabled", "true");
     await clickedAnswer.press("Enter");
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", "1");
+    const sourceLink = page.locator(".quiz-card__sentence a").first();
+    await sourceLink.evaluate((link) => link.addEventListener("click", (event) => {
+      event.preventDefault();
+      link.setAttribute("data-keyboard-activated", "true");
+    }, { once: true }));
+    await sourceLink.press("Enter");
+    await expect(sourceLink).toHaveAttribute("data-keyboard-activated", "true");
+    await sourceLink.press("Space");
+    await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", "1");
+    await clickedAnswer.focus();
     await clickedAnswer.press("Shift+Tab");
     await expect(page.locator(".answer-option").first()).toBeFocused();
     await page.getByRole("button", { name: /다음 카드/u }).click();
