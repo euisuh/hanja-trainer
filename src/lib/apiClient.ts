@@ -1,4 +1,4 @@
-import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
@@ -33,6 +33,15 @@ export const apiClient = {
     body: JSON.stringify(body),
     signal,
   }),
+  completeUnitTest: async (unitId: number, sessionId: string, answers: UnitTestAnswer[]): Promise<UnitTestResult> => {
+    const result = await requestJson<UnitTestResult>(`/api/curriculum/units/${unitId}/test-out`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ sessionId, answers }),
+    });
+    window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    return result;
+  },
   submitReviews: (body: SubmitReviewRequest[], signal?: AbortSignal) => requestJson<{ results: SubmitReviewResponse[] }>("/api/reviews/batch", {
     method: "POST",
     headers: { "content-type": "application/json" },

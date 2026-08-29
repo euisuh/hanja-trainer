@@ -18,6 +18,7 @@ interface CurriculumRow {
   cn_pinyin: string | null;
   stability: number | null;
   level_ord: number;
+  completion_character_id: number | null;
 }
 
 type PlacementRow = { level_ord: number };
@@ -32,17 +33,19 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
   const [result, placementResult] = await db.batch([db.prepare(`
     SELECT cu.id AS unit_id, cu.level, cu.ord AS unit_ord, cu.title, cu.subtitle,
       cum.ord AS member_ord, c.key, ct.glyph, ct.kr_reading, ct.jp_on, ct.cn_pinyin,
-      rs.stability, ct.level_ord
+      rs.stability, ct.level_ord, ucc.character_id AS completion_character_id
     FROM curriculum_units cu
     JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
     JOIN characters c ON c.id = cum.character_id
     JOIN character_tracks ct ON ct.character_id = c.id AND ct.track = cu.track
     LEFT JOIN review_states rs ON rs.character_id = c.id AND rs.track = cu.track
+    LEFT JOIN curriculum_unit_completion_members ucc ON ucc.unit_id = cu.id AND ucc.character_id = c.id
     WHERE cu.track = ?1
     ORDER BY MIN(ct.level_ord) OVER (PARTITION BY cu.id), cu.ord, cum.ord
   `).bind(track), db.prepare("SELECT level_ord FROM placement_results WHERE track = ?1 ORDER BY taken_at DESC, id DESC LIMIT 1").bind(track)]);
   const units = new Map<number, CurriculumResponse["units"][number]>();
   const unitLevels = new Map<number, number>();
+  const completedMembers = new Map<number, number>();
   for (const row of result.results as unknown as CurriculumRow[]) {
     let unit = units.get(row.unit_id);
     if (!unit) {
@@ -50,12 +53,18 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
       units.set(row.unit_id, unit);
     }
     unitLevels.set(row.unit_id, Math.min(unitLevels.get(row.unit_id) ?? row.level_ord, row.level_ord));
+    if (row.completion_character_id !== null) completedMembers.set(row.unit_id, (completedMembers.get(row.unit_id) ?? 0) + 1);
     const mastered = (row.stability ?? 0) >= MASTERY_STABILITY_DAYS;
     if (mastered) unit.progress.known += 1;
     unit.progress.total += 1;
     unit.nodes.push({ key: row.key, glyph: row.glyph, reading: rowReading(row, track), state: mastered ? "done" : "locked" });
   }
   const ordered = [...units.values()];
+  for (const unit of ordered) {
+    if ((completedMembers.get(unit.id) ?? 0) === unit.nodes.length) {
+      for (const node of unit.nodes) node.state = "done";
+    }
+  }
   const placementLevel = Number((placementResult.results[0] as unknown as PlacementRow | undefined)?.level_ord ?? 1);
   const matchedIndex = ordered.findIndex((unit) => (unitLevels.get(unit.id) ?? 1) >= placementLevel);
   const startIndex = matchedIndex < 0 ? Math.max(0, ordered.length - 1) : matchedIndex;

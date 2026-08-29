@@ -1,4 +1,6 @@
 PRAGMA foreign_keys = ON;
+DELETE FROM curriculum_unit_test_attempts;
+DELETE FROM curriculum_unit_completion_members;
 DELETE FROM review_submissions;
 DELETE FROM review_log;
 DELETE FROM review_states;

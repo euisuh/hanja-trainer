@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
@@ -22,28 +22,48 @@ export function LessonScreen() {
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
   const startedAt = useRef(new Date());
-  const lessonState = location.state as { track?: Track; tracks?: Track[]; unitId?: number } | null;
+  const lessonState = location.state as { track?: Track; tracks?: Track[]; unitId?: number; testOut?: boolean } | null;
   const requestedTracks = lessonState?.tracks ?? lessonState?.track;
   const tracks = useMemo(() => lessonTracks(requestedTracks, enabledTracks), [enabledTracks, requestedTracks]);
-  const unitId = Array.isArray(lessonState?.tracks) && lessonState.tracks.length > 0 && lessonState.tracks.every((track) => enabledTracks.includes(track)) ? lessonState.unitId : undefined;
+  const testOut = lessonState?.testOut === true;
+  const validUnit = Number.isInteger(lessonState?.unitId) && lessonState!.unitId! > 0;
+  const validTestOut = testOut && validUnit && tracks.length === 1 && Array.isArray(lessonState?.tracks) && lessonState.tracks.length === 1 && lessonState.tracks[0] === tracks[0];
+  const unitId = validUnit ? lessonState?.unitId : undefined;
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || testOut && !validTestOut) return;
     const controller = new AbortController();
-    apiClient.startSession({ mode: "lesson", tracks, limit: 8, unitId }, controller.signal)
+    apiClient.startSession({ mode: "lesson", tracks, limit: 8, unitId, ...(testOut ? { testOut: true } : {}) }, controller.signal)
       .then((result) => setSession({ id: result.sessionId, queue: apiCardsToQueue(result.cards) }))
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "레슨을 불러오지 못했습니다."); });
     return () => controller.abort();
-  }, [ready, retryKey, tracks, unitId]);
+  }, [ready, retryKey, testOut, tracks, unitId, validTestOut]);
+  if (testOut && !validTestOut) return <Navigate replace to="/home" />;
   if (settingsError) return <div className="session-empty"><h1>설정을 불러오지 못했습니다.</h1><p role="alert">{settingsError}</p><button onClick={retrySettings}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
-  if (error) return <div className="session-empty"><h1>레슨을 불러오지 못했습니다.</h1><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
-  if (!ready || !session) return <p>레슨을 불러오는 중…</p>;
+  if (error) return <div className="session-empty"><h1>{testOut ? "유닛 테스트를 완료하지 못했습니다." : "레슨을 불러오지 못했습니다."}</h1><p role="alert">{error}</p><button onClick={() => { startedAt.current = new Date(); setError(""); setRetryKey((value) => value + 1); }}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
+  if (!ready || !session) return <p>{testOut ? "유닛 테스트" : "레슨"}을 불러오는 중…</p>;
   return (
     <SessionRunner
       characters={queueCharacters(session.queue)}
       enabledTracks={tracks}
-      mode="lesson"
+      mode={testOut ? "unit-test" : "lesson"}
       onyomiScript={onyomiScript}
       onComplete={async (result) => {
+        if (testOut && unitId) {
+          try {
+            const unitTest = await apiClient.completeUnitTest(unitId, session.id, result.unitTestAnswers ?? []);
+            let profile;
+            if (unitTest.passed) {
+              try {
+                profile = await apiClient.createSession({ mode: "lesson", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
+              } catch { /* Unit completion is already safely persisted. */ }
+            }
+            navigate("/session-complete", { state: { ...result, profile, unitTest } });
+          } catch {
+            setSession(null);
+            setError("유닛 테스트 결과를 저장하지 못했습니다. 다시 시도해 주세요.");
+          }
+          return;
+        }
         try {
           const profile = await apiClient.createSession({ mode: "lesson", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
           navigate("/session-complete", { state: { ...result, profile } });

@@ -2,7 +2,7 @@ import { expect, test, type Locator, type Page, type TestInfo } from "@playwrigh
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
 type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; levelOrd: number; options: Array<{ label: string }>; track: keyof typeof languages };
-type SessionResponse = { cards: Card[] };
+type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 
 async function expectClosestLang(locator: Locator, lang: string) {
@@ -15,10 +15,11 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-type FinishOptions = { progressOffset?: number; skipFirst?: boolean; verifyLanguages?: boolean };
+type FinishOptions = { progressOffset?: number; skipFirst?: boolean; verifyLanguages?: boolean; wrongFirst?: boolean };
 
 async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
   let skipped = false;
+  let answeredWrong = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
     if (options.verifyLanguages) {
@@ -42,7 +43,9 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     }
     if (card.kind === "reading") {
       const shouldSkip = Boolean(options.skipFirst) && !skipped;
-      await page.keyboard.press(shouldSkip ? "0" : String(card.answerIndex + 1));
+      const shouldAnswerWrong = Boolean(options.wrongFirst) && !answeredWrong;
+      await page.keyboard.press(shouldSkip ? "0" : String((shouldAnswerWrong ? (card.answerIndex + 1) % card.options.length : card.answerIndex) + 1));
+      if (shouldAnswerWrong) answeredWrong = true;
       if (shouldSkip) {
         skipped = true;
         await expect(page.locator(".feedback-bar")).toContainText(/모름 · 정답 \S/u);
@@ -181,6 +184,63 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
+  });
+
+  test("unit test-out repeats every character and only advances on perfection", async ({ page }) => {
+    await page.goto("/home");
+    const launch = page.getByRole("button", { name: /이 유닛 건너뛰기/u });
+    await expect(launch).toBeVisible();
+    const before = await (await page.request.get("/api/curriculum?track=kr")).json() as { units: Array<{ id: number; current: boolean; progress: { known: number }; nodes: Array<{ state: string }> }> };
+    const xpBefore = (await (await page.request.get("/api/profile")).json() as { xp: number }).xp;
+    const current = before.units.find((unit) => unit.current)!;
+
+    const firstRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
+    await launch.focus();
+    const first = await sessionStarted(page, () => page.keyboard.press("Enter"));
+    expect((await firstRequest).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["kr"], unitId: current.id, testOut: true });
+    expect(first.cards.length).toBeGreaterThan(0);
+    expect(first.cards.length % 2).toBe(0);
+    expect(first.cards.every((card) => card.kind === "reading" && card.track === "kr")).toBe(true);
+    const grouped = Map.groupBy(first.cards, (card) => card.characterKey);
+    expect([...grouped.values()].every((cards) => cards.length === 2)).toBe(true);
+    expect(first.cards.every((card, index) => index === 0 || card.characterKey !== first.cards[index - 1].characterKey)).toBe(true);
+    for (const cards of grouped.values()) {
+      expect(cards[0].answerIndex).not.toBe(cards[1].answerIndex);
+      const wrong = (card: Card) => card.options.filter((_, index) => index !== card.answerIndex).map((option) => option.label).sort();
+      expect(wrong(cards[0])).not.toEqual(wrong(cards[1]));
+    }
+
+    await page.keyboard.press(String(first.cards[0].answerIndex + 1));
+    const reloaded = await sessionStarted(page, () => page.reload());
+    expect(reloaded.sessionId).not.toBe(first.sessionId);
+    await expect(page.locator(".quiz-card")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await page.keyboard.press("Q");
+    await expect(page.locator(".home-screen")).toBeVisible();
+    const afterAbandon = await (await page.request.get("/api/curriculum?track=kr")).json() as typeof before;
+    expect(afterAbandon.units.find((unit) => unit.current)?.id).toBe(current.id);
+    expect(afterAbandon.units.find((unit) => unit.id === current.id)?.progress.known).toBe(current.progress.known);
+
+    const failed = await sessionStarted(page, () => page.getByRole("button", { name: /이 유닛 건너뛰기/u }).press("Enter"));
+    const failedCompletion = page.waitForRequest((request) => request.url().includes(`/api/curriculum/units/${current.id}/test-out`));
+    await finishSession(page, failed.cards, /유닛 테스트 실패/u, { wrongFirst: true });
+    expect((await failedCompletion).postDataJSON()).toMatchObject({ sessionId: failed.sessionId });
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".home-screen")).toBeVisible();
+    const afterFailure = await (await page.request.get("/api/curriculum?track=kr")).json() as typeof before;
+    expect(afterFailure.units.find((unit) => unit.current)?.id).toBe(current.id);
+    expect(afterFailure.units.find((unit) => unit.id === current.id)?.progress.known).toBe(current.progress.known);
+    expect((await (await page.request.get("/api/profile")).json() as { xp: number }).xp).toBe(xpBefore);
+
+    const second = await sessionStarted(page, () => page.getByRole("button", { name: /이 유닛 건너뛰기/u }).press("Space"));
+    await finishSession(page, second.cards, /유닛 건너뛰기 성공/u);
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".home-screen")).toBeVisible();
+    const afterSuccess = await (await page.request.get("/api/curriculum?track=kr")).json() as typeof before;
+    const completed = afterSuccess.units.find((unit) => unit.id === current.id)!;
+    expect(completed.nodes.every((node) => node.state === "done")).toBe(true);
+    expect(completed.progress.known).toBe(current.progress.known);
+    await expect(page.getByRole("button", { name: /이 유닛 건너뛰기/u })).toHaveCount(0);
   });
 
   test("track imbalance quick-start scopes every CTA path and snoozes", async ({ page }) => {

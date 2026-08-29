@@ -28,7 +28,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
 

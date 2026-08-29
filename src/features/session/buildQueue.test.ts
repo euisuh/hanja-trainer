@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { parseSeed } from "../../../scripts/seed";
 import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry } from "../../shared/types";
-import { buildQueue, buildReadingItem, reviewKey } from "./buildQueue";
+import { buildQueue, buildReadingItem, buildUnitTestQueue, reviewKey } from "./buildQueue";
 
 function character(id: number): CharacterEntry {
   const glyph = String.fromCodePoint(0x4e00 + id);
@@ -29,6 +29,11 @@ function withReadings(id: number, jp: string, cn: string): CharacterEntry {
     ...base,
     tracks: base.tracks.map((entry) => entry.track === "jp" ? { ...entry, on: jp } : entry.track === "cn" ? { ...entry, pinyin: cn } : entry),
   };
+}
+
+function withKorean(id: number, reading: string): CharacterEntry {
+  const base = character(id);
+  return { ...base, tracks: base.tracks.map((entry) => entry.track === "kr" ? { ...entry, reading } : entry) };
 }
 
 function seededCharacters(): CharacterEntry[] {
@@ -215,6 +220,53 @@ describe("buildQueue", () => {
 
     expect(cnItem?.options.some((option) => option.label !== "bā" && option.label.normalize("NFD").replace(/\p{Mn}/gu, "") === "ba")).toBe(true);
     expect(jpItem?.options.some((option) => option.label === "ジン")).toBe(true);
+  });
+
+  it("prioritizes Korean readings with the same or a similar final sound", () => {
+    const corpus = ["장인 공", "빌 공", "강 강", "글월 문", "물 수", "불 화"].map((reading, index) => withKorean(index + 1, reading));
+    const item = buildReadingItem(corpus[0], "kr", corpus, 0, random(1));
+
+    expect(item?.options.slice(1, 3).map((option) => option.label)).toEqual(["빌 공", "강 강"]);
+  });
+
+  it("builds two separated deterministic unit-test rounds with harder repeats", () => {
+    const corpus = ["장인 공", "빌 공", "강 강", "글월 문", "물을 문", "물 수", "불 화", "일 사", "넉 사", "윗 상"].map((reading, index) => withKorean(index + 1, reading));
+    const targets = corpus.slice(0, 3);
+    const build = (seed: number) => buildUnitTestQueue({ targets, characters: corpus, track: "kr", random: random(seed) });
+    const queue = build(7);
+
+    expect(queue).toHaveLength(targets.length * 2);
+    expect(queue.slice(0, targets.length).map((item) => item.character.id).sort()).toEqual(targets.map((item) => item.id));
+    expect(queue.slice(targets.length).map((item) => item.character.id).sort()).toEqual(targets.map((item) => item.id));
+    expect(queue.every((item, index) => index === 0 || item.character.id !== queue[index - 1].character.id)).toBe(true);
+    expect(build(7)).toEqual(queue);
+    expect(build(8).map((item) => item.character.id)).not.toEqual(queue.map((item) => item.character.id));
+
+    for (const target of targets) {
+      const [first, second] = queue.filter((item) => item.character.id === target.id);
+      const wrong = (item: typeof first) => item.options.filter((_, index) => index !== item.answerIndex).map((option) => option.label);
+      expect(first.options).toHaveLength(4);
+      expect(new Set(first.options.map((option) => option.label)).size).toBe(4);
+      expect(wrong(second).filter((label) => wrong(first).includes(label))).toHaveLength(0);
+      expect(second.answerIndex).not.toBe(first.answerIndex);
+    }
+    expect(queue.flatMap((item) => item.options.map((option) => option.label)).some((label) => !targets.some((target) => target.tracks.some((entry) => entry.track === "kr" && entry.reading === label)))).toBe(true);
+  });
+
+  it("uses partial new distractors before reusing prior choices", () => {
+    const corpus = ["장인 공", "빌 공", "강 강", "글월 문", "물 수", "불 화"].map((reading, index) => withKorean(index + 1, reading));
+    const targets = corpus.slice(0, 2);
+    const queue = buildUnitTestQueue({ targets, characters: corpus, track: "kr", random: random(4) });
+
+    for (const target of targets) {
+      const [first, second] = queue.filter((item) => item.character.id === target.id);
+      const wrong = (item: typeof first) => item.options.filter((_, index) => index !== item.answerIndex).map((option) => option.label);
+      const unused = corpus.flatMap((item) => item.tracks.filter((entry) => entry.track === "kr").map((entry) => entry.reading))
+        .filter((label) => label !== target.tracks.find((entry) => entry.track === "kr")?.reading && !wrong(first).includes(label));
+      expect(unused).toHaveLength(2);
+      expect(wrong(second)).toEqual(expect.arrayContaining(unused));
+      expect(wrong(second).filter((label) => wrong(first).includes(label))).toHaveLength(1);
+    }
   });
 
   it("keeps Japanese option shape non-unique when the corpus offers a match", () => {

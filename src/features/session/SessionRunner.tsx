@@ -6,7 +6,7 @@ import { gradeFromReview, initialState, schedule, type ReviewState } from "../..
 import { toHiragana } from "../../shared/kana";
 import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
-import type { PlacementAnswer, ProfileResponse } from "../../shared/api";
+import type { PlacementAnswer, ProfileResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
 import { AnswerOptions } from "./AnswerOptions";
 import { buildQueue, buildReadingItem, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
@@ -19,7 +19,7 @@ import { useSessionKeys } from "./useSessionKeys";
 import { useAnswerSubmit } from "./useAnswerSubmit";
 import "./session.css";
 
-export type SessionMode = "lesson" | "review" | "placement";
+export type SessionMode = "lesson" | "review" | "placement" | "unit-test";
 
 export type SessionResult = {
   xp: number;
@@ -31,7 +31,9 @@ export type SessionResult = {
   skipped: number;
   profile?: ProfileResponse;
   placement?: PlacementResult[];
-  placementAnswers?: PlacementAnswer[];
+  answers?: PlacementAnswer[];
+  unitTestAnswers?: UnitTestAnswer[];
+  unitTest?: UnitTestResult;
 };
 
 type Props = {
@@ -65,7 +67,7 @@ export function SessionRunner({
 }: Props) {
   const [states] = useState(() => new Map(initialReviewStates));
   const externalQueue = queueOverride !== undefined;
-  const queue = useMemo(() => queueOverride ?? (mode === "placement" ? [] : buildQueue({ characters, enabledTracks, length, mode, reviewStates: states })), [characters, enabledTracks, length, mode, queueOverride, states]);
+  const queue = useMemo(() => queueOverride ?? (mode === "placement" || mode === "unit-test" ? [] : buildQueue({ characters, enabledTracks, length, mode, reviewStates: states })), [characters, enabledTracks, length, mode, queueOverride, states]);
   const [adaptiveState, setAdaptiveState] = useState(() => createPlacementState(characters, enabledTracks, length));
   const [placementItem, setPlacementItem] = useState(() => {
     if (mode !== "placement" || externalQueue) return undefined;
@@ -86,7 +88,8 @@ export function SessionRunner({
   const [lastXp, setLastXp] = useState(0);
   const [nextInterval, setNextInterval] = useState("—");
   const [burstKey, setBurstKey] = useState(0);
-  const [placementAnswers, setPlacementAnswers] = useState<PlacementAnswer[]>([]);
+  const [assessmentAnswers, setAssessmentAnswers] = useState<PlacementAnswer[]>([]);
+  const [unitTestAnswers, setUnitTestAnswers] = useState<UnitTestAnswer[]>([]);
   const startedAt = useRef(0);
   const answerLocked = useRef(false);
   const completing = useRef(false);
@@ -111,14 +114,18 @@ export function SessionRunner({
     const isCorrect = choice === item.answerIndex;
     const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current));
     let interval = "—";
-    if (mode === "placement") {
+    if (mode === "placement" || mode === "unit-test") {
       const entry = item.character.tracks.find((candidate) => candidate.track === item.track);
       if (!entry) {
         answerLocked.current = false;
         return;
       }
-      setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
-      setPlacementAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, levelOrd: entry.levelOrd }]);
+      if (mode === "placement") {
+        setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
+        setAssessmentAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, levelOrd: entry.levelOrd }]);
+      } else {
+        setUnitTestAnswers((current) => [...current, { cardIndex: index, characterKey: item.character.key, selectedIndex: choice }]);
+      }
     } else {
       const key = reviewKey(item.character.id, item.track);
       const previous = states.get(key) ?? initialState(new Date());
@@ -127,7 +134,7 @@ export function SessionRunner({
       interval = intervalLabel(result.next.scheduledDays);
     }
     const answeredIndex = index;
-    submit({ cardIndex: index, characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
+    if (mode !== "unit-test") submit({ cardIndex: index, characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
       if (currentIndex.current === answeredIndex && mode !== "placement") setNextInterval(response.dueLabel);
     });
     const gained = isCorrect ? 10 + Math.min(10, combo * 2) : 0;
@@ -161,7 +168,7 @@ export function SessionRunner({
           correct: correctCount,
           skipped: skippedCount,
           placement: placementResults(adaptiveState),
-          placementAnswers,
+          answers: assessmentAnswers,
         });
         return;
       }
@@ -178,7 +185,8 @@ export function SessionRunner({
         correct: correctCount,
         skipped: skippedCount,
         placement: mode === "placement" ? placementResults(adaptiveState) : undefined,
-        placementAnswers: mode === "placement" ? placementAnswers : undefined,
+        answers: mode === "placement" ? assessmentAnswers : undefined,
+        unitTestAnswers: mode === "unit-test" ? unitTestAnswers : undefined,
       });
       return;
     }
@@ -204,11 +212,14 @@ export function SessionRunner({
   if (!item) {
     if (mode === "lesson") return <div className="session-empty"><h1>활성화된 트랙에 학습할 콘텐츠가 부족합니다.</h1><p>설정에서 다른 트랙을 활성화하거나 복습 큐를 확인해 주세요.</p><Link to="/settings">설정으로 가기</Link><Link to="/review">복습 큐로 가기</Link><button onClick={onQuit} type="button">지도로 돌아가기</button></div>;
     if (mode === "placement") return <div className="session-empty"><h1>배치에 필요한 콘텐츠가 부족합니다.</h1><p>트랙 선택을 바꾼 뒤 다시 시작해 주세요.</p><button onClick={onQuit} type="button">트랙 선택으로 돌아가기</button></div>;
+    if (mode === "unit-test") return <div className="session-empty"><h1>유닛 테스트를 만들 수 없습니다.</h1><p>이 유닛의 문항 구성을 확인해 주세요.</p><button onClick={onQuit} type="button">지도로 돌아가기</button></div>;
     return <div className="session-empty"><h1>복습할 카드가 없습니다.</h1><button onClick={onQuit} type="button">복습 큐로 돌아가기</button></div>;
   }
   const source = item.character.sentences.find((sentence) => sentence.track === item.track)?.source;
   const feedbackNote = compare
     ? "이미 아는 글자를 다른 트랙과 함께 확인합니다."
+    : mode === "unit-test"
+      ? answered ? "두 번 모두 맞혀야 유닛을 건너뜁니다." : "같은 글자도 다른 보기로 다시 출제됩니다."
     : mode === "placement"
       ? answered ? "응답에 맞춰 시작 급수를 조정했습니다." : "정답에 따라 다음 문항 난이도가 바뀝니다."
     : !answered
@@ -240,7 +251,7 @@ export function SessionRunner({
           : <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>)}
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : undefined} track={item.track} />
+        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
           <>
             <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} track={item.track} />

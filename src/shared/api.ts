@@ -80,12 +80,15 @@ export type SessionCard = {
   compare?: Partial<Record<Track, SessionCompareEntry>>;
 };
 
-export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number; unitId?: number; levelOrd?: number };
+export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number; unitId?: number; levelOrd?: number; testOut?: true };
 export type StartSessionResponse = {
   sessionId: string;
   cards: SessionCard[];
   shortage?: { code: "insufficient_content"; tracks: Track[]; message: string };
 };
+
+export type UnitTestAnswer = { cardIndex: number; characterKey: string; selectedIndex: number | null };
+export type UnitTestResult = { passed: boolean; correct: number; total: number; required: number };
 
 export type SubmitReviewRequest = {
   sessionId: string;

@@ -8,6 +8,7 @@ import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
 import { clearSessionCookie, createSessionCookie, PinError, readPinRecord, removeDevicePin, setDevicePin, unlockDevice, verifyPinSession } from "../auth/pin";
+import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 
 function error(status: number, code: string, message: string, retryAfter?: number): Response {
   return Response.json(
@@ -35,13 +36,17 @@ function startRequest(value: unknown): StartSessionRequest & { limit: number } |
   if (body.unitId !== undefined && (!Number.isInteger(body.unitId) || (body.unitId as number) < 1)) return null;
   if (body.levelOrd !== undefined && (!Number.isInteger(body.levelOrd) || (body.levelOrd as number) < 1)) return null;
   if (body.unitId !== undefined && body.levelOrd !== undefined) return null;
+  if (body.testOut !== undefined && body.testOut !== true) return null;
   const mode = body.mode as SessionMode;
+  const tracks = [...new Set(body.tracks as Track[])];
+  if (body.testOut === true && (mode !== "lesson" || tracks.length !== 1 || body.unitId === undefined || body.levelOrd !== undefined)) return null;
   return {
     mode,
-    tracks: [...new Set(body.tracks as Track[])],
+    tracks,
     limit: (body.limit as number | undefined) ?? (mode === "placement" ? 15 : 8),
     ...(body.unitId === undefined ? {} : { unitId: body.unitId as number }),
     ...(body.levelOrd === undefined ? {} : { levelOrd: body.levelOrd as number }),
+    ...(body.testOut === true ? { testOut: true as const } : {}),
   };
 }
 
@@ -79,6 +84,17 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
       const input = startRequest(value);
       if (!input) return error(400, "invalid_session_request", "mode, tracks, or limit is invalid");
       return Response.json(await startSession(env.DB, input));
+    }
+
+    const unitTestMatch = request.method === "POST" ? pathname.match(/^\/api\/curriculum\/units\/(\d+)\/test-out$/) : null;
+    if (unitTestMatch) {
+      const unitId = Number(unitTestMatch[1]);
+      if (!Number.isSafeInteger(unitId) || unitId < 1) return error(400, "invalid_unit_test", "unit id is invalid");
+      let value: unknown;
+      try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
+      const submission = parseUnitTestSubmission(value);
+      if (!submission) return error(400, "invalid_unit_test", "unit test submission is invalid");
+      return Response.json(await completeUnitTest(env.DB, unitId, submission.sessionId, submission.answers));
     }
 
     if (request.method === "POST" && (pathname === "/api/reviews" || pathname === "/api/reviews/batch")) {
@@ -183,6 +199,7 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
     return record.pin_hash && record.pin_secret ? withCookie(response, await createSessionCookie(record.pin_secret, now)) : response;
   } catch (caught) {
     if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
+    if (caught instanceof UnitTestError) return error(caught.status, caught.code, caught.message);
     if (caught instanceof ReviewTargetNotFound) return error(404, "character_not_found", "character track was not found");
     console.error(caught);
     return error(500, "internal_error", "request could not be completed");

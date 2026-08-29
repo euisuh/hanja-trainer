@@ -43,7 +43,7 @@ export function PlacementScreen() {
       onyomiScript={onyomiScript}
       onComplete={async (result) => {
         try {
-          const placement = await apiClient.scorePlacement(result.placementAnswers ?? []);
+          const placement = await apiClient.scorePlacement(result.answers ?? []);
           await apiClient.createSession({ mode: "placement", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
           navigate("/placement-result", { replace: true, state: { ...placement, returnTo: retestTrack ? "/settings" : "/home" } });
         } catch {

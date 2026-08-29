@@ -1,8 +1,9 @@
 import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../src/shared/api";
 import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
-import { buildQueue, readingFor, reviewKey } from "../../src/features/session/buildQueue";
-import { listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
+import { buildQueue, buildUnitTestQueue, readingFor, reviewKey } from "../../src/features/session/buildQueue";
+import { listByUnit, listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
+import { issueUnitTestAttempt, requireUnitTestTarget } from "./unitTest";
 
 const labels = {
   kr: { badge: "한국 · 한자", prompt: "훈음을 고르세요" },
@@ -69,7 +70,29 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
   return { ...base, kind: "reading", options: item.options, answerIndex: item.answerIndex };
 }
 
-export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID()): Promise<StartSessionResponse> {
+export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID(), now = Date.now()): Promise<StartSessionResponse> {
+  if (input.testOut === true) {
+    const track = input.tracks[0];
+    await requireUnitTestTarget(db, input.unitId!, track);
+    const [targets, characters] = await Promise.all([listByUnit(db, input.unitId!), listForTracks(db, [track])]);
+    const random = seededRandom(hashSeed(sessionId));
+    const queue = buildUnitTestQueue({ targets, characters, track, random });
+    const cards = queue.map(toCard);
+    if (queue.length === targets.length * 2 && queue.length > 0) {
+      await issueUnitTestAttempt(db, sessionId, input.unitId!, cards.map((card) => ({ characterKey: card.characterKey, answerIndex: card.answerIndex })), now);
+    }
+    return {
+      sessionId,
+      cards,
+      ...(queue.length === targets.length * 2 && queue.length > 0 ? {} : {
+        shortage: {
+          code: "insufficient_content" as const,
+          tracks: [track],
+          message: `Not enough distinct ${track} readings to build a complete unit test`,
+        },
+      }),
+    };
+  }
   const [characters, states, candidateRows] = await Promise.all([
     listForTracks(db, input.tracks),
     listStatesForTracks(db, input.tracks),

@@ -69,6 +69,27 @@ function pinyinRime(final: string): string {
   return final.replace(/ng$/u, "n").replace(/^v/u, "i");
 }
 
+function koreanSounds(value: string): string[] {
+  return value.split("/").flatMap((part) => {
+    const sound = part.trim().split(/\s+/u).at(-1) ?? "";
+    return sound.replace(/[()]/gu, " ").split(/\s+/u).filter(Boolean);
+  });
+}
+
+function hangulDistance(left: string, right: string): number {
+  const a = left.codePointAt(0) ?? 0;
+  const b = right.codePointAt(0) ?? 0;
+  if (Array.from(left).length !== 1 || Array.from(right).length !== 1 || a < 0xac00 || a > 0xd7a3 || b < 0xac00 || b > 0xd7a3) return 3;
+  const parts = (code: number) => [Math.floor((code - 0xac00) / 588), Math.floor((code - 0xac00) % 588 / 28), (code - 0xac00) % 28];
+  const aa = parts(a);
+  const bb = parts(b);
+  return aa.filter((part, index) => part !== bb[index]).length;
+}
+
+function koreanTier(left: string, right: string): number {
+  return Math.min(...koreanSounds(left).flatMap((a) => koreanSounds(right).map((b) => a === b ? 0 : hangulDistance(a, b))), 3);
+}
+
 const VOICING_GROUPS = ["カガ", "キギ", "クグ", "ケゲ", "コゴ", "サザ", "シジ", "スズ", "セゼ", "ソゾ", "タダ", "チヂ", "ツヅ", "テデ", "トド", "ハバパ", "ヒビピ", "フブプ", "ヘベペ", "ホボポ"];
 const FINAL_MORA = "ツチクキ";
 
@@ -106,6 +127,7 @@ function oneMoraSubstitution(left: string, right: string): boolean {
 }
 
 function phoneticTier(correct: TrackEntry, candidate: TrackEntry): number {
+  if (correct.track === "kr" && candidate.track === "kr") return koreanTier(correct.reading, candidate.reading);
   if (correct.track === "cn" && candidate.track === "cn") {
     const base = tonelessPinyin(correct.pinyin);
     const other = tonelessPinyin(candidate.pinyin);
@@ -126,26 +148,36 @@ function phoneticTier(correct: TrackEntry, candidate: TrackEntry): number {
   return 0;
 }
 
-function sampleDistractors(correctEntry: TrackEntry, entries: TrackEntry[], random: () => number): AnswerOption[] {
+function sampleDistractors(correctEntry: TrackEntry, entries: TrackEntry[], random: () => number, excluded = new Set<string>()): AnswerOption[] {
   const seen = new Set([readingFor(correctEntry).label]);
-  const ordered = correctEntry.track === "kr" ? [...entries].sort((a, b) => Math.abs(a.levelOrd - correctEntry.levelOrd) - Math.abs(b.levelOrd - correctEntry.levelOrd) || a.characterId - b.characterId) : entries;
-  const candidates = ordered
+  const allCandidates = entries
     .map((entry) => ({ entry, option: readingFor(entry) }))
     .filter(({ option }) => {
       if (seen.has(option.label)) return false;
       seen.add(option.label);
       return true;
     });
-  if (correctEntry.track === "kr") return candidates.slice(0, 3).map(({ option }) => option);
+  const alternatives = allCandidates.filter(({ option }) => !excluded.has(option.label));
+  const candidates = alternatives.length >= 3 ? alternatives : allCandidates;
 
-  const segmentCount = readingFor(correctEntry).label.split("・").length;
+  const separator = correctEntry.track === "kr" ? "/" : "・";
+  const segmentCount = readingFor(correctEntry).label.split(separator).length;
   const ranked = candidates
     .map((candidate) => ({
       ...candidate,
       tier: phoneticTier(correctEntry, candidate.entry),
-      shape: candidate.option.label.split("・").length === segmentCount ? 0 : 1,
+      shape: candidate.option.label.split(separator).length === segmentCount ? 0 : 1,
     }))
-    .sort((a, b) => a.tier - b.tier || a.shape - b.shape || Math.abs(a.entry.levelOrd - correctEntry.levelOrd) - Math.abs(b.entry.levelOrd - correctEntry.levelOrd));
+    .sort((a, b) => a.tier - b.tier || a.shape - b.shape || Math.abs(a.entry.levelOrd - correctEntry.levelOrd) - Math.abs(b.entry.levelOrd - correctEntry.levelOrd) || a.entry.characterId - b.entry.characterId);
+  if (alternatives.length > 0 && alternatives.length < 3) {
+    const picked = [...ranked.filter(({ option }) => !excluded.has(option.label)), ...ranked.filter(({ option }) => excluded.has(option.label))].slice(0, 3);
+    if (correctEntry.track === "jp" && !picked.some((candidate) => candidate.shape === 0)) {
+      const sameShape = ranked.find((candidate) => candidate.shape === 0);
+      if (sameShape) picked[picked.length - 1] = sameShape;
+    }
+    return picked.map(({ option }) => option);
+  }
+  if (correctEntry.track === "kr") return ranked.slice(0, 3).map(({ option }) => option);
   if (ranked.length < 3) return ranked.map(({ option }) => option);
 
   const bestTier = ranked[0].tier;
@@ -164,13 +196,13 @@ function sampleDistractors(correctEntry: TrackEntry, entries: TrackEntry[], rand
   return picked.map(({ option }) => option);
 }
 
-function optionsFor(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number): { options: AnswerOption[]; answerIndex: number } | undefined {
+function optionsFor(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number, excluded?: Set<string>): { options: AnswerOption[]; answerIndex: number } | undefined {
   const correctEntry = character.tracks.find((entry) => entry.track === track);
   if (!correctEntry) throw new Error(`Character ${character.key} has no ${track} track`);
   const correct = readingFor(correctEntry);
   const distractors = sampleDistractors(correctEntry, characters
     .filter((candidate) => candidate.id !== character.id)
-    .flatMap((candidate) => candidate.tracks.filter((entry) => entry.track === track)), random);
+    .flatMap((candidate) => candidate.tracks.filter((entry) => entry.track === track)), random, excluded);
   if (distractors.length < 3) return undefined;
   const options = [correct, ...distractors];
   const shift = offset % options.length;
@@ -181,6 +213,51 @@ function optionsFor(character: CharacterEntry, track: Track, characters: Charact
 export function buildReadingItem(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number = () => 0.5): ReadingQueueItem | undefined {
   const answer = optionsFor(character, track, characters, offset, random);
   return answer ? { kind: "reading", character, track, ...answer } : undefined;
+}
+
+function shuffle<T>(items: T[], random: () => number): T[] {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(random() * (index + 1));
+    [shuffled[index], shuffled[swap]] = [shuffled[swap], shuffled[index]];
+  }
+  return shuffled;
+}
+
+export function buildUnitTestQueue({
+  targets,
+  characters,
+  track,
+  random = () => 0.5,
+}: {
+  targets: CharacterEntry[];
+  characters: CharacterEntry[];
+  track: Track;
+  random?: () => number;
+}): ReadingQueueItem[] {
+  if (targets.length < 2) return [];
+  const firstTargets = shuffle(targets, random);
+  const first = firstTargets.map((character, index) => {
+    const answer = optionsFor(character, track, characters, character.id + index, random);
+    return answer ? { kind: "reading" as const, character, track, ...answer } : undefined;
+  });
+  if (first.some((item) => item === undefined)) return [];
+
+  const firstById = new Map(first.map((item) => [item!.character.id, item!]));
+  const secondTargets = shuffle(targets, random);
+  if (secondTargets[0].id === firstTargets.at(-1)?.id) [secondTargets[0], secondTargets[1]] = [secondTargets[1], secondTargets[0]];
+  const second = secondTargets.map((character, index) => {
+    const previous = firstById.get(character.id)!;
+    const excluded = new Set(previous.options.filter((_, optionIndex) => optionIndex !== previous.answerIndex).map((option) => option.label));
+    const answer = optionsFor(character, track, characters, character.id + targets.length + index, random, excluded);
+    if (!answer) return undefined;
+    if (answer.answerIndex === previous.answerIndex) {
+      answer.options.push(answer.options.shift()!);
+      answer.answerIndex = (answer.answerIndex + answer.options.length - 1) % answer.options.length;
+    }
+    return { kind: "reading" as const, character, track, ...answer };
+  });
+  return second.some((item) => item === undefined) ? [] : [...first, ...second] as ReadingQueueItem[];
 }
 
 function placementPairs(pairs: QueuePair[], enabledTracks: Track[], length: number): QueuePair[] {

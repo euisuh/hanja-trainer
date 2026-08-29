@@ -138,6 +138,7 @@
 }
 
 .lesson-cta,
+.unit-test-cta,
 .review-cta {
   border: 3px solid var(--ink);
   color: var(--ink);
@@ -156,16 +157,21 @@
 .lesson-cta small,
 .lesson-cta strong,
 .lesson-cta span,
+.unit-test-cta small,
+.unit-test-cta strong,
+.unit-test-cta span,
 .review-cta small,
 .review-cta strong,
 .review-cta span { display: block; }
 .lesson-cta small,
+.unit-test-cta small,
 .review-cta small { font-size: 12px; font-weight: 800; letter-spacing: .14em; }
 .lesson-cta small { opacity: .85; }
 .lesson-cta strong { margin: 6px 0 10px; font-size: 26px; font-weight: 800; }
 .lesson-cta span { font-size: 13px; font-weight: 700; }
 .lesson-cta kbd { margin-left: 8px; background: var(--key-overlay); }
 
+.unit-test-cta,
 .review-cta {
   padding: 20px;
   border-radius: var(--radius-large);
@@ -173,8 +179,11 @@
   box-shadow: var(--shadow-5);
 }
 
+.unit-test-cta small,
 .review-cta small { color: var(--muted); }
+.unit-test-cta strong,
 .review-cta strong { margin: 5px 0 8px; font-size: 22px; font-weight: 800; }
+.unit-test-cta span,
 .review-cta span { color: var(--muted); font-size: 13px; font-weight: 700; }
 .review-cta kbd { margin-left: 4px; }
 
