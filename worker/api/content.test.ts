@@ -207,6 +207,12 @@ describe("content API", () => {
   it("starts fresh lessons at placement levels and requested units", async () => {
     const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
     const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    const placement = await (await post({ mode: "placement", tracks: ["kr", "jp", "cn"], limit: 15 })).json() as StartSessionResponse;
+    expect(placement.cards.map((card) => card.track)).toEqual(Array.from({ length: 15 }, (_, index) => (["kr", "jp", "cn"] as const)[index % 3]));
+    expect([...new Set(placement.cards.filter((card) => card.track === "kr").map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3]);
+    expect([...new Set(placement.cards.filter((card) => card.track === "jp").map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    expect([...new Set(placement.cards.filter((card) => card.track === "cn").map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+
     fixture.sqlite.prepare("INSERT INTO placement_results (track, level_ord, level_badge, accuracy, detail, taken_at) VALUES ('kr', 2, '7급II', 90, '', 1)").run();
     const placed = await (await post({ mode: "lesson", tracks: ["kr"], limit: 4 })).json() as StartSessionResponse;
     expect(placed.cards[0].levelOrd).toBe(2);

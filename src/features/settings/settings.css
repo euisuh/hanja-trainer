@@ -8,11 +8,12 @@
 .settings-controls { display: flex; flex: 1 1 280px; min-width: 260px; flex-direction: column; gap: 14px; }
 .settings-card { padding: 20px; border: 3px solid var(--ink); border-radius: var(--radius-large); background: var(--card); box-shadow: var(--shadow-5); }
 .settings-card > header { margin-bottom: 14px; font-size: 13px; font-weight: 800; }
-.track-toggles > div { display: flex; flex-direction: column; gap: 10px; }
-.track-toggles > p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
-.track-toggles button { display: flex; align-items: center; justify-content: space-between; padding: 13px 15px; border: 2px solid var(--settings-accent); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-size: 14px; font-weight: 800; }
+.track-toggles > div, .placement-retest > div { display: flex; flex-direction: column; gap: 10px; }
+.track-toggles > p, .placement-retest > p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+.track-toggles button, .placement-retest button { display: flex; align-items: center; justify-content: space-between; padding: 13px 15px; border: 2px solid var(--settings-accent); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-size: 14px; font-weight: 800; }
 .track-toggles button[aria-pressed="true"] { background: var(--settings-soft); }
-.track-toggles button small { color: var(--settings-accent-text); font-size: 12px; font-weight: 800; }
+.placement-retest button { background: var(--settings-soft); }
+.track-toggles button small, .placement-retest button small { color: var(--settings-accent-text); font-size: 12px; font-weight: 800; }
 .onyomi-script-setting > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .onyomi-script-setting > header small { color: var(--muted); font-size: 11px; }
 .onyomi-script-setting > div { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

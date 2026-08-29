@@ -37,6 +37,13 @@ export type BuildQueueOptions = {
   random?: () => number;
 };
 
+type QueuePair = {
+  character: CharacterEntry;
+  track: Track;
+  levelOrd: number;
+  state: ReviewState | undefined;
+};
+
 export function reviewKey(characterId: number, track: Track): string {
   return `${characterId}:${track}`;
 }
@@ -175,6 +182,20 @@ export function buildReadingItem(character: CharacterEntry, track: Track, charac
   return answer ? { kind: "reading", character, track, ...answer } : undefined;
 }
 
+function placementPairs(pairs: QueuePair[], enabledTracks: Track[], length: number): QueuePair[] {
+  const candidates = new Map(enabledTracks.map((track) => [track, pairs
+    .filter((pair) => pair.track === track)
+    .sort((a, b) => a.levelOrd - b.levelOrd || a.character.id - b.character.id)]));
+  return Array.from({ length }, (_, index) => {
+    const trackIndex = index % enabledTracks.length;
+    const track = enabledTracks[trackIndex];
+    const available = candidates.get(track) ?? [];
+    const slots = Math.ceil((length - trackIndex) / enabledTracks.length);
+    const slot = Math.floor(index / enabledTracks.length);
+    return available[slots === 1 ? 0 : Math.round(slot * (available.length - 1) / (slots - 1))];
+  }).filter((pair): pair is QueuePair => pair !== undefined);
+}
+
 export function buildQueue({
   characters,
   enabledTracks,
@@ -189,12 +210,12 @@ export function buildQueue({
   const enabled = new Set(enabledTracks);
   const pairs = characters.flatMap((character) => character.tracks
     .filter((entry) => enabled.has(entry.track))
-    .map((entry) => ({ character, track: entry.track, state: reviewStates.get(reviewKey(character.id, entry.track)) })));
+    .map((entry) => ({ character, track: entry.track, levelOrd: entry.levelOrd, state: reviewStates.get(reviewKey(character.id, entry.track)) })));
   const due = pairs
     .filter((pair) => pair.state && isDue(pair.state, now))
     .sort((a, b) => a.state!.due.getTime() - b.state!.due.getTime());
   const fresh = pairs.filter((pair) => !pair.state && (!freshKeys || freshKeys.has(reviewKey(pair.character.id, pair.track))));
-  const available = mode === "review" ? due : mode === "lesson" ? [...due, ...fresh] : pairs;
+  const available = mode === "review" ? due : mode === "lesson" ? [...due, ...fresh] : placementPairs(pairs, enabledTracks, length);
   if (available.length === 0) return [];
 
   const compareCharacters = characters

@@ -9,23 +9,25 @@ const labels = { kr: "한자 · 급수", jp: "漢検 · JLPT", cn: "HSK · 汉�
 export function PlacementResultScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const results = (location.state as PlacementScoreResponse | null)?.results;
-  const goHome = () => navigate("/home");
+  const state = location.state as (PlacementScoreResponse & { returnTo?: unknown }) | null;
+  const results = state?.results;
+  const returnTo = state?.returnTo === "/settings" ? "/settings" : "/home";
+  const goBack = () => navigate(returnTo, { replace: returnTo === "/settings" });
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Enter" || (event.target instanceof HTMLElement && event.target.matches("button, a"))) return;
       event.preventDefault();
-      navigate("/home");
+      navigate(returnTo, { replace: returnTo === "/settings" });
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [navigate]);
+  }, [navigate, returnTo]);
 
-  if (!results || results.length === 0) return <Navigate replace to="/home" />;
+  if (!results || results.length === 0) return <Navigate replace to={returnTo} />;
   return (
     <section className="placement-result">
-      <p className="onboarding-eyebrow">Step 2 / 2 · 배치 결과</p>
+      <p className="onboarding-eyebrow">{returnTo === "/settings" ? "커리큘럼 · 재측정 결과" : "Step 2 / 2 · 배치 결과"}</p>
       <h1>시작 지점이 정해졌습니다.</h1>
       <div className="placement-result__grid">
         {results.map((result) => (
@@ -36,7 +38,7 @@ export function PlacementResultScreen() {
             </article>
         ))}
       </div>
-      <button className="placement-result__cta" onClick={goHome} type="button">학습 지도로 <kbd>ENTER</kbd></button>
+      <button className="placement-result__cta" onClick={goBack} type="button">{returnTo === "/settings" ? "설정으로" : "학습 지도로"} <kbd>ENTER</kbd></button>
     </section>
   );
 }

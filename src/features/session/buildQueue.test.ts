@@ -91,6 +91,16 @@ describe("buildQueue", () => {
     expect(queue.every((item) => item.kind === "reading")).toBe(true);
   });
 
+  it("balances placement cards across tracks and their full level ranges", () => {
+    const queue = buildQueue({ characters: seededCharacters(), enabledTracks: ["kr", "jp", "cn"], length: 15, mode: "placement" });
+
+    expect(queue.map((item) => item.track)).toEqual(Array.from({ length: 15 }, (_, index) => (["kr", "jp", "cn"] as const)[index % 3]));
+    expect(new Set(queue.map((item) => `${item.character.id}:${item.track}`)).size).toBe(15);
+    for (const [track, levels] of [["kr", [1, 2, 3]], ["jp", [1, 2]], ["cn", [1, 2]]] as const) {
+      expect([...new Set(queue.filter((item) => item.track === track).map((item) => item.character.tracks.find((entry) => entry.track === track)?.levelOrd))].sort()).toEqual(levels);
+    }
+  });
+
   it("uses only enabled tracks and due items in review mode", () => {
     const now = new Date("2026-01-02T00:00:00Z");
     const states = new Map([

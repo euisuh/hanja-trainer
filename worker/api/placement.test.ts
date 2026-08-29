@@ -63,6 +63,7 @@ describe("profile, placement, and stats API", () => {
   it("persists placement results, marks onboarding complete, and selects a curriculum unit", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     fixture.sqlite.exec("UPDATE character_tracks SET level_ord = 2 WHERE track = 'kr' AND character_id IN (SELECT cum.character_id FROM curriculum_unit_members cum JOIN curriculum_units cu ON cu.id = cum.unit_id WHERE cu.track = 'kr' AND cu.ord >= 2)");
+    fixture.sqlite.prepare("INSERT INTO placement_results (track, level_ord, level_badge, accuracy, detail, taken_at) VALUES ('jp', 1, '10級', 75, '기존 결과', 1)").run();
     const response = await routeApiRequest(request("/api/placement/score", "POST", { answers: [
       { characterKey: "金", track: "kr", correct: true, skipped: false, levelOrd: 2 },
       { characterKey: "大", track: "kr", correct: false, skipped: false, levelOrd: 2 },
@@ -71,6 +72,8 @@ describe("profile, placement, and stats API", () => {
     expect(placement.results[0]).toMatchObject({ track: "kr", knownCount: 1, totalSeen: 2, accuracy: 50, levelBadge: "8급" });
     expect((await routeApiRequest(request("/api/placement/score", "POST", { answers: [{ characterKey: "金", track: "kr", correct: true, skipped: true, levelOrd: 2 }] }), fixture.env)).status).toBe(400);
     expect(await (await routeApiRequest(request("/api/onboarding-state"), fixture.env)).json()).toEqual({ onboarded: true });
+    expect(fixture.sqlite.prepare("SELECT level_ord, detail FROM placement_results WHERE track = 'jp' ORDER BY taken_at DESC, id DESC LIMIT 1").get()).toEqual({ level_ord: 1, detail: "기존 결과" });
+    expect(fixture.sqlite.prepare("SELECT track, COUNT(*) AS count FROM placement_results GROUP BY track ORDER BY track").all()).toEqual([{ track: "jp", count: 1 }, { track: "kr", count: 1 }]);
     const curriculum = await (await routeApiRequest(request("/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
     expect(curriculum.units.filter((unit) => unit.current)).toHaveLength(1);
     expect(curriculum.units.find((unit) => unit.current)?.ord).toBe(2);

@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
-type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; options: Array<{ label: string }>; track: keyof typeof languages };
+type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; levelOrd: number; options: Array<{ label: string }>; track: keyof typeof languages };
 type SessionResponse = { cards: Card[] };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 
@@ -108,7 +108,9 @@ test.describe.serial("keyboard-only product flows", () => {
 
     await page.keyboard.press("2");
     await expect(page.getByRole("button", { name: /日本/u })).toHaveAttribute("aria-pressed", "false");
+    const placementRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
     const placement = await sessionStarted(page, () => page.keyboard.press("Enter"));
+    expect((await placementRequest).postDataJSON()).toMatchObject({ mode: "placement", tracks: ["kr", "cn"], limit: 15 });
     expect(placement.cards).toHaveLength(15);
     expectReadingOnly(placement.cards);
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
@@ -373,9 +375,36 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(goal).toHaveValue(String(previous + 10));
     await persisted;
     await page.reload();
-    await expect(page.getByRole("button", { name: /한자 · 급수/u })).toHaveAttribute("aria-pressed", "false");
+    await expect(page.locator(".track-toggles").getByRole("button", { name: /한자 · 급수/u })).toHaveAttribute("aria-pressed", "false");
     await expect(page.getByRole("button", { name: /히라가나.*いち・いつ/u })).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByRole("slider", { name: "일일 XP 목표" })).toHaveValue(String(previous + 10));
+  });
+
+  test("retakes placement for one curriculum and returns to settings", async ({ page }) => {
+    await page.goto("/settings");
+    await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
+    const launch = page.locator(".placement-retest").getByRole("button", { name: /漢字 · 漢検.*15문항/u });
+    await expect(launch).toHaveCount(0);
+    const enabledBefore = await page.locator(".placement-retest").getByRole("button").count();
+    await page.locator(".track-toggles").getByRole("button", { name: /漢字 · 漢検/u }).click();
+    await expect(page.locator(".placement-retest").getByRole("button")).toHaveCount(enabledBefore + 1);
+    const startRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
+    const first = await sessionStarted(page, () => launch.click());
+    expect((await startRequest).postDataJSON()).toMatchObject({ mode: "placement", tracks: ["jp"], limit: 15 });
+    expect(first.cards).toHaveLength(15);
+    expect(first.cards.every((card) => card.track === "jp")).toBe(true);
+    expect([...new Set(first.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    await page.keyboard.press("Escape");
+    await page.keyboard.press("Q");
+    await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
+
+    const second = await sessionStarted(page, () => launch.click());
+    const scoreRequest = page.waitForRequest((request) => request.url().endsWith("/api/placement/score"));
+    await finishSession(page, second.cards, /시작 지점/u);
+    expect(((await scoreRequest).postDataJSON() as { answers: Array<{ track: string }> }).answers.every((answer) => answer.track === "jp")).toBe(true);
+    await expect(page.locator(".placement-result__card")).toHaveCount(1);
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
   });
 
   test("quit persists an answer and reopening starts on another card", async ({ page }) => {

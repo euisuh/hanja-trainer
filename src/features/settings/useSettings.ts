@@ -71,6 +71,13 @@ export function useSettings() {
     error,
     ready,
     retry: () => setRetryKey((value) => value + 1),
+    flush: async () => {
+      window.clearTimeout(timer.current);
+      const settings = await apiClient.patchSettings({ enabledTracks, dailyGoal, onyomiScript });
+      setEnabledTracks(settings.enabledTracks);
+      setDailyGoal(settings.dailyGoal);
+      setOnyomiScript(settings.onyomiScript);
+    },
     toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript),
     setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript),
     setOnyomiScript: (script: OnyomiScript) => persist(enabledTracks, dailyGoal, script),
