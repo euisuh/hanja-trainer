@@ -33,7 +33,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }

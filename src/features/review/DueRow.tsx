@@ -1,6 +1,7 @@
 import type { CSSProperties, KeyboardEvent, Ref } from "react";
 import { tracks } from "../../design/tokens";
 import { readingFor } from "../session/buildQueue";
+import type { OnyomiScript } from "../../shared/settings";
 import type { DueItem } from "./DueList";
 
 type Props = {
@@ -8,10 +9,11 @@ type Props = {
   buttonRef: Ref<HTMLButtonElement>;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
   onOpen: () => void;
+  onyomiScript: OnyomiScript;
 };
 
-export function DueRow({ item, buttonRef, onKeyDown, onOpen }: Props) {
-  const reading = readingFor(item.trackEntry);
+export function DueRow({ item, buttonRef, onKeyDown, onOpen, onyomiScript }: Props) {
+  const reading = readingFor(item.trackEntry, onyomiScript);
   const style = { "--due-font": tracks[item.trackEntry.track].font } as CSSProperties;
   return (
     <button className="due-row" onClick={onOpen} onKeyDown={onKeyDown} ref={buttonRef} style={style} type="button">

@@ -5,7 +5,7 @@ DELETE FROM review_states;
 DELETE FROM sessions;
 DELETE FROM placement_results;
 UPDATE profile
-SET enabled_tracks = '["kr","jp","cn"]', daily_goal = 40, timezone = 'Asia/Seoul', xp = 0,
+SET enabled_tracks = '["kr","jp","cn"]', daily_goal = 40, timezone = 'Asia/Seoul', onyomi_script = 'katakana', xp = 0,
     onboarded_at = NULL, updated_at = unixepoch() * 1000
 WHERE id = 1;
 

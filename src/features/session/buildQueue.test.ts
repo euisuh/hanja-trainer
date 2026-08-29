@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { initialState } from "../../shared/fsrs";
+import { toHiragana } from "../../shared/kana";
 import type { CharacterEntry, Track } from "../../shared/types";
-import { buildQueue, reviewKey } from "./buildQueue";
+import { buildQueue, readingFor, reviewKey } from "./buildQueue";
 
 function character(id: number): CharacterEntry {
   const glyph = String.fromCodePoint(0x4e00 + id);
@@ -71,5 +72,16 @@ describe("buildQueue", () => {
     ]);
 
     expect(buildQueue({ characters, enabledTracks: ["cn"], length: 8, mode: "review", reviewStates: states, now })).toHaveLength(2);
+  });
+
+  it("converts Japanese labels only after canonical distractor dedupe", () => {
+    const queue = buildQueue({ characters, enabledTracks: ["jp"], length: 8, mode: "lesson" });
+    for (const item of queue.filter((candidate) => candidate.kind === "reading")) {
+      const labels = item.options.map((option) => toHiragana(option.label));
+      expect(labels).toHaveLength(4);
+      expect(new Set(labels).size).toBe(4);
+    }
+    const entry = characters[0].tracks.find((candidate) => candidate.track === "jp")!;
+    expect(readingFor(entry, "hiragana")).toEqual({ label: "おん1", sublabel: "訓 くん1" });
   });
 });

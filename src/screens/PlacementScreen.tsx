@@ -10,7 +10,7 @@ type LoadedSession = { id: string; queue: SessionQueueItem[] };
 
 export function PlacementScreen() {
   const navigate = useNavigate();
-  const { enabledTracks, error: settingsError, ready, retry: retrySettings } = useSettings();
+  const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -31,6 +31,7 @@ export function PlacementScreen() {
       characters={queueCharacters(session.queue)}
       enabledTracks={enabledTracks}
       mode="placement"
+      onyomiScript={onyomiScript}
       onComplete={async (result) => {
         try {
           const placement = await apiClient.scorePlacement(result.placementAnswers ?? []);

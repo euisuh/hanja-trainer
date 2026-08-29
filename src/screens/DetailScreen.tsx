@@ -20,7 +20,7 @@ export function DetailScreen() {
   const { key } = useParams<{ key: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const { enabledTracks: enabled, error: settingsError, retry: retrySettings } = useSettings();
+  const { enabledTracks: enabled, onyomiScript, error: settingsError, retry: retrySettings } = useSettings();
   const [character, setCharacter] = useState<CharacterDetailResponse | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [loadError, setLoadError] = useState("");
@@ -88,7 +88,7 @@ export function DetailScreen() {
           <small>{variantLine(character)}</small>
         </article>
         <div className="detail-tracks">
-          {available.map((entry) => <TrackPanel entry={entry} key={entry.track} />)}
+          {available.map((entry) => <TrackPanel entry={entry} key={entry.track} onyomiScript={onyomiScript} />)}
         </div>
       </div>
       {tracks.length === 0 ? <p className="detail-empty detail-empty--standalone">활성화된 트랙에 이 글자가 없습니다.</p> : (

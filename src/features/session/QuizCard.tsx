@@ -1,4 +1,5 @@
 import type { CharacterEntry, ExampleSentence, Track, TrackEntry } from "../../shared/types";
+import type { OnyomiScript } from "../../shared/settings";
 import { CompareCard } from "./CompareCard";
 
 const trackLabels = {
@@ -37,9 +38,10 @@ type Props = {
   answered: boolean;
   correct: boolean;
   promptOverride?: string;
+  onyomiScript: OnyomiScript;
 };
 
-export function QuizCard({ character, track, compare, answered, correct, promptOverride }: Props) {
+export function QuizCard({ character, track, compare, answered, correct, promptOverride, onyomiScript }: Props) {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) return null;
   const sentence = character.sentences.find((candidate) => candidate.track === track);
@@ -54,7 +56,7 @@ export function QuizCard({ character, track, compare, answered, correct, promptO
         <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`}>{entry.glyph}</div>
         {sentence && <SentencePanel revealed={answered || compare} sentence={sentence} />}
       </div>
-      {compare && <CompareCard character={character} />}
+      {compare && <CompareCard character={character} onyomiScript={onyomiScript} />}
     </article>
   );
 }

@@ -36,7 +36,9 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
+  sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-kanken-10.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
   const now = Date.now();
   const insertState = sqlite.prepare(`INSERT INTO review_states (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count) VALUES (?, 'kr', ?, 5, 1, 2, 0, 2, 0, 2, ?, ?, 2, 2)`);
@@ -99,5 +101,26 @@ describe("content API", () => {
     }
     const malformed = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", body: "{" }), fixture.env);
     expect(malformed.status).toBe(400);
+  });
+
+  it("keeps every Japanese API payload canonical when display setting is hiragana", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    fixture.sqlite.exec("UPDATE profile SET onyomi_script = 'hiragana'");
+    const canonical = new Set((fixture.sqlite.prepare("SELECT jp_on FROM character_tracks WHERE track = 'jp'").all() as Array<{ jp_on: string }>).map((row) => row.jp_on));
+
+    const curriculum = await (await routeApiRequest(new Request("https://test/api/curriculum?track=jp"), fixture.env)).json() as CurriculumResponse;
+    expect(curriculum.units.flatMap((unit) => unit.nodes).every((node) => canonical.has(node.reading))).toBe(true);
+
+    const key = curriculum.units[0].nodes[0].key;
+    const stored = fixture.sqlite.prepare("SELECT ct.character_id, ct.jp_on FROM character_tracks ct JOIN characters c ON c.id = ct.character_id WHERE c.key = ? AND ct.track = 'jp'").get(key) as { character_id: number; jp_on: string };
+    const detail = await (await routeApiRequest(new Request(`https://test/api/characters/${encodeURIComponent(key)}`), fixture.env)).json() as CharacterDetailResponse;
+    expect(detail.tracks.find((track) => track.track === "jp")?.reading).toBe(`音 ${stored.jp_on}`);
+
+    const lesson = await (await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ mode: "lesson", tracks: ["jp"], limit: 4 }) }), fixture.env)).json() as StartSessionResponse;
+    expect(lesson.cards.flatMap((card) => card.options).every((option) => canonical.has(option.label))).toBe(true);
+
+    fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'jp', 2, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(stored.character_id);
+    const due = await (await routeApiRequest(new Request("https://test/api/reviews/due?tracks=jp&limit=1"), fixture.env)).json() as { cards: Array<{ reading: string }> };
+    expect(due.cards[0].reading).toBe(stored.jp_on);
   });
 });

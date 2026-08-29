@@ -12,6 +12,13 @@
 .track-toggles button { display: flex; align-items: center; justify-content: space-between; padding: 13px 15px; border: 2px solid var(--settings-accent); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-size: 14px; font-weight: 800; }
 .track-toggles button[aria-pressed="true"] { background: var(--settings-soft); }
 .track-toggles button small { color: var(--settings-accent); font-size: 12px; font-weight: 800; }
+.onyomi-script-setting > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.onyomi-script-setting > header small { color: var(--muted); font-size: 11px; }
+.onyomi-script-setting > div { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.onyomi-script-setting button { display: flex; flex-direction: column; gap: 4px; padding: 11px; border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; }
+.onyomi-script-setting button[aria-pressed="true"] { background: var(--jp-soft); border-color: var(--jp-accent); }
+.onyomi-script-setting button span { font-size: 11px; font-weight: 800; }
+.onyomi-script-setting button strong { font-size: 17px; }
 .daily-goal-setting > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .daily-goal-setting > header strong { font-size: 20px; font-weight: 800; }
 .daily-goal-setting input { width: 100%; accent-color: var(--gold); }

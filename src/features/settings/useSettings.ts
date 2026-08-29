@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { apiClient } from "../../lib/apiClient";
-import { DAILY_GOAL, DEFAULT_DAILY_GOAL, normalizeDailyGoal } from "../../shared/settings";
+import { DAILY_GOAL, DEFAULT_DAILY_GOAL, normalizeDailyGoal, type OnyomiScript } from "../../shared/settings";
 import { TRACKS, type Track } from "../../shared/types";
 
 export { DAILY_GOAL, normalizeDailyGoal };
@@ -15,6 +15,7 @@ export function toggleTrack(enabledTracks: Track[], track: Track): Track[] {
 export function useSettings() {
   const [enabledTracks, setEnabledTracks] = useState<Track[]>([...TRACKS]);
   const [dailyGoal, setDailyGoal] = useState(DEFAULT_DAILY_GOAL);
+  const [onyomiScript, setOnyomiScript] = useState<OnyomiScript>("katakana");
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -25,6 +26,7 @@ export function useSettings() {
     apiClient.settings(controller.signal).then((settings) => {
       setEnabledTracks(settings.enabledTracks);
       setDailyGoal(settings.dailyGoal);
+      setOnyomiScript(settings.onyomiScript);
       setError("");
       setReady(true);
       const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -44,17 +46,20 @@ export function useSettings() {
     };
   }, [retryKey]);
 
-  function persist(tracks: Track[], goal: number) {
+  function persist(tracks: Track[], goal: number, script: OnyomiScript) {
     setEnabledTracks(tracks);
     setDailyGoal(goal);
+    setOnyomiScript(script);
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
-      void apiClient.patchSettings({ enabledTracks: tracks, dailyGoal: goal }).then((settings) => {
+      void apiClient.patchSettings({ enabledTracks: tracks, dailyGoal: goal, onyomiScript: script }).then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
+        setOnyomiScript(settings.onyomiScript);
       }).catch(() => apiClient.settings().then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
+        setOnyomiScript(settings.onyomiScript);
       }).catch(() => undefined));
     }, 150);
   }
@@ -62,10 +67,12 @@ export function useSettings() {
   return {
     enabledTracks,
     dailyGoal,
+    onyomiScript,
     error,
     ready,
     retry: () => setRetryKey((value) => value + 1),
-    toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal),
-    setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal)),
+    toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript),
+    setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript),
+    setOnyomiScript: (script: OnyomiScript) => persist(enabledTracks, dailyGoal, script),
   };
 }

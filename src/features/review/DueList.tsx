@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { dueSort, formatDueLabel, isDue, type ReviewState } from "../../shared/fsrs";
 import type { CharacterEntry, Track, TrackEntry } from "../../shared/types";
+import type { OnyomiScript } from "../../shared/settings";
 import { reviewKey } from "../session/buildQueue";
 import { DueRow } from "./DueRow";
 
@@ -25,7 +26,7 @@ export function buildDueItems(characters: CharacterEntry[], states: ReadonlyMap<
   return dueSort(dueItems.map((item) => item.state), now).map((state) => itemByState.get(state)!);
 }
 
-export function DueList({ items, onOpen }: { items: DueItem[]; onOpen: (item: DueItem) => void }) {
+export function DueList({ items, onyomiScript, onOpen }: { items: DueItem[]; onyomiScript: OnyomiScript; onOpen: (item: DueItem) => void }) {
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
   const visible = items.slice(0, DUE_LIST_LIMIT);
   function moveFocus(index: number, direction: number) {
@@ -40,6 +41,7 @@ export function DueList({ items, onOpen }: { items: DueItem[]; onOpen: (item: Du
             buttonRef={(node) => { refs.current[index] = node; }}
             item={item}
             key={`${item.character.id}:${item.trackEntry.track}`}
+            onyomiScript={onyomiScript}
             onKeyDown={(event) => {
               if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
               event.preventDefault();

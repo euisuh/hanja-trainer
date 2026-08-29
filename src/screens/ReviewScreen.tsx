@@ -7,6 +7,7 @@ import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
 import type { SessionQueueItem } from "../features/session/buildQueue";
 import { apiClient } from "../lib/apiClient";
 import type { DueReviewsResponse } from "../shared/api";
+import { toHiragana } from "../shared/kana";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };
 
@@ -15,7 +16,7 @@ export const REVIEW_SESSION_LENGTH = 20;
 export function ReviewScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { enabledTracks, error: settingsError, ready, retry: retrySettings } = useSettings();
+  const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [due, setDue] = useState<DueReviewsResponse | null>(null);
   const [error, setError] = useState("");
@@ -63,6 +64,7 @@ export function ReviewScreen() {
         characters={queueCharacters(session.queue)}
         enabledTracks={enabledTracks}
         mode="review"
+        onyomiScript={onyomiScript}
         onComplete={async (result) => {
           try {
             const profile = await apiClient.createSession({ mode: "review", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, bestCombo: result.bestCombo, xp: result.xp });
@@ -91,7 +93,7 @@ export function ReviewScreen() {
       ) : (
         <>
           <button className="review-start" onClick={() => navigate("/review/session")} type="button">{due.total}장 복습 시작 <kbd>ENTER</kbd></button>
-          <div className="due-list">{due.cards.map((item) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`}>{item.glyph}</span><span className="due-row__copy"><strong>{item.characterKey}</strong><small>{item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
+          <div className="due-list">{due.cards.map((item) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`}>{item.glyph}</span><span className="due-row__copy"><strong>{item.characterKey}</strong><small>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
     </section>

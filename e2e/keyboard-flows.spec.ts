@@ -131,6 +131,13 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Tab");
     await page.keyboard.press("Tab");
     await page.keyboard.press("Tab");
+    await expect(page.getByRole("button", { name: /가타카나.*イチ・イツ/u })).toBeFocused();
+    await page.keyboard.press("Tab");
+    const scriptPersisted = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
+    await page.keyboard.press("Space");
+    await scriptPersisted;
+    await expect(page.getByRole("button", { name: /히라가나.*いち・いつ/u })).toHaveAttribute("aria-pressed", "true");
+    await page.keyboard.press("Tab");
     const goal = page.getByRole("slider", { name: "일일 XP 목표" });
     const previous = Number(await goal.inputValue());
     const persisted = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
@@ -139,6 +146,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await persisted;
     await page.reload();
     await expect(page.getByRole("button", { name: /한자 · 급수/u })).toHaveAttribute("aria-pressed", "false");
+    await expect(page.getByRole("button", { name: /히라가나.*いち・いつ/u })).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByRole("slider", { name: "일일 XP 목표" })).toHaveValue(String(previous + 10));
   });
 

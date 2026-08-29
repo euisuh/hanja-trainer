@@ -12,7 +12,7 @@ import "../features/path-map/pathMap.css";
 
 export function HomeScreen() {
   const navigate = useNavigate();
-  const { enabledTracks, error: settingsError, ready, retry: retrySettings } = useSettings();
+  const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
@@ -83,9 +83,11 @@ export function HomeScreen() {
         <PathMap
           focusedIndex={focusedIndex}
           nodes={nodes}
+          onyomiScript={onyomiScript}
           onFocus={setFocusedIndex}
           onOpen={(node) => navigate(`/detail/${encodeURIComponent(node.characterKey)}`, { state: { from: "/home" } })}
           title={unit.title}
+          track={selectedTrack}
           unit={`${unit.level} · UNIT ${unit.ord}`}
         />
         <aside className="home-rail">

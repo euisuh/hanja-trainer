@@ -31,7 +31,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-kanken-10.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -47,12 +47,17 @@ describe("profile, placement, and stats API", () => {
   it("enforces one profile row and persists validated settings without deleting review state", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect(() => fixture.sqlite.prepare("INSERT INTO profile (id) VALUES (2)").run()).toThrow();
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana" });
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
-    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul" }), fixture.env);
-    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul" });
+    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana" }), fixture.env);
+    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana" });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana" });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 1 });
     expect((await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: [] }), fixture.env)).status).toBe(400);
+    const invalid = await routeApiRequest(request("/api/settings", "PATCH", { onyomiScript: "romaji" }), fixture.env);
+    expect(invalid.status).toBe(400);
+    expect(await invalid.json()).toMatchObject({ error: { code: "invalid_settings" } });
   });
 
   it("persists placement results, marks onboarding complete, and selects a curriculum unit", async () => {

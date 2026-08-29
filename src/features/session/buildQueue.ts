@@ -1,4 +1,6 @@
 import { isDue, type ReviewState } from "../../shared/fsrs";
+import { toHiragana } from "../../shared/kana";
+import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track, TrackEntry } from "../../shared/types";
 
 export const COMPARE_CADENCE = 4;
@@ -37,9 +39,9 @@ export function reviewKey(characterId: number, track: Track): string {
   return `${characterId}:${track}`;
 }
 
-export function readingFor(entry: TrackEntry): AnswerOption {
+export function readingFor(entry: TrackEntry, onyomiScript: OnyomiScript = "katakana"): AnswerOption {
   if (entry.track === "kr") return { label: entry.reading, sublabel: "훈 + 음" };
-  if (entry.track === "jp") return { label: entry.on, sublabel: `訓 ${entry.kun}` };
+  if (entry.track === "jp") return { label: onyomiScript === "hiragana" ? toHiragana(entry.on) : entry.on, sublabel: `訓 ${entry.kun}` };
   return { label: entry.pinyin, sublabel: entry.meaning };
 }
 
@@ -52,7 +54,7 @@ function optionsFor(character: CharacterEntry, track: Track, characters: Charact
     .filter((candidate) => candidate.id !== character.id)
     .flatMap((candidate) => candidate.tracks.filter((entry) => entry.track === track))
     .sort((a, b) => Math.abs(a.levelOrd - correctEntry.levelOrd) - Math.abs(b.levelOrd - correctEntry.levelOrd) || a.characterId - b.characterId)
-    .map(readingFor)
+    .map((entry) => readingFor(entry))
     .filter((option) => {
       if (seen.has(option.label)) return false;
       seen.add(option.label);

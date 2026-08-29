@@ -1,4 +1,5 @@
 import { DailyGoal } from "../features/settings/DailyGoal";
+import { OnyomiScript } from "../features/settings/OnyomiScript";
 import { ShortcutSheet } from "../features/settings/ShortcutSheet";
 import { TrackToggles } from "../features/settings/TrackToggles";
 import { useSettings } from "../features/settings/useSettings";
@@ -15,6 +16,7 @@ export function SettingsScreen() {
         <ShortcutSheet />
         <div className="settings-controls">
           <TrackToggles enabled={settings.enabledTracks} onToggle={settings.toggle} />
+          <OnyomiScript onChange={settings.setOnyomiScript} value={settings.onyomiScript} />
           <DailyGoal goal={settings.dailyGoal} onChange={settings.setGoal} />
         </div>
       </div>

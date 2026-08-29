@@ -1,4 +1,5 @@
 import type { Track } from "./types";
+import type { OnyomiScript } from "./settings";
 
 export type ApiErrorBody = { error: { code: string; message: string } };
 
@@ -133,8 +134,8 @@ export type PlacementAnswer = { characterKey: string; track: Track; correct: boo
 export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; detail: string };
 export type PlacementScoreResponse = { results: PlacementScoreResult[] };
 
-export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string };
-export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number; timezone?: string };
+export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string; onyomiScript: OnyomiScript };
+export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number; timezone?: string; onyomiScript?: OnyomiScript };
 export type OnboardingStateResponse = { onboarded: boolean };
 
 export type StatsCalendarDay = { date: string; count: number };

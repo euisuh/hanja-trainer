@@ -1,8 +1,10 @@
+import { toHiragana } from "../../shared/kana";
+import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, TrackEntry } from "../../shared/types";
 
-function reading(entry: TrackEntry): string {
+function reading(entry: TrackEntry, onyomiScript: OnyomiScript): string {
   if (entry.track === "kr") return entry.reading;
-  if (entry.track === "jp") return `${entry.on} · ${entry.kun}`;
+  if (entry.track === "jp") return `${onyomiScript === "hiragana" ? toHiragana(entry.on) : entry.on} · ${entry.kun}`;
   return entry.pinyin;
 }
 
@@ -14,13 +16,13 @@ function level(entry: TrackEntry): string {
 
 const labels = { kr: "한국 · 훈음", jp: "日本 · 音/訓", cn: "中国 · 拼音" } as const;
 
-export function CompareCard({ character }: { character: CharacterEntry }) {
+export function CompareCard({ character, onyomiScript }: { character: CharacterEntry; onyomiScript: OnyomiScript }) {
   return (
     <div className="compare-card" aria-label="교차 트랙 비교">
       {character.tracks.map((entry) => (
         <section className={`compare-card__panel compare-card__panel--${entry.track}`} key={entry.track}>
           <div>{labels[entry.track]}</div>
-          <strong>{reading(entry)}</strong>
+          <strong>{reading(entry, onyomiScript)}</strong>
           <small>{level(entry)}</small>
         </section>
       ))}

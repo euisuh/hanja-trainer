@@ -3,6 +3,7 @@ type Props = {
   compare: boolean;
   correct: boolean;
   correctIndex: number;
+  correctAnswer?: string;
   xp: number;
   note: string;
   last: boolean;
@@ -10,7 +11,7 @@ type Props = {
   onNext: () => void;
 };
 
-export function FeedbackBar({ answered, compare, correct, correctIndex, xp, note, last, error, onNext }: Props) {
+export function FeedbackBar({ answered, compare, correct, correctIndex, correctAnswer, xp, note, last, error, onNext }: Props) {
   const state = error ? "wrong" : compare ? "compare" : !answered ? "idle" : correct ? "correct" : "wrong";
   const text = error
     ? "저장하지 못했습니다"
@@ -20,7 +21,7 @@ export function FeedbackBar({ answered, compare, correct, correctIndex, xp, note
         ? "숫자키 1–4로 답하세요"
         : correct
           ? `정확합니다 · +${xp} XP`
-          : `오답 · 정답 ${correctIndex + 1}번`;
+          : `오답 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`;
   const canAdvance = compare || answered;
   return (
     <div className={`feedback-bar feedback-bar--${state}`} aria-live="polite">

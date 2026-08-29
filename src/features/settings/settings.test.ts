@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { shortcutRows } from "./ShortcutSheet";
 import { DAILY_GOAL, normalizeDailyGoal, toggleTrack } from "./useSettings";
+import { ONYOMI_SCRIPTS } from "../../shared/settings";
 import { GLOBAL_DESTINATIONS, SHORTCUTS } from "../../shell/shortcuts";
 
 describe("settings", () => {
@@ -20,5 +21,9 @@ describe("settings", () => {
     expect(normalizeDailyGoal(1)).toBe(DAILY_GOAL.min);
     expect(normalizeDailyGoal(67)).toBe(70);
     expect(normalizeDailyGoal(999)).toBe(DAILY_GOAL.max);
+  });
+
+  it("offers only canonical on'yomi display scripts", () => {
+    expect(ONYOMI_SCRIPTS).toEqual(["katakana", "hiragana"]);
   });
 });

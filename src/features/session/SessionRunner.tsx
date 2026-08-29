@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import { tracks } from "../../design/tokens";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../placement/adaptive";
 import { gradeFromAnswer, initialState, schedule, type ReviewState } from "../../shared/fsrs";
+import { toHiragana } from "../../shared/kana";
+import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
 import type { PlacementAnswer, ProfileResponse } from "../../shared/api";
 import { AnswerOptions } from "./AnswerOptions";
@@ -39,6 +41,7 @@ type Props = {
   onQuit: () => void;
   queueOverride?: SessionQueueItem[];
   sessionId: string;
+  onyomiScript: OnyomiScript;
 };
 
 function intervalLabel(days: number): string {
@@ -55,6 +58,7 @@ export function SessionRunner({
   onQuit,
   queueOverride,
   sessionId,
+  onyomiScript,
 }: Props) {
   const [states] = useState(() => new Map(initialReviewStates));
   const externalQueue = queueOverride !== undefined;
@@ -201,6 +205,9 @@ export function SessionRunner({
     "--session-soft": tracks[item.track].soft,
     "--session-font": tracks[item.track].font,
   } as CSSProperties;
+  const displayOptions = item.kind === "reading" && item.track === "jp" && onyomiScript === "hiragana"
+    ? item.options.map((option) => ({ ...option, label: toHiragana(option.label) }))
+    : item.kind === "reading" ? item.options : [];
 
   return (
     <section className="session-runner" style={style}>
@@ -216,14 +223,15 @@ export function SessionRunner({
           : <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>)}
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} promptOverride={mode === "placement" ? `배치 문항 ${index + 1}/${queueLength}` : undefined} track={item.track} />
+        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${index + 1}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
-          <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={item.options} selectedIndex={selectedIndex} />
+          <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} />
         )}
         <FeedbackBar
           answered={answered}
           compare={compare}
           correct={correct}
+          correctAnswer={item.kind === "reading" ? displayOptions[item.answerIndex]?.label : undefined}
           correctIndex={item.kind === "reading" ? item.answerIndex : 0}
           last={index + 1 === queueLength}
           note={feedbackNote}
