@@ -93,6 +93,7 @@ describe("review persistence", () => {
     sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
+    sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
     const database = d1(sqlite);
     const now = new Date("2026-01-10T00:00:00.000Z");
     const firstId = addCharacter(sqlite, "一", ["kr", "jp"]);

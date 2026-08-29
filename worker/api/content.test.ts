@@ -50,6 +50,7 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-kanken-10.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
@@ -69,6 +70,7 @@ function setupSeeds(files: string[]) {
   sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }

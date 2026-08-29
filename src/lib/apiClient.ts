@@ -1,22 +1,25 @@
-import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
-  constructor(public readonly status: number, message: string) {
+  constructor(public readonly status: number, public readonly code: string, message: string, public readonly retryAfter?: number) {
     super(message);
   }
 }
 
 export const PROFILE_UPDATED_EVENT = "hanja-trainer:profile-updated";
 export const SETTINGS_UPDATED_EVENT = "hanja-trainer:settings-updated";
+export const PIN_REQUIRED_EVENT = "hanja-trainer:pin-required";
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, init);
   const body: unknown = await response.json();
   if (!response.ok) {
-    const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { message?: string } } : null;
+    const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { code?: string; message?: string }; retryAfter?: number } : null;
+    const code = errorBody?.error?.code ?? "request_failed";
     const message = errorBody?.error?.message ?? `Request failed (${response.status})`;
-    throw new ApiClientError(response.status, message);
+    if (code === "pin_required") window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+    throw new ApiClientError(response.status, code, message, errorBody?.retryAfter);
   }
   return body as T;
 }
@@ -61,4 +64,8 @@ export const apiClient = {
   },
   stats: (signal?: AbortSignal) => requestJson<StatsResponse>("/api/stats", { signal }),
   onboardingState: (signal?: AbortSignal) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }),
+  pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }),
+  unlockPin: (pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin }) }),
+  setPin: (pin: string, currentPin?: string) => requestJson<{ enabled: true }>("/api/pin", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin, ...(currentPin ? { currentPin } : {}) }) }),
+  removePin: (currentPin: string) => requestJson<{ enabled: false }>("/api/pin", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ currentPin }) }),
 };

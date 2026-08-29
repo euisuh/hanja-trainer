@@ -3,6 +3,8 @@ import { OnyomiScript } from "../features/settings/OnyomiScript";
 import { ShortcutSheet } from "../features/settings/ShortcutSheet";
 import { TrackToggles } from "../features/settings/TrackToggles";
 import { useSettings } from "../features/settings/useSettings";
+import { PinSettings } from "../features/pin/PinSettings";
+import "../features/pin/pin.css";
 import "../features/settings/settings.css";
 
 export function SettingsScreen() {
@@ -18,6 +20,7 @@ export function SettingsScreen() {
           <TrackToggles enabled={settings.enabledTracks} onToggle={settings.toggle} />
           <OnyomiScript onChange={settings.setOnyomiScript} value={settings.onyomiScript} />
           <DailyGoal goal={settings.dailyGoal} onChange={settings.setGoal} />
+          <PinSettings />
         </div>
       </div>
     </section>

@@ -7,9 +7,19 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
+import { clearSessionCookie, createSessionCookie, PinError, readPinRecord, removeDevicePin, setDevicePin, unlockDevice, verifyPinSession } from "../auth/pin";
 
-function error(status: number, code: string, message: string): Response {
-  return Response.json({ error: { code, message } } satisfies ApiErrorBody, { status });
+function error(status: number, code: string, message: string, retryAfter?: number): Response {
+  return Response.json(
+    { error: { code, message }, ...(retryAfter === undefined ? {} : { retryAfter }) } satisfies ApiErrorBody & { retryAfter?: number },
+    { status, headers: retryAfter === undefined ? undefined : { "retry-after": String(retryAfter) } },
+  );
+}
+
+function withCookie(response: Response, cookie: string): Response {
+  const headers = new Headers(response.headers);
+  headers.append("set-cookie", cookie);
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 
 function parseTrack(value: string | null): Track | null {
@@ -35,11 +45,10 @@ function startRequest(value: unknown): StartSessionRequest & { limit: number } |
   };
 }
 
-export async function routeApiRequest(request: Request, env: Env): Promise<Response> {
+async function dispatchApiRequest(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const { pathname } = url;
-  try {
-    if (request.method === "GET" && pathname === "/api/health") return Response.json({ ok: true });
+  if (request.method === "GET" && pathname === "/api/health") return Response.json({ ok: true });
 
     if (request.method === "GET" && pathname === "/api/curriculum") {
       const track = parseTrack(url.searchParams.get("track"));
@@ -131,8 +140,49 @@ export async function routeApiRequest(request: Request, env: Env): Promise<Respo
     if (request.method === "GET" && pathname === "/api/stats") return Response.json(await getStats(env.DB));
     if (request.method === "GET" && pathname === "/api/onboarding-state") return Response.json(await getOnboardingState(env.DB));
 
-    return error(404, "not_found", "API route was not found");
+  return error(404, "not_found", "API route was not found");
+}
+
+async function jsonBody(request: Request): Promise<Record<string, unknown>> {
+  let value: unknown;
+  try { value = await request.json(); } catch { throw new PinError(400, "invalid_json", "request body must be valid JSON"); }
+  if (typeof value !== "object" || value === null || Array.isArray(value)) throw new PinError(400, "invalid_json", "request body must be a JSON object");
+  return value as Record<string, unknown>;
+}
+
+export async function routeApiRequest(request: Request, env: Env, now = Date.now()): Promise<Response> {
+  const { pathname } = new URL(request.url);
+  try {
+    if (request.method === "GET" && pathname === "/api/pin/state") {
+      const record = await readPinRecord(env.DB);
+      const locked = Boolean(record.pin_locked_until && record.pin_locked_until > now);
+      return Response.json({ enabled: Boolean(record.pin_hash), locked, lockedUntil: locked ? record.pin_locked_until : null });
+    }
+    if (request.method === "POST" && pathname === "/api/pin/unlock") {
+      const body = await jsonBody(request);
+      return withCookie(Response.json({ unlocked: true }), await unlockDevice(env.DB, body.pin, now));
+    }
+
+    const record = await readPinRecord(env.DB);
+    if (record.pin_hash && !await verifyPinSession(record, request.headers.get("cookie"), now)) {
+      return error(401, "pin_required", "Device PIN is required");
+    }
+
+    if (request.method === "POST" && pathname === "/api/pin") {
+      const body = await jsonBody(request);
+      await setDevicePin(env.DB, body.pin, body.currentPin, now);
+      return withCookie(Response.json({ enabled: true }), clearSessionCookie);
+    }
+    if (request.method === "DELETE" && pathname === "/api/pin") {
+      const body = await jsonBody(request);
+      await removeDevicePin(env.DB, body.currentPin, now);
+      return withCookie(Response.json({ enabled: false }), clearSessionCookie);
+    }
+
+    const response = await dispatchApiRequest(request, env);
+    return record.pin_hash && record.pin_secret ? withCookie(response, await createSessionCookie(record.pin_secret, now)) : response;
   } catch (caught) {
+    if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
     if (caught instanceof ReviewTargetNotFound) return error(404, "character_not_found", "character track was not found");
     console.error(caught);
     return error(500, "internal_error", "request could not be completed");

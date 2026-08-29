@@ -70,3 +70,20 @@ on them. Verify the root SPA, one deep link, and `/api/health` after deploy.
 Cloudflare Access is the access-control layer in front of the Worker; the app
 does not implement authentication. An unauthenticated `curl` may therefore
 return the Access login response even while the deployment is healthy.
+
+## Optional device PIN
+
+Settings can enable a four-digit device PIN for unattended or shared screens.
+This remains a local device lock, not an identity system: Cloudflare Access is
+still the deployment access-control boundary. A four-digit value has only
+10,000 possibilities and does not protect copied D1 contents; Worker-side
+throttling protects the keyboard entry point. Unlock activity extends a
+two-hour inactivity window, while closing the browser clears the session.
+
+There is no recovery flow inside the app. An operator can remove a forgotten
+PIN through D1, which also invalidates every outstanding unlock cookie:
+
+```sh
+npx wrangler d1 execute hanja --remote --command \
+  "UPDATE profile SET pin_hash=NULL, pin_salt=NULL, pin_iterations=NULL, pin_secret=NULL, pin_failures=0, pin_locked_until=NULL WHERE id=1"
+```

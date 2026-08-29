@@ -2,6 +2,7 @@ import type { Track } from "./types";
 import type { OnyomiScript } from "./settings";
 
 export type ApiErrorBody = { error: { code: string; message: string } };
+export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };
 
 export type CurriculumNode = {
   key: string;

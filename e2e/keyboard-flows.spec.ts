@@ -289,6 +289,7 @@ test.describe.serial("keyboard-only product flows", () => {
 
   test("review queue decreases and reaches its empty state", async ({ page }, testInfo) => {
     await page.goto("/home");
+    await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const review = await sessionStarted(page, () => page.keyboard.press("R"));
     expectReadingOnly(review.cards);
     const before = await page.request.get("/api/reviews/due?tracks=kr,cn&limit=100");
@@ -344,6 +345,7 @@ test.describe.serial("keyboard-only product flows", () => {
 
   test("stats and settings persist keyboard changes", async ({ page }, testInfo) => {
     await page.goto("/home");
+    await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     await page.keyboard.press("T");
     await expect(page.getByRole("heading", { name: "통계" })).toBeVisible();
     await checkLayout(page, "stats", testInfo);
