@@ -4,3 +4,6 @@
 @keyframes om-rise { 0% { transform: translateY(14px); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
 @keyframes om-glyph { 0% { transform: scale(1) } 40% { transform: scale(1.09) } 100% { transform: scale(1) } }
 @keyframes om-pulse { 0%,100% { box-shadow: 0 0 0 0 var(--pulse-gold) } 50% { box-shadow: 0 0 0 12px var(--pulse-gold-clear) } }
+@keyframes om-celebration { from { opacity: .999 } to { opacity: 1 } }
+@keyframes om-celebration-ring { from { opacity: 1; transform: translate(-50%, -50%) scale(.35) } to { opacity: 0; transform: translate(-50%, -50%) scale(2.8) } }
+@keyframes om-celebration-flare { 0% { opacity: 0; transform: scale(.96) } 35% { opacity: .75 } 100% { opacity: 0; transform: scale(1.04) } }

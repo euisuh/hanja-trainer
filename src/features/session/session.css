@@ -1,4 +1,5 @@
 .session-runner {
+  position: relative;
   width: min(100%, 920px);
   margin-inline: auto;
   padding-top: 14px;
@@ -408,24 +409,61 @@ button.session-sync {
 .feedback-bar--wrong > strong { color: var(--wrong-fg); }
 .feedback-bar--skipped { border-color: var(--border-tan); background: var(--panel); }
 
-.particle-burst {
+.celebration-layer {
   position: absolute;
-  top: 42%;
-  left: 50%;
-  z-index: 5;
+  inset: 0;
+  z-index: 10;
   pointer-events: none;
 }
 
-.particle-burst span {
+.particle-burst {
   position: absolute;
+  inset: 0;
+  animation: om-celebration .92s;
+  pointer-events: none;
+  --burst-duration: .8s;
+}
+
+.particle-burst[data-tier="2"] { --burst-duration: .86s; }
+.particle-burst[data-tier="3"] { --burst-duration: .9s; }
+
+.particle-burst__particle {
+  position: absolute;
+  top: 42%;
+  left: 50%;
   width: var(--size);
   height: var(--size);
   border-radius: 3px;
   background: var(--particle);
-  animation: om-burst .72s cubic-bezier(.2, .7, .3, 1) forwards;
+  animation: om-burst var(--burst-duration) cubic-bezier(.2, .7, .3, 1) forwards;
 }
 
 .particle-burst .particle-burst__circle { border-radius: 50%; }
+
+.particle-burst__ring {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: 88px;
+  height: 88px;
+  border: 4px solid var(--gold);
+  border-radius: 50%;
+  animation: om-celebration-ring .72s ease-out forwards, om-pulse .72s ease-out;
+}
+
+.particle-burst[data-tier="3"] .particle-burst__ring {
+  width: 118px;
+  height: 118px;
+  border-width: 6px;
+}
+
+.particle-burst__flare {
+  position: absolute;
+  inset: 2%;
+  border: 5px solid var(--gold);
+  border-radius: var(--radius-extra-large);
+  animation: om-celebration-flare .8s ease-out forwards;
+}
 
 .pause-modal {
   position: fixed;
@@ -573,7 +611,7 @@ button.session-sync {
     animation: none;
   }
 
-  .particle-burst { display: none; }
+  .celebration-layer { display: none; }
   .session-progress span { transition: none; }
   .session-complete,
   .session-complete__glyph { animation: none; }

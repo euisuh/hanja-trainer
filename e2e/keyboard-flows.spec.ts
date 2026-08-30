@@ -4,6 +4,7 @@ const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
 type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; levelOrd: number; options: Array<{ label: string }>; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
+const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
 
 async function expectClosestLang(locator: Locator, lang: string) {
   expect(await locator.evaluate((node) => node.closest("[lang]")?.getAttribute("lang"))).toBe(lang);
@@ -15,19 +16,25 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; progressOffset?: number; skipFirst?: boolean; verifyLanguages?: boolean };
+type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyReducedMotion?: boolean };
 
 async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
   let skipped = false;
   let checkedAnnouncement = false;
   let testedKeyboardAdvance = false;
+  let correctAdvanceMs = 0;
+  let correctTransitions = 0;
+  let firstBurstParticles = 0;
+  let tierThreeParticles = 0;
+  let maxLiveBursts = 0;
+  let checkedSurvival = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
     const shouldSkip = card.kind === "reading" && Boolean(options.skipFirst) && !skipped;
     const testKeyboardAdvance = card.kind === "reading" && !shouldSkip && Boolean(options.keyboardAdvance) && !testedKeyboardAdvance;
     if (testKeyboardAdvance) {
       await page.clock.install();
-      await page.clock.pauseAt(new Date());
+      await page.clock.pauseAt(Date.now() + 1_000);
       await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-keyboard-advance", "true"));
     }
     if (options.verifyLanguages) {
@@ -50,6 +57,24 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       }
     }
     if (card.kind === "reading") {
+      if (options.measureCorrectLatency && !shouldSkip && index + 1 < cards.length) {
+        await page.evaluate(() => {
+          const progress = document.querySelector('[role="progressbar"]');
+          if (!progress) throw new Error("missing session progressbar");
+          const initialProgress = progress.getAttribute("aria-valuenow");
+          let answerStarted: number | undefined;
+          const onKeyDown = () => { answerStarted = performance.now(); };
+          const observer = new MutationObserver(() => {
+            if (answerStarted === undefined || progress.getAttribute("aria-valuenow") === initialProgress) return;
+            observer.disconnect();
+            window.removeEventListener("keydown", onKeyDown, true);
+            document.documentElement.dataset.correctAdvanceMs = String(performance.now() - answerStarted);
+          });
+          document.documentElement.dataset.correctAdvanceMs = "";
+          window.addEventListener("keydown", onKeyDown, { capture: true, once: true });
+          observer.observe(progress, { attributeFilter: ["aria-valuenow"], attributes: true });
+        });
+      }
       await page.keyboard.press(shouldSkip ? "0" : String(card.answerIndex + 1));
       if (options.announcement && !shouldSkip && !checkedAnnouncement) {
         await expect(page.locator(".session-announcement")).toContainText(options.announcement);
@@ -84,10 +109,46 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     if (index + 1 < cards.length) {
       const completed = (options.progressOffset ?? 0) + cards.slice(0, index + 1).filter((item) => item.kind === "reading").length;
       const next = cards[index + 1];
+      if (options.measureCorrectLatency && card.kind === "reading" && !shouldSkip) {
+        await page.waitForFunction(() => document.documentElement.dataset.correctAdvanceMs !== "");
+        correctAdvanceMs += await page.evaluate(() => {
+          const elapsed = Number(document.documentElement.dataset.correctAdvanceMs);
+          delete document.documentElement.dataset.correctAdvanceMs;
+          return elapsed;
+        });
+        correctTransitions += 1;
+      }
       await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(completed + Number(next.kind === "reading")));
+    }
+    if (card.kind === "reading" && !shouldSkip && (options.verifyCelebration || options.verifyReducedMotion)) {
+      const layer = page.locator(".celebration-layer");
+      const burst = layer.locator(".particle-burst").last();
+      await expect(layer).toHaveAttribute("aria-hidden", "true");
+      await expect(page.locator(".session-card-wrap .celebration-layer")).toHaveCount(0);
+      expect(await layer.evaluate((node) => getComputedStyle(node).pointerEvents)).toBe("none");
+      await expect(burst).toBeAttached();
+      if (options.verifyReducedMotion) await expect(layer).toBeHidden();
+      if (options.verifyCelebration) {
+        const liveBursts = await layer.locator(".particle-burst").count();
+        expect(liveBursts).toBeLessThanOrEqual(3);
+        maxLiveBursts = Math.max(maxLiveBursts, liveBursts);
+        const particles = await burst.locator(".particle-burst__particle").count();
+        if (await burst.getAttribute("data-tier") === "1") firstBurstParticles = particles;
+        if (await burst.getAttribute("data-tier") === "3") tierThreeParticles = particles;
+        if (!checkedSurvival) {
+          await expect(burst).toBeAttached();
+          await expect(burst).toHaveCount(0, { timeout: 2_000 });
+          checkedSurvival = true;
+        }
+      }
     }
   }
   await expect(page.getByRole("heading", { name: completion })).toBeVisible();
+  if (options.verifyCelebration) {
+    expect(maxLiveBursts).toBeGreaterThan(1);
+    expect(tierThreeParticles).toBeGreaterThan(firstBurstParticles);
+  }
+  return { correctAdvanceMs, correctTransitions };
 }
 
 async function answerUnitCard(page: Page, cards: Card[], correct: boolean, input: "keyboard" | "mouse" = "keyboard"): Promise<number> {
@@ -160,7 +221,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
     await checkLayout(page, "placement", testInfo);
-    await finishSession(page, placement.cards, /시작 지점/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true });
+    await finishSession(page, placement.cards, /시작 지점/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, verifyReducedMotion: true });
     await expect(page.getByRole("heading", { name: "시작 지점이 정해졌습니다." })).toBeVisible();
     await checkLayout(page, "placement-result", testInfo);
     await page.keyboard.press("Enter");
@@ -549,7 +610,9 @@ test.describe.serial("keyboard-only product flows", () => {
 
     const second = await sessionStarted(page, () => launch.click());
     const scoreRequest = page.waitForRequest((request) => request.url().endsWith("/api/placement/score"));
-    await finishSession(page, second.cards, /시작 지점/u, { autoAdvance: true });
+    const timing = await finishSession(page, second.cards, /시작 지점/u, { autoAdvance: true, measureCorrectLatency: true, verifyCelebration: true });
+    expect(timing.correctTransitions).toBe(second.cards.length - 1);
+    expect(timing.correctAdvanceMs).toBeLessThanOrEqual(timing.correctTransitions * MAIN_CORRECT_ADVANCE_BASELINE_MS * 1.1);
     expect(((await scoreRequest).postDataJSON() as { answers: Array<{ track: string }> }).answers.every((answer) => answer.track === "jp")).toBe(true);
     await expect(page.locator(".placement-result__card")).toHaveCount(1);
     await page.keyboard.press("Enter");

@@ -23,6 +23,7 @@ import "./session.css";
 export type SessionMode = "lesson" | "review" | "placement" | "unit-test";
 
 const AUTO_ADVANCE_DELAY_MS = 250;
+type Burst = { id: number; tier: 1 | 2 | 3; track: Track };
 
 export type SessionResult = {
   xp: number;
@@ -90,7 +91,7 @@ export function SessionRunner({
   const [xp, setXp] = useState(0);
   const [lastXp, setLastXp] = useState(0);
   const [nextInterval, setNextInterval] = useState("—");
-  const [burstKey, setBurstKey] = useState(0);
+  const [bursts, setBursts] = useState<Burst[]>([]);
   const [assessmentAnswers, setAssessmentAnswers] = useState<PlacementAnswer[]>([]);
   const [unitTestAnswers, setUnitTestAnswers] = useState<UnitTestAnswer[]>([]);
   const [unitTestQueue, setUnitTestQueue] = useState(() => mode === "unit-test" ? queue.map((entry, cardIndex) => ({ entry, cardIndex })) : []);
@@ -102,6 +103,7 @@ export function SessionRunner({
   const advancing = useRef(false);
   const completing = useRef(false);
   const currentIndex = useRef(0);
+  const nextBurstId = useRef(0);
   const advanceRef = useRef<() => void>(() => undefined);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
   const issuedUnitTestCard = mode === "unit-test" ? unitTestQueue[index] : undefined;
@@ -193,7 +195,10 @@ export function SessionRunner({
     setAnsweredCount((value) => value + 1);
     setSkippedCount((value) => value + Number(isSkipped));
     setNextInterval(interval);
-    if (isCorrect) setBurstKey((value) => value + 1);
+    if (isCorrect) {
+      const tier = nextCombo >= 6 ? 3 : nextCombo >= 3 ? 2 : 1;
+      setBursts((current) => [...current.slice(-2), { id: nextBurstId.current += 1, tier, track: item.track }]);
+    }
   }
 
   function advance() {
@@ -314,6 +319,11 @@ export function SessionRunner({
       <div aria-atomic="true" aria-live="polite" className="session-announcement">
         {sessionAnnouncement.text} {sessionAnnouncement.sequence > 0 ? `응답 알림 ${sessionAnnouncement.sequence}` : ""}
       </div>
+      <div aria-hidden="true" className="celebration-layer">
+        {bursts.map((burst) => (
+          <ParticleBurst key={burst.id} onDone={() => setBursts((current) => current.filter(({ id }) => id !== burst.id))} tier={burst.tier} track={burst.track} />
+        ))}
+      </div>
       <div className="session-card-wrap" key={index}>
         <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
@@ -335,7 +345,6 @@ export function SessionRunner({
           xp={lastXp}
           autoAdvance={autoAdvance}
         />
-        {answered && correct && <ParticleBurst key={burstKey} track={item.track} />}
       </div>
       {paused && <PauseModal onQuit={onQuit} onResume={() => setPaused(false)} />}
     </section>
