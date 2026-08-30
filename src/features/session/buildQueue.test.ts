@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseSeed } from "../../../scripts/seed";
 import { initialState } from "../../shared/fsrs";
-import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry } from "../../shared/types";
-import { buildQueue, buildReadingItem, buildUnitTestQueue, reviewKey } from "./buildQueue";
+import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
+import { buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, reviewKey } from "./buildQueue";
 
 function character(id: number): CharacterEntry {
   const glyph = String.fromCodePoint(0x4e00 + id);
@@ -34,6 +34,19 @@ function withReadings(id: number, jp: string, cn: string): CharacterEntry {
 function withKorean(id: number, reading: string): CharacterEntry {
   const base = character(id);
   return { ...base, tracks: base.tracks.map((entry) => entry.track === "kr" ? { ...entry, reading } : entry) };
+}
+
+function word(id: number, reading: string, members: [number, number] = [1, 2]): WordEntry {
+  return {
+    id,
+    track: "kr",
+    glyph: members.map((member) => character(member).key).join(""),
+    reading,
+    level: "8급",
+    levelOrd: 1,
+    sourceUrl: `https://ko.wiktionary.org/w/index.php?title=${reading}&oldid=${id}`,
+    members: members.map((characterId, position) => ({ characterId, key: character(characterId).key, position })),
+  };
 }
 
 function seededCharacters(): CharacterEntry[] {
@@ -227,6 +240,33 @@ describe("buildQueue", () => {
     const item = buildReadingItem(corpus[0], "kr", corpus, 0, random(1));
 
     expect(item?.options.slice(1, 3).map((option) => option.label)).toEqual(["빌 공", "강 강"]);
+  });
+
+  it("ranks compound near misses through the existing Korean distractor path", () => {
+    const words = ["학교", "학고", "악교", "부모", "정답"].map((reading, index) => word(index + 1, reading));
+    const item = buildWordItem(words[0], words, characters[0], 0, random(1));
+
+    expect(item?.options.slice(1, 3).map((option) => option.label)).toEqual(["학고", "악교"]);
+  });
+
+  it("adds only eligible minority word cards without replacing due reviews", () => {
+    const now = new Date("2026-01-02T00:00:00Z");
+    const due = { ...initialState(now), due: new Date("2026-01-01T00:00:00Z"), correctCount: 1 };
+    const states = new Map(characters.map((item) => [reviewKey(item.id, "kr"), due]));
+    const words = [word(1, "학교", [1, 2]), word(2, "부모", [3, 4]), word(3, "시간", [5, 6]), word(4, "정답", [7, 8])];
+    const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 8, mode: "review", reviewStates: states, now, words });
+
+    expect(queue.filter((item) => item.kind === "reading")).toHaveLength(8);
+    expect(queue.filter((item) => item.kind === "word")).toHaveLength(2);
+    expect(queue.filter((item) => item.kind === "word").length).toBeLessThan(queue.filter((item) => item.kind !== "word").length);
+  });
+
+  it("does not issue a word until every constituent has review state", () => {
+    const known = initialState(new Date());
+    const words = [word(1, "학교"), word(2, "부모"), word(3, "시간"), word(4, "정답")];
+    const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 4, mode: "lesson", reviewStates: new Map([[reviewKey(1, "kr"), known]]), words });
+
+    expect(queue.every((item) => item.kind !== "word")).toBe(true);
   });
 
   it("builds two separated deterministic unit-test rounds with harder repeats", () => {

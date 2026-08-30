@@ -65,7 +65,7 @@ export type SessionOption = { label: string };
 export type SessionCompareEntry = { glyph: string; reading: string; levelBadge: string };
 
 export type SessionCard = {
-  kind: "reading" | "compare";
+  kind: "reading" | "compare" | "word";
   characterKey: string;
   meaningKo: string;
   track: Track;
@@ -78,6 +78,9 @@ export type SessionCard = {
   options: SessionOption[];
   answerIndex: number;
   compare?: Partial<Record<Track, SessionCompareEntry>>;
+  wordId?: number;
+  memberKeys?: string[];
+  wordSourceUrl?: string;
 };
 
 export type StartSessionRequest = { mode: SessionMode; tracks: Track[]; limit?: number; unitId?: number; levelOrd?: number; testOut?: true };
@@ -94,6 +97,7 @@ export type SubmitReviewRequest = {
   sessionId: string;
   cardIndex: number;
   characterKey: string;
+  wordId?: number;
   track: Track;
   correct: boolean;
   skipped: boolean;

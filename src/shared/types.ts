@@ -57,6 +57,17 @@ export interface CharacterEntry {
   sentences: ExampleSentence[];
 }
 
+export interface WordEntry {
+  id: number;
+  track: "kr";
+  glyph: string;
+  reading: string;
+  level: string;
+  levelOrd: number;
+  sourceUrl: string;
+  members: Array<{ characterId: number; key: string; position: number }>;
+}
+
 export interface CurriculumUnitMember {
   characterId: number;
   key: string;
@@ -114,4 +125,18 @@ export interface SeedSentenceEntry extends SeedSentence {
 
 export interface SeedSentenceDocument {
   sentences: SeedSentenceEntry[];
+}
+
+export interface SeedWordEntry {
+  track: "kr";
+  glyph: string;
+  reading: string;
+  level: string;
+  levelOrd: number;
+  sourceUrl: string;
+  members: string[];
+}
+
+export interface SeedWordDocument {
+  words: SeedWordEntry[];
 }

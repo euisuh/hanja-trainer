@@ -12,6 +12,8 @@ import {
   type SeedSentenceDocument,
   type SeedSentenceEntry,
   type SeedTrackEntry,
+  type SeedWordDocument,
+  type SeedWordEntry,
   type SourceKind,
   type Track,
 } from "../src/shared/types.ts";
@@ -205,6 +207,29 @@ export function parseSentenceSeed(value: unknown): SeedSentenceDocument {
   return { sentences };
 }
 
+export function parseWordSeed(value: unknown): SeedWordDocument {
+  const rows = array(record(value, "seed").words, "seed.words");
+  const words: SeedWordEntry[] = rows.map((value, index) => {
+    const path = `words[${index}]`;
+    const input = record(value, path);
+    if (input.track !== "kr") throw new Error(`${path}.track: only kr compounds are supported`);
+    const glyph = string(input.glyph, `${path}.glyph`);
+    const reading = string(input.reading, `${path}.reading`);
+    const level = string(input.level, `${path}.level`);
+    const levelOrd = integer(input.levelOrd, `${path}.levelOrd`, 1);
+    const members = array(input.members, `${path}.members`).map((member, memberIndex) => string(member, `${path}.members[${memberIndex}]`));
+    if (Array.from(glyph).length !== 2 || members.length !== 2) throw new Error(`${path}: expected a two-character compound`);
+    if (new Set(members).size !== members.length) throw new Error(`${path}.members: duplicate character`);
+    if (levelOrd !== levelOrdFor("kr", level)) throw new Error(`${path}.levelOrd: expected ${levelOrdFor("kr", level)} for ${level}`);
+    const sourceUrl = string(input.sourceUrl, `${path}.sourceUrl`);
+    if (!/^https:\/\/ko\.wiktionary\.org\/w\/index\.php\?title=[^&]+&oldid=\d+$/u.test(sourceUrl)) throw new Error(`${path}.sourceUrl: expected an immutable Korean Wiktionary revision`);
+    return { track: "kr", glyph, reading, level, levelOrd, sourceUrl, members };
+  });
+  const identities = words.map((word) => `${word.track}:${word.glyph}:${word.reading}`);
+  if (new Set(identities).size !== identities.length) throw new Error("seed.words: duplicate track, glyph, and reading");
+  return { words };
+}
+
 function quote(value: string): string {
   return `'${value.replaceAll("'", "''")}'`;
 }
@@ -245,6 +270,17 @@ export function emitSentenceSeedSql(document: SeedSentenceDocument): string {
   ].join("\n")}\n`;
 }
 
+export function emitWordSeedSql(document: SeedWordDocument): string {
+  const sql = ["PRAGMA foreign_keys = ON;"];
+  for (const word of document.words) {
+    const identity = `track=${quote(word.track)} AND glyph=${quote(word.glyph)} AND reading=${quote(word.reading)}`;
+    sql.push(`INSERT INTO words (track, glyph, reading, level, level_ord, source_url) VALUES (${quote(word.track)}, ${quote(word.glyph)}, ${quote(word.reading)}, ${quote(word.level)}, ${word.levelOrd}, ${quote(word.sourceUrl)}) ON CONFLICT(track, glyph, reading) DO UPDATE SET level=excluded.level, level_ord=excluded.level_ord, source_url=excluded.source_url;`);
+    sql.push(`DELETE FROM word_members WHERE word_id=(SELECT id FROM words WHERE ${identity});`);
+    word.members.forEach((key, position) => sql.push(`INSERT INTO word_members (word_id, character_id, position) VALUES ((SELECT id FROM words WHERE ${identity}), (SELECT id FROM characters WHERE key=${quote(key)}), ${position});`));
+  }
+  return `${sql.join("\n")}\n`;
+}
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const mode = args.includes("--remote") ? "--remote" : "--local";
@@ -252,8 +288,10 @@ async function main(): Promise<void> {
   const paths = files.length > 0 ? files : ["data/characters.sample.json"];
   const documents = await Promise.all(paths.map(async (path) => {
     const value = JSON.parse(await readFile(path, "utf8")) as unknown;
-    const isSentenceDocument = typeof value === "object" && value !== null && "sentences" in value;
-    return isSentenceDocument ? emitSentenceSeedSql(parseSentenceSeed(value)) : emitSeedSql(parseSeed(value));
+    const isDocument = typeof value === "object" && value !== null;
+    if (isDocument && "sentences" in value) return emitSentenceSeedSql(parseSentenceSeed(value));
+    if (isDocument && "words" in value) return emitWordSeedSql(parseWordSeed(value));
+    return emitSeedSql(parseSeed(value));
   }));
   const directory = await mkdtemp(join(tmpdir(), "hanja-seed-"));
   const sqlPath = join(directory, "seed.sql");

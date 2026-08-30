@@ -1,10 +1,11 @@
 import { isDue, type ReviewState } from "../../shared/fsrs";
-import type { CharacterEntry, Track, TrackEntry } from "../../shared/types";
+import type { CharacterEntry, KrTrackEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
 
 // Compare cards are ungraded interstitials. After each cadence block in lesson
 // and review, prefer a character just answered; one known enabled track is enough
 // to qualify when the character is available in at least two enabled tracks.
 export const COMPARE_CADENCE = 4;
+export const WORD_CADENCE = 4;
 
 export type AnswerOption = {
   label: string;
@@ -24,7 +25,16 @@ export type CompareQueueItem = {
   track: Track;
 };
 
-export type SessionQueueItem = ReadingQueueItem | CompareQueueItem;
+export type WordQueueItem = {
+  kind: "word";
+  word: WordEntry;
+  character: CharacterEntry;
+  track: "kr";
+  options: AnswerOption[];
+  answerIndex: number;
+};
+
+export type SessionQueueItem = ReadingQueueItem | CompareQueueItem | WordQueueItem;
 
 export type BuildQueueOptions = {
   characters: CharacterEntry[];
@@ -36,6 +46,7 @@ export type BuildQueueOptions = {
   placementKeys?: ReadonlySet<string>;
   now?: Date;
   random?: () => number;
+  words?: WordEntry[];
 };
 
 type QueuePair = {
@@ -86,8 +97,14 @@ function hangulDistance(left: string, right: string): number {
   return aa.filter((part, index) => part !== bb[index]).length;
 }
 
+function hangulSequenceDistance(left: string, right: string): number {
+  const a = Array.from(left);
+  const b = Array.from(right);
+  return Math.abs(a.length - b.length) * 3 + a.slice(0, b.length).reduce((total, syllable, index) => total + hangulDistance(syllable, b[index]), 0);
+}
+
 function koreanTier(left: string, right: string): number {
-  return Math.min(...koreanSounds(left).flatMap((a) => koreanSounds(right).map((b) => a === b ? 0 : hangulDistance(a, b))), 3);
+  return Math.min(...koreanSounds(left).flatMap((a) => koreanSounds(right).map((b) => a === b ? 0 : hangulSequenceDistance(a, b))), 6);
 }
 
 const VOICING_GROUPS = ["カガ", "キギ", "クグ", "ケゲ", "コゴ", "サザ", "シジ", "スズ", "セゼ", "ソゾ", "タダ", "チヂ", "ツヅ", "テデ", "トド", "ハバパ", "ヒビピ", "フブプ", "ヘベペ", "ホボポ"];
@@ -215,6 +232,20 @@ export function buildReadingItem(character: CharacterEntry, track: Track, charac
   return answer ? { kind: "reading", character, track, ...answer } : undefined;
 }
 
+function wordTrack(word: WordEntry): KrTrackEntry {
+  return { characterId: word.id, track: "kr", glyph: word.glyph, reading: word.reading, level: word.level, levelOrd: word.levelOrd };
+}
+
+export function buildWordItem(word: WordEntry, words: WordEntry[], character: CharacterEntry, offset: number, random: () => number = () => 0.5): WordQueueItem | undefined {
+  const correct = { label: word.reading };
+  const distractors = sampleDistractors(wordTrack(word), words.filter((candidate) => candidate.id !== word.id).map(wordTrack), random);
+  if (distractors.length < 3) return undefined;
+  const options = [correct, ...distractors];
+  const shift = offset % options.length;
+  const rotated = [...options.slice(shift), ...options.slice(0, shift)];
+  return { kind: "word", word, character, track: "kr", options: rotated, answerIndex: rotated.findIndex((option) => option.label === word.reading) };
+}
+
 function shuffle<T>(items: T[], random: () => number): T[] {
   const shuffled = [...items];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -284,6 +315,7 @@ export function buildQueue({
   placementKeys,
   now = new Date(),
   random = () => 0.5,
+  words = [],
 }: BuildQueueOptions): SessionQueueItem[] {
   if (length <= 0 || enabledTracks.length === 0) return [];
   const enabled = new Set(enabledTracks);
@@ -330,16 +362,36 @@ export function buildQueue({
     if (!item) continue;
     readings.push(item);
   }
-  if (mode === "placement" || compareCharacters.length === 0) return readings;
+  if (mode === "placement") return readings;
+
+  const charactersById = new Map(characters.map((character) => [character.id, character]));
+  const eligibleWords = words.filter((word) => word.track === "kr"
+    && enabled.has("kr")
+    && word.members.every((member) => reviewStates.has(reviewKey(member.characterId, "kr"))));
 
   const queue: SessionQueueItem[] = [];
   const compared = new Set<number>();
+  const usedWords = new Set<number>();
   for (let index = 0; index < readings.length; index += 1) {
     queue.push(readings[index]);
+    if ((index + 1) % WORD_CADENCE === 0) {
+      const recent = readings.slice(index + 1 - WORD_CADENCE, index + 1);
+      const recentIds = new Set(recent.map((item) => item.character.id));
+      const wordCandidates = eligibleWords.filter((word) => !usedWords.has(word.id));
+      const relevantWords = wordCandidates.filter((word) => word.members.some((member) => recentIds.has(member.characterId)));
+      const word = (relevantWords.length > 0 ? relevantWords : wordCandidates)[0];
+      const firstMember = word ? charactersById.get(word.members[0].characterId) : undefined;
+      const wordItem = word && firstMember ? buildWordItem(word, words, firstMember, index + word.id, random) : undefined;
+      if (wordItem) {
+        usedWords.add(word.id);
+        queue.push(wordItem);
+      }
+    }
     if ((index + 1) % COMPARE_CADENCE !== 0) continue;
-    const recent = readings.slice(index + 1 - COMPARE_CADENCE, index + 1)
+    if (compareCharacters.length === 0) continue;
+    const recentComparisons = readings.slice(index + 1 - COMPARE_CADENCE, index + 1)
       .filter((item, itemIndex, items) => compareIds.has(item.character.id) && !compared.has(item.character.id) && items.findIndex((candidate) => candidate.character.id === item.character.id) === itemIndex);
-    const candidates = recent.length > 0 ? recent : mode === "lesson" ? compareCharacters
+    const candidates = recentComparisons.length > 0 ? recentComparisons : mode === "lesson" ? compareCharacters
       .filter((character) => !compared.has(character.id))
       .slice(0, COMPARE_CADENCE)
       .map((character) => ({ character, track: character.tracks.find((entry) => enabled.has(entry.track))!.track })) : [];

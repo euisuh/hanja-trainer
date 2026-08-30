@@ -109,12 +109,12 @@ export function SessionRunner({
   const issuedUnitTestCard = mode === "unit-test" ? unitTestQueue[index] : undefined;
   const item = mode === "placement" && !externalQueue ? placementItem : issuedUnitTestCard?.entry ?? queue[index];
   const requiredUnitTestCards = queue.filter((entry) => entry.kind === "reading").length;
-  const queueLength = mode === "placement" && !externalQueue ? length : mode === "unit-test" ? requiredUnitTestCards : queue.filter((entry) => entry.kind === "reading").length;
-  const completedBefore = mode === "placement" && !externalQueue ? index : queue.slice(0, index).filter((entry) => entry.kind === "reading").length;
+  const queueLength = mode === "placement" && !externalQueue ? length : mode === "unit-test" ? requiredUnitTestCards : queue.filter((entry) => entry.kind !== "compare").length;
+  const completedBefore = mode === "placement" && !externalQueue ? index : queue.slice(0, index).filter((entry) => entry.kind !== "compare").length;
   const compare = item?.kind === "compare";
-  const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(item?.kind === "reading");
+  const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(item?.kind !== "compare");
   const answered = selectedIndex !== null || skipped;
-  const correct = item?.kind === "reading" && selectedIndex === item.answerIndex;
+  const correct = item !== undefined && item.kind !== "compare" && selectedIndex === item.answerIndex;
   const autoAdvance = mode === "placement" || mode === "unit-test" || correct;
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export function SessionRunner({
   }, [index]);
 
   function pick(choice: number | null) {
-    if (!item || item.kind !== "reading" || selectedIndex !== null || answerLocked.current) return;
+    if (!item || item.kind === "compare" || selectedIndex !== null || answerLocked.current) return;
     answerLocked.current = true;
     const isSkipped = choice === null;
     const isCorrect = choice === item.answerIndex;
@@ -172,15 +172,18 @@ export function SessionRunner({
         }
       }
     } else {
-      const key = reviewKey(item.character.id, item.track);
-      const previous = states.get(key) ?? initialState(new Date());
-      const result = schedule(previous, gradeFromReview(isCorrect, isSkipped, elapsedMs), new Date());
-      states.set(key, result.next);
-      interval = intervalLabel(result.next.scheduledDays);
+      const ids = item.kind === "word" ? item.word.members.map((member) => member.characterId) : [item.character.id];
+      const results = ids.map((id) => {
+        const key = reviewKey(id, item.track);
+        const result = schedule(states.get(key) ?? initialState(new Date()), gradeFromReview(isCorrect, isSkipped, elapsedMs), new Date());
+        states.set(key, result.next);
+        return result;
+      });
+      interval = intervalLabel(results[0].next.scheduledDays);
       if (isCorrect) setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "정답입니다. 다음 문항으로 이동합니다." }));
     }
     const answeredIndex = index;
-    if (mode !== "unit-test") submit({ cardIndex: index, characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
+    if (mode !== "unit-test") submit({ cardIndex: index, characterKey: item.character.key, ...(item.kind === "word" ? { wordId: item.word.id } : {}), track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
       if (currentIndex.current === answeredIndex && mode !== "placement") setNextInterval(response.dueLabel);
     });
     const gained = isCorrect ? 10 + Math.min(10, combo * 2) : 0;
@@ -202,7 +205,7 @@ export function SessionRunner({
   }
 
   function advance() {
-    if (advancing.current || !item || (item.kind === "reading" && !answered)) return;
+    if (advancing.current || !item || (item.kind !== "compare" && !answered)) return;
     advancing.current = true;
     if (mode === "placement" && !externalQueue) {
       const next = nextPlacementItem(adaptiveState, characters);
@@ -276,6 +279,7 @@ export function SessionRunner({
     return <div className="session-empty"><h1>복습할 카드가 없습니다.</h1><button onClick={onQuit} type="button">복습 큐로 돌아가기</button></div>;
   }
   const source = item.character.sentences.find((sentence) => sentence.track === item.track)?.source;
+  const word = item.kind === "word" ? item.word : undefined;
   const feedbackNote = compare
     ? "이미 아는 글자를 다른 트랙과 함께 확인합니다."
     : mode === "unit-test"
@@ -285,19 +289,19 @@ export function SessionRunner({
     : mode === "placement"
       ? answered ? "응답에 맞춰 시작 급수를 조정했습니다." : "정답에 따라 다음 문항 난이도가 바뀝니다."
     : !answered
-      ? source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
+      ? word ? "한국어 위키낱말사전의 한자어입니다." : source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
       : correct
         ? `다음 복습: ${nextInterval}`
-        : `${item.character.tracks.find((entry) => entry.track === item.track)?.glyph} = ${item.character.meaningKo}`;
+        : word ? `${word.glyph} = ${word.reading}` : `${item.character.tracks.find((entry) => entry.track === item.track)?.glyph} = ${item.character.meaningKo}`;
   const style = {
     "--session-accent": tracks[item.track].accent,
     "--session-accent-text": tracks[item.track].accentText,
     "--session-soft": tracks[item.track].soft,
     "--session-font": tracks[item.track].font,
   } as CSSProperties;
-  const displayOptions = item.kind === "reading" && item.track === "jp" && onyomiScript === "hiragana"
+  const displayOptions = item.kind !== "compare" && item.track === "jp" && onyomiScript === "hiragana"
     ? item.options.map((option) => ({ ...option, label: toHiragana(option.label) }))
-    : item.kind === "reading" ? item.options : [];
+    : item.kind !== "compare" ? item.options : [];
 
   return (
     <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} style={style}>
@@ -325,8 +329,8 @@ export function SessionRunner({
         ))}
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} />
-        {item.kind === "reading" && (
+        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} word={word} />
+        {item.kind !== "compare" && (
           <>
             <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} track={item.track} />
             <SkipAnswer disabled={answered} onSkip={() => pick(null)} />
@@ -337,8 +341,8 @@ export function SessionRunner({
           compare={compare}
           correct={correct}
           skipped={skipped}
-          correctAnswer={item.kind === "reading" ? displayOptions[item.answerIndex]?.label : undefined}
-          correctIndex={item.kind === "reading" ? item.answerIndex : 0}
+          correctAnswer={item.kind !== "compare" ? displayOptions[item.answerIndex]?.label : undefined}
+          correctIndex={item.kind !== "compare" ? item.answerIndex : 0}
           last={mode === "placement" && !externalQueue ? index + 1 === length : index + 1 === queue.length}
           note={feedbackNote}
           onNext={advance}

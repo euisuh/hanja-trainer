@@ -5,7 +5,7 @@ import { getState, prepareAppendLog, prepareUpsertState } from "../db/reviews";
 
 const DAY_MS = 86_400_000;
 
-type CharacterRow = { id: number };
+type CharacterRow = { id: number; key: string; position?: number };
 type SubmissionRow = { response_json: string };
 type DueRow = {
   total?: number;
@@ -29,11 +29,13 @@ export function parseReviewRequest(value: unknown): SubmitReviewRequest | null {
   if (typeof body.sessionId !== "string" || body.sessionId.length < 1 || body.sessionId.length > 128) return null;
   if (!Number.isInteger(body.cardIndex) || (body.cardIndex as number) < 0 || (body.cardIndex as number) > 10_000) return null;
   if (typeof body.characterKey !== "string" || body.characterKey.length < 1 || body.characterKey.length > 16) return null;
+  if (body.wordId !== undefined && (!Number.isSafeInteger(body.wordId) || (body.wordId as number) < 1)) return null;
   if (typeof body.track !== "string" || !TRACKS.includes(body.track as Track)) return null;
   if (typeof body.correct !== "boolean") return null;
   if (typeof body.skipped !== "boolean" || body.skipped && body.correct) return null;
   if (!Number.isInteger(body.elapsedMs) || (body.elapsedMs as number) < 0 || (body.elapsedMs as number) > 3_600_000) return null;
   if (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "placement") return null;
+  if (body.wordId !== undefined && body.mode === "placement") return null;
   return body as SubmitReviewRequest;
 }
 
@@ -65,33 +67,55 @@ function responseFor(due: Date, scheduledDays: number, stability: number, diffic
 export async function submitReview(db: D1Database, input: SubmitReviewRequest, now = new Date()): Promise<SubmitReviewResponse> {
   const existing = await existingSubmission(db, input);
   if (existing) return existing;
-  const character = await db.prepare(`
-    SELECT c.id
-    FROM characters c
-    JOIN character_tracks ct ON ct.character_id = c.id
-    WHERE c.key = ?1 AND ct.track = ?2
-  `).bind(input.characterKey, input.track).first<CharacterRow>();
-  if (!character) throw new ReviewTargetNotFound();
+  const result = input.wordId === undefined
+    ? await db.prepare(`
+        SELECT c.id, c.key
+        FROM characters c
+        JOIN character_tracks ct ON ct.character_id = c.id
+        WHERE c.key = ?1 AND ct.track = ?2
+      `).bind(input.characterKey, input.track).all<CharacterRow>()
+    : await db.prepare(`
+        SELECT c.id, c.key, wm.position
+        FROM words w
+        JOIN word_members wm ON wm.word_id = w.id
+        JOIN characters c ON c.id = wm.character_id
+        JOIN character_tracks ct ON ct.character_id = c.id AND ct.track = w.track
+        JOIN review_states rs ON rs.character_id = c.id AND rs.track = w.track
+        WHERE w.id = ?1 AND w.track = ?2
+        ORDER BY wm.position
+      `).bind(input.wordId, input.track).all<CharacterRow>();
+  const characters = result.results;
+  if (input.wordId === undefined) {
+    if (characters.length !== 1) throw new ReviewTargetNotFound();
+  } else if (characters.length !== 2 || characters[0].key !== input.characterKey || characters.some((character, index) => character.position !== index)) {
+    throw new ReviewTargetNotFound();
+  }
 
   const grade = gradeFromReview(input.correct, input.skipped, input.elapsedMs);
-  const previous = input.mode === "placement" ? initialState(now) : await getState(db, character.id, input.track) ?? initialState(now);
-  const scheduled = schedule(previous, grade, now);
+  const scheduled = await Promise.all(characters.map(async (character) => schedule(
+    input.mode === "placement" ? initialState(now) : await getState(db, character.id, input.track) ?? initialState(now),
+    grade,
+    now,
+  )));
+  const primary = scheduled[0];
   const response = input.mode === "placement"
     ? responseFor(now, 0, 0, 0)
-    : responseFor(scheduled.next.due, scheduled.next.scheduledDays, scheduled.next.stability, scheduled.next.difficulty);
+    : responseFor(primary.next.due, primary.next.scheduledDays, primary.next.stability, primary.next.difficulty);
   const statements = [
-    ...(input.mode === "placement" ? [] : [prepareUpsertState(db, character.id, input.track, scheduled.next)]),
-    prepareAppendLog(db, {
-      ...scheduled.log,
-      characterId: character.id,
-      track: input.track,
-      correct: input.correct,
-      skipped: input.skipped,
-      elapsedMs: input.elapsedMs,
-      mode: input.mode,
-      sessionId: input.sessionId,
-      cardIndex: input.cardIndex,
-    }),
+    ...characters.flatMap((character, index) => [
+      ...(input.mode === "placement" ? [] : [prepareUpsertState(db, character.id, input.track, scheduled[index].next)]),
+      prepareAppendLog(db, {
+        ...scheduled[index].log,
+        characterId: character.id,
+        track: input.track,
+        correct: input.correct,
+        skipped: input.skipped,
+        elapsedMs: input.elapsedMs,
+        mode: input.mode,
+        sessionId: input.sessionId,
+        cardIndex: input.cardIndex,
+      }),
+    ]),
     db.prepare("INSERT INTO review_submissions (session_id, card_index, response_json) VALUES (?1, ?2, ?3)")
       .bind(input.sessionId, input.cardIndex, JSON.stringify(response)),
   ];

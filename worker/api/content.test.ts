@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
-import { emitSeedSql, parseSeed } from "../../scripts/seed";
+import { emitSeedSql, emitWordSeedSql, parseSeed, parseWordSeed } from "../../scripts/seed";
 import type { Track } from "../../src/shared/types";
 import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
 import { listForTracks } from "../db/characters";
@@ -62,6 +62,8 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-kanken-10.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
@@ -83,6 +85,8 @@ function setupSeeds(files: string[]) {
   sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -412,6 +416,26 @@ describe("content API", () => {
       const otherWrong = other.options.filter((_, index) => index !== other.answerIndex).map((option) => option.label).sort();
       return wrong.join() !== otherWrong.join();
     })).toBe(true);
+  });
+
+  it("issues sourced word cards only after all members are known", async () => {
+    const fixture = setupSeeds(KR_THROUGH_5_FILES); databases.push(fixture.sqlite);
+    fixture.sqlite.exec(emitWordSeedSql(parseWordSeed(JSON.parse(readFileSync("data/words/kr-wiktionary.json", "utf8")) as unknown)));
+    const members = fixture.sqlite.prepare("SELECT id FROM characters WHERE key IN ('學', '校') ORDER BY id").all() as Array<{ id: number }>;
+    const others = fixture.sqlite.prepare("SELECT id FROM characters WHERE key NOT IN ('學', '校') ORDER BY id LIMIT 3").all() as Array<{ id: number }>;
+    const insert = fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
+    insert.run(members[0].id);
+    for (const other of others) insert.run(other.id);
+    let session = await startSession(fixture.env.DB, { mode: "review", tracks: ["kr"], limit: 4 }, "one-known");
+    expect(session.cards.every((card) => card.kind !== "word")).toBe(true);
+
+    insert.run(members[1].id);
+    session = await startSession(fixture.env.DB, { mode: "review", tracks: ["kr"], limit: 4 }, "both-known");
+    const word = session.cards.find((card) => card.kind === "word");
+    expect(session.cards.filter((card) => card.kind === "reading")).toHaveLength(4);
+    expect(word).toMatchObject({ kind: "word", wordId: expect.any(Number), glyph: "學校", memberKeys: ["學", "校"], options: expect.any(Array), wordSourceUrl: expect.stringContaining("oldid=4219407") });
+    expect(word?.options).toHaveLength(4);
+    expect(new Set(word?.options.map((option) => option.label)).size).toBe(4);
   });
 
   it("rejects invalid tracks, limits, and malformed bodies as JSON 400s", async () => {

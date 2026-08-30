@@ -1,5 +1,5 @@
 import type { SessionCard, SessionCompareEntry } from "../../shared/api";
-import type { CharacterEntry, ExampleSentence, Track, TrackEntry } from "../../shared/types";
+import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../shared/types";
 import type { SessionQueueItem } from "./buildQueue";
 
 function trackEntry(track: Track, card: Pick<SessionCard, "glyph" | "levelBadge" | "levelOrd">, reading: string, characterId: number): TrackEntry {
@@ -39,6 +39,19 @@ export function apiCardsToQueue(cards: SessionCard[]): SessionQueueItem[] {
   return cards.map((card, index) => {
     const character = characterFor(card, index + 1);
     if (card.kind === "compare") return { kind: "compare", character, track: card.track };
+    if (card.kind === "word") {
+      const word: WordEntry = {
+        id: card.wordId ?? index + 1,
+        track: "kr",
+        glyph: card.glyph,
+        reading: card.options[card.answerIndex]?.label ?? "—",
+        level: card.levelBadge.replace(/^한자어 /u, ""),
+        levelOrd: card.levelOrd,
+        sourceUrl: card.wordSourceUrl ?? "",
+        members: (card.memberKeys ?? [card.characterKey]).map((key, position) => ({ characterId: (index + 1) * 100 + position, key, position })),
+      };
+      return { kind: "word", word, character, track: "kr", options: card.options.map((option) => ({ label: option.label })), answerIndex: card.answerIndex };
+    }
     return { kind: "reading", character, track: card.track, options: card.options.map((option) => ({ label: option.label })), answerIndex: card.answerIndex };
   });
 }

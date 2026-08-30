@@ -1,4 +1,4 @@
-import type { CharacterEntry, ExampleSentence, Track, TrackEntry } from "../../shared/types";
+import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../shared/types";
 import type { OnyomiScript } from "../../shared/settings";
 import { SourceAttribution } from "../source/SourceAttribution";
 import { trackThemes } from "../tracks/trackTheme";
@@ -44,23 +44,26 @@ type Props = {
   correct: boolean;
   promptOverride?: string;
   onyomiScript: OnyomiScript;
+  word?: WordEntry;
 };
 
-export function QuizCard({ character, track, compare, answered, correct, promptOverride, onyomiScript }: Props) {
+export function QuizCard({ character, track, compare, answered, correct, promptOverride, onyomiScript, word }: Props) {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) return null;
   const theme = trackThemes[track];
-  const sentence = character.sentences.find((candidate) => candidate.track === track);
+  const sentence = word ? undefined : character.sentences.find((candidate) => candidate.track === track);
+  const prompt = promptOverride ?? (compare ? "Enter로 계속" : word ? "한자어 독음을 고르세요" : trackLabels[track].prompt);
   return (
     <article className={`quiz-card quiz-card--${track}${answered ? correct ? " quiz-card--correct" : " quiz-card--wrong" : ""}`}>
       <div className="quiz-card__badges">
         <span lang={compare ? undefined : theme.lang}>{compare ? "교차 강화 · 한 글자 세 소리" : theme.badge}</span>
-        <span lang={theme.lang}>{levelLabel(entry)}</span>
-        <strong lang={promptOverride || compare ? undefined : theme.lang}>{promptOverride ?? (compare ? "Enter로 계속" : trackLabels[track].prompt)}</strong>
+        <span lang={theme.lang}>{word ? `한자어 ${word.level}` : levelLabel(entry)}</span>
+        <strong lang={promptOverride || compare ? undefined : theme.lang}>{prompt}</strong>
       </div>
       <div className="quiz-card__body">
-        <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`} lang={theme.lang}>{entry.glyph}</div>
+        <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`} lang={theme.lang}>{word?.glyph ?? entry.glyph}</div>
         {sentence && <SentencePanel revealed={answered || compare} sentence={sentence} />}
+        {word && <div className="quiz-card__sentence" lang="ko"><div>한자어 · <a href={word.sourceUrl}>한국어 위키낱말사전</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div>}
       </div>
       {compare && <CompareCard character={character} onyomiScript={onyomiScript} />}
     </article>

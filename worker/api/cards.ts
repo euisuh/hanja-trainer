@@ -3,6 +3,7 @@ import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
 import { buildQueue, buildUnitTestQueue, readingFor, reviewKey } from "../../src/features/session/buildQueue";
 import { listByUnit, listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
+import { listWordsForTracks } from "../db/words";
 import { issueUnitTestAttempt, requireUnitTestTarget } from "./unitTest";
 
 const labels = {
@@ -52,6 +53,25 @@ function comparison(character: CharacterEntry): SessionCard["compare"] {
 }
 
 function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
+  if (item.kind === "word") {
+    return {
+      kind: "word",
+      characterKey: item.word.members[0].key,
+      wordId: item.word.id,
+      memberKeys: item.word.members.map((member) => member.key),
+      meaningKo: "한자어",
+      track: "kr",
+      glyph: item.word.glyph,
+      levelBadge: `한자어 ${item.word.level}`,
+      levelOrd: item.word.levelOrd,
+      trackBadge: labels.kr.badge,
+      prompt: "한자어 독음을 고르세요",
+      sentence: null,
+      options: item.options,
+      answerIndex: item.answerIndex,
+      wordSourceUrl: item.word.sourceUrl,
+    };
+  }
   const entry = item.character.tracks.find((candidate) => candidate.track === item.track)!;
   const sentence = item.character.sentences.find((candidate) => candidate.track === item.track);
   const base = {
@@ -93,15 +113,16 @@ export async function startSession(db: D1Database, input: StartSessionRequest & 
       }),
     };
   }
-  const [characters, states, candidateRows] = await Promise.all([
+  const [characters, states, candidateRows, words] = await Promise.all([
     listForTracks(db, input.tracks),
     listStatesForTracks(db, input.tracks),
     input.mode === "lesson" ? listFreshForTracks(db, input.tracks, input) : input.mode === "placement" ? listPlacementMembersForTracks(db, input.tracks) : Promise.resolve([]),
+    listWordsForTracks(db, input.tracks),
   ]);
   const stateMap = new Map(states.map((state) => [reviewKey(state.characterId, state.track), state]));
   const candidateKeys = new Set(candidateRows.map((row) => reviewKey(row.character_id, row.track)));
   const random = seededRandom(hashSeed(sessionId));
-  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys: input.mode === "lesson" ? candidateKeys : undefined, placementKeys: input.mode === "placement" ? candidateKeys : undefined, random });
+  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys: input.mode === "lesson" ? candidateKeys : undefined, placementKeys: input.mode === "placement" ? candidateKeys : undefined, random, words });
   return {
     sessionId,
     cards: queue.map(toCard).map((card) => shuffleOptions(card, random)),

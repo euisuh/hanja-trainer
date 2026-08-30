@@ -33,7 +33,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql", "0010_words.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -78,6 +78,55 @@ describe("review and session API", () => {
     expect(due.total).toBe(2);
     expect(due.cards).toHaveLength(1);
     expect(due.cards[0].characterKey).toBe(ids[0].key);
+  });
+
+  it("schedules every compound constituent once for one submitted card", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const inserted = fixture.sqlite.prepare("INSERT INTO words (track, glyph, reading, level, level_ord, source_url) VALUES ('kr', '學校', '학교', '8급', 1, 'https://ko.wiktionary.org/w/index.php?title=학교&oldid=4219407')").run();
+    const wordId = Number(inserted.lastInsertRowid);
+    fixture.sqlite.prepare("INSERT INTO word_members (word_id, character_id, position) SELECT ?, id, ? FROM characters WHERE key = ?")
+      .run(wordId, 0, "學");
+    fixture.sqlite.prepare("INSERT INTO word_members (word_id, character_id, position) SELECT ?, id, ? FROM characters WHERE key = ?")
+      .run(wordId, 1, "校");
+    const input: SubmitReviewRequest = { sessionId: "word", cardIndex: 3, characterKey: "學", wordId, track: "kr", correct: true, skipped: false, elapsedMs: 1_200, mode: "lesson" };
+    expect((await post("/api/reviews", input, fixture.env)).status).toBe(404);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 0 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log").get()).toEqual({ count: 0 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_submissions").get()).toEqual({ count: 0 });
+
+    const members = fixture.sqlite.prepare("SELECT character_id FROM word_members WHERE word_id = ? ORDER BY position").all(wordId) as Array<{ character_id: number }>;
+    const insertState = fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
+    for (const member of members) insertState.run(member.character_id);
+    expect((await post("/api/reviews", input, fixture.env)).status).toBe(200);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 2 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log WHERE session_id = 'word' AND card_index = 3").get()).toEqual({ count: 2 });
+    const statesAfterSubmission = fixture.sqlite.prepare("SELECT character_id, correct_count, total_count FROM review_states ORDER BY character_id").all();
+    expect(statesAfterSubmission).toEqual(members.map(({ character_id }) => ({ character_id, correct_count: 2, total_count: 2 })).sort((a, b) => a.character_id - b.character_id));
+
+    expect((await post("/api/reviews", input, fixture.env)).status).toBe(200);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log WHERE session_id = 'word' AND card_index = 3").get()).toEqual({ count: 2 });
+    expect(fixture.sqlite.prepare("SELECT character_id, correct_count, total_count FROM review_states ORDER BY character_id").all()).toEqual(statesAfterSubmission);
+    expect((await post("/api/reviews", { ...input, sessionId: "forged-word", characterKey: "金" }, fixture.env)).status).toBe(404);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log").get()).toEqual({ count: 2 });
+
+    const stats = await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json() as { answered: number; calendar: Array<{ count: number }> };
+    expect(stats.answered).toBe(1);
+    expect(stats.calendar.reduce((total, day) => total + day.count, 0)).toBe(1);
+  });
+
+  it("keeps submitted attempts distinct from legacy log identities", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const characters = fixture.sqlite.prepare("SELECT id, key FROM characters ORDER BY id LIMIT 2").all() as Array<{ id: number; key: string }>;
+    fixture.sqlite.prepare(`
+      INSERT INTO review_log
+        (character_id, track, rating, answered_at, correct, elapsed_ms, scheduled_days_before, scheduled_days_after, mode, session_id, card_index, skipped)
+      VALUES (?, 'kr', 1, ?, 0, 1, 0, 0, 'lesson', NULL, NULL, 1)
+    `).run(characters[0].id, Date.now());
+    expect((await post("/api/reviews", { sessionId: "log", cardIndex: 1, characterKey: characters[1].key, track: "kr", correct: false, skipped: true, elapsedMs: 1, mode: "lesson" }, fixture.env)).status).toBe(200);
+
+    const stats = await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json() as { answered: number; skipped: number; calendar: Array<{ count: number }> };
+    expect(stats).toMatchObject({ answered: 2, skipped: 2 });
+    expect(stats.calendar.reduce((total, day) => total + day.count, 0)).toBe(2);
   });
 
   it("records skips separately and rejects correct skips", async () => {

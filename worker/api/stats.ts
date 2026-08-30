@@ -5,6 +5,7 @@ import { activityDaySql, streaks, zonedDayKey } from "./sessions";
 
 const CALENDAR_DAYS = 126;
 const DAY_MS = 86_400_000;
+const REVIEW_ATTEMPT_SQL = "CASE WHEN session_id IS NOT NULL AND card_index IS NOT NULL THEN json_array('submission', session_id, card_index) ELSE json_array('log', id) END";
 type ProfileRow = { enabled_tracks: string; timezone: string };
 type ActivityRangeRow = { min_at: number | null; max_at: number | null };
 type DailyCountRow = { day: string; count: number };
@@ -44,7 +45,10 @@ function addDays(key: string, amount: number): string {
 export async function getStats(db: D1Database, now = new Date()): Promise<StatsResponse> {
   const [profileResult, totalsResult, sessionsRangeResult, masteryResult, levelsResult, placementResult, jlptResult] = await db.batch([
     db.prepare("SELECT enabled_tracks, timezone FROM profile WHERE id = 1"),
-    db.prepare("SELECT MIN(answered_at) AS min_at, MAX(answered_at) AS max_at, COUNT(*) AS answered, COALESCE(SUM(skipped), 0) AS skipped FROM review_log"),
+    db.prepare(`SELECT MIN(answered_at) AS min_at, MAX(answered_at) AS max_at,
+      COUNT(DISTINCT ${REVIEW_ATTEMPT_SQL}) AS answered,
+      COUNT(DISTINCT CASE WHEN skipped = 1 THEN ${REVIEW_ATTEMPT_SQL} END) AS skipped
+      FROM review_log`),
     db.prepare("SELECT MIN(ended_at) AS min_at, MAX(ended_at) AS max_at FROM sessions"),
     db.prepare(`
       SELECT ct.track, COUNT(*) AS total,
@@ -85,7 +89,7 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
   const [logsResult, sessionsResult, calendarResult] = await db.batch([
     db.prepare(`SELECT ${days.review} AS day FROM review_log GROUP BY day ORDER BY day`),
     db.prepare(`SELECT ${days.session} AS day FROM sessions GROUP BY day ORDER BY day`),
-    db.prepare(`SELECT ${days.review} AS day, COUNT(*) AS count FROM review_log WHERE answered_at >= ?1 AND answered_at < ?2 GROUP BY day ORDER BY day`).bind(calendarStart, calendarEnd),
+    db.prepare(`SELECT ${days.review} AS day, COUNT(DISTINCT ${REVIEW_ATTEMPT_SQL}) AS count FROM review_log WHERE answered_at >= ?1 AND answered_at < ?2 GROUP BY day ORDER BY day`).bind(calendarStart, calendarEnd),
   ]);
   const counts = new Map((calendarResult.results as unknown as DailyCountRow[]).map((row) => [row.day, row.count]));
   const calendar = Array.from({ length: CALENDAR_DAYS }, (_, index) => {

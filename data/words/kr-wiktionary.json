@@ -1,0 +1,38 @@
+{
+  "words": [
+    { "track": "kr", "glyph": "學校", "reading": "학교", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%95%99%EA%B5%90&oldid=4219407", "members": ["學", "校"] },
+    { "track": "kr", "glyph": "學生", "reading": "학생", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%95%99%EC%83%9D&oldid=4151217", "members": ["學", "生"] },
+    { "track": "kr", "glyph": "父母", "reading": "부모", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%B6%80%EB%AA%A8&oldid=4132586", "members": ["父", "母"] },
+    { "track": "kr", "glyph": "國民", "reading": "국민", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B5%AD%EB%AF%BC&oldid=4263456", "members": ["國", "民"] },
+
+    { "track": "kr", "glyph": "時間", "reading": "시간", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%8B%9C%EA%B0%84&oldid=4286332", "members": ["時", "間"] },
+    { "track": "kr", "glyph": "人間", "reading": "인간", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9D%B8%EA%B0%84&oldid=4251411", "members": ["人", "間"] },
+    { "track": "kr", "glyph": "生活", "reading": "생활", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%83%9D%ED%99%9C&oldid=4180172", "members": ["生", "活"] },
+    { "track": "kr", "glyph": "正答", "reading": "정답", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EB%8B%B5&oldid=4121610", "members": ["正", "答"] },
+
+    { "track": "kr", "glyph": "國語", "reading": "국어", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B5%AD%EC%96%B4&oldid=4242586", "members": ["國", "語"] },
+    { "track": "kr", "glyph": "自然", "reading": "자연", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9E%90%EC%97%B0&oldid=4216064", "members": ["自", "然"] },
+    { "track": "kr", "glyph": "工夫", "reading": "공부", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B3%B5%EB%B6%80&oldid=4269981", "members": ["工", "夫"] },
+    { "track": "kr", "glyph": "主人", "reading": "주인", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A3%BC%EC%9D%B8&oldid=4385478", "members": ["主", "人"] },
+
+    { "track": "kr", "glyph": "問題", "reading": "문제", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%AC%B8%EC%A0%9C&oldid=4382612", "members": ["問", "題"] },
+    { "track": "kr", "glyph": "運動", "reading": "운동", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9A%B4%EB%8F%99&oldid=4188874", "members": ["運", "動"] },
+    { "track": "kr", "glyph": "平和", "reading": "평화", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%8F%89%ED%99%94&oldid=4257721", "members": ["平", "和"] },
+    { "track": "kr", "glyph": "科學", "reading": "과학", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B3%BC%ED%95%99&oldid=4180431", "members": ["科", "學"] },
+
+    { "track": "kr", "glyph": "英語", "reading": "영어", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%98%81%EC%96%B4&oldid=4395517", "members": ["英", "語"] },
+    { "track": "kr", "glyph": "衣服", "reading": "의복", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9D%98%EB%B3%B5&oldid=4186752", "members": ["衣", "服"] },
+    { "track": "kr", "glyph": "道路", "reading": "도로", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%8F%84%EB%A1%9C&oldid=4483939", "members": ["道", "路"] },
+    { "track": "kr", "glyph": "溫度", "reading": "온도", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%98%A8%EB%8F%84&oldid=4137778", "members": ["溫", "度"] },
+
+    { "track": "kr", "glyph": "幸福", "reading": "행복", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%96%89%EB%B3%B5&oldid=4192892", "members": ["幸", "福"] },
+    { "track": "kr", "glyph": "責任", "reading": "책임", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%B1%85%EC%9E%84&oldid=4241290", "members": ["責", "任"] },
+    { "track": "kr", "glyph": "品質", "reading": "품질", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%92%88%EC%A7%88&oldid=4235882", "members": ["品", "質"] },
+    { "track": "kr", "glyph": "商店", "reading": "상점", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%83%81%EC%A0%90&oldid=4382869", "members": ["商", "店"] },
+
+    { "track": "kr", "glyph": "原因", "reading": "원인", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9B%90%EC%9D%B8&oldid=4267550", "members": ["原", "因"] },
+    { "track": "kr", "glyph": "汽車", "reading": "기차", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EC%B0%A8&oldid=4162821", "members": ["汽", "車"] },
+    { "track": "kr", "glyph": "許可", "reading": "허가", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%97%88%EA%B0%80&oldid=4219754", "members": ["許", "可"] },
+    { "track": "kr", "glyph": "停止", "reading": "정지", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EC%A7%80&oldid=4142204", "members": ["停", "止"] }
+  ]
+}

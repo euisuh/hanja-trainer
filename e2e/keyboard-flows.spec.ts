@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
-type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; levelOrd: number; options: Array<{ label: string }>; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages };
+type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages; wordId?: number };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
@@ -31,7 +31,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
     const shouldSkip = card.kind === "reading" && Boolean(options.skipFirst) && !skipped;
-    const testKeyboardAdvance = card.kind === "reading" && !shouldSkip && Boolean(options.keyboardAdvance) && !testedKeyboardAdvance;
+    const testKeyboardAdvance = card.kind !== "compare" && !shouldSkip && Boolean(options.keyboardAdvance) && !testedKeyboardAdvance;
     if (testKeyboardAdvance) {
       const clockStart = Date.now();
       await page.clock.install({ time: clockStart });
@@ -40,7 +40,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     }
     if (options.verifyLanguages) {
       await expectClosestLang(page.locator(".quiz-card__glyph"), languages[card.track]);
-      if (card.kind === "reading") {
+      if (card.kind !== "compare") {
         await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[card.track]);
         if (await page.locator(".quiz-card__sentence p").count() > 0) {
           await expectClosestLang(page.locator(".quiz-card__sentence p"), languages[card.track]);
@@ -57,7 +57,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         }
       }
     }
-    if (card.kind === "reading") {
+    if (card.kind !== "compare") {
       if (options.measureCorrectLatency && !shouldSkip && index + 1 < cards.length) {
         await page.evaluate(() => {
           const progress = document.querySelector('[role="progressbar"]');
@@ -108,9 +108,9 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       await page.keyboard.press("Enter");
     }
     if (index + 1 < cards.length) {
-      const completed = (options.progressOffset ?? 0) + cards.slice(0, index + 1).filter((item) => item.kind === "reading").length;
+      const completed = (options.progressOffset ?? 0) + cards.slice(0, index + 1).filter((item) => item.kind !== "compare").length;
       const next = cards[index + 1];
-      if (options.measureCorrectLatency && card.kind === "reading" && !shouldSkip) {
+      if (options.measureCorrectLatency && card.kind !== "compare" && !shouldSkip) {
         await page.waitForFunction(() => document.documentElement.dataset.correctAdvanceMs !== "");
         correctAdvanceMs += await page.evaluate(() => {
           const elapsed = Number(document.documentElement.dataset.correctAdvanceMs);
@@ -119,9 +119,9 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         });
         correctTransitions += 1;
       }
-      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(completed + Number(next.kind === "reading")));
+      await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(completed + Number(next.kind !== "compare")));
     }
-    if (card.kind === "reading" && !shouldSkip && (options.verifyCelebration || options.verifyReducedMotion)) {
+    if (card.kind !== "compare" && !shouldSkip && (options.verifyCelebration || options.verifyReducedMotion)) {
       const layer = page.locator(".celebration-layer");
       const burst = layer.locator(".particle-burst").last();
       await expect(layer).toHaveAttribute("aria-hidden", "true");
@@ -170,7 +170,7 @@ async function waitForUnitAdvance(page: Page) {
 }
 
 function expectReadingOnly(cards: Card[]) {
-  for (const card of cards.filter((item) => item.kind === "reading")) {
+  for (const card of cards.filter((item) => item.kind !== "compare")) {
     expect(card.options.every((option) => Object.keys(option).join() === "label")).toBe(true);
   }
 }
@@ -263,10 +263,10 @@ test.describe.serial("keyboard-only product flows", () => {
     const sourceCardIndex = lesson.cards.findIndex((card, index) => card.kind === "reading" && card.sentence !== null && lesson.cards.slice(index + 1).some((later) => later.kind === "reading"));
     expect(sourceCardIndex).toBeGreaterThanOrEqual(0);
     for (const card of lesson.cards.slice(0, sourceCardIndex)) {
-      if (card.kind === "reading") await page.keyboard.press(String(card.answerIndex + 1));
+      if (card.kind !== "compare") await page.keyboard.press(String(card.answerIndex + 1));
       await page.keyboard.press("Enter");
     }
-    const sourceProgress = lesson.cards.slice(0, sourceCardIndex + 1).filter((card) => card.kind === "reading").length;
+    const sourceProgress = lesson.cards.slice(0, sourceCardIndex + 1).filter((card) => card.kind !== "compare").length;
     await expectClosestLang(page.locator(".quiz-card__glyph"), languages[lesson.cards[sourceCardIndex].track]);
     await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[lesson.cards[sourceCardIndex].track]);
     const wrongIndex = lesson.cards[sourceCardIndex].answerIndex === 1 ? 2 : 1;
@@ -532,6 +532,53 @@ test.describe.serial("keyboard-only product flows", () => {
     }).toBe(0);
     await page.keyboard.press("R");
     await expect(page.getByText("오늘 복습할 카드가 없습니다")).toBeVisible();
+  });
+
+  test("known Korean constituents unlock a keyboard-graded word card", async ({ page }) => {
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"] } })).ok()).toBe(true);
+    const seeded = ["學", "校", "金", "大"].map((characterKey, cardIndex) => ({
+      sessionId: "e2e-word-eligibility",
+      cardIndex,
+      characterKey,
+      track: "kr",
+      correct: false,
+      skipped: false,
+      elapsedMs: 1,
+      mode: "lesson",
+    }));
+    expect((await page.request.post("/api/reviews/batch", { data: seeded })).ok()).toBe(true);
+
+    const lesson = await sessionStarted(page, () => page.goto("/lesson"));
+    expect(lesson.cards.filter((card) => card.kind === "reading")).toHaveLength(8);
+    const wordIndex = lesson.cards.findIndex((card) => card.kind === "word");
+    expect(wordIndex).toBe(4);
+    for (const card of lesson.cards.slice(0, wordIndex)) {
+      await page.keyboard.press(String(card.answerIndex + 1));
+      await expect(page.locator(".quiz-card__glyph")).not.toHaveText(card.characterKey);
+    }
+
+    const word = lesson.cards[wordIndex];
+    await expect(page.locator(".quiz-card__glyph")).toHaveText("學校");
+    await expect(page.getByText("한자어 독음을 고르세요")).toBeVisible();
+    await expect(page.locator('.quiz-card__sentence a[href*="oldid=4219407"]')).toBeVisible();
+    const submission = page.waitForRequest((request) => request.url().endsWith("/api/reviews/batch") && (request.postDataJSON() as Array<{ wordId?: number }>).some((answer) => answer.wordId === word.wordId));
+    const clockStart = Date.now();
+    await page.clock.install({ time: clockStart });
+    await page.clock.pauseAt(clockStart + 1_000);
+    await page.keyboard.press(String(word.answerIndex + 1));
+    expect((await submission).postDataJSON()).toEqual(expect.arrayContaining([expect.objectContaining({ characterKey: "學", wordId: word.wordId, correct: true })]));
+    const celebration = page.locator(".celebration-layer");
+    await expect(celebration).toHaveAttribute("aria-hidden", "true");
+    await expect(celebration.locator(".particle-burst").last()).toBeAttached();
+    await page.clock.runFor(249);
+    await expect(page.locator(".quiz-card__glyph")).toHaveText("學校");
+    await page.clock.runFor(1);
+    await expect(page.locator(".quiz-card__glyph")).not.toHaveText("學校");
+    await page.clock.resume();
+    await finishSession(page, lesson.cards.slice(wordIndex + 1), /세션 완료/u, { autoAdvance: true, progressOffset: wordIndex + 1 });
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".home-screen")).toBeVisible();
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
   });
 
   test("path detail opens and exits by keyboard", async ({ page }, testInfo) => {

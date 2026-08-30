@@ -45,6 +45,12 @@ A simple seed file is an array of character entries, as in `characters.sample.js
 
 Files that also define curriculum use `{ "characters": [...], "curriculumUnits": [...] }`. Each unit contains `track`, `level`, `ord`, `title`, `subtitle`, and `members: [{ "key", "ord" }]`. Every member key must occur in that file's `characters` array.
 
+Korean compound files use `{ "words": [...] }`. Each row contains `track:
+"kr"`, the exact two-character `glyph`, its Hangul `reading`, the highest
+constituent `level` and `levelOrd`, an immutable Korean Wiktionary `sourceUrl`,
+and the two canonical character keys in `members`. Word rows are seeded after
+character rows.
+
 ## Level ordinals
 
 Ascending values mean harder material.

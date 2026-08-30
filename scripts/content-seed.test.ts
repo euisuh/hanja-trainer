@@ -4,7 +4,7 @@ import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 import { sentenceAttribution } from "../src/shared/sentenceAttribution.ts";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../src/features/placement/adaptive.ts";
-import { emitSeedSql, emitSentenceSeedSql, parseSeed, parseSentenceSeed } from "./seed.ts";
+import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
 import type { CharacterEntry, SeedSentenceEntry, Track } from "../src/shared/types.ts";
 
 const files = {
@@ -187,6 +187,43 @@ test("Korean sentence gap ledger names every uncovered character exactly once", 
     .sort();
 
   assert.deepEqual(documented, expected);
+});
+
+test("Korean compounds are sourced and contain only seeded grade members", async () => {
+  const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
+  const characters = (await Promise.all(krPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
+    .flatMap((document) => document.characters)
+    .map((character) => ({ character, track: character.tracks.find((entry) => entry.track === "kr")! }));
+  const byKey = new Map(characters.map((entry) => [entry.character.key, entry]));
+  const document = parseWordSeed(JSON.parse(await readFile("data/words/kr-wiktionary.json", "utf8")) as unknown);
+  const sources = await readFile("data/SOURCES.md", "utf8");
+
+  assert.equal(document.words.length, 28);
+  assert.deepEqual([...new Set(document.words.map((word) => word.levelOrd))], [1, 2, 3, 4, 5, 6, 7]);
+  for (let levelOrd = 1; levelOrd <= 7; levelOrd += 1) assert.equal(document.words.filter((word) => word.levelOrd === levelOrd).length, 4);
+  for (const word of document.words) {
+    assert.match(word.glyph, /^\p{Script=Han}{2}$/u, word.glyph);
+    assert.match(word.reading, /^\p{Script=Hangul}{2}$/u, word.reading);
+    const members = word.members.map((key) => byKey.get(key));
+    assert.ok(members.every(Boolean), `${word.glyph}: unseeded member`);
+    assert.equal(word.glyph, members.map((member) => member!.track.glyph).join(""), word.glyph);
+    assert.equal(word.levelOrd, Math.max(...members.map((member) => member!.track.levelOrd)), `${word.glyph}: highest grade`);
+    assert.ok(sources.includes(word.sourceUrl), `${word.glyph}: source ledger`);
+  }
+
+  const sqlite = new DatabaseSync(":memory:");
+  try {
+    for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0010_words.sql"]) sqlite.exec(await readFile(`migrations/${migration}`, "utf8"));
+    for (const path of Object.keys(files)) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+    const sql = emitWordSeedSql(document);
+    sqlite.exec(sql);
+    sqlite.exec(sql);
+    const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM words) AS words, (SELECT COUNT(*) FROM word_members) AS members").get();
+    assert.equal(counts?.words, 28);
+    assert.equal(counts?.members, 56);
+  } finally {
+    sqlite.close();
+  }
 });
 
 test("full content seed loads cleanly and is idempotent", async () => {
