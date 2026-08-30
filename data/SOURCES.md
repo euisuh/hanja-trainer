@@ -1,16 +1,27 @@
 # Character data sources
 
-Retrieved 2026-08-28. Seed files contain factual character memberships and
+Retrieved 2026-08-30. Seed files contain factual character memberships and
 dictionary fields only; no source prose or examples are copied.
 
-## Korean: 한국어문회 8급, 7급II, 7급
+## Korean: 한국어문회 8급 through 5급
 
-- Level definitions and cumulative exam structure: [한국어문회](https://www.hanja.re.kr/).
-- Machine-readable membership cross-check: [TypoStudio/matchit-packs](https://github.com/TypoStudio/matchit-packs/tree/acaafc3a08594d220f303f7d4bad94cd2d1e50c8/language/hanja-grade), checked against the association's 50-character 8급 and 50-character additions for 7급II and 7급.
+- Level definitions and membership: [한국어문회 급수배정](https://www.hanja.re.kr/kccpt/exam/levelConfirm.do). Its published `전체배정한자` XLS (retrieved 2026-08-30, SHA-256 `97b8db715ebe1dd6e00e8e58d338a9ba70e7420bf5ec84da38f987d60eb64b17`) gives exact grade deltas of 50/50/50/75/75/100/100 and cumulative reading counts of 50, 100, 150, 225, 300, 400, and 500 from 8급 through 5급.
+- Machine-readable factual membership cross-check: [TypoStudio/matchit-packs](https://github.com/TypoStudio/matchit-packs/tree/acaafc3a08594d220f303f7d4bad94cd2d1e50c8/language/hanja-grade). Every normalized glyph set through level 7 matches the association XLS exactly. The repository publishes no license, so only factual membership is used; none of its explanatory prose is copied.
 - 훈음: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), MIT license.
+- English dictionary definitions and total stroke counts: [Unicode Unihan 17.0.0](https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip) `kDefinition` and `kTotalStrokes`, under the [Unicode data license](https://www.unicode.org/license.txt).
 
 `kr-7geup.json` contains the 100 characters added across 7급II and 7급. Each
 track row retains its exact badge and ordinal (`7급II` = 2, `7급` = 3).
+The four higher files contain the exact additions for `6급II` (75), `6급`
+(75), `5급II` (100), and `5급` (100), with ordinals 4–7. Compatibility
+forms `樂` and `宅` in the cross-check pack are normalized to their canonical
+Unicode forms `樂` and `宅` before HanjaDict and Unihan lookup. Curriculum
+units are deterministically grouped by sourced dictionary definitions into
+8–10-character units; their title terms come directly from sourced 훈음.
+`scripts/generate-kr-through-5geup.mjs` reproduces the four character and
+sentence files from checkouts of the pinned grade pack and HanjaDict plus an
+extracted Unihan directory; it performs no network lookup and emits no sentence
+prose.
 
 ## Japanese: 漢検 10級, 9級
 
@@ -118,9 +129,11 @@ surrounding Hangul without copying the ruby annotation into the sentence.
   official laws are excluded from copyright protection by Copyright Act
   Article 7; `source_kind: corpus`.
 
-These lanes cover 127 of 150 Korean `(character, kr)` pairs: 48 of 50 in 8급
-and 79 of 100 in 7급. Across all tracks, 722 of 761 pairs now have rank-0
-sentences; one existing extra rank makes 723 unique seeded sentence identities.
+These lanes cover 218 of 500 Korean `(character, kr)` pairs: the existing 127
+through 7급 plus 91 higher-grade characters already present in the same exact,
+immutable licensed selections. No sentence text was generated or altered.
+Across all tracks, 813 of 1,111 pairs now have rank-0 sentences; one existing
+extra rank makes 814 unique seeded sentence identities.
 
 ### Remaining Korean gaps
 
@@ -153,6 +166,265 @@ parenthetical Hanja glosses, and incomplete clauses were rejected.
 | 川 | No qualifying licensed sentence found. |
 | 秋 | No qualifying licensed sentence found. |
 | 夏 | No qualifying licensed sentence found. |
+| 讀 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 書 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 線 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 題 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 角 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 短 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 代 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 童 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 理 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 表 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 堂 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 班 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 省 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 庭 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 體 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 雪 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 窓 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 術 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 身 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 藥 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 淸 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 形 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 社 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 運 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 今 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 昨 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 科 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 球 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 功 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 信 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 弱 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 飮 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 共 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 果 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 急 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 圖 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 樂 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 反 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 放 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 消 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 新 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 業 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 勇 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 用 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 才 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 戰 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 幸 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
+| 章 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 訓 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 多 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 度 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 禮 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 孫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 由 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 京 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 古 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 路 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 米 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 朴 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 病 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 席 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 樹 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 習 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 洋 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 英 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 近 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 頭 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 服 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 醫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 苦 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 油 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 衣 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 番 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 使 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 夜 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 晝 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 向 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 野 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 號 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 強 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 美 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 愛 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 交 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 待 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 失 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 感 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 郡 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 根 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 例 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 綠 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 李 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 死 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 速 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 勝 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 永 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 溫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 園 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 遠 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 親 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 通 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 畫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 黃 | 6급: No qualifying sentence occurs in the retained licensed selections. |
+| 具 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 念 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 典 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 筆 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 客 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 課 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 兵 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 仕 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 臣 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 兒 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 友 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 卒 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 流 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 類 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 雲 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 州 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 價 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 局 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 練 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 束 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 雨 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 任 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 切 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 觀 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 朗 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 洗 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 首 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 養 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 充 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 害 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 廣 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 歷 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 宿 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 展 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 情 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 格 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 舊 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 變 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 實 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 參 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 責 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 化 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 良 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 福 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 奉 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 見 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 關 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 到 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 産 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 順 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 着 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 基 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 團 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 德 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 旅 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 陸 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 史 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 商 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 相 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 說 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 性 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 識 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 約 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 偉 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 財 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 材 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 店 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 種 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 週 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 質 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 品 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 必 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 凶 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
+| 寫 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 葉 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 比 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 億 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 牛 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 雄 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 因 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 操 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 唱 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 規 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 壇 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 都 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 量 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 位 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 則 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 島 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 氷 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 漁 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 魚 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 曜 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 再 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 寒 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 健 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 技 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 鼻 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 浴 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 耳 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 卓 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 考 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 橋 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 船 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 屋 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 板 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 擧 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 競 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 末 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 倍 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 原 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 爭 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 停 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 致 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 去 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 冷 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 思 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 曲 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 吉 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 善 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 黑 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 改 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 建 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 固 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 給 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 落 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 領 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 加 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 可 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 輕 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 景 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 救 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 貴 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 汽 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 談 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 料 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 馬 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 亡 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 買 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 賣 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 賞 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 序 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 選 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 案 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 熱 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 願 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 災 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 貯 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 赤 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 止 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 祝 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 打 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 炭 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 敗 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 許 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 湖 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 患 | 5급: No qualifying sentence occurs in the retained licensed selections. |
 
 ## Past-paper sourcing position
 

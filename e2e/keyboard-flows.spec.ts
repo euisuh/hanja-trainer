@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
-type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; levelOrd: number; options: Array<{ label: string }>; track: keyof typeof languages };
+type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading"; levelOrd: number; options: Array<{ label: string }>; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 
@@ -198,9 +198,16 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Escape");
     expect(await page.evaluate(() => (document.activeElement as HTMLElement | null)?.getAttribute("aria-label"))).toBe(opener);
 
-    await expectClosestLang(page.locator(".quiz-card__glyph"), languages[lesson.cards[0].track]);
-    await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[lesson.cards[0].track]);
-    const wrongIndex = lesson.cards[0].answerIndex === 1 ? 2 : 1;
+    const sourceCardIndex = lesson.cards.findIndex((card, index) => card.kind === "reading" && card.sentence !== null && lesson.cards.slice(index + 1).some((later) => later.kind === "reading"));
+    expect(sourceCardIndex).toBeGreaterThanOrEqual(0);
+    for (const card of lesson.cards.slice(0, sourceCardIndex)) {
+      if (card.kind === "reading") await page.keyboard.press(String(card.answerIndex + 1));
+      await page.keyboard.press("Enter");
+    }
+    const sourceProgress = lesson.cards.slice(0, sourceCardIndex + 1).filter((card) => card.kind === "reading").length;
+    await expectClosestLang(page.locator(".quiz-card__glyph"), languages[lesson.cards[sourceCardIndex].track]);
+    await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[lesson.cards[sourceCardIndex].track]);
+    const wrongIndex = lesson.cards[sourceCardIndex].answerIndex === 1 ? 2 : 1;
     const clickedAnswer = page.locator(".answer-option").nth(wrongIndex);
     await clickedAnswer.click();
     await expect(clickedAnswer).toBeFocused();
@@ -210,7 +217,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.locator('[data-tested-hold="true"]')).toBeVisible();
     await expect(page.getByRole("button", { name: /다음 카드/u })).toBeVisible();
     await clickedAnswer.press("Enter");
-    await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", "1");
+    await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(sourceProgress));
     const sourceLink = page.locator(".quiz-card__sentence a").first();
     await sourceLink.evaluate((link) => link.addEventListener("click", (event) => {
       event.preventDefault();
@@ -219,7 +226,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await sourceLink.press("Enter");
     await expect(sourceLink).toHaveAttribute("data-keyboard-activated", "true");
     await sourceLink.press("Space");
-    await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", "1");
+    await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(sourceProgress));
     await clickedAnswer.focus();
     await clickedAnswer.press("Shift+Tab");
     await expect(page.locator(".answer-option").nth(wrongIndex - 1)).toBeFocused();
@@ -227,7 +234,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator('[data-tested-hold="true"]')).toHaveCount(0);
 
-    await finishSession(page, lesson.cards.slice(1), /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Enter", progressOffset: 1, skipFirst: true, verifyLanguages: true });
+    await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true });
     await expect.poll(async () => (await (await page.request.get("/api/stats")).json() as { skipped: number }).skipped).toBeGreaterThan(0);
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
@@ -321,7 +328,8 @@ test.describe.serial("keyboard-only product flows", () => {
     const completed = afterSuccess.units.find((unit) => unit.id === current.id)!;
     expect(completed.nodes.every((node) => node.state === "done")).toBe(true);
     expect(completed.progress.known).toBe(current.progress.known);
-    await expect(page.getByRole("button", { name: /이 유닛 건너뛰기/u })).toHaveCount(0);
+    expect(afterSuccess.units.find((unit) => unit.current)?.id).not.toBe(current.id);
+    await expect(page.getByRole("button", { name: /이 유닛 건너뛰기/u })).toBeVisible();
   });
 
   test("track imbalance quick-start scopes every CTA path and snoozes", async ({ page }) => {

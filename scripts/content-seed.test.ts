@@ -3,12 +3,17 @@ import { readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 import { sentenceAttribution } from "../src/shared/sentenceAttribution.ts";
+import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../src/features/placement/adaptive.ts";
 import { emitSeedSql, emitSentenceSeedSql, parseSeed, parseSentenceSeed } from "./seed.ts";
-import type { SeedSentenceEntry, Track } from "../src/shared/types.ts";
+import type { CharacterEntry, SeedSentenceEntry, Track } from "../src/shared/types.ts";
 
 const files = {
   "data/characters/kr-8geup.json": 50,
   "data/characters/kr-7geup.json": 100,
+  "data/characters/kr-6geup2.json": 75,
+  "data/characters/kr-6geup.json": 75,
+  "data/characters/kr-5geup2.json": 100,
+  "data/characters/kr-5geup.json": 100,
   "data/characters/jp-kanken-10.json": 80,
   "data/characters/jp-kanken-9.json": 160,
   "data/characters/cn-hsk1.json": 246,
@@ -39,9 +44,86 @@ test("curated character files validate and cross-link", async () => {
   assert.ok([...linked.values()].filter((tracks) => tracks.size >= 2).length >= 30);
 });
 
+test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage match the official scale", async () => {
+  const scale = [
+    { level: "8급", levelOrd: 1, added: 50, cumulative: 50 },
+    { level: "7급II", levelOrd: 2, added: 50, cumulative: 100 },
+    { level: "7급", levelOrd: 3, added: 50, cumulative: 150 },
+    { level: "6급II", levelOrd: 4, added: 75, cumulative: 225 },
+    { level: "6급", levelOrd: 5, added: 75, cumulative: 300 },
+    { level: "5급II", levelOrd: 6, added: 100, cumulative: 400 },
+    { level: "5급", levelOrd: 7, added: 100, cumulative: 500 },
+  ];
+  const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
+  const allPaths = Object.keys(files);
+  const documents = await Promise.all(allPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const byPath = new Map(allPaths.map((path, index) => [path, documents[index]]));
+  const characters = krPaths.flatMap((path) => byPath.get(path)!.characters);
+  assert.equal(new Set(characters.map((character) => character.key)).size, 500);
+
+  const completeVariants = new Map<string, Partial<Record<Track, string>>>();
+  for (const character of documents.flatMap((document) => document.characters)) {
+    completeVariants.set(character.key, { ...(completeVariants.get(character.key) ?? {}), ...character.variants });
+  }
+  for (const character of characters) {
+    const expected = completeVariants.get(character.key)!;
+    for (const track of ["jp", "cn"] as const) {
+      if (expected[track]) assert.equal(character.variants[track], expected[track], `${character.key} ${track} variant`);
+    }
+  }
+
+  let cumulative = 0;
+  for (const expected of scale) {
+    const entries = characters.filter((character) => character.tracks.some((track) => track.track === "kr" && track.level === expected.level));
+    assert.equal(entries.length, expected.added, expected.level);
+    assert.ok(entries.every((character) => character.tracks.some((track) => track.track === "kr" && track.levelOrd === expected.levelOrd)), expected.level);
+    cumulative += entries.length;
+    assert.equal(cumulative, expected.cumulative, `${expected.level} cumulative`);
+  }
+
+  for (const path of krPaths.filter((candidate) => !candidate.endsWith("kr-8geup.json") && !candidate.endsWith("kr-7geup.json"))) {
+    const document = parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown);
+    const characterKeys = new Set(document.characters.map((character) => character.key));
+    const members = document.curriculumUnits?.flatMap((unit) => unit.members.map((member) => member.key)) ?? [];
+    assert.equal(members.length, characterKeys.size, `${path} member count`);
+    assert.deepEqual(new Set(members), characterKeys, `${path} curriculum coverage`);
+    assert.equal(new Set(members).size, members.length, `${path} duplicate curriculum member`);
+    const level = document.characters[0].tracks.find((track) => track.track === "kr")!.level;
+    assert.ok(document.curriculumUnits?.every((unit) => unit.level === level), `${path} unit level`);
+  }
+});
+
+test("seeded Korean placement bounds and all-correct estimate reach 5급", async () => {
+  const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
+  let id = 0;
+  const characters: CharacterEntry[] = (await Promise.all(krPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
+    .flatMap((document) => document.characters)
+    .map((character) => {
+      id += 1;
+      return {
+        ...character,
+        id,
+        createdAt: 0,
+        sentences: [],
+        tracks: character.tracks.map((track) => ({ ...track, characterId: id })),
+      };
+    });
+  let state = createPlacementState(characters, ["kr"]);
+  assert.deepEqual({ min: state.estimates.kr.minLevelOrd, max: state.estimates.kr.maxLevelOrd }, { min: 1, max: 7 });
+  while (!isPlacementComplete(state)) {
+    const item = nextPlacementItem(state, characters);
+    assert.ok(item);
+    state = recordPlacementAnswer(state, item, true);
+  }
+  assert.equal(placementResults(state)[0].levelOrd, 7);
+});
+
 test("sourced sentence files resolve to their exact target glyph", async () => {
   const glyphs = new Map<string, string>();
   const trackCounts = new Map<string, Set<Track>>();
+  const legacyKrKeys = new Set((await Promise.all(["data/characters/kr-8geup.json", "data/characters/kr-7geup.json"].map(async (path) => (
+    parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown).characters.map((character) => character.key)
+  )))).flat());
   for (const path of Object.keys(files)) {
     for (const character of parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown).characters) {
       const tracks = trackCounts.get(character.key) ?? new Set<Track>();
@@ -77,15 +159,34 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   }
 
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
-  assert.equal(krCovered.length, 127);
-  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 127);
-  assert.equal(byIdentity.size, 723);
-  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 39);
+  assert.equal(krCovered.length, 218);
+  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 218);
+  assert.equal(byIdentity.size, 814);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 298);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3) {
-      assert.ok([...byIdentity.values()].filter((entry) => entry.characterKey === key).length >= 2, key);
+      const sentences = [...byIdentity.values()].filter((entry) => entry.characterKey === key);
+      assert.ok(sentences.length >= 1, key);
+      if (legacyKrKeys.has(key) || byIdentity.has(`${key}:kr:0`)) assert.ok(sentences.length >= 2, key);
     }
   }
+});
+
+test("Korean sentence gap ledger names every uncovered character exactly once", async () => {
+  const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
+  const characterKeys = (await Promise.all(krPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
+    .flatMap((document) => document.characters.map((character) => character.key));
+  const coveredKeys = new Set((await Promise.all(krPaths.map(async (path) => parseSentenceSeed(JSON.parse(await readFile(path.replace("/characters/", "/sentences/"), "utf8")) as unknown))))
+    .flatMap((document) => document.sentences.map((sentence) => sentence.characterKey)));
+  const expected = characterKeys.filter((key) => !coveredKeys.has(key)).sort();
+  const sources = await readFile("data/SOURCES.md", "utf8");
+  const gapSection = sources.slice(sources.indexOf("### Remaining Korean gaps"), sources.indexOf("## Past-paper sourcing position"));
+  const documented = [...gapSection.matchAll(/^\| ([^|]+) \|/gmu)]
+    .map((match) => match[1].trim())
+    .filter((key) => key !== "Character" && key !== "---")
+    .sort();
+
+  assert.deepEqual(documented, expected);
 });
 
 test("full content seed loads cleanly and is idempotent", async () => {
@@ -103,7 +204,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
     sqlite.exec(sql);
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
-    assert.equal(counts?.sentences, 723);
+    assert.equal(counts?.sentences, 814);
   } finally {
     sqlite.close();
   }

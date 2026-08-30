@@ -1,0 +1,284 @@
+{
+  "sentences": [
+    {
+      "character_key": "作",
+      "track": "kr",
+      "text": "三月에 쌓기를 始作하여 七月에 마친지라",
+      "translation_ko": "三月에 쌓기를 始作하여 七月에 마친지라",
+      "source": "개역간이국한문한글판 #393798",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "風",
+      "track": "kr",
+      "text": "主께서 東風으로 다시스의 배를 깨뜨리시도다",
+      "translation_ko": "主께서 東風으로 다시스의 배를 깨뜨리시도다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "現",
+      "track": "kr",
+      "text": "서울市는現在의區劃에따라八區로構成함",
+      "translation_ko": "서울市는現在의區劃에따라八區로構成함",
+      "source": "군정법령 제106호 #456157",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "等",
+      "track": "kr",
+      "text": "모든國民은均等하게敎育을받을權利가있다",
+      "translation_ko": "모든國民은均等하게敎育을받을權利가있다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "始",
+      "track": "kr",
+      "text": "三月에 쌓기를 始作하여 七月에 마친지라",
+      "translation_ko": "三月에 쌓기를 始作하여 七月에 마친지라",
+      "source": "개역간이국한문한글판 #393798",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "光",
+      "track": "kr",
+      "text": "榮光이 저에게 世世토록 있을지어다 아멘",
+      "translation_ko": "榮光이 저에게 世世토록 있을지어다 아멘",
+      "source": "개역간이국한문한글판 #394055",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "明",
+      "track": "kr",
+      "text": "나를 詰問하는 者들에게 發明할 것이 이것이니",
+      "translation_ko": "나를 詰問하는 者들에게 發明할 것이 이것이니",
+      "source": "개역간이국한문한글판 #394041",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "聞",
+      "track": "kr",
+      "text": "예수의 所聞이 곧 온 갈릴리 四方에 퍼지더라",
+      "translation_ko": "예수의 所聞이 곧 온 갈릴리 四方에 퍼지더라",
+      "source": "개역간이국한문한글판 #393999",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "發",
+      "track": "kr",
+      "text": "나를 詰問하는 者들에게 發明할 것이 이것이니",
+      "translation_ko": "나를 詰問하는 者들에게 發明할 것이 이것이니",
+      "source": "개역간이국한문한글판 #394041",
+      "source_kind": "corpus",
+      "target_index": 13,
+      "rank": 0
+    },
+    {
+      "character_key": "分",
+      "track": "kr",
+      "text": "물도 힌 六分 一씩 되어서 때를 따라 마시라",
+      "translation_ko": "물도 힌 六分 一씩 되어서 때를 따라 마시라",
+      "source": "개역간이국한문한글판 #393904",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "半",
+      "track": "kr",
+      "text": "國務會議의議決은過半數로써行한다",
+      "translation_ko": "國務會議의議決은過半數로써行한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "部",
+      "track": "kr",
+      "text": "告示文의 印刷 樣式은 勞働部長이 提供함.",
+      "translation_ko": "告示文의 印刷 樣式은 勞働部長이 提供함.",
+      "source": "군정법령 제112호 #456159",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "音",
+      "track": "kr",
+      "text": "온 땅의 口音이 하나이요 言語가 하나이었더라",
+      "translation_ko": "온 땅의 口音이 하나이요 言語가 하나이었더라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "第",
+      "track": "kr",
+      "text": "第 八日에는 그 아이의 陽皮를 벨 것이요",
+      "translation_ko": "第 八日에는 그 아이의 陽皮를 벨 것이요",
+      "source": "개역간이국한문한글판 #393105",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "對",
+      "track": "kr",
+      "text": "내가 물어도 너희가 對答지 아니할 것이니라",
+      "translation_ko": "내가 물어도 너희가 對答지 아니할 것이니라",
+      "source": "개역간이국한문한글판 #394008",
+      "source_kind": "corpus",
+      "target_index": 11,
+      "rank": 0
+    },
+    {
+      "character_key": "意",
+      "track": "kr",
+      "text": "一般赦免을命함에는國會의同意를얻어야한다",
+      "translation_ko": "一般赦免을命함에는國會의同意를얻어야한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 13,
+      "rank": 0
+    },
+    {
+      "character_key": "和",
+      "track": "kr",
+      "text": "여호사밧이 이스라엘 王으로 더불어 平和하니라",
+      "translation_ko": "여호사밧이 이스라엘 王으로 더불어 平和하니라",
+      "source": "개역간이국한문한글판 #393354",
+      "source_kind": "corpus",
+      "target_index": 20,
+      "rank": 0
+    },
+    {
+      "character_key": "成",
+      "track": "kr",
+      "text": "서울市는現在의區劃에따라八區로構成함",
+      "translation_ko": "서울市는現在의區劃에따라八區로構成함",
+      "source": "군정법령 제106호 #456157",
+      "source_kind": "corpus",
+      "target_index": 16,
+      "rank": 0
+    },
+    {
+      "character_key": "神",
+      "track": "kr",
+      "text": "나 外에는 爲하는 神들을 네게 있게 말지니라",
+      "translation_ko": "나 外에는 爲하는 神들을 네게 있게 말지니라",
+      "source": "개역간이국한문한글판 #393281",
+      "source_kind": "corpus",
+      "target_index": 10,
+      "rank": 0
+    },
+    {
+      "character_key": "各",
+      "track": "kr",
+      "text": "東西南北 各 地方에서부터 모으셨도다",
+      "translation_ko": "東西南北 各 地方에서부터 모으셨도다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "界",
+      "track": "kr",
+      "text": "그內容과限界는法律로써定한다",
+      "translation_ko": "그內容과限界는法律로써定한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "計",
+      "track": "kr",
+      "text": "國家의收入支出의決算은每年審計院에서檢査한다",
+      "translation_ko": "國家의收入支出의決算은每年審計院에서檢査한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "高",
+      "track": "kr",
+      "text": "最高法院인大法院과下級法院의組織은法律로써定한다",
+      "translation_ko": "最高法院인大法院과下級法院의組織은法律로써定한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "公",
+      "track": "kr",
+      "text": "本 令은 公布와 同時에 有效함.",
+      "translation_ko": "本 令은 公布와 同時에 有效함.",
+      "source": "군정법령 제104호 #455281",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "利",
+      "track": "kr",
+      "text": "모든國民은均等하게敎育을받을權利가있다",
+      "translation_ko": "모든國民은均等하게敎育을받을權利가있다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 15,
+      "rank": 0
+    },
+    {
+      "character_key": "注",
+      "track": "kr",
+      "text": "그 날 後로 사울이 다윗을 注目하였더라",
+      "translation_ko": "그 날 後로 사울이 다윗을 注目하였더라",
+      "source": "개역간이국한문한글판 #393343",
+      "source_kind": "corpus",
+      "target_index": 15,
+      "rank": 0
+    },
+    {
+      "character_key": "集",
+      "track": "kr",
+      "text": "當該日이公休日인때에는그翌日에集會한다",
+      "translation_ko": "當該日이公休日인때에는그翌日에集會한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 15,
+      "rank": 0
+    },
+    {
+      "character_key": "會",
+      "track": "kr",
+      "text": "國務會議의議決은過半數로써行한다",
+      "translation_ko": "國務會議의議決은過半數로써行한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    }
+  ]
+}

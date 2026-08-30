@@ -18,6 +18,15 @@ const CHARACTER_FILES = [
   "data/characters/kr-8geup.json",
 ];
 
+const KR_THROUGH_5_FILES = [
+  "data/characters/kr-8geup.json",
+  "data/characters/kr-7geup.json",
+  "data/characters/kr-6geup2.json",
+  "data/characters/kr-6geup.json",
+  "data/characters/kr-5geup2.json",
+  "data/characters/kr-5geup.json",
+];
+
 function d1Result<T>(results: T[]): D1Result<T> {
   return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: 0, last_row_id: 0, changed_db: false, changes: 0 } };
 }
@@ -427,6 +436,16 @@ describe("content API", () => {
       expect((await listForTracks(reverse.env.DB, [track])).map((entry) => entry.key)).toEqual(expected);
     }
     expect(expectedOrder("kr").slice(0, 50)).toEqual(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown).curriculumUnits!.flatMap((unit) => unit.members.map((member) => member.key)));
+  });
+
+  it("orders all 500 Korean curriculum members from 8급 through 5급", async () => {
+    const fixture = setupSeeds(KR_THROUGH_5_FILES); databases.push(fixture.sqlite);
+    const curriculum = await (await routeApiRequest(new Request("https://test/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
+    const levelWalk = curriculum.units.map((unit) => unit.level).filter((level, index, levels) => index === 0 || level !== levels[index - 1]);
+
+    expect(levelWalk).toEqual(["8급", "7급", "6급II", "6급", "5급II", "5급"]);
+    expect(curriculum.units.flatMap((unit) => unit.nodes)).toHaveLength(500);
+    expect(curriculum.units.every((unit) => unit.nodes.length >= 8 && unit.nodes.length <= 10)).toBe(true);
   });
 
   it("starts fresh lessons at placement levels and requested units", async () => {

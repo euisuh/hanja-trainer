@@ -1,0 +1,274 @@
+{
+  "sentences": [
+    {
+      "character_key": "己",
+      "track": "kr",
+      "text": "가실 때에 저희가 自己의 겉옷을 길에 펴더라",
+      "translation_ko": "가실 때에 저희가 自己의 겉옷을 길에 펴더라",
+      "source": "개역간이국한문한글판 #394008",
+      "source_kind": "corpus",
+      "target_index": 11,
+      "rank": 0
+    },
+    {
+      "character_key": "勞",
+      "track": "kr",
+      "text": "女子와少年의勤勞는特別한保護를받는다",
+      "translation_ko": "女子와少年의勤勞는特別한保護를받는다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 7,
+      "rank": 0
+    },
+    {
+      "character_key": "士",
+      "track": "kr",
+      "text": "이에 軍士들이 거룻줄을 끊어 떼어 버리니라",
+      "translation_ko": "이에 軍士들이 거룻줄을 끊어 떼어 버리니라",
+      "source": "개역간이국한문한글판 #394026",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "法",
+      "track": "kr",
+      "text": "그內容과限界는法律로써定한다",
+      "translation_ko": "그內容과限界는法律로써定한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 7,
+      "rank": 0
+    },
+    {
+      "character_key": "當",
+      "track": "kr",
+      "text": "當該日이公休日인때에는그翌日에集會한다",
+      "translation_ko": "當該日이公休日인때에는그翌日에集會한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "歲",
+      "track": "kr",
+      "text": "그가 九百 三十歲를 享壽하고 죽었더라",
+      "translation_ko": "그가 九百 三十歲를 享壽하고 죽었더라",
+      "source": "개역간이국한문한글판 #393095",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "元",
+      "track": "kr",
+      "text": "다니엘은 고레스 王 元年까지 있으니라",
+      "translation_ko": "다니엘은 고레스 王 元年까지 있으니라",
+      "source": "개역간이국한문한글판 #393911",
+      "source_kind": "corpus",
+      "target_index": 11,
+      "rank": 0
+    },
+    {
+      "character_key": "傳",
+      "track": "kr",
+      "text": "다윗의 아들 예루살렘 王 傳道者의 말씀이라",
+      "translation_ko": "다윗의 아들 예루살렘 王 傳道者의 말씀이라",
+      "source": "개역간이국한문한글판 #393845",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "宅",
+      "track": "kr",
+      "text": "朝鮮 內의 住宅 狀態를 調査, 硏究함.",
+      "translation_ko": "朝鮮 內의 住宅 狀態를 調査, 硏究함.",
+      "source": "군정법령 제123호 #455297",
+      "source_kind": "corpus",
+      "target_index": 7,
+      "rank": 0
+    },
+    {
+      "character_key": "仙",
+      "track": "kr",
+      "text": "나는 사론의 水仙花요 골짜기의 百合花로구나",
+      "translation_ko": "나는 사론의 水仙花요 골짜기의 百合花로구나",
+      "source": "개역간이국한문한글판 #393850",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "知",
+      "track": "kr",
+      "text": "先知者 하나냐가 그 해 七月에 죽었더라",
+      "translation_ko": "先知者 하나냐가 그 해 七月에 죽었더라",
+      "source": "개역간이국한문한글판 #393895",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "結",
+      "track": "kr",
+      "text": "春滿한 大界에 民族的 精華를 結紐할지로다",
+      "translation_ko": "春滿한 大界에 民族的 精華를 結紐할지로다",
+      "source": "3·1독립선언서 #430581",
+      "source_kind": "corpus",
+      "target_index": 16,
+      "rank": 0
+    },
+    {
+      "character_key": "告",
+      "track": "kr",
+      "text": "前項의公告期間은三十日以上으로한다",
+      "translation_ko": "前項의公告期間은三十日以上으로한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "獨",
+      "track": "kr",
+      "text": "法官은憲法과法律에依하여獨立하여審判한다",
+      "translation_ko": "法官은憲法과法律에依하여獨立하여審判한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 12,
+      "rank": 0
+    },
+    {
+      "character_key": "鮮",
+      "track": "kr",
+      "text": "朝鮮 內의 住宅 狀態를 調査, 硏究함.",
+      "translation_ko": "朝鮮 內의 住宅 狀態를 調査, 硏究함.",
+      "source": "군정법령 제123호 #455297",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "節",
+      "track": "kr",
+      "text": "유대人의 名節인 草幕節이 가까운지라",
+      "translation_ko": "유대人의 名節인 草幕節이 가까운지라",
+      "source": "개역간이국한문한글판 #394019",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "敬",
+      "track": "kr",
+      "text": "하지 말라, 네 父母를 恭敬하라 하였느니라",
+      "translation_ko": "하지 말라, 네 父母를 恭敬하라 하였느니라",
+      "source": "개역간이국한문한글판 #394008",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    },
+    {
+      "character_key": "惡",
+      "track": "kr",
+      "text": "네가 惡人의 밟던 옛적 길을 지키려느냐",
+      "translation_ko": "네가 惡人의 밟던 옛적 길을 지키려느냐",
+      "source": "개역간이국한문한글판 #393817",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "過",
+      "track": "kr",
+      "text": "國務會議의議決은過半數로써行한다",
+      "translation_ko": "國務會議의議決은過半數로써行한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 8,
+      "rank": 0
+    },
+    {
+      "character_key": "調",
+      "track": "kr",
+      "text": "朝鮮 內의 住宅 狀態를 調査, 硏究함.",
+      "translation_ko": "朝鮮 內의 住宅 狀態를 調査, 硏究함.",
+      "source": "군정법령 제123호 #455297",
+      "source_kind": "corpus",
+      "target_index": 13,
+      "rank": 0
+    },
+    {
+      "character_key": "決",
+      "track": "kr",
+      "text": "國務會議의議決은過半數로써行한다",
+      "translation_ko": "國務會議의議決은過半數로써行한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "能",
+      "track": "kr",
+      "text": "누가 能히 鐵 곧 北方의 鐵과 놋을 꺾으리요",
+      "translation_ko": "누가 能히 鐵 곧 北方의 鐵과 놋을 꺾으리요",
+      "source": "개역간이국한문한글판 #393895",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "望",
+      "track": "kr",
+      "text": "月朔과 月望과 우리의 節日에 나팔을 불지어다",
+      "translation_ko": "月朔과 月望과 우리의 節日에 나팔을 불지어다",
+      "source": "개역간이국한문한글판 #393836",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "要",
+      "track": "kr",
+      "text": "大韓民國의國民되는要件은法律로써定한다",
+      "translation_ko": "大韓民國의國民되는要件은法律로써定한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "以",
+      "track": "kr",
+      "text": "前項의公告期間은三十日以上으로한다",
+      "translation_ko": "前項의公告期間은三十日以上으로한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 11,
+      "rank": 0
+    },
+    {
+      "character_key": "的",
+      "track": "kr",
+      "text": "적어도初等敎育은義務的이며無償으로한다",
+      "translation_ko": "적어도初等敎育은義務的이며無償으로한다",
+      "source": "대한민국헌법 #418801",
+      "source_kind": "corpus",
+      "target_index": 10,
+      "rank": 0
+    },
+    {
+      "character_key": "效",
+      "track": "kr",
+      "text": "本 令은 公布와 同時에 有效함.",
+      "translation_ko": "本 令은 公布와 同時에 有效함.",
+      "source": "군정법령 제104호 #455281",
+      "source_kind": "corpus",
+      "target_index": 14,
+      "rank": 0
+    }
+  ]
+}

@@ -1,0 +1,1779 @@
+{
+  "characters": [
+    {
+      "key": "言",
+      "meaningEn": "words, speech; speak, say; Kangxi radical 149",
+      "meaningKo": "말씀",
+      "variants": {
+        "jp": "言",
+        "kr": "言"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "言",
+          "reading": "말씀 언, 화기애애할 은",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "章",
+      "meaningEn": "composition; chapter, section",
+      "meaningKo": "글",
+      "variants": {
+        "kr": "章"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "章",
+          "reading": "글 장",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "訓",
+      "meaningEn": "teach, instruct; exegesis",
+      "meaningKo": "가르칠",
+      "variants": {
+        "kr": "訓"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "訓",
+          "reading": "가르칠 훈, 길 순",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "多",
+      "meaningEn": "much, many; more than, over",
+      "meaningKo": "많을",
+      "variants": {
+        "jp": "多",
+        "cn": "多",
+        "kr": "多"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "多",
+          "reading": "많을 다",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "度",
+      "meaningEn": "degree, system; manner; to consider",
+      "meaningKo": "법도",
+      "variants": {
+        "kr": "度"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "度",
+          "reading": "법도 도, 헤아릴 탁, 살 택",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "禮",
+      "meaningEn": "social custom; manners; courtesy; rites",
+      "meaningKo": "예도",
+      "variants": {
+        "kr": "禮"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "禮",
+          "reading": "예도 례(예)",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "孫",
+      "meaningEn": "grandchild, descendent; surname",
+      "meaningKo": "손자",
+      "variants": {
+        "kr": "孫"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "孫",
+          "reading": "손자 손",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "由",
+      "meaningEn": "cause, reason; from",
+      "meaningKo": "말미암을",
+      "variants": {
+        "kr": "由"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "由",
+          "reading": "말미암을 유, 여자의 웃는 모양 요",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "族",
+      "meaningEn": "a family clan, ethnic group, tribe",
+      "meaningKo": "겨레",
+      "variants": {
+        "kr": "族"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "族",
+          "reading": "겨레 족, 풍류 가락 주",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "京",
+      "meaningEn": "capital city",
+      "meaningKo": "서울",
+      "variants": {
+        "jp": "京",
+        "kr": "京"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "京",
+          "reading": "서울 경, 언덕 원",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "古",
+      "meaningEn": "old, classic, ancient",
+      "meaningKo": "옛",
+      "variants": {
+        "jp": "古",
+        "kr": "古"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "古",
+          "reading": "옛 고",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "區",
+      "meaningEn": "area, district, region, ward; surname",
+      "meaningKo": "구분할",
+      "variants": {
+        "kr": "區"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "區",
+          "reading": "구분할 구/지경 구, 열여섯 되들이 우",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "級",
+      "meaningEn": "level, rank, class; grade",
+      "meaningKo": "등급",
+      "variants": {
+        "kr": "級"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "級",
+          "reading": "등급 급",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "式",
+      "meaningEn": "style, system, formula, rule",
+      "meaningKo": "법",
+      "variants": {
+        "kr": "式"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "式",
+          "reading": "법 식",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "開",
+      "meaningEn": "open; initiate, begin, start",
+      "meaningKo": "열",
+      "variants": {
+        "kr": "開"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "開",
+          "reading": "열 개",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "路",
+      "meaningEn": "road, path, street; journey",
+      "meaningKo": "길",
+      "variants": {
+        "cn": "路",
+        "kr": "路"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "路",
+          "reading": "길 로(노), 울짱 락(낙)",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "米",
+      "meaningEn": "hulled or husked uncooked rice",
+      "meaningKo": "쌀",
+      "variants": {
+        "jp": "米",
+        "cn": "米",
+        "kr": "米"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "米",
+          "reading": "쌀 미",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "朴",
+      "meaningEn": "simple, unadorned; sincere; surname; a tree",
+      "meaningKo": "나무 껍질",
+      "variants": {
+        "kr": "朴"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "朴",
+          "reading": "나무 껍질 박, 칠 복, 성씨 부",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "病",
+      "meaningEn": "illness, sickness, disease",
+      "meaningKo": "병",
+      "variants": {
+        "cn": "病",
+        "kr": "病"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "病",
+          "reading": "병 병",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "席",
+      "meaningEn": "seat; mat; take seat; banquet",
+      "meaningKo": "자리",
+      "variants": {
+        "kr": "席"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "席",
+          "reading": "자리 석",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "樹",
+      "meaningEn": "tree; plant; set up, establish",
+      "meaningKo": "나무",
+      "variants": {
+        "kr": "樹"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "樹",
+          "reading": "나무 수/심을 수",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "習",
+      "meaningEn": "practice; flapping wings",
+      "meaningKo": "익힐",
+      "variants": {
+        "cn": "习",
+        "kr": "習"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "習",
+          "reading": "익힐 습",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "陽",
+      "meaningEn": "the active, male principle in Chinese philosophy (yang); light; sun",
+      "meaningKo": "볕",
+      "variants": {
+        "kr": "陽"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "陽",
+          "reading": "볕 양",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "洋",
+      "meaningEn": "ocean, sea; foreign; western",
+      "meaningKo": "큰 바다",
+      "variants": {
+        "kr": "洋"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "洋",
+          "reading": "큰 바다 양, 땅 이름 상",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "英",
+      "meaningEn": "petal, flower, leaf; brave, a hero; England, English",
+      "meaningKo": "꽃부리",
+      "variants": {
+        "kr": "英"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "英",
+          "reading": "꽃부리 영, 못자리 모 앙",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "近",
+      "meaningEn": "near, close; approach; intimate",
+      "meaningKo": "가까울",
+      "variants": {
+        "jp": "近",
+        "cn": "近",
+        "kr": "近"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "近",
+          "reading": "가까울 근, 어조사 기",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "頭",
+      "meaningEn": "head; top; chief, first; boss",
+      "meaningKo": "머리",
+      "variants": {
+        "jp": "頭",
+        "kr": "頭"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "頭",
+          "reading": "머리 두",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "目",
+      "meaningEn": "eye; look, see; division, topic; Kangxi radical 109",
+      "meaningKo": "눈",
+      "variants": {
+        "jp": "目",
+        "kr": "目"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "目",
+          "reading": "눈 목",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "服",
+      "meaningEn": "clothes; wear, dress",
+      "meaningKo": "옷",
+      "variants": {
+        "cn": "服",
+        "kr": "服"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "服",
+          "reading": "옷 복",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "醫",
+      "meaningEn": "medicine; to cure, heal; physician",
+      "meaningKo": "의원",
+      "variants": {
+        "cn": "医",
+        "kr": "醫"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "醫",
+          "reading": "의원 의/단술 의",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "苦",
+      "meaningEn": "bitter; hardship, suffering",
+      "meaningKo": "쓸",
+      "variants": {
+        "kr": "苦"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "苦",
+          "reading": "쓸 고, 땅 이름 호",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "石",
+      "meaningEn": "stone, rock, mineral; Kangxi radical 112",
+      "meaningKo": "돌",
+      "variants": {
+        "jp": "石",
+        "kr": "石"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "石",
+          "reading": "돌 석/섬 석",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "油",
+      "meaningEn": "oil, fat, grease, lard; paints",
+      "meaningKo": "기름",
+      "variants": {
+        "kr": "油"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "油",
+          "reading": "기름 유",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "衣",
+      "meaningEn": "clothes, clothing; cover, skin; Kangxi radical 145",
+      "meaningKo": "옷",
+      "variants": {
+        "cn": "衣",
+        "kr": "衣"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "衣",
+          "reading": "옷 의",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "番",
+      "meaningEn": "to take turns; a turn, a time; to repeat",
+      "meaningKo": "차례",
+      "variants": {
+        "jp": "番",
+        "kr": "番"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "番",
+          "reading": "차례 번, 날랠 파, 땅 이름 반",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "使",
+      "meaningEn": "cause, send on a mission, order; envoy, messenger, ambassador",
+      "meaningKo": "하여금",
+      "variants": {
+        "kr": "使"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "使",
+          "reading": "하여금 사/부릴 사, 보낼 시",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "夜",
+      "meaningEn": "night, dark; in night; by night",
+      "meaningKo": "밤",
+      "variants": {
+        "jp": "夜",
+        "kr": "夜"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "夜",
+          "reading": "밤 야, 고을 이름 액",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "朝",
+      "meaningEn": "dynasty; morning",
+      "meaningKo": "아침",
+      "variants": {
+        "jp": "朝",
+        "kr": "朝"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "朝",
+          "reading": "아침 조, 고을 이름 주",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "晝",
+      "meaningEn": "daytime, daylight",
+      "meaningKo": "낮",
+      "variants": {
+        "jp": "昼",
+        "kr": "晝"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "晝",
+          "reading": "낮 주",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "向",
+      "meaningEn": "toward, direction, trend",
+      "meaningKo": "향할",
+      "variants": {
+        "kr": "向"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "向",
+          "reading": "향할 향, 성씨 상",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "野",
+      "meaningEn": "open country, field; wilderness",
+      "meaningKo": "들",
+      "variants": {
+        "jp": "野",
+        "kr": "野"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "野",
+          "reading": "들 야",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "銀",
+      "meaningEn": "silver (element 47, Ag); cash, money, wealth",
+      "meaningKo": "은",
+      "variants": {
+        "kr": "銀"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "銀",
+          "reading": "은 은",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "合",
+      "meaningEn": "combine, unite, join; gather",
+      "meaningKo": "합할",
+      "variants": {
+        "jp": "合",
+        "kr": "合"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "合",
+          "reading": "합할 합, 홉 갑, 홉 홉",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "號",
+      "meaningEn": "mark, sign; symbol; number",
+      "meaningKo": "이름",
+      "variants": {
+        "cn": "号",
+        "kr": "號"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "號",
+          "reading": "이름 호/부르짖을 호",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "強",
+      "meaningEn": "strong, powerful, energetic",
+      "meaningKo": "강할",
+      "variants": {
+        "jp": "強",
+        "kr": "強"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "強",
+          "reading": "강할 강",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "美",
+      "meaningEn": "beautiful, pretty; pleasing",
+      "meaningKo": "아름다울",
+      "variants": {
+        "kr": "美"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "美",
+          "reading": "아름다울 미",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "愛",
+      "meaningEn": "love, be fond of, like",
+      "meaningKo": "사랑",
+      "variants": {
+        "cn": "爱",
+        "kr": "愛"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "愛",
+          "reading": "사랑 애",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "交",
+      "meaningEn": "mix; intersect; exchange, communicate; deliver",
+      "meaningKo": "사귈",
+      "variants": {
+        "jp": "交",
+        "cn": "交",
+        "kr": "交"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "交",
+          "reading": "사귈 교",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "待",
+      "meaningEn": "treat, entertain, receive; wait",
+      "meaningKo": "기다릴",
+      "variants": {
+        "kr": "待"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "待",
+          "reading": "기다릴 대",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "失",
+      "meaningEn": "lose; make mistake, neglect",
+      "meaningKo": "잃을",
+      "variants": {
+        "kr": "失"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "失",
+          "reading": "잃을 실, 놓을 일",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "行",
+      "meaningEn": "go; walk; move, travel; circulate; Kangxi radical 144",
+      "meaningKo": "다닐",
+      "variants": {
+        "jp": "行",
+        "kr": "行"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "行",
+          "reading": "다닐 행, 항렬 항",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "感",
+      "meaningEn": "feel, perceive, emotion",
+      "meaningKo": "느낄",
+      "variants": {
+        "kr": "感"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "感",
+          "reading": "느낄 감/한할 감",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "郡",
+      "meaningEn": "administrative division",
+      "meaningKo": "고을",
+      "variants": {
+        "kr": "郡"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "郡",
+          "reading": "고을 군",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "根",
+      "meaningEn": "root, base(d on); foundation",
+      "meaningKo": "뿌리",
+      "variants": {
+        "kr": "根"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "根",
+          "reading": "뿌리 근",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "例",
+      "meaningEn": "precedent, example; regulation",
+      "meaningKo": "법식",
+      "variants": {
+        "kr": "例"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "例",
+          "reading": "법식 례(예)",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "綠",
+      "meaningEn": "green; chlorine",
+      "meaningKo": "푸를",
+      "variants": {
+        "kr": "綠"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "綠",
+          "reading": "푸를 록(녹)",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "李",
+      "meaningEn": "plum; judge; surname",
+      "meaningKo": "오얏",
+      "variants": {
+        "kr": "李"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "李",
+          "reading": "오얏 리(이)",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "別",
+      "meaningEn": "separate, other; do not",
+      "meaningKo": "나눌",
+      "variants": {
+        "kr": "別"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "別",
+          "reading": "나눌 별/다를 별",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "本",
+      "meaningEn": "root, origin, source; basis",
+      "meaningKo": "근본",
+      "variants": {
+        "jp": "本",
+        "cn": "本",
+        "kr": "本"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "本",
+          "reading": "근본 본, 달릴 분",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "死",
+      "meaningEn": "die; dead; death",
+      "meaningKo": "죽을",
+      "variants": {
+        "kr": "死"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "死",
+          "reading": "죽을 사",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "速",
+      "meaningEn": "quick, prompt, speedy",
+      "meaningKo": "빠를",
+      "variants": {
+        "kr": "速"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "速",
+          "reading": "빠를 속",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "勝",
+      "meaningEn": "victory; excel, be better than",
+      "meaningKo": "이길",
+      "variants": {
+        "kr": "勝"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "勝",
+          "reading": "이길 승",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "永",
+      "meaningEn": "long, perpetual, eternal, forever",
+      "meaningKo": "길",
+      "variants": {
+        "kr": "永"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "永",
+          "reading": "길 영/읊을 영",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "溫",
+      "meaningEn": "lukewarm, warm; tepid, mild",
+      "meaningKo": "따뜻할",
+      "variants": {
+        "kr": "溫"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "溫",
+          "reading": "따뜻할 온/쌓을 온",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "園",
+      "meaningEn": "garden; park, orchard",
+      "meaningKo": "동산",
+      "variants": {
+        "jp": "園",
+        "kr": "園"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "園",
+          "reading": "동산 원",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "遠",
+      "meaningEn": "distant, remote, far; profound",
+      "meaningKo": "멀",
+      "variants": {
+        "jp": "遠",
+        "kr": "遠"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "遠",
+          "reading": "멀 원",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "者",
+      "meaningEn": "that which; he who; those who",
+      "meaningKo": "놈",
+      "variants": {
+        "kr": "者"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "者",
+          "reading": "놈 자",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "在",
+      "meaningEn": "be at, in, on; consist in, rest",
+      "meaningKo": "있을",
+      "variants": {
+        "cn": "在",
+        "kr": "在"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "在",
+          "reading": "있을 재",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "定",
+      "meaningEn": "decide, settle, fix",
+      "meaningKo": "정할",
+      "variants": {
+        "kr": "定"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "定",
+          "reading": "정할 정/이마 정",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "親",
+      "meaningEn": "relatives, parents; intimate",
+      "meaningKo": "친할",
+      "variants": {
+        "jp": "親",
+        "kr": "親"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "親",
+          "reading": "친할 친",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "太",
+      "meaningEn": "very, too, much; big; extreme",
+      "meaningKo": "클",
+      "variants": {
+        "jp": "太",
+        "cn": "太",
+        "kr": "太"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "太",
+          "reading": "클 태",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "通",
+      "meaningEn": "pass through; common; communicate",
+      "meaningKo": "통할",
+      "variants": {
+        "jp": "通",
+        "kr": "通"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "通",
+          "reading": "통할 통",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "特",
+      "meaningEn": "special, unique, distinguished",
+      "meaningKo": "특별할",
+      "variants": {
+        "kr": "特"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "特",
+          "reading": "특별할 특/수컷 특",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "畫",
+      "meaningEn": "delineate, painting, picture, drawing; draw",
+      "meaningKo": "그림",
+      "variants": {
+        "jp": "画",
+        "cn": "画",
+        "kr": "畫"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "畫",
+          "reading": "그림 화, 그을 획",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    },
+    {
+      "key": "黃",
+      "meaningEn": "yellow; surname; Kangxi radical 201",
+      "meaningKo": "누를",
+      "variants": {
+        "jp": "黄",
+        "kr": "黃"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "黃",
+          "reading": "누를 황",
+          "level": "6급",
+          "levelOrd": 5
+        }
+      ]
+    }
+  ],
+  "curriculumUnits": [
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 1,
+      "title": "말씀·글 1",
+      "subtitle": "6급 9자",
+      "members": [
+        {
+          "key": "言",
+          "ord": 1
+        },
+        {
+          "key": "章",
+          "ord": 2
+        },
+        {
+          "key": "訓",
+          "ord": 3
+        },
+        {
+          "key": "多",
+          "ord": 4
+        },
+        {
+          "key": "度",
+          "ord": 5
+        },
+        {
+          "key": "禮",
+          "ord": 6
+        },
+        {
+          "key": "孫",
+          "ord": 7
+        },
+        {
+          "key": "由",
+          "ord": 8
+        },
+        {
+          "key": "族",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 2,
+      "title": "서울·옛 2",
+      "subtitle": "6급 9자",
+      "members": [
+        {
+          "key": "京",
+          "ord": 1
+        },
+        {
+          "key": "古",
+          "ord": 2
+        },
+        {
+          "key": "區",
+          "ord": 3
+        },
+        {
+          "key": "級",
+          "ord": 4
+        },
+        {
+          "key": "式",
+          "ord": 5
+        },
+        {
+          "key": "開",
+          "ord": 6
+        },
+        {
+          "key": "路",
+          "ord": 7
+        },
+        {
+          "key": "米",
+          "ord": 8
+        },
+        {
+          "key": "朴",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 3,
+      "title": "병·자리 3",
+      "subtitle": "6급 9자",
+      "members": [
+        {
+          "key": "病",
+          "ord": 1
+        },
+        {
+          "key": "席",
+          "ord": 2
+        },
+        {
+          "key": "樹",
+          "ord": 3
+        },
+        {
+          "key": "習",
+          "ord": 4
+        },
+        {
+          "key": "陽",
+          "ord": 5
+        },
+        {
+          "key": "洋",
+          "ord": 6
+        },
+        {
+          "key": "英",
+          "ord": 7
+        },
+        {
+          "key": "近",
+          "ord": 8
+        },
+        {
+          "key": "頭",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 4,
+      "title": "눈·옷 4",
+      "subtitle": "6급 8자",
+      "members": [
+        {
+          "key": "目",
+          "ord": 1
+        },
+        {
+          "key": "服",
+          "ord": 2
+        },
+        {
+          "key": "醫",
+          "ord": 3
+        },
+        {
+          "key": "苦",
+          "ord": 4
+        },
+        {
+          "key": "石",
+          "ord": 5
+        },
+        {
+          "key": "油",
+          "ord": 6
+        },
+        {
+          "key": "衣",
+          "ord": 7
+        },
+        {
+          "key": "番",
+          "ord": 8
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 5,
+      "title": "하여금·밤 5",
+      "subtitle": "6급 8자",
+      "members": [
+        {
+          "key": "使",
+          "ord": 1
+        },
+        {
+          "key": "夜",
+          "ord": 2
+        },
+        {
+          "key": "朝",
+          "ord": 3
+        },
+        {
+          "key": "晝",
+          "ord": 4
+        },
+        {
+          "key": "向",
+          "ord": 5
+        },
+        {
+          "key": "野",
+          "ord": 6
+        },
+        {
+          "key": "銀",
+          "ord": 7
+        },
+        {
+          "key": "合",
+          "ord": 8
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 6,
+      "title": "이름·강할 6",
+      "subtitle": "6급 8자",
+      "members": [
+        {
+          "key": "號",
+          "ord": 1
+        },
+        {
+          "key": "強",
+          "ord": 2
+        },
+        {
+          "key": "美",
+          "ord": 3
+        },
+        {
+          "key": "愛",
+          "ord": 4
+        },
+        {
+          "key": "交",
+          "ord": 5
+        },
+        {
+          "key": "待",
+          "ord": 6
+        },
+        {
+          "key": "失",
+          "ord": 7
+        },
+        {
+          "key": "行",
+          "ord": 8
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 7,
+      "title": "느낄·고을 7",
+      "subtitle": "6급 8자",
+      "members": [
+        {
+          "key": "感",
+          "ord": 1
+        },
+        {
+          "key": "郡",
+          "ord": 2
+        },
+        {
+          "key": "根",
+          "ord": 3
+        },
+        {
+          "key": "例",
+          "ord": 4
+        },
+        {
+          "key": "綠",
+          "ord": 5
+        },
+        {
+          "key": "李",
+          "ord": 6
+        },
+        {
+          "key": "別",
+          "ord": 7
+        },
+        {
+          "key": "本",
+          "ord": 8
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 8,
+      "title": "죽을·빠를 8",
+      "subtitle": "6급 8자",
+      "members": [
+        {
+          "key": "死",
+          "ord": 1
+        },
+        {
+          "key": "速",
+          "ord": 2
+        },
+        {
+          "key": "勝",
+          "ord": 3
+        },
+        {
+          "key": "永",
+          "ord": 4
+        },
+        {
+          "key": "溫",
+          "ord": 5
+        },
+        {
+          "key": "園",
+          "ord": 6
+        },
+        {
+          "key": "遠",
+          "ord": 7
+        },
+        {
+          "key": "者",
+          "ord": 8
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "6급",
+      "ord": 9,
+      "title": "있을·정할 9",
+      "subtitle": "6급 8자",
+      "members": [
+        {
+          "key": "在",
+          "ord": 1
+        },
+        {
+          "key": "定",
+          "ord": 2
+        },
+        {
+          "key": "親",
+          "ord": 3
+        },
+        {
+          "key": "太",
+          "ord": 4
+        },
+        {
+          "key": "通",
+          "ord": 5
+        },
+        {
+          "key": "特",
+          "ord": 6
+        },
+        {
+          "key": "畫",
+          "ord": 7
+        },
+        {
+          "key": "黃",
+          "ord": 8
+        }
+      ]
+    }
+  ]
+}
