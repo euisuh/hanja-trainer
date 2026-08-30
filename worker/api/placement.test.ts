@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
-import type { CurriculumResponse, PlacementScoreResponse, StatsResponse } from "../../src/shared/api";
+import type { CurriculumResponse, PlacementAnswer, PlacementScoreResponse, StatsResponse } from "../../src/shared/api";
 import { getProfile, zonedDayKey } from "./sessions";
 import { getStats } from "./stats";
 import { routeApiRequest } from "./router";
@@ -87,7 +87,7 @@ describe("profile, placement, and stats API", () => {
       { characterKey: "大", track: "kr", correct: false, skipped: false, levelOrd: 2 },
     ] }), fixture.env);
     const placement = await response.json() as PlacementScoreResponse;
-    expect(placement.results[0]).toMatchObject({ track: "kr", knownCount: 1, totalSeen: 2, accuracy: 50, levelBadge: "8급" });
+    expect(placement.results[0]).toMatchObject({ track: "kr", knownCount: 1, totalSeen: 2, accuracy: 50, saturated: false, floored: false, levelBadge: "8급" });
     expect((await routeApiRequest(request("/api/placement/score", "POST", { answers: [{ characterKey: "金", track: "kr", correct: true, skipped: true, levelOrd: 2 }] }), fixture.env)).status).toBe(400);
     expect(await (await routeApiRequest(request("/api/onboarding-state"), fixture.env)).json()).toEqual({ onboarded: true });
     expect(fixture.sqlite.prepare("SELECT level_ord, detail FROM placement_results WHERE track = 'jp' ORDER BY taken_at DESC, id DESC LIMIT 1").get()).toEqual({ level_ord: 1, detail: "기존 결과" });
@@ -95,6 +95,55 @@ describe("profile, placement, and stats API", () => {
     const curriculum = await (await routeApiRequest(request("/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
     expect(curriculum.units.filter((unit) => unit.current)).toHaveLength(1);
     expect(curriculum.units.find((unit) => unit.current)?.ord).toBe(2);
+  });
+
+  it("reports curriculum-bound ceiling and floor signals without changing the stored level", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    fixture.sqlite.exec("UPDATE character_tracks SET level_ord = 2, kr_level = '7급' WHERE track = 'kr' AND character_id IN (SELECT cum.character_id FROM curriculum_unit_members cum JOIN curriculum_units cu ON cu.id = cum.unit_id WHERE cu.track = 'kr' AND cu.ord >= 2)");
+
+    const ceilingResponse = await routeApiRequest(request("/api/placement/score", "POST", { answers: [
+      { characterKey: "金", track: "kr", correct: true, skipped: false, levelOrd: 1 },
+      { characterKey: "大", track: "kr", correct: true, skipped: false, levelOrd: 2 },
+    ] }), fixture.env);
+    const ceiling = await ceilingResponse.json() as PlacementScoreResponse;
+    expect(ceiling.results[0]).toMatchObject({ levelOrd: 2, levelBadge: "7급", saturated: true, floored: false, detail: "2/2문항 정확 · 현재 콘텐츠의 끝에 도달" });
+    expect(fixture.sqlite.prepare("SELECT level_ord FROM placement_results WHERE track = 'kr' ORDER BY taken_at DESC, id DESC LIMIT 1").get()).toEqual({ level_ord: 2 });
+
+    const floorResponse = await routeApiRequest(request("/api/placement/score", "POST", { answers: [
+      { characterKey: "金", track: "kr", correct: false, skipped: false, levelOrd: 1 },
+      { characterKey: "大", track: "kr", correct: false, skipped: false, levelOrd: 2 },
+    ] }), fixture.env);
+    const floor = await floorResponse.json() as PlacementScoreResponse;
+    expect(floor.results[0]).toMatchObject({ levelOrd: 1, saturated: false, floored: true, detail: "0/2문항 정확 · 처음부터 시작" });
+    expect(fixture.sqlite.prepare("SELECT level_ord FROM placement_results WHERE track = 'kr' ORDER BY taken_at DESC, id DESC LIMIT 1").get()).toEqual({ level_ord: 1 });
+
+    fixture.sqlite.exec(`
+      UPDATE character_tracks AS ct SET level_ord = (
+        SELECT cu.ord FROM curriculum_unit_members cum
+        JOIN curriculum_units cu ON cu.id = cum.unit_id
+        WHERE cum.character_id = ct.character_id AND cu.track = ct.track
+      ) WHERE track = 'kr'
+    `);
+    const curriculumRows = fixture.sqlite.prepare(`
+      SELECT c.key, ct.level_ord FROM characters c
+      JOIN character_tracks ct ON ct.character_id = c.id AND ct.track = 'kr'
+      JOIN curriculum_unit_members cum ON cum.character_id = c.id
+      JOIN curriculum_units cu ON cu.id = cum.unit_id AND cu.track = ct.track
+      ORDER BY ct.level_ord, c.id
+    `).all() as Array<{ key: string; level_ord: number }>;
+    const keyAt = (levelOrd: number, offset = 0) => curriculumRows.filter((row) => row.level_ord === levelOrd)[offset].key;
+    const recoveryLevels = [1, 1, 1, 2, 3, 4, ...Array<number>(9).fill(5)];
+    const recoveryAnswers: PlacementAnswer[] = recoveryLevels.map((levelOrd, index) => ({
+      characterKey: keyAt(levelOrd, levelOrd === 1 ? index : 0),
+      track: "kr",
+      correct: index >= 2,
+      skipped: false,
+      levelOrd,
+    }));
+    const recoveryResponse = await routeApiRequest(request("/api/placement/score", "POST", { answers: recoveryAnswers }), fixture.env);
+    const recovery = await recoveryResponse.json() as PlacementScoreResponse;
+    expect(recovery.results[0]).toMatchObject({ levelOrd: 5, saturated: true, floored: false, detail: "13/15문항 정확 · 현재 콘텐츠의 끝에 도달" });
+    expect(fixture.sqlite.prepare("SELECT level_ord FROM placement_results WHERE track = 'kr' ORDER BY taken_at DESC, id DESC LIMIT 1").get()).toEqual({ level_ord: 5 });
   });
 
   it("buckets 23:50 in the stored timezone and shares mastery and streak values", async () => {

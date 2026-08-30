@@ -33,8 +33,9 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     const shouldSkip = card.kind === "reading" && Boolean(options.skipFirst) && !skipped;
     const testKeyboardAdvance = card.kind === "reading" && !shouldSkip && Boolean(options.keyboardAdvance) && !testedKeyboardAdvance;
     if (testKeyboardAdvance) {
-      await page.clock.install();
-      await page.clock.pauseAt(Date.now() + 1_000);
+      const clockStart = Date.now();
+      await page.clock.install({ time: clockStart });
+      await page.clock.pauseAt(clockStart + 1_000);
       await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-keyboard-advance", "true"));
     }
     if (options.verifyLanguages) {
@@ -221,8 +222,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
     await checkLayout(page, "placement", testInfo);
-    await finishSession(page, placement.cards, /시작 지점/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, verifyReducedMotion: true });
-    await expect(page.getByRole("heading", { name: "시작 지점이 정해졌습니다." })).toBeVisible();
+    await finishSession(page, placement.cards, /현재 콘텐츠의 끝/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, verifyReducedMotion: true });
+    await expect(page.getByRole("heading", { name: "현재 콘텐츠의 끝까지 도달했습니다." })).toBeVisible();
     await checkLayout(page, "placement-result", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
@@ -610,7 +611,7 @@ test.describe.serial("keyboard-only product flows", () => {
 
     const second = await sessionStarted(page, () => launch.click());
     const scoreRequest = page.waitForRequest((request) => request.url().endsWith("/api/placement/score"));
-    const timing = await finishSession(page, second.cards, /시작 지점/u, { autoAdvance: true, measureCorrectLatency: true, verifyCelebration: true });
+    const timing = await finishSession(page, second.cards, /현재 콘텐츠의 끝/u, { autoAdvance: true, measureCorrectLatency: true, verifyCelebration: true });
     expect(timing.correctTransitions).toBe(second.cards.length - 1);
     expect(timing.correctAdvanceMs).toBeLessThanOrEqual(timing.correctTransitions * MAIN_CORRECT_ADVANCE_BASELINE_MS * 1.1);
     expect(((await scoreRequest).postDataJSON() as { answers: Array<{ track: string }> }).answers.every((answer) => answer.track === "jp")).toBe(true);

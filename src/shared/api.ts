@@ -142,7 +142,7 @@ export type ProfileResponse = {
 };
 
 export type PlacementAnswer = { characterKey: string; track: Track; correct: boolean; skipped: boolean; levelOrd: number };
-export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; detail: string };
+export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; saturated: boolean; floored: boolean; detail: string };
 export type PlacementScoreResponse = { results: PlacementScoreResult[] };
 
 export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string; onyomiScript: OnyomiScript };

@@ -12,6 +12,10 @@ export type TrackEstimate = {
   total: number;
   unchanged: number;
   stable: boolean;
+  answeredAtMax: boolean;
+  incorrectAtMax: boolean;
+  answeredAtMin: boolean;
+  correctAtMin: boolean;
   askedCharacterIds: number[];
 };
 
@@ -34,11 +38,14 @@ export type PlacementResult = {
   correct: number;
   total: number;
   accuracy: number;
+  saturated: boolean;
+  floored: boolean;
 };
 
-export type PlacementScore = { track: Track; levelOrd: number; knownCount: number; totalSeen: number; accuracy: number };
+export type PlacementBounds = Partial<Record<Track, { minLevelOrd: number; maxLevelOrd: number }>>;
+export type PlacementScore = { track: Track; levelOrd: number; knownCount: number; totalSeen: number; accuracy: number; saturated: boolean; floored: boolean };
 
-export function scorePlacementAnswers(answers: PlacementAnswer[]): PlacementScore[] {
+export function scorePlacementAnswers(answers: PlacementAnswer[], bounds: PlacementBounds = {}): PlacementScore[] {
   return TRACKS.flatMap((track) => {
     const seen = answers.filter((answer) => answer.track === track);
     if (seen.length === 0) return [];
@@ -46,7 +53,27 @@ export function scorePlacementAnswers(answers: PlacementAnswer[]): PlacementScor
     const ceiling = Math.max(...seen.map((answer) => answer.levelOrd));
     const knownCount = seen.filter((answer) => answer.correct).length;
     const accuracy = Math.round(knownCount / seen.length * 100);
-    return [{ track, levelOrd: Math.round(floor + (ceiling - floor) * accuracy / 100), knownCount, totalSeen: seen.length, accuracy }];
+    const interpolatedLevelOrd = Math.round(floor + (ceiling - floor) * accuracy / 100);
+    const configuredBounds = bounds[track];
+    const minLevelOrd = configuredBounds?.minLevelOrd;
+    const maxLevelOrd = configuredBounds?.maxLevelOrd;
+    const atMax = seen.filter((answer) => answer.levelOrd === maxLevelOrd);
+    const atMin = seen.filter((answer) => answer.levelOrd === minLevelOrd);
+    const ceilingReached = configuredBounds !== undefined && atMax.length > 0 && atMax.every((answer) => answer.correct);
+    const floorReached = configuredBounds !== undefined && atMin.length > 0 && atMin.every((answer) => !answer.correct);
+    const lastMaxIndex = seen.reduce((last, answer, index) => answer.levelOrd === maxLevelOrd ? index : last, -1);
+    const lastMinIndex = seen.reduce((last, answer, index) => answer.levelOrd === minLevelOrd ? index : last, -1);
+    const saturated = ceilingReached && (!floorReached || lastMaxIndex > lastMinIndex);
+    const floored = floorReached && (!ceilingReached || lastMinIndex > lastMaxIndex);
+    return [{
+      track,
+      levelOrd: saturated ? configuredBounds.maxLevelOrd : floored ? configuredBounds.minLevelOrd : interpolatedLevelOrd,
+      knownCount,
+      totalSeen: seen.length,
+      accuracy,
+      saturated,
+      floored,
+    }];
   });
 }
 
@@ -73,6 +100,10 @@ export function createPlacementState(
       total: 0,
       unchanged: 0,
       stable: !enabledTracks.includes(track),
+      answeredAtMax: false,
+      incorrectAtMax: false,
+      answeredAtMin: false,
+      correctAtMin: false,
       askedCharacterIds: [],
     };
   }
@@ -102,7 +133,8 @@ export function recordPlacementAnswer(state: PlacementState, item: PlacementItem
   if (isPlacementComplete(state)) return state;
   const current = state.estimates[item.track];
   const levelOrd = Math.max(current.minLevelOrd, Math.min(current.maxLevelOrd, current.levelOrd + (correct ? 1 : -1)));
-  const unchanged = levelOrd === current.levelOrd ? current.unchanged + 1 : 0;
+  const clampedAtBoundary = levelOrd === current.levelOrd && (correct && current.levelOrd === current.maxLevelOrd || !correct && current.levelOrd === current.minLevelOrd);
+  const unchanged = clampedAtBoundary ? current.unchanged : levelOrd === current.levelOrd ? current.unchanged + 1 : 0;
   const total = current.total + 1;
   const minimumItems = Math.ceil(state.budget / state.enabledTracks.length);
   const estimate = {
@@ -112,6 +144,10 @@ export function recordPlacementAnswer(state: PlacementState, item: PlacementItem
     total,
     unchanged,
     stable: total >= minimumItems && unchanged >= 2,
+    answeredAtMax: current.answeredAtMax || current.levelOrd === current.maxLevelOrd,
+    incorrectAtMax: current.incorrectAtMax || current.levelOrd === current.maxLevelOrd && !correct,
+    answeredAtMin: current.answeredAtMin || current.levelOrd === current.minLevelOrd,
+    correctAtMin: current.correctAtMin || current.levelOrd === current.minLevelOrd && correct,
     askedCharacterIds: [...current.askedCharacterIds, item.character.id],
   };
   return {
@@ -130,6 +166,8 @@ export function placementResults(state: PlacementState): PlacementResult[] {
       correct: estimate.correct,
       total: estimate.total,
       accuracy: estimate.total === 0 ? 0 : Math.round(estimate.correct / estimate.total * 100),
+      saturated: estimate.levelOrd === estimate.maxLevelOrd && estimate.answeredAtMax && !estimate.incorrectAtMax,
+      floored: estimate.levelOrd === estimate.minLevelOrd && estimate.answeredAtMin && !estimate.correctAtMin,
     };
   });
 }

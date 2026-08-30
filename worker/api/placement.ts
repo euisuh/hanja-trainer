@@ -1,8 +1,9 @@
-import { scorePlacementAnswers } from "../../src/features/placement/adaptive";
+import { scorePlacementAnswers, type PlacementBounds } from "../../src/features/placement/adaptive";
 import type { PlacementAnswer, PlacementScoreResponse } from "../../src/shared/api";
 import { TRACKS, type Track } from "../../src/shared/types";
 
 type BadgeRow = { level_badge: string };
+type BoundsRow = { track: Track; min_level_ord: number; max_level_ord: number };
 
 export function parsePlacementAnswers(value: unknown): PlacementAnswer[] | null {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
@@ -20,14 +21,30 @@ export function parsePlacementAnswers(value: unknown): PlacementAnswer[] | null 
   return parsed;
 }
 
-function detail(track: Track, badge: string, known: number, total: number, accuracy: number): string {
+function detail(track: Track, badge: string, known: number, total: number, accuracy: number, saturated: boolean, floored: boolean): string {
+  if (saturated) return `${known}/${total}문항 정확 · 현재 콘텐츠의 끝에 도달`;
+  if (floored) return `${known}/${total}문항 정확 · 처음부터 시작`;
   if (track === "kr") return `${known}/${total}문항 정확 · ${badge} 시작`;
   if (track === "jp") return `音読み 정확도 ${accuracy}% · ${badge} 수준`;
   return `拼音 정확도 ${accuracy}% · ${badge}`;
 }
 
 export async function scoreAndSavePlacement(db: D1Database, answers: PlacementAnswer[], now = new Date()): Promise<PlacementScoreResponse> {
-  const scores = scorePlacementAnswers(answers);
+  const tracks = [...new Set(answers.map((answer) => answer.track))];
+  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
+  const boundRows = await db.prepare(`
+    SELECT cu.track, MIN(ct.level_ord) AS min_level_ord, MAX(ct.level_ord) AS max_level_ord
+    FROM curriculum_units cu
+    JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
+    JOIN character_tracks ct ON ct.character_id = cum.character_id AND ct.track = cu.track
+    WHERE cu.track IN (${placeholders})
+    GROUP BY cu.track
+  `).bind(...tracks).all<BoundsRow>();
+  const bounds = Object.fromEntries(boundRows.results.map((row) => [row.track, {
+    minLevelOrd: row.min_level_ord,
+    maxLevelOrd: row.max_level_ord,
+  }])) as PlacementBounds;
+  const scores = scorePlacementAnswers(answers, bounds);
   const badgeResults = await db.batch(scores.map((score) => db.prepare(`
     SELECT CASE track WHEN 'kr' THEN kr_level WHEN 'jp' THEN jp_kanken ELSE cn_hsk END AS level_badge
     FROM character_tracks WHERE track = ?1
@@ -35,7 +52,7 @@ export async function scoreAndSavePlacement(db: D1Database, answers: PlacementAn
   `).bind(score.track, score.levelOrd)));
   const results = scores.map((score, index) => {
     const badge = (badgeResults[index].results[0] as unknown as BadgeRow | undefined)?.level_badge ?? String(score.levelOrd);
-    return { ...score, levelBadge: badge, detail: detail(score.track, badge, score.knownCount, score.totalSeen, score.accuracy) };
+    return { ...score, levelBadge: badge, detail: detail(score.track, badge, score.knownCount, score.totalSeen, score.accuracy, score.saturated, score.floored) };
   });
   await db.batch([
     ...results.map((result) => db.prepare(`
