@@ -1,17 +1,19 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import type { CurriculumResponse, PlacementScoreResponse, StatsResponse } from "../../src/shared/api";
-import { getProfile } from "./sessions";
+import { getProfile, zonedDayKey } from "./sessions";
 import { getStats } from "./stats";
 import { routeApiRequest } from "./router";
+
+type QueryObservation = { query: string; rows: number };
 
 function result<T>(results: T[]): D1Result<T> {
   return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: 0, last_row_id: 0, changed_db: false, changes: 0 } };
 }
 
-function d1(sqlite: DatabaseSync): D1Database {
+function d1(sqlite: DatabaseSync, observations: QueryObservation[]): D1Database {
   const adapter = Object.create(null) as D1Database;
   adapter.prepare = (query: string) => {
     let values: SQLInputValue[] = [];
@@ -21,7 +23,11 @@ function d1(sqlite: DatabaseSync): D1Database {
       return statement;
     };
     statement.first = async <T>() => (sqlite.prepare(query).get(...values) as T | undefined) ?? null;
-    statement.all = async <T>() => result(sqlite.prepare(query).all(...values) as T[]);
+    statement.all = async <T>() => {
+      const rows = sqlite.prepare(query).all(...values) as T[];
+      observations.push({ query, rows: rows.length });
+      return result(rows);
+    };
     statement.run = async <T>() => { sqlite.prepare(query).run(...values); return result<T>([]); };
     return statement;
   };
@@ -29,11 +35,11 @@ function d1(sqlite: DatabaseSync): D1Database {
   return adapter;
 }
 
-function setup() {
+function setup(observations: QueryObservation[] = []) {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-kanken-10.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
-  return { sqlite, env: { DB: d1(sqlite) } as Env };
+  return { sqlite, env: { DB: d1(sqlite, observations) } as Env };
 }
 
 function request(path: string, method = "GET", body?: unknown) {
@@ -42,7 +48,19 @@ function request(path: string, method = "GET", body?: unknown) {
 
 describe("profile, placement, and stats API", () => {
   const databases: DatabaseSync[] = [];
-  afterEach(() => { for (const database of databases.splice(0)) database.close(); });
+  afterEach(() => {
+    vi.restoreAllMocks();
+    for (const database of databases.splice(0)) database.close();
+  });
+
+  it("reuses one date formatter per timezone", () => {
+    const DateTimeFormat = Intl.DateTimeFormat;
+    const formatter = vi.spyOn(Intl, "DateTimeFormat").mockImplementation(function (...args) { return new DateTimeFormat(...args); });
+    const timezone = "Pacific/Kiritimati";
+    expect(zonedDayKey(new Date("2026-01-01T09:59:00Z"), timezone)).toBe("2026-01-01");
+    expect(zonedDayKey(new Date("2026-01-01T10:01:00Z"), timezone)).toBe("2026-01-02");
+    expect(formatter.mock.calls.filter(([, options]) => options?.timeZone === timezone)).toHaveLength(1);
+  });
 
   it("enforces one profile row and persists validated settings without deleting review state", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
@@ -94,5 +112,52 @@ describe("profile, placement, and stats API", () => {
     const curriculum = await (await routeApiRequest(request("/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
     expect(curriculum.units.reduce((sum, unit) => sum + unit.progress.known, 0)).toBe(stats.tracks[0].known);
     expect((await getProfile(fixture.env.DB, now)).streak).toBe(stats.streak);
+  });
+
+  it("bounds event result sets by active days across a DST boundary", async () => {
+    const observations: QueryObservation[] = [];
+    const fixture = setup(observations); databases.push(fixture.sqlite);
+    fixture.sqlite.exec("UPDATE profile SET enabled_tracks = '[\"kr\"]', timezone = 'America/New_York'");
+    const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
+    const moments = [
+      "2026-03-07T04:30:00Z", // March 6, 23:30 EST
+      "2026-03-07T05:30:00Z", // March 7, 00:30 EST
+      "2026-03-08T04:30:00Z", // March 7, 23:30 EST
+      "2026-03-08T05:30:00Z", // March 8, 00:30 EST
+      "2026-03-09T03:30:00Z", // March 8, 23:30 EDT
+      "2026-03-09T04:30:00Z", // March 9, 00:30 EDT
+    ].map(Date.parse);
+    const insert = fixture.sqlite.prepare(`
+      INSERT INTO review_log
+        (character_id, track, rating, answered_at, correct, elapsed_ms, scheduled_days_before, scheduled_days_after, mode, skipped)
+      VALUES (?, 'kr', 3, ?, 1, 1000, 1, 2, 'lesson', ?)
+    `);
+    fixture.sqlite.exec("BEGIN");
+    for (let index = 0; index < 3_000; index += 1) insert.run(character.id, moments[index % moments.length], index % 3 === 0 ? 1 : 0);
+    fixture.sqlite.exec("COMMIT");
+    fixture.sqlite.prepare(`
+      INSERT INTO sessions (mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
+      VALUES ('lesson', ?1, ?1, 1, 1, 0, 1, ?2)
+    `).run(Date.parse("2026-03-08T16:00:00Z"), 5);
+    fixture.sqlite.prepare(`
+      INSERT INTO sessions (mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
+      VALUES ('lesson', ?1, ?1, 1, 1, 0, 1, ?2)
+    `).run(Date.parse("2026-03-09T16:00:00Z"), 7);
+
+    const now = new Date("2026-03-09T17:00:00Z");
+    const profile = await getProfile(fixture.env.DB, now);
+    const stats = await getStats(fixture.env.DB, now);
+
+    expect(profile).toMatchObject({ todayXp: 7, streak: 4, longestStreak: 4 });
+    expect(stats).toMatchObject({ answered: 3_000, skipped: 1_000, skipRate: 1_000 / 3_000 * 100, streak: 4, longestStreak: 4 });
+    expect(stats.calendar.filter((day) => day.count > 0)).toEqual([
+      { date: "2026-03-06", count: 500 },
+      { date: "2026-03-07", count: 1_000 },
+      { date: "2026-03-08", count: 1_000 },
+      { date: "2026-03-09", count: 500 },
+    ]);
+    const eventQueries = observations.filter(({ query }) => /\b(?:review_log|sessions)\b/.test(query));
+    expect(eventQueries.length).toBeGreaterThan(0);
+    expect(Math.max(...eventQueries.map(({ rows }) => rows))).toBe(4);
   });
 });

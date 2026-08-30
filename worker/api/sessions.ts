@@ -3,8 +3,12 @@ import { TRACKS } from "../../src/shared/types";
 
 const DAY_MS = 86_400_000;
 type ProfileRow = { enabled_tracks: string; daily_goal: number; timezone: string; xp: number };
-type SessionRow = { ended_at: number; xp: number };
-type LogRow = { answered_at: number };
+type ActivityRangeRow = { min_at: number | null; max_at: number | null };
+type DailyXpRow = { day: string; xp: number };
+type DailyRow = { day: string };
+type OffsetPeriod = { until?: number; offset: number };
+
+const dayFormatters = new Map<string, Intl.DateTimeFormat>();
 
 function record(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null && !Array.isArray(value) ? value as Record<string, unknown> : null;
@@ -50,28 +54,106 @@ export function streaks(days: string[], now: Date): { streak: number; longestStr
 }
 
 export function zonedDayKey(date: Date, timezone: string): string {
-  const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date);
+  let formatter = dayFormatters.get(timezone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+    });
+    dayFormatters.set(timezone, formatter);
+  }
+  const parts = formatter.formatToParts(date);
   const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
   return `${value.year}-${value.month}-${value.day}`;
 }
 
+function timezoneOffset(timestamp: number, timezone: string): number {
+  let formatter = dayFormatters.get(timezone);
+  if (!formatter) {
+    zonedDayKey(new Date(timestamp), timezone);
+    formatter = dayFormatters.get(timezone)!;
+  }
+  const parts = Object.fromEntries(formatter.formatToParts(new Date(timestamp)).map((part) => [part.type, part.value]));
+  const local = Date.UTC(Number(parts.year), Number(parts.month) - 1, Number(parts.day), Number(parts.hour), Number(parts.minute), Number(parts.second));
+  return local - Math.floor(timestamp / 1_000) * 1_000;
+}
+
+function offsetPeriods(timezone: string, minAt: number | null, maxAt: number | null): OffsetPeriod[] {
+  if (minAt === null || maxAt === null) return [{ offset: 0 }];
+  const start = Math.floor(minAt / DAY_MS) * DAY_MS - DAY_MS;
+  const end = Math.ceil(maxAt / DAY_MS) * DAY_MS + DAY_MS;
+  const periods: OffsetPeriod[] = [];
+  let previousAt = start;
+  let previousOffset = timezoneOffset(start, timezone);
+  for (let sample = start + DAY_MS; sample <= end; sample += DAY_MS) {
+    const nextOffset = timezoneOffset(sample, timezone);
+    if (nextOffset === previousOffset) {
+      previousAt = sample;
+      continue;
+    }
+    let low = previousAt;
+    let high = sample;
+    while (high - low > 1) {
+      const middle = Math.floor((low + high) / 2);
+      if (timezoneOffset(middle, timezone) === previousOffset) low = middle;
+      else high = middle;
+    }
+    periods.push({ until: high, offset: previousOffset });
+    previousOffset = timezoneOffset(high, timezone);
+    previousAt = sample;
+  }
+  periods.push({ offset: previousOffset });
+  return periods;
+}
+
+function localDaySql(column: "answered_at" | "ended_at", periods: OffsetPeriod[]): string {
+  const offset = periods.length === 1
+    ? String(periods[0].offset)
+    : `CASE ${periods.map((period) => period.until === undefined ? `ELSE ${period.offset}` : `WHEN ${column} < ${period.until} THEN ${period.offset}`).join(" ")} END`;
+  return `strftime('%Y-%m-%d', (${column} + (${offset})) / 1000.0, 'unixepoch')`;
+}
+
+export function activityDaySql(timezone: string, minAt: number | null, maxAt: number | null): { review: string; session: string } {
+  const periods = offsetPeriods(timezone, minAt, maxAt);
+  return { review: localDaySql("answered_at", periods), session: localDaySql("ended_at", periods) };
+}
+
 export async function getProfile(db: D1Database, now = new Date()): Promise<ProfileResponse> {
-  const [profileResult, sessionsResult, logsResult] = await db.batch([
+  const [profileResult, rangeResult] = await db.batch([
     db.prepare("SELECT enabled_tracks, daily_goal, timezone, xp FROM profile WHERE id = 1"),
-    db.prepare("SELECT ended_at, xp FROM sessions"),
-    db.prepare("SELECT answered_at FROM review_log"),
+    db.prepare(`
+      SELECT MIN(value) AS min_at, MAX(value) AS max_at FROM (
+        SELECT MIN(answered_at) AS value FROM review_log
+        UNION ALL SELECT MAX(answered_at) FROM review_log
+        UNION ALL SELECT MIN(ended_at) FROM sessions
+        UNION ALL SELECT MAX(ended_at) FROM sessions
+      )
+    `),
   ]);
   const profile = profileResult.results[0] as unknown as ProfileRow | undefined;
   if (!profile) throw new Error("Profile row is missing");
   const parsed = JSON.parse(profile.enabled_tracks) as unknown;
   const enabledTracks = Array.isArray(parsed) ? TRACKS.filter((track) => parsed.includes(track)) : [...TRACKS];
   const today = zonedDayKey(now, profile.timezone);
-  const todayXp = (sessionsResult.results as unknown as SessionRow[]).filter((row) => zonedDayKey(new Date(row.ended_at), profile.timezone) === today).reduce((sum, row) => sum + row.xp, 0);
-  const days = [
-    ...(sessionsResult.results as unknown as SessionRow[]).map((row) => zonedDayKey(new Date(row.ended_at), profile.timezone)),
-    ...(logsResult.results as unknown as LogRow[]).map((row) => zonedDayKey(new Date(row.answered_at), profile.timezone)),
+  const range = rangeResult.results[0] as unknown as ActivityRangeRow | undefined;
+  const days = activityDaySql(profile.timezone, range?.min_at ?? null, range?.max_at ?? null);
+  const [sessionsResult, logsResult] = await db.batch([
+    db.prepare(`SELECT ${days.session} AS day, SUM(xp) AS xp FROM sessions GROUP BY day ORDER BY day`),
+    db.prepare(`SELECT ${days.review} AS day FROM review_log GROUP BY day ORDER BY day`),
+  ]);
+  const sessionDays = sessionsResult.results as unknown as DailyXpRow[];
+  const todayXp = sessionDays.find((row) => row.day === today)?.xp ?? 0;
+  const activeDays = [
+    ...sessionDays.map((row) => row.day),
+    ...(logsResult.results as unknown as DailyRow[]).map((row) => row.day),
   ];
-  return { xp: profile.xp, todayXp, goal: profile.daily_goal, ...streaks(days, new Date(`${today}T12:00:00Z`)), enabledTracks };
+  return { xp: profile.xp, todayXp, goal: profile.daily_goal, ...streaks(activeDays, new Date(`${today}T12:00:00Z`)), enabledTracks };
 }
 
 export async function createSession(db: D1Database, input: CreateSessionRequest, now = new Date()): Promise<ProfileResponse> {
