@@ -22,6 +22,8 @@ import "./session.css";
 
 export type SessionMode = "lesson" | "review" | "placement" | "unit-test";
 
+const AUTO_ADVANCE_DELAY_MS = 250;
+
 export type SessionResult = {
   xp: number;
   accuracy: number;
@@ -94,9 +96,10 @@ export function SessionRunner({
   const [unitTestQueue, setUnitTestQueue] = useState(() => mode === "unit-test" ? queue.map((entry, cardIndex) => ({ entry, cardIndex })) : []);
   const [unitTestMistakes, setUnitTestMistakes] = useState(0);
   const [clearedUnitTestCards, setClearedUnitTestCards] = useState<Set<number>>(() => new Set());
-  const [unitTestAnnouncement, setUnitTestAnnouncement] = useState({ sequence: 0, text: "" });
+  const [sessionAnnouncement, setSessionAnnouncement] = useState({ sequence: 0, text: "" });
   const startedAt = useRef(0);
   const answerLocked = useRef(false);
+  const advancing = useRef(false);
   const completing = useRef(false);
   const currentIndex = useRef(0);
   const advanceRef = useRef<() => void>(() => undefined);
@@ -110,8 +113,10 @@ export function SessionRunner({
   const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(item?.kind === "reading");
   const answered = selectedIndex !== null || skipped;
   const correct = item?.kind === "reading" && selectedIndex === item.answerIndex;
+  const autoAdvance = mode === "placement" || mode === "unit-test" || correct;
 
   useEffect(() => {
+    advancing.current = false;
     startedAt.current = performance.now();
   }, [index]);
 
@@ -131,13 +136,14 @@ export function SessionRunner({
       if (mode === "placement") {
         setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
         setAssessmentAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, levelOrd: entry.levelOrd }]);
+        setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "응답을 기록했습니다. 다음 문항으로 이동합니다." }));
       } else {
         const cardIndex = issuedUnitTestCard?.cardIndex ?? index;
         const mistakes = unitTestMistakes + Number(!isCorrect);
         const answer = item.options[item.answerIndex]?.label ?? "";
         const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
         setUnitTestAnswers((current) => [...current, { cardIndex, characterKey: item.character.key, selectedIndex: choice }]);
-        setUnitTestAnnouncement((current) => ({
+        setSessionAnnouncement((current) => ({
           sequence: current.sequence + 1,
           text: isCorrect
             ? "정답입니다. 다음 문항으로 이동합니다."
@@ -169,6 +175,7 @@ export function SessionRunner({
       const result = schedule(previous, gradeFromReview(isCorrect, isSkipped, elapsedMs), new Date());
       states.set(key, result.next);
       interval = intervalLabel(result.next.scheduledDays);
+      if (isCorrect) setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "정답입니다. 다음 문항으로 이동합니다." }));
     }
     const answeredIndex = index;
     if (mode !== "unit-test") submit({ cardIndex: index, characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
@@ -190,7 +197,8 @@ export function SessionRunner({
   }
 
   function advance() {
-    if (!item || (item.kind === "reading" && !answered)) return;
+    if (advancing.current || !item || (item.kind === "reading" && !answered)) return;
+    advancing.current = true;
     if (mode === "placement" && !externalQueue) {
       const next = nextPlacementItem(adaptiveState, characters);
       if (isPlacementComplete(adaptiveState) || !next) {
@@ -241,14 +249,14 @@ export function SessionRunner({
   });
 
   useEffect(() => {
-    if (mode !== "unit-test" || !answered || paused) return;
-    const timer = window.setTimeout(() => advanceRef.current(), correct ? 250 : 450);
+    if (!answered || !autoAdvance || paused) return;
+    const timer = window.setTimeout(() => advanceRef.current(), AUTO_ADVANCE_DELAY_MS);
     return () => window.clearTimeout(timer);
-  }, [answered, correct, index, mode, paused]);
+  }, [answered, autoAdvance, index, paused]);
 
   useSessionKeys({
     active: Boolean(item) && !paused,
-    answered: mode === "unit-test" ? false : answered,
+    answered,
     compare,
     onPick: pick,
     onSkip: () => pick(null),
@@ -303,11 +311,9 @@ export function SessionRunner({
           ? <button className="session-sync" onClick={() => void retry()} type="button">저장 재시도 · {pendingCount}</button>
           : <span className="session-sync" role="status">동기화 중 · {pendingCount}</span>)}
       </div>
-      {mode === "unit-test" && (
-        <div aria-atomic="true" aria-live="polite" className="session-announcement">
-          {unitTestAnnouncement.text} {unitTestAnnouncement.sequence > 0 ? `응답 알림 ${unitTestAnnouncement.sequence}` : ""}
-        </div>
-      )}
+      <div aria-atomic="true" aria-live="polite" className="session-announcement">
+        {sessionAnnouncement.text} {sessionAnnouncement.sequence > 0 ? `응답 알림 ${sessionAnnouncement.sequence}` : ""}
+      </div>
       <div className="session-card-wrap" key={index}>
         <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} />
         {item.kind === "reading" && (
@@ -327,7 +333,7 @@ export function SessionRunner({
           note={feedbackNote}
           onNext={advance}
           xp={lastXp}
-          autoAdvance={mode === "unit-test"}
+          autoAdvance={autoAdvance}
         />
         {answered && correct && <ParticleBurst key={burstKey} track={item.track} />}
       </div>
