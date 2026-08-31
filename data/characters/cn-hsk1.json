@@ -274,7 +274,9 @@
       "meaningEn": "illness, sickness, disease",
       "meaningKo": "병",
       "variants": {
-        "cn": "病"
+        "cn": "病",
+        "kr": "病",
+        "jp": "病"
       },
       "strokeCount": 10,
       "tracks": [
@@ -520,7 +522,9 @@
       "meaningEn": "strike, hit, beat",
       "meaningKo": "칠",
       "variants": {
-        "cn": "打"
+        "cn": "打",
+        "kr": "打",
+        "jp": "打"
       },
       "strokeCount": 5,
       "tracks": [
@@ -686,7 +690,9 @@
       "meaningEn": "sequence, number",
       "meaningKo": "차례",
       "variants": {
-        "cn": "第"
+        "cn": "第",
+        "kr": "第",
+        "jp": "第"
       },
       "strokeCount": 11,
       "tracks": [
@@ -769,7 +775,9 @@
       "meaningEn": "metropolis, capital",
       "meaningKo": "도읍",
       "variants": {
-        "cn": "都"
+        "cn": "都",
+        "kr": "都",
+        "jp": "都"
       },
       "strokeCount": 10,
       "tracks": [
@@ -994,7 +1002,9 @@
       "meaningEn": "clothes",
       "meaningKo": "옷",
       "variants": {
-        "cn": "服"
+        "cn": "服",
+        "kr": "服",
+        "jp": "服"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1303,7 +1313,8 @@
       "meaningKo": "한수",
       "variants": {
         "kr": "漢",
-        "cn": "汉"
+        "cn": "汉",
+        "jp": "漢"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1343,7 +1354,9 @@
       "meaningEn": "mark, sign",
       "meaningKo": "이름",
       "variants": {
-        "cn": "号"
+        "cn": "号",
+        "kr": "號",
+        "jp": "号"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1383,7 +1396,9 @@
       "meaningEn": "harmony, peace",
       "meaningKo": "화할",
       "variants": {
-        "cn": "和"
+        "cn": "和",
+        "kr": "和",
+        "jp": "和"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1877,7 +1892,9 @@
       "meaningEn": "guest, traveller",
       "meaningKo": "손",
       "variants": {
-        "cn": "客"
+        "cn": "客",
+        "kr": "客",
+        "jp": "客"
       },
       "strokeCount": 9,
       "tracks": [
@@ -2371,7 +2388,8 @@
       "meaningKo": "낯",
       "variants": {
         "kr": "面",
-        "cn": "面"
+        "cn": "面",
+        "jp": "面"
       },
       "strokeCount": 9,
       "tracks": [
@@ -2763,7 +2781,9 @@
       "meaningEn": "period of time",
       "meaningKo": "기약할",
       "variants": {
-        "cn": "期"
+        "cn": "期",
+        "kr": "期",
+        "jp": "期"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2783,7 +2803,8 @@
       "meaningEn": "rise, stand up",
       "meaningKo": "일어날",
       "variants": {
-        "cn": "起"
+        "cn": "起",
+        "jp": "起"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2907,7 +2928,9 @@
       "meaningEn": "go away, leave, depart",
       "meaningKo": "갈",
       "variants": {
-        "cn": "去"
+        "cn": "去",
+        "kr": "去",
+        "jp": "去"
       },
       "strokeCount": 5,
       "tracks": [
@@ -3033,7 +3056,9 @@
       "meaningEn": "commerce, business, trade",
       "meaningKo": "헤아릴",
       "variants": {
-        "cn": "商"
+        "cn": "商",
+        "kr": "商",
+        "jp": "商"
       },
       "strokeCount": 11,
       "tracks": [
@@ -3284,7 +3309,8 @@
       "meaningKo": "일",
       "variants": {
         "kr": "事",
-        "cn": "事"
+        "cn": "事",
+        "jp": "事"
       },
       "strokeCount": 8,
       "tracks": [
@@ -3511,7 +3537,9 @@
       "meaningEn": "other, another",
       "meaningKo": "다를",
       "variants": {
-        "cn": "他"
+        "cn": "他",
+        "kr": "他",
+        "jp": "他"
       },
       "strokeCount": 5,
       "tracks": [
@@ -3592,7 +3620,9 @@
       "meaningEn": "forehead",
       "meaningKo": "제목",
       "variants": {
-        "cn": "题"
+        "cn": "题",
+        "kr": "題",
+        "jp": "題"
       },
       "strokeCount": 18,
       "tracks": [
@@ -3801,7 +3831,8 @@
       "meaningKo": "물을",
       "variants": {
         "kr": "問",
-        "cn": "问"
+        "cn": "问",
+        "jp": "問"
       },
       "strokeCount": 11,
       "tracks": [
@@ -3907,7 +3938,8 @@
       "meaningEn": "rest, put stop to, end, cease",
       "meaningKo": "쉴",
       "variants": {
-        "cn": "息"
+        "cn": "息",
+        "jp": "息"
       },
       "strokeCount": 10,
       "tracks": [
@@ -3927,7 +3959,9 @@
       "meaningEn": "practice",
       "meaningKo": "익힐",
       "variants": {
-        "cn": "习"
+        "cn": "习",
+        "kr": "習",
+        "jp": "習"
       },
       "strokeCount": 11,
       "tracks": [
@@ -4051,7 +4085,8 @@
       "meaningEn": "think, speculate, plan, consider",
       "meaningKo": "생각",
       "variants": {
-        "cn": "想"
+        "cn": "想",
+        "jp": "想"
       },
       "strokeCount": 13,
       "tracks": [
@@ -4135,7 +4170,9 @@
       "meaningEn": "write",
       "meaningKo": "베낄",
       "variants": {
-        "cn": "写"
+        "cn": "写",
+        "kr": "寫",
+        "jp": "写"
       },
       "strokeCount": 15,
       "tracks": [
@@ -4302,7 +4339,8 @@
       "meaningEn": "shape, form, pattern, style",
       "meaningKo": "모양",
       "variants": {
-        "cn": "样"
+        "cn": "样",
+        "jp": "様"
       },
       "strokeCount": 15,
       "tracks": [
@@ -4404,7 +4442,9 @@
       "meaningEn": "medicine",
       "meaningKo": "의원",
       "variants": {
-        "cn": "医"
+        "cn": "医",
+        "kr": "醫",
+        "jp": "医"
       },
       "strokeCount": 18,
       "tracks": [
@@ -4526,7 +4566,8 @@
       "meaningKo": "있을",
       "variants": {
         "kr": "有",
-        "cn": "有"
+        "cn": "有",
+        "jp": "有"
       },
       "strokeCount": 6,
       "tracks": [
@@ -4610,7 +4651,9 @@
       "meaningEn": "courtyard, yard, court",
       "meaningKo": "집",
       "variants": {
-        "cn": "院"
+        "cn": "院",
+        "kr": "院",
+        "jp": "院"
       },
       "strokeCount": 9,
       "tracks": [
@@ -4773,7 +4816,8 @@
       "meaningEn": "real, actual, true, genuine",
       "meaningKo": "참",
       "variants": {
-        "cn": "真"
+        "cn": "真",
+        "jp": "真"
       },
       "strokeCount": 10,
       "tracks": [
@@ -4899,7 +4943,8 @@
       "meaningKo": "살",
       "variants": {
         "kr": "住",
-        "cn": "住"
+        "cn": "住",
+        "jp": "住"
       },
       "strokeCount": 7,
       "tracks": [

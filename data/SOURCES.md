@@ -23,16 +23,30 @@ sentence files from checkouts of the pinned grade pack and HanjaDict plus an
 extracted Unihan directory; it performs no network lookup and emits no sentence
 prose.
 
-## Japanese: 漢検 10級, 9級
+## Japanese: 漢検 10級 through 8級
 
-- Official membership: [日本漢字能力検定 級別漢字表](https://www.kanken.or.jp/kanken/outline/data/outline_degree_national_list20200217.pdf), published by 日本漢字能力検定協会. It identifies 10級 as the 80 小学校一年生 characters and 9級 as the 160 小学校二年生 characters.
-- Readings, meanings, stroke counts, and community JLPT mapping: [davidluzgouveia/kanji-data](https://github.com/davidluzgouveia/kanji-data/tree/00fd7079c3890f430759536f91aa5e854ec0ca4f), MIT-licensed structured KANJIDIC2 derivative. KANJIDIC2 is maintained by the Electronic Dictionary Research and Development Group under its published dictionary license.
-- Shinjitai to kyūjitai facts: [dahlia/shinjitai-table](https://github.com/dahlia/shinjitai-table/tree/65fc03d9ad556d748d370c64d04c36d712df1708), derived from the official Jōyō table. Unihan 17 does not yet expose the proposed Japanese old-variant property.
+- Official membership: [日本漢字能力検定 級別漢字表](https://www.kanken.or.jp/kanken/outline/data/outline_degree_national_list20200217.pdf), published by 日本漢字能力検定協会 (retrieved 2026-08-31, SHA-256 `8c7513a4ecfc7d6ca2b8f8aa71313b9097e972bac7a43f8a568fe99a9a1d7285`). It identifies 10級, 9級, and 8級 as the 80 小学校一年生, 160 小学校二年生, and 200 小学校三年生 characters respectively, for exact cumulative counts of 80, 240, and 440. Only factual membership is retained.
+- Readings, meanings, stroke counts, and community JLPT mapping: [davidluzgouveia/kanji-data](https://github.com/davidluzgouveia/kanji-data/tree/00fd7079c3890f430759536f91aa5e854ec0ca4f), retrieved 2026-08-31 at commit `00fd7079c3890f430759536f91aa5e854ec0ca4f`. It is an MIT-licensed structured KANJIDIC2 derivative; KANJIDIC2 is maintained by the Electronic Dictionary Research and Development Group under its published dictionary license.
+- Shinjitai to kyūjitai facts: [dahlia/shinjitai-table](https://github.com/dahlia/shinjitai-table/tree/65fc03d9ad556d748d370c64d04c36d712df1708), retrieved 2026-08-31 at commit `65fc03d9ad556d748d370c64d04c36d712df1708` and derived from the official Jōyō table. The repository publishes no license, so only factual mappings are used. Unihan 17 does not yet expose the proposed Japanese old-variant property.
+- Korean dictionary glosses: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), retrieved 2026-08-31 at commit `39bbc7ba04514ec5d29eee79259823fa720b7065`, MIT license. The first sourced 훈음 supplies `meaningKo`; its reading syllable is removed without translating or paraphrasing the gloss.
 
 The post-2010 JLPT does not publish an official per-kanji list. `jlpt` therefore
 uses the dataset's documented `jlpt_new` mapping, falling back to its historical
-level-4 mapping as N5 for `分` and `里`. `なし` truthfully marks characters with
-no kun'yomi.
+mapping when `jlpt_new` is absent (`分` and `里` at historical N5; `身` and
+`畑` at historical N2). `なし` truthfully marks a missing on'yomi or kun'yomi.
+For linked shinjitai/kyūjitai rows, `strokeCount` comes from the canonical
+key's pinned `kanji-data` entry while the Japanese readings use the JP glyph.
+
+`scripts/generate-jp-through-8kyu.mjs` reproduces the 200-character 8級 file
+from the exact `kanji-data`, `shinjitai-table`, and HanjaDict pins above. It
+contains the official PDF's row-order membership as an independent exact-set
+check and performs no network lookup. The 51 sentence rows are exact reusable
+matches from the already-frozen Tatoeba selection; the remaining 149
+characters ship without a sentence rather than introducing new prose.
+
+```sh
+node scripts/generate-jp-through-8kyu.mjs /path/to/kanji-data /path/to/shinjitai-table /path/to/hanjadict/src/hanjadict/table.json
+```
 
 ## Chinese: HSK 3.0 2026 HSK1, HSK2
 
@@ -117,7 +131,8 @@ contributor, and license record. Tatoeba exports are released under
 [CC BY 2.0 FR](https://creativecommons.org/licenses/by/2.0/fr/), with some
 individual entries under CC0. These rows use `source_kind: corpus`.
 
-The frozen Tatoeba selection remains unchanged for Japanese and Chinese: 232
+The frozen Tatoeba sentence selection remains unchanged for Japanese and
+Chinese. Exact reuse for new 8級 target glyphs raises the mappings to 283
 Japanese and 363 Chinese `(character, track)` pairs. The original two Korean
 rows were replaced because their parenthetical gloss format did not meet the
 required mixed-script convention.
@@ -160,8 +175,8 @@ surrounding Hangul without copying the ruby annotation into the sentence.
 These lanes cover 218 of 500 Korean `(character, kr)` pairs: the existing 127
 through 7급 plus 91 higher-grade characters already present in the same exact,
 immutable licensed selections. No sentence text was generated or altered.
-Across all tracks, 813 of 1,111 pairs now have rank-0 sentences; one existing
-extra rank makes 814 unique seeded sentence identities.
+Across all tracks, 864 of 1,311 pairs now have rank-0 sentences; one existing
+extra rank makes 865 unique seeded sentence identities.
 
 ### Remaining Korean gaps
 

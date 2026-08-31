@@ -199,7 +199,8 @@
       "meaningEn": "agriculture, farming",
       "meaningKo": "농사",
       "variants": {
-        "kr": "農"
+        "kr": "農",
+        "jp": "農"
       },
       "strokeCount": 13,
       "tracks": [
@@ -256,7 +257,8 @@
       "meaningEn": "move, happen",
       "meaningKo": "움직일",
       "variants": {
-        "kr": "動"
+        "kr": "動",
+        "jp": "動"
       },
       "strokeCount": 11,
       "tracks": [
@@ -352,7 +354,8 @@
       "meaningEn": "thing, substance, creature",
       "meaningKo": "물건",
       "variants": {
-        "kr": "物"
+        "kr": "物",
+        "jp": "物"
       },
       "strokeCount": 8,
       "tracks": [
@@ -409,7 +412,8 @@
       "meaningKo": "일",
       "variants": {
         "kr": "事",
-        "cn": "事"
+        "cn": "事",
+        "jp": "事"
       },
       "strokeCount": 8,
       "tracks": [
@@ -466,7 +470,8 @@
       "meaningEn": "generation",
       "meaningKo": "인간",
       "variants": {
-        "kr": "世"
+        "kr": "世",
+        "jp": "世"
       },
       "strokeCount": 5,
       "tracks": [
@@ -562,7 +567,8 @@
       "meaningEn": "peaceful, tranquil, quiet",
       "meaningKo": "편안",
       "variants": {
-        "kr": "安"
+        "kr": "安",
+        "jp": "安"
       },
       "strokeCount": 6,
       "tracks": [
@@ -719,7 +725,8 @@
       "meaningEn": "maintain, keep whole or intact",
       "meaningKo": "온전할",
       "variants": {
-        "kr": "全"
+        "kr": "全",
+        "jp": "全"
       },
       "strokeCount": 6,
       "tracks": [
@@ -816,7 +823,8 @@
       "meaningEn": "flat, level, even",
       "meaningKo": "평평할",
       "variants": {
-        "kr": "平"
+        "kr": "平",
+        "jp": "平"
       },
       "strokeCount": 5,
       "tracks": [
@@ -855,7 +863,8 @@
       "meaningKo": "한수",
       "variants": {
         "kr": "漢",
-        "cn": "汉"
+        "cn": "汉",
+        "jp": "漢"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1083,7 +1092,8 @@
       "meaningEn": "rise, mount, board, climb",
       "meaningKo": "오를",
       "variants": {
-        "kr": "登"
+        "kr": "登",
+        "jp": "登"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1180,7 +1190,8 @@
       "meaningKo": "낯",
       "variants": {
         "kr": "面",
-        "cn": "面"
+        "cn": "面",
+        "jp": "面"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1198,7 +1209,8 @@
       "meaningEn": "life",
       "meaningKo": "목숨",
       "variants": {
-        "kr": "命"
+        "kr": "命",
+        "jp": "命"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1237,7 +1249,8 @@
       "meaningKo": "물을",
       "variants": {
         "kr": "問",
-        "cn": "问"
+        "cn": "问",
+        "jp": "問"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1373,7 +1386,8 @@
       "meaningKo": "바",
       "variants": {
         "kr": "所",
-        "cn": "所"
+        "cn": "所",
+        "jp": "所"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1410,7 +1424,8 @@
       "meaningEn": "plant, trees, plants",
       "meaningKo": "심을",
       "variants": {
-        "kr": "植"
+        "kr": "植",
+        "jp": "植"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1487,7 +1502,8 @@
       "meaningKo": "있을",
       "variants": {
         "kr": "有",
-        "cn": "有"
+        "cn": "有",
+        "jp": "有"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1505,7 +1521,8 @@
       "meaningEn": "produce, give birth to",
       "meaningKo": "기를",
       "variants": {
-        "kr": "育"
+        "kr": "育",
+        "jp": "育"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1599,7 +1616,8 @@
       "meaningKo": "살",
       "variants": {
         "kr": "住",
-        "cn": "住"
+        "cn": "住",
+        "jp": "住"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1617,7 +1635,8 @@
       "meaningEn": "master, chief owner",
       "meaningKo": "임금",
       "variants": {
-        "kr": "主"
+        "kr": "主",
+        "jp": "主"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1635,7 +1654,8 @@
       "meaningEn": "heavy, weighty",
       "meaningKo": "무거울",
       "variants": {
-        "kr": "重"
+        "kr": "重",
+        "jp": "重"
       },
       "strokeCount": 9,
       "tracks": [

@@ -105,7 +105,9 @@
       "meaningEn": "show, express, manifest, display",
       "meaningKo": "겉",
       "variants": {
-        "cn": "表"
+        "cn": "表",
+        "kr": "表",
+        "jp": "表"
       },
       "strokeCount": 8,
       "tracks": [
@@ -208,7 +210,8 @@
       "meaningEn": "order, sequence",
       "meaningKo": "버금",
       "variants": {
-        "cn": "次"
+        "cn": "次",
+        "jp": "次"
       },
       "strokeCount": 6,
       "tracks": [
@@ -310,7 +313,9 @@
       "meaningEn": "rank, grade",
       "meaningKo": "무리",
       "variants": {
-        "cn": "等"
+        "cn": "等",
+        "kr": "等",
+        "jp": "等"
       },
       "strokeCount": 12,
       "tracks": [
@@ -472,7 +477,8 @@
       "meaningEn": "public building",
       "meaningKo": "집",
       "variants": {
-        "cn": "馆"
+        "cn": "馆",
+        "jp": "館"
       },
       "strokeCount": 16,
       "tracks": [
@@ -720,7 +726,8 @@
       "meaningEn": "advance, make progress, enter",
       "meaningKo": "나아갈",
       "variants": {
-        "cn": "进"
+        "cn": "进",
+        "jp": "進"
       },
       "strokeCount": 11,
       "tracks": [
@@ -801,7 +808,8 @@
       "meaningEn": "wine, spirits, liquor, alcoholic beverage",
       "meaningKo": "술",
       "variants": {
-        "cn": "酒"
+        "cn": "酒",
+        "jp": "酒"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1042,7 +1050,9 @@
       "meaningEn": "road, path, street",
       "meaningKo": "길",
       "variants": {
-        "cn": "路"
+        "cn": "路",
+        "kr": "路",
+        "jp": "路"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1062,7 +1072,9 @@
       "meaningEn": "trip, journey",
       "meaningKo": "나그네",
       "variants": {
-        "cn": "旅"
+        "cn": "旅",
+        "kr": "旅",
+        "jp": "旅"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1328,7 +1340,9 @@
       "meaningEn": "ball, sphere, globe",
       "meaningKo": "공",
       "variants": {
-        "cn": "球"
+        "cn": "球",
+        "kr": "球",
+        "jp": "球"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1452,7 +1466,9 @@
       "meaningEn": "body",
       "meaningKo": "몸",
       "variants": {
-        "cn": "身"
+        "cn": "身",
+        "kr": "身",
+        "jp": "身"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1472,7 +1488,9 @@
       "meaningEn": "begin, start",
       "meaningKo": "비로소",
       "variants": {
-        "cn": "始"
+        "cn": "始",
+        "kr": "始",
+        "jp": "始"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1575,7 +1593,8 @@
       "meaningEn": "see off, send off",
       "meaningKo": "보낼",
       "variants": {
-        "cn": "送"
+        "cn": "送",
+        "jp": "送"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1636,7 +1655,8 @@
       "meaningKo": "바",
       "variants": {
         "kr": "所",
-        "cn": "所"
+        "cn": "所",
+        "jp": "所"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1737,7 +1757,9 @@
       "meaningEn": "iron (element 26, fe)",
       "meaningKo": "쇠",
       "variants": {
-        "cn": "铁"
+        "cn": "铁",
+        "kr": "鐵",
+        "jp": "鉄"
       },
       "strokeCount": 21,
       "tracks": [
@@ -2140,7 +2162,9 @@
       "meaningEn": "thought, idea, opinion",
       "meaningKo": "뜻",
       "variants": {
-        "cn": "意"
+        "cn": "意",
+        "kr": "意",
+        "jp": "意"
       },
       "strokeCount": 13,
       "tracks": [
@@ -2200,7 +2224,8 @@
       "meaningEn": "dive",
       "meaningKo": "헤엄칠",
       "variants": {
-        "cn": "泳"
+        "cn": "泳",
+        "jp": "泳"
       },
       "strokeCount": 8,
       "tracks": [
@@ -2303,7 +2328,9 @@
       "meaningEn": "luck, fortune",
       "meaningKo": "옮길",
       "variants": {
-        "cn": "运"
+        "cn": "运",
+        "kr": "運",
+        "jp": "運"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2405,7 +2432,9 @@
       "meaningEn": "make move, take action",
       "meaningKo": "붙을",
       "variants": {
-        "cn": "着"
+        "cn": "着",
+        "kr": "着",
+        "jp": "着"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2719,7 +2748,9 @@
       "meaningEn": "strike, hit, beat",
       "meaningKo": "칠",
       "variants": {
-        "cn": "打"
+        "cn": "打",
+        "kr": "打",
+        "jp": "打"
       },
       "strokeCount": 5,
       "tracks": [
@@ -3033,7 +3064,8 @@
       "meaningKo": "한수",
       "variants": {
         "kr": "漢",
-        "cn": "汉"
+        "cn": "汉",
+        "jp": "漢"
       },
       "strokeCount": 14,
       "tracks": [
@@ -3073,7 +3105,9 @@
       "meaningEn": "harmony, peace",
       "meaningKo": "화할",
       "variants": {
-        "cn": "和"
+        "cn": "和",
+        "kr": "和",
+        "jp": "和"
       },
       "strokeCount": 8,
       "tracks": [
@@ -3633,7 +3667,9 @@
       "meaningEn": "go away, leave, depart",
       "meaningKo": "갈",
       "variants": {
-        "cn": "去"
+        "cn": "去",
+        "kr": "去",
+        "jp": "去"
       },
       "strokeCount": 5,
       "tracks": [
@@ -3950,7 +3986,9 @@
       "meaningEn": "other, another",
       "meaningKo": "다를",
       "variants": {
-        "cn": "他"
+        "cn": "他",
+        "kr": "他",
+        "jp": "他"
       },
       "strokeCount": 5,
       "tracks": [
@@ -4120,7 +4158,9 @@
       "meaningEn": "practice",
       "meaningKo": "익힐",
       "variants": {
-        "cn": "习"
+        "cn": "习",
+        "kr": "習",
+        "jp": "習"
       },
       "strokeCount": 11,
       "tracks": [
@@ -4204,7 +4244,9 @@
       "meaningEn": "write",
       "meaningKo": "베낄",
       "variants": {
-        "cn": "写"
+        "cn": "写",
+        "kr": "寫",
+        "jp": "写"
       },
       "strokeCount": 15,
       "tracks": [
@@ -4329,7 +4371,8 @@
       "meaningKo": "있을",
       "variants": {
         "kr": "有",
-        "cn": "有"
+        "cn": "有",
+        "jp": "有"
       },
       "strokeCount": 6,
       "tracks": [

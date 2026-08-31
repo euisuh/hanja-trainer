@@ -675,7 +675,7 @@ test.describe.serial("keyboard-only product flows", () => {
     expect((await startRequest).postDataJSON()).toMatchObject({ mode: "placement", tracks: ["jp"], limit: 15 });
     expect(first.cards).toHaveLength(15);
     expect(first.cards.every((card) => card.track === "jp")).toBe(true);
-    expect([...new Set(first.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    expect([...new Set(first.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3]);
     await page.locator(".skip-answer").click();
     const displayedAnswer = await page.locator(".answer-option").nth(first.cards[0].answerIndex).locator("strong").textContent();
     await expect(page.locator(".answer-option").nth(first.cards[0].answerIndex)).toHaveClass(/answer-option--correct/u);

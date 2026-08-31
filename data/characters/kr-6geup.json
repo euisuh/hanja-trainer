@@ -24,7 +24,8 @@
       "meaningEn": "composition; chapter, section",
       "meaningKo": "글",
       "variants": {
-        "kr": "章"
+        "kr": "章",
+        "jp": "章"
       },
       "strokeCount": 11,
       "tracks": [
@@ -80,7 +81,8 @@
       "meaningEn": "degree, system; manner; to consider",
       "meaningKo": "법도",
       "variants": {
-        "kr": "度"
+        "kr": "度",
+        "jp": "度"
       },
       "strokeCount": 9,
       "tracks": [
@@ -98,7 +100,8 @@
       "meaningEn": "social custom; manners; courtesy; rites",
       "meaningKo": "예도",
       "variants": {
-        "kr": "禮"
+        "kr": "禮",
+        "jp": "礼"
       },
       "strokeCount": 17,
       "tracks": [
@@ -134,7 +137,8 @@
       "meaningEn": "cause, reason; from",
       "meaningKo": "말미암을",
       "variants": {
-        "kr": "由"
+        "kr": "由",
+        "jp": "由"
       },
       "strokeCount": 5,
       "tracks": [
@@ -152,7 +156,8 @@
       "meaningEn": "a family clan, ethnic group, tribe",
       "meaningKo": "겨레",
       "variants": {
-        "kr": "族"
+        "kr": "族",
+        "jp": "族"
       },
       "strokeCount": 11,
       "tracks": [
@@ -208,7 +213,8 @@
       "meaningEn": "area, district, region, ward; surname",
       "meaningKo": "구분할",
       "variants": {
-        "kr": "區"
+        "kr": "區",
+        "jp": "区"
       },
       "strokeCount": 11,
       "tracks": [
@@ -226,7 +232,8 @@
       "meaningEn": "level, rank, class; grade",
       "meaningKo": "등급",
       "variants": {
-        "kr": "級"
+        "kr": "級",
+        "jp": "級"
       },
       "strokeCount": 9,
       "tracks": [
@@ -244,7 +251,8 @@
       "meaningEn": "style, system, formula, rule",
       "meaningKo": "법",
       "variants": {
-        "kr": "式"
+        "kr": "式",
+        "jp": "式"
       },
       "strokeCount": 6,
       "tracks": [
@@ -262,7 +270,8 @@
       "meaningEn": "open; initiate, begin, start",
       "meaningKo": "열",
       "variants": {
-        "kr": "開"
+        "kr": "開",
+        "jp": "開"
       },
       "strokeCount": 12,
       "tracks": [
@@ -281,7 +290,8 @@
       "meaningKo": "길",
       "variants": {
         "cn": "路",
-        "kr": "路"
+        "kr": "路",
+        "jp": "路"
       },
       "strokeCount": 13,
       "tracks": [
@@ -338,7 +348,8 @@
       "meaningKo": "병",
       "variants": {
         "cn": "病",
-        "kr": "病"
+        "kr": "病",
+        "jp": "病"
       },
       "strokeCount": 10,
       "tracks": [
@@ -393,7 +404,8 @@
       "meaningKo": "익힐",
       "variants": {
         "cn": "习",
-        "kr": "習"
+        "kr": "習",
+        "jp": "習"
       },
       "strokeCount": 11,
       "tracks": [
@@ -411,7 +423,8 @@
       "meaningEn": "the active, male principle in Chinese philosophy (yang); light; sun",
       "meaningKo": "볕",
       "variants": {
-        "kr": "陽"
+        "kr": "陽",
+        "jp": "陽"
       },
       "strokeCount": 11,
       "tracks": [
@@ -429,7 +442,8 @@
       "meaningEn": "ocean, sea; foreign; western",
       "meaningKo": "큰 바다",
       "variants": {
-        "kr": "洋"
+        "kr": "洋",
+        "jp": "洋"
       },
       "strokeCount": 9,
       "tracks": [
@@ -524,7 +538,8 @@
       "meaningKo": "옷",
       "variants": {
         "cn": "服",
-        "kr": "服"
+        "kr": "服",
+        "jp": "服"
       },
       "strokeCount": 8,
       "tracks": [
@@ -543,7 +558,8 @@
       "meaningKo": "의원",
       "variants": {
         "cn": "医",
-        "kr": "醫"
+        "kr": "醫",
+        "jp": "医"
       },
       "strokeCount": 18,
       "tracks": [
@@ -561,7 +577,8 @@
       "meaningEn": "bitter; hardship, suffering",
       "meaningKo": "쓸",
       "variants": {
-        "kr": "苦"
+        "kr": "苦",
+        "jp": "苦"
       },
       "strokeCount": 8,
       "tracks": [
@@ -598,7 +615,8 @@
       "meaningEn": "oil, fat, grease, lard; paints",
       "meaningKo": "기름",
       "variants": {
-        "kr": "油"
+        "kr": "油",
+        "jp": "油"
       },
       "strokeCount": 8,
       "tracks": [
@@ -654,7 +672,8 @@
       "meaningEn": "cause, send on a mission, order; envoy, messenger, ambassador",
       "meaningKo": "하여금",
       "variants": {
-        "kr": "使"
+        "kr": "使",
+        "jp": "使"
       },
       "strokeCount": 8,
       "tracks": [
@@ -729,7 +748,8 @@
       "meaningEn": "toward, direction, trend",
       "meaningKo": "향할",
       "variants": {
-        "kr": "向"
+        "kr": "向",
+        "jp": "向"
       },
       "strokeCount": 6,
       "tracks": [
@@ -766,7 +786,8 @@
       "meaningEn": "silver (element 47, Ag); cash, money, wealth",
       "meaningKo": "은",
       "variants": {
-        "kr": "銀"
+        "kr": "銀",
+        "jp": "銀"
       },
       "strokeCount": 14,
       "tracks": [
@@ -804,7 +825,8 @@
       "meaningKo": "이름",
       "variants": {
         "cn": "号",
-        "kr": "號"
+        "kr": "號",
+        "jp": "号"
       },
       "strokeCount": 13,
       "tracks": [
@@ -841,7 +863,8 @@
       "meaningEn": "beautiful, pretty; pleasing",
       "meaningKo": "아름다울",
       "variants": {
-        "kr": "美"
+        "kr": "美",
+        "jp": "美"
       },
       "strokeCount": 9,
       "tracks": [
@@ -898,7 +921,8 @@
       "meaningEn": "treat, entertain, receive; wait",
       "meaningKo": "기다릴",
       "variants": {
-        "kr": "待"
+        "kr": "待",
+        "jp": "待"
       },
       "strokeCount": 9,
       "tracks": [
@@ -953,7 +977,8 @@
       "meaningEn": "feel, perceive, emotion",
       "meaningKo": "느낄",
       "variants": {
-        "kr": "感"
+        "kr": "感",
+        "jp": "感"
       },
       "strokeCount": 13,
       "tracks": [
@@ -989,7 +1014,8 @@
       "meaningEn": "root, base(d on); foundation",
       "meaningKo": "뿌리",
       "variants": {
-        "kr": "根"
+        "kr": "根",
+        "jp": "根"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1025,7 +1051,8 @@
       "meaningEn": "green; chlorine",
       "meaningKo": "푸를",
       "variants": {
-        "kr": "綠"
+        "kr": "綠",
+        "jp": "緑"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1099,7 +1126,8 @@
       "meaningEn": "die; dead; death",
       "meaningKo": "죽을",
       "variants": {
-        "kr": "死"
+        "kr": "死",
+        "jp": "死"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1117,7 +1145,8 @@
       "meaningEn": "quick, prompt, speedy",
       "meaningKo": "빠를",
       "variants": {
-        "kr": "速"
+        "kr": "速",
+        "jp": "速"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1135,7 +1164,8 @@
       "meaningEn": "victory; excel, be better than",
       "meaningKo": "이길",
       "variants": {
-        "kr": "勝"
+        "kr": "勝",
+        "jp": "勝"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1171,7 +1201,8 @@
       "meaningEn": "lukewarm, warm; tepid, mild",
       "meaningKo": "따뜻할",
       "variants": {
-        "kr": "溫"
+        "kr": "溫",
+        "jp": "温"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1227,7 +1258,8 @@
       "meaningEn": "that which; he who; those who",
       "meaningKo": "놈",
       "variants": {
-        "kr": "者"
+        "kr": "者",
+        "jp": "者"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1264,7 +1296,8 @@
       "meaningEn": "decide, settle, fix",
       "meaningKo": "정할",
       "variants": {
-        "kr": "定"
+        "kr": "定",
+        "jp": "定"
       },
       "strokeCount": 8,
       "tracks": [

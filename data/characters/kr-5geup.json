@@ -6,7 +6,8 @@
       "meaningKo": "베낄",
       "variants": {
         "cn": "写",
-        "kr": "寫"
+        "kr": "寫",
+        "jp": "写"
       },
       "strokeCount": 15,
       "tracks": [
@@ -24,7 +25,8 @@
       "meaningEn": "leaf, petal; page of book; period",
       "meaningKo": "잎",
       "variants": {
-        "kr": "葉"
+        "kr": "葉",
+        "jp": "葉"
       },
       "strokeCount": 12,
       "tracks": [
@@ -43,7 +45,8 @@
       "meaningKo": "집",
       "variants": {
         "cn": "院",
-        "kr": "院"
+        "kr": "院",
+        "jp": "院"
       },
       "strokeCount": 9,
       "tracks": [
@@ -265,7 +268,8 @@
       "meaningKo": "도읍",
       "variants": {
         "cn": "都",
-        "kr": "都"
+        "kr": "都",
+        "jp": "都"
       },
       "strokeCount": 10,
       "tracks": [
@@ -356,7 +360,8 @@
       "meaningEn": "island",
       "meaningKo": "섬",
       "variants": {
-        "kr": "島"
+        "kr": "島",
+        "jp": "島"
       },
       "strokeCount": 10,
       "tracks": [
@@ -374,7 +379,8 @@
       "meaningEn": "ice, frost, icicles; cold",
       "meaningKo": "얼음",
       "variants": {
-        "kr": "氷"
+        "kr": "氷",
+        "jp": "氷"
       },
       "strokeCount": 5,
       "tracks": [
@@ -486,7 +492,8 @@
       "meaningEn": "cold, wintry, chilly",
       "meaningKo": "찰",
       "variants": {
-        "kr": "寒"
+        "kr": "寒",
+        "jp": "寒"
       },
       "strokeCount": 12,
       "tracks": [
@@ -540,7 +547,8 @@
       "meaningEn": "nose; first; Kangxi radical 209",
       "meaningKo": "코",
       "variants": {
-        "kr": "鼻"
+        "kr": "鼻",
+        "jp": "鼻"
       },
       "strokeCount": 14,
       "tracks": [
@@ -633,7 +641,8 @@
       "meaningEn": "bridge; beam, crosspiece",
       "meaningKo": "다리",
       "variants": {
-        "kr": "橋"
+        "kr": "橋",
+        "jp": "橋"
       },
       "strokeCount": 16,
       "tracks": [
@@ -688,7 +697,8 @@
       "meaningEn": "house; room; building, shelter",
       "meaningKo": "집",
       "variants": {
-        "kr": "屋"
+        "kr": "屋",
+        "jp": "屋"
       },
       "strokeCount": 9,
       "tracks": [
@@ -707,7 +717,8 @@
       "meaningKo": "쇠",
       "variants": {
         "cn": "铁",
-        "kr": "鐵"
+        "kr": "鐵",
+        "jp": "鉄"
       },
       "strokeCount": 21,
       "tracks": [
@@ -725,7 +736,8 @@
       "meaningEn": "plank, board; iron or tin plate",
       "meaningKo": "널빤지",
       "variants": {
-        "kr": "板"
+        "kr": "板",
+        "jp": "板"
       },
       "strokeCount": 8,
       "tracks": [
@@ -780,7 +792,8 @@
       "meaningKo": "기약할",
       "variants": {
         "cn": "期",
-        "kr": "期"
+        "kr": "期",
+        "jp": "期"
       },
       "strokeCount": 12,
       "tracks": [
@@ -816,7 +829,8 @@
       "meaningEn": "times, fold, multiple times",
       "meaningKo": "곱",
       "variants": {
-        "kr": "倍"
+        "kr": "倍",
+        "jp": "倍"
       },
       "strokeCount": 10,
       "tracks": [
@@ -907,7 +921,8 @@
       "meaningEn": "end; finally, in the end",
       "meaningKo": "끝",
       "variants": {
-        "kr": "終"
+        "kr": "終",
+        "jp": "終"
       },
       "strokeCount": 11,
       "tracks": [
@@ -962,7 +977,8 @@
       "meaningKo": "갈",
       "variants": {
         "cn": "去",
-        "kr": "去"
+        "kr": "去",
+        "jp": "去"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1038,7 +1054,8 @@
       "meaningEn": "crooked, bent; wrong, false",
       "meaningKo": "굽을",
       "variants": {
-        "kr": "曲"
+        "kr": "曲",
+        "jp": "曲"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1185,7 +1202,8 @@
       "meaningEn": "fall, drop; net income, surplus",
       "meaningKo": "떨어질",
       "variants": {
-        "kr": "落"
+        "kr": "落",
+        "jp": "落"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1277,7 +1295,8 @@
       "meaningEn": "light; easy, simple; gentle",
       "meaningKo": "가벼울",
       "variants": {
-        "kr": "輕"
+        "kr": "輕",
+        "jp": "軽"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1369,7 +1388,8 @@
       "meaningEn": "talk; conversation; surname",
       "meaningKo": "말씀",
       "variants": {
-        "kr": "談"
+        "kr": "談",
+        "jp": "談"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1720,7 +1740,8 @@
       "meaningKo": "다를",
       "variants": {
         "cn": "他",
-        "kr": "他"
+        "kr": "他",
+        "jp": "他"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1739,7 +1760,8 @@
       "meaningKo": "칠",
       "variants": {
         "cn": "打",
-        "kr": "打"
+        "kr": "打",
+        "jp": "打"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1757,7 +1779,8 @@
       "meaningEn": "charcoal; coal; carbon",
       "meaningKo": "숯",
       "variants": {
-        "kr": "炭"
+        "kr": "炭",
+        "jp": "炭"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1811,7 +1834,8 @@
       "meaningEn": "a lake; Hubei, Hunan; bluish-green",
       "meaningKo": "호수",
       "variants": {
-        "kr": "湖"
+        "kr": "湖",
+        "jp": "湖"
       },
       "strokeCount": 12,
       "tracks": [

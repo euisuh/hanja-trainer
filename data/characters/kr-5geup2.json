@@ -5,7 +5,8 @@
       "meaningEn": "tool, implement; draw up, write",
       "meaningKo": "갖출",
       "variants": {
-        "kr": "具"
+        "kr": "具",
+        "jp": "具"
       },
       "strokeCount": 8,
       "tracks": [
@@ -59,7 +60,8 @@
       "meaningEn": "writing brush; write; stroke",
       "meaningKo": "붓",
       "variants": {
-        "kr": "筆"
+        "kr": "筆",
+        "jp": "筆"
       },
       "strokeCount": 12,
       "tracks": [
@@ -78,7 +80,8 @@
       "meaningKo": "손",
       "variants": {
         "cn": "客",
-        "kr": "客"
+        "kr": "客",
+        "jp": "客"
       },
       "strokeCount": 9,
       "tracks": [
@@ -189,7 +192,8 @@
       "meaningEn": "official; serve government",
       "meaningKo": "섬길",
       "variants": {
-        "kr": "仕"
+        "kr": "仕",
+        "jp": "仕"
       },
       "strokeCount": 5,
       "tracks": [
@@ -281,7 +285,8 @@
       "meaningEn": "flow, circulate, drift; class",
       "meaningKo": "흐를",
       "variants": {
-        "kr": "流"
+        "kr": "流",
+        "jp": "流"
       },
       "strokeCount": 10,
       "tracks": [
@@ -354,7 +359,8 @@
       "meaningEn": "administrative division, state",
       "meaningKo": "고을",
       "variants": {
-        "kr": "州"
+        "kr": "州",
+        "jp": "州"
       },
       "strokeCount": 6,
       "tracks": [
@@ -390,7 +396,8 @@
       "meaningEn": "bureau, office; circumstance",
       "meaningKo": "판",
       "variants": {
-        "kr": "局"
+        "kr": "局",
+        "jp": "局"
       },
       "strokeCount": 7,
       "tracks": [
@@ -408,7 +415,8 @@
       "meaningEn": "practice, drill, exercise, train",
       "meaningKo": "누일",
       "variants": {
-        "kr": "練"
+        "kr": "練",
+        "jp": "練"
       },
       "strokeCount": 15,
       "tracks": [
@@ -777,7 +785,8 @@
       "meaningEn": "stop, rest, lodge, stay overnight; constellation",
       "meaningKo": "잘",
       "variants": {
-        "kr": "宿"
+        "kr": "宿",
+        "jp": "宿"
       },
       "strokeCount": 11,
       "tracks": [
@@ -979,7 +988,8 @@
       "meaningEn": "real, true, solid, honest",
       "meaningKo": "열매",
       "variants": {
-        "kr": "實"
+        "kr": "實",
+        "jp": "実"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1051,7 +1061,8 @@
       "meaningEn": "change, convert, reform; -ize",
       "meaningKo": "될",
       "variants": {
-        "kr": "化"
+        "kr": "化",
+        "jp": "化"
       },
       "strokeCount": 4,
       "tracks": [
@@ -1105,7 +1116,8 @@
       "meaningEn": "happiness, good fortune, blessing",
       "meaningKo": "복",
       "variants": {
-        "kr": "福"
+        "kr": "福",
+        "jp": "福"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1141,7 +1153,8 @@
       "meaningEn": "evil, wicked, bad, foul",
       "meaningKo": "악할",
       "variants": {
-        "kr": "惡"
+        "kr": "惡",
+        "jp": "悪"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1271,7 +1284,8 @@
       "meaningEn": "transfer, move, change; tune",
       "meaningKo": "고를",
       "variants": {
-        "kr": "調"
+        "kr": "調",
+        "jp": "調"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1290,7 +1304,8 @@
       "meaningKo": "붙을",
       "variants": {
         "cn": "着",
-        "kr": "着"
+        "kr": "着",
+        "jp": "着"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1308,7 +1323,8 @@
       "meaningEn": "decide, determine, judge",
       "meaningKo": "결단할",
       "variants": {
-        "kr": "決"
+        "kr": "決",
+        "jp": "決"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1400,7 +1416,8 @@
       "meaningKo": "나그네",
       "variants": {
         "cn": "旅",
-        "kr": "旅"
+        "kr": "旅",
+        "jp": "旅"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1474,7 +1491,8 @@
       "meaningKo": "헤아릴",
       "variants": {
         "cn": "商",
-        "kr": "商"
+        "kr": "商",
+        "jp": "商"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1492,7 +1510,8 @@
       "meaningEn": "mutual, reciprocal, each other",
       "meaningKo": "서로",
       "variants": {
-        "kr": "相"
+        "kr": "相",
+        "jp": "相"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1769,7 +1788,8 @@
       "meaningEn": "article, product, commodity",
       "meaningKo": "물건",
       "variants": {
-        "kr": "品"
+        "kr": "品",
+        "jp": "品"
       },
       "strokeCount": 9,
       "tracks": [

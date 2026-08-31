@@ -85,7 +85,8 @@
       "meaningKo": "제목",
       "variants": {
         "cn": "题",
-        "kr": "題"
+        "kr": "題",
+        "jp": "題"
       },
       "strokeCount": 18,
       "tracks": [
@@ -122,7 +123,8 @@
       "meaningEn": "short; brief; deficient, lacking",
       "meaningKo": "짧을",
       "variants": {
-        "kr": "短"
+        "kr": "短",
+        "jp": "短"
       },
       "strokeCount": 12,
       "tracks": [
@@ -140,7 +142,8 @@
       "meaningEn": "replace, replacement (of person or generation); era, generation",
       "meaningKo": "대신할",
       "variants": {
-        "kr": "代"
+        "kr": "代",
+        "jp": "代"
       },
       "strokeCount": 5,
       "tracks": [
@@ -158,7 +161,8 @@
       "meaningEn": "child, boy, servant boy; virgin",
       "meaningKo": "아이",
       "variants": {
-        "kr": "童"
+        "kr": "童",
+        "jp": "童"
       },
       "strokeCount": 12,
       "tracks": [
@@ -196,7 +200,8 @@
       "meaningKo": "겉",
       "variants": {
         "cn": "表",
-        "kr": "表"
+        "kr": "表",
+        "jp": "表"
       },
       "strokeCount": 8,
       "tracks": [
@@ -271,7 +276,8 @@
       "meaningKo": "무리",
       "variants": {
         "cn": "等",
-        "kr": "等"
+        "kr": "等",
+        "jp": "等"
       },
       "strokeCount": 12,
       "tracks": [
@@ -326,7 +332,8 @@
       "meaningEn": "courtyard; spacious hall or yard",
       "meaningKo": "뜰",
       "variants": {
-        "kr": "庭"
+        "kr": "庭",
+        "jp": "庭"
       },
       "strokeCount": 9,
       "tracks": [
@@ -385,7 +392,8 @@
       "meaningKo": "비로소",
       "variants": {
         "cn": "始",
-        "kr": "始"
+        "kr": "始",
+        "jp": "始"
       },
       "strokeCount": 8,
       "tracks": [
@@ -498,7 +506,8 @@
       "meaningKo": "몸",
       "variants": {
         "cn": "身",
-        "kr": "身"
+        "kr": "身",
+        "jp": "身"
       },
       "strokeCount": 7,
       "tracks": [
@@ -516,7 +525,8 @@
       "meaningEn": "drugs, pharmaceuticals, medicine",
       "meaningKo": "약",
       "variants": {
-        "kr": "藥"
+        "kr": "藥",
+        "jp": "薬"
       },
       "strokeCount": 18,
       "tracks": [
@@ -591,7 +601,8 @@
       "meaningKo": "옮길",
       "variants": {
         "cn": "运",
-        "kr": "運"
+        "kr": "運",
+        "jp": "運"
       },
       "strokeCount": 12,
       "tracks": [
@@ -629,7 +640,8 @@
       "meaningEn": "issue, dispatch, send out, emit",
       "meaningKo": "필",
       "variants": {
-        "kr": "發"
+        "kr": "發",
+        "jp": "発"
       },
       "strokeCount": 12,
       "tracks": [
@@ -706,7 +718,8 @@
       "meaningKo": "공",
       "variants": {
         "cn": "球",
-        "kr": "球"
+        "kr": "球",
+        "jp": "球"
       },
       "strokeCount": 11,
       "tracks": [
@@ -744,7 +757,8 @@
       "meaningEn": "part, division, section",
       "meaningKo": "거느릴",
       "variants": {
-        "kr": "部"
+        "kr": "部",
+        "jp": "部"
       },
       "strokeCount": 10,
       "tracks": [
@@ -782,7 +796,8 @@
       "meaningKo": "차례",
       "variants": {
         "cn": "第",
-        "kr": "第"
+        "kr": "第",
+        "jp": "第"
       },
       "strokeCount": 11,
       "tracks": [
@@ -818,7 +833,8 @@
       "meaningEn": "correct, right; facing, opposed",
       "meaningKo": "대할",
       "variants": {
-        "kr": "對"
+        "kr": "對",
+        "jp": "対"
       },
       "strokeCount": 14,
       "tracks": [
@@ -892,7 +908,8 @@
       "meaningKo": "뜻",
       "variants": {
         "cn": "意",
-        "kr": "意"
+        "kr": "意",
+        "jp": "意"
       },
       "strokeCount": 13,
       "tracks": [
@@ -911,7 +928,8 @@
       "meaningKo": "화할",
       "variants": {
         "cn": "和",
-        "kr": "和"
+        "kr": "和",
+        "jp": "和"
       },
       "strokeCount": 8,
       "tracks": [
@@ -947,7 +965,8 @@
       "meaningEn": "spirit, god, supernatural being",
       "meaningKo": "귀신",
       "variants": {
-        "kr": "神"
+        "kr": "神",
+        "jp": "神"
       },
       "strokeCount": 9,
       "tracks": [
@@ -983,7 +1002,8 @@
       "meaningEn": "boundary, limit; domain; society; the world",
       "meaningKo": "지경",
       "variants": {
-        "kr": "界"
+        "kr": "界",
+        "jp": "界"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1097,7 +1117,8 @@
       "meaningEn": "quick, quickly; urgent, pressing",
       "meaningKo": "급할",
       "variants": {
-        "kr": "急"
+        "kr": "急",
+        "jp": "急"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1171,7 +1192,8 @@
       "meaningEn": "reverse, opposite, contrary, anti",
       "meaningKo": "돌이킬",
       "variants": {
-        "kr": "反"
+        "kr": "反",
+        "jp": "反"
       },
       "strokeCount": 4,
       "tracks": [
@@ -1189,7 +1211,8 @@
       "meaningEn": "put, release, free, liberate",
       "meaningKo": "놓을",
       "variants": {
-        "kr": "放"
+        "kr": "放",
+        "jp": "放"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1207,7 +1230,8 @@
       "meaningEn": "vanish, die out; melt away",
       "meaningKo": "사라질",
       "variants": {
-        "kr": "消"
+        "kr": "消",
+        "jp": "消"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1245,7 +1269,8 @@
       "meaningEn": "profession, business, trade",
       "meaningKo": "업",
       "variants": {
-        "kr": "業"
+        "kr": "業",
+        "jp": "業"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1337,7 +1362,8 @@
       "meaningEn": "concentrate, focus, direct",
       "meaningKo": "부을",
       "variants": {
-        "kr": "注"
+        "kr": "注",
+        "jp": "注"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1355,7 +1381,8 @@
       "meaningEn": "assemble, collect together",
       "meaningKo": "모을",
       "variants": {
-        "kr": "集"
+        "kr": "集",
+        "jp": "集"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1373,7 +1400,8 @@
       "meaningEn": "luck(ily), favor, fortunately",
       "meaningKo": "다행",
       "variants": {
-        "kr": "幸"
+        "kr": "幸",
+        "jp": "幸"
       },
       "strokeCount": 8,
       "tracks": [

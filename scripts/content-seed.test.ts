@@ -16,6 +16,7 @@ const files = {
   "data/characters/kr-5geup.json": 100,
   "data/characters/jp-kanken-10.json": 80,
   "data/characters/jp-kanken-9.json": 160,
+  "data/characters/jp-kanken-8.json": 200,
   "data/characters/cn-hsk1.json": 246,
   "data/characters/cn-hsk2.json": 220,
 };
@@ -32,7 +33,7 @@ test("curated character files validate and cross-link", async () => {
       for (const entry of character.tracks) {
         tracks.add(entry.track);
         if (entry.track === "jp") {
-          assert.match(entry.on, /^[\p{Script=Katakana}ー・-]+$/u, `${path}: ${character.key} on`);
+          assert.match(entry.on, /^(?:[\p{Script=Katakana}ー・-]+|なし)$/u, `${path}: ${character.key} on`);
           assert.match(entry.kun, /^[\p{Script=Hiragana}ー・-]+$/u, `${path}: ${character.key} kun`);
         }
         if (entry.track === "cn") assert.doesNotMatch(entry.pinyin, /\d/u, `${path}: ${character.key} pinyin`);
@@ -42,6 +43,73 @@ test("curated character files validate and cross-link", async () => {
   }
 
   assert.ok([...linked.values()].filter((tracks) => tracks.size >= 2).length >= 30);
+});
+
+test("Japanese grade deltas, official 8級 membership, units, and variants match the pinned sources", async () => {
+  const scale = [
+    { path: "data/characters/jp-kanken-10.json", level: "10級", levelOrd: 1, added: 80, cumulative: 80 },
+    { path: "data/characters/jp-kanken-9.json", level: "9級", levelOrd: 2, added: 160, cumulative: 240 },
+    { path: "data/characters/jp-kanken-8.json", level: "8級", levelOrd: 3, added: 200, cumulative: 440 },
+  ];
+  const allPaths = Object.keys(files);
+  const documents = await Promise.all(allPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const byPath = new Map(allPaths.map((path, index) => [path, documents[index]]));
+  let cumulative = 0;
+  for (const expected of scale) {
+    const characters = byPath.get(expected.path)!.characters;
+    assert.equal(characters.length, expected.added, expected.level);
+    assert.ok(characters.every((character) => character.tracks.some((track) => track.track === "jp" && track.levelOrd === expected.levelOrd)), expected.level);
+    cumulative += characters.length;
+    assert.equal(cumulative, expected.cumulative, `${expected.level} cumulative`);
+  }
+
+  const grade8 = byPath.get("data/characters/jp-kanken-8.json")!;
+  const official = new Set(Array.from(
+    "由氷湯炭真拾仕銀開悪油表登短深終死区階安有秒等談進習使苦寒暗遊病動着世集始具感医予品童注整住指君漢委" +
+    "羊負農柱昔重歯係館意洋部波丁全宿詩軽岸育葉服配帳相所次血起員陽福倍調送暑事決期院様物箱追想助持研客飲" +
+    "落平畑定息昭式県究運流返発庭速消実庫急泳旅勉反笛族商写湖級駅両放坂鉄他章者向宮央緑味板転打勝主幸球横" +
+    "礼命皮都対乗守港去屋列面悲度待植取号橋温練問美投代申酒根業化路役鼻豆第身受祭曲荷和薬筆島題神州皿局界",
+  ));
+  assert.deepEqual(new Set(grade8.characters.map((character) => character.tracks.find((track) => track.track === "jp")!.glyph)), official);
+  const members = grade8.curriculumUnits?.flatMap((unit) => unit.members.map((member) => member.key)) ?? [];
+  assert.equal(members.length, 200);
+  assert.equal(new Set(members).size, 200);
+  assert.deepEqual(new Set(members), new Set(grade8.characters.map((character) => character.key)));
+  assert.ok(grade8.curriculumUnits?.every((unit) => unit.track === "jp" && unit.level === "8級" && unit.members.length >= 8 && unit.members.length <= 10));
+  const canonicalStrokes = new Map([
+    ["轉", 18], ["乘", 10], ["驛", 23], ["硏", 11], ["兩", 8],
+    ["橫", 16], ["豫", 16], ["齒", 15], ["縣", 16],
+  ]);
+  for (const character of grade8.characters) {
+    const expected = canonicalStrokes.get(character.key);
+    if (expected) assert.equal(character.strokeCount, expected, `${character.key} canonical strokes`);
+  }
+
+  const otherCharacters = documents.flatMap((document) => document.characters).filter((character) => !grade8.characters.includes(character));
+  for (const character of grade8.characters) {
+    for (const matching of otherCharacters.filter((candidate) => candidate.key === character.key)) {
+      assert.deepEqual(matching.variants, character.variants, `${character.key} complete variants`);
+    }
+  }
+});
+
+test("seeded Japanese placement bounds and all-correct estimate reach 8級", async () => {
+  const jpPaths = Object.keys(files).filter((path) => path.includes("/jp-"));
+  let id = 0;
+  const characters: CharacterEntry[] = (await Promise.all(jpPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
+    .flatMap((document) => document.characters)
+    .map((character) => {
+      id += 1;
+      return { ...character, id, createdAt: 0, sentences: [], tracks: character.tracks.map((track) => ({ ...track, characterId: id })) };
+    });
+  let state = createPlacementState(characters, ["jp"]);
+  assert.deepEqual({ min: state.estimates.jp.minLevelOrd, max: state.estimates.jp.maxLevelOrd }, { min: 1, max: 3 });
+  while (!isPlacementComplete(state)) {
+    const item = nextPlacementItem(state, characters);
+    assert.ok(item);
+    state = recordPlacementAnswer(state, item, true);
+  }
+  assert.equal(placementResults(state)[0].levelOrd, 3);
 });
 
 test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage match the official scale", async () => {
@@ -121,6 +189,7 @@ test("seeded Korean placement bounds and all-correct estimate reach 5급", async
 test("sourced sentence files resolve to their exact target glyph", async () => {
   const glyphs = new Map<string, string>();
   const trackCounts = new Map<string, Set<Track>>();
+  const legacyTrackCounts = new Map<string, Set<Track>>();
   const legacyKrKeys = new Set((await Promise.all(["data/characters/kr-8geup.json", "data/characters/kr-7geup.json"].map(async (path) => (
     parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown).characters.map((character) => character.key)
   )))).flat());
@@ -130,6 +199,11 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
       for (const entry of character.tracks) {
         glyphs.set(`${character.key}:${entry.track}`, entry.glyph);
         tracks.add(entry.track);
+        if (path !== "data/characters/jp-kanken-8.json") {
+          const legacyTracks = legacyTrackCounts.get(character.key) ?? new Set<Track>();
+          legacyTracks.add(entry.track);
+          legacyTrackCounts.set(character.key, legacyTracks);
+        }
       }
       trackCounts.set(character.key, tracks);
     }
@@ -161,10 +235,10 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
   assert.equal(krCovered.length, 218);
   assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 218);
-  assert.equal(byIdentity.size, 814);
-  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 298);
+  assert.equal(byIdentity.size, 865);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 447);
   for (const [key, tracks] of trackCounts) {
-    if (tracks.size === 3) {
+    if (tracks.size === 3 && legacyTrackCounts.get(key)?.size === 3) {
       const sentences = [...byIdentity.values()].filter((entry) => entry.characterKey === key);
       assert.ok(sentences.length >= 1, key);
       if (legacyKrKeys.has(key) || byIdentity.has(`${key}:kr:0`)) assert.ok(sentences.length >= 2, key);
@@ -241,7 +315,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
     sqlite.exec(sql);
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
-    assert.equal(counts?.sentences, 814);
+    assert.equal(counts?.sentences, 865);
   } finally {
     sqlite.close();
   }
