@@ -135,9 +135,11 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       await expect(layer).toHaveAttribute("aria-hidden", "true");
       await expect(page.locator(".session-card-wrap .celebration-layer")).toHaveCount(0);
       expect(await layer.evaluate((node) => getComputedStyle(node).pointerEvents)).toBe("none");
-      await expect(burst).toBeAttached();
-      if (options.verifyReducedMotion) await expect(layer).toBeHidden();
-      if (options.verifyCelebration) {
+      if (options.verifyReducedMotion) {
+        await expect(layer).toBeHidden();
+        await expect(burst).toHaveCount(0);
+      } else if (options.verifyCelebration) {
+        await expect(burst).toBeAttached();
         const liveBursts = await layer.locator(".particle-burst").count();
         expect(liveBursts).toBeLessThanOrEqual(3);
         maxLiveBursts = Math.max(maxLiveBursts, liveBursts);

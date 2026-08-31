@@ -40,6 +40,18 @@ select {
   font-family: var(--font-ui);
 }
 
+.app[data-theme="quiet-technical"] * { border-width: var(--border-width); box-shadow: none; }
+.app[data-theme="quiet-technical"] .bottom-nav { box-shadow: var(--shadow-nav); }
+.app[data-theme="quiet-technical"] .feedback-bar,
+.app[data-theme="quiet-technical"] .feedback-bar--correct,
+.app[data-theme="quiet-technical"] .feedback-bar--wrong,
+.app[data-theme="quiet-technical"] .feedback-bar--skipped { border-color: var(--feedback-bg); background: var(--feedback-bg); }
+.app[data-theme="quiet-technical"] .feedback-bar > strong,
+.app[data-theme="quiet-technical"] .feedback-bar > span { color: var(--feedback-text); }
+.app[data-theme="quiet-technical"] .feedback-bar > button { border-radius: var(--radius-pill); }
+.app[data-theme="quiet-technical"] :is(.feedback-bar > button:not(:disabled), .session-empty button, .pin-keys button:not(:disabled), .pin-action:not(:disabled)):hover { background: var(--gold-hover); color: var(--gold-text); }
+.app[data-theme="quiet-technical"] :is(.pin-keys button, .pin-action):disabled { background: var(--chip-bg); color: var(--ink); opacity: 1; }
+
 main,
 .app-header {
   width: min(100%, 1080px);

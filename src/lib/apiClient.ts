@@ -62,7 +62,7 @@ export const apiClient = {
   settings: (signal?: AbortSignal) => requestJson<SettingsResponse>("/api/settings", { signal }),
   patchSettings: async (body: PatchSettingsRequest): Promise<SettingsResponse> => {
     const settings = await requestJson<SettingsResponse>("/api/settings", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
-    window.dispatchEvent(new Event(SETTINGS_UPDATED_EVENT));
+    window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: settings }));
     window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
     return settings;
   },

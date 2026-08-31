@@ -4,6 +4,7 @@ import { DailyGoal } from "../features/settings/DailyGoal";
 import { OnyomiScript } from "../features/settings/OnyomiScript";
 import { ShortcutSheet } from "../features/settings/ShortcutSheet";
 import { TrackToggles } from "../features/settings/TrackToggles";
+import { ThemePicker } from "../features/settings/ThemePicker";
 import { useSettings } from "../features/settings/useSettings";
 import { PinSettings } from "../features/pin/PinSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
@@ -34,6 +35,7 @@ export function SettingsScreen() {
           <TrackToggles enabled={settings.enabledTracks} onToggle={settings.toggle} />
           <OnyomiScript onChange={settings.setOnyomiScript} value={settings.onyomiScript} />
           <DailyGoal goal={settings.dailyGoal} onChange={settings.setGoal} />
+          <ThemePicker onChange={settings.setTheme} value={settings.theme} />
           <section className="settings-card placement-retest">
             <header>레벨 다시 측정</header>
             <div>

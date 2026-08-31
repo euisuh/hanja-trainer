@@ -1,6 +1,6 @@
 .unlock-screen { display: grid; min-height: calc(100vh - 88px); place-items: center; }
 .unlock-card { width: min(100%, 380px); padding: 28px; border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
-.unlock-card__mark { display: inline-grid; width: 58px; height: 58px; margin-bottom: 14px; place-items: center; border: 3px solid var(--ink); border-radius: 18px; background: var(--gold); font-family: var(--font-kr); font-size: 30px; font-weight: 800; box-shadow: var(--shadow-4); }
+.unlock-card__mark { display: inline-grid; width: 58px; height: 58px; margin-bottom: 14px; place-items: center; border: 3px solid var(--ink); border-radius: var(--radius-answer); background: var(--gold); color: var(--gold-text); font-family: var(--font-kr); font-size: 30px; font-weight: 800; box-shadow: var(--shadow-4); }
 .unlock-card h1 { font-size: 32px; }
 .pin-keypad { margin-top: 22px; border-radius: var(--radius-medium); }
 .pin-keypad--shake { animation: om-shake .45s; }
@@ -8,7 +8,7 @@
 .pin-dot { width: 17px; height: 17px; border: 3px solid var(--ink); border-radius: 50%; background: var(--card); }
 .pin-dot--filled { background: var(--ink); }
 .pin-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.pin-keys button, .pin-action { min-height: 48px; border: 3px solid var(--ink); border-radius: var(--radius-small); background: var(--gold); color: var(--ink); box-shadow: var(--shadow-4); cursor: pointer; font-size: 18px; font-weight: 800; }
+.pin-keys button, .pin-action { min-height: 48px; border: 3px solid var(--ink); border-radius: var(--radius-small); background: var(--gold); color: var(--gold-text); box-shadow: var(--shadow-4); cursor: pointer; font-size: 18px; font-weight: 800; }
 .pin-keys button:active, .pin-action:active { transform: translateY(3px); box-shadow: none; }
 .pin-keys button:disabled, .pin-action:disabled { cursor: not-allowed; opacity: .55; }
 .pin-keys button:last-child { grid-column: span 2; font-size: 12px; }
@@ -19,6 +19,6 @@
 .pin-setting strong { display: block; margin-top: 14px; }
 .pin-setting__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .pin-action { padding: 8px 16px; font-size: 14px; }
-.pin-action--secondary { background: var(--card); }
+.pin-action--secondary { background: var(--card); color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) { .pin-keypad--shake { animation: none; } }

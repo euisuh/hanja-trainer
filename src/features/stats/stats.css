@@ -28,7 +28,7 @@
   gap: 4px;
 }
 
-.streak-calendar__day { display: block; aspect-ratio: 1; border-radius: 4px; background: var(--paper); }
+.streak-calendar__day { display: block; aspect-ratio: 1; border-radius: var(--radius-calendar); background: var(--paper); }
 .streak-calendar__day--1 { background: var(--calendar-low); }
 .streak-calendar__day--2 { background: var(--calendar-medium); }
 .streak-calendar__day--3 { background: var(--kr-accent); }

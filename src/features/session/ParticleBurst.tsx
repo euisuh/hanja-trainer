@@ -2,15 +2,17 @@ import type { CSSProperties } from "react";
 import { colors, tracks } from "../../design/tokens";
 import type { Track } from "../../shared/types";
 
-type Props = { onDone: () => void; tier: 1 | 2 | 3; track: Track };
+export type BurstAnchor = { x: number; y: number; width: number; height: number };
+type Props = { anchor: BurstAnchor; onDone: () => void; tier: 1 | 2 | 3; track: Track };
 
-export function ParticleBurst({ onDone, tier, track }: Props) {
+export function ParticleBurst({ anchor, onDone, tier, track }: Props) {
   const count = tier === 3 ? 36 : tier === 2 ? 28 : 22;
   const palette = tier === 3
     ? [colors.gold, colors.gold, colors.flame, tracks[track].accent, colors.correct]
     : [colors.gold, colors.correct, tracks[track].accent, colors.ink];
   return (
     <div className="particle-burst" data-tier={tier} onAnimationEnd={(event) => { if (event.target === event.currentTarget) onDone(); }}>
+      <i className="quiet-glow-ring" style={{ "--glow-height": `${anchor.height}px`, "--glow-width": `${anchor.width}px`, "--glow-x": `${anchor.x}px`, "--glow-y": `${anchor.y}px` } as CSSProperties} />
       {tier >= 2 && <i className="particle-burst__ring" />}
       {tier === 3 && <i className="particle-burst__flare" />}
       {Array.from({ length: count }, (_, index) => {

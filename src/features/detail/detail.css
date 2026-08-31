@@ -27,7 +27,7 @@
   justify-content: center;
   padding: 22px;
   border: 3px solid var(--ink);
-  border-radius: 26px;
+  border-radius: var(--radius-modal);
   background: var(--card);
   box-shadow: var(--shadow-6);
   text-align: center;
@@ -73,7 +73,7 @@
 .interval-chart > header span { color: var(--muted); font-size: 12px; font-weight: 700; }
 .interval-chart__bars { display: flex; height: 110px; align-items: flex-end; gap: 8px; }
 .interval-chart__bar { display: flex; flex: 1; height: 100%; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; }
-.interval-chart__bar > span { width: 100%; border: 2px solid var(--ink); border-radius: 7px 7px 3px 3px; background: var(--detail-accent); }
+.interval-chart__bar > span { width: 100%; border: 2px solid var(--ink); border-radius: var(--radius-chart); background: var(--detail-accent); }
 .interval-chart__bar:last-child > span { background: var(--gold); }
 .interval-chart__bar small { color: var(--muted); font-size: 10px; font-weight: 800; }
 

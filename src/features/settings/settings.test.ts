@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { shortcutRows } from "./ShortcutSheet";
 import { DAILY_GOAL, normalizeDailyGoal, toggleTrack } from "./useSettings";
-import { ONYOMI_SCRIPTS } from "../../shared/settings";
+import { ONYOMI_SCRIPTS, THEME_IDS } from "../../shared/settings";
 import { GLOBAL_DESTINATIONS, SHORTCUTS } from "../../shell/shortcuts";
 
 describe("settings", () => {
@@ -25,5 +25,9 @@ describe("settings", () => {
 
   it("offers only canonical on'yomi display scripts", () => {
     expect(ONYOMI_SCRIPTS).toEqual(["katakana", "hiragana"]);
+  });
+
+  it("offers only persisted visual themes", () => {
+    expect(THEME_IDS).toEqual(["default", "quiet-technical"]);
   });
 });

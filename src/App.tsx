@@ -1,12 +1,14 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { matchPath, useLocation } from "react-router-dom";
-import { cssVariables } from "./design/tokens";
+import { themes } from "./design/tokens";
 import { AppRoutes, routes, type Screen } from "./routes";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
 import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";
-import { ApiClientError, PIN_REQUIRED_EVENT, apiClient } from "./lib/apiClient";
+import { ApiClientError, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient } from "./lib/apiClient";
 import { UnlockScreen } from "./screens/UnlockScreen";
+import type { SettingsResponse } from "./shared/api";
+import type { ThemeId } from "./shared/settings";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
@@ -16,6 +18,7 @@ export function App() {
   const { pathname } = useLocation();
   const [pinGate, setPinGate] = useState<"checking" | "locked" | "unlocked">("checking");
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
+  const [theme, setTheme] = useState<ThemeId>("default");
   const screen = routes.find((route) => matchPath({ path: route.path, end: true }, pathname))?.screen ?? "onboarding";
   const sessionActive = sessionScreens.has(screen);
 
@@ -34,8 +37,19 @@ export function App() {
     return () => { controller.abort(); window.removeEventListener(PIN_REQUIRED_EVENT, requirePin); };
   }, []);
 
+  useEffect(() => {
+    const controller = new AbortController();
+    const updateTheme = (event: Event) => {
+      const next = (event as CustomEvent<Partial<SettingsResponse>>).detail?.theme;
+      if (next) setTheme(next);
+    };
+    window.addEventListener(SETTINGS_UPDATED_EVENT, updateTheme);
+    if (pinGate === "unlocked") void apiClient.settings(controller.signal).then((settings) => setTheme(settings.theme)).catch(() => undefined);
+    return () => { controller.abort(); window.removeEventListener(SETTINGS_UPDATED_EVENT, updateTheme); };
+  }, [pinGate]);
+
   return (
-    <div className="app" style={cssVariables as CSSProperties}>
+    <div className="app" data-theme={theme} style={themes[theme].cssVariables as CSSProperties}>
       {pinGate === "checking" ? <main><p>잠금 상태 확인 중…</p></main> : pinGate === "locked" ? <UnlockScreen lockedUntil={lockedUntil} onUnlock={() => setPinGate("unlocked")} /> : <>
         {headerScreens.has(screen) && <AppHeader />}
         <main><AppRoutes /></main>

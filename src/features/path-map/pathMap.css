@@ -17,7 +17,7 @@
   min-width: 96px;
   padding: 12px 10px;
   border: 2px solid var(--track-accent);
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   background: var(--card);
   color: var(--track-accent-text);
   cursor: pointer;
@@ -66,7 +66,7 @@
   padding: 20px 16px 26px;
   overflow: hidden;
   border: 3px solid var(--ink);
-  border-radius: 26px;
+  border-radius: var(--radius-modal);
   background: var(--card);
   box-shadow: var(--shadow-6);
 }
@@ -113,10 +113,10 @@
   height: 74px;
   place-items: center;
   border: 3px solid var(--ink);
-  border-radius: 26px;
+  border-radius: var(--radius-modal);
   background: var(--gold);
   box-shadow: var(--shadow-5);
-  color: var(--ink);
+  color: var(--gold-text);
   font-family: var(--home-font);
   font-size: 34px;
   font-weight: 700;
@@ -148,7 +148,7 @@
 
 .lesson-cta {
   padding: 22px;
-  border-radius: 24px;
+  border-radius: var(--radius-cta);
   background: var(--home-accent);
   box-shadow: var(--shadow-7);
   color: var(--card);

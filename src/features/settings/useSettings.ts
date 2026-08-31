@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { apiClient } from "../../lib/apiClient";
-import { DAILY_GOAL, DEFAULT_DAILY_GOAL, normalizeDailyGoal, type OnyomiScript } from "../../shared/settings";
+import { SETTINGS_UPDATED_EVENT, apiClient } from "../../lib/apiClient";
+import { DAILY_GOAL, DEFAULT_DAILY_GOAL, normalizeDailyGoal, type OnyomiScript, type ThemeId } from "../../shared/settings";
 import { TRACKS, type Track } from "../../shared/types";
 
 export { DAILY_GOAL, normalizeDailyGoal };
@@ -16,6 +16,7 @@ export function useSettings() {
   const [enabledTracks, setEnabledTracks] = useState<Track[]>([...TRACKS]);
   const [dailyGoal, setDailyGoal] = useState(DEFAULT_DAILY_GOAL);
   const [onyomiScript, setOnyomiScript] = useState<OnyomiScript>("katakana");
+  const [theme, setTheme] = useState<ThemeId>("default");
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -27,6 +28,7 @@ export function useSettings() {
       setEnabledTracks(settings.enabledTracks);
       setDailyGoal(settings.dailyGoal);
       setOnyomiScript(settings.onyomiScript);
+      setTheme(settings.theme);
       setError("");
       setReady(true);
       const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -46,20 +48,25 @@ export function useSettings() {
     };
   }, [retryKey]);
 
-  function persist(tracks: Track[], goal: number, script: OnyomiScript) {
+  function persist(tracks: Track[], goal: number, script: OnyomiScript, visualTheme: ThemeId) {
     setEnabledTracks(tracks);
     setDailyGoal(goal);
     setOnyomiScript(script);
+    setTheme(visualTheme);
+    window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { theme: visualTheme } }));
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
-      void apiClient.patchSettings({ enabledTracks: tracks, dailyGoal: goal, onyomiScript: script }).then((settings) => {
+      void apiClient.patchSettings({ enabledTracks: tracks, dailyGoal: goal, onyomiScript: script, theme: visualTheme }).then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
         setOnyomiScript(settings.onyomiScript);
+        setTheme(settings.theme);
       }).catch(() => apiClient.settings().then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
         setOnyomiScript(settings.onyomiScript);
+        setTheme(settings.theme);
+        window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { theme: settings.theme } }));
       }).catch(() => undefined));
     }, 150);
   }
@@ -68,18 +75,21 @@ export function useSettings() {
     enabledTracks,
     dailyGoal,
     onyomiScript,
+    theme,
     error,
     ready,
     retry: () => setRetryKey((value) => value + 1),
     flush: async () => {
       window.clearTimeout(timer.current);
-      const settings = await apiClient.patchSettings({ enabledTracks, dailyGoal, onyomiScript });
+      const settings = await apiClient.patchSettings({ enabledTracks, dailyGoal, onyomiScript, theme });
       setEnabledTracks(settings.enabledTracks);
       setDailyGoal(settings.dailyGoal);
       setOnyomiScript(settings.onyomiScript);
+      setTheme(settings.theme);
     },
-    toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript),
-    setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript),
-    setOnyomiScript: (script: OnyomiScript) => persist(enabledTracks, dailyGoal, script),
+    toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript, theme),
+    setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript, theme),
+    setOnyomiScript: (script: OnyomiScript) => persist(enabledTracks, dailyGoal, script, theme),
+    setTheme: (next: ThemeId) => persist(enabledTracks, dailyGoal, onyomiScript, next),
   };
 }

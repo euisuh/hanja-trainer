@@ -12,7 +12,7 @@ import { AnswerOptions } from "./AnswerOptions";
 import { buildQueue, buildReadingItem, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
-import { ParticleBurst } from "./ParticleBurst";
+import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
 import { PauseModal } from "./PauseModal";
 import { QuizCard } from "./QuizCard";
 import { SkipAnswer } from "./SkipAnswer";
@@ -23,7 +23,7 @@ import "./session.css";
 export type SessionMode = "lesson" | "review" | "placement" | "unit-test";
 
 const AUTO_ADVANCE_DELAY_MS = 250;
-type Burst = { id: number; tier: 1 | 2 | 3; track: Track };
+type Burst = { anchor: BurstAnchor; id: number; tier: 1 | 2 | 3; track: Track };
 
 export type SessionResult = {
   xp: number;
@@ -104,6 +104,7 @@ export function SessionRunner({
   const completing = useRef(false);
   const currentIndex = useRef(0);
   const nextBurstId = useRef(0);
+  const runnerRef = useRef<HTMLElement>(null);
   const advanceRef = useRef<() => void>(() => undefined);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
   const issuedUnitTestCard = mode === "unit-test" ? unitTestQueue[index] : undefined;
@@ -203,7 +204,13 @@ export function SessionRunner({
     setNextInterval(interval);
     if (isCorrect) {
       const tier = nextCombo >= 6 ? 3 : nextCombo >= 3 ? 2 : 1;
-      setBursts((current) => [...current.slice(-2), { id: nextBurstId.current += 1, tier, track: item.track }]);
+      const option = choice === null ? undefined : runnerRef.current?.querySelectorAll<HTMLElement>(".answer-option")[choice];
+      const optionRect = option?.getBoundingClientRect();
+      const runnerRect = runnerRef.current?.getBoundingClientRect();
+      if (optionRect && runnerRect) setBursts((current) => [...current.slice(-2), {
+        anchor: { x: optionRect.left - runnerRect.left + optionRect.width / 2, y: optionRect.top - runnerRect.top + optionRect.height / 2, width: optionRect.width, height: optionRect.height },
+        id: nextBurstId.current += 1, tier, track: item.track,
+      }]);
     }
   }
 
@@ -307,7 +314,7 @@ export function SessionRunner({
     : item.kind !== "compare" ? item.options : [];
 
   return (
-    <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} style={style}>
+    <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} ref={runnerRef} style={style}>
       <div className="session-chrome">
         <button aria-label="세션 일시정지" onClick={() => setPaused(true)} type="button">esc</button>
         <div aria-label={`진행률 ${progress}/${queueLength}`} className="session-progress" role="progressbar" aria-valuemax={queueLength} aria-valuemin={0} aria-valuenow={progress}>
@@ -328,7 +335,7 @@ export function SessionRunner({
       </div>
       <div aria-hidden="true" className="celebration-layer">
         {bursts.map((burst) => (
-          <ParticleBurst key={burst.id} onDone={() => setBursts((current) => current.filter(({ id }) => id !== burst.id))} tier={burst.tier} track={burst.track} />
+          <ParticleBurst anchor={burst.anchor} key={burst.id} onDone={() => setBursts((current) => current.filter(({ id }) => id !== burst.id))} tier={burst.tier} track={burst.track} />
         ))}
       </div>
       <div className="session-card-wrap" key={index}>

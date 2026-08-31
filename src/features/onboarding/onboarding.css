@@ -75,7 +75,7 @@
   height: 26px;
   place-items: center;
   border: 2px solid var(--ink);
-  border-radius: 8px;
+  border-radius: var(--radius-badge);
   background: var(--card);
   color: var(--card);
   font-size: 15px;
@@ -98,7 +98,7 @@
   border: 3px solid var(--ink);
   background: var(--gold);
   box-shadow: var(--shadow-6);
-  color: var(--ink);
+  color: var(--gold-text);
   cursor: pointer;
   font-weight: 800;
 }
@@ -127,7 +127,7 @@
 .placement-result__card small { color: var(--result-accent-text); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .placement-result__card strong { margin: 6px 0 2px; font-size: 40px; font-weight: 800; }
 .placement-result__card span { color: var(--muted); font-size: 13px; font-weight: 600; }
-.placement-result__cta { padding: 16px 26px; border-radius: 18px; font-size: 16px; }
+.placement-result__cta { padding: 16px 26px; border-radius: var(--radius-answer); font-size: 16px; }
 
 @media (max-width: 560px) {
   .track-picker,

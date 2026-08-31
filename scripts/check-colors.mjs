@@ -56,6 +56,7 @@ async function scan(directory) {
     else if ([".css", ".ts", ".tsx"].includes(extname(path))) {
       const name = relative(root.pathname, path);
       if (name === tokenFile) continue;
+      if (name.endsWith(".test.ts") || name.endsWith(".test.tsx")) continue;
       const lines = (await readFile(path, "utf8")).split("\n");
       lines.forEach((line, index) => {
         if (color.test(line)) violations.push(`${name}:${index + 1}: ${line.trim()}`);

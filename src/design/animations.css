@@ -7,3 +7,4 @@
 @keyframes om-celebration { from { opacity: .999 } to { opacity: 1 } }
 @keyframes om-celebration-ring { from { opacity: 1; transform: translate(-50%, -50%) scale(.35) } to { opacity: 0; transform: translate(-50%, -50%) scale(2.8) } }
 @keyframes om-celebration-flare { 0% { opacity: 0; transform: scale(.96) } 35% { opacity: .75 } 100% { opacity: 0; transform: scale(1.04) } }
+@keyframes om-quiet-glow { from { box-shadow: 0 0 0 0 var(--correct-glow) } to { box-shadow: 0 0 0 10px var(--correct-glow-clear) } }

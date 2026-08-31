@@ -3,11 +3,14 @@
 .shortcut-sheet { flex: 1 1 300px; min-width: 280px; padding: 22px; border-radius: var(--radius-large); background: var(--ink); color: var(--paper); }
 .shortcut-sheet > header { margin-bottom: 16px; color: var(--faint); font-size: 12px; font-weight: 800; letter-spacing: .14em; }
 .shortcut-sheet__row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--shortcut-divider); }
-.shortcut-sheet__row kbd { min-width: 74px; padding: 5px 10px; border-radius: 8px; background: var(--paper); color: var(--ink); font-size: 12px; text-align: center; }
+.shortcut-sheet__row kbd { min-width: 74px; padding: 5px 10px; border-radius: var(--radius-badge); background: var(--paper); color: var(--ink); font-size: 12px; text-align: center; }
 .shortcut-sheet__row span { font-size: 14px; font-weight: 600; }
 .settings-controls { display: flex; flex: 1 1 280px; min-width: 260px; flex-direction: column; gap: 14px; }
 .settings-card { padding: 20px; border: 3px solid var(--ink); border-radius: var(--radius-large); background: var(--card); box-shadow: var(--shadow-5); }
 .settings-card > header { margin-bottom: 14px; font-size: 13px; font-weight: 800; }
+.theme-picker > div { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.theme-picker button { padding: 11px; border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-weight: 800; }
+.theme-picker button[aria-pressed="true"] { border-color: var(--gold); background: var(--chip-bg); color: var(--gold-hover); }
 .track-toggles > div, .placement-retest > div { display: flex; flex-direction: column; gap: 10px; }
 .track-toggles > p, .placement-retest > p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
 .track-toggles button, .placement-retest button { display: flex; align-items: center; justify-content: space-between; padding: 13px 15px; border: 2px solid var(--settings-accent); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-size: 14px; font-weight: 800; }

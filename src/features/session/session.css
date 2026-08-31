@@ -122,7 +122,7 @@ button.session-sync {
 
 .quiz-card__badges span {
   padding: 5px 11px;
-  border-radius: 8px;
+  border-radius: var(--radius-badge);
   font-size: 11px;
   font-weight: 800;
 }
@@ -171,7 +171,7 @@ button.session-sync {
   min-width: 240px;
   padding: 16px;
   border: 2px solid var(--border-tan);
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   background: var(--panel);
 }
 
@@ -221,7 +221,7 @@ button.session-sync {
 .compare-card__panel {
   padding: 14px;
   border: 2px solid;
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
 }
 
 .compare-card__panel > div {
@@ -270,7 +270,7 @@ button.session-sync {
   gap: 13px;
   padding: 15px 16px;
   border: 3px solid var(--ink);
-  border-radius: 18px;
+  border-radius: var(--radius-answer);
   background: var(--card);
   box-shadow: var(--shadow-4);
   color: var(--ink);
@@ -292,7 +292,7 @@ button.session-sync {
   width: 30px;
   height: 30px;
   place-items: center;
-  border-radius: 9px;
+  border-radius: var(--radius-answer-key);
   background: var(--chip-bg);
   color: var(--muted);
   font-size: 14px;
@@ -309,7 +309,7 @@ button.session-sync {
 }
 
 .answer-option__copy strong {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: var(--font-answer);
   font-size: 19px;
   font-weight: 800;
 }
@@ -339,14 +339,14 @@ button.session-sync {
   margin-top: 12px;
   padding: 12px 16px;
   border: 2px solid var(--border-tan);
-  border-radius: 14px;
+  border-radius: var(--radius-control);
   background: var(--panel);
   color: var(--ink);
   cursor: pointer;
 }
 
 .skip-answer:disabled { cursor: default; opacity: .65; }
-.skip-answer kbd { width: 30px; padding: 6px 0; border-radius: 9px; background: var(--chip-bg); text-align: center; }
+.skip-answer kbd { width: 30px; padding: 6px 0; border-radius: var(--radius-answer-key); background: var(--chip-bg); text-align: center; }
 .skip-answer strong { font-size: 15px; }
 
 .feedback-bar {
@@ -382,10 +382,10 @@ button.session-sync {
   gap: 9px;
   padding: 11px 18px;
   border: 3px solid var(--ink);
-  border-radius: 14px;
+  border-radius: var(--radius-control);
   background: var(--gold);
   box-shadow: var(--shadow-4);
-  color: var(--ink);
+  color: var(--gold-text);
   cursor: pointer;
   font-size: 14px;
   font-weight: 800;
@@ -393,6 +393,7 @@ button.session-sync {
 
 .feedback-bar > button:disabled {
   background: var(--chip-bg);
+  color: var(--ink);
   cursor: default;
 }
 
@@ -465,6 +466,21 @@ button.session-sync {
   animation: om-celebration-flare .8s ease-out forwards;
 }
 
+.quiet-glow-ring { display: none; }
+.app[data-theme="quiet-technical"] .particle-burst { animation-duration: .8s; }
+.app[data-theme="quiet-technical"] .particle-burst > * { display: none; }
+.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring {
+  position: absolute;
+  top: var(--glow-y);
+  left: var(--glow-x);
+  display: block;
+  width: var(--glow-width);
+  height: var(--glow-height);
+  border-radius: var(--radius-answer);
+  animation: om-quiet-glow .8s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
 .pause-modal {
   position: fixed;
   inset: 0;
@@ -479,7 +495,7 @@ button.session-sync {
   width: min(100%, 380px);
   padding: 26px;
   border: 3px solid var(--ink);
-  border-radius: 26px;
+  border-radius: var(--radius-modal);
   background: var(--paper);
   box-shadow: 0 8px 0 var(--ink);
 }
@@ -504,7 +520,7 @@ button.session-sync {
   margin-top: 10px;
   padding: 14px 16px;
   border: 3px solid var(--ink);
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   background: var(--card);
   box-shadow: var(--shadow-4);
   cursor: pointer;
@@ -512,7 +528,7 @@ button.session-sync {
   font-weight: 800;
 }
 
-.pause-modal .pause-modal__resume { background: var(--gold); }
+.pause-modal .pause-modal__resume { background: var(--gold); color: var(--gold-text); }
 
 .session-empty {
   display: grid;
@@ -551,7 +567,7 @@ button.session-sync {
 .session-complete__stats > div {
   padding: 18px;
   border: 3px solid var(--ink);
-  border-radius: 18px;
+  border-radius: var(--radius-answer);
   background: var(--card);
   box-shadow: var(--shadow-5);
 }
@@ -579,12 +595,13 @@ button.session-sync {
   gap: 12px;
   padding: 16px 24px;
   border: 3px solid var(--ink);
-  border-radius: 18px;
+  border-radius: var(--radius-answer);
   background: var(--gold);
   box-shadow: var(--shadow-6);
   cursor: pointer;
   font-size: 16px;
   font-weight: 800;
+  color: var(--gold-text);
 }
 
 @media (max-width: 560px) {
@@ -611,7 +628,7 @@ button.session-sync {
     animation: none;
   }
 
-  .celebration-layer { display: none; }
+  .celebration-layer { visibility: hidden; }
   .session-progress span { transition: none; }
   .session-complete,
   .session-complete__glyph { animation: none; }
