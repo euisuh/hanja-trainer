@@ -104,7 +104,8 @@
       "meaningKo": "빌",
       "variants": {
         "kr": "空",
-        "jp": "空"
+        "jp": "空",
+        "cn": "空"
       },
       "strokeCount": 8,
       "tracks": [
@@ -219,7 +220,8 @@
       "meaningKo": "대답",
       "variants": {
         "kr": "答",
-        "jp": "答"
+        "jp": "答",
+        "cn": "答"
       },
       "strokeCount": 12,
       "tracks": [
@@ -277,7 +279,8 @@
       "meaningKo": "힘",
       "variants": {
         "kr": "力",
-        "jp": "力"
+        "jp": "力",
+        "cn": "力"
       },
       "strokeCount": 2,
       "tracks": [
@@ -355,7 +358,8 @@
       "meaningKo": "물건",
       "variants": {
         "kr": "物",
-        "jp": "物"
+        "jp": "物",
+        "cn": "物"
       },
       "strokeCount": 8,
       "tracks": [
@@ -374,7 +378,8 @@
       "meaningKo": "모",
       "variants": {
         "kr": "方",
-        "jp": "方"
+        "jp": "方",
+        "cn": "方"
       },
       "strokeCount": 4,
       "tracks": [
@@ -471,7 +476,8 @@
       "meaningKo": "인간",
       "variants": {
         "kr": "世",
-        "jp": "世"
+        "jp": "世",
+        "cn": "世"
       },
       "strokeCount": 5,
       "tracks": [
@@ -568,7 +574,8 @@
       "meaningKo": "편안",
       "variants": {
         "kr": "安",
-        "jp": "安"
+        "jp": "安",
+        "cn": "安"
       },
       "strokeCount": 6,
       "tracks": [
@@ -726,7 +733,8 @@
       "meaningKo": "온전할",
       "variants": {
         "kr": "全",
-        "jp": "全"
+        "jp": "全",
+        "cn": "全"
       },
       "strokeCount": 6,
       "tracks": [
@@ -805,7 +813,8 @@
       "meaningKo": "곧을",
       "variants": {
         "kr": "直",
-        "jp": "直"
+        "jp": "直",
+        "cn": "直"
       },
       "strokeCount": 8,
       "tracks": [
@@ -824,7 +833,8 @@
       "meaningKo": "평평할",
       "variants": {
         "kr": "平",
-        "jp": "平"
+        "jp": "平",
+        "cn": "平"
       },
       "strokeCount": 5,
       "tracks": [
@@ -883,7 +893,8 @@
       "meaningKo": "바다",
       "variants": {
         "kr": "海",
-        "jp": "海"
+        "jp": "海",
+        "cn": "海"
       },
       "strokeCount": 10,
       "tracks": [
@@ -922,7 +933,8 @@
       "meaningKo": "살",
       "variants": {
         "kr": "活",
-        "jp": "活"
+        "jp": "活",
+        "cn": "活"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1074,7 +1086,8 @@
       "meaningKo": "겨울",
       "variants": {
         "kr": "冬",
-        "jp": "冬"
+        "jp": "冬",
+        "cn": "冬"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1308,7 +1321,8 @@
       "meaningKo": "셈",
       "variants": {
         "kr": "算",
-        "jp": "算"
+        "jp": "算",
+        "cn": "算"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1406,7 +1420,8 @@
       "meaningKo": "셈",
       "variants": {
         "kr": "數",
-        "jp": "数"
+        "jp": "数",
+        "cn": "数"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1444,7 +1459,8 @@
       "meaningKo": "마음",
       "variants": {
         "kr": "心",
-        "jp": "心"
+        "jp": "心",
+        "cn": "心"
       },
       "strokeCount": 4,
       "tracks": [
@@ -1522,7 +1538,8 @@
       "meaningKo": "기를",
       "variants": {
         "kr": "育",
-        "jp": "育"
+        "jp": "育",
+        "cn": "育"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1636,7 +1653,8 @@
       "meaningKo": "임금",
       "variants": {
         "kr": "主",
-        "jp": "主"
+        "jp": "主",
+        "cn": "主"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1655,7 +1673,8 @@
       "meaningKo": "무거울",
       "variants": {
         "kr": "重",
-        "jp": "重"
+        "jp": "重",
+        "cn": "重"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1674,7 +1693,8 @@
       "meaningKo": "종이",
       "variants": {
         "kr": "紙",
-        "jp": "紙"
+        "jp": "紙",
+        "cn": "纸"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1772,7 +1792,8 @@
       "meaningKo": "풀",
       "variants": {
         "kr": "草",
-        "jp": "草"
+        "jp": "草",
+        "cn": "草"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1810,7 +1831,8 @@
       "meaningKo": "가을",
       "variants": {
         "kr": "秋",
-        "jp": "秋"
+        "jp": "秋",
+        "cn": "秋"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1829,7 +1851,8 @@
       "meaningKo": "봄",
       "variants": {
         "kr": "春",
-        "jp": "春"
+        "jp": "春",
+        "cn": "春"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1887,7 +1910,8 @@
       "meaningKo": "여름",
       "variants": {
         "kr": "夏",
-        "jp": "夏"
+        "jp": "夏",
+        "cn": "夏"
       },
       "strokeCount": 10,
       "tracks": [

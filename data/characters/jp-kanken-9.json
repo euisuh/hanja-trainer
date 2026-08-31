@@ -67,7 +67,9 @@
       "meaningEn": "talent, ability",
       "meaningKo": "재주",
       "variants": {
-        "jp": "才"
+        "jp": "才",
+        "kr": "才",
+        "cn": "才"
       },
       "strokeCount": 3,
       "tracks": [
@@ -340,7 +342,8 @@
       "meaningKo": "마음",
       "variants": {
         "kr": "心",
-        "jp": "心"
+        "jp": "心",
+        "cn": "心"
       },
       "strokeCount": 4,
       "tracks": [
@@ -381,7 +384,8 @@
       "meaningKo": "모",
       "variants": {
         "kr": "方",
-        "jp": "方"
+        "jp": "方",
+        "cn": "方"
       },
       "strokeCount": 4,
       "tracks": [
@@ -443,7 +447,8 @@
       "meaningEn": "hair, fur, feathers",
       "meaningKo": "터럭",
       "variants": {
-        "jp": "毛"
+        "jp": "毛",
+        "cn": "毛"
       },
       "strokeCount": 4,
       "tracks": [
@@ -505,7 +510,8 @@
       "meaningKo": "겨울",
       "variants": {
         "kr": "冬",
-        "jp": "冬"
+        "jp": "冬",
+        "cn": "冬"
       },
       "strokeCount": 5,
       "tracks": [
@@ -526,7 +532,8 @@
       "meaningKo": "북녘",
       "variants": {
         "kr": "北",
-        "jp": "北"
+        "jp": "北",
+        "cn": "北"
       },
       "strokeCount": 5,
       "tracks": [
@@ -692,7 +699,9 @@
       "meaningEn": "use, employ, apply, operate",
       "meaningKo": "쓸",
       "variants": {
-        "jp": "用"
+        "jp": "用",
+        "kr": "用",
+        "cn": "用"
       },
       "strokeCount": 5,
       "tracks": [
@@ -858,7 +867,9 @@
       "meaningEn": "bear, accept, undertake",
       "meaningKo": "마땅",
       "variants": {
-        "jp": "当"
+        "jp": "当",
+        "kr": "當",
+        "cn": "当"
       },
       "strokeCount": 13,
       "tracks": [
@@ -941,7 +952,8 @@
       "meaningEn": "feather, plume",
       "meaningKo": "깃",
       "variants": {
-        "jp": "羽"
+        "jp": "羽",
+        "cn": "羽"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1047,7 +1059,9 @@
       "meaningEn": "go",
       "meaningKo": "다닐",
       "variants": {
-        "jp": "行"
+        "jp": "行",
+        "kr": "行",
+        "cn": "行"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1171,7 +1185,8 @@
       "meaningEn": "sound, voice, noise",
       "meaningKo": "소리",
       "variants": {
-        "jp": "声"
+        "jp": "声",
+        "cn": "声"
       },
       "strokeCount": 17,
       "tracks": [
@@ -1296,7 +1311,9 @@
       "meaningEn": "horn",
       "meaningKo": "뿔",
       "variants": {
-        "jp": "角"
+        "jp": "角",
+        "kr": "角",
+        "cn": "角"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1316,7 +1333,9 @@
       "meaningEn": "words, speech",
       "meaningKo": "말씀",
       "variants": {
-        "jp": "言"
+        "jp": "言",
+        "kr": "言",
+        "cn": "言"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1672,7 +1691,8 @@
       "meaningKo": "곧을",
       "variants": {
         "kr": "直",
-        "jp": "直"
+        "jp": "直",
+        "cn": "直"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1758,7 +1778,8 @@
       "meaningKo": "남녘",
       "variants": {
         "kr": "南",
-        "jp": "南"
+        "jp": "南",
+        "cn": "南"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1864,7 +1885,8 @@
       "meaningKo": "살",
       "variants": {
         "kr": "活",
-        "jp": "活"
+        "jp": "活",
+        "cn": "活"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1885,7 +1907,8 @@
       "meaningKo": "바다",
       "variants": {
         "kr": "海",
-        "jp": "海"
+        "jp": "海",
+        "cn": "海"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2009,7 +2032,8 @@
       "meaningKo": "여름",
       "variants": {
         "kr": "夏",
-        "jp": "夏"
+        "jp": "夏",
+        "cn": "夏"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2093,7 +2117,8 @@
       "meaningKo": "종이",
       "variants": {
         "kr": "紙",
-        "jp": "紙"
+        "jp": "紙",
+        "cn": "纸"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2217,7 +2242,9 @@
       "meaningEn": "reason, logic",
       "meaningKo": "다스릴",
       "variants": {
-        "jp": "理"
+        "jp": "理",
+        "kr": "理",
+        "cn": "理"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2257,7 +2284,9 @@
       "meaningEn": "ship, boat, vessel",
       "meaningKo": "배",
       "variants": {
-        "jp": "船"
+        "jp": "船",
+        "kr": "船",
+        "cn": "船"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2360,7 +2389,9 @@
       "meaningEn": "yellow",
       "meaningKo": "누를",
       "variants": {
-        "jp": "黄"
+        "jp": "黄",
+        "kr": "黃",
+        "cn": "黄"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2401,7 +2432,9 @@
       "meaningEn": "horse",
       "meaningKo": "말",
       "variants": {
-        "jp": "馬"
+        "jp": "馬",
+        "kr": "馬",
+        "cn": "马"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2484,7 +2517,8 @@
       "meaningKo": "대답",
       "variants": {
         "kr": "答",
-        "jp": "答"
+        "jp": "答",
+        "cn": "答"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2610,7 +2644,8 @@
       "meaningKo": "셈",
       "variants": {
         "kr": "數",
-        "jp": "数"
+        "jp": "数",
+        "cn": "数"
       },
       "strokeCount": 15,
       "tracks": [
@@ -2716,7 +2751,8 @@
       "meaningKo": "셈",
       "variants": {
         "kr": "算",
-        "jp": "算"
+        "jp": "算",
+        "cn": "算"
       },
       "strokeCount": 14,
       "tracks": [
@@ -2736,7 +2772,9 @@
       "meaningEn": "hear",
       "meaningKo": "들을",
       "variants": {
-        "jp": "聞"
+        "jp": "聞",
+        "kr": "聞",
+        "cn": "闻"
       },
       "strokeCount": 14,
       "tracks": [
@@ -2919,7 +2957,9 @@
       "meaningEn": "combine, unite, join",
       "meaningKo": "합할",
       "variants": {
-        "jp": "合"
+        "jp": "合",
+        "kr": "合",
+        "cn": "合"
       },
       "strokeCount": 6,
       "tracks": [
@@ -3041,7 +3081,8 @@
       "meaningKo": "봄",
       "variants": {
         "kr": "春",
-        "jp": "春"
+        "jp": "春",
+        "cn": "春"
       },
       "strokeCount": 9,
       "tracks": [
@@ -3103,7 +3144,8 @@
       "meaningKo": "가을",
       "variants": {
         "kr": "秋",
-        "jp": "秋"
+        "jp": "秋",
+        "cn": "秋"
       },
       "strokeCount": 9,
       "tracks": [
@@ -3306,7 +3348,9 @@
       "meaningEn": "steam, vapor, gas",
       "meaningKo": "물 끓는 김",
       "variants": {
-        "jp": "汽"
+        "jp": "汽",
+        "kr": "汽",
+        "cn": "汽"
       },
       "strokeCount": 7,
       "tracks": [

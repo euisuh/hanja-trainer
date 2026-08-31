@@ -159,7 +159,8 @@
       "meaningKo": "힘",
       "variants": {
         "kr": "力",
-        "jp": "力"
+        "jp": "力",
+        "cn": "力"
       },
       "strokeCount": 2,
       "tracks": [
@@ -334,7 +335,8 @@
       "meaningKo": "메",
       "variants": {
         "kr": "山",
-        "jp": "山"
+        "jp": "山",
+        "cn": "山"
       },
       "strokeCount": 3,
       "tracks": [
@@ -978,7 +980,9 @@
       "meaningEn": "eye",
       "meaningKo": "눈",
       "variants": {
-        "jp": "目"
+        "jp": "目",
+        "kr": "目",
+        "cn": "目"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1253,7 +1257,9 @@
       "meaningEn": "ear",
       "meaningKo": "귀",
       "variants": {
-        "jp": "耳"
+        "jp": "耳",
+        "kr": "耳",
+        "cn": "耳"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1527,7 +1533,8 @@
       "meaningKo": "빌",
       "variants": {
         "kr": "空",
-        "jp": "空"
+        "jp": "空",
+        "cn": "空"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1610,7 +1617,8 @@
       "meaningKo": "풀",
       "variants": {
         "kr": "草",
-        "jp": "草"
+        "jp": "草",
+        "cn": "草"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1630,7 +1638,9 @@
       "meaningEn": "sound, tone, pitch, pronunciation",
       "meaningKo": "소리",
       "variants": {
-        "jp": "音"
+        "jp": "音",
+        "kr": "音",
+        "cn": "音"
       },
       "strokeCount": 9,
       "tracks": [

@@ -48,16 +48,34 @@ characters ship without a sentence rather than introducing new prose.
 node scripts/generate-jp-through-8kyu.mjs /path/to/kanji-data /path/to/shinjitai-table /path/to/hanjadict/src/hanjadict/table.json
 ```
 
-## Chinese: HSK 3.0 2026 HSK1, HSK2
+## Chinese: HSK 3.0 2026 HSK1 through HSK3
 
 - Official syllabus origin: [Chinese Testing International](https://www.chinesetest.cn/).
-- Machine-readable official syllabus extraction: [profesorm/hsk30](https://github.com/profesorm/hsk30/tree/f3163ca6edff5d6b1e81afb1cd716bb78f5a958a), CC BY 4.0. HSK1 has 246 unique characters. HSK2 has 220 unique characters after unioning recognition and handwriting rows; five characters occur in both source categories.
-- Tone-marked Mandarin, English definitions, traditional/simplified mappings, and `通用规范汉字表` positions: [Unicode Unihan 17.0.0](https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip), under the [Unicode data license](https://www.unicode.org/license.txt). Positions 1–3500 map to `一级字`, 3501–6500 to `二级字`, and 6501–8105 to `三级字`.
+- Machine-readable official syllabus extraction: [profesorm/hsk30](https://github.com/profesorm/hsk30/tree/f3163ca6edff5d6b1e81afb1cd716bb78f5a958a), retrieved 2026-08-31 at commit `f3163ca6edff5d6b1e81afb1cd716bb78f5a958a`, CC BY 4.0. The pinned `data/hsk_hanzi_compact.json` has SHA-256 `6f48d2e8bf9e61857246a9f84c2d6ca3d3168df554be1f51fd746c30ca85ede2`.
+- Tone-marked Mandarin, English definitions, traditional/simplified mappings, total strokes, and `通用规范汉字表` positions: [Unicode Unihan 17.0.0](https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip), retrieved 2026-08-31 under the [Unicode data license](https://www.unicode.org/license.txt). The exact input SHA-256 values are `575e69c9ad85a4737a889a4f94cbd987042a90a1a6cc16dd3f4ed995c715b17c` (`Unihan_Readings.txt`), `3f23cd71872633f3350875d25bd388e83b60fa71807634c9a600ec26f38a68ab` (`Unihan_Variants.txt`), `d1c817dd7db84295dab0643c277d97c2fa742c245f8824e6736c2a0935095325` (`Unihan_IRGSources.txt`), and `4fabda168d04a5ac360809a8bfa377fe54e04fbc069ba67cacad4df03d691fa0` (`Unihan_OtherMappings.txt`). The `kTGH` value supplies the actual table position: 1–3500 map to `一级字`, 3501–6500 to `二级字`, and 6501–8105 to `三级字`; `kTGHZ2013` is a dictionary locator and is not used as a tier index.
+- Korean dictionary glosses: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), retrieved 2026-08-31 at commit `39bbc7ba04514ec5d29eee79259823fa720b7065`, MIT license. `src/hanjadict/table.json` has SHA-256 `d36ceb0d37ed53b9af78a88517ebc1499502cdef0367c396ff723460af52e471`. The first sourced 훈음 supplies `meaningKo`; its reading syllable is removed without translation or paraphrase.
 
-The HSK2 handwriting/recognition union repeats 95 HSK1 recognition characters.
-Because the frozen schema stores one band per `(character, track)`, repeated
-characters retain their earliest recognition band (`HSK 1`) while remaining
-members of the HSK2 curriculum units.
+The compact source has 246 membership rows (246 unique glyphs) at HSK1,
+225 membership rows (220 unique glyphs) at HSK2, and 434 membership rows
+(284 unique glyphs) at HSK3. Five HSK2 glyphs and 150 HSK3 glyphs occur in
+both recognition and handwriting categories inside their level. After that
+within-level union, HSK2 repeats 95 HSK1 glyphs while HSK3 repeats none from
+HSK1 or HSK2. The true cumulative simplified-glyph union is therefore 246 at
+HSK1, 371 through HSK2, and 655 through HSK3; the prior 466 figure was the
+sum of file rows, not the cross-level union.
+
+The frozen schema stores one band per `(character, track)`. A repeated glyph
+retains its earliest band while remaining a member of each later curriculum
+unit. `cn-hsk3.json` therefore contains the exact 284-glyph HSK3 union with
+badge `HSK 3` and ordinal 3. `scripts/generate-cn-through-hsk3.mjs` reproduces
+the character file and its 29 units from the pinned HSK, Unihan, and HanjaDict
+inputs without network access. It also reuses 67 exact rows from the existing
+frozen Tatoeba selection where those sentences already contain an HSK3 glyph;
+no new sentence prose is generated or translated.
+
+```sh
+npx tsx scripts/generate-cn-through-hsk3.mjs /path/to/hsk30 /path/to/unihan /path/to/hanjadict/src/hanjadict/table.json
+```
 
 ## Canonical glyph and variant policy
 

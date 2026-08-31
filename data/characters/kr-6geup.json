@@ -6,7 +6,8 @@
       "meaningKo": "말씀",
       "variants": {
         "jp": "言",
-        "kr": "言"
+        "kr": "言",
+        "cn": "言"
       },
       "strokeCount": 7,
       "tracks": [
@@ -101,7 +102,8 @@
       "meaningKo": "예도",
       "variants": {
         "kr": "禮",
-        "jp": "礼"
+        "jp": "礼",
+        "cn": "礼"
       },
       "strokeCount": 17,
       "tracks": [
@@ -214,7 +216,8 @@
       "meaningKo": "구분할",
       "variants": {
         "kr": "區",
-        "jp": "区"
+        "jp": "区",
+        "cn": "区"
       },
       "strokeCount": 11,
       "tracks": [
@@ -233,7 +236,8 @@
       "meaningKo": "등급",
       "variants": {
         "kr": "級",
-        "jp": "級"
+        "jp": "級",
+        "cn": "级"
       },
       "strokeCount": 9,
       "tracks": [
@@ -385,7 +389,8 @@
       "meaningEn": "tree; plant; set up, establish",
       "meaningKo": "나무",
       "variants": {
-        "kr": "樹"
+        "kr": "樹",
+        "cn": "树"
       },
       "strokeCount": 16,
       "tracks": [
@@ -424,7 +429,8 @@
       "meaningKo": "볕",
       "variants": {
         "kr": "陽",
-        "jp": "陽"
+        "jp": "陽",
+        "cn": "阳"
       },
       "strokeCount": 11,
       "tracks": [
@@ -519,7 +525,8 @@
       "meaningKo": "눈",
       "variants": {
         "jp": "目",
-        "kr": "目"
+        "kr": "目",
+        "cn": "目"
       },
       "strokeCount": 5,
       "tracks": [
@@ -749,7 +756,8 @@
       "meaningKo": "향할",
       "variants": {
         "kr": "向",
-        "jp": "向"
+        "jp": "向",
+        "cn": "向"
       },
       "strokeCount": 6,
       "tracks": [
@@ -787,7 +795,8 @@
       "meaningKo": "은",
       "variants": {
         "kr": "銀",
-        "jp": "銀"
+        "jp": "銀",
+        "cn": "银"
       },
       "strokeCount": 14,
       "tracks": [
@@ -806,7 +815,8 @@
       "meaningKo": "합할",
       "variants": {
         "jp": "合",
-        "kr": "合"
+        "kr": "合",
+        "cn": "合"
       },
       "strokeCount": 6,
       "tracks": [
@@ -959,7 +969,8 @@
       "meaningKo": "다닐",
       "variants": {
         "jp": "行",
-        "kr": "行"
+        "kr": "行",
+        "cn": "行"
       },
       "strokeCount": 6,
       "tracks": [
@@ -978,7 +989,8 @@
       "meaningKo": "느낄",
       "variants": {
         "kr": "感",
-        "jp": "感"
+        "jp": "感",
+        "cn": "感"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1015,7 +1027,8 @@
       "meaningKo": "뿌리",
       "variants": {
         "kr": "根",
-        "jp": "根"
+        "jp": "根",
+        "cn": "根"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1070,7 +1083,8 @@
       "meaningEn": "plum; judge; surname",
       "meaningKo": "오얏",
       "variants": {
-        "kr": "李"
+        "kr": "李",
+        "cn": "李"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1259,7 +1273,8 @@
       "meaningKo": "놈",
       "variants": {
         "kr": "者",
-        "jp": "者"
+        "jp": "者",
+        "cn": "者"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1297,7 +1312,8 @@
       "meaningKo": "정할",
       "variants": {
         "kr": "定",
-        "jp": "定"
+        "jp": "定",
+        "cn": "定"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1373,7 +1389,8 @@
       "meaningEn": "special, unique, distinguished",
       "meaningKo": "특별할",
       "variants": {
-        "kr": "特"
+        "kr": "特",
+        "cn": "特"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1412,7 +1429,8 @@
       "meaningKo": "누를",
       "variants": {
         "jp": "黄",
-        "kr": "黃"
+        "kr": "黃",
+        "cn": "黄"
       },
       "strokeCount": 12,
       "tracks": [

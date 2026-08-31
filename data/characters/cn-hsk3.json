@@ -1,0 +1,7254 @@
+{
+  "characters": [
+    {
+      "key": "阿",
+      "meaningEn": "prefix for people's names; used in transliteration",
+      "meaningKo": "언덕",
+      "variants": {
+        "cn": "阿"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "阿",
+          "pinyin": "ā",
+          "meaning": "prefix for people's names; used in transliteration",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "把",
+      "meaningEn": "hold, take; guard; regard as",
+      "meaningKo": "잡을",
+      "variants": {
+        "cn": "把"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "把",
+          "pinyin": "bǎ",
+          "meaning": "hold, take; guard; regard as",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "般",
+      "meaningEn": "sort, manner, kind, category",
+      "meaningKo": "일반",
+      "variants": {
+        "cn": "般"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "般",
+          "pinyin": "bān",
+          "meaning": "sort, manner, kind, category",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "搬",
+      "meaningEn": "transfer, move, remove, shift",
+      "meaningKo": "옮길",
+      "variants": {
+        "cn": "搬"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "搬",
+          "pinyin": "bān",
+          "meaning": "transfer, move, remove, shift",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "變",
+      "meaningEn": "change, transform, alter; rebel",
+      "meaningKo": "변할",
+      "variants": {
+        "kr": "變",
+        "cn": "变"
+      },
+      "strokeCount": 23,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "变",
+          "pinyin": "biàn",
+          "meaning": "change, transform, alter; rebel",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "参",
+      "meaningEn": "take part in, intervene; ginseng; 21st lunar mansion, determinative star ζ orionis (alnitak)",
+      "meaningKo": "참여할",
+      "variants": {
+        "cn": "参"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "参",
+          "pinyin": "cān",
+          "meaning": "take part in, intervene; ginseng; 21st lunar mansion, determinative star ζ orionis (alnitak)",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "持",
+      "meaningEn": "sustain, support; hold, grasp",
+      "meaningKo": "가질",
+      "variants": {
+        "jp": "持",
+        "cn": "持"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "持",
+          "pinyin": "chí",
+          "meaning": "sustain, support; hold, grasp",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "初",
+      "meaningEn": "beginning, initial, primary",
+      "meaningKo": "처음",
+      "variants": {
+        "kr": "初",
+        "cn": "初"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "初",
+          "pinyin": "chū",
+          "meaning": "beginning, initial, primary",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "除",
+      "meaningEn": "eliminate, remove, except",
+      "meaningKo": "덜",
+      "variants": {
+        "cn": "除"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "除",
+          "pinyin": "chú",
+          "meaning": "eliminate, remove, except",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "答",
+      "meaningEn": "answer, reply; return; assent to",
+      "meaningKo": "대답",
+      "variants": {
+        "kr": "答",
+        "jp": "答",
+        "cn": "答"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "答",
+          "pinyin": "dá",
+          "meaning": "answer, reply; return; assent to",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "担",
+      "meaningEn": "carry, bear, undertake",
+      "meaningKo": "떨칠",
+      "variants": {
+        "cn": "担"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "担",
+          "pinyin": "dān",
+          "meaning": "carry, bear, undertake",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "當",
+      "meaningEn": "bear, accept, undertake; just",
+      "meaningKo": "마땅",
+      "variants": {
+        "jp": "当",
+        "kr": "當",
+        "cn": "当"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "当",
+          "pinyin": "dāng",
+          "meaning": "bear, accept, undertake; just",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "調",
+      "meaningEn": "transfer, move, change; tune",
+      "meaningKo": "고를",
+      "variants": {
+        "kr": "調",
+        "jp": "調",
+        "cn": "调"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "调",
+          "pinyin": "diào",
+          "meaning": "transfer, move, change; tune",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "发",
+      "meaningEn": "issue, dispatch, send out; hair",
+      "meaningKo": "터럭",
+      "variants": {
+        "cn": "发"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "发",
+          "pinyin": "fā",
+          "meaning": "issue, dispatch, send out; hair",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "附",
+      "meaningEn": "adhere to, append; rely on near to",
+      "meaningKo": "붙을",
+      "variants": {
+        "cn": "附"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "附",
+          "pinyin": "fù",
+          "meaning": "adhere to, append; rely on near to",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "复",
+      "meaningEn": "return; repeat; repeatedly",
+      "meaningKo": "회복할",
+      "variants": {
+        "cn": "复"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "复",
+          "pinyin": "fù",
+          "meaning": "return; repeat; repeatedly",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "干",
+      "meaningEn": "oppose, offend; invade; dried",
+      "meaningKo": "방패",
+      "variants": {
+        "cn": "干"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "干",
+          "pinyin": "gàn",
+          "meaning": "oppose, offend; invade; dried",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "更",
+      "meaningEn": "more, still further, much more; to change, alter",
+      "meaningKo": "고칠",
+      "variants": {
+        "cn": "更"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "更",
+          "pinyin": "gèng",
+          "meaning": "more, still further, much more; to change, alter",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "故",
+      "meaningEn": "ancient, old; reason, because",
+      "meaningKo": "연고",
+      "variants": {
+        "cn": "故"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "故",
+          "pinyin": "gù",
+          "meaning": "ancient, old; reason, because",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "瓜",
+      "meaningEn": "melon, gourd, cucumber; kangxi radical 97",
+      "meaningKo": "오이",
+      "variants": {
+        "cn": "瓜"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "瓜",
+          "pinyin": "guā",
+          "meaning": "melon, gourd, cucumber; kangxi radical 97",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "護",
+      "meaningEn": "protect, guard, defend, shelter",
+      "meaningKo": "도울",
+      "variants": {
+        "cn": "护"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "护",
+          "pinyin": "hù",
+          "meaning": "protect, guard, defend, shelter",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "化",
+      "meaningEn": "change, convert, reform; -ize",
+      "meaningKo": "될",
+      "variants": {
+        "kr": "化",
+        "jp": "化",
+        "cn": "化"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "化",
+          "pinyin": "huà",
+          "meaning": "change, convert, reform; -ize",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "換",
+      "meaningEn": "change, exchange; substitute",
+      "meaningKo": "바꿀",
+      "variants": {
+        "cn": "换"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "换",
+          "pinyin": "huàn",
+          "meaning": "change",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "激",
+      "meaningEn": "arouse, excite, incite; quickly",
+      "meaningKo": "격할",
+      "variants": {
+        "cn": "激"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "激",
+          "pinyin": "jī",
+          "meaning": "arouse, excite, incite; quickly",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "接",
+      "meaningEn": "receive; continue; catch; connect",
+      "meaningKo": "이을",
+      "variants": {
+        "cn": "接"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "接",
+          "pinyin": "jiē",
+          "meaning": "receive; continue; catch; connect",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "借",
+      "meaningEn": "borrow; lend; make pretext of",
+      "meaningKo": "빌릴",
+      "variants": {
+        "cn": "借"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "借",
+          "pinyin": "jiè",
+          "meaning": "borrow; lend; make pretext of",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "久",
+      "meaningEn": "long time (ago); time passage, grow late",
+      "meaningKo": "오랠",
+      "variants": {
+        "cn": "久"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "久",
+          "pinyin": "jiǔ",
+          "meaning": "long time (ago); time passage, grow late",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "据",
+      "meaningEn": "to occupy, take possession of; a base, position",
+      "meaningKo": "근거",
+      "variants": {
+        "cn": "据"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "据",
+          "pinyin": "jù",
+          "meaning": "to occupy, take possession of; a base, position",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "藍",
+      "meaningEn": "blue; indigo plant; surname",
+      "meaningKo": "쪽",
+      "variants": {
+        "cn": "蓝"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "蓝",
+          "pinyin": "lán",
+          "meaning": "blue; indigo plant; surname",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "历",
+      "meaningEn": "history; calendar",
+      "meaningKo": "지날",
+      "variants": {
+        "cn": "历"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "历",
+          "pinyin": "lì",
+          "meaning": "history; calendar",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "末",
+      "meaningEn": "final, last, end; insignificant",
+      "meaningKo": "끝",
+      "variants": {
+        "kr": "末",
+        "cn": "末"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "末",
+          "pinyin": "mò",
+          "meaning": "final, last, end; insignificant",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "努",
+      "meaningEn": "to exert, strive, make an effort; to pout",
+      "meaningKo": "힘쓸",
+      "variants": {
+        "cn": "努"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "努",
+          "pinyin": "nǔ",
+          "meaning": "to exert, strive, make an effort; to pout",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "騎",
+      "meaningEn": "ride horseback; mount; cavalry",
+      "meaningKo": "말 탈",
+      "variants": {
+        "cn": "骑"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "骑",
+          "pinyin": "qí",
+          "meaning": "ride horseback; mount; cavalry",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "賽",
+      "meaningEn": "compete, contend; contest, race",
+      "meaningKo": "굿할",
+      "variants": {
+        "cn": "赛"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "赛",
+          "pinyin": "sài",
+          "meaning": "compete, contend; contest, race",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "衫",
+      "meaningEn": "shirt; robe; gown; jacket",
+      "meaningKo": "적삼",
+      "variants": {
+        "cn": "衫"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "衫",
+          "pinyin": "shān",
+          "meaning": "shirt; robe; gown; jacket",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "适",
+      "meaningEn": "go, reach; appropriate, suitable",
+      "meaningKo": "빠를",
+      "variants": {
+        "cn": "适"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "适",
+          "pinyin": "shì",
+          "meaning": "go, reach; appropriate, suitable",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "受",
+      "meaningEn": "receive, accept, get; bear, stand",
+      "meaningKo": "받을",
+      "variants": {
+        "jp": "受",
+        "cn": "受"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "受",
+          "pinyin": "shòu",
+          "meaning": "receive, accept, get; bear, stand",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "提",
+      "meaningEn": "hold in hand; lift in hand",
+      "meaningKo": "끌",
+      "variants": {
+        "cn": "提"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "提",
+          "pinyin": "tí",
+          "meaning": "hold in hand; lift in hand",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "衛",
+      "meaningEn": "guard, protect, defend",
+      "meaningKo": "지킬",
+      "variants": {
+        "cn": "卫"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "卫",
+          "pinyin": "wèi",
+          "meaning": "guard, protect, defend",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "聞",
+      "meaningEn": "hear; smell; make known; news",
+      "meaningKo": "들을",
+      "variants": {
+        "jp": "聞",
+        "kr": "聞",
+        "cn": "闻"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "闻",
+          "pinyin": "wén",
+          "meaning": "hear; smell; make known; news",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "屋",
+      "meaningEn": "house; room; building, shelter",
+      "meaningKo": "집",
+      "variants": {
+        "kr": "屋",
+        "jp": "屋",
+        "cn": "屋"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "屋",
+          "pinyin": "wū",
+          "meaning": "house; room; building, shelter",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "箱",
+      "meaningEn": "case, box, chest, trunk",
+      "meaningKo": "상자",
+      "variants": {
+        "jp": "箱",
+        "cn": "箱"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "箱",
+          "pinyin": "xiāng",
+          "meaning": "case, box, chest, trunk",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "响",
+      "meaningEn": "make sound, make noise; sound",
+      "meaningKo": "울릴",
+      "variants": {
+        "cn": "响"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "响",
+          "pinyin": "xiǎng",
+          "meaning": "make sound, make noise; sound",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "向",
+      "meaningEn": "toward, direction, trend",
+      "meaningKo": "향할",
+      "variants": {
+        "kr": "向",
+        "jp": "向",
+        "cn": "向"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "向",
+          "pinyin": "xiàng",
+          "meaning": "toward, direction, trend",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "行",
+      "meaningEn": "go; walk; move, travel; circulate; kangxi radical 144",
+      "meaningKo": "다닐",
+      "variants": {
+        "jp": "行",
+        "kr": "行",
+        "cn": "行"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "行",
+          "pinyin": "xíng",
+          "meaning": "go; walk; move, travel; circulate; kangxi radical 144",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "选",
+      "meaningEn": "choose, select; elect; election",
+      "meaningKo": "가릴",
+      "variants": {
+        "cn": "选"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "选",
+          "pinyin": "xuǎn",
+          "meaning": "choose, select; elect; election",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "羊",
+      "meaningEn": "sheep, goat; kangxi radical 123",
+      "meaningKo": "양",
+      "variants": {
+        "jp": "羊",
+        "cn": "羊"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "羊",
+          "pinyin": "yáng",
+          "meaning": "sheep, goat; kangxi radical 123",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "易",
+      "meaningEn": "change; easy",
+      "meaningKo": "바꿀",
+      "variants": {
+        "cn": "易"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "易",
+          "pinyin": "yì",
+          "meaning": "change; easy",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "迎",
+      "meaningEn": "receive, welcome, greet",
+      "meaningKo": "맞을",
+      "variants": {
+        "cn": "迎"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "迎",
+          "pinyin": "yíng",
+          "meaning": "receive, welcome, greet",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "用",
+      "meaningEn": "use, employ, apply, operate; use",
+      "meaningKo": "쓸",
+      "variants": {
+        "jp": "用",
+        "kr": "用",
+        "cn": "用"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "用",
+          "pinyin": "yòng",
+          "meaning": "use, employ, apply, operate; use",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "于",
+      "meaningEn": "in, on, at; go to; surname",
+      "meaningKo": "어조사",
+      "variants": {
+        "cn": "于"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "于",
+          "pinyin": "yú",
+          "meaning": "in, on, at; go to; surname",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "遇",
+      "meaningEn": "meet, come across, encounter",
+      "meaningKo": "만날",
+      "variants": {
+        "cn": "遇"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "遇",
+          "pinyin": "yù",
+          "meaning": "meet, come across, encounter",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "越",
+      "meaningEn": "exceed, go beyond; the more ...",
+      "meaningKo": "넘을",
+      "variants": {
+        "cn": "越"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "越",
+          "pinyin": "yuè",
+          "meaning": "exceed, go beyond; the more ...",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "擇",
+      "meaningEn": "select, choose, pick out",
+      "meaningKo": "가릴",
+      "variants": {
+        "cn": "择"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "择",
+          "pinyin": "zé",
+          "meaning": "select, choose, pick out",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "展",
+      "meaningEn": "open, unfold; stretch, extend",
+      "meaningKo": "펼",
+      "variants": {
+        "kr": "展",
+        "cn": "展"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "展",
+          "pinyin": "zhǎn",
+          "meaning": "open, unfold; stretch, extend",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "張",
+      "meaningEn": "stretch, extend, expand; sheet; 26th lunar mansion, determinative star υ¹ hydrae",
+      "meaningKo": "베풀",
+      "variants": {
+        "cn": "张"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "张",
+          "pinyin": "zhāng",
+          "meaning": "stretch, extend, expand; sheet",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "終",
+      "meaningEn": "end; finally, in the end",
+      "meaningKo": "끝",
+      "variants": {
+        "kr": "終",
+        "jp": "終",
+        "cn": "终"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "终",
+          "pinyin": "zhōng",
+          "meaning": "end; finally, in the end",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "助",
+      "meaningEn": "help, aid, assist",
+      "meaningKo": "도울",
+      "variants": {
+        "jp": "助",
+        "cn": "助"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "助",
+          "pinyin": "zhù",
+          "meaning": "help, aid, assist",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "板",
+      "meaningEn": "plank, board; iron or tin plate",
+      "meaningKo": "널빤지",
+      "variants": {
+        "kr": "板",
+        "jp": "板",
+        "cn": "板"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "板",
+          "pinyin": "bǎn",
+          "meaning": "plank, board; iron or tin plate",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "街",
+      "meaningEn": "street, road, thoroughfare",
+      "meaningKo": "거리",
+      "variants": {
+        "cn": "街"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "街",
+          "pinyin": "jiē",
+          "meaning": "street, road, thoroughfare",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "盤",
+      "meaningEn": "tray, plate, dish; examine",
+      "meaningKo": "소반",
+      "variants": {
+        "cn": "盘"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "盘",
+          "pinyin": "pán",
+          "meaning": "tray, plate, dish; examine",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "瓶",
+      "meaningEn": "jug, pitcher, vase, jar, bottle",
+      "meaningKo": "병",
+      "variants": {
+        "cn": "瓶"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "瓶",
+          "pinyin": "píng",
+          "meaning": "jug, pitcher, vase, jar, bottle",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "傘",
+      "meaningEn": "umbrella, parasol, parachute",
+      "meaningKo": "우산",
+      "variants": {
+        "cn": "伞"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "伞",
+          "pinyin": "sǎn",
+          "meaning": "umbrella, parasol, parachute",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "鞋",
+      "meaningEn": "shoes, footwear in general",
+      "meaningKo": "신",
+      "variants": {
+        "cn": "鞋"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "鞋",
+          "pinyin": "xié",
+          "meaning": "shoes, footwear in general",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "飲",
+      "meaningEn": "drink; swallow; kind of drink",
+      "meaningKo": "마실",
+      "variants": {
+        "jp": "飲",
+        "cn": "饮"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "饮",
+          "pinyin": "yǐn",
+          "meaning": "drink; swallow; kind of drink",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "紙",
+      "meaningEn": "paper",
+      "meaningKo": "종이",
+      "variants": {
+        "kr": "紙",
+        "jp": "紙",
+        "cn": "纸"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "纸",
+          "pinyin": "zhǐ",
+          "meaning": "paper",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "級",
+      "meaningEn": "level, rank, class; grade",
+      "meaningKo": "등급",
+      "variants": {
+        "kr": "級",
+        "jp": "級",
+        "cn": "级"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "级",
+          "pinyin": "jí",
+          "meaning": "level, rank, class; grade",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "聲",
+      "meaningEn": "sound, voice, noise; tone; music",
+      "meaningKo": "소리",
+      "variants": {
+        "jp": "声",
+        "cn": "声"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "声",
+          "pinyin": "shēng",
+          "meaning": "sound, voice, noise; tone; music",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "言",
+      "meaningEn": "words, speech; speak, say; kangxi radical 149",
+      "meaningKo": "말씀",
+      "variants": {
+        "jp": "言",
+        "kr": "言",
+        "cn": "言"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "言",
+          "pinyin": "yán",
+          "meaning": "words, speech; speak, say; kangxi radical 149",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "音",
+      "meaningEn": "sound, tone, pitch, pronunciation; kangxi radical 180",
+      "meaningKo": "소리",
+      "variants": {
+        "jp": "音",
+        "kr": "音",
+        "cn": "音"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "音",
+          "pinyin": "yīn",
+          "meaning": "sound, tone, pitch, pronunciation; kangxi radical 180",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "冰",
+      "meaningEn": "ice; ice-cold",
+      "meaningKo": "얼음",
+      "variants": {
+        "cn": "冰"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "冰",
+          "pinyin": "bīng",
+          "meaning": "ice; ice-cold",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "草",
+      "meaningEn": "grass, straw, thatch, herbs",
+      "meaningKo": "풀",
+      "variants": {
+        "kr": "草",
+        "jp": "草",
+        "cn": "草"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "草",
+          "pinyin": "cǎo",
+          "meaning": "grass, straw, thatch, herbs",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "差",
+      "meaningEn": "to differ; different, wrong; nearly, almost; an officer",
+      "meaningKo": "다를",
+      "variants": {
+        "cn": "差"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "差",
+          "pinyin": "chà",
+          "meaning": "to differ; different, wrong; nearly, almost; an officer",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "朵",
+      "meaningEn": "cluster of flowers; earlobe",
+      "meaningKo": "늘어질",
+      "variants": {
+        "cn": "朵"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "朵",
+          "pinyin": "duǒ",
+          "meaning": "cluster of flowers; earlobe",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "风",
+      "meaningEn": "wind; air; manners, atmosphere",
+      "meaningKo": "바람",
+      "variants": {
+        "cn": "风"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "风",
+          "pinyin": "fēng",
+          "meaning": "wind; air; manners, atmosphere",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "河",
+      "meaningEn": "river; stream; the yellow river",
+      "meaningKo": "물",
+      "variants": {
+        "kr": "河",
+        "cn": "河"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "河",
+          "pinyin": "hé",
+          "meaning": "river; stream; the yellow river",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "蕉",
+      "meaningEn": "banana; plantain",
+      "meaningKo": "파초",
+      "variants": {
+        "cn": "蕉"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "蕉",
+          "pinyin": "jiāo",
+          "meaning": "banana; plantain",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "角",
+      "meaningEn": "horn; angle, corner; point; kangxi radical 148; 1st lunar mansion, determinative star spica",
+      "meaningKo": "뿔",
+      "variants": {
+        "jp": "角",
+        "kr": "角",
+        "cn": "角"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "角",
+          "pinyin": "jiǎo",
+          "meaning": "horn; angle, corner; point; kangxi radical 148; 1st lunar mansion, determinative star spica",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "練",
+      "meaningEn": "practice, drill, exercise, train",
+      "meaningKo": "누일",
+      "variants": {
+        "kr": "練",
+        "jp": "練",
+        "cn": "练"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "练",
+          "pinyin": "liàn",
+          "meaning": "to practice, drill, exercise, train",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "片",
+      "meaningEn": "slice, splinter, strip; rad. 91",
+      "meaningKo": "조각",
+      "variants": {
+        "cn": "片"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "片",
+          "pinyin": "piàn",
+          "meaning": "slice, splinter, strip; rad. 91",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "山",
+      "meaningEn": "mountain, hill, peak",
+      "meaningKo": "메",
+      "variants": {
+        "kr": "山",
+        "jp": "山",
+        "cn": "山"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "山",
+          "pinyin": "shān",
+          "meaning": "mountain, hill, peak",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "束",
+      "meaningEn": "bind, control, restrain; bale",
+      "meaningKo": "묶을",
+      "variants": {
+        "kr": "束",
+        "cn": "束"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "束",
+          "pinyin": "shù",
+          "meaning": "bind, control, restrain; bale",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "樹",
+      "meaningEn": "tree; plant; set up, establish",
+      "meaningKo": "나무",
+      "variants": {
+        "kr": "樹",
+        "cn": "树"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "树",
+          "pinyin": "shù",
+          "meaning": "tree; plant; set up, establish",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "心",
+      "meaningEn": "heart; mind, intelligence; soul; 5th lunar mansion, determinative star α scorpii (antares)",
+      "meaningKo": "마음",
+      "variants": {
+        "kr": "心",
+        "jp": "心",
+        "cn": "心"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "心",
+          "pinyin": "xīn",
+          "meaning": "heart; mind, intelligence; soul; 5th lunar mansion, determinative star α scorpii (antares)",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "陽",
+      "meaningEn": "the active, male principle in chinese philosophy (yang); light; sun",
+      "meaningKo": "볕",
+      "variants": {
+        "kr": "陽",
+        "jp": "陽",
+        "cn": "阳"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "阳",
+          "pinyin": "yáng",
+          "meaning": "'male' principle; light; sun",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "頁",
+      "meaningEn": "page, sheet, leaf; kangxi radical 181",
+      "meaningKo": "머리",
+      "variants": {
+        "cn": "页"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "页",
+          "pinyin": "yè",
+          "meaning": "page, sheet, leaf; rad. no. 181",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "郵",
+      "meaningEn": "postal, mail; post office",
+      "meaningKo": "우편",
+      "variants": {
+        "cn": "邮"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "邮",
+          "pinyin": "yóu",
+          "meaning": "postal, mail; post office",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "种",
+      "meaningEn": "seed; race, breed; to plant",
+      "meaningKo": "어릴",
+      "variants": {
+        "cn": "种"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "种",
+          "pinyin": "zhǒng",
+          "meaning": "seed; race, breed; to plant",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "冬",
+      "meaningEn": "winter, 11th lunar month",
+      "meaningKo": "겨울",
+      "variants": {
+        "kr": "冬",
+        "jp": "冬",
+        "cn": "冬"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "冬",
+          "pinyin": "dōng",
+          "meaning": "winter, 11th lunar month",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "海",
+      "meaningEn": "sea, ocean; maritime",
+      "meaningKo": "바다",
+      "variants": {
+        "kr": "海",
+        "jp": "海",
+        "cn": "海"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "海",
+          "pinyin": "hǎi",
+          "meaning": "sea, ocean; maritime",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "季",
+      "meaningEn": "quarter of year; season; surname",
+      "meaningKo": "계절",
+      "variants": {
+        "cn": "季"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "季",
+          "pinyin": "jì",
+          "meaning": "quarter of year; season; surname",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "渴",
+      "meaningEn": "thirsty, parched; yearn, pine",
+      "meaningKo": "목마를",
+      "variants": {
+        "cn": "渴"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "渴",
+          "pinyin": "kě",
+          "meaning": "thirsty, parched; yearn, pine",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "碼",
+      "meaningEn": "number, numerals; yard; symbol",
+      "meaningKo": "마노",
+      "variants": {
+        "cn": "码"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "码",
+          "pinyin": "mǎ",
+          "meaning": "number, numerals; yard; symbol",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "秋",
+      "meaningEn": "autumn, fall; year",
+      "meaningKo": "가을",
+      "variants": {
+        "kr": "秋",
+        "jp": "秋",
+        "cn": "秋"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "秋",
+          "pinyin": "qiū",
+          "meaning": "autumn, fall; year",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "數",
+      "meaningEn": "number; several; count; fate",
+      "meaningKo": "셈",
+      "variants": {
+        "kr": "數",
+        "jp": "数",
+        "cn": "数"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "数",
+          "pinyin": "shù",
+          "meaning": "number; several, count; fate",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "算",
+      "meaningEn": "count, calculate, figure; plan",
+      "meaningKo": "셈",
+      "variants": {
+        "kr": "算",
+        "jp": "算",
+        "cn": "算"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "算",
+          "pinyin": "suàn",
+          "meaning": "count, calculate, figure; plan",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "重",
+      "meaningEn": "heavy, weighty; double",
+      "meaningKo": "무거울",
+      "variants": {
+        "kr": "重",
+        "jp": "重",
+        "cn": "重"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "重",
+          "pinyin": "zhòng",
+          "meaning": "heavy, weighty; double",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "办",
+      "meaningEn": "manage, do, handle; deal with",
+      "meaningKo": "힘들일",
+      "variants": {
+        "cn": "办"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "办",
+          "pinyin": "bàn",
+          "meaning": "manage, do, handle; deal with",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "宾",
+      "meaningEn": "guest, visitor; surname; submit",
+      "meaningKo": "손",
+      "variants": {
+        "cn": "宾"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "宾",
+          "pinyin": "bīn",
+          "meaning": "guest, visitor; surname; submit",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "禮",
+      "meaningEn": "social custom; manners; courtesy; rites",
+      "meaningKo": "예도",
+      "variants": {
+        "kr": "禮",
+        "jp": "礼",
+        "cn": "礼"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "礼",
+          "pinyin": "lǐ",
+          "meaning": "social custom; manners; courtesy; rites",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "理",
+      "meaningEn": "reason, logic; manage",
+      "meaningKo": "다스릴",
+      "variants": {
+        "jp": "理",
+        "kr": "理",
+        "cn": "理"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "理",
+          "pinyin": "lǐ",
+          "meaning": "reason, logic; manage",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "求",
+      "meaningEn": "seek; demand, request; beseech",
+      "meaningKo": "구할",
+      "variants": {
+        "cn": "求"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "求",
+          "pinyin": "qiú",
+          "meaning": "seek; demand, request; beseech",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "叔",
+      "meaningEn": "father's younger brother",
+      "meaningKo": "아저씨",
+      "variants": {
+        "cn": "叔"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "叔",
+          "pinyin": "shū",
+          "meaning": "father's younger brother",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "姨",
+      "meaningEn": "mother/wife's sister; concubine",
+      "meaningKo": "이모",
+      "variants": {
+        "cn": "姨"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "姨",
+          "pinyin": "yí",
+          "meaning": "mother/wife's sister; concubine",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "員",
+      "meaningEn": "member; personnel, staff member",
+      "meaningKo": "인원",
+      "variants": {
+        "jp": "員",
+        "cn": "员"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "员",
+          "pinyin": "yuán",
+          "meaning": "member; personnel, staff member",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "北",
+      "meaningEn": "north; northern; northward",
+      "meaningKo": "북녘",
+      "variants": {
+        "kr": "北",
+        "jp": "北",
+        "cn": "北"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "北",
+          "pinyin": "běi",
+          "meaning": "north; northern; northward",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "城",
+      "meaningEn": "castle; city, town; municipality",
+      "meaningKo": "재",
+      "variants": {
+        "cn": "城"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "城",
+          "pinyin": "chéng",
+          "meaning": "castle; city, town; municipality",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "處",
+      "meaningEn": "place, locale; department",
+      "meaningKo": "곳",
+      "variants": {
+        "cn": "处"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "处",
+          "pinyin": "chù",
+          "meaning": "place, locale; department",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "聊",
+      "meaningEn": "somewhat, slightly, at least",
+      "meaningKo": "귀 울",
+      "variants": {
+        "cn": "聊"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "聊",
+          "pinyin": "liáo",
+          "meaning": "somewhat, slightly, at least",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "南",
+      "meaningEn": "south; southern part; southward",
+      "meaningKo": "남녘",
+      "variants": {
+        "kr": "南",
+        "jp": "南",
+        "cn": "南"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "南",
+          "pinyin": "nán",
+          "meaning": "south; southern part; southward",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "區",
+      "meaningEn": "area, district, region, ward; surname",
+      "meaningKo": "구분할",
+      "variants": {
+        "kr": "區",
+        "jp": "区",
+        "cn": "区"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "区",
+          "pinyin": "qū",
+          "meaning": "area, district, region, ward",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "矮",
+      "meaningEn": "short, dwarf; low",
+      "meaningKo": "난쟁이",
+      "variants": {
+        "cn": "矮"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "矮",
+          "pinyin": "ǎi",
+          "meaning": "short, dwarf; low",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "安",
+      "meaningEn": "peaceful, tranquil, quiet",
+      "meaningKo": "편안",
+      "variants": {
+        "kr": "安",
+        "jp": "安",
+        "cn": "安"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "安",
+          "pinyin": "ān",
+          "meaning": "peaceful, tranquil, quiet",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "遲",
+      "meaningEn": "late, tardy; slow; delay",
+      "meaningKo": "더딜",
+      "variants": {
+        "cn": "迟"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "迟",
+          "pinyin": "chí",
+          "meaning": "late, tardy; slow; delay",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "聰",
+      "meaningEn": "intelligent, clever, bright",
+      "meaningKo": "귀 밝을",
+      "variants": {
+        "cn": "聪"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "聪",
+          "pinyin": "cōng",
+          "meaning": "intelligent, clever, bright",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "短",
+      "meaningEn": "short; brief; deficient, lacking",
+      "meaningKo": "짧을",
+      "variants": {
+        "kr": "短",
+        "jp": "短",
+        "cn": "短"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "短",
+          "pinyin": "duǎn",
+          "meaning": "short; brief; deficient, lacking",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "假",
+      "meaningEn": "falsehood, deception; vacation",
+      "meaningKo": "거짓",
+      "variants": {
+        "cn": "假"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "假",
+          "pinyin": "jiǎ",
+          "meaning": "falsehood, deception; vacation",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "解",
+      "meaningEn": "loosen, unfasten, untie; explain; hexagram ䷧",
+      "meaningKo": "풀",
+      "variants": {
+        "cn": "解"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "解",
+          "pinyin": "jiě",
+          "meaning": "loosen, unfasten, untie; explain; hexagram ䷧",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "康",
+      "meaningEn": "peaceful, quiet; happy, healthy",
+      "meaningKo": "편안",
+      "variants": {
+        "cn": "康"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "康",
+          "pinyin": "kāng",
+          "meaning": "peaceful, quiet; happy, healthy",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "凉",
+      "meaningEn": "cool, cold; disheartened",
+      "meaningKo": "서늘할",
+      "variants": {
+        "cn": "凉"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "凉",
+          "pinyin": "liáng",
+          "meaning": "cool, cold; disheartened",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "平",
+      "meaningEn": "flat, level, even; peaceful",
+      "meaningKo": "평평할",
+      "variants": {
+        "kr": "平",
+        "jp": "平",
+        "cn": "平"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "平",
+          "pinyin": "píng",
+          "meaning": "flat, level, even; peaceful",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "輕",
+      "meaningEn": "light; easy, simple; gentle",
+      "meaningKo": "가벼울",
+      "variants": {
+        "kr": "輕",
+        "jp": "軽",
+        "cn": "轻"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "轻",
+          "pinyin": "qīng",
+          "meaning": "light; easy, simple; gentle",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "清",
+      "meaningEn": "clear, pure, clean; peaceful",
+      "meaningKo": "맑을",
+      "variants": {
+        "cn": "清"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "清",
+          "pinyin": "qīng",
+          "meaning": "clear, pure, clean; peaceful",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "实",
+      "meaningEn": "real, true; honest, sincere",
+      "meaningKo": "열매",
+      "variants": {
+        "cn": "实"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "实",
+          "pinyin": "shí",
+          "meaning": "real, true; honest, sincere",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "熊",
+      "meaningEn": "a bear; brilliant; bright; surname",
+      "meaningKo": "곰",
+      "variants": {
+        "cn": "熊"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "熊",
+          "pinyin": "xióng",
+          "meaning": "a bear; brilliant; bright; surname",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "楚",
+      "meaningEn": "name of feudal state; clear",
+      "meaningKo": "초나라",
+      "variants": {
+        "cn": "楚"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "楚",
+          "pinyin": "chǔ",
+          "meaning": "name of feudal state; clear",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "典",
+      "meaningEn": "law, canon; documentation; classic, scripture",
+      "meaningKo": "법",
+      "variants": {
+        "kr": "典",
+        "cn": "典"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "典",
+          "pinyin": "diǎn",
+          "meaning": "law, canon; documentation; classic, scripture",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "法",
+      "meaningEn": "law, rule, regulation, statute; france, french",
+      "meaningKo": "법",
+      "variants": {
+        "kr": "法",
+        "cn": "法"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "法",
+          "pinyin": "fǎ",
+          "meaning": "law, rule, regulation, statute; france, french",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "界",
+      "meaningEn": "boundary, limit; domain; society; the world",
+      "meaningKo": "지경",
+      "variants": {
+        "kr": "界",
+        "jp": "界",
+        "cn": "界"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "界",
+          "pinyin": "jiè",
+          "meaning": "boundary, limit; domain; society; the world",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "務",
+      "meaningEn": "affairs, business; must, should",
+      "meaningKo": "힘쓸",
+      "variants": {
+        "cn": "务"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "务",
+          "pinyin": "wù",
+          "meaning": "affairs, business; must, should",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "業",
+      "meaningEn": "profession, business, trade",
+      "meaningKo": "업",
+      "variants": {
+        "kr": "業",
+        "jp": "業",
+        "cn": "业"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "业",
+          "pinyin": "yè",
+          "meaning": "profession, business; gb radical 111",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "飽",
+      "meaningEn": "eat heartily; eat one's fill",
+      "meaningKo": "배부를",
+      "variants": {
+        "cn": "饱"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "饱",
+          "pinyin": "bǎo",
+          "meaning": "eat heartily; eat one's fill",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "报",
+      "meaningEn": "report, tell, announce",
+      "meaningKo": "갚을",
+      "variants": {
+        "cn": "报"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "报",
+          "pinyin": "bào",
+          "meaning": "report, tell, announce",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "被",
+      "meaningEn": "passive indicator 'by'; bedding",
+      "meaningKo": "입을",
+      "variants": {
+        "cn": "被"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "被",
+          "pinyin": "bèi",
+          "meaning": "passive indicator 'by'; bedding",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "必",
+      "meaningEn": "surely, most certainly; must",
+      "meaningKo": "반드시",
+      "variants": {
+        "kr": "必",
+        "cn": "必"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "必",
+          "pinyin": "bì",
+          "meaning": "surely, most certainly; must",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "遍",
+      "meaningEn": "everywhere, all over, throughout",
+      "meaningKo": "두루",
+      "variants": {
+        "cn": "遍"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "遍",
+          "pinyin": "biàn",
+          "meaning": "everywhere, all over, throughout",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "才",
+      "meaningEn": "talent, ability; just, only",
+      "meaningKo": "재주",
+      "variants": {
+        "jp": "才",
+        "kr": "才",
+        "cn": "才"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "才",
+          "pinyin": "cái",
+          "meaning": "talent, ability; just, only",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "層",
+      "meaningEn": "story, layer, floor, stratum",
+      "meaningKo": "층",
+      "variants": {
+        "cn": "层"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "层",
+          "pinyin": "céng",
+          "meaning": "story, layer, floor, stratum",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "查",
+      "meaningEn": "investigate, examine, seek into",
+      "meaningKo": "조사할",
+      "variants": {
+        "cn": "查"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "查",
+          "pinyin": "chá",
+          "meaning": "investigate, examine, seek into",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "尝",
+      "meaningEn": "taste; experience, experiment",
+      "meaningKo": "맛볼",
+      "variants": {
+        "cn": "尝"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "尝",
+          "pinyin": "cháng",
+          "meaning": "taste; experience, experiment",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "襯",
+      "meaningEn": "underwear; inner garments",
+      "meaningKo": "속옷",
+      "variants": {
+        "cn": "衬"
+      },
+      "strokeCount": 21,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "衬",
+          "pinyin": "chèn",
+          "meaning": "underwear; inner garments",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "成",
+      "meaningEn": "completed, finished, fixed",
+      "meaningKo": "이룰",
+      "variants": {
+        "kr": "成",
+        "cn": "成"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "成",
+          "pinyin": "chéng",
+          "meaning": "completed, finished, fixed",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "船",
+      "meaningEn": "ship, boat, vessel",
+      "meaningKo": "배",
+      "variants": {
+        "jp": "船",
+        "kr": "船",
+        "cn": "船"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "船",
+          "pinyin": "chuán",
+          "meaning": "ship, boat, vessel",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "春",
+      "meaningEn": "spring; wanton",
+      "meaningKo": "봄",
+      "variants": {
+        "kr": "春",
+        "jp": "春",
+        "cn": "春"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "春",
+          "pinyin": "chūn",
+          "meaning": "spring; wanton",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "帶",
+      "meaningEn": "belt, girdle, band, strap, zone",
+      "meaningKo": "띠",
+      "variants": {
+        "cn": "带"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "带",
+          "pinyin": "dài",
+          "meaning": "belt, girdle, band, strap, zone",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "单",
+      "meaningEn": "single, individual, only; lone",
+      "meaningKo": "홑",
+      "variants": {
+        "cn": "单"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "单",
+          "pinyin": "dān",
+          "meaning": "single, individual, only; lone",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "灯",
+      "meaningEn": "lantern, lamp",
+      "meaningKo": "불",
+      "variants": {
+        "cn": "灯"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "灯",
+          "pinyin": "dēng",
+          "meaning": "lantern, lamp",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "定",
+      "meaningEn": "decide, settle, fix",
+      "meaningKo": "정할",
+      "variants": {
+        "kr": "定",
+        "jp": "定",
+        "cn": "定"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "定",
+          "pinyin": "dìng",
+          "meaning": "decide, settle, fix",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "丢",
+      "meaningEn": "discard",
+      "meaningKo": "아주 갈",
+      "variants": {
+        "cn": "丢"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "丢",
+          "pinyin": "diū",
+          "meaning": "discard",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "段",
+      "meaningEn": "section, piece, division",
+      "meaningKo": "조각",
+      "variants": {
+        "cn": "段"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "段",
+          "pinyin": "duàn",
+          "meaning": "section, piece, division",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "鍛",
+      "meaningEn": "forge metal; temper, refine",
+      "meaningKo": "불릴",
+      "variants": {
+        "cn": "锻"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "锻",
+          "pinyin": "duàn",
+          "meaning": "forge metal; temper, refine",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "餓",
+      "meaningEn": "hungry; greedy for; hunger",
+      "meaningKo": "주릴",
+      "variants": {
+        "cn": "饿"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "饿",
+          "pinyin": "è",
+          "meaning": "hungry; greedy for; hunger",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "而",
+      "meaningEn": "and; and then; and yet; but; kangxi radical 126",
+      "meaningKo": "말 이을",
+      "variants": {
+        "cn": "而"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "而",
+          "pinyin": "ér",
+          "meaning": "and; and then; and yet; but; kangxi radical 126",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "耳",
+      "meaningEn": "ear; merely, only; handle; kangxi radical 128",
+      "meaningKo": "귀",
+      "variants": {
+        "jp": "耳",
+        "kr": "耳",
+        "cn": "耳"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "耳",
+          "pinyin": "ěr",
+          "meaning": "ear; merely, only; handle; kangxi radical 128",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "方",
+      "meaningEn": "a square, rectangle; a region; local",
+      "meaningKo": "모",
+      "variants": {
+        "kr": "方",
+        "jp": "方",
+        "cn": "方"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "方",
+          "pinyin": "fāng",
+          "meaning": "a square, rectangle; a region; local",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "放",
+      "meaningEn": "put, release, free, liberate",
+      "meaningKo": "놓을",
+      "variants": {
+        "kr": "放",
+        "jp": "放",
+        "cn": "放"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "放",
+          "pinyin": "fàng",
+          "meaning": "put, release, free, liberate",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "封",
+      "meaningEn": "letter, envelope; feudal",
+      "meaningKo": "봉할",
+      "variants": {
+        "cn": "封"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "封",
+          "pinyin": "fēng",
+          "meaning": "letter, envelope; feudal",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "該",
+      "meaningEn": "should, ought to, need to",
+      "meaningKo": "갖출",
+      "variants": {
+        "cn": "该"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "该",
+          "pinyin": "gāi",
+          "meaning": "should, ought to, need to",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "概",
+      "meaningEn": "generally, approximately",
+      "meaningKo": "대개",
+      "variants": {
+        "cn": "概"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "概",
+          "pinyin": "gài",
+          "meaning": "generally, approximately",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "感",
+      "meaningEn": "feel, perceive, emotion",
+      "meaningKo": "느낄",
+      "variants": {
+        "kr": "感",
+        "jp": "感",
+        "cn": "感"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "感",
+          "pinyin": "gǎn",
+          "meaning": "feel, perceive, emotion",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "剛",
+      "meaningEn": "hard, tough, rigid, strong",
+      "meaningKo": "굳셀",
+      "variants": {
+        "cn": "刚"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "刚",
+          "pinyin": "gāng",
+          "meaning": "hard, tough, rigid, strong",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "糕",
+      "meaningEn": "cakes, pastry",
+      "meaningKo": "떡",
+      "variants": {
+        "cn": "糕"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "糕",
+          "pinyin": "gāo",
+          "meaning": "cakes, pastry",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "根",
+      "meaningEn": "root, base(d on); foundation",
+      "meaningKo": "뿌리",
+      "variants": {
+        "kr": "根",
+        "jp": "根",
+        "cn": "根"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "根",
+          "pinyin": "gēn",
+          "meaning": "root, base(d on); foundation",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "共",
+      "meaningEn": "together with, all, total; to share",
+      "meaningKo": "함께",
+      "variants": {
+        "kr": "共",
+        "cn": "共"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "共",
+          "pinyin": "gòng",
+          "meaning": "together with, all, total; to share",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "顧",
+      "meaningEn": "look back; look at; look after",
+      "meaningKo": "돌아볼",
+      "variants": {
+        "cn": "顾"
+      },
+      "strokeCount": 21,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "顾",
+          "pinyin": "gù",
+          "meaning": "look back; look at; look after",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "刮",
+      "meaningEn": "shave, pare off, scrape",
+      "meaningKo": "깎을",
+      "variants": {
+        "cn": "刮"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "刮",
+          "pinyin": "guā",
+          "meaning": "shave, pare off, scrape",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "怪",
+      "meaningEn": "strange, unusual, peculiar",
+      "meaningKo": "괴이할",
+      "variants": {
+        "cn": "怪"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "怪",
+          "pinyin": "guài",
+          "meaning": "strange, unusual, peculiar",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "慣",
+      "meaningEn": "habit, custom; habitually, usually",
+      "meaningKo": "익숙할",
+      "variants": {
+        "cn": "惯"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "惯",
+          "pinyin": "guàn",
+          "meaning": "habit, custom; habitually, usual",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "害",
+      "meaningEn": "injure, harm; destroy, kill",
+      "meaningKo": "해할",
+      "variants": {
+        "kr": "害",
+        "cn": "害"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "害",
+          "pinyin": "hài",
+          "meaning": "injure, harm; destroy, kill",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "合",
+      "meaningEn": "combine, unite, join; gather",
+      "meaningKo": "합할",
+      "variants": {
+        "jp": "合",
+        "kr": "合",
+        "cn": "合"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "合",
+          "pinyin": "hé",
+          "meaning": "combine, unite, join; gather",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "乎",
+      "meaningEn": "interrogative or exclamatory final particle",
+      "meaningKo": "어조사",
+      "variants": {
+        "cn": "乎"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "乎",
+          "pinyin": "hū",
+          "meaning": "interrogative or exclamatory final particle",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "环",
+      "meaningEn": "jade ring or bracelet; ring",
+      "meaningKo": "구슬",
+      "variants": {
+        "cn": "环"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "环",
+          "pinyin": "huán",
+          "meaning": "jade ring or bracelet; ring",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "黃",
+      "meaningEn": "yellow; surname; kangxi radical 201",
+      "meaningKo": "누를",
+      "variants": {
+        "jp": "黄",
+        "kr": "黃",
+        "cn": "黄"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "黄",
+          "pinyin": "huáng",
+          "meaning": "yellow; surname",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "婚",
+      "meaningEn": "get married; marriage, wedding",
+      "meaningKo": "혼인할",
+      "variants": {
+        "cn": "婚"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "婚",
+          "pinyin": "hūn",
+          "meaning": "get married; marriage, wedding",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "活",
+      "meaningEn": "live, exist, survive; lively",
+      "meaningKo": "살",
+      "variants": {
+        "kr": "活",
+        "jp": "活",
+        "cn": "活"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "活",
+          "pinyin": "huó",
+          "meaning": "live, exist, survive; lively",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "或",
+      "meaningEn": "or, either, else; perhaps, maybe",
+      "meaningKo": "혹",
+      "variants": {
+        "cn": "或"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "或",
+          "pinyin": "huò",
+          "meaning": "or, either, else; perhaps, maybe",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "极",
+      "meaningEn": "extreme, utmost, furthest, final",
+      "meaningKo": "길마",
+      "variants": {
+        "cn": "极"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "极",
+          "pinyin": "jí",
+          "meaning": "extreme, utmost, furthest, final",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "急",
+      "meaningEn": "quick, quickly; urgent, pressing",
+      "meaningKo": "급할",
+      "variants": {
+        "kr": "急",
+        "jp": "急",
+        "cn": "急"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "急",
+          "pinyin": "jí",
+          "meaning": "quick, quickly; urgent, pressing",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "績",
+      "meaningEn": "spin; achievements",
+      "meaningKo": "길쌈할",
+      "variants": {
+        "cn": "绩"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "绩",
+          "pinyin": "jì",
+          "meaning": "spin; achievements",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "加",
+      "meaningEn": "add to, increase, augment",
+      "meaningKo": "더할",
+      "variants": {
+        "kr": "加",
+        "cn": "加"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "加",
+          "pinyin": "jiā",
+          "meaning": "add to, increase, augment",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "堅",
+      "meaningEn": "hard, strong, firm; resolute",
+      "meaningKo": "굳을",
+      "variants": {
+        "cn": "坚"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "坚",
+          "pinyin": "jiān",
+          "meaning": "hard, strong, firm; resolute",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "檢",
+      "meaningEn": "check; examine",
+      "meaningKo": "검사할",
+      "variants": {
+        "cn": "检"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "检",
+          "pinyin": "jiǎn",
+          "meaning": "check; examine",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "簡",
+      "meaningEn": "simple, terse, succinct; letter",
+      "meaningKo": "대쪽",
+      "variants": {
+        "cn": "简"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "简",
+          "pinyin": "jiǎn",
+          "meaning": "simple, terse, succinct, a letter",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "健",
+      "meaningEn": "strong, robust, healthy; strength",
+      "meaningKo": "굳셀",
+      "variants": {
+        "kr": "健",
+        "cn": "健"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "健",
+          "pinyin": "jiàn",
+          "meaning": "strong, robust, healthy; strength",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "講",
+      "meaningEn": "explain; discuss; talk",
+      "meaningKo": "외울",
+      "variants": {
+        "cn": "讲"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "讲",
+          "pinyin": "jiǎng",
+          "meaning": "explain; discuss; talk",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "餃",
+      "meaningEn": "stuffed dumplings",
+      "meaningKo": "떡",
+      "variants": {
+        "cn": "饺"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "饺",
+          "pinyin": "jiǎo",
+          "meaning": "stuffed dumplings",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "脚",
+      "meaningEn": "leg, foot; base, leg, foundation",
+      "meaningKo": "다리",
+      "variants": {
+        "cn": "脚"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "脚",
+          "pinyin": "jiǎo",
+          "meaning": "leg, foot; base, leg, foundation",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "較",
+      "meaningEn": "compare; comparatively, more",
+      "meaningKo": "견줄",
+      "variants": {
+        "cn": "较"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "较",
+          "pinyin": "jiào",
+          "meaning": "compare; comparatively, more",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "節",
+      "meaningEn": "knot, node, joint; section; hexagram ䷻",
+      "meaningKo": "마디",
+      "variants": {
+        "kr": "節",
+        "cn": "节"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "节",
+          "pinyin": "jié",
+          "meaning": "knot, node, joint; section",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "結",
+      "meaningEn": "knot, tie; join, connect",
+      "meaningKo": "맺을",
+      "variants": {
+        "kr": "結",
+        "cn": "结"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "结",
+          "pinyin": "jié",
+          "meaning": "knot, tie; join, connect",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "斤",
+      "meaningEn": "a catty (approximately 600 g); an axe; keen, shrewd; kangxi radical 69",
+      "meaningKo": "근",
+      "variants": {
+        "cn": "斤"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "斤",
+          "pinyin": "jīn",
+          "meaning": "a catty (approximately 600 g); an axe; keen, shrewd; kangxi radical 69",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "凈",
+      "meaningEn": "clean, pure; cleanse",
+      "meaningKo": "찰",
+      "variants": {
+        "cn": "净"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "净",
+          "pinyin": "jìng",
+          "meaning": "clean, pure; cleanse",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "静",
+      "meaningEn": "quiet, still, motionless; gentle",
+      "meaningKo": "고요할",
+      "variants": {
+        "cn": "静"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "静",
+          "pinyin": "jìng",
+          "meaning": "quiet, still, motionless; gentle",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "境",
+      "meaningEn": "boundary, frontier; area, region",
+      "meaningKo": "지경",
+      "variants": {
+        "cn": "境"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "境",
+          "pinyin": "jìng",
+          "meaning": "boundary, frontier; area, region",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "舊",
+      "meaningEn": "old, ancient; former, past",
+      "meaningKo": "예",
+      "variants": {
+        "kr": "舊",
+        "cn": "旧"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "旧",
+          "pinyin": "jiù",
+          "meaning": "old, ancient; former, past",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "居",
+      "meaningEn": "live, dwell, reside, sit",
+      "meaningKo": "살",
+      "variants": {
+        "cn": "居"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "居",
+          "pinyin": "jū",
+          "meaning": "live, dwell, reside, sit",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "句",
+      "meaningEn": "sentence",
+      "meaningKo": "글귀",
+      "variants": {
+        "cn": "句"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "句",
+          "pinyin": "jù",
+          "meaning": "sentence",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "決",
+      "meaningEn": "decide, determine, judge",
+      "meaningKo": "결단할",
+      "variants": {
+        "kr": "決",
+        "jp": "決",
+        "cn": "决"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "决",
+          "pinyin": "jué",
+          "meaning": "decide, determine, judge",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "卡",
+      "meaningEn": "card, punch card; calorie",
+      "meaningKo": "지킬",
+      "variants": {
+        "cn": "卡"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "卡",
+          "pinyin": "kǎ",
+          "meaning": "card, punch card; calorie",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "刻",
+      "meaningEn": "carve, engrave; quarter hour",
+      "meaningKo": "새길",
+      "variants": {
+        "cn": "刻"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "刻",
+          "pinyin": "kè",
+          "meaning": "carve, engrave; quarter hour",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "空",
+      "meaningEn": "empty, hollow, bare, deserted",
+      "meaningKo": "빌",
+      "variants": {
+        "kr": "空",
+        "jp": "空",
+        "cn": "空"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "空",
+          "pinyin": "kōng",
+          "meaning": "empty, hollow, bare, deserted",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "哭",
+      "meaningEn": "weep, cry, wail",
+      "meaningKo": "울",
+      "variants": {
+        "cn": "哭"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "哭",
+          "pinyin": "kū",
+          "meaning": "weep, cry, wail",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "筷",
+      "meaningEn": "chopsticks",
+      "meaningKo": "젓가락",
+      "variants": {
+        "cn": "筷"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "筷",
+          "pinyin": "kuài",
+          "meaning": "chopsticks",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "礦",
+      "meaningEn": "mine; mineral, ore",
+      "meaningKo": "쇳돌",
+      "variants": {
+        "cn": "矿"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "矿",
+          "pinyin": "kuàng",
+          "meaning": "mine; mineral, ore",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "李",
+      "meaningEn": "plum; judge; surname",
+      "meaningKo": "오얏",
+      "variants": {
+        "kr": "李",
+        "cn": "李"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "李",
+          "pinyin": "lǐ",
+          "meaning": "plum; judge; surname",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "力",
+      "meaningEn": "power, capability, influence; kangxi radical 19",
+      "meaningKo": "힘",
+      "variants": {
+        "kr": "力",
+        "jp": "力",
+        "cn": "力"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "力",
+          "pinyin": "lì",
+          "meaning": "power, capability, influence; kangxi radical 19",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "臉",
+      "meaningEn": "face; cheek; reputation",
+      "meaningKo": "뺨",
+      "variants": {
+        "cn": "脸"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "脸",
+          "pinyin": "liǎn",
+          "meaning": "face; cheek; reputation",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "煉",
+      "meaningEn": "smelt, refine; distill, condense",
+      "meaningKo": "달굴",
+      "variants": {
+        "cn": "炼"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "炼",
+          "pinyin": "liàn",
+          "meaning": "smelt, refine; distill, condense",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "輛",
+      "meaningEn": "numerary adjunct for vehicles",
+      "meaningKo": "수레",
+      "variants": {
+        "cn": "辆"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "辆",
+          "pinyin": "liàng",
+          "meaning": "numerary adjunct for vehicles",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "料",
+      "meaningEn": "consider, conjecture; materials, ingredients",
+      "meaningKo": "헤아릴",
+      "variants": {
+        "kr": "料",
+        "cn": "料"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "料",
+          "pinyin": "liào",
+          "meaning": "consider, conjecture; materials, ingredients",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "鄰",
+      "meaningEn": "neighbor; neighborhood",
+      "meaningKo": "이웃",
+      "variants": {
+        "cn": "邻"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "邻",
+          "pinyin": "lín",
+          "meaning": "neighbor; neighborhood",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "凌",
+      "meaningEn": "pure; virtuous; insult; maltreat",
+      "meaningKo": "얼음",
+      "variants": {
+        "cn": "凌"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "凌",
+          "pinyin": "líng",
+          "meaning": "pure; virtuous; insult; maltreat",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "馬",
+      "meaningEn": "horse; surname; kangxi radical 187",
+      "meaningKo": "말",
+      "variants": {
+        "jp": "馬",
+        "kr": "馬",
+        "cn": "马"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "马",
+          "pinyin": "mǎ",
+          "meaning": "horse; surname; kangxi radical 187",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "滿",
+      "meaningEn": "fill; full, satisfied",
+      "meaningKo": "찰",
+      "variants": {
+        "cn": "满"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "满",
+          "pinyin": "mǎn",
+          "meaning": "fill; full, satisfied",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "毛",
+      "meaningEn": "hair, fur, feathers; coarse",
+      "meaningKo": "터럭",
+      "variants": {
+        "jp": "毛",
+        "cn": "毛"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "毛",
+          "pinyin": "máo",
+          "meaning": "hair, fur, feathers; coarse",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "冒",
+      "meaningEn": "risk, brave, dare",
+      "meaningKo": "무릅쓸",
+      "variants": {
+        "cn": "冒"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "冒",
+          "pinyin": "mào",
+          "meaning": "risk, brave, dare",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "目",
+      "meaningEn": "eye; look, see; division, topic; kangxi radical 109",
+      "meaningKo": "눈",
+      "variants": {
+        "jp": "目",
+        "kr": "目",
+        "cn": "目"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "目",
+          "pinyin": "mù",
+          "meaning": "eye; look, see; division, topic; kangxi radical 109",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "难",
+      "meaningEn": "difficult, arduous, hard; unable",
+      "meaningKo": "어려울",
+      "variants": {
+        "cn": "难"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "难",
+          "pinyin": "nán",
+          "meaning": "difficult, arduous, hard; unable",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "爬",
+      "meaningEn": "crawl, creep; climb; scramble",
+      "meaningKo": "긁을",
+      "variants": {
+        "cn": "爬"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "爬",
+          "pinyin": "pá",
+          "meaning": "crawl, creep; climb; scramble",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "怕",
+      "meaningEn": "to fear, be afraid of; apprehensive",
+      "meaningKo": "두려워할",
+      "variants": {
+        "cn": "怕"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "怕",
+          "pinyin": "pà",
+          "meaning": "to fear, be afraid of; apprehensive",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "拍",
+      "meaningEn": "clap, tap, beat; beat or rhythm",
+      "meaningKo": "칠",
+      "variants": {
+        "cn": "拍"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "拍",
+          "pinyin": "pāi",
+          "meaning": "clap, tap, beat; beat or rhythm",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "胖",
+      "meaningEn": "fat, obese; fatty",
+      "meaningKo": "희생의 반쪽",
+      "variants": {
+        "cn": "胖"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "胖",
+          "pinyin": "pàng",
+          "meaning": "fat, obese; fatty",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "啤",
+      "meaningEn": "beer",
+      "meaningKo": "맥주",
+      "variants": {
+        "cn": "啤"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "啤",
+          "pinyin": "pí",
+          "meaning": "beer",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "其",
+      "meaningEn": "his, her, its, their; that",
+      "meaningKo": "그",
+      "variants": {
+        "cn": "其"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "其",
+          "pinyin": "qí",
+          "meaning": "his, her, its, their; that",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "奇",
+      "meaningEn": "strange, unusual, uncanny, occult",
+      "meaningKo": "기특할",
+      "variants": {
+        "cn": "奇"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "奇",
+          "pinyin": "qí",
+          "meaning": "strange, unusual, uncanny, occult",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "汽",
+      "meaningEn": "steam, vapor, gas",
+      "meaningKo": "물 끓는 김",
+      "variants": {
+        "jp": "汽",
+        "kr": "汽",
+        "cn": "汽"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "汽",
+          "pinyin": "qì",
+          "meaning": "steam, vapor, gas",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "鉛",
+      "meaningEn": "lead (element 82, pb)",
+      "meaningKo": "납",
+      "variants": {
+        "cn": "铅"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "铅",
+          "pinyin": "qiān",
+          "meaning": "lead (element 82, pb)",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "且",
+      "meaningEn": "moreover, also (post-subject); about to, will soon (pre-verb)",
+      "meaningKo": "또",
+      "variants": {
+        "cn": "且"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "且",
+          "pinyin": "qiě",
+          "meaning": "moreover, also (post-subject); about to, will soon (pre-verb)",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "趣",
+      "meaningEn": "what attracts one's attention",
+      "meaningKo": "뜻",
+      "variants": {
+        "cn": "趣"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "趣",
+          "pinyin": "qù",
+          "meaning": "what attracts one's attention",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "全",
+      "meaningEn": "maintain, keep whole or intact",
+      "meaningKo": "온전할",
+      "variants": {
+        "kr": "全",
+        "jp": "全",
+        "cn": "全"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "全",
+          "pinyin": "quán",
+          "meaning": "maintain, keep whole or intact",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "泉",
+      "meaningEn": "spring, fountain; wealth, money",
+      "meaningKo": "샘",
+      "variants": {
+        "cn": "泉"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "泉",
+          "pinyin": "quán",
+          "meaning": "spring, fountain; wealth, money",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "裙",
+      "meaningEn": "skirt, apron, petticoat",
+      "meaningKo": "치마",
+      "variants": {
+        "cn": "裙"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "裙",
+          "pinyin": "qún",
+          "meaning": "skirt, apron, petticoat",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "容",
+      "meaningEn": "looks, appearance; figure, form",
+      "meaningKo": "얼굴",
+      "variants": {
+        "cn": "容"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "容",
+          "pinyin": "róng",
+          "meaning": "looks, appearance; figure, form",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "如",
+      "meaningEn": "if, supposing; as if; like, as",
+      "meaningKo": "같을",
+      "variants": {
+        "cn": "如"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "如",
+          "pinyin": "rú",
+          "meaning": "if, supposing; as if; like, as",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "掃",
+      "meaningEn": "sweep, clear away; exterminate",
+      "meaningKo": "쓸",
+      "variants": {
+        "cn": "扫"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "扫",
+          "pinyin": "sǎo",
+          "meaning": "sweep, clear away; exterminate",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "沙",
+      "meaningEn": "sand, gravel, pebbles; granulated",
+      "meaningKo": "모래",
+      "variants": {
+        "cn": "沙"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "沙",
+          "pinyin": "shā",
+          "meaning": "sand, gravel, pebbles; granulated",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "燒",
+      "meaningEn": "burn; bake; heat; roast",
+      "meaningKo": "불사를",
+      "variants": {
+        "cn": "烧"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "烧",
+          "pinyin": "shāo",
+          "meaning": "burn; bake; heat; roast",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "勺",
+      "meaningEn": "spoon, ladle; unit of volume",
+      "meaningKo": "구기",
+      "variants": {
+        "cn": "勺"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "勺",
+          "pinyin": "sháo",
+          "meaning": "spoon, ladle; unit of volume",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "史",
+      "meaningEn": "history, chronicle, annals",
+      "meaningKo": "사관",
+      "variants": {
+        "kr": "史",
+        "cn": "史"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "史",
+          "pinyin": "shǐ",
+          "meaning": "history, chronicle, annals",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "世",
+      "meaningEn": "generation; world; era",
+      "meaningKo": "인간",
+      "variants": {
+        "kr": "世",
+        "jp": "世",
+        "cn": "世"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "世",
+          "pinyin": "shì",
+          "meaning": "generation; world; era",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "收",
+      "meaningEn": "gather together, collect; harvest",
+      "meaningKo": "거둘",
+      "variants": {
+        "cn": "收"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "收",
+          "pinyin": "shōu",
+          "meaning": "gather together, collect; harvest",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "瘦",
+      "meaningEn": "thin, emaciated, lean; meager",
+      "meaningKo": "여윌",
+      "variants": {
+        "cn": "瘦"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "瘦",
+          "pinyin": "shòu",
+          "meaning": "thin, emaciated, lean; meager",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "刷",
+      "meaningEn": "brush; clean with brush, scrub",
+      "meaningKo": "인쇄할",
+      "variants": {
+        "cn": "刷"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "刷",
+          "pinyin": "shuā",
+          "meaning": "brush; clean with brush, scrub",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "双",
+      "meaningEn": "set of two, pair, couple; both",
+      "meaningKo": "두",
+      "variants": {
+        "cn": "双"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "双",
+          "pinyin": "shuāng",
+          "meaning": "set of two, pair, couple; both",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "糖",
+      "meaningEn": "sugar; candy; sweets",
+      "meaningKo": "엿",
+      "variants": {
+        "cn": "糖"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "糖",
+          "pinyin": "táng",
+          "meaning": "sugar; candy; sweets",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "特",
+      "meaningEn": "special, unique, distinguished",
+      "meaningKo": "특별할",
+      "variants": {
+        "kr": "特",
+        "cn": "特"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "特",
+          "pinyin": "tè",
+          "meaning": "special, unique, distinguished",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "梯",
+      "meaningEn": "ladder, steps, stairs; lean",
+      "meaningKo": "사다리",
+      "variants": {
+        "cn": "梯"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "梯",
+          "pinyin": "tī",
+          "meaning": "ladder, steps, stairs; lean",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "甜",
+      "meaningEn": "sweet, sweetness",
+      "meaningKo": "달",
+      "variants": {
+        "cn": "甜"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "甜",
+          "pinyin": "tián",
+          "meaning": "sweet, sweetness",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "挺",
+      "meaningEn": "to stand upright, straighten; rigid",
+      "meaningKo": "빼어날",
+      "variants": {
+        "cn": "挺"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "挺",
+          "pinyin": "tǐng",
+          "meaning": "to stand upright, straighten; rigid",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "突",
+      "meaningEn": "suddenly, abruptly, unexpectedly",
+      "meaningKo": "갑자기",
+      "variants": {
+        "cn": "突"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "突",
+          "pinyin": "tū",
+          "meaning": "suddenly, abruptly, unexpectedly",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "图",
+      "meaningEn": "diagram; chart, map, picture",
+      "meaningKo": "그림",
+      "variants": {
+        "cn": "图"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "图",
+          "pinyin": "tú",
+          "meaning": "diagram; chart, map, picture",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "腿",
+      "meaningEn": "legs, thighs",
+      "meaningKo": "넓적다리",
+      "variants": {
+        "cn": "腿"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "腿",
+          "pinyin": "tuǐ",
+          "meaning": "legs, thighs",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "碗",
+      "meaningEn": "bowl, small dish",
+      "meaningKo": "사발",
+      "variants": {
+        "cn": "碗"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "碗",
+          "pinyin": "wǎn",
+          "meaning": "bowl, small dish",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "物",
+      "meaningEn": "thing, substance, creature",
+      "meaningKo": "물건",
+      "variants": {
+        "kr": "物",
+        "jp": "物",
+        "cn": "物"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "物",
+          "pinyin": "wù",
+          "meaning": "thing, substance, creature",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "戏",
+      "meaningEn": "theatrical play, show",
+      "meaningKo": "놀이",
+      "variants": {
+        "cn": "戏"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "戏",
+          "pinyin": "xì",
+          "meaning": "theatrical play, show",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "夏",
+      "meaningEn": "summer; great, grand, big",
+      "meaningKo": "여름",
+      "variants": {
+        "kr": "夏",
+        "jp": "夏",
+        "cn": "夏"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "夏",
+          "pinyin": "xià",
+          "meaning": "summer; great, grand, big",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "鮮",
+      "meaningEn": "fresh, new, delicious; rare, few",
+      "meaningKo": "고울",
+      "variants": {
+        "kr": "鮮",
+        "cn": "鲜"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "鲜",
+          "pinyin": "xiān",
+          "meaning": "fresh; delicious; attractive",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "相",
+      "meaningEn": "mutual, reciprocal, each other",
+      "meaningKo": "서로",
+      "variants": {
+        "kr": "相",
+        "jp": "相",
+        "cn": "相"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "相",
+          "pinyin": "xiāng",
+          "meaning": "mutual, reciprocal, each other",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "香",
+      "meaningEn": "fragrant, sweet-smelling; incense; kangxi radical 186",
+      "meaningKo": "향기",
+      "variants": {
+        "cn": "香"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "香",
+          "pinyin": "xiāng",
+          "meaning": "fragrant, sweet-smelling; incense; kangxi radical 186",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "像",
+      "meaningEn": "a picture, image, figure; to resemble",
+      "meaningKo": "모양",
+      "variants": {
+        "cn": "像"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "像",
+          "pinyin": "xiàng",
+          "meaning": "a picture, image, figure; to resemble",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "信",
+      "meaningEn": "trust, believe; letter",
+      "meaningKo": "믿을",
+      "variants": {
+        "kr": "信",
+        "cn": "信"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "信",
+          "pinyin": "xìn",
+          "meaning": "trust, believe; letter",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "须",
+      "meaningEn": "must, have to, necessary",
+      "meaningKo": "모름지기",
+      "variants": {
+        "cn": "须"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "须",
+          "pinyin": "xū",
+          "meaning": "must, have to, necessary",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "需",
+      "meaningEn": "need, require, must; hexagram ䷄",
+      "meaningKo": "기다릴",
+      "variants": {
+        "cn": "需"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "需",
+          "pinyin": "xū",
+          "meaning": "need, require, must; hexagram ䷄",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "牙",
+      "meaningEn": "tooth, molars, teeth; serrated",
+      "meaningKo": "어금니",
+      "variants": {
+        "cn": "牙"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "牙",
+          "pinyin": "yá",
+          "meaning": "tooth, molars, teeth; serrated",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "演",
+      "meaningEn": "perform, put on; exercise",
+      "meaningKo": "펼",
+      "variants": {
+        "cn": "演"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "演",
+          "pinyin": "yǎn",
+          "meaning": "perform, put on; exercise",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "養",
+      "meaningEn": "raise, rear, bring up; support",
+      "meaningKo": "기를",
+      "variants": {
+        "kr": "養",
+        "cn": "养"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "养",
+          "pinyin": "yǎng",
+          "meaning": "raise, rear, bring up; support",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "議",
+      "meaningEn": "consult, talk over, discuss",
+      "meaningKo": "의논할",
+      "variants": {
+        "cn": "议"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "议",
+          "pinyin": "yì",
+          "meaning": "consult, talk over, discuss",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "銀",
+      "meaningEn": "silver (element 47, ag); cash, money, wealth",
+      "meaningKo": "은",
+      "variants": {
+        "kr": "銀",
+        "jp": "銀",
+        "cn": "银"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "银",
+          "pinyin": "yín",
+          "meaning": "silver; cash, money, wealth",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "应",
+      "meaningEn": "should, ought to, must",
+      "meaningKo": "응할",
+      "variants": {
+        "cn": "应"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "应",
+          "pinyin": "yīng",
+          "meaning": "should, ought to, must",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "又",
+      "meaningEn": "and, also, again, in addition",
+      "meaningKo": "또",
+      "variants": {
+        "cn": "又"
+      },
+      "strokeCount": 2,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "又",
+          "pinyin": "yòu",
+          "meaning": "and, also, again, in addition",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "羽",
+      "meaningEn": "feather, plume; wings; kangxi radical 124",
+      "meaningKo": "깃",
+      "variants": {
+        "jp": "羽",
+        "cn": "羽"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "羽",
+          "pinyin": "yǔ",
+          "meaning": "feather, plume; wings; kangxi radical 124",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "育",
+      "meaningEn": "produce, give birth to; educate",
+      "meaningKo": "기를",
+      "variants": {
+        "kr": "育",
+        "jp": "育",
+        "cn": "育"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "育",
+          "pinyin": "yù",
+          "meaning": "produce, give birth to; educate",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "园",
+      "meaningEn": "garden; park, orchard",
+      "meaningKo": "깎을",
+      "variants": {
+        "cn": "园"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "园",
+          "pinyin": "yuán",
+          "meaning": "garden; park, orchard",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "愿",
+      "meaningEn": "sincere, honest, virtuous",
+      "meaningKo": "원할",
+      "variants": {
+        "cn": "愿"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "愿",
+          "pinyin": "yuàn",
+          "meaning": "sincere, honest, virtuous",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "咱",
+      "meaningEn": "we, us",
+      "meaningKo": "나",
+      "variants": {
+        "cn": "咱"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "咱",
+          "pinyin": "zán",
+          "meaning": "we, us",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "脏",
+      "meaningEn": "internal organs, viscera; dirty",
+      "meaningKo": "오장",
+      "variants": {
+        "cn": "脏"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "脏",
+          "pinyin": "zàng",
+          "meaning": "internal organs, viscera; dirty",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "澡",
+      "meaningEn": "wash, bathe",
+      "meaningKo": "씻을",
+      "variants": {
+        "cn": "澡"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "澡",
+          "pinyin": "zǎo",
+          "meaning": "wash, bathe",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "照",
+      "meaningEn": "shine, illumine, reflect",
+      "meaningKo": "비칠",
+      "variants": {
+        "cn": "照"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "照",
+          "pinyin": "zhào",
+          "meaning": "shine, illumine, reflect",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "者",
+      "meaningEn": "that which; he who; those who",
+      "meaningKo": "놈",
+      "variants": {
+        "kr": "者",
+        "jp": "者",
+        "cn": "者"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "者",
+          "pinyin": "zhě",
+          "meaning": "that which; he who; those who",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "直",
+      "meaningEn": "straight, erect, vertical",
+      "meaningKo": "곧을",
+      "variants": {
+        "kr": "直",
+        "jp": "直",
+        "cn": "直"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "直",
+          "pinyin": "zhí",
+          "meaning": "straight, erect, vertical",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "主",
+      "meaningEn": "master, chief owner; host; lord",
+      "meaningKo": "임금",
+      "variants": {
+        "kr": "主",
+        "jp": "主",
+        "cn": "主"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "主",
+          "pinyin": "zhǔ",
+          "meaning": "master, chief owner; host; lord",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "注",
+      "meaningEn": "concentrate, focus, direct",
+      "meaningKo": "부을",
+      "variants": {
+        "kr": "注",
+        "jp": "注",
+        "cn": "注"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "注",
+          "pinyin": "zhù",
+          "meaning": "concentrate, focus, direct",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "總",
+      "meaningEn": "collect; overall, altogether",
+      "meaningKo": "합할",
+      "variants": {
+        "cn": "总"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "总",
+          "pinyin": "zǒng",
+          "meaning": "collect; overall, altogether",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "嘴",
+      "meaningEn": "mouth, lips",
+      "meaningKo": "부리",
+      "variants": {
+        "cn": "嘴"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "cn",
+          "glyph": "嘴",
+          "pinyin": "zuǐ",
+          "meaning": "mouth, lips",
+          "hsk": "HSK 3",
+          "tier": "一级字",
+          "levelOrd": 3
+        }
+      ]
+    }
+  ],
+  "curriculumUnits": [
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 1,
+      "title": "动作 1",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "阿",
+          "ord": 1
+        },
+        {
+          "key": "把",
+          "ord": 2
+        },
+        {
+          "key": "般",
+          "ord": 3
+        },
+        {
+          "key": "搬",
+          "ord": 4
+        },
+        {
+          "key": "變",
+          "ord": 5
+        },
+        {
+          "key": "参",
+          "ord": 6
+        },
+        {
+          "key": "持",
+          "ord": 7
+        },
+        {
+          "key": "初",
+          "ord": 8
+        },
+        {
+          "key": "除",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 2,
+      "title": "动作 2",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "答",
+          "ord": 1
+        },
+        {
+          "key": "担",
+          "ord": 2
+        },
+        {
+          "key": "當",
+          "ord": 3
+        },
+        {
+          "key": "調",
+          "ord": 4
+        },
+        {
+          "key": "发",
+          "ord": 5
+        },
+        {
+          "key": "附",
+          "ord": 6
+        },
+        {
+          "key": "复",
+          "ord": 7
+        },
+        {
+          "key": "干",
+          "ord": 8
+        },
+        {
+          "key": "更",
+          "ord": 9
+        },
+        {
+          "key": "故",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 3,
+      "title": "动作 3",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "瓜",
+          "ord": 1
+        },
+        {
+          "key": "護",
+          "ord": 2
+        },
+        {
+          "key": "化",
+          "ord": 3
+        },
+        {
+          "key": "換",
+          "ord": 4
+        },
+        {
+          "key": "激",
+          "ord": 5
+        },
+        {
+          "key": "接",
+          "ord": 6
+        },
+        {
+          "key": "借",
+          "ord": 7
+        },
+        {
+          "key": "久",
+          "ord": 8
+        },
+        {
+          "key": "据",
+          "ord": 9
+        },
+        {
+          "key": "藍",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 4,
+      "title": "动作 4",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "历",
+          "ord": 1
+        },
+        {
+          "key": "末",
+          "ord": 2
+        },
+        {
+          "key": "努",
+          "ord": 3
+        },
+        {
+          "key": "騎",
+          "ord": 4
+        },
+        {
+          "key": "賽",
+          "ord": 5
+        },
+        {
+          "key": "衫",
+          "ord": 6
+        },
+        {
+          "key": "适",
+          "ord": 7
+        },
+        {
+          "key": "受",
+          "ord": 8
+        },
+        {
+          "key": "提",
+          "ord": 9
+        },
+        {
+          "key": "衛",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 5,
+      "title": "动作 5",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "聞",
+          "ord": 1
+        },
+        {
+          "key": "屋",
+          "ord": 2
+        },
+        {
+          "key": "箱",
+          "ord": 3
+        },
+        {
+          "key": "响",
+          "ord": 4
+        },
+        {
+          "key": "向",
+          "ord": 5
+        },
+        {
+          "key": "行",
+          "ord": 6
+        },
+        {
+          "key": "选",
+          "ord": 7
+        },
+        {
+          "key": "羊",
+          "ord": 8
+        },
+        {
+          "key": "易",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 6,
+      "title": "动作 6",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "迎",
+          "ord": 1
+        },
+        {
+          "key": "用",
+          "ord": 2
+        },
+        {
+          "key": "于",
+          "ord": 3
+        },
+        {
+          "key": "遇",
+          "ord": 4
+        },
+        {
+          "key": "越",
+          "ord": 5
+        },
+        {
+          "key": "擇",
+          "ord": 6
+        },
+        {
+          "key": "展",
+          "ord": 7
+        },
+        {
+          "key": "張",
+          "ord": 8
+        },
+        {
+          "key": "終",
+          "ord": 9
+        },
+        {
+          "key": "助",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 7,
+      "title": "生活与物品·学习与语言 7",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "板",
+          "ord": 1
+        },
+        {
+          "key": "街",
+          "ord": 2
+        },
+        {
+          "key": "盤",
+          "ord": 3
+        },
+        {
+          "key": "瓶",
+          "ord": 4
+        },
+        {
+          "key": "傘",
+          "ord": 5
+        },
+        {
+          "key": "鞋",
+          "ord": 6
+        },
+        {
+          "key": "飲",
+          "ord": 7
+        },
+        {
+          "key": "紙",
+          "ord": 8
+        },
+        {
+          "key": "級",
+          "ord": 9
+        },
+        {
+          "key": "聲",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 8,
+      "title": "学习与语言·自然 8",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "言",
+          "ord": 1
+        },
+        {
+          "key": "音",
+          "ord": 2
+        },
+        {
+          "key": "冰",
+          "ord": 3
+        },
+        {
+          "key": "草",
+          "ord": 4
+        },
+        {
+          "key": "差",
+          "ord": 5
+        },
+        {
+          "key": "朵",
+          "ord": 6
+        },
+        {
+          "key": "风",
+          "ord": 7
+        },
+        {
+          "key": "河",
+          "ord": 8
+        },
+        {
+          "key": "蕉",
+          "ord": 9
+        },
+        {
+          "key": "角",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 9,
+      "title": "自然 9",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "練",
+          "ord": 1
+        },
+        {
+          "key": "片",
+          "ord": 2
+        },
+        {
+          "key": "山",
+          "ord": 3
+        },
+        {
+          "key": "束",
+          "ord": 4
+        },
+        {
+          "key": "樹",
+          "ord": 5
+        },
+        {
+          "key": "心",
+          "ord": 6
+        },
+        {
+          "key": "陽",
+          "ord": 7
+        },
+        {
+          "key": "頁",
+          "ord": 8
+        },
+        {
+          "key": "郵",
+          "ord": 9
+        },
+        {
+          "key": "种",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 10,
+      "title": "数字与时间 10",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "冬",
+          "ord": 1
+        },
+        {
+          "key": "海",
+          "ord": 2
+        },
+        {
+          "key": "季",
+          "ord": 3
+        },
+        {
+          "key": "渴",
+          "ord": 4
+        },
+        {
+          "key": "碼",
+          "ord": 5
+        },
+        {
+          "key": "秋",
+          "ord": 6
+        },
+        {
+          "key": "數",
+          "ord": 7
+        },
+        {
+          "key": "算",
+          "ord": 8
+        },
+        {
+          "key": "重",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 11,
+      "title": "人与家庭·地点与方向 11",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "办",
+          "ord": 1
+        },
+        {
+          "key": "宾",
+          "ord": 2
+        },
+        {
+          "key": "禮",
+          "ord": 3
+        },
+        {
+          "key": "理",
+          "ord": 4
+        },
+        {
+          "key": "求",
+          "ord": 5
+        },
+        {
+          "key": "叔",
+          "ord": 6
+        },
+        {
+          "key": "姨",
+          "ord": 7
+        },
+        {
+          "key": "員",
+          "ord": 8
+        },
+        {
+          "key": "北",
+          "ord": 9
+        },
+        {
+          "key": "城",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 12,
+      "title": "地点与方向·性质与状态 12",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "處",
+          "ord": 1
+        },
+        {
+          "key": "聊",
+          "ord": 2
+        },
+        {
+          "key": "南",
+          "ord": 3
+        },
+        {
+          "key": "區",
+          "ord": 4
+        },
+        {
+          "key": "矮",
+          "ord": 5
+        },
+        {
+          "key": "安",
+          "ord": 6
+        },
+        {
+          "key": "遲",
+          "ord": 7
+        },
+        {
+          "key": "聰",
+          "ord": 8
+        },
+        {
+          "key": "短",
+          "ord": 9
+        },
+        {
+          "key": "假",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 13,
+      "title": "性质与状态·社会与文化 13",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "解",
+          "ord": 1
+        },
+        {
+          "key": "康",
+          "ord": 2
+        },
+        {
+          "key": "凉",
+          "ord": 3
+        },
+        {
+          "key": "平",
+          "ord": 4
+        },
+        {
+          "key": "輕",
+          "ord": 5
+        },
+        {
+          "key": "清",
+          "ord": 6
+        },
+        {
+          "key": "实",
+          "ord": 7
+        },
+        {
+          "key": "熊",
+          "ord": 8
+        },
+        {
+          "key": "楚",
+          "ord": 9
+        },
+        {
+          "key": "典",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 14,
+      "title": "社会与文化·日常 14",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "法",
+          "ord": 1
+        },
+        {
+          "key": "界",
+          "ord": 2
+        },
+        {
+          "key": "務",
+          "ord": 3
+        },
+        {
+          "key": "業",
+          "ord": 4
+        },
+        {
+          "key": "飽",
+          "ord": 5
+        },
+        {
+          "key": "报",
+          "ord": 6
+        },
+        {
+          "key": "被",
+          "ord": 7
+        },
+        {
+          "key": "必",
+          "ord": 8
+        },
+        {
+          "key": "遍",
+          "ord": 9
+        },
+        {
+          "key": "才",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 15,
+      "title": "日常 15",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "層",
+          "ord": 1
+        },
+        {
+          "key": "查",
+          "ord": 2
+        },
+        {
+          "key": "尝",
+          "ord": 3
+        },
+        {
+          "key": "襯",
+          "ord": 4
+        },
+        {
+          "key": "成",
+          "ord": 5
+        },
+        {
+          "key": "船",
+          "ord": 6
+        },
+        {
+          "key": "春",
+          "ord": 7
+        },
+        {
+          "key": "帶",
+          "ord": 8
+        },
+        {
+          "key": "单",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 16,
+      "title": "日常 16",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "灯",
+          "ord": 1
+        },
+        {
+          "key": "定",
+          "ord": 2
+        },
+        {
+          "key": "丢",
+          "ord": 3
+        },
+        {
+          "key": "段",
+          "ord": 4
+        },
+        {
+          "key": "鍛",
+          "ord": 5
+        },
+        {
+          "key": "餓",
+          "ord": 6
+        },
+        {
+          "key": "而",
+          "ord": 7
+        },
+        {
+          "key": "耳",
+          "ord": 8
+        },
+        {
+          "key": "方",
+          "ord": 9
+        },
+        {
+          "key": "放",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 17,
+      "title": "日常 17",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "封",
+          "ord": 1
+        },
+        {
+          "key": "該",
+          "ord": 2
+        },
+        {
+          "key": "概",
+          "ord": 3
+        },
+        {
+          "key": "感",
+          "ord": 4
+        },
+        {
+          "key": "剛",
+          "ord": 5
+        },
+        {
+          "key": "糕",
+          "ord": 6
+        },
+        {
+          "key": "根",
+          "ord": 7
+        },
+        {
+          "key": "共",
+          "ord": 8
+        },
+        {
+          "key": "顧",
+          "ord": 9
+        },
+        {
+          "key": "刮",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 18,
+      "title": "日常 18",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "怪",
+          "ord": 1
+        },
+        {
+          "key": "慣",
+          "ord": 2
+        },
+        {
+          "key": "害",
+          "ord": 3
+        },
+        {
+          "key": "合",
+          "ord": 4
+        },
+        {
+          "key": "乎",
+          "ord": 5
+        },
+        {
+          "key": "环",
+          "ord": 6
+        },
+        {
+          "key": "黃",
+          "ord": 7
+        },
+        {
+          "key": "婚",
+          "ord": 8
+        },
+        {
+          "key": "活",
+          "ord": 9
+        },
+        {
+          "key": "或",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 19,
+      "title": "日常 19",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "极",
+          "ord": 1
+        },
+        {
+          "key": "急",
+          "ord": 2
+        },
+        {
+          "key": "績",
+          "ord": 3
+        },
+        {
+          "key": "加",
+          "ord": 4
+        },
+        {
+          "key": "堅",
+          "ord": 5
+        },
+        {
+          "key": "檢",
+          "ord": 6
+        },
+        {
+          "key": "簡",
+          "ord": 7
+        },
+        {
+          "key": "健",
+          "ord": 8
+        },
+        {
+          "key": "講",
+          "ord": 9
+        },
+        {
+          "key": "餃",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 20,
+      "title": "日常 20",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "脚",
+          "ord": 1
+        },
+        {
+          "key": "較",
+          "ord": 2
+        },
+        {
+          "key": "節",
+          "ord": 3
+        },
+        {
+          "key": "結",
+          "ord": 4
+        },
+        {
+          "key": "斤",
+          "ord": 5
+        },
+        {
+          "key": "凈",
+          "ord": 6
+        },
+        {
+          "key": "静",
+          "ord": 7
+        },
+        {
+          "key": "境",
+          "ord": 8
+        },
+        {
+          "key": "舊",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 21,
+      "title": "日常 21",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "居",
+          "ord": 1
+        },
+        {
+          "key": "句",
+          "ord": 2
+        },
+        {
+          "key": "決",
+          "ord": 3
+        },
+        {
+          "key": "卡",
+          "ord": 4
+        },
+        {
+          "key": "刻",
+          "ord": 5
+        },
+        {
+          "key": "空",
+          "ord": 6
+        },
+        {
+          "key": "哭",
+          "ord": 7
+        },
+        {
+          "key": "筷",
+          "ord": 8
+        },
+        {
+          "key": "礦",
+          "ord": 9
+        },
+        {
+          "key": "李",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 22,
+      "title": "日常 22",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "力",
+          "ord": 1
+        },
+        {
+          "key": "臉",
+          "ord": 2
+        },
+        {
+          "key": "煉",
+          "ord": 3
+        },
+        {
+          "key": "輛",
+          "ord": 4
+        },
+        {
+          "key": "料",
+          "ord": 5
+        },
+        {
+          "key": "鄰",
+          "ord": 6
+        },
+        {
+          "key": "凌",
+          "ord": 7
+        },
+        {
+          "key": "馬",
+          "ord": 8
+        },
+        {
+          "key": "滿",
+          "ord": 9
+        },
+        {
+          "key": "毛",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 23,
+      "title": "日常 23",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "冒",
+          "ord": 1
+        },
+        {
+          "key": "目",
+          "ord": 2
+        },
+        {
+          "key": "难",
+          "ord": 3
+        },
+        {
+          "key": "爬",
+          "ord": 4
+        },
+        {
+          "key": "怕",
+          "ord": 5
+        },
+        {
+          "key": "拍",
+          "ord": 6
+        },
+        {
+          "key": "胖",
+          "ord": 7
+        },
+        {
+          "key": "啤",
+          "ord": 8
+        },
+        {
+          "key": "其",
+          "ord": 9
+        },
+        {
+          "key": "奇",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 24,
+      "title": "日常 24",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "汽",
+          "ord": 1
+        },
+        {
+          "key": "鉛",
+          "ord": 2
+        },
+        {
+          "key": "且",
+          "ord": 3
+        },
+        {
+          "key": "趣",
+          "ord": 4
+        },
+        {
+          "key": "全",
+          "ord": 5
+        },
+        {
+          "key": "泉",
+          "ord": 6
+        },
+        {
+          "key": "裙",
+          "ord": 7
+        },
+        {
+          "key": "容",
+          "ord": 8
+        },
+        {
+          "key": "如",
+          "ord": 9
+        },
+        {
+          "key": "掃",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 25,
+      "title": "日常 25",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "沙",
+          "ord": 1
+        },
+        {
+          "key": "燒",
+          "ord": 2
+        },
+        {
+          "key": "勺",
+          "ord": 3
+        },
+        {
+          "key": "史",
+          "ord": 4
+        },
+        {
+          "key": "世",
+          "ord": 5
+        },
+        {
+          "key": "收",
+          "ord": 6
+        },
+        {
+          "key": "瘦",
+          "ord": 7
+        },
+        {
+          "key": "刷",
+          "ord": 8
+        },
+        {
+          "key": "双",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 26,
+      "title": "日常 26",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "糖",
+          "ord": 1
+        },
+        {
+          "key": "特",
+          "ord": 2
+        },
+        {
+          "key": "梯",
+          "ord": 3
+        },
+        {
+          "key": "甜",
+          "ord": 4
+        },
+        {
+          "key": "挺",
+          "ord": 5
+        },
+        {
+          "key": "突",
+          "ord": 6
+        },
+        {
+          "key": "图",
+          "ord": 7
+        },
+        {
+          "key": "腿",
+          "ord": 8
+        },
+        {
+          "key": "碗",
+          "ord": 9
+        },
+        {
+          "key": "物",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 27,
+      "title": "日常 27",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "戏",
+          "ord": 1
+        },
+        {
+          "key": "夏",
+          "ord": 2
+        },
+        {
+          "key": "鮮",
+          "ord": 3
+        },
+        {
+          "key": "相",
+          "ord": 4
+        },
+        {
+          "key": "香",
+          "ord": 5
+        },
+        {
+          "key": "像",
+          "ord": 6
+        },
+        {
+          "key": "信",
+          "ord": 7
+        },
+        {
+          "key": "须",
+          "ord": 8
+        },
+        {
+          "key": "需",
+          "ord": 9
+        },
+        {
+          "key": "牙",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 28,
+      "title": "日常 28",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "演",
+          "ord": 1
+        },
+        {
+          "key": "養",
+          "ord": 2
+        },
+        {
+          "key": "議",
+          "ord": 3
+        },
+        {
+          "key": "銀",
+          "ord": 4
+        },
+        {
+          "key": "应",
+          "ord": 5
+        },
+        {
+          "key": "又",
+          "ord": 6
+        },
+        {
+          "key": "羽",
+          "ord": 7
+        },
+        {
+          "key": "育",
+          "ord": 8
+        },
+        {
+          "key": "园",
+          "ord": 9
+        },
+        {
+          "key": "愿",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "cn",
+      "level": "HSK 3",
+      "ord": 29,
+      "title": "日常 29",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "咱",
+          "ord": 1
+        },
+        {
+          "key": "脏",
+          "ord": 2
+        },
+        {
+          "key": "澡",
+          "ord": 3
+        },
+        {
+          "key": "照",
+          "ord": 4
+        },
+        {
+          "key": "者",
+          "ord": 5
+        },
+        {
+          "key": "直",
+          "ord": 6
+        },
+        {
+          "key": "主",
+          "ord": 7
+        },
+        {
+          "key": "注",
+          "ord": 8
+        },
+        {
+          "key": "總",
+          "ord": 9
+        },
+        {
+          "key": "嘴",
+          "ord": 10
+        }
+      ]
+    }
+  ]
+}

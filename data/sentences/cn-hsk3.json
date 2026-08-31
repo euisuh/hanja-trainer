@@ -1,0 +1,674 @@
+{
+  "sentences": [
+    {
+      "character_key": "把",
+      "track": "cn",
+      "text": "把嘴张开！",
+      "translation_ko": "입을 벌리세요!",
+      "source": "Tatoeba #501554",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "担",
+      "track": "cn",
+      "text": "不要担心！",
+      "translation_ko": "너 걱정마.",
+      "source": "Tatoeba #1872180",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "當",
+      "track": "cn",
+      "text": "当然是的。",
+      "translation_ko": "당연하지.",
+      "source": "Tatoeba #421347",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "附",
+      "track": "cn",
+      "text": "她住在附近。",
+      "translation_ko": "그녀는 근처에 산다.",
+      "source": "Tatoeba #2006618",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "干",
+      "track": "cn",
+      "text": "干活慢点。",
+      "translation_ko": "쉬엄쉬엄 일해.",
+      "source": "Tatoeba #5092211",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "更",
+      "track": "cn",
+      "text": "我注意到桌子比椅子更稳固。",
+      "translation_ko": "테이블이 의자보다 더 안정적이라는 것을 알았습니다.",
+      "source": "Tatoeba #13828526",
+      "source_kind": "corpus",
+      "target_index": 9,
+      "rank": 0
+    },
+    {
+      "character_key": "瓜",
+      "track": "cn",
+      "text": "我在吃西瓜。",
+      "translation_ko": "나는 수박을 먹고 있어요.",
+      "source": "Tatoeba #10613902",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "化",
+      "track": "cn",
+      "text": "软件正在不断进化。",
+      "translation_ko": "소프트웨어는 끊임없이 진화하고 있어.",
+      "source": "Tatoeba #8696302",
+      "source_kind": "corpus",
+      "target_index": 7,
+      "rank": 0
+    },
+    {
+      "character_key": "接",
+      "track": "cn",
+      "text": "接一下电话。",
+      "translation_ko": "전화 좀 받아.",
+      "source": "Tatoeba #4104698",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "久",
+      "track": "cn",
+      "text": "好久不见！",
+      "translation_ko": "오래간만입니다!",
+      "source": "Tatoeba #1357629",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "末",
+      "track": "cn",
+      "text": "周末愉快！",
+      "translation_ko": "주말 잘 보내세요!",
+      "source": "Tatoeba #2485698",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "提",
+      "track": "cn",
+      "text": "提姆是左撇子。",
+      "translation_ko": "팀은 왼손잡이다.",
+      "source": "Tatoeba #10252148",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "屋",
+      "track": "cn",
+      "text": "你有屋子吗？",
+      "translation_ko": "집 있어요?",
+      "source": "Tatoeba #9453433",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "向",
+      "track": "cn",
+      "text": "请向右转。",
+      "translation_ko": "오른쪽으로 돌아주세요.",
+      "source": "Tatoeba #512815",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "行",
+      "track": "cn",
+      "text": "旅行是乐事。",
+      "translation_ko": "여행은 재미있다.",
+      "source": "Tatoeba #7771682",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "选",
+      "track": "cn",
+      "text": "从中选一个。",
+      "translation_ko": "그중 하나를 고르세요.",
+      "source": "Tatoeba #10157061",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "羊",
+      "track": "cn",
+      "text": "冬天穿羊毛衣。",
+      "translation_ko": "겨울에는 양모 옷을 입어요.",
+      "source": "Tatoeba #1400904",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "迎",
+      "track": "cn",
+      "text": "欢迎你们！",
+      "translation_ko": "어서 오세요!",
+      "source": "Tatoeba #9991999",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "用",
+      "track": "cn",
+      "text": "不用客气。",
+      "translation_ko": "천만에요.",
+      "source": "Tatoeba #700676",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "于",
+      "track": "cn",
+      "text": "糖溶于水。",
+      "translation_ko": "설탕은 물에 잘 녹아.",
+      "source": "Tatoeba #736554",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "張",
+      "track": "cn",
+      "text": "把嘴张开！",
+      "translation_ko": "입을 벌리세요!",
+      "source": "Tatoeba #501554",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "板",
+      "track": "cn",
+      "text": "看看黑板。",
+      "translation_ko": "칠판을 보세요.",
+      "source": "Tatoeba #13148495",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "街",
+      "track": "cn",
+      "text": "他站在街角。",
+      "translation_ko": "그는 길 모퉁이에 서있었다.",
+      "source": "Tatoeba #333711",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "言",
+      "track": "cn",
+      "text": "严格来说，中文包含几百种方言。",
+      "translation_ko": "엄밀히 말하자면, 중국어는 수백 개의 방언들로 구성되어 있어.",
+      "source": "Tatoeba #10192346",
+      "source_kind": "corpus",
+      "target_index": 13,
+      "rank": 0
+    },
+    {
+      "character_key": "角",
+      "track": "cn",
+      "text": "他站在街角。",
+      "translation_ko": "그는 길 모퉁이에 서있었다.",
+      "source": "Tatoeba #333711",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "心",
+      "track": "cn",
+      "text": "不要担心！",
+      "translation_ko": "너 걱정마.",
+      "source": "Tatoeba #1872180",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "种",
+      "track": "cn",
+      "text": "铁是一种金属。",
+      "translation_ko": "철은 금속의 일종이다.",
+      "source": "Tatoeba #8932409",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "冬",
+      "track": "cn",
+      "text": "冬天穿羊毛衣。",
+      "translation_ko": "겨울에는 양모 옷을 입어요.",
+      "source": "Tatoeba #1400904",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "理",
+      "track": "cn",
+      "text": "可以告诉我理由吗？",
+      "translation_ko": "이유를 물어봐도 돼?",
+      "source": "Tatoeba #5072426",
+      "source_kind": "corpus",
+      "target_index": 5,
+      "rank": 0
+    },
+    {
+      "character_key": "北",
+      "track": "cn",
+      "text": "南男北女。",
+      "translation_ko": "남남북녀.",
+      "source": "Tatoeba #3217147",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "處",
+      "track": "cn",
+      "text": "四处看看。",
+      "translation_ko": "둘러봐.",
+      "source": "Tatoeba #5092470",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "南",
+      "track": "cn",
+      "text": "南男北女。",
+      "translation_ko": "남남북녀.",
+      "source": "Tatoeba #3217147",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "安",
+      "track": "cn",
+      "text": "愿他安息！",
+      "translation_ko": "그의 혼에 평화를!",
+      "source": "Tatoeba #2032353",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "康",
+      "track": "cn",
+      "text": "我父亲身体很健康。",
+      "translation_ko": "아버지는 건강하다.",
+      "source": "Tatoeba #784039",
+      "source_kind": "corpus",
+      "target_index": 7,
+      "rank": 0
+    },
+    {
+      "character_key": "清",
+      "track": "cn",
+      "text": "能看清吧？",
+      "translation_ko": "잘 보이죠?",
+      "source": "Tatoeba #13521812",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "典",
+      "track": "cn",
+      "text": "我有词典。",
+      "translation_ko": "나에게 사전이 있다.",
+      "source": "Tatoeba #695413",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "法",
+      "track": "cn",
+      "text": "她说法语。",
+      "translation_ko": "그는 프랑스어를 한다.",
+      "source": "Tatoeba #10260759",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "被",
+      "track": "cn",
+      "text": "食物和被子被送到难民手中。",
+      "translation_ko": "음식과 이불이 난민들에게 전달되었다.",
+      "source": "Tatoeba #346807",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "才",
+      "track": "cn",
+      "text": "我也才刚到。",
+      "translation_ko": "저도 이제서야 도착했어요.",
+      "source": "Tatoeba #8832719",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "層",
+      "track": "cn",
+      "text": "我爱千层面。",
+      "translation_ko": "저는 라자냐를 좋아해요.",
+      "source": "Tatoeba #12880273",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "成",
+      "track": "cn",
+      "text": "成名作了。",
+      "translation_ko": "그것은 그의 출세작이 되었다.",
+      "source": "Tatoeba #13522188",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "方",
+      "track": "cn",
+      "text": "严格来说，中文包含几百种方言。",
+      "translation_ko": "엄밀히 말하자면, 중국어는 수백 개의 방언들로 구성되어 있어.",
+      "source": "Tatoeba #10192346",
+      "source_kind": "corpus",
+      "target_index": 12,
+      "rank": 0
+    },
+    {
+      "character_key": "放",
+      "track": "cn",
+      "text": "放飞鸟儿。",
+      "translation_ko": "새가 날아가도록 풀어주자.",
+      "source": "Tatoeba #1737985",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "剛",
+      "track": "cn",
+      "text": "他刚刚离开。",
+      "translation_ko": "그는 방금 떠났다.",
+      "source": "Tatoeba #13893600",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "乎",
+      "track": "cn",
+      "text": "似乎很便宜。",
+      "translation_ko": "싼 것 같았습니다.",
+      "source": "Tatoeba #333228",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "黃",
+      "track": "cn",
+      "text": "我爱蛋黄。",
+      "translation_ko": "나는 계란노른자를 사랑해.",
+      "source": "Tatoeba #4546932",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "活",
+      "track": "cn",
+      "text": "干活慢点。",
+      "translation_ko": "쉬엄쉬엄 일해.",
+      "source": "Tatoeba #5092211",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "加",
+      "track": "cn",
+      "text": "考试加油！",
+      "translation_ko": "시험 잘쳐.",
+      "source": "Tatoeba #4885094",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "健",
+      "track": "cn",
+      "text": "我父亲身体很健康。",
+      "translation_ko": "아버지는 건강하다.",
+      "source": "Tatoeba #784039",
+      "source_kind": "corpus",
+      "target_index": 6,
+      "rank": 0
+    },
+    {
+      "character_key": "空",
+      "track": "cn",
+      "text": "天空很晴朗。",
+      "translation_ko": "하늘이 맑다.",
+      "source": "Tatoeba #825138",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "臉",
+      "track": "cn",
+      "text": "她脸红了。",
+      "translation_ko": "그녀는 얼굴이 빨개졌다.",
+      "source": "Tatoeba #396112",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "馬",
+      "track": "cn",
+      "text": "马上回来。",
+      "translation_ko": "즉시 돌아와.",
+      "source": "Tatoeba #9475952",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "毛",
+      "track": "cn",
+      "text": "冬天穿羊毛衣。",
+      "translation_ko": "겨울에는 양모 옷을 입어요.",
+      "source": "Tatoeba #1400904",
+      "source_kind": "corpus",
+      "target_index": 4,
+      "rank": 0
+    },
+    {
+      "character_key": "难",
+      "track": "cn",
+      "text": "难以置信！",
+      "translation_ko": "설마!",
+      "source": "Tatoeba #4505070",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "鉛",
+      "track": "cn",
+      "text": "这支铅笔是谁的？",
+      "translation_ko": "이 연필 누구 거야?",
+      "source": "Tatoeba #1328157",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "全",
+      "track": "cn",
+      "text": "全都好吃！",
+      "translation_ko": "전부가 맛있어요!",
+      "source": "Tatoeba #348285",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "糖",
+      "track": "cn",
+      "text": "糖溶于水。",
+      "translation_ko": "설탕은 물에 잘 녹아.",
+      "source": "Tatoeba #736554",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "图",
+      "track": "cn",
+      "text": "他在图书馆里。",
+      "translation_ko": "그는 그의 서재에 있다.",
+      "source": "Tatoeba #3378272",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "物",
+      "track": "cn",
+      "text": "食物和被子被送到难民手中。",
+      "translation_ko": "음식과 이불이 난민들에게 전달되었다.",
+      "source": "Tatoeba #346807",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "相",
+      "track": "cn",
+      "text": "我相信爱情。",
+      "translation_ko": "난 사랑을 믿는다.",
+      "source": "Tatoeba #5613718",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "像",
+      "track": "cn",
+      "text": "你都像你的爸爸。",
+      "translation_ko": "너는 아빠랑 똑같다.",
+      "source": "Tatoeba #2889783",
+      "source_kind": "corpus",
+      "target_index": 2,
+      "rank": 0
+    },
+    {
+      "character_key": "信",
+      "track": "cn",
+      "text": "难以置信！",
+      "translation_ko": "설마!",
+      "source": "Tatoeba #4505070",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "愿",
+      "track": "cn",
+      "text": "愿他安息！",
+      "translation_ko": "그의 혼에 평화를!",
+      "source": "Tatoeba #2032353",
+      "source_kind": "corpus",
+      "target_index": 0,
+      "rank": 0
+    },
+    {
+      "character_key": "澡",
+      "track": "cn",
+      "text": "我洗了澡。",
+      "translation_ko": "나는 샤워를 했다.",
+      "source": "Tatoeba #5624915",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "照",
+      "track": "cn",
+      "text": "请多关照！",
+      "translation_ko": "잘 부탁합니다!",
+      "source": "Tatoeba #1216144",
+      "source_kind": "corpus",
+      "target_index": 3,
+      "rank": 0
+    },
+    {
+      "character_key": "注",
+      "track": "cn",
+      "text": "我注意到桌子比椅子更稳固。",
+      "translation_ko": "테이블이 의자보다 더 안정적이라는 것을 알았습니다.",
+      "source": "Tatoeba #13828526",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    },
+    {
+      "character_key": "嘴",
+      "track": "cn",
+      "text": "把嘴张开！",
+      "translation_ko": "입을 벌리세요!",
+      "source": "Tatoeba #501554",
+      "source_kind": "corpus",
+      "target_index": 1,
+      "rank": 0
+    }
+  ]
+}

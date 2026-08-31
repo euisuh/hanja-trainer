@@ -121,7 +121,8 @@
       "meaningKo": "남녘",
       "variants": {
         "kr": "南",
-        "jp": "南"
+        "jp": "南",
+        "cn": "南"
       },
       "strokeCount": 9,
       "tracks": [
@@ -375,7 +376,8 @@
       "meaningKo": "북녘",
       "variants": {
         "kr": "北",
-        "jp": "北"
+        "jp": "北",
+        "cn": "北"
       },
       "strokeCount": 5,
       "tracks": [
@@ -414,7 +416,8 @@
       "meaningKo": "메",
       "variants": {
         "kr": "山",
-        "jp": "山"
+        "jp": "山",
+        "cn": "山"
       },
       "strokeCount": 3,
       "tracks": [

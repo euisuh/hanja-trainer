@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 import { sentenceAttribution } from "../src/shared/sentenceAttribution.ts";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../src/features/placement/adaptive.ts";
 import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
+import { tierForTgh } from "./tgh-tier.ts";
 import type { CharacterEntry, SeedSentenceEntry, Track } from "../src/shared/types.ts";
 
 const files = {
@@ -19,6 +21,7 @@ const files = {
   "data/characters/jp-kanken-8.json": 200,
   "data/characters/cn-hsk1.json": 246,
   "data/characters/cn-hsk2.json": 220,
+  "data/characters/cn-hsk3.json": 284,
 };
 
 test("curated character files validate and cross-link", async () => {
@@ -104,6 +107,94 @@ test("seeded Japanese placement bounds and all-correct estimate reach 8級", asy
     });
   let state = createPlacementState(characters, ["jp"]);
   assert.deepEqual({ min: state.estimates.jp.minLevelOrd, max: state.estimates.jp.maxLevelOrd }, { min: 1, max: 3 });
+  while (!isPlacementComplete(state)) {
+    const item = nextPlacementItem(state, characters);
+    assert.ok(item);
+    state = recordPlacementAnswer(state, item, true);
+  }
+  assert.equal(placementResults(state)[0].levelOrd, 3);
+});
+
+test("Chinese source counts, HSK 3 membership, units, and variants match the pinned sources", async () => {
+  assert.deepEqual(["2013:3500", "2013:3501", "2013:6500", "2013:6501", "2013:8105"].map(tierForTgh), ["一级字", "二级字", "二级字", "三级字", "三级字"]);
+  for (const invalid of [undefined, "2013:0", "2013:8106", "3379", "2013:abc"]) assert.throws(() => tierForTgh(invalid), /invalid kTGH position/u);
+  const cnPaths = ["data/characters/cn-hsk1.json", "data/characters/cn-hsk2.json", "data/characters/cn-hsk3.json"];
+  assert.equal(
+    createHash("sha256").update(await readFile(cnPaths[2])).digest("hex"),
+    "3ddeee7742f6d8020eff5e659dee3c6c1043997dd3c4649e5081278328c82f9f",
+    "re-run generate-cn-through-hsk3.mjs when the frozen output changes",
+  );
+  assert.equal(
+    createHash("sha256").update(await readFile("data/sentences/cn-hsk3.json")).digest("hex"),
+    "d75edbfa6ecbe88e6a55979284786558eaa4a79b547e4d38c43ec58e67462f68",
+    "re-run generate-cn-through-hsk3.mjs when the frozen output changes",
+  );
+  const documents = await Promise.all(Object.keys(files).map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const byPath = new Map(Object.keys(files).map((path, index) => [path, documents[index]]));
+  const [hsk1, hsk2, hsk3] = cnPaths.map((path) => byPath.get(path)!);
+  const glyphs = (document: typeof hsk1) => document.characters.map((character) => character.tracks.find((track) => track.track === "cn")!.glyph);
+  const [hsk1Glyphs, hsk2Glyphs, hsk3Glyphs] = [hsk1, hsk2, hsk3].map(glyphs);
+
+  assert.deepEqual([hsk1.characters.length, hsk2.characters.length, hsk3.characters.length], [246, 220, 284]);
+  assert.equal(hsk2Glyphs.filter((glyph) => hsk1Glyphs.includes(glyph)).length, 95);
+  assert.equal(hsk3Glyphs.filter((glyph) => hsk1Glyphs.includes(glyph) || hsk2Glyphs.includes(glyph)).length, 0);
+  assert.equal(new Set([...hsk1Glyphs, ...hsk2Glyphs, ...hsk3Glyphs]).size, 655);
+  assert.equal(
+    createHash("sha256").update(hsk3Glyphs.toSorted().join("")).digest("hex"),
+    "d57f93e9d888ec3e5f4a77fb0b5ba3d079adefa93bcba572f166d75ca95d1ca5",
+  );
+
+  const members = hsk3.curriculumUnits?.flatMap((unit) => unit.members.map((member) => member.key)) ?? [];
+  assert.equal(members.length, 284);
+  assert.deepEqual(new Set(members), new Set(hsk3.characters.map((character) => character.key)));
+  assert.equal(new Set(members).size, members.length);
+  assert.ok(hsk3.curriculumUnits?.every((unit) => unit.track === "cn" && unit.level === "HSK 3" && unit.members.length >= 8 && unit.members.length <= 10));
+  assert.ok(hsk3.characters.every((character) => character.tracks.some((track) => (
+    track.track === "cn" && track.hsk === "HSK 3" && track.levelOrd === 3 && track.tier === "一级字"
+  ))));
+  assert.equal(
+    hsk3.characters.find((character) => character.tracks[0].glyph === "激")!.tracks.find((track) => track.track === "cn")!.tier,
+    tierForTgh("2013:3379"),
+  );
+  const canonicalSpotChecks = new Map([
+    ["黄", { key: "黃", variants: { jp: "黄", kr: "黃", cn: "黄" }, strokeCount: 12, pinyin: "huáng" }],
+    ["礼", { key: "禮", variants: { kr: "禮", jp: "礼", cn: "礼" }, strokeCount: 17, pinyin: "lǐ" }],
+    ["银", { key: "銀", variants: { kr: "銀", jp: "銀", cn: "银" }, strokeCount: 14, pinyin: "yín" }],
+    ["发", { key: "发", variants: { cn: "发" }, strokeCount: 5, pinyin: "fā" }],
+    ["历", { key: "历", variants: { cn: "历" }, strokeCount: 4, pinyin: "lì" }],
+  ]);
+  for (const [glyph, expected] of canonicalSpotChecks) {
+    const character = hsk3.characters.find((candidate) => candidate.tracks[0].glyph === glyph)!;
+    const track = character.tracks.find((candidate) => candidate.track === "cn")!;
+    assert.deepEqual({ key: character.key, variants: character.variants, strokeCount: character.strokeCount, pinyin: track.pinyin }, expected);
+  }
+
+  const completeVariants = new Map<string, Partial<Record<Track, string>>>();
+  for (const character of documents.flatMap((document) => document.characters)) {
+    completeVariants.set(character.key, { ...(completeVariants.get(character.key) ?? {}), ...character.variants });
+  }
+  for (const character of hsk3.characters) {
+    assert.deepEqual(character.variants, completeVariants.get(character.key), `${character.key} complete variants`);
+    for (const matching of documents.flatMap((document) => document.characters).filter((candidate) => candidate.key === character.key)) {
+      assert.deepEqual(matching.variants, character.variants, `${character.key} cross-file variants`);
+    }
+  }
+
+  const sources = await readFile("data/SOURCES.md", "utf8");
+  for (const count of ["246 membership rows", "225 membership rows", "434 membership rows", "655"]) assert.ok(sources.includes(count), count);
+});
+
+test("seeded Chinese placement bounds and all-correct estimate reach HSK 3", async () => {
+  const cnPaths = Object.keys(files).filter((path) => path.includes("/cn-"));
+  let id = 0;
+  const characters: CharacterEntry[] = (await Promise.all(cnPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
+    .flatMap((document) => document.characters)
+    .map((character) => {
+      id += 1;
+      return { ...character, id, createdAt: 0, sentences: [], tracks: character.tracks.map((track) => ({ ...track, characterId: id })) };
+    });
+  let state = createPlacementState(characters, ["cn"]);
+  assert.deepEqual({ min: state.estimates.cn.minLevelOrd, max: state.estimates.cn.maxLevelOrd }, { min: 1, max: 3 });
   while (!isPlacementComplete(state)) {
     const item = nextPlacementItem(state, characters);
     assert.ok(item);
@@ -199,7 +290,7 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
       for (const entry of character.tracks) {
         glyphs.set(`${character.key}:${entry.track}`, entry.glyph);
         tracks.add(entry.track);
-        if (path !== "data/characters/jp-kanken-8.json") {
+        if (path !== "data/characters/jp-kanken-8.json" && path !== "data/characters/cn-hsk3.json") {
           const legacyTracks = legacyTrackCounts.get(character.key) ?? new Set<Track>();
           legacyTracks.add(entry.track);
           legacyTrackCounts.set(character.key, legacyTracks);
@@ -235,8 +326,8 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
   assert.equal(krCovered.length, 218);
   assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 218);
-  assert.equal(byIdentity.size, 865);
-  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 447);
+  assert.equal(byIdentity.size, 932);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 664);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3 && legacyTrackCounts.get(key)?.size === 3) {
       const sentences = [...byIdentity.values()].filter((entry) => entry.characterKey === key);
@@ -315,7 +406,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
     sqlite.exec(sql);
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
-    assert.equal(counts?.sentences, 865);
+    assert.equal(counts?.sentences, 932);
   } finally {
     sqlite.close();
   }

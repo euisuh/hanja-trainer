@@ -474,7 +474,8 @@
       "meaningEn": "river; stream; the Yellow River",
       "meaningKo": "물",
       "variants": {
-        "kr": "河"
+        "kr": "河",
+        "cn": "河"
       },
       "strokeCount": 8,
       "tracks": [
@@ -511,7 +512,8 @@
       "meaningEn": "strong, robust, healthy; strength",
       "meaningKo": "굳셀",
       "variants": {
-        "kr": "健"
+        "kr": "健",
+        "cn": "健"
       },
       "strokeCount": 10,
       "tracks": [
@@ -585,7 +587,8 @@
       "meaningKo": "귀",
       "variants": {
         "jp": "耳",
-        "kr": "耳"
+        "kr": "耳",
+        "cn": "耳"
       },
       "strokeCount": 6,
       "tracks": [
@@ -679,7 +682,8 @@
       "meaningKo": "배",
       "variants": {
         "jp": "船",
-        "kr": "船"
+        "kr": "船",
+        "cn": "船"
       },
       "strokeCount": 11,
       "tracks": [
@@ -698,7 +702,8 @@
       "meaningKo": "집",
       "variants": {
         "kr": "屋",
-        "jp": "屋"
+        "jp": "屋",
+        "cn": "屋"
       },
       "strokeCount": 9,
       "tracks": [
@@ -737,7 +742,8 @@
       "meaningKo": "널빤지",
       "variants": {
         "kr": "板",
-        "jp": "板"
+        "jp": "板",
+        "cn": "板"
       },
       "strokeCount": 8,
       "tracks": [
@@ -811,7 +817,8 @@
       "meaningEn": "final, last, end; insignificant",
       "meaningKo": "끝",
       "variants": {
-        "kr": "末"
+        "kr": "末",
+        "cn": "末"
       },
       "strokeCount": 5,
       "tracks": [
@@ -922,7 +929,8 @@
       "meaningKo": "끝",
       "variants": {
         "kr": "終",
-        "jp": "終"
+        "jp": "終",
+        "cn": "终"
       },
       "strokeCount": 11,
       "tracks": [
@@ -940,7 +948,8 @@
       "meaningEn": "beginning, initial, primary",
       "meaningKo": "처음",
       "variants": {
-        "kr": "初"
+        "kr": "初",
+        "cn": "初"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1239,7 +1248,8 @@
       "meaningEn": "add to, increase, augment",
       "meaningKo": "더할",
       "variants": {
-        "kr": "加"
+        "kr": "加",
+        "cn": "加"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1296,7 +1306,8 @@
       "meaningKo": "가벼울",
       "variants": {
         "kr": "輕",
-        "jp": "軽"
+        "jp": "軽",
+        "cn": "轻"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1370,7 +1381,8 @@
       "meaningKo": "물 끓는 김",
       "variants": {
         "jp": "汽",
-        "kr": "汽"
+        "kr": "汽",
+        "cn": "汽"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1407,7 +1419,8 @@
       "meaningEn": "consider, conjecture; materials, ingredients",
       "meaningKo": "헤아릴",
       "variants": {
-        "kr": "料"
+        "kr": "料",
+        "cn": "料"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1426,7 +1439,8 @@
       "meaningKo": "말",
       "variants": {
         "jp": "馬",
-        "kr": "馬"
+        "kr": "馬",
+        "cn": "马"
       },
       "strokeCount": 10,
       "tracks": [

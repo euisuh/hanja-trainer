@@ -42,7 +42,8 @@
       "meaningEn": "law, canon; documentation; classic, scripture",
       "meaningKo": "법",
       "variants": {
-        "kr": "典"
+        "kr": "典",
+        "cn": "典"
       },
       "strokeCount": 8,
       "tracks": [
@@ -322,7 +323,8 @@
       "meaningEn": "law, rule, regulation, statute; France, French",
       "meaningKo": "법",
       "variants": {
-        "kr": "法"
+        "kr": "法",
+        "cn": "法"
       },
       "strokeCount": 8,
       "tracks": [
@@ -416,7 +418,8 @@
       "meaningKo": "누일",
       "variants": {
         "kr": "練",
-        "jp": "練"
+        "jp": "練",
+        "cn": "练"
       },
       "strokeCount": 15,
       "tracks": [
@@ -434,7 +437,8 @@
       "meaningEn": "bind, control, restrain; bale",
       "meaningKo": "묶을",
       "variants": {
-        "kr": "束"
+        "kr": "束",
+        "cn": "束"
       },
       "strokeCount": 7,
       "tracks": [
@@ -528,7 +532,8 @@
       "meaningKo": "마땅",
       "variants": {
         "jp": "当",
-        "kr": "當"
+        "kr": "當",
+        "cn": "当"
       },
       "strokeCount": 13,
       "tracks": [
@@ -620,7 +625,8 @@
       "meaningEn": "raise, rear, bring up; support",
       "meaningKo": "기를",
       "variants": {
-        "kr": "養"
+        "kr": "養",
+        "cn": "养"
       },
       "strokeCount": 14,
       "tracks": [
@@ -676,7 +682,8 @@
       "meaningEn": "injure, harm; destroy, kill",
       "meaningKo": "해할",
       "variants": {
-        "kr": "害"
+        "kr": "害",
+        "cn": "害"
       },
       "strokeCount": 10,
       "tracks": [
@@ -804,7 +811,8 @@
       "meaningEn": "open, unfold; stretch, extend",
       "meaningKo": "펼",
       "variants": {
-        "kr": "展"
+        "kr": "展",
+        "cn": "展"
       },
       "strokeCount": 10,
       "tracks": [
@@ -879,7 +887,8 @@
       "meaningEn": "knot, tie; join, connect",
       "meaningKo": "맺을",
       "variants": {
-        "kr": "結"
+        "kr": "結",
+        "cn": "结"
       },
       "strokeCount": 12,
       "tracks": [
@@ -916,7 +925,8 @@
       "meaningEn": "old, ancient; former, past",
       "meaningKo": "예",
       "variants": {
-        "kr": "舊"
+        "kr": "舊",
+        "cn": "旧"
       },
       "strokeCount": 17,
       "tracks": [
@@ -952,7 +962,8 @@
       "meaningEn": "change, transform, alter; rebel",
       "meaningKo": "변할",
       "variants": {
-        "kr": "變"
+        "kr": "變",
+        "cn": "变"
       },
       "strokeCount": 23,
       "tracks": [
@@ -970,7 +981,8 @@
       "meaningEn": "fresh, new, delicious; rare, few",
       "meaningKo": "고울",
       "variants": {
-        "kr": "鮮"
+        "kr": "鮮",
+        "cn": "鲜"
       },
       "strokeCount": 17,
       "tracks": [
@@ -1007,7 +1019,8 @@
       "meaningEn": "knot, node, joint; section; hexagram ䷻",
       "meaningKo": "마디",
       "variants": {
-        "kr": "節"
+        "kr": "節",
+        "cn": "节"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1062,7 +1075,8 @@
       "meaningKo": "될",
       "variants": {
         "kr": "化",
-        "jp": "化"
+        "jp": "化",
+        "cn": "化"
       },
       "strokeCount": 4,
       "tracks": [
@@ -1285,7 +1299,8 @@
       "meaningKo": "고를",
       "variants": {
         "kr": "調",
-        "jp": "調"
+        "jp": "調",
+        "cn": "调"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1324,7 +1339,8 @@
       "meaningKo": "결단할",
       "variants": {
         "kr": "決",
-        "jp": "決"
+        "jp": "決",
+        "cn": "决"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1472,7 +1488,8 @@
       "meaningEn": "history, chronicle, annals",
       "meaningKo": "사관",
       "variants": {
-        "kr": "史"
+        "kr": "史",
+        "cn": "史"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1511,7 +1528,8 @@
       "meaningKo": "서로",
       "variants": {
         "kr": "相",
-        "jp": "相"
+        "jp": "相",
+        "cn": "相"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1807,7 +1825,8 @@
       "meaningEn": "surely, most certainly; must",
       "meaningKo": "반드시",
       "variants": {
-        "kr": "必"
+        "kr": "必",
+        "cn": "必"
       },
       "strokeCount": 5,
       "tracks": [

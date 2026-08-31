@@ -105,7 +105,8 @@
       "meaningKo": "뿔",
       "variants": {
         "jp": "角",
-        "kr": "角"
+        "kr": "角",
+        "cn": "角"
       },
       "strokeCount": 7,
       "tracks": [
@@ -124,7 +125,8 @@
       "meaningKo": "짧을",
       "variants": {
         "kr": "短",
-        "jp": "短"
+        "jp": "短",
+        "cn": "短"
       },
       "strokeCount": 12,
       "tracks": [
@@ -181,7 +183,8 @@
       "meaningKo": "다스릴",
       "variants": {
         "jp": "理",
-        "kr": "理"
+        "kr": "理",
+        "cn": "理"
       },
       "strokeCount": 11,
       "tracks": [
@@ -469,7 +472,8 @@
       "meaningKo": "들을",
       "variants": {
         "jp": "聞",
-        "kr": "聞"
+        "kr": "聞",
+        "cn": "闻"
       },
       "strokeCount": 14,
       "tracks": [
@@ -777,7 +781,8 @@
       "meaningKo": "소리",
       "variants": {
         "jp": "音",
-        "kr": "音"
+        "kr": "音",
+        "cn": "音"
       },
       "strokeCount": 9,
       "tracks": [
@@ -852,7 +857,8 @@
       "meaningEn": "trust, believe; letter",
       "meaningKo": "믿을",
       "variants": {
-        "kr": "信"
+        "kr": "信",
+        "cn": "信"
       },
       "strokeCount": 9,
       "tracks": [
@@ -947,7 +953,8 @@
       "meaningEn": "completed, finished, fixed",
       "meaningKo": "이룰",
       "variants": {
-        "kr": "成"
+        "kr": "成",
+        "cn": "成"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1003,7 +1010,8 @@
       "meaningKo": "지경",
       "variants": {
         "kr": "界",
-        "jp": "界"
+        "jp": "界",
+        "cn": "界"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1080,7 +1088,8 @@
       "meaningEn": "together with, all, total; to share",
       "meaningKo": "함께",
       "variants": {
-        "kr": "共"
+        "kr": "共",
+        "cn": "共"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1118,7 +1127,8 @@
       "meaningKo": "급할",
       "variants": {
         "kr": "急",
-        "jp": "急"
+        "jp": "急",
+        "cn": "急"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1212,7 +1222,8 @@
       "meaningKo": "놓을",
       "variants": {
         "kr": "放",
-        "jp": "放"
+        "jp": "放",
+        "cn": "放"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1270,7 +1281,8 @@
       "meaningKo": "업",
       "variants": {
         "kr": "業",
-        "jp": "業"
+        "jp": "業",
+        "cn": "业"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1307,7 +1319,8 @@
       "meaningKo": "쓸",
       "variants": {
         "jp": "用",
-        "kr": "用"
+        "kr": "用",
+        "cn": "用"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1326,7 +1339,8 @@
       "meaningKo": "재주",
       "variants": {
         "jp": "才",
-        "kr": "才"
+        "kr": "才",
+        "cn": "才"
       },
       "strokeCount": 3,
       "tracks": [
@@ -1363,7 +1377,8 @@
       "meaningKo": "부을",
       "variants": {
         "kr": "注",
-        "jp": "注"
+        "jp": "注",
+        "cn": "注"
       },
       "strokeCount": 8,
       "tracks": [
