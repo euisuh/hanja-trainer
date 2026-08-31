@@ -115,7 +115,7 @@ export function SessionRunner({
   const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(item?.kind !== "compare");
   const answered = selectedIndex !== null || skipped;
   const correct = item !== undefined && item.kind !== "compare" && selectedIndex === item.answerIndex;
-  const autoAdvance = mode === "placement" || mode === "unit-test" || correct;
+  const autoAdvance = !skipped && (mode === "placement" || mode === "unit-test" || correct);
 
   useEffect(() => {
     advancing.current = false;
@@ -127,6 +127,8 @@ export function SessionRunner({
     answerLocked.current = true;
     const isSkipped = choice === null;
     const isCorrect = choice === item.answerIndex;
+    const answer = item.options[item.answerIndex]?.label ?? "";
+    const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
     const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current));
     let interval = "—";
     if (mode === "placement" || mode === "unit-test") {
@@ -138,12 +140,13 @@ export function SessionRunner({
       if (mode === "placement") {
         setAdaptiveState(recordPlacementAnswer(adaptiveState, { character: item.character, track: item.track, levelOrd: entry.levelOrd }, isCorrect));
         setAssessmentAnswers((current) => [...current, { characterKey: item.character.key, track: item.track, correct: isCorrect, skipped: isSkipped, levelOrd: entry.levelOrd }]);
-        setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "응답을 기록했습니다. 다음 문항으로 이동합니다." }));
+        setSessionAnnouncement((current) => ({
+          sequence: current.sequence + 1,
+          text: isSkipped ? `모름을 선택했습니다. 정답은 ${displayedAnswer}입니다.` : "응답을 기록했습니다. 다음 문항으로 이동합니다.",
+        }));
       } else {
         const cardIndex = issuedUnitTestCard?.cardIndex ?? index;
         const mistakes = unitTestMistakes + Number(!isCorrect);
-        const answer = item.options[item.answerIndex]?.label ?? "";
-        const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
         setUnitTestAnswers((current) => [...current, { cardIndex, characterKey: item.character.key, selectedIndex: choice }]);
         setSessionAnnouncement((current) => ({
           sequence: current.sequence + 1,

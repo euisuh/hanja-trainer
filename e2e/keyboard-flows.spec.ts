@@ -16,7 +16,7 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyReducedMotion?: boolean };
+type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; skipAdvance?: "Enter" | "Space"; skipAnnouncement?: boolean; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyReducedMotion?: boolean };
 
 async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
   let skipped = false;
@@ -83,8 +83,16 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       }
       if (shouldSkip) {
         skipped = true;
+        const displayedAnswer = await page.locator(".answer-option").nth(card.answerIndex).locator("strong").textContent();
+        await expect(page.locator(".answer-option").nth(card.answerIndex)).toHaveClass(/answer-option--correct/u);
         await expect(page.locator(".feedback-bar")).toContainText(/모름 · 정답 \S/u);
-        await expect(page.locator(".feedback-bar")).toContainText(/= \S/u);
+        if (!options.skipAnnouncement) await expect(page.locator(".feedback-bar")).toContainText(/= \S/u);
+        await expect(page.locator(".feedback-bar")).toHaveAttribute("aria-live", "polite");
+        await expect(page.getByRole("button", { name: /다음 카드/u })).toBeEnabled();
+        if (options.skipAnnouncement) await expect(page.locator(".session-announcement")).toContainText(`정답은 ${displayedAnswer}입니다.`);
+        await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-skip-hold", "true"));
+        await page.waitForTimeout(500);
+        await expect(page.locator('[data-tested-skip-hold="true"]')).toBeVisible();
       }
     } else {
       const progress = await page.getByRole("progressbar", { name: /진행률/u }).getAttribute("aria-valuenow");
@@ -105,7 +113,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       }
       await page.clock.resume();
     } else if (!options.autoAdvance || card.kind === "compare" || shouldSkip) {
-      await page.keyboard.press("Enter");
+      await page.keyboard.press(shouldSkip ? options.skipAdvance ?? "Enter" : "Enter");
     }
     if (index + 1 < cards.length) {
       const completed = (options.progressOffset ?? 0) + cards.slice(0, index + 1).filter((item) => item.kind !== "compare").length;
@@ -222,7 +230,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
     await checkLayout(page, "placement", testInfo);
-    await finishSession(page, placement.cards, /현재 콘텐츠의 끝/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, verifyReducedMotion: true });
+    await finishSession(page, placement.cards, /현재 콘텐츠의 끝/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, skipAnnouncement: true, skipFirst: true, verifyReducedMotion: true });
     await expect(page.getByRole("heading", { name: "현재 콘텐츠의 끝까지 도달했습니다." })).toBeVisible();
     await checkLayout(page, "placement-result", testInfo);
     await page.keyboard.press("Enter");
@@ -362,12 +370,25 @@ test.describe.serial("keyboard-only product flows", () => {
     expect((await (await page.request.get("/api/profile")).json() as { xp: number }).xp).toBe(xpBefore);
 
     const second = await sessionStarted(page, () => page.getByRole("button", { name: /이 유닛 건너뛰기/u }).press("Space"));
-    const recoveredCard = await answerUnitCard(page, second.cards, false, "mouse");
+    const labels = await page.locator(".answer-option__copy strong").allTextContents();
+    const recoveredCard = second.cards.findIndex((card) => card.options.map((option) => option.label).join("\u0000") === labels.join("\u0000"));
+    expect(recoveredCard).toBeGreaterThanOrEqual(0);
+    const skippedAnswer = second.cards[recoveredCard].options[second.cards[recoveredCard].answerIndex].label;
+    await page.locator(".skip-answer").click();
     await expect(page.locator(".unit-test-hearts")).toHaveAccessibleName("남은 하트 2개");
+    await expect(page.locator(".answer-option").nth(second.cards[recoveredCard].answerIndex)).toHaveClass(/answer-option--correct/u);
+    await expect(page.locator(".feedback-bar")).toContainText(`모름 · 정답 ${skippedAnswer}`);
     await expect(page.locator(".feedback-bar")).toContainText("틀린 문항은 뒤에서 다시 나옵니다.");
-    await expect(page.locator(".session-announcement")).toContainText(`정답은 ${second.cards[recoveredCard].options[second.cards[recoveredCard].answerIndex].label}`);
+    await expect(page.locator(".feedback-bar")).toHaveAttribute("aria-live", "polite");
+    await expect(page.locator(".session-announcement")).toContainText(`모름을 선택했습니다. 정답은 ${skippedAnswer}`);
+    const next = page.getByRole("button", { name: /다음 카드/u });
+    await expect(next).toBeEnabled();
+    await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-unit-skip-hold", "true"));
+    await page.waitForTimeout(500);
+    await expect(page.locator('[data-tested-unit-skip-hold="true"]')).toBeVisible();
+    await next.click();
     await waitForUnitAdvance(page);
-    await expect(page.locator(".session-announcement")).toContainText("오답입니다");
+    const secondCompletion = page.waitForRequest((request) => request.url().includes(`/api/curriculum/units/${current.id}/test-out`));
     const cleared = new Set<number>();
     const correctOrder: number[] = [];
     let responses = 1;
@@ -383,6 +404,9 @@ test.describe.serial("keyboard-only product flows", () => {
     expect([...cleared].includes(recoveredCard)).toBe(true);
     expect(correctOrder.indexOf(recoveredCard)).toBeGreaterThan(0);
     await expect(page.getByRole("heading", { name: /유닛 건너뛰기 성공/u })).toBeVisible();
+    expect((await secondCompletion).postDataJSON()).toMatchObject({
+      answers: expect.arrayContaining([expect.objectContaining({ characterKey: second.cards[recoveredCard].characterKey, selectedIndex: null })]),
+    });
     await expect(page.getByRole("heading", { name: /유닛 건너뛰기 성공/u })).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
@@ -523,7 +547,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
-    await finishSession(page, review.cards, /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Space" });
+    await finishSession(page, review.cards, /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Space", skipAdvance: "Space", skipFirst: true });
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     await expect.poll(async () => {
@@ -652,6 +676,18 @@ test.describe.serial("keyboard-only product flows", () => {
     expect(first.cards).toHaveLength(15);
     expect(first.cards.every((card) => card.track === "jp")).toBe(true);
     expect([...new Set(first.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    await page.locator(".skip-answer").click();
+    const displayedAnswer = await page.locator(".answer-option").nth(first.cards[0].answerIndex).locator("strong").textContent();
+    await expect(page.locator(".answer-option").nth(first.cards[0].answerIndex)).toHaveClass(/answer-option--correct/u);
+    await expect(page.locator(".feedback-bar")).toHaveAttribute("aria-live", "polite");
+    await expect(page.getByRole("button", { name: /다음 카드/u })).toBeEnabled();
+    await expect(page.locator(".session-announcement")).toContainText(`정답은 ${displayedAnswer}입니다.`);
+    await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-retest-skip-hold", "true"));
+    await page.waitForTimeout(500);
+    await expect(page.locator('[data-tested-retest-skip-hold="true"]')).toBeVisible();
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await page.keyboard.press("Space");
+    await expect(page.locator('[data-tested-retest-skip-hold="true"]')).toHaveCount(0);
     await page.keyboard.press("Escape");
     await page.keyboard.press("Q");
     await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
