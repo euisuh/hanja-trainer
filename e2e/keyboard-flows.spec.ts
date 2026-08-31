@@ -546,7 +546,19 @@ test.describe.serial("keyboard-only product flows", () => {
         await expectClosestLang(page.locator(".due-row__copy small").nth(index), languages[track]);
       }
     }
+    const dueRows = page.locator(".due-row");
+    expect(await dueRows.count()).toBeGreaterThan(1);
+    await dueRows.first().focus();
+    await page.keyboard.press("ArrowDown");
+    await expect(dueRows.nth(1)).toBeFocused();
+    await page.keyboard.press("ArrowUp");
+    await expect(dueRows.first()).toBeFocused();
+    await page.keyboard.press("ArrowUp");
+    await expect(dueRows.last()).toBeFocused();
+    await page.keyboard.press("ArrowDown");
+    await expect(dueRows.first()).toBeFocused();
     await checkLayout(page, "review", testInfo);
+    await page.getByRole("button", { name: /복습 시작/u }).focus();
     await page.keyboard.press("Enter");
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);

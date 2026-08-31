@@ -24,6 +24,7 @@ export function ReviewScreen() {
   const [retryKey, setRetryKey] = useState(0);
   const inSession = location.pathname === "/review/session";
   const startedAt = useRef(new Date());
+  const dueRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useEffect(() => {
     if (inSession) startedAt.current = new Date();
@@ -94,7 +95,12 @@ export function ReviewScreen() {
       ) : (
         <>
           <button className="review-start" onClick={() => navigate("/review/session")} type="button">{due.total}장 복습 시작 <kbd>ENTER</kbd></button>
-          <div className="due-list">{due.cards.map((item) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
+          <div className="due-list">{due.cards.map((item, index) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} onKeyDown={(event) => {
+            if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+            event.preventDefault();
+            const direction = event.key === "ArrowDown" ? 1 : -1;
+            dueRefs.current[(index + direction + due.cards.length) % due.cards.length]?.focus();
+          }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
     </section>
