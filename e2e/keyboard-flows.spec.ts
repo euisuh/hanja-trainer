@@ -222,6 +222,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "onboarding", testInfo);
     expect(await page.locator(".onboarding-cta").evaluate((node) => Number.parseFloat(getComputedStyle(node).animationDuration))).toBeLessThanOrEqual(0.01);
 
+    await expect(page.locator(".onboarding-cta")).toBeEnabled();
     await page.keyboard.press("2");
     await expect(page.getByRole("button", { name: /日本/u })).toHaveAttribute("aria-pressed", "false");
     const placementRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
