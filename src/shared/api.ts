@@ -60,6 +60,26 @@ export type CharacterDetailResponse = {
   tracks: ApiTrackDetail[];
 };
 
+export type UnitStudyTrackDetail = {
+  track: Track;
+  glyph: string;
+  reading: string;
+  subreading?: string;
+  meaning: string;
+  level_badges: string[];
+  sentences: ApiSentence[];
+};
+
+export type UnitStudyResponse = {
+  unit: { id: number; track: Track; level: string; ord: number; title: string; subtitle: string };
+  characters: Array<{
+    key: string;
+    meaning_en: string;
+    meaning_ko: string;
+    tracks: UnitStudyTrackDetail[];
+  }>;
+};
+
 export type SessionMode = "lesson" | "review" | "placement";
 export type SessionOption = { label: string };
 export type SessionCompareEntry = { glyph: string; reading: string; levelBadge: string };

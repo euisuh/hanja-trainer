@@ -1,7 +1,7 @@
 import { TRACKS, type Track } from "../../src/shared/types";
 import type { ApiErrorBody, SessionMode, StartSessionRequest } from "../../src/shared/api";
 import { startSession } from "./cards";
-import { getCharacterContent, getCurriculumContent } from "./content";
+import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
 import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
@@ -59,6 +59,14 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
       const track = parseTrack(url.searchParams.get("track"));
       if (!track) return error(400, "invalid_track", "track must be kr, jp, or cn");
       return Response.json(await getCurriculumContent(env.DB, track));
+    }
+
+    const unitStudyMatch = request.method === "GET" ? pathname.match(/^\/api\/curriculum\/units\/(\d+)$/) : null;
+    if (unitStudyMatch) {
+      const unitId = Number(unitStudyMatch[1]);
+      if (!Number.isSafeInteger(unitId) || unitId < 1) return error(400, "invalid_unit", "unit id is invalid");
+      const detail = await getUnitStudyContent(env.DB, unitId);
+      return detail ? Response.json(detail) : error(404, "unit_not_found", "curriculum unit was not found");
     }
 
     if (request.method === "GET" && pathname.startsWith("/api/characters/")) {

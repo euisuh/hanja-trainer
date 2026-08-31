@@ -138,6 +138,7 @@
 }
 
 .lesson-cta,
+.study-cta,
 .unit-test-cta,
 .review-cta {
   border: 3px solid var(--ink);
@@ -154,9 +155,22 @@
   color: var(--card);
 }
 
+.study-cta {
+  padding: 20px;
+  border-radius: var(--radius-large);
+  background: var(--home-soft);
+}
+
+.study-cta small { color: var(--home-accent-text); }
+.study-cta strong { margin: 5px 0 8px; font-size: 22px; font-weight: 800; }
+.study-cta span { color: var(--muted); font-size: 13px; font-weight: 700; }
+
 .lesson-cta small,
 .lesson-cta strong,
 .lesson-cta span,
+.study-cta small,
+.study-cta strong,
+.study-cta span,
 .unit-test-cta small,
 .unit-test-cta strong,
 .unit-test-cta span,

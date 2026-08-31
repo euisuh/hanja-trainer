@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
+import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
 import { emitSeedSql, emitWordSeedSql, parseSeed, parseWordSeed } from "../../scripts/seed";
 import type { Track } from "../../src/shared/types";
 import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
@@ -149,6 +149,18 @@ describe("content API", () => {
     expect(curriculumResponse.headers.get("content-type")).toContain("application/json");
     expect(curriculum.units[0].nodes.slice(0, 3).map((node) => node.state)).toEqual(["done", "current", "locked"]);
     expect(curriculum.units[0].progress).toMatchObject({ known: 1, total: 10 });
+
+    const unitResponse = await routeApiRequest(new Request(`https://test/api/curriculum/units/${curriculum.units[0].id}`), fixture.env);
+    const unit = await unitResponse.json() as UnitStudyResponse;
+    expect(unitResponse.status).toBe(200);
+    expect(unit.unit).toMatchObject({ id: curriculum.units[0].id, track: "kr", level: curriculum.units[0].level, title: curriculum.units[0].title });
+    expect(unit.characters.map((character) => character.key)).toEqual(curriculum.units[0].nodes.map((node) => node.key));
+    expect(unit.characters[0].tracks).toEqual(expect.arrayContaining([
+      expect.objectContaining({ track: "kr", reading: expect.any(String), meaning: expect.any(String), level_badges: expect.any(Array), sentences: expect.any(Array) }),
+      expect.objectContaining({ track: "jp", reading: expect.any(String), meaning: expect.any(String), level_badges: expect.any(Array), sentences: expect.any(Array) }),
+    ]));
+    expect((await routeApiRequest(new Request("https://test/api/curriculum/units/0"), fixture.env)).status).toBe(400);
+    expect((await routeApiRequest(new Request("https://test/api/curriculum/units/999999"), fixture.env)).status).toBe(404);
 
     const key = curriculum.units[0].nodes[0].key;
     const detailResponse = await routeApiRequest(new Request(`https://test/api/characters/${encodeURIComponent(key)}`), fixture.env);

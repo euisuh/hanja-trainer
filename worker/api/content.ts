@@ -1,7 +1,7 @@
 import { MASTERY_STABILITY_DAYS } from "../../src/shared/mastery";
-import type { ApiTrackDetail, CharacterDetailResponse, CurriculumResponse } from "../../src/shared/api";
-import type { Track } from "../../src/shared/types";
-import { getCharacter } from "../db/characters";
+import type { ApiSentence, ApiTrackDetail, CharacterDetailResponse, CurriculumResponse, UnitStudyResponse, UnitStudyTrackDetail } from "../../src/shared/api";
+import type { CharacterEntry, Track, TrackEntry } from "../../src/shared/types";
+import { getCharacter, getUnitDetail } from "../db/characters";
 import { getStatsForCharacter } from "../db/reviews";
 
 interface CurriculumRow {
@@ -108,4 +108,34 @@ export async function getCharacterContent(db: D1Database, key: string): Promise<
     return { ...base, track: "cn", reading: entry.pinyin, level_badges: [entry.hsk, entry.tier] };
   });
   return { key: character.key, variants: character.variants, meaning_en: character.meaningEn, meaning_ko: character.meaningKo, tracks };
+}
+
+function sentences(character: CharacterEntry, track: Track): ApiSentence[] {
+  return character.sentences.filter((sentence) => sentence.track === track).map((sentence) => ({
+    text: sentence.text,
+    translation: sentence.translationKo,
+    source: sentence.source,
+    target_index: sentence.targetIndex,
+  }));
+}
+
+function studyTrack(character: CharacterEntry, entry: TrackEntry): UnitStudyTrackDetail {
+  const base = { track: entry.track, glyph: entry.glyph, sentences: sentences(character, entry.track) };
+  if (entry.track === "kr") return { ...base, track: "kr", reading: entry.reading, meaning: character.meaningKo, level_badges: [`한자 ${entry.level}`] };
+  if (entry.track === "jp") return { ...base, track: "jp", reading: entry.on, subreading: entry.kun, meaning: character.meaningEn, level_badges: [`漢検 ${entry.kanken}`, entry.jlpt] };
+  return { ...base, track: "cn", reading: entry.pinyin, meaning: entry.meaning, level_badges: [entry.hsk, entry.tier] };
+}
+
+export async function getUnitStudyContent(db: D1Database, unitId: number): Promise<UnitStudyResponse | null> {
+  const detail = await getUnitDetail(db, unitId);
+  if (!detail) return null;
+  return {
+    unit: { id: detail.id, track: detail.track, level: detail.level, ord: detail.ord, title: detail.title, subtitle: detail.subtitle },
+    characters: detail.characters.map((character) => ({
+      key: character.key,
+      meaning_en: character.meaningEn,
+      meaning_ko: character.meaningKo,
+      tracks: character.tracks.map((entry) => studyTrack(character, entry)),
+    })),
+  };
 }

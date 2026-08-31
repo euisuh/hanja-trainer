@@ -148,6 +148,9 @@ export function HomeScreen() {
           <button className="lesson-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } })} type="button">
             <small>오늘의 학습</small><strong>레슨 시작</strong><span>신규 4자 + 복습 {dueCount}장 <kbd>ENTER</kbd></span>
           </button>
+          <button className="study-cta" onClick={() => navigate(`/study/${unit.id}`)} type="button">
+            <small>퀴즈 전 미리보기</small><strong>학습 목록</strong><span>읽기 · 뜻 · 예문 · 발음</span>
+          </button>
           {unit.nodes.some((node) => node.state !== "done") && <button className="unit-test-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack], testOut: true } })} type="button">
             <small>실력으로 잠금 해제</small><strong>이 유닛 건너뛰기</strong><span>전 글자 2회 · 전부 정답</span>
           </button>}

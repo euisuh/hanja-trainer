@@ -1,4 +1,4 @@
-import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
@@ -26,6 +26,7 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const apiClient = {
   curriculum: (track: Track, signal?: AbortSignal) => requestJson<CurriculumResponse>(`/api/curriculum?track=${track}`, { signal }),
+  unitStudy: (unitId: number, signal?: AbortSignal) => requestJson<UnitStudyResponse>(`/api/curriculum/units/${unitId}`, { signal }),
   character: (key: string, signal?: AbortSignal) => requestJson<CharacterDetailResponse>(`/api/characters/${encodeURIComponent(key)}`, { signal }),
   startSession: (body: StartSessionRequest, signal?: AbortSignal) => requestJson<StartSessionResponse>("/api/session/start", {
     method: "POST",

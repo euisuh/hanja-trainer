@@ -51,17 +51,39 @@ type CurriculumAnchor = Pick<import("../../src/shared/api").StartSessionRequest,
 type FreshRow = { character_id: number; track: Track };
 type UnitAnchorRow = { track: Track; level_ord: number; unit_ord: number };
 
-const SELECT_ENTRIES = `
-  SELECT c.id, c.key, c.meaning_en, c.meaning_ko, c.variants, c.stroke_count, c.created_at,
+const SELECT_ENTRY_COLUMNS = `
+    c.id, c.key, c.meaning_en, c.meaning_ko, c.variants, c.stroke_count, c.created_at,
     ct.track, ct.glyph, ct.level_ord, ct.kr_reading, ct.kr_level,
     ct.jp_on, ct.jp_kun, ct.jp_kanken, ct.jp_jlpt,
     ct.cn_pinyin, ct.cn_meaning, ct.cn_hsk, ct.cn_tier,
     es.id AS sentence_id, es.text AS sentence_text, es.translation_ko, es.source,
-    es.source_kind, es.target_index, es.rank AS sentence_rank
+    es.source_kind, es.target_index, es.rank AS sentence_rank`;
+
+const SELECT_ENTRIES = `
+  SELECT ${SELECT_ENTRY_COLUMNS}
   FROM characters c
   JOIN character_tracks ct ON ct.character_id = c.id
   LEFT JOIN example_sentences es ON es.character_id = c.id AND es.track = ct.track
 `;
+
+interface UnitDetailRow extends CharacterRow {
+  unit_id: number;
+  unit_track: Track;
+  unit_level: string;
+  unit_ord: number;
+  unit_title: string;
+  unit_subtitle: string;
+}
+
+export type UnitDetail = {
+  id: number;
+  track: Track;
+  level: string;
+  ord: number;
+  title: string;
+  subtitle: string;
+  characters: CharacterEntry[];
+};
 
 function required(value: string | null, field: string): string {
   if (value === null) throw new Error(`Database row missing ${field}`);
@@ -177,6 +199,32 @@ export async function listByUnit(db: D1Database, unitId: number): Promise<Charac
     WHERE cum.unit_id = ?1
     ORDER BY cum.ord, CASE ct.track WHEN 'kr' THEN 1 WHEN 'jp' THEN 2 ELSE 3 END, es.rank`).bind(unitId).all<CharacterRow>();
   return hydrate(result.results);
+}
+
+export async function getUnitDetail(db: D1Database, unitId: number): Promise<UnitDetail | null> {
+  const result = await db.prepare(`
+    SELECT ${SELECT_ENTRY_COLUMNS}, cu.id AS unit_id, cu.track AS unit_track,
+      cu.level AS unit_level, cu.ord AS unit_ord, cu.title AS unit_title,
+      cu.subtitle AS unit_subtitle
+    FROM curriculum_units cu
+    JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
+    JOIN characters c ON c.id = cum.character_id
+    JOIN character_tracks ct ON ct.character_id = c.id
+    LEFT JOIN example_sentences es ON es.character_id = c.id AND es.track = ct.track
+    WHERE cu.id = ?1
+    ORDER BY cum.ord, CASE ct.track WHEN 'kr' THEN 1 WHEN 'jp' THEN 2 ELSE 3 END, es.rank
+  `).bind(unitId).all<UnitDetailRow>();
+  const first = result.results[0];
+  if (!first) return null;
+  return {
+    id: first.unit_id,
+    track: first.unit_track,
+    level: first.unit_level,
+    ord: first.unit_ord,
+    title: first.unit_title,
+    subtitle: first.unit_subtitle,
+    characters: hydrate(result.results),
+  };
 }
 
 export async function listByTrackLevel(db: D1Database, track: Track, levelOrd: number): Promise<CharacterEntry[]> {

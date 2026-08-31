@@ -10,6 +10,7 @@ import { ReviewScreen } from "./screens/ReviewScreen";
 import { SessionCompleteScreen } from "./screens/SessionCompleteScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { StatsScreen } from "./screens/StatsScreen";
+import { UnitStudyScreen } from "./screens/UnitStudyScreen";
 
 export type Screen =
   | "onboarding"
@@ -21,6 +22,7 @@ export type Screen =
   | "review-session"
   | "session-complete"
   | "detail"
+  | "study"
   | "stats"
   | "settings";
 
@@ -40,6 +42,7 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "review-session", path: "/review/session", Component: ReviewScreen },
   { screen: "session-complete", path: "/session-complete", Component: SessionCompleteScreen },
   { screen: "detail", path: "/detail/:key", Component: DetailScreen },
+  { screen: "study", path: "/study/:unitId", Component: UnitStudyScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
   { screen: "settings", path: "/settings", Component: SettingsScreen },
 ];
