@@ -17,8 +17,8 @@ function SpeakerIcon() {
 }
 
 function AudioControl({ children, label, onPlay, supported }: { children: ReactNode; label: string; onPlay: () => void; supported: boolean }) {
-  if (!supported) return <div>{children}</div>;
-  return <button aria-label={label} className="unit-study__audio" data-study-audio onClick={onPlay} type="button"><span>{children}</span><SpeakerIcon /></button>;
+  if (!supported) return <div data-study-control tabIndex={0}>{children}</div>;
+  return <button aria-label={label} className="unit-study__audio" data-study-audio data-study-control onClick={onPlay} type="button"><span>{children}</span><SpeakerIcon /></button>;
 }
 
 function HighlightedSentence({ sentence }: { sentence: ApiSentence }) {
@@ -60,7 +60,7 @@ export function UnitStudyScreen() {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") { event.preventDefault(); back(); return; }
       if (!event.key.startsWith("Arrow")) return;
-      const controls = [...document.querySelectorAll<HTMLElement>("[data-study-audio]")];
+      const controls = [...document.querySelectorAll<HTMLElement>("[data-study-control]")];
       const index = controls.indexOf(document.activeElement as HTMLElement);
       if (index < 0 || controls.length < 2) return;
       event.preventDefault();

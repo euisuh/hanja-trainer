@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("previews one unit with cross-track keyboard audio", async ({ page }) => {
+test("previews one unit with cross-track keyboard controls", async ({ page }) => {
   await page.addInitScript(() => {
     class TestUtterance {
       lang = "";
@@ -33,6 +33,15 @@ test("previews one unit with cross-track keyboard audio", async ({ page }) => {
   await expect(page.getByRole("columnheader", { name: "中国 · 拼音" })).toBeVisible();
   expect(requests).toHaveLength(1);
   await expect(page.locator("[data-study-audio]")).toHaveCount(0);
+  const silentControls = page.locator("[data-study-control]");
+  const silentSentence = page.locator(".unit-study__sentence [data-study-control]").first();
+  await silentControls.first().focus();
+  await silentControls.first().press("Enter");
+  expect(await page.locator("html").getAttribute("data-last-speech")).toBeNull();
+  await page.keyboard.press("ArrowDown");
+  await expect(silentControls.nth(1)).toBeFocused();
+  await silentSentence.focus();
+  await expect(silentSentence).toBeFocused();
   await page.evaluate(() => { document.documentElement.dataset.voicesReady = "true"; window.dispatchEvent(new Event("test-voiceschanged")); });
 
   const krReading = page.getByRole("button", { name: /한국 · 훈음 읽기 듣기/u }).first();
@@ -47,9 +56,10 @@ test("previews one unit with cross-track keyboard audio", async ({ page }) => {
   await expect(page.getByRole("button", { name: /中国 · 拼音 .* 듣기/u })).toHaveCount(0);
   await expect(page.locator(".unit-study__sentence mark").first()).toBeVisible();
 
-  await krReading.focus();
+  const studyControls = page.locator("[data-study-control]");
+  await studyControls.first().focus();
   await page.keyboard.press("ArrowDown");
-  await expect(krReading).not.toBeFocused();
+  await expect(studyControls.nth(1)).toBeFocused();
   await page.setViewportSize({ width: 430, height: 900 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   await page.keyboard.press("Escape");
