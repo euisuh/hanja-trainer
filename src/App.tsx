@@ -16,7 +16,8 @@ const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session",
 
 export function App() {
   const { pathname } = useLocation();
-  const [pinGate, setPinGate] = useState<"checking" | "locked" | "unlocked">("checking");
+  const [pinGate, setPinGate] = useState<"checking" | "error" | "locked" | "unlocked">("checking");
+  const [pinRetry, setPinRetry] = useState(0);
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [theme, setTheme] = useState<ThemeId>("quiet-technical");
   const screen = routes.find((route) => matchPath({ path: route.path, end: true }, pathname))?.screen ?? "onboarding";
@@ -32,10 +33,10 @@ export function App() {
       setLockedUntil(state.lockedUntil);
       if (!state.enabled) { setPinGate("unlocked"); return; }
       try { await apiClient.profile(controller.signal); setPinGate("unlocked"); }
-      catch (caught) { if (!controller.signal.aborted) setPinGate(caught instanceof ApiClientError && caught.code === "pin_required" ? "locked" : "checking"); }
-    }).catch(() => { if (!controller.signal.aborted) setPinGate("checking"); });
+      catch (caught) { if (!controller.signal.aborted) setPinGate(caught instanceof ApiClientError && caught.code === "pin_required" ? "locked" : "error"); }
+    }).catch(() => { if (!controller.signal.aborted) setPinGate("error"); });
     return () => { controller.abort(); window.removeEventListener(PIN_REQUIRED_EVENT, requirePin); };
-  }, []);
+  }, [pinRetry]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -50,7 +51,7 @@ export function App() {
 
   return (
     <div className="app" data-theme={theme} style={themes[theme].cssVariables as CSSProperties}>
-      {pinGate === "checking" ? <main><p>잠금 상태 확인 중…</p></main> : pinGate === "locked" ? <UnlockScreen lockedUntil={lockedUntil} onUnlock={() => setPinGate("unlocked")} /> : <>
+      {pinGate === "checking" ? <main><p>잠금 상태 확인 중…</p></main> : pinGate === "error" ? <main className="session-empty"><p role="alert">잠금 상태를 확인하지 못했습니다.</p><button onClick={() => { setPinGate("checking"); setPinRetry((value) => value + 1); }} type="button">다시 시도</button></main> : pinGate === "locked" ? <UnlockScreen lockedUntil={lockedUntil} onUnlock={() => setPinGate("unlocked")} /> : <>
         {headerScreens.has(screen) && <AppHeader />}
         <main><AppRoutes /></main>
         {!navlessScreens.has(screen) && !sessionActive && <BottomNav />}
