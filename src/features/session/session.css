@@ -447,29 +447,30 @@ button.session-sync {
   left: 50%;
   width: 88px;
   height: 88px;
-  border: 4px solid var(--gold);
+  border: 5px solid var(--gold);
   border-radius: 50%;
   animation: om-celebration-ring .72s ease-out forwards, om-pulse .72s ease-out;
 }
 
 .particle-burst[data-tier="3"] .particle-burst__ring {
-  width: 118px;
-  height: 118px;
-  border-width: 6px;
+  width: 148px;
+  height: 148px;
+  border-width: 7px;
 }
 
 .particle-burst__flare {
   position: absolute;
-  inset: 2%;
-  border: 5px solid var(--gold);
+  inset: 1%;
+  border: 6px solid var(--gold);
   border-radius: var(--radius-extra-large);
   animation: om-celebration-flare .8s ease-out forwards;
 }
 
-.quiet-glow-ring { display: none; }
-.app[data-theme="quiet-technical"] .particle-burst { animation-duration: .8s; }
+.quiet-glow-ring, .quiet-glow-ring--outer { display: none; }
+.app[data-theme="quiet-technical"] .particle-burst { animation-duration: .85s; }
 .app[data-theme="quiet-technical"] .particle-burst > * { display: none; }
-.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring {
+.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring,
+.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring--outer {
   position: absolute;
   top: var(--glow-y);
   left: var(--glow-x);
@@ -477,8 +478,13 @@ button.session-sync {
   width: var(--glow-width);
   height: var(--glow-height);
   border-radius: var(--radius-answer);
-  animation: om-quiet-glow .8s ease-out forwards;
   transform: translate(-50%, -50%);
+}
+.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring {
+  animation: om-quiet-glow .8s ease-out forwards;
+}
+.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring--outer {
+  animation: om-quiet-glow-outer .85s ease-out .08s forwards;
 }
 
 .pause-modal {

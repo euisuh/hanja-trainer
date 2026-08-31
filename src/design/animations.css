@@ -5,6 +5,7 @@
 @keyframes om-glyph { 0% { transform: scale(1) } 40% { transform: scale(1.09) } 100% { transform: scale(1) } }
 @keyframes om-pulse { 0%,100% { box-shadow: 0 0 0 0 var(--pulse-gold) } 50% { box-shadow: 0 0 0 12px var(--pulse-gold-clear) } }
 @keyframes om-celebration { from { opacity: .999 } to { opacity: 1 } }
-@keyframes om-celebration-ring { from { opacity: 1; transform: translate(-50%, -50%) scale(.35) } to { opacity: 0; transform: translate(-50%, -50%) scale(2.8) } }
-@keyframes om-celebration-flare { 0% { opacity: 0; transform: scale(.96) } 35% { opacity: .75 } 100% { opacity: 0; transform: scale(1.04) } }
-@keyframes om-quiet-glow { from { box-shadow: 0 0 0 0 var(--correct-glow) } to { box-shadow: 0 0 0 10px var(--correct-glow-clear) } }
+@keyframes om-celebration-ring { from { opacity: 1; transform: translate(-50%, -50%) scale(.3) } to { opacity: 0; transform: translate(-50%, -50%) scale(3.4) } }
+@keyframes om-celebration-flare { 0% { opacity: 0; transform: scale(.94) } 30% { opacity: .92 } 100% { opacity: 0; transform: scale(1.08) } }
+@keyframes om-quiet-glow { 0% { box-shadow: 0 0 0 0 var(--correct-glow) } 45% { box-shadow: 0 0 0 20px var(--correct-glow) } 100% { box-shadow: 0 0 0 26px var(--correct-glow-clear) } }
+@keyframes om-quiet-glow-outer { 0% { box-shadow: 0 0 0 0 var(--correct-glow-clear); opacity: 0 } 25% { opacity: 1 } 100% { box-shadow: 0 0 0 34px var(--correct-glow-clear); opacity: 0 } }

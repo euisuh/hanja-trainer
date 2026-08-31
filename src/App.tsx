@@ -18,7 +18,7 @@ export function App() {
   const { pathname } = useLocation();
   const [pinGate, setPinGate] = useState<"checking" | "locked" | "unlocked">("checking");
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
-  const [theme, setTheme] = useState<ThemeId>("default");
+  const [theme, setTheme] = useState<ThemeId>("quiet-technical");
   const screen = routes.find((route) => matchPath({ path: route.path, end: true }, pathname))?.screen ?? "onboarding";
   const sessionActive = sessionScreens.has(screen);
 

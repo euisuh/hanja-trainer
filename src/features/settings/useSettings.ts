@@ -16,7 +16,7 @@ export function useSettings() {
   const [enabledTracks, setEnabledTracks] = useState<Track[]>([...TRACKS]);
   const [dailyGoal, setDailyGoal] = useState(DEFAULT_DAILY_GOAL);
   const [onyomiScript, setOnyomiScript] = useState<OnyomiScript>("katakana");
-  const [theme, setTheme] = useState<ThemeId>("default");
+  const [theme, setTheme] = useState<ThemeId>("quiet-technical");
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);

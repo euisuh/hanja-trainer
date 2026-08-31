@@ -37,7 +37,7 @@ function d1(sqlite: DatabaseSync, observations: QueryObservation[]): D1Database 
 
 function setup(observations: QueryObservation[] = []) {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql", "0011_theme.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql", "0011_theme.sql", "0012_theme_default.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
   for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-kanken-10.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite, observations) } as Env };
 }
@@ -65,7 +65,7 @@ describe("profile, placement, and stats API", () => {
   it("enforces one profile row and persists validated settings without deleting review state", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect(() => fixture.sqlite.prepare("INSERT INTO profile (id) VALUES (2)").run()).toThrow();
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", theme: "default" });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", theme: "quiet-technical" });
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
     const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" }), fixture.env);

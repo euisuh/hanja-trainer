@@ -76,7 +76,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
           observer.observe(progress, { attributeFilter: ["aria-valuenow"], attributes: true });
         });
       }
-      await page.keyboard.press(shouldSkip ? "0" : String(card.answerIndex + 1));
+      await page.keyboard.press(shouldSkip ? "5" : String(card.answerIndex + 1));
       if (options.announcement && !shouldSkip && !checkedAnnouncement) {
         await expect(page.locator(".session-announcement")).toContainText(options.announcement);
         checkedAnnouncement = true;

@@ -22,7 +22,7 @@ export function useSessionKeys({ active, answered, compare, onPick, onSkip, onAd
       } else if (/^[1-4]$/u.test(event.key) && !answered && !compare) {
         event.preventDefault();
         onPick(Number(event.key) - 1);
-      } else if (event.key === "0" && !answered && !compare) {
+      } else if (event.key === "5" && !answered && !compare) {
         event.preventDefault();
         onSkip();
       } else if ((event.key === "Enter" || event.key === " ") && (answered || compare)) {

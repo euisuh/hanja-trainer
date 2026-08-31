@@ -42,7 +42,7 @@ const quietColors = {
   wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", overdue: "#B0492E",
   progressTrack: "#DEDCDA", sessionOverlay: "rgba(32, 31, 29, .72)",
   pulseGold: "rgba(180, 83, 9, .35)", pulseGoldClear: "rgba(180, 83, 9, 0)",
-  correctGlow: "rgba(47, 125, 90, .35)", correctGlowClear: "rgba(47, 125, 90, 0)",
+  correctGlow: "rgba(47, 125, 90, .5)", correctGlowClear: "rgba(47, 125, 90, 0)",
   feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
 } as const;
 const quietFonts = { ui: "'Space Grotesk', system-ui, sans-serif", answer: "'Space Grotesk', system-ui, sans-serif", ...glyphFonts } as const;
