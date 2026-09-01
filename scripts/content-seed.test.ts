@@ -16,6 +16,8 @@ const files = {
   "data/characters/kr-6geup.json": 75,
   "data/characters/kr-5geup2.json": 100,
   "data/characters/kr-5geup.json": 100,
+  "data/characters/kr-4geup2.json": 250,
+  "data/characters/kr-4geup.json": 250,
   "data/characters/jp-kanken-10.json": 80,
   "data/characters/jp-kanken-9.json": 160,
   "data/characters/jp-kanken-8.json": 200,
@@ -121,7 +123,7 @@ test("Chinese source counts, HSK 3 membership, units, and variants match the pin
   const cnPaths = ["data/characters/cn-hsk1.json", "data/characters/cn-hsk2.json", "data/characters/cn-hsk3.json"];
   assert.equal(
     createHash("sha256").update(await readFile(cnPaths[2])).digest("hex"),
-    "3ddeee7742f6d8020eff5e659dee3c6c1043997dd3c4649e5081278328c82f9f",
+    "963372c2c94113bc74c068f4ed27fb593b207266ac960bcf723179407724671e",
     "re-run generate-cn-through-hsk3.mjs when the frozen output changes",
   );
   assert.equal(
@@ -212,13 +214,36 @@ test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage 
     { level: "6급", levelOrd: 5, added: 75, cumulative: 300 },
     { level: "5급II", levelOrd: 6, added: 100, cumulative: 400 },
     { level: "5급", levelOrd: 7, added: 100, cumulative: 500 },
+    { level: "4급II", levelOrd: 8, added: 250, cumulative: 750 },
+    { level: "4급", levelOrd: 9, added: 250, cumulative: 1000 },
   ];
   const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
   const allPaths = Object.keys(files);
   const documents = await Promise.all(allPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
   const byPath = new Map(allPaths.map((path, index) => [path, documents[index]]));
   const characters = krPaths.flatMap((path) => byPath.get(path)!.characters);
-  assert.equal(new Set(characters.map((character) => character.key)).size, 500);
+  assert.equal(new Set(characters.map((character) => character.key)).size, 1000);
+
+  for (const [path, expectedHash] of [
+    ["data/characters/kr-4geup2.json", "b339ac35f32f81945eb7bfb02468c2c06ea02653e1c6b02ff7b9742307a6dc48"],
+    ["data/characters/kr-4geup.json", "16d1206cc4274244f7ea4c3d6d8fda7f40f018a5432b910c31c35746c49b95a1"],
+    ["data/sentences/kr-4geup2.json", "bf909ff25b00f0571ac12208caed49515a0fb185f34020713360ef2fced5aabb"],
+    ["data/sentences/kr-4geup.json", "56ac5fa261114e2da2915818c52a16e5fe37cae2e26398b6c30eb2e173a18c06"],
+  ] as const) {
+    assert.equal(
+      createHash("sha256").update(await readFile(path)).digest("hex"),
+      expectedHash,
+      "re-run generate-kr-through-4geup.mjs when the frozen output changes",
+    );
+  }
+
+  for (const [path, expectedHash] of [
+    ["data/characters/kr-4geup2.json", "fd169e3bb781c9aa6cfeb6893d06cf0404afb3b5a4738c82c02a5c56666b2a18"],
+    ["data/characters/kr-4geup.json", "bfcb679634056844394a40c234cd281b64ab3e9fed2f60ed127c627f812ec336"],
+  ] as const) {
+    const glyphs = byPath.get(path)!.characters.map((character) => character.tracks.find((track) => track.track === "kr")!.glyph);
+    assert.equal(createHash("sha256").update(glyphs.toSorted().join("")).digest("hex"), expectedHash, path);
+  }
 
   const completeVariants = new Map<string, Partial<Record<Track, string>>>();
   for (const character of documents.flatMap((document) => document.characters)) {
@@ -252,7 +277,7 @@ test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage 
   }
 });
 
-test("seeded Korean placement bounds and all-correct estimate reach 5급", async () => {
+test("seeded Korean placement bounds and all-correct estimate reach 4급", async () => {
   const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
   let id = 0;
   const characters: CharacterEntry[] = (await Promise.all(krPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
@@ -268,13 +293,13 @@ test("seeded Korean placement bounds and all-correct estimate reach 5급", async
       };
     });
   let state = createPlacementState(characters, ["kr"]);
-  assert.deepEqual({ min: state.estimates.kr.minLevelOrd, max: state.estimates.kr.maxLevelOrd }, { min: 1, max: 7 });
+  assert.deepEqual({ min: state.estimates.kr.minLevelOrd, max: state.estimates.kr.maxLevelOrd }, { min: 1, max: 9 });
   while (!isPlacementComplete(state)) {
     const item = nextPlacementItem(state, characters);
     assert.ok(item);
     state = recordPlacementAnswer(state, item, true);
   }
-  assert.equal(placementResults(state)[0].levelOrd, 7);
+  assert.equal(placementResults(state)[0].levelOrd, 9);
 });
 
 test("sourced sentence files resolve to their exact target glyph", async () => {
@@ -332,10 +357,10 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   }
 
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
-  assert.equal(krCovered.length, 218);
-  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 218);
-  assert.equal(byIdentity.size, 932);
-  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 664);
+  assert.equal(krCovered.length, 289);
+  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 289);
+  assert.equal(byIdentity.size, 1003);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 1093);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3 && legacyTrackCounts.get(key)?.size === 3) {
       const sentences = [...byIdentity.values()].filter((entry) => entry.characterKey === key);
@@ -415,7 +440,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
     sqlite.exec(sql);
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
-    assert.equal(counts?.sentences, 932);
+    assert.equal(counts?.sentences, 1003);
   } finally {
     sqlite.close();
   }

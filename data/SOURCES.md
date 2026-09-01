@@ -3,25 +3,30 @@
 Retrieved 2026-08-30. Seed files contain factual character memberships and
 dictionary fields only; no source prose or examples are copied.
 
-## Korean: 한국어문회 8급 through 5급
+## Korean: 한국어문회 8급 through 4급
 
-- Level definitions and membership: [한국어문회 급수배정](https://www.hanja.re.kr/kccpt/exam/levelConfirm.do). Its published `전체배정한자` XLS (retrieved 2026-08-30, SHA-256 `97b8db715ebe1dd6e00e8e58d338a9ba70e7420bf5ec84da38f987d60eb64b17`) gives exact grade deltas of 50/50/50/75/75/100/100 and cumulative reading counts of 50, 100, 150, 225, 300, 400, and 500 from 8급 through 5급.
-- Machine-readable factual membership cross-check: [TypoStudio/matchit-packs](https://github.com/TypoStudio/matchit-packs/tree/acaafc3a08594d220f303f7d4bad94cd2d1e50c8/language/hanja-grade). Every normalized glyph set through level 7 matches the association XLS exactly. The repository publishes no license, so only factual membership is used; none of its explanatory prose is copied.
-- 훈음: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), MIT license.
-- English dictionary definitions and total stroke counts: [Unicode Unihan 17.0.0](https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip) `kDefinition` and `kTotalStrokes`, under the [Unicode data license](https://www.unicode.org/license.txt).
+- Level definitions and membership: [한국어문회 급수배정](https://www.hanja.re.kr/kccpt/exam/levelConfirm.do). Its published `전체배정한자` XLS (retrieved 2026-08-30, SHA-256 `97b8db715ebe1dd6e00e8e58d338a9ba70e7420bf5ec84da38f987d60eb64b17`) gives exact grade deltas of 50/50/50/75/75/100/100/250/250 and cumulative reading counts of 50, 100, 150, 225, 300, 400, 500, 750, and 1,000 from 8급 through 4급.
+- Machine-readable factual membership cross-check: [TypoStudio/matchit-packs](https://github.com/TypoStudio/matchit-packs/tree/acaafc3a08594d220f303f7d4bad94cd2d1e50c8/language/hanja-grade). Every normalized glyph set through level 9 matches the association XLS exactly. The repository publishes no license, so only factual membership is used; none of its explanatory prose is copied.
+- 훈음: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), MIT license. The pinned `src/hanjadict/table.json` has SHA-256 `d36ceb0d37ed53b9af78a88517ebc1499502cdef0367c396ff723460af52e471`.
+- English dictionary definitions and total stroke counts: [Unicode Unihan 17.0.0](https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip) `kDefinition` and `kTotalStrokes`, under the [Unicode data license](https://www.unicode.org/license.txt). Pinned inputs are SHA-256 `575e69c9ad85a4737a889a4f94cbd987042a90a1a6cc16dd3f4ed995c715b17c` (`Unihan_Readings.txt`) and `d1c817dd7db84295dab0643c277d97c2fa742c245f8824e6736c2a0935095325` (`Unihan_IRGSources.txt`).
 
 `kr-7geup.json` contains the 100 characters added across 7급II and 7급. Each
 track row retains its exact badge and ordinal (`7급II` = 2, `7급` = 3).
-The four higher files contain the exact additions for `6급II` (75), `6급`
-(75), `5급II` (100), and `5급` (100), with ordinals 4–7. Compatibility
+The six higher files contain the exact additions for `6급II` (75), `6급`
+(75), `5급II` (100), `5급` (100), `4급II` (250), and `4급` (250), with
+ordinals 4–9. Compatibility
 forms `樂` and `宅` in the cross-check pack are normalized to their canonical
 Unicode forms `樂` and `宅` before HanjaDict and Unihan lookup. Curriculum
 units are deterministically grouped by sourced dictionary definitions into
 8–10-character units; their title terms come directly from sourced 훈음.
-`scripts/generate-kr-through-5geup.mjs` reproduces the four character and
+`scripts/generate-kr-through-4geup.mjs` reproduces the six character and
 sentence files from checkouts of the pinned grade pack and HanjaDict plus an
 extracted Unihan directory; it performs no network lookup and emits no sentence
 prose.
+
+Coverage stops at 4급 in this pass. Extending through 3급II, 3급, 2급, or 1급
+remains a follow-up because those tiers add at least 500 more characters and
+require a separate content and QA pass.
 
 ## Japanese: 漢検 10級 through 8級
 
@@ -190,11 +195,11 @@ surrounding Hangul without copying the ruby annotation into the sentence.
   official laws are excluded from copyright protection by Copyright Act
   Article 7; `source_kind: corpus`.
 
-These lanes cover 218 of 500 Korean `(character, kr)` pairs: the existing 127
-through 7급 plus 91 higher-grade characters already present in the same exact,
+These lanes cover 289 of 1,000 Korean `(character, kr)` pairs: the existing 127
+through 7급 plus 162 higher-grade characters already present in the same exact,
 immutable licensed selections. No sentence text was generated or altered.
-Across all tracks, 864 of 1,311 pairs now have rank-0 sentences; one existing
-extra rank makes 865 unique seeded sentence identities.
+Across all tracks, 1,002 of 2,095 pairs now have rank-0 sentences; one existing
+extra rank makes 1,003 unique seeded sentence identities.
 
 ### Remaining Korean gaps
 
@@ -486,6 +491,435 @@ parenthetical Hanja glosses, and incomplete clauses were rejected.
 | 許 | 5급: No qualifying sentence occurs in the retained licensed selections. |
 | 湖 | 5급: No qualifying sentence occurs in the retained licensed selections. |
 | 患 | 5급: No qualifying sentence occurs in the retained licensed selections. |
+| 講 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 師 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 修 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 解 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 故 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 求 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 毒 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 斗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 房 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 壁 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 婦 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 佛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 星 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 謠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 員 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 製 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 統 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 虛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 戶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 列 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 武 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 府 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 寺 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 申 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 政 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 準 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 志 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 街 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 檀 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 羅 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 麗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 液 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 祭 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 鳥 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 職 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 察 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 康 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 端 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 擔 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 脈 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 未 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 殺 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 盛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 掃 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 受 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 眼 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 將 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 早 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 走 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 齒 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 鄕 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 血 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 博 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 伐 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 舍 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 玉 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 票 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 航 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 貨 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 起 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 牧 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 防 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 配 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 勢 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 細 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 送 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 守 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 息 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 衛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 移 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 低 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 程 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 回 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 單 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 黨 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 帶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 豆 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 兩 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 連 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 誠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 素 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 演 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 圓 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 測 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 假 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 想 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 是 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 恩 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 尊 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 眞 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 賢 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 惠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 好 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 確 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 宮 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 努 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 導 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 密 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 步 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 飛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 床 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 續 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 授 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 施 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 誤 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 接 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 除 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 進 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 築 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 蓄 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 取 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 治 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 減 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 監 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 個 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 潔 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 缺 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 境 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 警 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 慶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 係 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 句 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 極 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 器 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 暖 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 難 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 怒 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 斷 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 達 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 隊 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 督 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 銅 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 得 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 燈 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 論 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 毛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 味 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 訪 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 拜 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 背 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 邊 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 報 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 復 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 富 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 副 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 非 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 悲 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 貧 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 謝 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 常 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 聖 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 笑 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 俗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 純 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 詩 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 試 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 視 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 深 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 暗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 壓 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 餘 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 逆 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 煙 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 藝 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 肉 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 陰 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 應 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 益 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 引 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 障 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 敵 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 田 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 絶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 濟 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 制 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 際 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 助 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 竹 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 衆 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 增 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 指 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 至 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 請 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 總 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 銃 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 忠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 蟲 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 侵 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 快 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 退 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 波 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 砲 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 包 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 港 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 驗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 協 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 呼 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 吸 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 興 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 希 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
+| 券 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 紀 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 普 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 辭 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 絲 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 籍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 智 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 誌 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 冊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 派 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 篇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 季 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 孤 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 柳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 私 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 叔 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 氏 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 緣 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 營 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 危 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 儒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 仁 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 姿 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 張 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 差 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 討 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 顯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 階 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 君 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 亂 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 犯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 範 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 屬 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 域 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 資 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 帝 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 刑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 驚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 孔 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 管 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 糧 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鳴 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 松 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 秀 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 燃 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 郵 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 座 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 探 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 革 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 拒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 更 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 骨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 徒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 負 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 傷 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 源 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 裝 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 靜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 聽 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 就 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 紅 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 庫 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 碑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 殘 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 廳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 暇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 干 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 降 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 屈 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 勸 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 筋 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 寄 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 粉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 委 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 乳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 雜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 折 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 讚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鬪 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 胞 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 閑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 混 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 犬 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 困 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 離 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 否 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 批 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 延 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 遇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 圍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 錢 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 整 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 泉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 趣 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 堅 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 肅 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 疲 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 喜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 繼 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 卷 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 龍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 嚴 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 與 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 易 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鉛 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 迎 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 援 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 獎 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 轉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 丁 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鍾 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 持 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 採 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 閉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 候 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 刻 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 覺 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 簡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 看 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 甘 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 敢 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 甲 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 據 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 巨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 傑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 儉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 擊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 激 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 傾 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鏡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鷄 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 系 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 戒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 攻 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 鑛 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 群 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 歸 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 劇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 機 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 奇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 段 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 盜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 逃 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 卵 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 覽 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 慮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 烈 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 輪 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 妹 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 模 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 墓 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 妙 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 舞 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 拍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 髮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 妨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 辯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 伏 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 複 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 憤 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 祕 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 射 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 散 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 象 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 宣 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 舌 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 損 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 頌 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 崇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 映 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 優 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 怨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 威 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 慰 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 遊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 遺 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 隱 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 儀 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 疑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 異 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 姉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 腸 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 壯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 帳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 底 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 積 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 適 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 績 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 賊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 專 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 點 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 占 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 條 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 潮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 存 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 酒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 朱 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 周 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 證 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 珍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 盡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 招 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 推 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 縮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 層 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 寢 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 針 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 歎 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 彈 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 脫 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 擇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 痛 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 投 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 評 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 爆 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 標 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 避 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 恨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 抗 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 核 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 險 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 或 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 婚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 歡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 環 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 況 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 灰 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 厚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
+| 揮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
 
 ## Past-paper sourcing position
 

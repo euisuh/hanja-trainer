@@ -551,7 +551,8 @@
       "meaningEn": "circle",
       "meaningKo": "둥글",
       "variants": {
-        "jp": "円"
+        "jp": "円",
+        "kr": "圓"
       },
       "strokeCount": 13,
       "tracks": [
@@ -746,7 +747,8 @@
       "meaningEn": "dog",
       "meaningKo": "개",
       "variants": {
-        "jp": "犬"
+        "jp": "犬",
+        "kr": "犬"
       },
       "strokeCount": 4,
       "tracks": [
@@ -876,7 +878,8 @@
       "meaningKo": "근본",
       "variants": {
         "jp": "本",
-        "cn": "本"
+        "cn": "本",
+        "kr": "本"
       },
       "strokeCount": 5,
       "tracks": [
@@ -918,7 +921,8 @@
       "meaningEn": "jade, precious stone, gem",
       "meaningKo": "구슬",
       "variants": {
-        "jp": "玉"
+        "jp": "玉",
+        "kr": "玉"
       },
       "strokeCount": 5,
       "tracks": [
@@ -938,7 +942,8 @@
       "meaningEn": "field, arable land, cultivated",
       "meaningKo": "밭",
       "variants": {
-        "jp": "田"
+        "jp": "田",
+        "kr": "田"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1002,7 +1007,8 @@
       "meaningEn": "stone, rock, mineral",
       "meaningKo": "돌",
       "variants": {
-        "jp": "石"
+        "jp": "石",
+        "kr": "石"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1154,7 +1160,8 @@
       "meaningKo": "이를",
       "variants": {
         "jp": "早",
-        "cn": "早"
+        "cn": "早",
+        "kr": "早"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1217,7 +1224,8 @@
       "meaningEn": "bamboo",
       "meaningKo": "대",
       "variants": {
-        "jp": "竹"
+        "jp": "竹",
+        "kr": "竹"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1237,7 +1245,8 @@
       "meaningEn": "silk",
       "meaningKo": "실",
       "variants": {
-        "jp": "糸"
+        "jp": "糸",
+        "kr": "絲"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1279,7 +1288,8 @@
       "meaningEn": "worms",
       "meaningKo": "벌레",
       "variants": {
-        "jp": "虫"
+        "jp": "虫",
+        "kr": "蟲"
       },
       "strokeCount": 18,
       "tracks": [
@@ -1385,7 +1395,8 @@
       "meaningKo": "볼",
       "variants": {
         "jp": "見",
-        "cn": "见"
+        "cn": "见",
+        "kr": "見"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1425,7 +1436,8 @@
       "meaningEn": "red",
       "meaningKo": "붉을",
       "variants": {
-        "jp": "赤"
+        "jp": "赤",
+        "kr": "赤"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1576,7 +1588,8 @@
       "meaningKo": "비",
       "variants": {
         "jp": "雨",
-        "cn": "雨"
+        "cn": "雨",
+        "kr": "雨"
       },
       "strokeCount": 8,
       "tracks": [

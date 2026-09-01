@@ -112,7 +112,8 @@
       "meaningKo": "이제",
       "variants": {
         "jp": "今",
-        "cn": "今"
+        "cn": "今",
+        "kr": "今"
       },
       "strokeCount": 4,
       "tracks": [
@@ -133,7 +134,8 @@
       "meaningKo": "으뜸",
       "variants": {
         "jp": "元",
-        "cn": "元"
+        "cn": "元",
+        "kr": "元"
       },
       "strokeCount": 4,
       "tracks": [
@@ -154,7 +156,8 @@
       "meaningKo": "공평할",
       "variants": {
         "jp": "公",
-        "cn": "公"
+        "cn": "公",
+        "kr": "公"
       },
       "strokeCount": 4,
       "tracks": [
@@ -195,7 +198,8 @@
       "meaningKo": "나눌",
       "variants": {
         "jp": "分",
-        "cn": "分"
+        "cn": "分",
+        "kr": "分"
       },
       "strokeCount": 4,
       "tracks": [
@@ -215,7 +219,8 @@
       "meaningEn": "cut, mince, slice, carve",
       "meaningKo": "끊을",
       "variants": {
-        "jp": "切"
+        "jp": "切",
+        "kr": "切"
       },
       "strokeCount": 4,
       "tracks": [
@@ -258,7 +263,8 @@
       "meaningKo": "벗",
       "variants": {
         "jp": "友",
-        "cn": "友"
+        "cn": "友",
+        "kr": "友"
       },
       "strokeCount": 4,
       "tracks": [
@@ -279,7 +285,8 @@
       "meaningKo": "클",
       "variants": {
         "jp": "太",
-        "cn": "太"
+        "cn": "太",
+        "kr": "太"
       },
       "strokeCount": 4,
       "tracks": [
@@ -321,7 +328,8 @@
       "meaningEn": "to pull, draw out, attract",
       "meaningKo": "끌",
       "variants": {
-        "jp": "引"
+        "jp": "引",
+        "kr": "引"
       },
       "strokeCount": 4,
       "tracks": [
@@ -406,7 +414,8 @@
       "meaningKo": "소",
       "variants": {
         "jp": "牛",
-        "cn": "牛"
+        "cn": "牛",
+        "kr": "牛"
       },
       "strokeCount": 4,
       "tracks": [
@@ -448,7 +457,8 @@
       "meaningKo": "터럭",
       "variants": {
         "jp": "毛",
-        "cn": "毛"
+        "cn": "毛",
+        "kr": "毛"
       },
       "strokeCount": 4,
       "tracks": [
@@ -468,7 +478,8 @@
       "meaningEn": "stop, halt, desist",
       "meaningKo": "그칠",
       "variants": {
-        "jp": "止"
+        "jp": "止",
+        "kr": "止"
       },
       "strokeCount": 4,
       "tracks": [
@@ -554,7 +565,8 @@
       "meaningKo": "반",
       "variants": {
         "jp": "半",
-        "cn": "半"
+        "cn": "半",
+        "kr": "半"
       },
       "strokeCount": 5,
       "tracks": [
@@ -574,7 +586,8 @@
       "meaningEn": "old, classic, ancient",
       "meaningKo": "옛",
       "variants": {
-        "jp": "古"
+        "jp": "古",
+        "kr": "古"
       },
       "strokeCount": 5,
       "tracks": [
@@ -658,7 +671,8 @@
       "meaningEn": "broad, wide, extensive",
       "meaningKo": "넓을",
       "variants": {
-        "jp": "広"
+        "jp": "広",
+        "kr": "廣"
       },
       "strokeCount": 14,
       "tracks": [
@@ -742,7 +756,8 @@
       "meaningKo": "사귈",
       "variants": {
         "jp": "交",
-        "cn": "交"
+        "cn": "交",
+        "kr": "交"
       },
       "strokeCount": 6,
       "tracks": [
@@ -763,7 +778,8 @@
       "meaningKo": "모일",
       "variants": {
         "jp": "会",
-        "cn": "会"
+        "cn": "会",
+        "kr": "會"
       },
       "strokeCount": 13,
       "tracks": [
@@ -783,7 +799,8 @@
       "meaningEn": "light, brilliant, shine",
       "meaningKo": "빛",
       "variants": {
-        "jp": "光"
+        "jp": "光",
+        "kr": "光"
       },
       "strokeCount": 6,
       "tracks": [
@@ -826,7 +843,8 @@
       "meaningKo": "돌아올",
       "variants": {
         "jp": "回",
-        "cn": "回"
+        "cn": "回",
+        "kr": "回"
       },
       "strokeCount": 6,
       "tracks": [
@@ -847,7 +865,8 @@
       "meaningKo": "많을",
       "variants": {
         "jp": "多",
-        "cn": "多"
+        "cn": "多",
+        "kr": "多"
       },
       "strokeCount": 6,
       "tracks": [
@@ -932,7 +951,8 @@
       "meaningKo": "쌀",
       "variants": {
         "jp": "米",
-        "cn": "米"
+        "cn": "米",
+        "kr": "米"
       },
       "strokeCount": 6,
       "tracks": [
@@ -974,7 +994,8 @@
       "meaningKo": "생각할",
       "variants": {
         "jp": "考",
-        "cn": "考"
+        "cn": "考",
+        "kr": "考"
       },
       "strokeCount": 6,
       "tracks": [
@@ -995,7 +1016,8 @@
       "meaningKo": "고기",
       "variants": {
         "jp": "肉",
-        "cn": "肉"
+        "cn": "肉",
+        "kr": "肉"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1124,7 +1146,8 @@
       "meaningKo": "몸",
       "variants": {
         "jp": "体",
-        "cn": "体"
+        "cn": "体",
+        "kr": "體"
       },
       "strokeCount": 22,
       "tracks": [
@@ -1145,7 +1168,8 @@
       "meaningKo": "지을",
       "variants": {
         "jp": "作",
-        "cn": "作"
+        "cn": "作",
+        "kr": "作"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1165,7 +1189,8 @@
       "meaningEn": "diagram",
       "meaningKo": "그림",
       "variants": {
-        "jp": "図"
+        "jp": "図",
+        "kr": "圖"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1186,7 +1211,8 @@
       "meaningKo": "소리",
       "variants": {
         "jp": "声",
-        "cn": "声"
+        "cn": "声",
+        "kr": "聲"
       },
       "strokeCount": 17,
       "tracks": [
@@ -1207,7 +1233,8 @@
       "meaningKo": "팔",
       "variants": {
         "jp": "売",
-        "cn": "卖"
+        "cn": "卖",
+        "kr": "賣"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1249,7 +1276,8 @@
       "meaningEn": "form, shape, appearance",
       "meaningKo": "모양",
       "variants": {
-        "jp": "形"
+        "jp": "形",
+        "kr": "形"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1291,7 +1319,8 @@
       "meaningEn": "god of the soil and altars to him",
       "meaningKo": "토지신",
       "variants": {
-        "jp": "社"
+        "jp": "社",
+        "kr": "社"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1376,7 +1405,8 @@
       "meaningKo": "달릴",
       "variants": {
         "jp": "走",
-        "cn": "走"
+        "cn": "走",
+        "kr": "走"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1397,7 +1427,8 @@
       "meaningKo": "가까울",
       "variants": {
         "jp": "近",
-        "cn": "近"
+        "cn": "近",
+        "kr": "近"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1481,7 +1512,8 @@
       "meaningEn": "capital city",
       "meaningKo": "서울",
       "variants": {
-        "jp": "京"
+        "jp": "京",
+        "kr": "京"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1523,7 +1555,8 @@
       "meaningEn": "night, dark",
       "meaningKo": "밤",
       "variants": {
-        "jp": "夜"
+        "jp": "夜",
+        "kr": "夜"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1544,7 +1577,8 @@
       "meaningKo": "누이",
       "variants": {
         "jp": "妹",
-        "cn": "妹"
+        "cn": "妹",
+        "kr": "妹"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1564,7 +1598,8 @@
       "meaningEn": "elder sister",
       "meaningKo": "윗누이",
       "variants": {
-        "jp": "姉"
+        "jp": "姉",
+        "kr": "姉"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1585,7 +1620,8 @@
       "meaningKo": "가게",
       "variants": {
         "jp": "店",
-        "cn": "店"
+        "cn": "店",
+        "kr": "店"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1606,7 +1642,8 @@
       "meaningKo": "밝을",
       "variants": {
         "jp": "明",
-        "cn": "明"
+        "cn": "明",
+        "kr": "明"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1649,7 +1686,8 @@
       "meaningKo": "걸음",
       "variants": {
         "jp": "歩",
-        "cn": "步"
+        "cn": "步",
+        "kr": "步"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1670,7 +1708,8 @@
       "meaningKo": "그림",
       "variants": {
         "jp": "画",
-        "cn": "画"
+        "cn": "画",
+        "kr": "畫"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1713,7 +1752,8 @@
       "meaningKo": "알",
       "variants": {
         "jp": "知",
-        "cn": "知"
+        "cn": "知",
+        "kr": "知"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1843,7 +1883,8 @@
       "meaningKo": "생각",
       "variants": {
         "jp": "思",
-        "cn": "思"
+        "cn": "思",
+        "kr": "思"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1864,7 +1905,8 @@
       "meaningKo": "별",
       "variants": {
         "jp": "星",
-        "cn": "星"
+        "cn": "星",
+        "kr": "星"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1929,7 +1971,8 @@
       "meaningKo": "점",
       "variants": {
         "jp": "点",
-        "cn": "点"
+        "cn": "点",
+        "kr": "點"
       },
       "strokeCount": 17,
       "tracks": [
@@ -1949,7 +1992,8 @@
       "meaningEn": "section, department, science",
       "meaningKo": "과목",
       "variants": {
-        "jp": "科"
+        "jp": "科",
+        "kr": "科"
       },
       "strokeCount": 9,
       "tracks": [
@@ -2011,7 +2055,8 @@
       "meaningEn": "head",
       "meaningKo": "머리",
       "variants": {
-        "jp": "首"
+        "jp": "首",
+        "kr": "首"
       },
       "strokeCount": 9,
       "tracks": [
@@ -2075,7 +2120,8 @@
       "meaningEn": "weak",
       "meaningKo": "약할",
       "variants": {
-        "jp": "弱"
+        "jp": "弱",
+        "kr": "弱"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2160,7 +2206,8 @@
       "meaningEn": "pass through",
       "meaningKo": "통할",
       "variants": {
-        "jp": "通"
+        "jp": "通",
+        "kr": "通"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2181,7 +2228,8 @@
       "meaningKo": "높을",
       "variants": {
         "jp": "高",
-        "cn": "高"
+        "cn": "高",
+        "kr": "高"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2201,7 +2249,8 @@
       "meaningEn": "strong, powerful, energetic",
       "meaningKo": "강할",
       "variants": {
-        "jp": "強"
+        "jp": "強",
+        "kr": "強"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2264,7 +2313,8 @@
       "meaningEn": "class",
       "meaningKo": "짤",
       "variants": {
-        "jp": "組"
+        "jp": "組",
+        "kr": "組"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2306,7 +2356,8 @@
       "meaningEn": "week",
       "meaningKo": "돌",
       "variants": {
-        "jp": "週"
+        "jp": "週",
+        "kr": "週"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2327,7 +2378,8 @@
       "meaningKo": "눈",
       "variants": {
         "jp": "雪",
-        "cn": "雪"
+        "cn": "雪",
+        "kr": "雪"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2348,7 +2400,8 @@
       "meaningKo": "물고기",
       "variants": {
         "jp": "魚",
-        "cn": "鱼"
+        "cn": "鱼",
+        "kr": "魚"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2369,7 +2422,8 @@
       "meaningKo": "새",
       "variants": {
         "jp": "鳥",
-        "cn": "鸟"
+        "cn": "鸟",
+        "kr": "鳥"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2412,7 +2466,8 @@
       "meaningKo": "검을",
       "variants": {
         "jp": "黒",
-        "cn": "黑"
+        "cn": "黑",
+        "kr": "黑"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2476,7 +2531,8 @@
       "meaningEn": "dynasty",
       "meaningKo": "아침",
       "variants": {
-        "jp": "朝"
+        "jp": "朝",
+        "kr": "朝"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2496,7 +2552,8 @@
       "meaningEn": "to take turns",
       "meaningKo": "차례",
       "variants": {
-        "jp": "番"
+        "jp": "番",
+        "kr": "番"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2559,7 +2616,8 @@
       "meaningKo": "살",
       "variants": {
         "jp": "買",
-        "cn": "买"
+        "cn": "买",
+        "kr": "買"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2623,7 +2681,8 @@
       "meaningEn": "clouds",
       "meaningKo": "구름",
       "variants": {
-        "jp": "雲"
+        "jp": "雲",
+        "kr": "雲"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2665,7 +2724,8 @@
       "meaningEn": "happy, glad",
       "meaningKo": "노래",
       "variants": {
-        "jp": "楽"
+        "jp": "楽",
+        "kr": "樂"
       },
       "strokeCount": 15,
       "tracks": [
@@ -2817,7 +2877,8 @@
       "meaningKo": "읽을",
       "variants": {
         "jp": "読",
-        "cn": "读"
+        "cn": "读",
+        "kr": "讀"
       },
       "strokeCount": 22,
       "tracks": [
@@ -2837,7 +2898,8 @@
       "meaningEn": "cry of bird or animal",
       "meaningKo": "울",
       "variants": {
-        "jp": "鳴"
+        "jp": "鳴",
+        "kr": "鳴"
       },
       "strokeCount": 14,
       "tracks": [
@@ -2857,7 +2919,8 @@
       "meaningEn": "thread, line, wire",
       "meaningKo": "줄",
       "variants": {
-        "jp": "線"
+        "jp": "線",
+        "kr": "線"
       },
       "strokeCount": 15,
       "tracks": [
@@ -2877,7 +2940,8 @@
       "meaningEn": "relatives, parents",
       "meaningKo": "친할",
       "variants": {
-        "jp": "親"
+        "jp": "親",
+        "kr": "親"
       },
       "strokeCount": 16,
       "tracks": [
@@ -2897,7 +2961,8 @@
       "meaningEn": "head",
       "meaningKo": "머리",
       "variants": {
-        "jp": "頭"
+        "jp": "頭",
+        "kr": "頭"
       },
       "strokeCount": 16,
       "tracks": [
@@ -2937,7 +3002,8 @@
       "meaningEn": "open country, field",
       "meaningKo": "들",
       "variants": {
-        "jp": "野"
+        "jp": "野",
+        "kr": "野"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2979,7 +3045,8 @@
       "meaningEn": "wind",
       "meaningKo": "바람",
       "variants": {
-        "jp": "風"
+        "jp": "風",
+        "kr": "風"
       },
       "strokeCount": 9,
       "tracks": [
@@ -3000,7 +3067,8 @@
       "meaningKo": "새",
       "variants": {
         "jp": "新",
-        "cn": "新"
+        "cn": "新",
+        "kr": "新"
       },
       "strokeCount": 13,
       "tracks": [
@@ -3020,7 +3088,8 @@
       "meaningEn": "court, office",
       "meaningKo": "절",
       "variants": {
-        "jp": "寺"
+        "jp": "寺",
+        "kr": "寺"
       },
       "strokeCount": 6,
       "tracks": [
@@ -3060,7 +3129,8 @@
       "meaningEn": "return",
       "meaningKo": "돌아갈",
       "variants": {
-        "jp": "帰"
+        "jp": "帰",
+        "kr": "歸"
       },
       "strokeCount": 18,
       "tracks": [
@@ -3102,7 +3172,8 @@
       "meaningEn": "daytime, daylight",
       "meaningKo": "낮",
       "variants": {
-        "jp": "昼"
+        "jp": "昼",
+        "kr": "晝"
       },
       "strokeCount": 11,
       "tracks": [
@@ -3165,7 +3236,8 @@
       "meaningEn": "plan, plot",
       "meaningKo": "셀",
       "variants": {
-        "jp": "計"
+        "jp": "計",
+        "kr": "計"
       },
       "strokeCount": 9,
       "tracks": [
@@ -3185,7 +3257,8 @@
       "meaningEn": "garden",
       "meaningKo": "동산",
       "variants": {
-        "jp": "園"
+        "jp": "園",
+        "kr": "園"
       },
       "strokeCount": 13,
       "tracks": [
@@ -3205,7 +3278,8 @@
       "meaningEn": "glorious, as sun",
       "meaningKo": "빛날",
       "variants": {
-        "jp": "曜"
+        "jp": "曜",
+        "kr": "曜"
       },
       "strokeCount": 18,
       "tracks": [
@@ -3226,7 +3300,8 @@
       "meaningKo": "글",
       "variants": {
         "jp": "書",
-        "cn": "书"
+        "cn": "书",
+        "kr": "書"
       },
       "strokeCount": 10,
       "tracks": [
@@ -3246,7 +3321,8 @@
       "meaningEn": "distant, remote, far",
       "meaningKo": "멀",
       "variants": {
-        "jp": "遠"
+        "jp": "遠",
+        "kr": "遠"
       },
       "strokeCount": 13,
       "tracks": [
@@ -3288,7 +3364,8 @@
       "meaningEn": "source, origin, beginning",
       "meaningKo": "언덕",
       "variants": {
-        "jp": "原"
+        "jp": "原",
+        "kr": "原"
       },
       "strokeCount": 10,
       "tracks": [
@@ -3308,7 +3385,8 @@
       "meaningEn": "fine, tiny",
       "meaningKo": "가늘",
       "variants": {
-        "jp": "細"
+        "jp": "細",
+        "kr": "細"
       },
       "strokeCount": 11,
       "tracks": [

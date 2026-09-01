@@ -32,6 +32,13 @@ test("previews one unit with cross-track keyboard controls", async ({ page }) =>
   await expect(page.getByRole("columnheader", { name: "日本 · 音/訓" })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: "中国 · 拼音" })).toBeVisible();
   expect(requests).toHaveLength(1);
+
+  const curriculum = await (await page.request.get("/api/curriculum?track=kr")).json() as { units: Array<{ id: number }> };
+  const firstUnitLoaded = page.waitForResponse((response) => /\/api\/curriculum\/units\/\d+$/u.test(response.url()) && response.ok());
+  await page.goto(`/study/${curriculum.units[0].id}`);
+  const firstUnit = await (await firstUnitLoaded).json() as { characters: unknown[] };
+  await expect(page.locator(".unit-study__table tbody tr")).toHaveCount(firstUnit.characters.length);
+
   await expect(page.locator("[data-study-audio]")).toHaveCount(0);
   const silentControls = page.locator("[data-study-control]");
   const silentSentence = page.locator(".unit-study__sentence [data-study-control]").first();

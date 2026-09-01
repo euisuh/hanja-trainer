@@ -18,13 +18,15 @@ const CHARACTER_FILES = [
   "data/characters/kr-8geup.json",
 ];
 
-const KR_THROUGH_5_FILES = [
+const KR_THROUGH_4_FILES = [
   "data/characters/kr-8geup.json",
   "data/characters/kr-7geup.json",
   "data/characters/kr-6geup2.json",
   "data/characters/kr-6geup.json",
   "data/characters/kr-5geup2.json",
   "data/characters/kr-5geup.json",
+  "data/characters/kr-4geup2.json",
+  "data/characters/kr-4geup.json",
 ];
 
 function d1Result<T>(results: T[]): D1Result<T> {
@@ -442,7 +444,7 @@ describe("content API", () => {
   });
 
   it("issues sourced word cards only after all members are known", async () => {
-    const fixture = setupSeeds(KR_THROUGH_5_FILES); databases.push(fixture.sqlite);
+    const fixture = setupSeeds(KR_THROUGH_4_FILES); databases.push(fixture.sqlite);
     fixture.sqlite.exec(emitWordSeedSql(parseWordSeed(JSON.parse(readFileSync("data/words/kr-wiktionary.json", "utf8")) as unknown)));
     const members = fixture.sqlite.prepare("SELECT id FROM characters WHERE key IN ('學', '校') ORDER BY id").all() as Array<{ id: number }>;
     const others = fixture.sqlite.prepare("SELECT id FROM characters WHERE key NOT IN ('學', '校') ORDER BY id LIMIT 3").all() as Array<{ id: number }>;
@@ -485,13 +487,13 @@ describe("content API", () => {
     expect(expectedOrder("kr").slice(0, 50)).toEqual(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown).curriculumUnits!.flatMap((unit) => unit.members.map((member) => member.key)));
   });
 
-  it("orders all 500 Korean curriculum members from 8급 through 5급", async () => {
-    const fixture = setupSeeds(KR_THROUGH_5_FILES); databases.push(fixture.sqlite);
+  it("orders all 1000 Korean curriculum members from 8급 through 4급", async () => {
+    const fixture = setupSeeds(KR_THROUGH_4_FILES); databases.push(fixture.sqlite);
     const curriculum = await (await routeApiRequest(new Request("https://test/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
     const levelWalk = curriculum.units.map((unit) => unit.level).filter((level, index, levels) => index === 0 || level !== levels[index - 1]);
 
-    expect(levelWalk).toEqual(["8급", "7급", "6급II", "6급", "5급II", "5급"]);
-    expect(curriculum.units.flatMap((unit) => unit.nodes)).toHaveLength(500);
+    expect(levelWalk).toEqual(["8급", "7급", "6급II", "6급", "5급II", "5급", "4급II", "4급"]);
+    expect(curriculum.units.flatMap((unit) => unit.nodes)).toHaveLength(1000);
     expect(curriculum.units.every((unit) => unit.nodes.length >= 8 && unit.nodes.length <= 10)).toBe(true);
   });
 

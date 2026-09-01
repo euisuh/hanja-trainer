@@ -1,0 +1,5855 @@
+{
+  "characters": [
+    {
+      "key": "講",
+      "meaningEn": "explain; discuss; talk",
+      "meaningKo": "외울",
+      "variants": {
+        "cn": "讲",
+        "kr": "講"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "講",
+          "reading": "외울 강, 얽을 구",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "錄",
+      "meaningEn": "copy, write down, record",
+      "meaningKo": "기록할",
+      "variants": {
+        "kr": "錄"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "錄",
+          "reading": "기록할 록(녹), 사실할 려(여)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "備",
+      "meaningEn": "prepare, ready, perfect",
+      "meaningKo": "갖출",
+      "variants": {
+        "cn": "备",
+        "kr": "備"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "備",
+          "reading": "갖출 비",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "師",
+      "meaningEn": "teacher, master, specialist; multitude, troops; hexagram ䷆",
+      "meaningKo": "스승",
+      "variants": {
+        "kr": "師"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "師",
+          "reading": "스승 사",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "修",
+      "meaningEn": "study; repair; cultivate",
+      "meaningKo": "닦을",
+      "variants": {
+        "kr": "修"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "修",
+          "reading": "닦을 수",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "解",
+      "meaningEn": "loosen, unfasten, untie; explain; hexagram ䷧",
+      "meaningKo": "풀",
+      "variants": {
+        "cn": "解",
+        "kr": "解"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "解",
+          "reading": "풀 해",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "故",
+      "meaningEn": "ancient, old; reason, because",
+      "meaningKo": "연고",
+      "variants": {
+        "cn": "故",
+        "kr": "故"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "故",
+          "reading": "연고 고",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "官",
+      "meaningEn": "official, public servant",
+      "meaningKo": "벼슬",
+      "variants": {
+        "kr": "官"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "官",
+          "reading": "벼슬 관",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "求",
+      "meaningEn": "seek; demand, request; beseech",
+      "meaningKo": "구할",
+      "variants": {
+        "cn": "求",
+        "kr": "求"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "求",
+          "reading": "구할 구",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "毒",
+      "meaningEn": "poison, venom; poisonous",
+      "meaningKo": "독",
+      "variants": {
+        "kr": "毒"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "毒",
+          "reading": "독 독, 거북 대",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "斗",
+      "meaningEn": "a dipper; unit of volume (ten 升 or litres); Kangxi radical 68; 8th lunar mansion, determinative star φ Sagittarii",
+      "meaningKo": "말",
+      "variants": {
+        "kr": "斗"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "斗",
+          "reading": "말 두, 구기 주, 싸울 투",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "房",
+      "meaningEn": "house, building; room; 4th lunar mansion, determinative star π Scorpii",
+      "meaningKo": "방",
+      "variants": {
+        "cn": "房",
+        "kr": "房"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "房",
+          "reading": "방 방",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "壁",
+      "meaningEn": "partition wall; walls of a house; 14th lunar mansion, determinative star γ Pegasi (Algenib)",
+      "meaningKo": "벽",
+      "variants": {
+        "kr": "壁"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "壁",
+          "reading": "벽 벽",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "婦",
+      "meaningEn": "married women; woman; wife",
+      "meaningKo": "며느리",
+      "variants": {
+        "kr": "婦"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "婦",
+          "reading": "며느리 부",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "佛",
+      "meaningEn": "Buddha; of Buddhism; merciful person; Buddhist image; the dead (Japanese)",
+      "meaningKo": "부처",
+      "variants": {
+        "kr": "佛"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "佛",
+          "reading": "부처 불, 일어날 발, 도울 필",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "狀",
+      "meaningEn": "form; appearance; shape; official",
+      "meaningKo": "형상",
+      "variants": {
+        "kr": "狀"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "狀",
+          "reading": "형상 상, 문서 장",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "星",
+      "meaningEn": "a star, planet; any point of light; 25th lunar mansion, determinative star α Hydrae (Alphard)",
+      "meaningKo": "별",
+      "variants": {
+        "jp": "星",
+        "cn": "星",
+        "kr": "星"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "星",
+          "reading": "별 성",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "謠",
+      "meaningEn": "sing; folksong, ballad; rumor",
+      "meaningKo": "노래",
+      "variants": {
+        "kr": "謠"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "謠",
+          "reading": "노래 요",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "員",
+      "meaningEn": "member; personnel, staff member",
+      "meaningKo": "인원",
+      "variants": {
+        "jp": "員",
+        "cn": "员",
+        "kr": "員"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "員",
+          "reading": "인원 원, 더할 운",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "製",
+      "meaningEn": "make, manufacture; produce",
+      "meaningKo": "지을",
+      "variants": {
+        "kr": "製"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "製",
+          "reading": "지을 제",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "態",
+      "meaningEn": "manner, bearing, attitude",
+      "meaningKo": "모습",
+      "variants": {
+        "kr": "態"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "態",
+          "reading": "모습 태",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "統",
+      "meaningEn": "govern, command, control; unite",
+      "meaningKo": "거느릴",
+      "variants": {
+        "kr": "統"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "統",
+          "reading": "거느릴 통",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "虛",
+      "meaningEn": "false, worthless; empty, hollow; 11th lunar mansion, determinative star β Aquarii (Sadalsuud)",
+      "meaningKo": "빌",
+      "variants": {
+        "kr": "虛"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "虛",
+          "reading": "빌 허",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "戶",
+      "meaningEn": "door; family, household",
+      "meaningKo": "집",
+      "variants": {
+        "kr": "戶"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "戶",
+          "reading": "집 호/지게 호",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "經",
+      "meaningEn": "classic works; pass through",
+      "meaningKo": "날",
+      "variants": {
+        "cn": "经",
+        "kr": "經"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "經",
+          "reading": "날 경",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "列",
+      "meaningEn": "a line; to arrange in order, classify",
+      "meaningKo": "벌일",
+      "variants": {
+        "jp": "列",
+        "kr": "列"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "列",
+          "reading": "벌일 렬(열), 동류 례(예)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "武",
+      "meaningEn": "military; martial, warlike",
+      "meaningKo": "호반",
+      "variants": {
+        "kr": "武"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "武",
+          "reading": "호반 무",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "罰",
+      "meaningEn": "penalty, fine; punish, penalize",
+      "meaningKo": "죄",
+      "variants": {
+        "kr": "罰"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "罰",
+          "reading": "죄 벌",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "府",
+      "meaningEn": "prefecture; prefect; government",
+      "meaningKo": "마을",
+      "variants": {
+        "kr": "府"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "府",
+          "reading": "마을 부",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "寺",
+      "meaningEn": "court, office; temple, monastery",
+      "meaningKo": "절",
+      "variants": {
+        "jp": "寺",
+        "kr": "寺"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "寺",
+          "reading": "절 사, 관청 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "城",
+      "meaningEn": "castle; city, town; municipality",
+      "meaningKo": "재",
+      "variants": {
+        "cn": "城",
+        "kr": "城"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "城",
+          "reading": "재 성",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "申",
+      "meaningEn": "to state to a superior, report; extend; ninth earthly branch",
+      "meaningKo": "거듭",
+      "variants": {
+        "jp": "申",
+        "kr": "申"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "申",
+          "reading": "거듭 신/아홉째 지지 신",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "政",
+      "meaningEn": "government, political affairs",
+      "meaningKo": "정사",
+      "variants": {
+        "kr": "政"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "政",
+          "reading": "정사 정/칠 정",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "準",
+      "meaningEn": "rule, guideline, standard",
+      "meaningKo": "준할",
+      "variants": {
+        "kr": "準"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "準",
+          "reading": "준할 준, 콧마루 절",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "志",
+      "meaningEn": "purpose, will, determination; annals",
+      "meaningKo": "뜻",
+      "variants": {
+        "kr": "志"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "志",
+          "reading": "뜻 지, 기치 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "街",
+      "meaningEn": "street, road, thoroughfare",
+      "meaningKo": "거리",
+      "variants": {
+        "cn": "街",
+        "kr": "街"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "街",
+          "reading": "거리 가",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "檀",
+      "meaningEn": "sandalwood, hardwood; surname",
+      "meaningKo": "박달나무",
+      "variants": {
+        "kr": "檀"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "檀",
+          "reading": "박달나무 단",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "羅",
+      "meaningEn": "net for catching birds; gauze",
+      "meaningKo": "그물",
+      "variants": {
+        "kr": "羅"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "羅",
+          "reading": "그물 라(나)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "麗",
+      "meaningEn": "beautiful, magnificent, elegant",
+      "meaningKo": "고울",
+      "variants": {
+        "kr": "麗"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "麗",
+          "reading": "고울 려(여), 나라 이름 리(이)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "聲",
+      "meaningEn": "sound, voice, noise; tone; music",
+      "meaningKo": "소리",
+      "variants": {
+        "jp": "声",
+        "cn": "声",
+        "kr": "聲"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "聲",
+          "reading": "소리 성",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "液",
+      "meaningEn": "sap, juice, liquid, fluid",
+      "meaningKo": "진",
+      "variants": {
+        "kr": "液"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "液",
+          "reading": "진 액, 담글 석",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "印",
+      "meaningEn": "print, seal, stamp, chop, mark",
+      "meaningKo": "도장",
+      "variants": {
+        "kr": "印"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "印",
+          "reading": "도장 인",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "祭",
+      "meaningEn": "sacrifice to, worship",
+      "meaningKo": "제사",
+      "variants": {
+        "jp": "祭",
+        "kr": "祭"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "祭",
+          "reading": "제사 제, 나라 이름 채, 좨주 좨",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "鳥",
+      "meaningEn": "bird; Kangxi radical 196",
+      "meaningKo": "새",
+      "variants": {
+        "jp": "鳥",
+        "cn": "鸟",
+        "kr": "鳥"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "鳥",
+          "reading": "새 조, 땅 이름 작, 섬 도",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "職",
+      "meaningEn": "duty, profession; office, post",
+      "meaningKo": "직분",
+      "variants": {
+        "kr": "職"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "職",
+          "reading": "직분 직, 깃발 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "察",
+      "meaningEn": "examine, investigate; notice",
+      "meaningKo": "살필",
+      "variants": {
+        "kr": "察"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "察",
+          "reading": "살필 찰",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "康",
+      "meaningEn": "peaceful, quiet; happy, healthy",
+      "meaningKo": "편안",
+      "variants": {
+        "cn": "康",
+        "kr": "康"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "康",
+          "reading": "편안 강/들 강",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "端",
+      "meaningEn": "end, extreme; head; beginning",
+      "meaningKo": "끝",
+      "variants": {
+        "kr": "端"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "端",
+          "reading": "끝 단, 헐떡일 천, 홀 전",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "擔",
+      "meaningEn": "carry, bear, undertake",
+      "meaningKo": "멜",
+      "variants": {
+        "kr": "擔"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "擔",
+          "reading": "멜 담, 빌릴 섬",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "滿",
+      "meaningEn": "fill; full, satisfied",
+      "meaningKo": "찰",
+      "variants": {
+        "cn": "满",
+        "kr": "滿"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "滿",
+          "reading": "찰 만",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "脈",
+      "meaningEn": "blood vessels, veins, arteries",
+      "meaningKo": "혈맥",
+      "variants": {
+        "kr": "脈"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "脈",
+          "reading": "혈맥 맥",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "未",
+      "meaningEn": "not yet; eighth earthly branch",
+      "meaningKo": "아닐",
+      "variants": {
+        "kr": "未"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "未",
+          "reading": "아닐 미",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "殺",
+      "meaningEn": "kill, slaughter, murder; hurt; to pare off, reduce, clip",
+      "meaningKo": "죽일",
+      "variants": {
+        "kr": "殺"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "殺",
+          "reading": "죽일 살/감할 살, 빠를 쇄, 윗사람 죽일 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "盛",
+      "meaningEn": "abundant, flourishing; contain; fill",
+      "meaningKo": "성할",
+      "variants": {
+        "kr": "盛"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "盛",
+          "reading": "성할 성",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "掃",
+      "meaningEn": "sweep, clear away; exterminate",
+      "meaningKo": "쓸",
+      "variants": {
+        "cn": "扫",
+        "kr": "掃"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "掃",
+          "reading": "쓸 소",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "受",
+      "meaningEn": "receive, accept, get; bear, stand",
+      "meaningKo": "받을",
+      "variants": {
+        "jp": "受",
+        "cn": "受",
+        "kr": "受"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "受",
+          "reading": "받을 수",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "眼",
+      "meaningEn": "eye; eyelet, hole, opening",
+      "meaningKo": "눈",
+      "variants": {
+        "cn": "眼",
+        "kr": "眼"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "眼",
+          "reading": "눈 안, 눈 불거진 모양 은",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "容",
+      "meaningEn": "looks, appearance; figure, form",
+      "meaningKo": "얼굴",
+      "variants": {
+        "cn": "容",
+        "kr": "容"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "容",
+          "reading": "얼굴 용",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "爲",
+      "meaningEn": "do, handle, govern, act; be",
+      "meaningKo": "할",
+      "variants": {
+        "kr": "爲"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "爲",
+          "reading": "할 위",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "將",
+      "meaningEn": "will, going to, future; general",
+      "meaningKo": "장수",
+      "variants": {
+        "kr": "將"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "將",
+          "reading": "장수 장",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "提",
+      "meaningEn": "hold in hand; lift in hand",
+      "meaningKo": "끌",
+      "variants": {
+        "cn": "提",
+        "kr": "提"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "提",
+          "reading": "끌 제, 떼지어 날 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "早",
+      "meaningEn": "early; soon; morning",
+      "meaningKo": "이를",
+      "variants": {
+        "jp": "早",
+        "cn": "早",
+        "kr": "早"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "早",
+          "reading": "이를 조",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "走",
+      "meaningEn": "walk, go on foot; run; leave; Kangxi radical 156",
+      "meaningKo": "달릴",
+      "variants": {
+        "jp": "走",
+        "cn": "走",
+        "kr": "走"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "走",
+          "reading": "달릴 주",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "齒",
+      "meaningEn": "teeth; gears, cogs; age; Kangxi radical 211",
+      "meaningKo": "이",
+      "variants": {
+        "jp": "歯",
+        "kr": "齒"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "齒",
+          "reading": "이 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "鄕",
+      "meaningEn": "country; rural; village",
+      "meaningKo": "시골",
+      "variants": {
+        "kr": "鄕"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "鄕",
+          "reading": "시골 향",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "血",
+      "meaningEn": "blood; Kangxi radical 143",
+      "meaningKo": "피",
+      "variants": {
+        "jp": "血",
+        "kr": "血"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "血",
+          "reading": "피 혈",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "究",
+      "meaningEn": "examine, investigate",
+      "meaningKo": "연구할",
+      "variants": {
+        "jp": "究",
+        "kr": "究"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "究",
+          "reading": "연구할 구",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "博",
+      "meaningEn": "gamble, play games; wide, broad",
+      "meaningKo": "넓을",
+      "variants": {
+        "kr": "博"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "博",
+          "reading": "넓을 박",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "伐",
+      "meaningEn": "cut down, subjugate, attack",
+      "meaningKo": "칠",
+      "variants": {
+        "kr": "伐"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "伐",
+          "reading": "칠 벌",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "舍",
+      "meaningEn": "house, dwelling; dwell, reside",
+      "meaningKo": "집",
+      "variants": {
+        "kr": "舍"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "舍",
+          "reading": "집 사/버릴 사, 벌여놓을 석",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "玉",
+      "meaningEn": "jade, precious stone, gem",
+      "meaningKo": "구슬",
+      "variants": {
+        "jp": "玉",
+        "kr": "玉"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "玉",
+          "reading": "구슬 옥",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "票",
+      "meaningEn": "slip of paper or bamboo; ticket",
+      "meaningKo": "표",
+      "variants": {
+        "cn": "票",
+        "kr": "票"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "票",
+          "reading": "표 표",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "航",
+      "meaningEn": "sail; navigate; ship, boat",
+      "meaningKo": "배",
+      "variants": {
+        "kr": "航"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "航",
+          "reading": "배 항",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "貨",
+      "meaningEn": "goods, commodities, products",
+      "meaningKo": "재물",
+      "variants": {
+        "kr": "貨"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "貨",
+          "reading": "재물 화",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "起",
+      "meaningEn": "rise, stand up; go up; begin",
+      "meaningKo": "일어날",
+      "variants": {
+        "cn": "起",
+        "jp": "起",
+        "kr": "起"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "起",
+          "reading": "일어날 기",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "牧",
+      "meaningEn": "tend cattle, shepherd",
+      "meaningKo": "칠",
+      "variants": {
+        "kr": "牧"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "牧",
+          "reading": "칠 목/땅 이름 목",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "防",
+      "meaningEn": "defend; prevent; embankment",
+      "meaningKo": "막을",
+      "variants": {
+        "kr": "防"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "防",
+          "reading": "막을 방",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "配",
+      "meaningEn": "match, pair; equal; blend",
+      "meaningKo": "짝",
+      "variants": {
+        "jp": "配",
+        "kr": "配"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "配",
+          "reading": "짝 배",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "保",
+      "meaningEn": "protect, safeguard, defend, care",
+      "meaningKo": "지킬",
+      "variants": {
+        "kr": "保"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "保",
+          "reading": "지킬 보/포대기 보/작은 성 보",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "勢",
+      "meaningEn": "power, force; tendency",
+      "meaningKo": "형세",
+      "variants": {
+        "kr": "勢"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "勢",
+          "reading": "형세 세",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "細",
+      "meaningEn": "fine, tiny; slender, thin",
+      "meaningKo": "가늘",
+      "variants": {
+        "jp": "細",
+        "kr": "細"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "細",
+          "reading": "가늘 세",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "送",
+      "meaningEn": "see off, send off; dispatch, give",
+      "meaningKo": "보낼",
+      "variants": {
+        "cn": "送",
+        "jp": "送",
+        "kr": "送"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "送",
+          "reading": "보낼 송",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "守",
+      "meaningEn": "defend, protect, guard, conserve",
+      "meaningKo": "지킬",
+      "variants": {
+        "jp": "守",
+        "kr": "守"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "守",
+          "reading": "지킬 수",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "息",
+      "meaningEn": "rest, put stop to, end, cease",
+      "meaningKo": "쉴",
+      "variants": {
+        "cn": "息",
+        "jp": "息",
+        "kr": "息"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "息",
+          "reading": "쉴 식",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "衛",
+      "meaningEn": "guard, protect, defend",
+      "meaningKo": "지킬",
+      "variants": {
+        "cn": "卫",
+        "kr": "衛"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "衛",
+          "reading": "지킬 위",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "移",
+      "meaningEn": "change place, shift; move about",
+      "meaningKo": "옮길",
+      "variants": {
+        "kr": "移"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "移",
+          "reading": "옮길 이, 크게 할 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "低",
+      "meaningEn": "low; to lower, hang, bend, bow",
+      "meaningKo": "낮을",
+      "variants": {
+        "kr": "低"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "低",
+          "reading": "낮을 저",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "程",
+      "meaningEn": "journey, trip; schedule, agenda",
+      "meaningKo": "한도",
+      "variants": {
+        "kr": "程"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "程",
+          "reading": "한도 정",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "造",
+      "meaningEn": "construct, build, make, begin; prepare",
+      "meaningKo": "지을",
+      "variants": {
+        "kr": "造"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "造",
+          "reading": "지을 조",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "處",
+      "meaningEn": "place, locale; department",
+      "meaningKo": "곳",
+      "variants": {
+        "cn": "处",
+        "kr": "處"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "處",
+          "reading": "곳 처",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "置",
+      "meaningEn": "place, lay out; set aside",
+      "meaningKo": "둘",
+      "variants": {
+        "kr": "置"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "置",
+          "reading": "둘 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "護",
+      "meaningEn": "protect, guard, defend, shelter",
+      "meaningKo": "도울",
+      "variants": {
+        "cn": "护",
+        "kr": "護"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "護",
+          "reading": "도울 호",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "回",
+      "meaningEn": "return, turn around; a time",
+      "meaningKo": "돌아올",
+      "variants": {
+        "jp": "回",
+        "cn": "回",
+        "kr": "回"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "回",
+          "reading": "돌아올 회",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "單",
+      "meaningEn": "single, individual, only; lone",
+      "meaningKo": "홑",
+      "variants": {
+        "kr": "單"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "單",
+          "reading": "홑 단, 오랑캐 이름 선, 꺼릴 탄, 경솔한 모양 전",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "黨",
+      "meaningEn": "political party, gang, faction",
+      "meaningKo": "무리",
+      "variants": {
+        "kr": "黨"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "黨",
+          "reading": "무리 당, 성씨 장",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "帶",
+      "meaningEn": "belt, girdle, band, strap, zone",
+      "meaningKo": "띠",
+      "variants": {
+        "cn": "带",
+        "kr": "帶"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "帶",
+          "reading": "띠 대",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "豆",
+      "meaningEn": "beans, peas; bean-shaped; Kangxi radical 151",
+      "meaningKo": "콩",
+      "variants": {
+        "jp": "豆",
+        "kr": "豆"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "豆",
+          "reading": "콩 두",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "兩",
+      "meaningEn": "two, both, pair, couple; ounce",
+      "meaningKo": "두",
+      "variants": {
+        "jp": "両",
+        "kr": "兩"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "兩",
+          "reading": "두 량(양), 냥 냥(양)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "連",
+      "meaningEn": "join, connect; continuous; even",
+      "meaningKo": "잇닿을",
+      "variants": {
+        "kr": "連"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "連",
+          "reading": "잇닿을 련(연), 산 이름 란(난)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "設",
+      "meaningEn": "build; establish; display; particle of hypothesis, supposing",
+      "meaningKo": "베풀",
+      "variants": {
+        "kr": "設"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "設",
+          "reading": "베풀 설",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "誠",
+      "meaningEn": "sincere, honest; true, real",
+      "meaningKo": "정성",
+      "variants": {
+        "kr": "誠"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "誠",
+          "reading": "정성 성",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "素",
+      "meaningEn": "white (silk); plain; vegetarian; formerly; normally",
+      "meaningKo": "본디",
+      "variants": {
+        "kr": "素"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "素",
+          "reading": "본디 소/흴 소",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "演",
+      "meaningEn": "perform, put on; exercise",
+      "meaningKo": "펼",
+      "variants": {
+        "cn": "演",
+        "kr": "演"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "演",
+          "reading": "펼 연",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "往",
+      "meaningEn": "go, depart; past, formerly",
+      "meaningKo": "갈",
+      "variants": {
+        "cn": "往",
+        "kr": "往"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "往",
+          "reading": "갈 왕",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "圓",
+      "meaningEn": "circle; round, circular; complete",
+      "meaningKo": "둥글",
+      "variants": {
+        "jp": "円",
+        "kr": "圓"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "圓",
+          "reading": "둥글 원",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "測",
+      "meaningEn": "measure, estimate, conjecture",
+      "meaningKo": "헤아릴",
+      "variants": {
+        "kr": "測"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "測",
+          "reading": "헤아릴 측",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "假",
+      "meaningEn": "falsehood, deception; vacation",
+      "meaningKo": "거짓",
+      "variants": {
+        "cn": "假",
+        "kr": "假"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "假",
+          "reading": "거짓 가, 멀 하, 이를 격",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "權",
+      "meaningEn": "power, right, authority",
+      "meaningKo": "저울추",
+      "variants": {
+        "kr": "權"
+      },
+      "strokeCount": 21,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "權",
+          "reading": "저울추 권/권세 권, 떨기나무 관",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "想",
+      "meaningEn": "think, speculate, plan, consider",
+      "meaningKo": "생각",
+      "variants": {
+        "cn": "想",
+        "jp": "想",
+        "kr": "想"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "想",
+          "reading": "생각 상",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "是",
+      "meaningEn": "indeed, yes, right; to be; demonstrative pronoun, this, that",
+      "meaningKo": "이",
+      "variants": {
+        "cn": "是",
+        "kr": "是"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "是",
+          "reading": "이 시/옳을 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "恩",
+      "meaningEn": "kindness, mercy, charity",
+      "meaningKo": "은혜",
+      "variants": {
+        "kr": "恩"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "恩",
+          "reading": "은혜 은",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "義",
+      "meaningEn": "right conduct, righteousness",
+      "meaningKo": "옳을",
+      "variants": {
+        "kr": "義"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "義",
+          "reading": "옳을 의",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "尊",
+      "meaningEn": "respect, revere, venerate; honor",
+      "meaningKo": "높을",
+      "variants": {
+        "kr": "尊"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "尊",
+          "reading": "높을 존, 술그릇 준",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "眞",
+      "meaningEn": "real, actual, true, genuine",
+      "meaningKo": "참",
+      "variants": {
+        "cn": "真",
+        "jp": "真",
+        "kr": "眞"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "眞",
+          "reading": "참 진",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "賢",
+      "meaningEn": "virtuous, worthy, good; able",
+      "meaningKo": "어질",
+      "variants": {
+        "kr": "賢"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "賢",
+          "reading": "어질 현",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "惠",
+      "meaningEn": "favor, benefit, confer kindness",
+      "meaningKo": "은혜",
+      "variants": {
+        "kr": "惠"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "惠",
+          "reading": "은혜 혜",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "好",
+      "meaningEn": "good, excellent, fine; well",
+      "meaningKo": "좋을",
+      "variants": {
+        "cn": "好",
+        "kr": "好"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "好",
+          "reading": "좋을 호",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "確",
+      "meaningEn": "sure, certain; real, true",
+      "meaningKo": "굳을",
+      "variants": {
+        "kr": "確"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "確",
+          "reading": "굳을 확",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "宮",
+      "meaningEn": "palace, temple, dwelling, enclose",
+      "meaningKo": "집",
+      "variants": {
+        "jp": "宮",
+        "kr": "宮"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "宮",
+          "reading": "집 궁",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "努",
+      "meaningEn": "to exert, strive, make an effort; to pout",
+      "meaningKo": "힘쓸",
+      "variants": {
+        "cn": "努",
+        "kr": "努"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "努",
+          "reading": "힘쓸 노",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "導",
+      "meaningEn": "direct, guide, lead, conduct",
+      "meaningKo": "인도할",
+      "variants": {
+        "kr": "導"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "導",
+          "reading": "인도할 도",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "密",
+      "meaningEn": "dense, thick, close; intimate",
+      "meaningKo": "빽빽할",
+      "variants": {
+        "kr": "密"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "密",
+          "reading": "빽빽할 밀",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "步",
+      "meaningEn": "step, pace; walk, stroll",
+      "meaningKo": "걸음",
+      "variants": {
+        "jp": "歩",
+        "cn": "步",
+        "kr": "步"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "步",
+          "reading": "걸음 보",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "飛",
+      "meaningEn": "fly; go quickly; dart; high; Kangxi radical 183",
+      "meaningKo": "날",
+      "variants": {
+        "cn": "飞",
+        "kr": "飛"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "飛",
+          "reading": "날 비",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "床",
+      "meaningEn": "bed, couch; framework, chassis",
+      "meaningKo": "평상",
+      "variants": {
+        "cn": "床",
+        "kr": "床"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "床",
+          "reading": "평상 상",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "續",
+      "meaningEn": "continue, carry on; succeed",
+      "meaningKo": "이을",
+      "variants": {
+        "kr": "續"
+      },
+      "strokeCount": 21,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "續",
+          "reading": "이을 속",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "授",
+      "meaningEn": "give to, transmit; confer",
+      "meaningKo": "줄",
+      "variants": {
+        "kr": "授"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "授",
+          "reading": "줄 수",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "收",
+      "meaningEn": "gather together, collect; harvest",
+      "meaningKo": "거둘",
+      "variants": {
+        "cn": "收",
+        "kr": "收"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "收",
+          "reading": "거둘 수",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "承",
+      "meaningEn": "inherit, receive; succeed",
+      "meaningKo": "이을",
+      "variants": {
+        "kr": "承"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "承",
+          "reading": "이을 승, 구원할 증, 징계할 징",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "施",
+      "meaningEn": "grant, bestow; give; act; name",
+      "meaningKo": "베풀",
+      "variants": {
+        "kr": "施"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "施",
+          "reading": "베풀 시, 옮길 이",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "羊",
+      "meaningEn": "sheep, goat; Kangxi radical 123",
+      "meaningKo": "양",
+      "variants": {
+        "jp": "羊",
+        "cn": "羊",
+        "kr": "羊"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "羊",
+          "reading": "양 양",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "誤",
+      "meaningEn": "err, make mistake; interfere",
+      "meaningKo": "그르칠",
+      "variants": {
+        "kr": "誤"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "誤",
+          "reading": "그르칠 오",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "接",
+      "meaningEn": "receive; continue; catch; connect",
+      "meaningKo": "이을",
+      "variants": {
+        "cn": "接",
+        "kr": "接"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "接",
+          "reading": "이을 접, 빠를 첩, 거둘 삽",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "除",
+      "meaningEn": "eliminate, remove, except",
+      "meaningKo": "덜",
+      "variants": {
+        "cn": "除",
+        "kr": "除"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "除",
+          "reading": "덜 제, 음력 사월 여",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "進",
+      "meaningEn": "advance, make progress, enter",
+      "meaningKo": "나아갈",
+      "variants": {
+        "cn": "进",
+        "jp": "進",
+        "kr": "進"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "進",
+          "reading": "나아갈 진, 선사 신",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "築",
+      "meaningEn": "build, erect; building",
+      "meaningKo": "쌓을",
+      "variants": {
+        "kr": "築"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "築",
+          "reading": "쌓을 축/악기 이름 축",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "蓄",
+      "meaningEn": "store, save, hoard, gather",
+      "meaningKo": "모을",
+      "variants": {
+        "kr": "蓄"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "蓄",
+          "reading": "모을 축",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "取",
+      "meaningEn": "take, receive, obtain; select",
+      "meaningKo": "가질",
+      "variants": {
+        "jp": "取",
+        "kr": "取"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "取",
+          "reading": "가질 취",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "治",
+      "meaningEn": "govern, regulate, administer",
+      "meaningKo": "다스릴",
+      "variants": {
+        "kr": "治"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "治",
+          "reading": "다스릴 치, 강 이름 이",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "減",
+      "meaningEn": "decrease, subtract, diminish",
+      "meaningKo": "덜",
+      "variants": {
+        "kr": "減"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "減",
+          "reading": "덜 감",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "監",
+      "meaningEn": "supervise, control, direct",
+      "meaningKo": "볼",
+      "variants": {
+        "kr": "監"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "監",
+          "reading": "볼 감",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "個",
+      "meaningEn": "numerary adjunct, piece; single",
+      "meaningKo": "낱",
+      "variants": {
+        "kr": "個"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "個",
+          "reading": "낱 개",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "檢",
+      "meaningEn": "check; examine",
+      "meaningKo": "검사할",
+      "variants": {
+        "cn": "检",
+        "kr": "檢"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "檢",
+          "reading": "검사할 검",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "潔",
+      "meaningEn": "clean, purify, pure",
+      "meaningKo": "깨끗할",
+      "variants": {
+        "kr": "潔"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "潔",
+          "reading": "깨끗할 결",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "缺",
+      "meaningEn": "be short of, lack; gap, deficit",
+      "meaningKo": "이지러질",
+      "variants": {
+        "kr": "缺"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "缺",
+          "reading": "이지러질 결, 머리띠 기",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "境",
+      "meaningEn": "boundary, frontier; area, region",
+      "meaningKo": "지경",
+      "variants": {
+        "cn": "境",
+        "kr": "境"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "境",
+          "reading": "지경 경",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "警",
+      "meaningEn": "guard, watch; alert, alarm",
+      "meaningKo": "경계할",
+      "variants": {
+        "kr": "警"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "警",
+          "reading": "경계할 경",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "慶",
+      "meaningEn": "congratulate, celebrate",
+      "meaningKo": "경사",
+      "variants": {
+        "kr": "慶"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "慶",
+          "reading": "경사 경, 발어사 강",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "係",
+      "meaningEn": "bind, tie up; involve, relation",
+      "meaningKo": "맬",
+      "variants": {
+        "jp": "係",
+        "kr": "係"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "係",
+          "reading": "맬 계",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "句",
+      "meaningEn": "sentence",
+      "meaningKo": "글귀",
+      "variants": {
+        "cn": "句",
+        "kr": "句"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "句",
+          "reading": "글귀 구, 글귀 귀",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "極",
+      "meaningEn": "extreme, utmost, furthest, final",
+      "meaningKo": "극진할",
+      "variants": {
+        "kr": "極"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "極",
+          "reading": "극진할 극/다할 극",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "禁",
+      "meaningEn": "restrict, prohibit, forbid",
+      "meaningKo": "금할",
+      "variants": {
+        "kr": "禁"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "禁",
+          "reading": "금할 금",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "器",
+      "meaningEn": "receptacle, vessel; instrument",
+      "meaningKo": "그릇",
+      "variants": {
+        "kr": "器"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "器",
+          "reading": "그릇 기",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "暖",
+      "meaningEn": "warm, genial",
+      "meaningKo": "따뜻할",
+      "variants": {
+        "kr": "暖"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "暖",
+          "reading": "따뜻할 난, 부드러울 훤",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "難",
+      "meaningEn": "difficult, arduous, hard; unable",
+      "meaningKo": "어려울",
+      "variants": {
+        "kr": "難"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "難",
+          "reading": "어려울 난, 우거질 나",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "怒",
+      "meaningEn": "anger, rage, passion; angry",
+      "meaningKo": "성낼",
+      "variants": {
+        "kr": "怒"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "怒",
+          "reading": "성낼 노",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "斷",
+      "meaningEn": "sever, cut off; interrupt",
+      "meaningKo": "끊을",
+      "variants": {
+        "kr": "斷"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "斷",
+          "reading": "끊을 단",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "達",
+      "meaningEn": "arrive at, reach; intelligent",
+      "meaningKo": "통달할",
+      "variants": {
+        "kr": "達"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "達",
+          "reading": "통달할 달",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "隊",
+      "meaningEn": "team, group; army unit",
+      "meaningKo": "무리",
+      "variants": {
+        "kr": "隊"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "隊",
+          "reading": "무리 대, 떨어질 추, 길 수",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "督",
+      "meaningEn": "supervise, oversee, direct",
+      "meaningKo": "감독할",
+      "variants": {
+        "kr": "督"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "督",
+          "reading": "감독할 독",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "銅",
+      "meaningEn": "copper (element 29, Cu); brass, bronze",
+      "meaningKo": "구리",
+      "variants": {
+        "kr": "銅"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "銅",
+          "reading": "구리 동",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "得",
+      "meaningEn": "obtain, get, gain, acquire",
+      "meaningKo": "얻을",
+      "variants": {
+        "cn": "得",
+        "kr": "得"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "得",
+          "reading": "얻을 득, 덕 덕",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "燈",
+      "meaningEn": "lantern, lamp",
+      "meaningKo": "등",
+      "variants": {
+        "kr": "燈"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "燈",
+          "reading": "등 등",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "論",
+      "meaningEn": "debate; discuss; discourse",
+      "meaningKo": "논할",
+      "variants": {
+        "kr": "論"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "論",
+          "reading": "논할 론(논), 조리 륜(윤)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "留",
+      "meaningEn": "stop, halt; stay, detain, keep",
+      "meaningKo": "머무를",
+      "variants": {
+        "cn": "留",
+        "kr": "留"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "留",
+          "reading": "머무를 류(유)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "律",
+      "meaningEn": "statute, principle, regulation",
+      "meaningKo": "법칙",
+      "variants": {
+        "kr": "律"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "律",
+          "reading": "법칙 률(율)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "毛",
+      "meaningEn": "hair, fur, feathers; coarse",
+      "meaningKo": "터럭",
+      "variants": {
+        "jp": "毛",
+        "cn": "毛",
+        "kr": "毛"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "毛",
+          "reading": "터럭 모",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "務",
+      "meaningEn": "affairs, business; must, should",
+      "meaningKo": "힘쓸",
+      "variants": {
+        "cn": "务",
+        "kr": "務"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "務",
+          "reading": "힘쓸 무, 업신여길 모",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "味",
+      "meaningEn": "taste, smell, odor; delicacy",
+      "meaningKo": "맛",
+      "variants": {
+        "jp": "味",
+        "kr": "味"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "味",
+          "reading": "맛 미, 광택 매",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "訪",
+      "meaningEn": "visit; ask, inquire",
+      "meaningKo": "찾을",
+      "variants": {
+        "kr": "訪"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "訪",
+          "reading": "찾을 방",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "拜",
+      "meaningEn": "do obeisance, bow, kowtow",
+      "meaningKo": "절",
+      "variants": {
+        "kr": "拜"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "拜",
+          "reading": "절 배",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "背",
+      "meaningEn": "back; back side; behind; betray",
+      "meaningKo": "등",
+      "variants": {
+        "kr": "背"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "背",
+          "reading": "등 배/배반할 배, 위반할 패",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "邊",
+      "meaningEn": "edge, margin, side, border",
+      "meaningKo": "가",
+      "variants": {
+        "kr": "邊"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "邊",
+          "reading": "가 변",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "報",
+      "meaningEn": "report, tell, announce",
+      "meaningKo": "갚을",
+      "variants": {
+        "kr": "報"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "報",
+          "reading": "갚을 보, 빨리 부",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "寶",
+      "meaningEn": "treasure, jewel; precious, rare",
+      "meaningKo": "보배",
+      "variants": {
+        "kr": "寶"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "寶",
+          "reading": "보배 보",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "復",
+      "meaningEn": "return; repeat; repeatedly; hexagram ䷗",
+      "meaningKo": "회복할",
+      "variants": {
+        "kr": "復"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "復",
+          "reading": "회복할 복, 다시 부",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "富",
+      "meaningEn": "abundant, ample; rich, wealthy",
+      "meaningKo": "부유할",
+      "variants": {
+        "kr": "富"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "富",
+          "reading": "부유할 부",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "副",
+      "meaningEn": "assist; supplement; assistant",
+      "meaningKo": "버금",
+      "variants": {
+        "kr": "副"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "副",
+          "reading": "버금 부, 쪼갤 복, 쪼갤 핍, 쪼갤 벽",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "非",
+      "meaningEn": "not, negative, non-; oppose; Kangxi radical 175",
+      "meaningKo": "아닐",
+      "variants": {
+        "cn": "非",
+        "kr": "非"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "非",
+          "reading": "아닐 비/비방할 비",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "悲",
+      "meaningEn": "sorrow, grief; sorry, sad",
+      "meaningKo": "슬플",
+      "variants": {
+        "jp": "悲",
+        "kr": "悲"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "悲",
+          "reading": "슬플 비",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "貧",
+      "meaningEn": "poor, impoverished, needy",
+      "meaningKo": "가난할",
+      "variants": {
+        "kr": "貧"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "貧",
+          "reading": "가난할 빈",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "謝",
+      "meaningEn": "thank; decline",
+      "meaningKo": "사례할",
+      "variants": {
+        "cn": "谢",
+        "kr": "謝"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "謝",
+          "reading": "사례할 사",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "常",
+      "meaningEn": "common, normal, frequent, regular",
+      "meaningKo": "떳떳할",
+      "variants": {
+        "cn": "常",
+        "kr": "常"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "常",
+          "reading": "떳떳할 상/항상 상",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "聖",
+      "meaningEn": "holy, sacred; sage",
+      "meaningKo": "성인",
+      "variants": {
+        "kr": "聖"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "聖",
+          "reading": "성인 성",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "稅",
+      "meaningEn": "taxes, revenue, duty; tax",
+      "meaningKo": "세금",
+      "variants": {
+        "kr": "稅"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "稅",
+          "reading": "세금 세, 벗을 탈, 기뻐할 열, 수의 수, 추복 입을 태",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "笑",
+      "meaningEn": "smile, laugh, giggle; snicker",
+      "meaningKo": "웃음",
+      "variants": {
+        "cn": "笑",
+        "kr": "笑"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "笑",
+          "reading": "웃음 소",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "俗",
+      "meaningEn": "social customs; vulgar, unrefined",
+      "meaningKo": "풍속",
+      "variants": {
+        "kr": "俗"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "俗",
+          "reading": "풍속 속",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "純",
+      "meaningEn": "pure, clean, simple",
+      "meaningKo": "순수할",
+      "variants": {
+        "kr": "純"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "純",
+          "reading": "순수할 순, 가선 준, 묶을 돈, 온전할 전, 검은 비단 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "詩",
+      "meaningEn": "poetry; poem, verse, ode",
+      "meaningKo": "시",
+      "variants": {
+        "jp": "詩",
+        "kr": "詩"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "詩",
+          "reading": "시 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "試",
+      "meaningEn": "test, try, experiment",
+      "meaningKo": "시험할",
+      "variants": {
+        "cn": "试",
+        "kr": "試"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "試",
+          "reading": "시험할 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "視",
+      "meaningEn": "look at, inspect, observe, see",
+      "meaningKo": "볼",
+      "variants": {
+        "cn": "视",
+        "kr": "視"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "視",
+          "reading": "볼 시",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "深",
+      "meaningEn": "deep; depth; far; very, extreme",
+      "meaningKo": "깊을",
+      "variants": {
+        "jp": "深",
+        "kr": "深"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "深",
+          "reading": "깊을 심",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "暗",
+      "meaningEn": "dark; obscure; in secret, covert",
+      "meaningKo": "어두울",
+      "variants": {
+        "jp": "暗",
+        "kr": "暗"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "暗",
+          "reading": "어두울 암",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "壓",
+      "meaningEn": "press; oppress; crush; pressure",
+      "meaningKo": "누를",
+      "variants": {
+        "kr": "壓"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "壓",
+          "reading": "누를 압, 싫어할 염, 숙일 엽, 누를 녑(엽)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "餘",
+      "meaningEn": "surplus, excess, remainder",
+      "meaningKo": "남을",
+      "variants": {
+        "kr": "餘"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "餘",
+          "reading": "남을 여",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "如",
+      "meaningEn": "if, supposing; as if; like, as",
+      "meaningKo": "같을",
+      "variants": {
+        "cn": "如",
+        "kr": "如"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "如",
+          "reading": "같을 여, 말 이을 이",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "逆",
+      "meaningEn": "disobey, rebel; rebel, traitor",
+      "meaningKo": "거스를",
+      "variants": {
+        "kr": "逆"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "逆",
+          "reading": "거스를 역",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "煙",
+      "meaningEn": "smoke, soot; opium; tobacco, cigarettes",
+      "meaningKo": "연기",
+      "variants": {
+        "kr": "煙"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "煙",
+          "reading": "연기 연, 원기 인",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "硏",
+      "meaningEn": "grind",
+      "meaningKo": "갈",
+      "variants": {
+        "jp": "研",
+        "kr": "硏"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "硏",
+          "reading": "갈 연/벼루 연",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "榮",
+      "meaningEn": "glory, honor; flourish, prosper",
+      "meaningKo": "영화",
+      "variants": {
+        "kr": "榮"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "榮",
+          "reading": "영화 영/꽃 영",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "藝",
+      "meaningEn": "art; talent, ability; craft",
+      "meaningKo": "재주",
+      "variants": {
+        "kr": "藝"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "藝",
+          "reading": "재주 예",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "肉",
+      "meaningEn": "flesh; meat; Kangxi radical 130",
+      "meaningKo": "고기",
+      "variants": {
+        "jp": "肉",
+        "cn": "肉",
+        "kr": "肉"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "肉",
+          "reading": "고기 육, 둘레 유",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "陰",
+      "meaningEn": "the passive, female principle in Chinese philosophy (yin); dark; secret",
+      "meaningKo": "그늘",
+      "variants": {
+        "cn": "阴",
+        "kr": "陰"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "陰",
+          "reading": "그늘 음, 침묵할 암",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "應",
+      "meaningEn": "should, ought to, must",
+      "meaningKo": "응할",
+      "variants": {
+        "kr": "應"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "應",
+          "reading": "응할 응",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "議",
+      "meaningEn": "consult, talk over, discuss",
+      "meaningKo": "의논할",
+      "variants": {
+        "cn": "议",
+        "kr": "議"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "議",
+          "reading": "의논할 의",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "益",
+      "meaningEn": "profit, benefit; advantage; hexagram ䷩",
+      "meaningKo": "더할",
+      "variants": {
+        "kr": "益"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "益",
+          "reading": "더할 익, 넘칠 일",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "引",
+      "meaningEn": "to pull, draw out, attract; to stretch",
+      "meaningKo": "끌",
+      "variants": {
+        "jp": "引",
+        "kr": "引"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "引",
+          "reading": "끌 인",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "認",
+      "meaningEn": "recognize, know, understand",
+      "meaningKo": "알",
+      "variants": {
+        "cn": "认",
+        "kr": "認"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "認",
+          "reading": "알 인, 적을 잉",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "障",
+      "meaningEn": "separate; shield; barricade",
+      "meaningKo": "막을",
+      "variants": {
+        "kr": "障"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "障",
+          "reading": "막을 장",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "敵",
+      "meaningEn": "enemy, foe, rival; resist",
+      "meaningKo": "대적할",
+      "variants": {
+        "kr": "敵"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "敵",
+          "reading": "대적할 적",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "田",
+      "meaningEn": "field, arable land, cultivated",
+      "meaningKo": "밭",
+      "variants": {
+        "jp": "田",
+        "kr": "田"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "田",
+          "reading": "밭 전",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "絶",
+      "meaningEn": "cut",
+      "meaningKo": "끊을",
+      "variants": {
+        "kr": "絶"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "絶",
+          "reading": "끊을 절",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "精",
+      "meaningEn": "essence; semen; spirit",
+      "meaningKo": "정할",
+      "variants": {
+        "kr": "精"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "精",
+          "reading": "정할 정",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "濟",
+      "meaningEn": "to help, aid, relieve; to ferry, cross",
+      "meaningKo": "건널",
+      "variants": {
+        "kr": "濟"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "濟",
+          "reading": "건널 제",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "制",
+      "meaningEn": "system; establish; overpower",
+      "meaningKo": "절제할",
+      "variants": {
+        "kr": "制"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "制",
+          "reading": "절제할 제/지을 제",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "際",
+      "meaningEn": "border, boundary, juncture",
+      "meaningKo": "이음새",
+      "variants": {
+        "kr": "際"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "際",
+          "reading": "이음새 제",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "助",
+      "meaningEn": "help, aid, assist",
+      "meaningKo": "도울",
+      "variants": {
+        "jp": "助",
+        "cn": "助",
+        "kr": "助"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "助",
+          "reading": "도울 조, 없앨 서",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "宗",
+      "meaningEn": "lineage, ancestry; ancestor, clan",
+      "meaningKo": "마루",
+      "variants": {
+        "kr": "宗"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "宗",
+          "reading": "마루 종",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "竹",
+      "meaningEn": "bamboo; flute; Kangxi radical 118",
+      "meaningKo": "대",
+      "variants": {
+        "jp": "竹",
+        "kr": "竹"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "竹",
+          "reading": "대 죽",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "衆",
+      "meaningEn": "multitude, crowd; masses, public",
+      "meaningKo": "무리",
+      "variants": {
+        "kr": "衆"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "衆",
+          "reading": "무리 중",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "增",
+      "meaningEn": "increase, add to, augment",
+      "meaningKo": "더할",
+      "variants": {
+        "kr": "增"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "增",
+          "reading": "더할 증, 겹칠 층",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "指",
+      "meaningEn": "finger, toe; point, indicate",
+      "meaningKo": "가리킬",
+      "variants": {
+        "jp": "指",
+        "kr": "指"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "指",
+          "reading": "가리킬 지",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "支",
+      "meaningEn": "disperse, pay; support; branch",
+      "meaningKo": "지탱할",
+      "variants": {
+        "kr": "支"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "支",
+          "reading": "지탱할 지",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "至",
+      "meaningEn": "reach, arrive; extremely, very; Kangxi radical 133",
+      "meaningKo": "이를",
+      "variants": {
+        "kr": "至"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "至",
+          "reading": "이를 지, 덜렁대는 모양 질",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "次",
+      "meaningEn": "order, sequence; next",
+      "meaningKo": "버금",
+      "variants": {
+        "cn": "次",
+        "jp": "次",
+        "kr": "次"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "次",
+          "reading": "버금 차/머뭇거릴 차",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "創",
+      "meaningEn": "establish, create; knife cut",
+      "meaningKo": "비롯할",
+      "variants": {
+        "kr": "創"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "創",
+          "reading": "비롯할 창/다칠 창",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "請",
+      "meaningEn": "ask, request; invite; please",
+      "meaningKo": "청할",
+      "variants": {
+        "cn": "请",
+        "kr": "請"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "請",
+          "reading": "청할 청",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "總",
+      "meaningEn": "collect; overall, altogether",
+      "meaningKo": "합할",
+      "variants": {
+        "cn": "总",
+        "kr": "總"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "總",
+          "reading": "합할 총",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "銃",
+      "meaningEn": "ancient weapon, blunderbuss",
+      "meaningKo": "총",
+      "variants": {
+        "kr": "銃"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "銃",
+          "reading": "총 총",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "忠",
+      "meaningEn": "loyalty, devotion, fidelity",
+      "meaningKo": "충성",
+      "variants": {
+        "kr": "忠"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "忠",
+          "reading": "충성 충",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "蟲",
+      "meaningEn": "worms; insects",
+      "meaningKo": "벌레",
+      "variants": {
+        "jp": "虫",
+        "kr": "蟲"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "蟲",
+          "reading": "벌레 충",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "侵",
+      "meaningEn": "invade, encroach upon, raid",
+      "meaningKo": "침노할",
+      "variants": {
+        "kr": "侵"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "侵",
+          "reading": "침노할 침",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "快",
+      "meaningEn": "rapid, quick, speedy, fast; soon",
+      "meaningKo": "쾌할",
+      "variants": {
+        "cn": "快",
+        "kr": "快"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "快",
+          "reading": "쾌할 쾌",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "退",
+      "meaningEn": "step back, retreat, withdraw",
+      "meaningKo": "물러날",
+      "variants": {
+        "kr": "退"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "退",
+          "reading": "물러날 퇴",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "波",
+      "meaningEn": "waves, breakers; undulations",
+      "meaningKo": "물결",
+      "variants": {
+        "jp": "波",
+        "kr": "波"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "波",
+          "reading": "물결 파, 방죽 피",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "破",
+      "meaningEn": "break, ruin, destroy; rout",
+      "meaningKo": "깨뜨릴",
+      "variants": {
+        "kr": "破"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "破",
+          "reading": "깨뜨릴 파",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "砲",
+      "meaningEn": "gun, cannon",
+      "meaningKo": "대포",
+      "variants": {
+        "kr": "砲"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "砲",
+          "reading": "대포 포",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "包",
+      "meaningEn": "wrap, pack, bundle; package",
+      "meaningKo": "쌀",
+      "variants": {
+        "cn": "包",
+        "kr": "包"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "包",
+          "reading": "쌀 포",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "布",
+      "meaningEn": "cotton cloth, textiles, linen",
+      "meaningKo": "베",
+      "variants": {
+        "kr": "布"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "布",
+          "reading": "베 포/펼 포, 보시 보",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "暴",
+      "meaningEn": "violent, brutal, tyrannical",
+      "meaningKo": "사나울",
+      "variants": {
+        "kr": "暴"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "暴",
+          "reading": "사나울 폭/쬘 폭, 사나울 포, 앙상할 박",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "豊",
+      "meaningEn": "abundant, lush, bountiful, plenty",
+      "meaningKo": "풍년",
+      "variants": {
+        "kr": "豊"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "豊",
+          "reading": "풍년 풍, 예도 례(예)/제기 례(에)",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "限",
+      "meaningEn": "boundary, limit, line",
+      "meaningKo": "한할",
+      "variants": {
+        "kr": "限"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "限",
+          "reading": "한할 한",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "港",
+      "meaningEn": "port, harbor; small stream; bay",
+      "meaningKo": "항구",
+      "variants": {
+        "jp": "港",
+        "kr": "港"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "港",
+          "reading": "항구 항, 통할 홍",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "香",
+      "meaningEn": "fragrant, sweet-smelling; incense; Kangxi radical 186",
+      "meaningKo": "향기",
+      "variants": {
+        "cn": "香",
+        "kr": "香"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "香",
+          "reading": "향기 향",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "驗",
+      "meaningEn": "test, examine, inspect; verify",
+      "meaningKo": "시험",
+      "variants": {
+        "kr": "驗"
+      },
+      "strokeCount": 23,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "驗",
+          "reading": "시험 험",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "協",
+      "meaningEn": "be united; cooperate",
+      "meaningKo": "화합할",
+      "variants": {
+        "kr": "協"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "協",
+          "reading": "화합할 협",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "呼",
+      "meaningEn": "breathe sigh, exhale; call, shout",
+      "meaningKo": "부를",
+      "variants": {
+        "kr": "呼"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "呼",
+          "reading": "부를 호, 아 하, 소리 지를 효",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "吸",
+      "meaningEn": "inhale, suck in; absorb; attract",
+      "meaningKo": "마실",
+      "variants": {
+        "kr": "吸"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "吸",
+          "reading": "마실 흡",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "興",
+      "meaningEn": "thrive, prosper, flourish",
+      "meaningKo": "일",
+      "variants": {
+        "cn": "兴",
+        "kr": "興"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "興",
+          "reading": "일 흥, 피 바를 흔",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    },
+    {
+      "key": "希",
+      "meaningEn": "rare; hope, expect, strive for",
+      "meaningKo": "바랄",
+      "variants": {
+        "cn": "希",
+        "kr": "希"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "kr",
+          "glyph": "希",
+          "reading": "바랄 희, 칡베 치",
+          "level": "4급II",
+          "levelOrd": 8
+        }
+      ]
+    }
+  ],
+  "curriculumUnits": [
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 1,
+      "title": "외울·기록할 1",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "講",
+          "ord": 1
+        },
+        {
+          "key": "錄",
+          "ord": 2
+        },
+        {
+          "key": "備",
+          "ord": 3
+        },
+        {
+          "key": "師",
+          "ord": 4
+        },
+        {
+          "key": "修",
+          "ord": 5
+        },
+        {
+          "key": "解",
+          "ord": 6
+        },
+        {
+          "key": "故",
+          "ord": 7
+        },
+        {
+          "key": "官",
+          "ord": 8
+        },
+        {
+          "key": "求",
+          "ord": 9
+        },
+        {
+          "key": "毒",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 2,
+      "title": "말·방 2",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "斗",
+          "ord": 1
+        },
+        {
+          "key": "房",
+          "ord": 2
+        },
+        {
+          "key": "壁",
+          "ord": 3
+        },
+        {
+          "key": "婦",
+          "ord": 4
+        },
+        {
+          "key": "佛",
+          "ord": 5
+        },
+        {
+          "key": "狀",
+          "ord": 6
+        },
+        {
+          "key": "星",
+          "ord": 7
+        },
+        {
+          "key": "謠",
+          "ord": 8
+        },
+        {
+          "key": "員",
+          "ord": 9
+        },
+        {
+          "key": "製",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 3,
+      "title": "모습·거느릴 3",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "態",
+          "ord": 1
+        },
+        {
+          "key": "統",
+          "ord": 2
+        },
+        {
+          "key": "虛",
+          "ord": 3
+        },
+        {
+          "key": "戶",
+          "ord": 4
+        },
+        {
+          "key": "經",
+          "ord": 5
+        },
+        {
+          "key": "列",
+          "ord": 6
+        },
+        {
+          "key": "武",
+          "ord": 7
+        },
+        {
+          "key": "罰",
+          "ord": 8
+        },
+        {
+          "key": "府",
+          "ord": 9
+        },
+        {
+          "key": "寺",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 4,
+      "title": "재·거듭 4",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "城",
+          "ord": 1
+        },
+        {
+          "key": "申",
+          "ord": 2
+        },
+        {
+          "key": "政",
+          "ord": 3
+        },
+        {
+          "key": "準",
+          "ord": 4
+        },
+        {
+          "key": "志",
+          "ord": 5
+        },
+        {
+          "key": "街",
+          "ord": 6
+        },
+        {
+          "key": "檀",
+          "ord": 7
+        },
+        {
+          "key": "羅",
+          "ord": 8
+        },
+        {
+          "key": "麗",
+          "ord": 9
+        },
+        {
+          "key": "聲",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 5,
+      "title": "진·도장 5",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "液",
+          "ord": 1
+        },
+        {
+          "key": "印",
+          "ord": 2
+        },
+        {
+          "key": "祭",
+          "ord": 3
+        },
+        {
+          "key": "鳥",
+          "ord": 4
+        },
+        {
+          "key": "職",
+          "ord": 5
+        },
+        {
+          "key": "察",
+          "ord": 6
+        },
+        {
+          "key": "康",
+          "ord": 7
+        },
+        {
+          "key": "端",
+          "ord": 8
+        },
+        {
+          "key": "擔",
+          "ord": 9
+        },
+        {
+          "key": "滿",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 6,
+      "title": "혈맥·아닐 6",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "脈",
+          "ord": 1
+        },
+        {
+          "key": "未",
+          "ord": 2
+        },
+        {
+          "key": "殺",
+          "ord": 3
+        },
+        {
+          "key": "盛",
+          "ord": 4
+        },
+        {
+          "key": "掃",
+          "ord": 5
+        },
+        {
+          "key": "受",
+          "ord": 6
+        },
+        {
+          "key": "眼",
+          "ord": 7
+        },
+        {
+          "key": "容",
+          "ord": 8
+        },
+        {
+          "key": "爲",
+          "ord": 9
+        },
+        {
+          "key": "將",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 7,
+      "title": "끌·이를 7",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "提",
+          "ord": 1
+        },
+        {
+          "key": "早",
+          "ord": 2
+        },
+        {
+          "key": "走",
+          "ord": 3
+        },
+        {
+          "key": "齒",
+          "ord": 4
+        },
+        {
+          "key": "鄕",
+          "ord": 5
+        },
+        {
+          "key": "血",
+          "ord": 6
+        },
+        {
+          "key": "究",
+          "ord": 7
+        },
+        {
+          "key": "博",
+          "ord": 8
+        },
+        {
+          "key": "伐",
+          "ord": 9
+        },
+        {
+          "key": "舍",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 8,
+      "title": "구슬·표 8",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "玉",
+          "ord": 1
+        },
+        {
+          "key": "票",
+          "ord": 2
+        },
+        {
+          "key": "航",
+          "ord": 3
+        },
+        {
+          "key": "貨",
+          "ord": 4
+        },
+        {
+          "key": "起",
+          "ord": 5
+        },
+        {
+          "key": "牧",
+          "ord": 6
+        },
+        {
+          "key": "防",
+          "ord": 7
+        },
+        {
+          "key": "配",
+          "ord": 8
+        },
+        {
+          "key": "保",
+          "ord": 9
+        },
+        {
+          "key": "勢",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 9,
+      "title": "가늘·보낼 9",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "細",
+          "ord": 1
+        },
+        {
+          "key": "送",
+          "ord": 2
+        },
+        {
+          "key": "守",
+          "ord": 3
+        },
+        {
+          "key": "息",
+          "ord": 4
+        },
+        {
+          "key": "衛",
+          "ord": 5
+        },
+        {
+          "key": "移",
+          "ord": 6
+        },
+        {
+          "key": "低",
+          "ord": 7
+        },
+        {
+          "key": "程",
+          "ord": 8
+        },
+        {
+          "key": "造",
+          "ord": 9
+        },
+        {
+          "key": "處",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 10,
+      "title": "둘·도울 10",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "置",
+          "ord": 1
+        },
+        {
+          "key": "護",
+          "ord": 2
+        },
+        {
+          "key": "回",
+          "ord": 3
+        },
+        {
+          "key": "單",
+          "ord": 4
+        },
+        {
+          "key": "黨",
+          "ord": 5
+        },
+        {
+          "key": "帶",
+          "ord": 6
+        },
+        {
+          "key": "豆",
+          "ord": 7
+        },
+        {
+          "key": "兩",
+          "ord": 8
+        },
+        {
+          "key": "連",
+          "ord": 9
+        },
+        {
+          "key": "設",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 11,
+      "title": "정성·본디 11",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "誠",
+          "ord": 1
+        },
+        {
+          "key": "素",
+          "ord": 2
+        },
+        {
+          "key": "演",
+          "ord": 3
+        },
+        {
+          "key": "往",
+          "ord": 4
+        },
+        {
+          "key": "圓",
+          "ord": 5
+        },
+        {
+          "key": "測",
+          "ord": 6
+        },
+        {
+          "key": "假",
+          "ord": 7
+        },
+        {
+          "key": "權",
+          "ord": 8
+        },
+        {
+          "key": "想",
+          "ord": 9
+        },
+        {
+          "key": "是",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 12,
+      "title": "은혜·옳을 12",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "恩",
+          "ord": 1
+        },
+        {
+          "key": "義",
+          "ord": 2
+        },
+        {
+          "key": "尊",
+          "ord": 3
+        },
+        {
+          "key": "眞",
+          "ord": 4
+        },
+        {
+          "key": "賢",
+          "ord": 5
+        },
+        {
+          "key": "惠",
+          "ord": 6
+        },
+        {
+          "key": "好",
+          "ord": 7
+        },
+        {
+          "key": "確",
+          "ord": 8
+        },
+        {
+          "key": "宮",
+          "ord": 9
+        },
+        {
+          "key": "努",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 13,
+      "title": "인도할·빽빽할 13",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "導",
+          "ord": 1
+        },
+        {
+          "key": "密",
+          "ord": 2
+        },
+        {
+          "key": "步",
+          "ord": 3
+        },
+        {
+          "key": "飛",
+          "ord": 4
+        },
+        {
+          "key": "床",
+          "ord": 5
+        },
+        {
+          "key": "續",
+          "ord": 6
+        },
+        {
+          "key": "授",
+          "ord": 7
+        },
+        {
+          "key": "收",
+          "ord": 8
+        },
+        {
+          "key": "承",
+          "ord": 9
+        },
+        {
+          "key": "施",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 14,
+      "title": "양·그르칠 14",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "羊",
+          "ord": 1
+        },
+        {
+          "key": "誤",
+          "ord": 2
+        },
+        {
+          "key": "接",
+          "ord": 3
+        },
+        {
+          "key": "除",
+          "ord": 4
+        },
+        {
+          "key": "進",
+          "ord": 5
+        },
+        {
+          "key": "築",
+          "ord": 6
+        },
+        {
+          "key": "蓄",
+          "ord": 7
+        },
+        {
+          "key": "取",
+          "ord": 8
+        },
+        {
+          "key": "治",
+          "ord": 9
+        },
+        {
+          "key": "減",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 15,
+      "title": "볼·낱 15",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "監",
+          "ord": 1
+        },
+        {
+          "key": "個",
+          "ord": 2
+        },
+        {
+          "key": "檢",
+          "ord": 3
+        },
+        {
+          "key": "潔",
+          "ord": 4
+        },
+        {
+          "key": "缺",
+          "ord": 5
+        },
+        {
+          "key": "境",
+          "ord": 6
+        },
+        {
+          "key": "警",
+          "ord": 7
+        },
+        {
+          "key": "慶",
+          "ord": 8
+        },
+        {
+          "key": "係",
+          "ord": 9
+        },
+        {
+          "key": "句",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 16,
+      "title": "극진할·금할 16",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "極",
+          "ord": 1
+        },
+        {
+          "key": "禁",
+          "ord": 2
+        },
+        {
+          "key": "器",
+          "ord": 3
+        },
+        {
+          "key": "暖",
+          "ord": 4
+        },
+        {
+          "key": "難",
+          "ord": 5
+        },
+        {
+          "key": "怒",
+          "ord": 6
+        },
+        {
+          "key": "斷",
+          "ord": 7
+        },
+        {
+          "key": "達",
+          "ord": 8
+        },
+        {
+          "key": "隊",
+          "ord": 9
+        },
+        {
+          "key": "督",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 17,
+      "title": "구리·얻을 17",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "銅",
+          "ord": 1
+        },
+        {
+          "key": "得",
+          "ord": 2
+        },
+        {
+          "key": "燈",
+          "ord": 3
+        },
+        {
+          "key": "論",
+          "ord": 4
+        },
+        {
+          "key": "留",
+          "ord": 5
+        },
+        {
+          "key": "律",
+          "ord": 6
+        },
+        {
+          "key": "毛",
+          "ord": 7
+        },
+        {
+          "key": "務",
+          "ord": 8
+        },
+        {
+          "key": "味",
+          "ord": 9
+        },
+        {
+          "key": "訪",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 18,
+      "title": "절·등 18",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "拜",
+          "ord": 1
+        },
+        {
+          "key": "背",
+          "ord": 2
+        },
+        {
+          "key": "邊",
+          "ord": 3
+        },
+        {
+          "key": "報",
+          "ord": 4
+        },
+        {
+          "key": "寶",
+          "ord": 5
+        },
+        {
+          "key": "復",
+          "ord": 6
+        },
+        {
+          "key": "富",
+          "ord": 7
+        },
+        {
+          "key": "副",
+          "ord": 8
+        },
+        {
+          "key": "非",
+          "ord": 9
+        },
+        {
+          "key": "悲",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 19,
+      "title": "가난할·사례할 19",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "貧",
+          "ord": 1
+        },
+        {
+          "key": "謝",
+          "ord": 2
+        },
+        {
+          "key": "常",
+          "ord": 3
+        },
+        {
+          "key": "聖",
+          "ord": 4
+        },
+        {
+          "key": "稅",
+          "ord": 5
+        },
+        {
+          "key": "笑",
+          "ord": 6
+        },
+        {
+          "key": "俗",
+          "ord": 7
+        },
+        {
+          "key": "純",
+          "ord": 8
+        },
+        {
+          "key": "詩",
+          "ord": 9
+        },
+        {
+          "key": "試",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 20,
+      "title": "볼·깊을 20",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "視",
+          "ord": 1
+        },
+        {
+          "key": "深",
+          "ord": 2
+        },
+        {
+          "key": "暗",
+          "ord": 3
+        },
+        {
+          "key": "壓",
+          "ord": 4
+        },
+        {
+          "key": "餘",
+          "ord": 5
+        },
+        {
+          "key": "如",
+          "ord": 6
+        },
+        {
+          "key": "逆",
+          "ord": 7
+        },
+        {
+          "key": "煙",
+          "ord": 8
+        },
+        {
+          "key": "硏",
+          "ord": 9
+        },
+        {
+          "key": "榮",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 21,
+      "title": "재주·고기 21",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "藝",
+          "ord": 1
+        },
+        {
+          "key": "肉",
+          "ord": 2
+        },
+        {
+          "key": "陰",
+          "ord": 3
+        },
+        {
+          "key": "應",
+          "ord": 4
+        },
+        {
+          "key": "議",
+          "ord": 5
+        },
+        {
+          "key": "益",
+          "ord": 6
+        },
+        {
+          "key": "引",
+          "ord": 7
+        },
+        {
+          "key": "認",
+          "ord": 8
+        },
+        {
+          "key": "障",
+          "ord": 9
+        },
+        {
+          "key": "敵",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 22,
+      "title": "밭·끊을 22",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "田",
+          "ord": 1
+        },
+        {
+          "key": "絶",
+          "ord": 2
+        },
+        {
+          "key": "精",
+          "ord": 3
+        },
+        {
+          "key": "濟",
+          "ord": 4
+        },
+        {
+          "key": "制",
+          "ord": 5
+        },
+        {
+          "key": "際",
+          "ord": 6
+        },
+        {
+          "key": "助",
+          "ord": 7
+        },
+        {
+          "key": "宗",
+          "ord": 8
+        },
+        {
+          "key": "竹",
+          "ord": 9
+        },
+        {
+          "key": "衆",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 23,
+      "title": "더할·가리킬 23",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "增",
+          "ord": 1
+        },
+        {
+          "key": "指",
+          "ord": 2
+        },
+        {
+          "key": "支",
+          "ord": 3
+        },
+        {
+          "key": "至",
+          "ord": 4
+        },
+        {
+          "key": "次",
+          "ord": 5
+        },
+        {
+          "key": "創",
+          "ord": 6
+        },
+        {
+          "key": "請",
+          "ord": 7
+        },
+        {
+          "key": "總",
+          "ord": 8
+        },
+        {
+          "key": "銃",
+          "ord": 9
+        },
+        {
+          "key": "忠",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 24,
+      "title": "벌레·침노할 24",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "蟲",
+          "ord": 1
+        },
+        {
+          "key": "侵",
+          "ord": 2
+        },
+        {
+          "key": "快",
+          "ord": 3
+        },
+        {
+          "key": "退",
+          "ord": 4
+        },
+        {
+          "key": "波",
+          "ord": 5
+        },
+        {
+          "key": "破",
+          "ord": 6
+        },
+        {
+          "key": "砲",
+          "ord": 7
+        },
+        {
+          "key": "包",
+          "ord": 8
+        },
+        {
+          "key": "布",
+          "ord": 9
+        },
+        {
+          "key": "暴",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "kr",
+      "level": "4급II",
+      "ord": 25,
+      "title": "풍년·한할 25",
+      "subtitle": "4급II 10자",
+      "members": [
+        {
+          "key": "豊",
+          "ord": 1
+        },
+        {
+          "key": "限",
+          "ord": 2
+        },
+        {
+          "key": "港",
+          "ord": 3
+        },
+        {
+          "key": "香",
+          "ord": 4
+        },
+        {
+          "key": "驗",
+          "ord": 5
+        },
+        {
+          "key": "協",
+          "ord": 6
+        },
+        {
+          "key": "呼",
+          "ord": 7
+        },
+        {
+          "key": "吸",
+          "ord": 8
+        },
+        {
+          "key": "興",
+          "ord": 9
+        },
+        {
+          "key": "希",
+          "ord": 10
+        }
+      ]
+    }
+  ]
+}
