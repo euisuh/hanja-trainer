@@ -126,7 +126,7 @@ test("Chinese source counts, HSK 3 membership, units, and variants match the pin
   );
   assert.equal(
     createHash("sha256").update(await readFile("data/sentences/cn-hsk3.json")).digest("hex"),
-    "d75edbfa6ecbe88e6a55979284786558eaa4a79b547e4d38c43ec58e67462f68",
+    "7802410f35fb70d200a9ea0abaadfca869ec23897c09e00ec4b99069a20fcf45",
     "re-run generate-cn-through-hsk3.mjs when the frozen output changes",
   );
   const documents = await Promise.all(Object.keys(files).map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
@@ -312,9 +312,17 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
       assert.match(entry.source, /^(?:Tatoeba|개역간이국한문한글판|대한민국헌법|노동야학독본|국민 소학 독본|산중신곡|3·1독립선언서|군정법령 제\d+호) #\d+$/u, `${sentencePath}: ${entry.characterKey}`);
       assert.ok(sentenceAttribution(entry.source), `${sentencePath}: ${entry.characterKey} attribution`);
       if (entry.track === "kr") {
+        assert.equal(entry.reading, null, `${sentencePath}: ${entry.characterKey} reading`);
         assert.match(entry.text, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul`);
         assert.ok(entry.text.includes(glyph), `${sentencePath}: ${entry.characterKey} Hanja`);
         assert.equal(entry.sourceKind, entry.source.includes("독본") ? "textbook" : "corpus", `${sentencePath}: ${entry.characterKey} source kind`);
+      } else {
+        assert.ok(entry.reading, `${sentencePath}: ${entry.characterKey} reading`);
+        if (entry.track === "jp") assert.doesNotMatch(entry.reading, /[\p{Script=Han}\p{Script=Katakana}\p{Number}]/u, `${sentencePath}: ${entry.characterKey} hiragana`);
+        else {
+          assert.doesNotMatch(entry.reading, /\p{Number}/u, `${sentencePath}: ${entry.characterKey} full pinyin`);
+          assert.match(entry.reading, /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/u, `${sentencePath}: ${entry.characterKey} tone mark`);
+        }
       }
       const identity = `${entry.characterKey}:${entry.track}:${entry.rank}`;
       const existing = byIdentity.get(identity);
@@ -395,6 +403,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
   const sqlite = new DatabaseSync(":memory:");
   try {
     sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
+    sqlite.exec(await readFile("migrations/0013_sentence_readings.sql", "utf8"));
     const characterSql = await Promise.all(Object.keys(files).map(async (path) => (
       emitSeedSql(parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))
     )));

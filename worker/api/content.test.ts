@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
-import { emitSeedSql, emitWordSeedSql, parseSeed, parseWordSeed } from "../../scripts/seed";
+import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "../../scripts/seed";
 import type { Track } from "../../src/shared/types";
 import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
 import { listForTracks } from "../db/characters";
@@ -64,8 +64,11 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-kanken-10.json", "utf8")) as unknown)));
+  sqlite.exec(emitSentenceSeedSql(parseSentenceSeed(JSON.parse(readFileSync("data/sentences/kr-8geup.json", "utf8")) as unknown)));
+  sqlite.exec(emitSentenceSeedSql(parseSentenceSeed(JSON.parse(readFileSync("data/sentences/jp-kanken-10.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
   const now = Date.now();
   const insertState = sqlite.prepare(`INSERT INTO review_states (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count) VALUES (?, 'kr', ?, 5, 1, 2, 0, 2, 0, 2, ?, ?, 2, 2)`);
@@ -87,6 +90,7 @@ function setupSeeds(files: string[]) {
   sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -167,6 +171,13 @@ describe("content API", () => {
     const detail = await detailResponse.json() as CharacterDetailResponse;
     expect(detail).toMatchObject({ key, meaning_en: expect.any(String), meaning_ko: expect.any(String) });
     expect(detail.tracks[0].review_state).toMatchObject({ stability: 8, interval_history: [2] });
+
+    const sentenceRows = fixture.sqlite.prepare("SELECT c.key, es.track FROM example_sentences es JOIN characters c ON c.id = es.character_id WHERE es.id = (SELECT MIN(other.id) FROM example_sentences other WHERE other.track = es.track) ORDER BY es.track").all() as Array<{ key: string; track: Track }>;
+    for (const row of sentenceRows) {
+      const response = await routeApiRequest(new Request(`https://test/api/characters/${encodeURIComponent(row.key)}`), fixture.env);
+      const sentence = ((await response.json()) as CharacterDetailResponse).tracks.find((track) => track.track === row.track)?.sentences[0];
+      expect(sentence?.reading).toEqual(row.track === "kr" ? null : expect.any(String));
+    }
 
     const missing = await routeApiRequest(new Request("https://test/api/characters/%E7%84%A1"), fixture.env);
     expect(missing.status).toBe(404);

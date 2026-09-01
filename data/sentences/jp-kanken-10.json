@@ -8,7 +8,8 @@
       "source": "Tatoeba #342167",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "おなかいっぱい！"
     },
     {
       "character_key": "二",
@@ -18,7 +19,8 @@
       "source": "Tatoeba #190377",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "いっせきにちょう。"
     },
     {
       "character_key": "九",
@@ -28,7 +30,8 @@
       "source": "Tatoeba #1483516",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "もうくじです。"
     },
     {
       "character_key": "七",
@@ -38,7 +41,8 @@
       "source": "Tatoeba #13128674",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "ななさいです。"
     },
     {
       "character_key": "人",
@@ -48,7 +52,8 @@
       "source": "Tatoeba #230689",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "あのひとだれ？"
     },
     {
       "character_key": "入",
@@ -58,7 +63,8 @@
       "source": "Tatoeba #183266",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "きにいった？"
     },
     {
       "character_key": "八",
@@ -68,7 +74,8 @@
       "source": "Tatoeba #13225054",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "はちじゅっさいです。"
     },
     {
       "character_key": "力",
@@ -78,7 +85,8 @@
       "source": "Tatoeba #127044",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "ちしきはちからなり。"
     },
     {
       "character_key": "十",
@@ -88,7 +96,8 @@
       "source": "Tatoeba #13225054",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "はちじゅっさいです。"
     },
     {
       "character_key": "三",
@@ -98,7 +107,8 @@
       "source": "Tatoeba #149633",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "しちじさんじゅっぷんだった。"
     },
     {
       "character_key": "上",
@@ -108,7 +118,8 @@
       "source": "Tatoeba #13563757",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "たちあがれ！"
     },
     {
       "character_key": "下",
@@ -118,7 +129,8 @@
       "source": "Tatoeba #3488166",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "さがって。"
     },
     {
       "character_key": "口",
@@ -128,7 +140,8 @@
       "source": "Tatoeba #173912",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "くちをだすな。"
     },
     {
       "character_key": "大",
@@ -138,7 +151,8 @@
       "source": "Tatoeba #13164555",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "だいっきらい！"
     },
     {
       "character_key": "女",
@@ -148,7 +162,8 @@
       "source": "Tatoeba #13224678",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "かのじょいる？"
     },
     {
       "character_key": "山",
@@ -158,7 +173,8 @@
       "source": "Tatoeba #963704",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "そのやまはみどりです。"
     },
     {
       "character_key": "川",
@@ -168,7 +184,8 @@
       "source": "Tatoeba #2684301",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "このかわのなまえはなに？"
     },
     {
       "character_key": "土",
@@ -178,7 +195,8 @@
       "source": "Tatoeba #13541131",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "あれはどせいです。"
     },
     {
       "character_key": "千",
@@ -188,7 +206,8 @@
       "source": "Tatoeba #8733219",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "せんえんでたりる？"
     },
     {
       "character_key": "夕",
@@ -198,7 +217,8 @@
       "source": "Tatoeba #11242897",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "ゆうはんはもうたべたの？"
     },
     {
       "character_key": "子",
@@ -208,7 +228,8 @@
       "source": "Tatoeba #4562142",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "むすこです。"
     },
     {
       "character_key": "小",
@@ -218,7 +239,8 @@
       "source": "Tatoeba #221152",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "このしょうせつはたいくつだ。"
     },
     {
       "character_key": "中",
@@ -228,7 +250,8 @@
       "source": "Tatoeba #10489229",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "なかにいるの？"
     },
     {
       "character_key": "五",
@@ -238,7 +261,8 @@
       "source": "Tatoeba #235115",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "いつかまってくれ。"
     },
     {
       "character_key": "六",
@@ -248,7 +272,8 @@
       "source": "Tatoeba #8865844",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "じゅうろくさいですよ。"
     },
     {
       "character_key": "圓",
@@ -258,7 +283,8 @@
       "source": "Tatoeba #8733219",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "せんえんでたりる？"
     },
     {
       "character_key": "天",
@@ -268,7 +294,8 @@
       "source": "Tatoeba #2970662",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "てんにつきがある。"
     },
     {
       "character_key": "手",
@@ -278,7 +305,8 @@
       "source": "Tatoeba #3878008",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "てつだおうか？"
     },
     {
       "character_key": "文",
@@ -288,7 +316,8 @@
       "source": "Tatoeba #1944414",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "ほん、ちゅうもんした？"
     },
     {
       "character_key": "日",
@@ -298,7 +327,8 @@
       "source": "Tatoeba #3073578",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "たんじょうびいつ？"
     },
     {
       "character_key": "月",
@@ -308,7 +338,8 @@
       "source": "Tatoeba #11303233",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "じゅうにがつです。"
     },
     {
       "character_key": "木",
@@ -318,7 +349,8 @@
       "source": "Tatoeba #80140",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "きがもえる。"
     },
     {
       "character_key": "水",
@@ -328,7 +360,8 @@
       "source": "Tatoeba #143758",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "みずはじゅうぶんある。"
     },
     {
       "character_key": "火",
@@ -338,7 +371,8 @@
       "source": "Tatoeba #9415265",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "はなびをみた？"
     },
     {
       "character_key": "犬",
@@ -348,7 +382,8 @@
       "source": "Tatoeba #3557593",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "いぬがきらい。"
     },
     {
       "character_key": "王",
@@ -358,7 +393,8 @@
       "source": "Tatoeba #13198953",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "みょうじはおうです。"
     },
     {
       "character_key": "出",
@@ -368,7 +404,8 @@
       "source": "Tatoeba #3272096",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "かねをだせ！"
     },
     {
       "character_key": "右",
@@ -378,7 +415,8 @@
       "source": "Tatoeba #5253130",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "みぎにまがって。"
     },
     {
       "character_key": "四",
@@ -388,7 +426,8 @@
       "source": "Tatoeba #12993390",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": "いち、に、さん、よん、ご。"
     },
     {
       "character_key": "左",
@@ -398,7 +437,8 @@
       "source": "Tatoeba #5253128",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "ひだりにまがって。"
     },
     {
       "character_key": "本",
@@ -408,7 +448,8 @@
       "source": "Tatoeba #3488459",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "それほんとう？"
     },
     {
       "character_key": "正",
@@ -418,7 +459,8 @@
       "source": "Tatoeba #5188",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "あなたはただしい。"
     },
     {
       "character_key": "玉",
@@ -428,7 +470,8 @@
       "source": "Tatoeba #10107038",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "たまねぎはじゃがいもよりもひがとおりやすい。"
     },
     {
       "character_key": "田",
@@ -438,7 +481,8 @@
       "source": "Tatoeba #1771684",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "いなかにはごらくがない。"
     },
     {
       "character_key": "白",
@@ -448,7 +492,8 @@
       "source": "Tatoeba #1751989",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "おもしろくない。"
     },
     {
       "character_key": "目",
@@ -458,7 +503,8 @@
       "source": "Tatoeba #10901725",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "だめです。"
     },
     {
       "character_key": "石",
@@ -468,7 +514,8 @@
       "source": "Tatoeba #190377",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "いっせきにちょう。"
     },
     {
       "character_key": "立",
@@ -478,7 +525,8 @@
       "source": "Tatoeba #13563757",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "たちあがれ！"
     },
     {
       "character_key": "休",
@@ -488,7 +536,8 @@
       "source": "Tatoeba #3552065",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "やすみたい。"
     },
     {
       "character_key": "先",
@@ -498,7 +547,8 @@
       "source": "Tatoeba #13536216",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "せんせいです。"
     },
     {
       "character_key": "名",
@@ -508,7 +558,8 @@
       "source": "Tatoeba #4002090",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "なまえはなに？"
     },
     {
       "character_key": "字",
@@ -518,7 +569,8 @@
       "source": "Tatoeba #13198953",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "みょうじはおうです。"
     },
     {
       "character_key": "年",
@@ -528,7 +580,8 @@
       "source": "Tatoeba #192926",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "よいおとしを。"
     },
     {
       "character_key": "早",
@@ -538,7 +591,8 @@
       "source": "Tatoeba #140535",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "はやくこい。"
     },
     {
       "character_key": "氣",
@@ -548,7 +602,8 @@
       "source": "Tatoeba #11256131",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "げんきでね！"
     },
     {
       "character_key": "百",
@@ -558,7 +613,8 @@
       "source": "Tatoeba #10650876",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "ゆりはしゅっこんそうです。"
     },
     {
       "character_key": "竹",
@@ -568,7 +624,8 @@
       "source": "Tatoeba #13545832",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "しんちくはかぜがつよいため、「かぜのまち」というびしょうがある。"
     },
     {
       "character_key": "耳",
@@ -578,7 +635,8 @@
       "source": "Tatoeba #150152",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "みみをすませてごらん。"
     },
     {
       "character_key": "蟲",
@@ -588,7 +646,8 @@
       "source": "Tatoeba #982235",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "くもがこんちゅうでないというのはよくしられたじじつだ。"
     },
     {
       "character_key": "村",
@@ -598,7 +657,8 @@
       "source": "Tatoeba #163823",
       "source_kind": "corpus",
       "target_index": 8,
-      "rank": 0
+      "rank": 0,
+      "reading": "わたしのあには、ちいさなむらにすんでいます。"
     },
     {
       "character_key": "男",
@@ -608,7 +668,8 @@
       "source": "Tatoeba #155143",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "わたしはおとこだ。"
     },
     {
       "character_key": "町",
@@ -618,7 +679,8 @@
       "source": "Tatoeba #11105425",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "まちでようがあるんだ。"
     },
     {
       "character_key": "花",
@@ -628,7 +690,8 @@
       "source": "Tatoeba #9415265",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "はなびをみた？"
     },
     {
       "character_key": "見",
@@ -638,7 +701,8 @@
       "source": "Tatoeba #7577266",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "みつけた！"
     },
     {
       "character_key": "貝",
@@ -648,7 +712,8 @@
       "source": "Tatoeba #13146683",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "かいがらをひろいながら、なみうちぎわをあるいた。"
     },
     {
       "character_key": "赤",
@@ -658,7 +723,8 @@
       "source": "Tatoeba #10667328",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "りんごはあかい。"
     },
     {
       "character_key": "足",
@@ -668,7 +734,8 @@
       "source": "Tatoeba #10588114",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "あしがさむい。"
     },
     {
       "character_key": "車",
@@ -678,7 +745,8 @@
       "source": "Tatoeba #13177727",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "ちゅうしゃきんし！"
     },
     {
       "character_key": "學",
@@ -688,7 +756,8 @@
       "source": "Tatoeba #13172381",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "きみはがくせい？"
     },
     {
       "character_key": "林",
@@ -698,7 +767,8 @@
       "source": "Tatoeba #774817",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "りんごはいくつですか？"
     },
     {
       "character_key": "空",
@@ -708,7 +778,8 @@
       "source": "Tatoeba #179417",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "そらはあおい。"
     },
     {
       "character_key": "金",
@@ -718,7 +789,8 @@
       "source": "Tatoeba #3272096",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "かねをだせ！"
     },
     {
       "character_key": "雨",
@@ -728,7 +800,8 @@
       "source": "Tatoeba #2562842",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "あめふってる？"
     },
     {
       "character_key": "青",
@@ -738,7 +811,8 @@
       "source": "Tatoeba #179417",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "そらはあおい。"
     },
     {
       "character_key": "草",
@@ -748,7 +822,8 @@
       "source": "Tatoeba #10650876",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "ゆりはしゅっこんそうです。"
     },
     {
       "character_key": "音",
@@ -758,7 +833,8 @@
       "source": "Tatoeba #3550819",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "いまのおとなに？"
     },
     {
       "character_key": "校",
@@ -768,7 +844,8 @@
       "source": "Tatoeba #10756861",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "がっこうだよ。"
     },
     {
       "character_key": "森",
@@ -778,7 +855,8 @@
       "source": "Tatoeba #79595",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "やじゅうはもりにすんでいる。"
     },
     {
       "character_key": "生",
@@ -788,7 +866,8 @@
       "source": "Tatoeba #13172381",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "きみはがくせい？"
     }
   ]
 }

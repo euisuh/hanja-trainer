@@ -69,14 +69,17 @@ function sourceKind(value: unknown, path: string): SourceKind {
   return value;
 }
 
-function sentence(value: unknown, path: string, glyph: string): SeedSentence {
+function sentence(value: unknown, path: string, glyph: string, kind: Track): SeedSentence {
   const input = record(value, path);
   const text = string(input.text, `${path}.text`);
   const targetIndex = integer(input.targetIndex, `${path}.targetIndex`);
   if (Array.from(text)[targetIndex] !== glyph) throw new Error(`${path}.targetIndex: does not point to ${glyph}`);
+  const reading = input.reading === null ? null : string(input.reading, `${path}.reading`);
+  if ((kind === "kr") !== (reading === null)) throw new Error(`${path}.reading: expected ${kind === "kr" ? "null" : `${kind} reading`}`);
 
   return {
     text,
+    reading,
     translationKo: string(input.translationKo, `${path}.translationKo`),
     source: string(input.source, `${path}.source`),
     sourceKind: sourceKind(input.sourceKind, `${path}.sourceKind`),
@@ -96,7 +99,7 @@ function seedTrack(value: unknown, path: string, key: string, variants: Partial<
   if (levelOrd !== levelOrdFor(kind, level)) throw new Error(`${path}.levelOrd: expected ${levelOrdFor(kind, level)} for ${level}`);
   const sentences = input.sentences === undefined
     ? undefined
-    : array(input.sentences, `${path}.sentences`).map((item, index) => sentence(item, `${path}.sentences[${index}]`, glyph));
+    : array(input.sentences, `${path}.sentences`).map((item, index) => sentence(item, `${path}.sentences[${index}]`, glyph, kind));
   const base = { track: kind, glyph, levelOrd, sentences };
 
   if (kind === "kr") {
@@ -187,14 +190,18 @@ export function parseSentenceSeed(value: unknown): SeedSentenceDocument {
   const sentences: SeedSentenceEntry[] = rows.map((value, index) => {
     const path = `sentences[${index}]`;
     const input = record(value, path);
+    const kind = track(input.track, `${path}.track`);
     const text = string(input.text, `${path}.text`);
     const targetIndex = integer(input.target_index, `${path}.target_index`);
     if (Array.from(text).length > 24) throw new Error(`${path}.text: expected at most 24 characters`);
     if (Array.from(text)[targetIndex] === undefined) throw new Error(`${path}.target_index: outside text`);
+    const reading = input.reading === null ? null : string(input.reading, `${path}.reading`);
+    if ((kind === "kr") !== (reading === null)) throw new Error(`${path}.reading: expected ${kind === "kr" ? "null" : `${kind} reading`}`);
     return {
       characterKey: string(input.character_key, `${path}.character_key`),
-      track: track(input.track, `${path}.track`),
+      track: kind,
       text,
+      reading,
       translationKo: string(input.translation_ko, `${path}.translation_ko`),
       source: string(input.source, `${path}.source`),
       sourceKind: sourceKind(input.source_kind, `${path}.source_kind`),
@@ -250,7 +257,7 @@ export function emitSeedSql(document: SeedDocument): string {
           : [null, null, null, null, null, null, itemTrack.pinyin, itemTrack.meaning, itemTrack.hsk, itemTrack.tier];
       sql.push(`INSERT INTO character_tracks (character_id, track, glyph, kr_reading, kr_level, jp_on, jp_kun, jp_kanken, jp_jlpt, cn_pinyin, cn_meaning, cn_hsk, cn_tier, level_ord) VALUES ((SELECT id FROM characters WHERE key=${quote(item.key)}), ${quote(itemTrack.track)}, ${quote(itemTrack.glyph)}, ${values.map(nullable).join(", ")}, ${itemTrack.levelOrd}) ON CONFLICT(character_id, track) DO UPDATE SET glyph=excluded.glyph, kr_reading=excluded.kr_reading, kr_level=excluded.kr_level, jp_on=excluded.jp_on, jp_kun=excluded.jp_kun, jp_kanken=excluded.jp_kanken, jp_jlpt=excluded.jp_jlpt, cn_pinyin=excluded.cn_pinyin, cn_meaning=excluded.cn_meaning, cn_hsk=excluded.cn_hsk, cn_tier=excluded.cn_tier, level_ord=excluded.level_ord;`);
       for (const example of itemTrack.sentences ?? []) {
-        sql.push(`INSERT INTO example_sentences (character_id, track, text, translation_ko, source, source_kind, target_index, rank) VALUES ((SELECT id FROM characters WHERE key=${quote(item.key)}), ${quote(itemTrack.track)}, ${quote(example.text)}, ${quote(example.translationKo)}, ${quote(example.source)}, ${quote(example.sourceKind)}, ${example.targetIndex}, ${example.rank}) ON CONFLICT(character_id, track, rank) DO UPDATE SET text=excluded.text, translation_ko=excluded.translation_ko, source=excluded.source, source_kind=excluded.source_kind, target_index=excluded.target_index;`);
+        sql.push(`INSERT INTO example_sentences (character_id, track, text, reading, translation_ko, source, source_kind, target_index, rank) VALUES ((SELECT id FROM characters WHERE key=${quote(item.key)}), ${quote(itemTrack.track)}, ${quote(example.text)}, ${nullable(example.reading)}, ${quote(example.translationKo)}, ${quote(example.source)}, ${quote(example.sourceKind)}, ${example.targetIndex}, ${example.rank}) ON CONFLICT(character_id, track, rank) DO UPDATE SET text=excluded.text, reading=excluded.reading, translation_ko=excluded.translation_ko, source=excluded.source, source_kind=excluded.source_kind, target_index=excluded.target_index;`);
       }
     }
   }
@@ -266,7 +273,7 @@ export function emitSeedSql(document: SeedDocument): string {
 export function emitSentenceSeedSql(document: SeedSentenceDocument): string {
   return `${[
     "PRAGMA foreign_keys = ON;",
-    ...document.sentences.map((entry) => `INSERT INTO example_sentences (character_id, track, text, translation_ko, source, source_kind, target_index, rank) VALUES ((SELECT id FROM characters WHERE key=${quote(entry.characterKey)}), ${quote(entry.track)}, ${quote(entry.text)}, ${quote(entry.translationKo)}, ${quote(entry.source)}, ${quote(entry.sourceKind)}, ${entry.targetIndex}, ${entry.rank}) ON CONFLICT(character_id, track, rank) DO UPDATE SET text=excluded.text, translation_ko=excluded.translation_ko, source=excluded.source, source_kind=excluded.source_kind, target_index=excluded.target_index;`),
+    ...document.sentences.map((entry) => `INSERT INTO example_sentences (character_id, track, text, reading, translation_ko, source, source_kind, target_index, rank) VALUES ((SELECT id FROM characters WHERE key=${quote(entry.characterKey)}), ${quote(entry.track)}, ${quote(entry.text)}, ${nullable(entry.reading)}, ${quote(entry.translationKo)}, ${quote(entry.source)}, ${quote(entry.sourceKind)}, ${entry.targetIndex}, ${entry.rank}) ON CONFLICT(character_id, track, rank) DO UPDATE SET text=excluded.text, reading=excluded.reading, translation_ko=excluded.translation_ko, source=excluded.source, source_kind=excluded.source_kind, target_index=excluded.target_index;`),
   ].join("\n")}\n`;
 }
 

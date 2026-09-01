@@ -8,7 +8,8 @@
       "source": "개역간이국한문한글판 #393836",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "族",
@@ -18,7 +19,8 @@
       "source": "3·1독립선언서 #430581",
       "source_kind": "corpus",
       "target_index": 9,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "區",
@@ -28,7 +30,8 @@
       "source": "군정법령 제106호 #456157",
       "source_kind": "corpus",
       "target_index": 7,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "級",
@@ -38,7 +41,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 10,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "式",
@@ -48,7 +52,8 @@
       "source": "군정법령 제112호 #456159",
       "source_kind": "corpus",
       "target_index": 9,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "開",
@@ -58,7 +63,8 @@
       "source": "개역간이국한문한글판 #393095",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "陽",
@@ -68,7 +74,8 @@
       "source": "개역간이국한문한글판 #393105",
       "source_kind": "corpus",
       "target_index": 13,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "目",
@@ -78,7 +85,8 @@
       "source": "개역간이국한문한글판 #393343",
       "source_kind": "corpus",
       "target_index": 16,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "石",
@@ -88,7 +96,8 @@
       "source": "개역간이국한문한글판 #393840",
       "source_kind": "corpus",
       "target_index": 13,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "朝",
@@ -98,7 +107,8 @@
       "source": "군정법령 제123호 #455297",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "銀",
@@ -108,7 +118,8 @@
       "source": "개역간이국한문한글판 #393836",
       "source_kind": "corpus",
       "target_index": 7,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "合",
@@ -118,7 +129,8 @@
       "source": "개역간이국한문한글판 #393850",
       "source_kind": "corpus",
       "target_index": 18,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "行",
@@ -128,7 +140,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 13,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "別",
@@ -138,7 +151,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 10,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "本",
@@ -148,7 +162,8 @@
       "source": "군정법령 제104호 #455281",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "者",
@@ -158,7 +173,8 @@
       "source": "개역간이국한문한글판 #393895",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "在",
@@ -168,7 +184,8 @@
       "source": "군정법령 제106호 #456157",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "定",
@@ -178,7 +195,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 11,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "太",
@@ -188,7 +206,8 @@
       "source": "개역간이국한문한글판 #393095",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "特",
@@ -198,7 +217,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 9,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     }
   ]
 }

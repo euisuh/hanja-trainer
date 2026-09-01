@@ -8,7 +8,8 @@
       "source": "Tatoeba #8591235",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "gǎo shén me a？"
     },
     {
       "character_key": "帮",
@@ -18,7 +19,8 @@
       "source": "Tatoeba #7772052",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nín néng bāng wǒ ma？"
     },
     {
       "character_key": "備",
@@ -28,7 +30,8 @@
       "source": "Tatoeba #1895538",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zhǔn bèi hǎo le。"
     },
     {
       "character_key": "比",
@@ -38,7 +41,8 @@
       "source": "Tatoeba #833198",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ bǐ nǐ gāo。"
     },
     {
       "character_key": "笔",
@@ -48,7 +52,8 @@
       "source": "Tatoeba #1328157",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè zhī qiān bǐ shì shuí de？"
     },
     {
       "character_key": "表",
@@ -58,7 +63,8 @@
       "source": "Tatoeba #4903269",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè zhī biǎo duō shǎo qián？"
     },
     {
       "character_key": "别",
@@ -68,7 +74,8 @@
       "source": "Tatoeba #5008719",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "bié chán wǒ le!"
     },
     {
       "character_key": "步",
@@ -78,7 +85,8 @@
       "source": "Tatoeba #834374",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā chū qù sàn bù。"
     },
     {
       "character_key": "場",
@@ -88,7 +96,8 @@
       "source": "Tatoeba #346826",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "miǎn fèi rù chǎng。"
     },
     {
       "character_key": "詞",
@@ -98,7 +107,8 @@
       "source": "Tatoeba #695413",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ yǒu cí diǎn。"
     },
     {
       "character_key": "次",
@@ -108,7 +118,8 @@
       "source": "Tatoeba #10783858",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ xiǎng zài kàn yí cì。"
     },
     {
       "character_key": "从",
@@ -118,7 +129,8 @@
       "source": "Tatoeba #10157061",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "cóng zhōng xuǎn yí gè。"
     },
     {
       "character_key": "錯",
@@ -128,7 +140,8 @@
       "source": "Tatoeba #335862",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ cuò le ma？"
     },
     {
       "character_key": "但",
@@ -138,7 +151,8 @@
       "source": "Tatoeba #426875",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ tīng dé jiàn nǐ， dàn wǒ kàn bú jiàn nǐ。"
     },
     {
       "character_key": "地",
@@ -148,7 +162,8 @@
       "source": "Tatoeba #7772610",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "dì qiú mǔ qīn。"
     },
     {
       "character_key": "等",
@@ -158,7 +173,8 @@
       "source": "Tatoeba #5102308",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "zài zhè děng zhe。"
     },
     {
       "character_key": "店",
@@ -168,7 +184,8 @@
       "source": "Tatoeba #13519659",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ yào qù shāng diàn。"
     },
     {
       "character_key": "懂",
@@ -178,7 +195,8 @@
       "source": "Tatoeba #7768205",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ dǒng le ma？"
     },
     {
       "character_key": "动",
@@ -188,7 +206,8 @@
       "source": "Tatoeba #1946822",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "hù wài yùn dòng。"
     },
     {
       "character_key": "啡",
@@ -198,7 +217,8 @@
       "source": "Tatoeba #8696299",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "lái bēi kā fēi ma？"
     },
     {
       "character_key": "夫",
@@ -208,7 +228,8 @@
       "source": "Tatoeba #13260802",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā shì wǒ zhàng fu。"
     },
     {
       "character_key": "告",
@@ -218,7 +239,8 @@
       "source": "Tatoeba #7774602",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wú kě fèng gào。"
     },
     {
       "character_key": "跟",
@@ -228,7 +250,8 @@
       "source": "Tatoeba #466246",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "qǐng gēn wǒ lái。"
     },
     {
       "character_key": "館",
@@ -238,7 +261,8 @@
       "source": "Tatoeba #3378272",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zài tú shū guǎn lǐ。"
     },
     {
       "character_key": "过",
@@ -248,7 +272,8 @@
       "source": "Tatoeba #5570613",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "chī guò fàn le ma"
     },
     {
       "character_key": "黑",
@@ -258,7 +283,8 @@
       "source": "Tatoeba #13148495",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "kàn kàn hēi bǎn。"
     },
     {
       "character_key": "紅",
@@ -268,7 +294,8 @@
       "source": "Tatoeba #396112",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā liǎn hóng le。"
     },
     {
       "character_key": "花",
@@ -278,7 +305,8 @@
       "source": "Tatoeba #11508980",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ mǎi le huā。"
     },
     {
       "character_key": "畫",
@@ -288,7 +316,8 @@
       "source": "Tatoeba #10538309",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ jīng cháng dú màn huà。"
     },
     {
       "character_key": "坏",
@@ -298,7 +327,8 @@
       "source": "Tatoeba #638943",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nuǎn qì huài le。"
     },
     {
       "character_key": "己",
@@ -308,7 +338,8 @@
       "source": "Tatoeba #5102151",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "zì jǐ dāng xīn a。"
     },
     {
       "character_key": "記",
@@ -318,7 +349,8 @@
       "source": "Tatoeba #444736",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ jì de ma？"
     },
     {
       "character_key": "教",
@@ -328,7 +360,8 @@
       "source": "Tatoeba #7768344",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā shì jiào shī。"
     },
     {
       "character_key": "介",
@@ -338,7 +371,8 @@
       "source": "Tatoeba #333945",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ jiè yì wǒ kāi chuāng ma？"
     },
     {
       "character_key": "進",
@@ -348,7 +382,8 @@
       "source": "Tatoeba #8696302",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": "ruǎn jiàn zhèng zài bú duàn jìn huà。"
     },
     {
       "character_key": "近",
@@ -358,7 +393,8 @@
       "source": "Tatoeba #2006618",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zhù zài fù jìn。"
     },
     {
       "character_key": "經",
@@ -368,7 +404,8 @@
       "source": "Tatoeba #10538309",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ jīng cháng dú màn huà。"
     },
     {
       "character_key": "睛",
@@ -378,7 +415,8 @@
       "source": "Tatoeba #13505789",
       "source_kind": "corpus",
       "target_index": 10,
-      "rank": 0
+      "rank": 0,
+      "reading": "gǒu dà bù fen dōu yǒu zōng sè de yǎn jīng。"
     },
     {
       "character_key": "酒",
@@ -388,7 +426,8 @@
       "source": "Tatoeba #13137631",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ hē le duō shǎo jiǔ？"
     },
     {
       "character_key": "就",
@@ -398,7 +437,8 @@
       "source": "Tatoeba #345398",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zhè jiù zǒu。"
     },
     {
       "character_key": "咖",
@@ -408,7 +448,8 @@
       "source": "Tatoeba #8696299",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "lái bēi kā fēi ma？"
     },
     {
       "character_key": "考",
@@ -418,7 +459,8 @@
       "source": "Tatoeba #4885094",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "kǎo shì jiā yóu！"
     },
     {
       "character_key": "快",
@@ -428,7 +470,8 @@
       "source": "Tatoeba #2485698",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhōu mò yú kuài！"
     },
     {
       "character_key": "乐",
@@ -438,7 +481,8 @@
       "source": "Tatoeba #373237",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "xīn nián kuài lè！"
     },
     {
       "character_key": "累",
@@ -448,7 +492,8 @@
       "source": "Tatoeba #12422343",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ yǒu diǎn lèi le。"
     },
     {
       "character_key": "離",
@@ -458,7 +503,8 @@
       "source": "Tatoeba #13893600",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā gāng gāng lí kāi。"
     },
     {
       "character_key": "留",
@@ -468,7 +514,8 @@
       "source": "Tatoeba #5102231",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "liú zài zhè lǐ bié dòng。"
     },
     {
       "character_key": "樓",
@@ -478,7 +525,8 @@
       "source": "Tatoeba #1444139",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zhù liù lóu。"
     },
     {
       "character_key": "路",
@@ -488,7 +536,8 @@
       "source": "Tatoeba #6482591",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā chuān guò gōng lù。"
     },
     {
       "character_key": "旅",
@@ -498,7 +547,8 @@
       "source": "Tatoeba #7771682",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "lǚ xíng shì lè shì。"
     },
     {
       "character_key": "绿",
@@ -508,7 +558,8 @@
       "source": "Tatoeba #2782917",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ hē lǜ chá ma？"
     },
     {
       "character_key": "慢",
@@ -518,7 +569,8 @@
       "source": "Tatoeba #5092211",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "gàn huó màn diǎn。"
     },
     {
       "character_key": "每",
@@ -528,7 +580,8 @@
       "source": "Tatoeba #1323989",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā měi gè yuè zhèng duō shǎo？"
     },
     {
       "character_key": "門",
@@ -538,7 +591,8 @@
       "source": "Tatoeba #472973",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "bú yào shuǎi mén。"
     },
     {
       "character_key": "拿",
@@ -548,7 +602,8 @@
       "source": "Tatoeba #12378260",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ men shì jiā ná dà rén ma？"
     },
     {
       "character_key": "鳥",
@@ -558,7 +613,8 @@
       "source": "Tatoeba #1737985",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "fàng fēi niǎo ér。"
     },
     {
       "character_key": "旁",
@@ -568,7 +624,8 @@
       "source": "Tatoeba #9401515",
       "source_kind": "corpus",
       "target_index": 7,
-      "rank": 0
+      "rank": 0,
+      "reading": "sà mǐ zuò zài yóu yǒng chí páng biān。"
     },
     {
       "character_key": "跑",
@@ -578,7 +635,8 @@
       "source": "Tatoeba #9963109",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "xiǎo tōu pǎo le。"
     },
     {
       "character_key": "票",
@@ -588,7 +646,8 @@
       "source": "Tatoeba #2054068",
       "source_kind": "corpus",
       "target_index": 11,
-      "rank": 0
+      "rank": 0,
+      "reading": "qǐng gěi wǒ yì zhāng zhī jiā gē de wǎng fǎn piào。"
     },
     {
       "character_key": "妻",
@@ -598,7 +657,8 @@
       "source": "Tatoeba #1325183",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā shì wǒ qī zǐ。"
     },
     {
       "character_key": "情",
@@ -608,7 +668,8 @@
       "source": "Tatoeba #5613718",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ xiāng xìn ài qíng。"
     },
     {
       "character_key": "晴",
@@ -618,7 +679,8 @@
       "source": "Tatoeba #825138",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tiān kōng hěn qíng lǎng。"
     },
     {
       "character_key": "球",
@@ -628,7 +690,8 @@
       "source": "Tatoeba #7772610",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "dì qiú mǔ qīn。"
     },
     {
       "character_key": "然",
@@ -638,7 +701,8 @@
       "source": "Tatoeba #421347",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "dāng rán shì de。"
     },
     {
       "character_key": "讓",
@@ -648,7 +712,8 @@
       "source": "Tatoeba #4845112",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "ràng wǒ qù sǐ。"
     },
     {
       "character_key": "肉",
@@ -658,7 +723,8 @@
       "source": "Tatoeba #717156",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā bù xǐ huan yú ròu。"
     },
     {
       "character_key": "色",
@@ -668,7 +734,8 @@
       "source": "Tatoeba #1416190",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tiān sè yǐ wǎn。"
     },
     {
       "character_key": "身",
@@ -678,7 +745,8 @@
       "source": "Tatoeba #13111771",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "qiè shēn zhī tòng。"
     },
     {
       "character_key": "始",
@@ -688,7 +756,8 @@
       "source": "Tatoeba #3377935",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "shé nián kāi shǐ le。"
     },
     {
       "character_key": "試",
@@ -698,7 +767,8 @@
       "source": "Tatoeba #4885094",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "kǎo shì jiā yóu！"
     },
     {
       "character_key": "室",
@@ -708,7 +778,8 @@
       "source": "Tatoeba #465918",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "jiào shì lǐ méi yǒu rén。"
     },
     {
       "character_key": "舒",
@@ -718,7 +789,8 @@
       "source": "Tatoeba #8686694",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè yào huì ràng nǐ shū fú xiē。"
     },
     {
       "character_key": "思",
@@ -728,7 +800,8 @@
       "source": "Tatoeba #13174918",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "bù hǎo yì si！"
     },
     {
       "character_key": "送",
@@ -738,7 +811,8 @@
       "source": "Tatoeba #346807",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": "shí wù hé bèi zi bèi sòng dào nàn mín shǒu zhōng。"
     },
     {
       "character_key": "訴",
@@ -748,7 +822,8 @@
       "source": "Tatoeba #5072426",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "kě yǐ gào sù wǒ lǐ yóu ma？"
     },
     {
       "character_key": "所",
@@ -758,7 +833,8 @@
       "source": "Tatoeba #493902",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "cè suǒ zài nǎ lǐ？"
     },
     {
       "character_key": "疼",
@@ -768,7 +844,8 @@
       "source": "Tatoeba #338784",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ de tóu téng。"
     },
     {
       "character_key": "踢",
@@ -778,7 +855,8 @@
       "source": "Tatoeba #332489",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "qù tī zú qiú ba。"
     },
     {
       "character_key": "體",
@@ -788,7 +866,8 @@
       "source": "Tatoeba #784039",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ fù qīn shēn tǐ hěn jiàn kāng。"
     },
     {
       "character_key": "跳",
@@ -798,7 +877,8 @@
       "source": "Tatoeba #340315",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ hěn xǐ huan tiào wǔ。"
     },
     {
       "character_key": "鐵",
@@ -808,7 +888,8 @@
       "source": "Tatoeba #8932409",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "tiě shì yì zhǒng jīn shǔ。"
     },
     {
       "character_key": "头",
@@ -818,7 +899,8 @@
       "source": "Tatoeba #472905",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ men diào tóu ba！"
     },
     {
       "character_key": "完",
@@ -828,7 +910,8 @@
       "source": "Tatoeba #13218086",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tài wán měi le。"
     },
     {
       "character_key": "萬",
@@ -838,7 +921,8 @@
       "source": "Tatoeba #5092154",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "jīn qián wàn néng。"
     },
     {
       "character_key": "网",
@@ -848,7 +932,8 @@
       "source": "Tatoeba #669021",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ dǎ le wǎng qiú。"
     },
     {
       "character_key": "往",
@@ -858,7 +943,8 @@
       "source": "Tatoeba #12674855",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "jìn zhǐ qián wǎng fáng wū。"
     },
     {
       "character_key": "忘",
@@ -868,7 +954,8 @@
       "source": "Tatoeba #13553878",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "bú yào wàng le。"
     },
     {
       "character_key": "望",
@@ -878,7 +965,8 @@
       "source": "Tatoeba #13109231",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ wàng xiàng chuāng wài。"
     },
     {
       "character_key": "为",
@@ -888,7 +976,8 @@
       "source": "Tatoeba #796839",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "wèi shén me bù？"
     },
     {
       "character_key": "位",
@@ -898,7 +987,8 @@
       "source": "Tatoeba #471070",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè ge wèi zǐ kōng zhe ma？"
     },
     {
       "character_key": "舞",
@@ -908,7 +998,8 @@
       "source": "Tatoeba #340315",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ hěn xǐ huan tiào wǔ。"
     },
     {
       "character_key": "希",
@@ -918,7 +1009,8 @@
       "source": "Tatoeba #10024491",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "xī là yǔ hěn nán xué。"
     },
     {
       "character_key": "洗",
@@ -928,7 +1020,8 @@
       "source": "Tatoeba #5624915",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ xǐ le zǎo。"
     },
     {
       "character_key": "笑",
@@ -938,7 +1031,8 @@
       "source": "Tatoeba #10617861",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "qǐng xiào yi xiào！"
     },
     {
       "character_key": "姓",
@@ -948,7 +1042,8 @@
       "source": "Tatoeba #13557574",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "yǒu xìng bái de。"
     },
     {
       "character_key": "颜",
@@ -958,7 +1053,8 @@
       "source": "Tatoeba #2779529",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè tiáo yú shì shén me yán sè？"
     },
     {
       "character_key": "眼",
@@ -968,7 +1064,8 @@
       "source": "Tatoeba #13934243",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā yòu yǎn xiā le。"
     },
     {
       "character_key": "药",
@@ -978,7 +1075,8 @@
       "source": "Tatoeba #8686694",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè yào huì ràng nǐ shū fú xiē。"
     },
     {
       "character_key": "爺",
@@ -988,7 +1086,8 @@
       "source": "Tatoeba #1185718",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "lǎo tiān yé a！"
     },
     {
       "character_key": "已",
@@ -998,7 +1097,8 @@
       "source": "Tatoeba #1416190",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "tiān sè yǐ wǎn。"
     },
     {
       "character_key": "意",
@@ -1008,7 +1108,8 @@
       "source": "Tatoeba #13174918",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "bù hǎo yì si！"
     },
     {
       "character_key": "因",
@@ -1018,7 +1119,8 @@
       "source": "Tatoeba #2021500",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nà shì yīn wèi wǒ ài tā."
     },
     {
       "character_key": "泳",
@@ -1028,7 +1130,8 @@
       "source": "Tatoeba #4977423",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tāng mǔ yóu yǒng le。"
     },
     {
       "character_key": "游",
@@ -1038,7 +1141,8 @@
       "source": "Tatoeba #11524435",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā yóu dé hěn hǎo。"
     },
     {
       "character_key": "右",
@@ -1048,7 +1152,8 @@
       "source": "Tatoeba #512815",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "qǐng xiàng yòu zhuǎn。"
     },
     {
       "character_key": "魚",
@@ -1058,7 +1163,8 @@
       "source": "Tatoeba #9409615",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "yú， xiè xiè。"
     },
     {
       "character_key": "远",
@@ -1068,7 +1174,8 @@
       "source": "Tatoeba #5753565",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ néng kàn dào yuǎn ma？"
     },
     {
       "character_key": "運",
@@ -1078,7 +1185,8 @@
       "source": "Tatoeba #1946822",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "hù wài yùn dòng。"
     },
     {
       "character_key": "站",
@@ -1088,7 +1196,8 @@
       "source": "Tatoeba #333711",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zhàn zài jiē jiǎo。"
     },
     {
       "character_key": "長",
@@ -1098,7 +1207,8 @@
       "source": "Tatoeba #5780621",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "yào duō cháng shí jiān？"
     },
     {
       "character_key": "丈",
@@ -1108,7 +1218,8 @@
       "source": "Tatoeba #13260802",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā shì wǒ zhàng fu。"
     },
     {
       "character_key": "周",
@@ -1118,7 +1229,8 @@
       "source": "Tatoeba #2485698",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhōu mò yú kuài！"
     },
     {
       "character_key": "着",
@@ -1128,7 +1240,8 @@
       "source": "Tatoeba #5102308",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "zài zhè děng zhe。"
     },
     {
       "character_key": "准",
@@ -1138,7 +1251,8 @@
       "source": "Tatoeba #1895538",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zhǔn bèi hǎo le。"
     },
     {
       "character_key": "自",
@@ -1148,7 +1262,8 @@
       "source": "Tatoeba #841579",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "hǎo zì dà a！"
     },
     {
       "character_key": "走",
@@ -1158,7 +1273,8 @@
       "source": "Tatoeba #13156946",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zǒu bú kuài。"
     },
     {
       "character_key": "足",
@@ -1168,7 +1284,8 @@
       "source": "Tatoeba #332489",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "qù tī zú qiú ba。"
     },
     {
       "character_key": "最",
@@ -1178,7 +1295,8 @@
       "source": "Tatoeba #13256585",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zuì jìn shēng le hái zi。"
     },
     {
       "character_key": "左",
@@ -1188,7 +1306,8 @@
       "source": "Tatoeba #10252148",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tí mǔ shì zuǒ piě zǐ。"
     },
     {
       "character_key": "愛",
@@ -1198,7 +1317,8 @@
       "source": "Tatoeba #10966779",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ ài wǒ ma？"
     },
     {
       "character_key": "八",
@@ -1208,7 +1328,8 @@
       "source": "Tatoeba #9084064",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "shí jiǎn èr děng yú bā。"
     },
     {
       "character_key": "爸",
@@ -1218,7 +1339,8 @@
       "source": "Tatoeba #2889783",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ dōu xiàng nǐ de bà ba。"
     },
     {
       "character_key": "百",
@@ -1228,7 +1350,8 @@
       "source": "Tatoeba #10192346",
       "source_kind": "corpus",
       "target_index": 10,
-      "rank": 0
+      "rank": 0,
+      "reading": "yán gé lái shuō， zhōng wén bāo hán jǐ bǎi zhǒng fāng yán。"
     },
     {
       "character_key": "半",
@@ -1238,7 +1361,8 @@
       "source": "Tatoeba #795758",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "sān diǎn bàn le。"
     },
     {
       "character_key": "边",
@@ -1248,7 +1372,8 @@
       "source": "Tatoeba #9401515",
       "source_kind": "corpus",
       "target_index": 8,
-      "rank": 0
+      "rank": 0,
+      "reading": "sà mǐ zuò zài yóu yǒng chí páng biān。"
     },
     {
       "character_key": "不",
@@ -1258,7 +1383,8 @@
       "source": "Tatoeba #9400910",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "duì bù qǐ......"
     },
     {
       "character_key": "茶",
@@ -1268,7 +1394,8 @@
       "source": "Tatoeba #7668773",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ xǐ huan chá ma？"
     },
     {
       "character_key": "打",
@@ -1278,7 +1405,8 @@
       "source": "Tatoeba #8696225",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "qù dǎ tāng mǔ。"
     },
     {
       "character_key": "大",
@@ -1288,7 +1416,8 @@
       "source": "Tatoeba #13504539",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "chāo shì zhēn dà！"
     },
     {
       "character_key": "的",
@@ -1298,7 +1427,8 @@
       "source": "Tatoeba #3702831",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ de tiān nǎ!"
     },
     {
       "character_key": "點",
@@ -1308,7 +1438,8 @@
       "source": "Tatoeba #8293429",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "xiàn zài jǐ diǎn？"
     },
     {
       "character_key": "对",
@@ -1318,7 +1449,8 @@
       "source": "Tatoeba #9400910",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "duì bù qǐ......"
     },
     {
       "character_key": "多",
@@ -1328,7 +1460,8 @@
       "source": "Tatoeba #5092632",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "duō kě ài a！"
     },
     {
       "character_key": "儿",
@@ -1338,7 +1471,8 @@
       "source": "Tatoeba #389803",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ qù nǎ ér？"
     },
     {
       "character_key": "二",
@@ -1348,7 +1482,8 @@
       "source": "Tatoeba #401900",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "yì shí èr niǎo。"
     },
     {
       "character_key": "分",
@@ -1358,7 +1493,8 @@
       "source": "Tatoeba #1948456",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "xiū xi shí fēn zhōng"
     },
     {
       "character_key": "哥",
@@ -1368,7 +1504,8 @@
       "source": "Tatoeba #8696349",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ gē ge shì jiào shòu。"
     },
     {
       "character_key": "个",
@@ -1378,7 +1515,8 @@
       "source": "Tatoeba #10052320",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè ge jǐ kuài？"
     },
     {
       "character_key": "工",
@@ -1388,7 +1526,8 @@
       "source": "Tatoeba #5100103",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "gōng zuò zěn me yàng？"
     },
     {
       "character_key": "口",
@@ -1398,7 +1537,8 @@
       "source": "Tatoeba #13192807",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhù hǎo wèi kǒu！"
     },
     {
       "character_key": "國",
@@ -1408,7 +1548,8 @@
       "source": "Tatoeba #4147182",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ shì hán guó rén。"
     },
     {
       "character_key": "还",
@@ -1418,7 +1559,8 @@
       "source": "Tatoeba #982281",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ hái hǎo ba？"
     },
     {
       "character_key": "漢",
@@ -1428,7 +1570,8 @@
       "source": "Tatoeba #2321655",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ xué xí hàn yǔ。"
     },
     {
       "character_key": "好",
@@ -1438,7 +1581,8 @@
       "source": "Tatoeba #762012",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wā， hǎo lěng！"
     },
     {
       "character_key": "和",
@@ -1448,7 +1592,8 @@
       "source": "Tatoeba #8696221",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "hé wǒ yuē huì hǎo ma？"
     },
     {
       "character_key": "很",
@@ -1458,7 +1603,8 @@
       "source": "Tatoeba #6055174",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ hěn xiǎng nǐ！"
     },
     {
       "character_key": "后",
@@ -1468,7 +1614,8 @@
       "source": "Tatoeba #9434981",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ huì hòu huǐ de。"
     },
     {
       "character_key": "會",
@@ -1478,7 +1625,8 @@
       "source": "Tatoeba #337874",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "yí huì er jiàn！"
     },
     {
       "character_key": "几",
@@ -1488,7 +1636,8 @@
       "source": "Tatoeba #10052320",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè ge jǐ kuài？"
     },
     {
       "character_key": "家",
@@ -1498,7 +1647,8 @@
       "source": "Tatoeba #12918650",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "jiā lǐ yǒu rén ma？"
     },
     {
       "character_key": "間",
@@ -1508,7 +1658,8 @@
       "source": "Tatoeba #5780621",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "yào duō cháng shí jiān？"
     },
     {
       "character_key": "叫",
@@ -1518,7 +1669,8 @@
       "source": "Tatoeba #10966808",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ jiào shén me？"
     },
     {
       "character_key": "姐",
@@ -1528,7 +1680,8 @@
       "source": "Tatoeba #3365893",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ yǒu xiōng dì jiě mèi ma？"
     },
     {
       "character_key": "今",
@@ -1538,7 +1691,8 @@
       "source": "Tatoeba #408909",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "jīn tiān shì jǐ hào？"
     },
     {
       "character_key": "男",
@@ -1548,7 +1702,8 @@
       "source": "Tatoeba #3217147",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nán nán běi nǚ。"
     },
     {
       "character_key": "九",
@@ -1558,7 +1713,8 @@
       "source": "Tatoeba #738370",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zài yī jiǔ qī èr nián shí yuè shí rì chū shēng。"
     },
     {
       "character_key": "可",
@@ -1568,7 +1724,8 @@
       "source": "Tatoeba #9432340",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "yǒu kě néng ma？"
     },
     {
       "character_key": "來",
@@ -1578,7 +1735,8 @@
       "source": "Tatoeba #10153684",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ huí lái le！"
     },
     {
       "character_key": "了",
@@ -1588,7 +1746,8 @@
       "source": "Tatoeba #10153684",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ huí lái le！"
     },
     {
       "character_key": "两",
@@ -1598,7 +1757,8 @@
       "source": "Tatoeba #5321360",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ yǒu liǎng zhī māo"
     },
     {
       "character_key": "六",
@@ -1608,7 +1768,8 @@
       "source": "Tatoeba #1444139",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ zhù liù lóu。"
     },
     {
       "character_key": "媽",
@@ -1618,7 +1779,8 @@
       "source": "Tatoeba #1424255",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zhù zài tā jiù mā jiā。"
     },
     {
       "character_key": "嗎",
@@ -1628,7 +1790,8 @@
       "source": "Tatoeba #11512354",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ zhī dào ma？"
     },
     {
       "character_key": "么",
@@ -1638,7 +1801,8 @@
       "source": "Tatoeba #10966808",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ jiào shén me？"
     },
     {
       "character_key": "没",
@@ -1648,7 +1812,8 @@
       "source": "Tatoeba #10981515",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ méi shì ba？"
     },
     {
       "character_key": "們",
@@ -1658,7 +1823,8 @@
       "source": "Tatoeba #9991999",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "huān yíng nǐ men！"
     },
     {
       "character_key": "名",
@@ -1668,7 +1834,8 @@
       "source": "Tatoeba #13522188",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "chéng míng zuò le。"
     },
     {
       "character_key": "那",
@@ -1678,7 +1845,8 @@
       "source": "Tatoeba #2442276",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "nà rén shuí a？"
     },
     {
       "character_key": "你",
@@ -1688,7 +1856,8 @@
       "source": "Tatoeba #11512354",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ zhī dào ma？"
     },
     {
       "character_key": "年",
@@ -1698,7 +1867,8 @@
       "source": "Tatoeba #373237",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "xīn nián kuài lè！"
     },
     {
       "character_key": "七",
@@ -1708,7 +1878,8 @@
       "source": "Tatoeba #743100",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā qī diǎn qǐ chuáng。"
     },
     {
       "character_key": "去",
@@ -1718,7 +1889,8 @@
       "source": "Tatoeba #1185719",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ de gè qù！"
     },
     {
       "character_key": "人",
@@ -1728,7 +1900,8 @@
       "source": "Tatoeba #2442276",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nà rén shuí a？"
     },
     {
       "character_key": "日",
@@ -1738,7 +1911,8 @@
       "source": "Tatoeba #346492",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "shēng rì kuài lè！"
     },
     {
       "character_key": "三",
@@ -1748,7 +1922,8 @@
       "source": "Tatoeba #10895471",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā sān suì le。"
     },
     {
       "character_key": "少",
@@ -1758,7 +1933,8 @@
       "source": "Tatoeba #755840",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "duō shǎo píng guǒ？"
     },
     {
       "character_key": "上",
@@ -1768,7 +1944,8 @@
       "source": "Tatoeba #9475952",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "mǎ shàng huí lái。"
     },
     {
       "character_key": "什",
@@ -1778,7 +1955,8 @@
       "source": "Tatoeba #10966808",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ jiào shén me？"
     },
     {
       "character_key": "生",
@@ -1788,7 +1966,8 @@
       "source": "Tatoeba #346492",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "shēng rì kuài lè！"
     },
     {
       "character_key": "十",
@@ -1798,7 +1977,8 @@
       "source": "Tatoeba #516981",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ shí suì le ma？"
     },
     {
       "character_key": "时",
@@ -1808,7 +1988,8 @@
       "source": "Tatoeba #5780621",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "yào duō cháng shí jiān？"
     },
     {
       "character_key": "是",
@@ -1818,7 +1999,8 @@
       "source": "Tatoeba #4887708",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā shì shén me？"
     },
     {
       "character_key": "書",
@@ -1828,7 +2010,8 @@
       "source": "Tatoeba #1160771",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zài kàn shū。"
     },
     {
       "character_key": "说",
@@ -1838,7 +2021,8 @@
       "source": "Tatoeba #10756037",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ shuō shén me？"
     },
     {
       "character_key": "四",
@@ -1848,7 +2032,8 @@
       "source": "Tatoeba #5092470",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "sì chù kàn kàn。"
     },
     {
       "character_key": "岁",
@@ -1858,7 +2043,8 @@
       "source": "Tatoeba #345427",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ jǐ suì le？"
     },
     {
       "character_key": "他",
@@ -1868,7 +2054,8 @@
       "source": "Tatoeba #2032353",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "yuàn tā ān xī！"
     },
     {
       "character_key": "她",
@@ -1878,7 +2065,8 @@
       "source": "Tatoeba #10280144",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā zài chī shá？"
     },
     {
       "character_key": "天",
@@ -1888,7 +2076,8 @@
       "source": "Tatoeba #3702831",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ de tiān nǎ!"
     },
     {
       "character_key": "同",
@@ -1898,7 +2087,8 @@
       "source": "Tatoeba #679450",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ tóng yì nǐ。"
     },
     {
       "character_key": "文",
@@ -1908,7 +2098,8 @@
       "source": "Tatoeba #9961363",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "wén míng yòng yǔ。"
     },
     {
       "character_key": "我",
@@ -1918,7 +2109,8 @@
       "source": "Tatoeba #10966779",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ ài wǒ ma？"
     },
     {
       "character_key": "五",
@@ -1928,7 +2120,8 @@
       "source": "Tatoeba #12993361",
       "source_kind": "corpus",
       "target_index": 8,
-      "rank": 0
+      "rank": 0,
+      "reading": "yī， èr， sān， sì， wǔ。"
     },
     {
       "character_key": "午",
@@ -1938,7 +2131,8 @@
       "source": "Tatoeba #1785971",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhōng wǔ， wǒ dǐ dá dōng jīng。"
     },
     {
       "character_key": "習",
@@ -1948,7 +2142,8 @@
       "source": "Tatoeba #332662",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "nín xué xí ma？"
     },
     {
       "character_key": "下",
@@ -1958,7 +2153,8 @@
       "source": "Tatoeba #10617221",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "zài xià yǔ ma？"
     },
     {
       "character_key": "小",
@@ -1968,7 +2164,8 @@
       "source": "Tatoeba #9963109",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "xiǎo tōu pǎo le。"
     },
     {
       "character_key": "現",
@@ -1978,7 +2175,8 @@
       "source": "Tatoeba #8293429",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "xiàn zài jǐ diǎn？"
     },
     {
       "character_key": "寫",
@@ -1988,7 +2186,8 @@
       "source": "Tatoeba #8686682",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ bú zài xiě xìn le。"
     },
     {
       "character_key": "學",
@@ -1998,7 +2197,8 @@
       "source": "Tatoeba #332662",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nín xué xí ma？"
     },
     {
       "character_key": "要",
@@ -2008,7 +2208,8 @@
       "source": "Tatoeba #1872180",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "bú yào dān xīn！"
     },
     {
       "character_key": "也",
@@ -2018,7 +2219,8 @@
       "source": "Tatoeba #8832719",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ yě cái gāng dào。"
     },
     {
       "character_key": "一",
@@ -2028,7 +2230,8 @@
       "source": "Tatoeba #10617861",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "qǐng xiào yi xiào！"
     },
     {
       "character_key": "以",
@@ -2038,7 +2241,8 @@
       "source": "Tatoeba #4505070",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "nán yǐ zhì xìn！"
     },
     {
       "character_key": "有",
@@ -2048,7 +2252,8 @@
       "source": "Tatoeba #9432340",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "yǒu kě néng ma？"
     },
     {
       "character_key": "語",
@@ -2058,7 +2263,8 @@
       "source": "Tatoeba #10260759",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "tā shuō fǎ yǔ。"
     },
     {
       "character_key": "月",
@@ -2068,7 +2274,8 @@
       "source": "Tatoeba #1182328",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "shì shí yuè sān hào。"
     },
     {
       "character_key": "在",
@@ -2078,7 +2285,8 @@
       "source": "Tatoeba #10617221",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "zài xià yǔ ma？"
     },
     {
       "character_key": "这",
@@ -2088,7 +2296,8 @@
       "source": "Tatoeba #10052320",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": "zhè ge jǐ kuài？"
     },
     {
       "character_key": "中",
@@ -2098,7 +2307,8 @@
       "source": "Tatoeba #10157061",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": "cóng zhōng xuǎn yí gè。"
     },
     {
       "character_key": "子",
@@ -2108,7 +2318,8 @@
       "source": "Tatoeba #9453433",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "nǐ yǒu wū zi ma？"
     },
     {
       "character_key": "女",
@@ -2118,7 +2329,8 @@
       "source": "Tatoeba #3217147",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "nán nán běi nǚ。"
     },
     {
       "character_key": "字",
@@ -2128,7 +2340,8 @@
       "source": "Tatoeba #6203798",
       "source_kind": "corpus",
       "target_index": 3,
-      "rank": 0
+      "rank": 0,
+      "reading": "wǒ yǒu běn zì diǎn。"
     },
     {
       "character_key": "作",
@@ -2138,7 +2351,8 @@
       "source": "Tatoeba #13522188",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": "chéng míng zuò le。"
     }
   ]
 }

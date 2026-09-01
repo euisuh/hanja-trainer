@@ -116,6 +116,7 @@ export function UnitStudyScreen() {
                   <p className="unit-study__meaning">{entry.meaning}</p>
                   {entry.sentences.length > 0 ? <div className="unit-study__sentences">{entry.sentences.map((sentence) => <div className="unit-study__sentence" key={`${sentence.target_index}:${sentence.text}`}>
                     <AudioControl label={`${labels[track]} 예문 듣기: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence sentence={sentence} /></AudioControl>
+                    {sentence.reading && <small lang={theme.lang}>{sentence.reading}</small>}
                     {sentence.translation !== sentence.text && <small lang="ko">{sentence.translation}</small>}
                     <small className="unit-study__source" lang="ko">예문 · <SourceAttribution source={sentence.source} /></small>
                   </div>)}</div> : <p className="unit-study__empty" lang="ko">확인된 예문이 없습니다.</p>}

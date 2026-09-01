@@ -26,6 +26,7 @@ export type CurriculumResponse = { units: CurriculumUnitPayload[] };
 
 export type ApiSentence = {
   text: string;
+  reading: string | null;
   translation: string;
   source: string;
   target_index: number;

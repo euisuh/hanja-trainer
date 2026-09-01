@@ -88,6 +88,7 @@ export async function getCharacterContent(db: D1Database, key: string): Promise<
       glyph: entry.glyph,
       sentences: character.sentences.filter((sentence) => sentence.track === entry.track).map((sentence) => ({
         text: sentence.text,
+        reading: sentence.reading,
         translation: sentence.translationKo,
         source: sentence.source,
         target_index: sentence.targetIndex,
@@ -113,6 +114,7 @@ export async function getCharacterContent(db: D1Database, key: string): Promise<
 function sentences(character: CharacterEntry, track: Track): ApiSentence[] {
   return character.sentences.filter((sentence) => sentence.track === track).map((sentence) => ({
     text: sentence.text,
+    reading: sentence.reading,
     translation: sentence.translationKo,
     source: sentence.source,
     target_index: sentence.targetIndex,

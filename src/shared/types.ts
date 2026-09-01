@@ -8,6 +8,7 @@ export interface ExampleSentence {
   characterId: number;
   track: Track;
   text: string;
+  reading: string | null;
   translationKo: string;
   source: string;
   sourceKind: SourceKind;

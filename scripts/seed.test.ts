@@ -60,6 +60,7 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
   const sqlite = new DatabaseSync(":memory:");
   try {
     sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
+    sqlite.exec(await readFile("migrations/0013_sentence_readings.sql", "utf8"));
     const sql = emitSeedSql(document);
     assert.doesNotMatch(sql, /\b(?:BEGIN|COMMIT)\b/);
     sqlite.exec(sql);
@@ -80,6 +81,7 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
         assert.deepEqual(
           loaded.sentences.filter((sentence) => sentence.track === sourceTrack.track).map((sentence) => ({
             text: sentence.text,
+            reading: sentence.reading,
             translationKo: sentence.translationKo,
             source: sentence.source,
             sourceKind: sentence.sourceKind,
@@ -126,21 +128,22 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
 
 test("standalone sentence seeds validate and remain idempotent", () => {
   const document = parseSentenceSeed({ sentences: [{
-    character_key: "學", track: "jp", text: "学校へ行く。", translation_ko: "학교에 간다.",
+    character_key: "學", track: "jp", text: "学校へ行く。", reading: "がっこうへいく。", translation_ko: "학교에 간다.",
     source: "Tatoeba #1", source_kind: "corpus", target_index: 0, rank: 0,
   }] });
   assert.deepEqual(document.sentences[0], {
-    characterKey: "學", track: "jp", text: "学校へ行く。", translationKo: "학교에 간다.",
+    characterKey: "學", track: "jp", text: "学校へ行く。", reading: "がっこうへいく。", translationKo: "학교에 간다.",
     source: "Tatoeba #1", sourceKind: "corpus", targetIndex: 0, rank: 0,
   });
   assert.throws(() => parseSentenceSeed({ sentences: [{
-    character_key: "學", track: "jp", text: "学校へ行く。", translation_ko: "학교에 간다.",
+    character_key: "學", track: "jp", text: "学校へ行く。", reading: "がっこうへいく。", translation_ko: "학교에 간다.",
     source: "Tatoeba #1", source_kind: "corpus", target_index: 20, rank: 0,
   }] }), /outside text/);
 
   const sqlite = new DatabaseSync(":memory:");
   try {
     sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
+    sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
     const character = parseSeed([{
       key: "學", meaningEn: "study", meaningKo: "배우다", variants: { jp: "学" }, strokeCount: 16,
       tracks: [{ track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 12 }],

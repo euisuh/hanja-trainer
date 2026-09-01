@@ -8,7 +8,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 15,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "令",
@@ -18,7 +19,8 @@
       "source": "군정법령 제104호 #455281",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "示",
@@ -28,7 +30,8 @@
       "source": "군정법령 제112호 #456159",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "罪",
@@ -38,7 +41,8 @@
       "source": "개역간이국한문한글판 #393817",
       "source_kind": "corpus",
       "target_index": 4,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "河",
@@ -48,7 +52,8 @@
       "source": "개역간이국한문한글판 #393092",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "査",
@@ -58,7 +63,8 @@
       "source": "군정법령 제123호 #455297",
       "source_kind": "corpus",
       "target_index": 14,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "鐵",
@@ -68,7 +74,8 @@
       "source": "개역간이국한문한글판 #393895",
       "source_kind": "corpus",
       "target_index": 6,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "期",
@@ -78,7 +85,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "費",
@@ -88,7 +96,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 2,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "終",
@@ -98,7 +107,8 @@
       "source": "개역간이국한문한글판 #393900",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "初",
@@ -108,7 +118,8 @@
       "source": "개역간이국한문한글판 #393095",
       "source_kind": "corpus",
       "target_index": 1,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "完",
@@ -118,7 +129,8 @@
       "source": "개역간이국한문한글판 #393281",
       "source_kind": "corpus",
       "target_index": 16,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "件",
@@ -128,7 +140,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 10,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "無",
@@ -138,7 +151,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 13,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "最",
@@ -148,7 +162,8 @@
       "source": "대한민국헌법 #418801",
       "source_kind": "corpus",
       "target_index": 0,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     },
     {
       "character_key": "他",
@@ -158,7 +173,8 @@
       "source": "개역간이국한문한글판 #393092",
       "source_kind": "corpus",
       "target_index": 5,
-      "rank": 0
+      "rank": 0,
+      "reading": null
     }
   ]
 }

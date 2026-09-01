@@ -23,6 +23,7 @@ interface CharacterRow {
   cn_tier: string | null;
   sentence_id: number | null;
   sentence_text: string | null;
+  sentence_reading: string | null;
   translation_ko: string | null;
   source: string | null;
   source_kind: ExampleSentence["sourceKind"] | null;
@@ -56,7 +57,7 @@ const SELECT_ENTRY_COLUMNS = `
     ct.track, ct.glyph, ct.level_ord, ct.kr_reading, ct.kr_level,
     ct.jp_on, ct.jp_kun, ct.jp_kanken, ct.jp_jlpt,
     ct.cn_pinyin, ct.cn_meaning, ct.cn_hsk, ct.cn_tier,
-    es.id AS sentence_id, es.text AS sentence_text, es.translation_ko, es.source,
+    es.id AS sentence_id, es.text AS sentence_text, es.reading AS sentence_reading, es.translation_ko, es.source,
     es.source_kind, es.target_index, es.rank AS sentence_rank`;
 
 const SELECT_ENTRIES = `
@@ -175,6 +176,7 @@ function hydrate(rows: CharacterRow[]): CharacterEntry[] {
         characterId: row.id,
         track: row.track,
         text: required(row.sentence_text, "example_sentences.text"),
+        reading: row.sentence_reading,
         translationKo: required(row.translation_ko, "example_sentences.translation_ko"),
         source: required(row.source, "example_sentences.source"),
         sourceKind: requiredSourceKind(row.source_kind),
