@@ -44,7 +44,7 @@ export function runServer() {
     child = spawn(npm.command, npm.args, {
       cwd: root,
       detached: process.platform !== "win32",
-      env: process.env,
+      env: { ...process.env, WRANGLER_LOG_PATH: join(root, "test-results", "wrangler-debug.log") },
       shell: npm.shell,
       stdio: ["ignore", log, log],
     });
