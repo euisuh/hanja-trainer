@@ -9,6 +9,7 @@ import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSent
 import { tierForTgh } from "./tgh-tier.ts";
 import { buildAudioEntries } from "./generate-audio.ts";
 import type { CharacterEntry, SeedSentenceEntry, Track } from "../src/shared/types.ts";
+import { applyMigrations } from "../worker/test/schema.ts";
 
 const files = {
   "data/characters/kr-8geup.json": 50,
@@ -433,6 +434,7 @@ test("Korean compounds are sourced and contain only seeded grade members", async
 
   const sqlite = new DatabaseSync(":memory:");
   try {
+    // Deliberately isolate character/word seed SQL from unrelated application migrations.
     for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0010_words.sql", "0015_curriculum_unit_level_ord.sql"]) sqlite.exec(await readFile(`migrations/${migration}`, "utf8"));
     for (const path of Object.keys(files)) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
     const sql = emitWordSeedSql(document);
@@ -449,9 +451,7 @@ test("Korean compounds are sourced and contain only seeded grade members", async
 test("full content seed loads cleanly and is idempotent", async () => {
   const sqlite = new DatabaseSync(":memory:");
   try {
-    sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
-    sqlite.exec(await readFile("migrations/0013_sentence_readings.sql", "utf8"));
-    sqlite.exec(await readFile("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
+    applyMigrations(sqlite);
     const characterSql = await Promise.all(Object.keys(files).map(async (path) => (
       emitSeedSql(parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))
     )));

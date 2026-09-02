@@ -3,6 +3,7 @@ import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import type { CurriculumResponse, PlacementAnswer, PlacementScoreResponse, StatsResponse } from "../../src/shared/api";
+import { applyMigrations } from "../test/schema";
 import { getProfile, zonedDayKey } from "./sessions";
 import { getStats, kankenProgress } from "./stats";
 import { routeApiRequest } from "./router";
@@ -37,7 +38,7 @@ function d1(sqlite: DatabaseSync, observations: QueryObservation[]): D1Database 
 
 function setup(observations: QueryObservation[] = []) {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql", "0011_theme.sql", "0012_theme_default.sql", "0013_sentence_readings.sql", "0015_curriculum_unit_level_ord.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  applyMigrations(sqlite);
   for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-jlpt-n5.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite, observations) } as Env };
 }

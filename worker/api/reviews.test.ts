@@ -3,6 +3,7 @@ import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import type { CharacterDetailResponse, DueReviewsResponse, ProfileResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
+import { applyMigrations } from "../test/schema";
 import { createSession } from "./sessions";
 import { routeApiRequest } from "./router";
 
@@ -33,7 +34,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql", "0010_words.sql", "0013_sentence_readings.sql", "0015_curriculum_unit_level_ord.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
+  applyMigrations(sqlite);
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }

@@ -61,6 +61,11 @@ async function contrastOf(page: Page, foregroundSelector: string, backgroundSele
 test("theme selection applies live and persists", async ({ page }) => {
   await page.goto("/settings");
   const app = page.locator(".app");
+  await expect(app).toHaveAttribute("data-theme", "quiet-technical");
+
+  const reset = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
+  await page.getByRole("button", { name: "기본", exact: true }).click();
+  await reset;
   await expect(app).toHaveAttribute("data-theme", "default");
   const defaultGlyphFonts = await app.evaluate((node) => ["--font-kr", "--font-jp", "--font-cn"].map((name) => getComputedStyle(node).getPropertyValue(name)));
 

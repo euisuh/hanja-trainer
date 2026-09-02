@@ -5,6 +5,7 @@ import test from "node:test";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { getCharacter, listByTrackLevel, listByUnit, searchDistractors } from "../worker/db/characters.ts";
 import type { SeedDocument, SeedTrackEntry } from "../src/shared/types.ts";
+import { applyMigrations } from "../worker/test/schema.ts";
 import { emitSeedSql, emitSentenceSeedSql, levelOrdFor, parseSeed, parseSentenceSeed } from "./seed.ts";
 
 function d1(sqlite: DatabaseSync): D1Database {
@@ -36,6 +37,18 @@ function comparableTrack(track: SeedTrackEntry): Record<string, unknown> {
   return fields;
 }
 
+test("production migrations apply in filename order", () => {
+  const sqlite = new DatabaseSync(":memory:");
+  try {
+    const names = applyMigrations(sqlite);
+    assert.ok(names.length > 0);
+    assert.deepEqual(names, [...names].sort());
+    assert.equal((sqlite.prepare("PRAGMA integrity_check").get() as { integrity_check: string }).integrity_check, "ok");
+  } finally {
+    sqlite.close();
+  }
+});
+
 test("seed validation, round-trip, idempotency, and queries", async () => {
   assert.equal(levelOrdFor("kr", "8급"), 1);
   assert.equal(levelOrdFor("kr", "특급"), 15);
@@ -59,6 +72,7 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
 
   const sqlite = new DatabaseSync(":memory:");
   try {
+    // Deliberately exercise only the schema columns emitted by character seeds.
     sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
     sqlite.exec(await readFile("migrations/0013_sentence_readings.sql", "utf8"));
     sqlite.exec(await readFile("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
@@ -144,6 +158,7 @@ test("standalone sentence seeds validate and remain idempotent", () => {
 
   const sqlite = new DatabaseSync(":memory:");
   try {
+    // Deliberately exercise only the schema columns emitted by sentence seeds.
     sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));

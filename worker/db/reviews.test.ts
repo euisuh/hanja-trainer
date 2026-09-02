@@ -1,7 +1,7 @@
-import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import { initialState, schedule } from "../../src/shared/fsrs";
+import { applyMigrations } from "../test/schema";
 import { appendLog, getDueQueue, getState, getStatsForCharacter, upsertState } from "./reviews";
 
 function d1Result<T>(results: T[]): D1Result<T> {
@@ -87,14 +87,7 @@ describe("review persistence", () => {
   it("filters due states by enabled tracks, due time, and limit", async () => {
     const sqlite = new DatabaseSync(":memory:");
     databases.push(sqlite);
-    sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
-    sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
+    applyMigrations(sqlite);
     const database = d1(sqlite);
     const now = new Date("2026-01-10T00:00:00.000Z");
     const firstId = addCharacter(sqlite, "一", ["kr", "jp"]);

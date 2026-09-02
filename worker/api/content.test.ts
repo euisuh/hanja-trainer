@@ -6,6 +6,7 @@ import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, levelOrdFor, parseSe
 import type { Track } from "../../src/shared/types";
 import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
 import { listForTracks } from "../db/characters";
+import { applyMigrations } from "../test/schema";
 import { startSession } from "./cards";
 import { routeApiRequest } from "./router";
 
@@ -59,18 +60,7 @@ function d1(sqlite: DatabaseSync): D1Database {
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
-  sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
+  applyMigrations(sqlite);
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   for (const level of ["n5", "n4", "n3", "n2", "n1"]) {
     sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(`data/characters/jp-jlpt-${level}.json`, "utf8")) as unknown)));
@@ -88,18 +78,7 @@ function setup() {
 
 function setupSeeds(files: string[]) {
   const sqlite = new DatabaseSync(":memory:");
-  sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0002_fsrs.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0003_sessions.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0004_profile.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0005_onyomi_script.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0006_skipped.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0007_pin.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0008_unit_test_out.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
-  sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
+  applyMigrations(sqlite);
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
