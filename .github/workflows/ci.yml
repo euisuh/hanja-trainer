@@ -34,9 +34,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run e2e
+      - run: npm run e2e:ci
       - if: always()
         uses: actions/upload-artifact@v7
         with:
           name: responsive-screenshots
-          path: test-results/
+          path: test-results*/
