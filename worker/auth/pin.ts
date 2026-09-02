@@ -14,6 +14,7 @@ export type PinRecord = {
 };
 
 export type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
+export type PinCredentials = { hash: string; salt: string; iterations: number; secret: string };
 
 export class PinError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string, public readonly retryAfter?: number) {
@@ -60,6 +61,17 @@ export function isPin(value: unknown): value is string {
 export async function derivePinHash(pin: string, salt: Uint8Array<ArrayBuffer>, iterations: number): Promise<Uint8Array<ArrayBuffer>> {
   const key = await crypto.subtle.importKey("raw", encoder.encode(pin), "PBKDF2", false, ["deriveBits"]);
   return new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt, iterations }, key, 256));
+}
+
+export async function createPinCredentials(pin: unknown, derive = derivePinHash): Promise<PinCredentials> {
+  if (!isPin(pin)) throw new PinError(400, "invalid_pin", "pin must be exactly 4 digits");
+  const salt = randomBytes(16);
+  return {
+    hash: base64(await derive(pin, salt, PIN_ITERATIONS)),
+    salt: base64(salt),
+    iterations: PIN_ITERATIONS,
+    secret: base64(randomBytes(32)),
+  };
 }
 
 async function matchesPin(record: PinRecord, pin: string, derive = derivePinHash): Promise<boolean> {
@@ -136,15 +148,14 @@ export async function setDevicePin(
   if (hasPin && (!isPin(currentPin) || !await matchesPin(record, currentPin, derive))) {
     throw new PinError(401, "invalid_current_pin", "current PIN is incorrect");
   }
-  const salt = randomBytes(16);
-  const hash = await derive(pin, salt, PIN_ITERATIONS);
+  const credentials = await createPinCredentials(pin, derive);
   const result = await db.prepare(`
     UPDATE profile SET pin_hash = ?1, pin_salt = ?2, pin_iterations = ?3, pin_secret = ?4,
       pin_failures = 0, pin_locked_until = NULL, updated_at = ?5
     WHERE id = ?6 AND pin_hash IS ?7 AND pin_salt IS ?8
       AND pin_iterations IS ?9 AND pin_secret IS ?10
   `).bind(
-    base64(hash), base64(salt), PIN_ITERATIONS, base64(randomBytes(32)), now,
+    credentials.hash, credentials.salt, credentials.iterations, credentials.secret, now,
     profileId, record.pin_hash, record.pin_salt, record.pin_iterations, record.pin_secret,
   ).run();
   if (result.meta.changes !== 1) throw pinConflict();

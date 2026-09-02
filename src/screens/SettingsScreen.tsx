@@ -5,6 +5,7 @@ import { OnyomiScript } from "../features/settings/OnyomiScript";
 import { ShortcutSheet } from "../features/settings/ShortcutSheet";
 import { TrackToggles } from "../features/settings/TrackToggles";
 import { ThemePicker } from "../features/settings/ThemePicker";
+import { ProfileSettings } from "../features/settings/ProfileSettings";
 import { useSettings } from "../features/settings/useSettings";
 import { PinSettings } from "../features/pin/PinSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
@@ -48,6 +49,7 @@ export function SettingsScreen() {
             {retestError && <p role="alert">{retestError}</p>}
           </section>
           <PinSettings />
+          {settings.isAdmin && <ProfileSettings />}
         </div>
       </div>
     </section>

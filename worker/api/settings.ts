@@ -2,7 +2,7 @@ import type { OnboardingStateResponse, PatchSettingsRequest, SettingsResponse } 
 import { normalizeDailyGoal, ONYOMI_SCRIPTS, THEME_IDS, type OnyomiScript, type ThemeId } from "../../src/shared/settings";
 import { TRACKS, type Track } from "../../src/shared/types";
 
-type ProfileRow = { enabled_tracks: string; daily_goal: number; timezone: string; onyomi_script: OnyomiScript; theme: ThemeId; onboarded_at?: number | null };
+type ProfileRow = { enabled_tracks: string; daily_goal: number; timezone: string; onyomi_script: OnyomiScript; theme: ThemeId; is_admin: number; onboarded_at?: number | null };
 
 function validTimezone(value: string): boolean {
   try {
@@ -35,11 +35,11 @@ function decode(row: ProfileRow): SettingsResponse {
   const parsed = JSON.parse(row.enabled_tracks) as unknown;
   const enabledTracks = Array.isArray(parsed) ? TRACKS.filter((track) => parsed.includes(track)) : [];
   if (enabledTracks.length === 0) throw new Error("Profile has no enabled tracks");
-  return { enabledTracks, dailyGoal: row.daily_goal, timezone: row.timezone, onyomiScript: row.onyomi_script, theme: row.theme };
+  return { enabledTracks, dailyGoal: row.daily_goal, timezone: row.timezone, onyomiScript: row.onyomi_script, theme: row.theme, isAdmin: Boolean(row.is_admin) };
 }
 
 export async function getSettings(db: D1Database, profileId: number): Promise<SettingsResponse> {
-  const row = await db.prepare("SELECT enabled_tracks, daily_goal, timezone, onyomi_script, theme FROM profile WHERE id = ?1").bind(profileId).first<ProfileRow>();
+  const row = await db.prepare("SELECT enabled_tracks, daily_goal, timezone, onyomi_script, theme, is_admin FROM profile WHERE id = ?1").bind(profileId).first<ProfileRow>();
   if (!row) throw new Error("Profile row is missing");
   return decode(row);
 }

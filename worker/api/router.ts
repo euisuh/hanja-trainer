@@ -9,6 +9,7 @@ import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } fr
 import { getStats } from "./stats";
 import { clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
+import { assertProfileAdmin, createProfile, deleteProfile, parseCreateProfile, parseRenameProfile, ProfileError, renameProfile } from "./profiles";
 
 function error(status: number, code: string, message: string, retryAfter?: number): Response {
   return Response.json(
@@ -164,6 +165,31 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
     if (request.method === "GET" && pathname === "/api/stats") return Response.json(await getStats(env.DB, profileId));
     if (request.method === "GET" && pathname === "/api/onboarding-state") return Response.json(await getOnboardingState(env.DB, profileId));
 
+    if (request.method === "POST" && pathname === "/api/profiles") {
+      await assertProfileAdmin(env.DB, profileId);
+      let value: unknown;
+      try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
+      const input = parseCreateProfile(value);
+      if (!input) return error(400, "invalid_profile", "name or PIN is invalid");
+      return Response.json(await createProfile(env.DB, profileId, input), { status: 201 });
+    }
+
+    const managedProfileMatch = pathname.match(/^\/api\/profiles\/(\d+)$/);
+    if (managedProfileMatch && (request.method === "PATCH" || request.method === "DELETE")) {
+      const targetId = Number(managedProfileMatch[1]);
+      if (!Number.isSafeInteger(targetId) || targetId < 1) return error(400, "invalid_profile", "profile id is invalid");
+      if (request.method === "DELETE") {
+        await deleteProfile(env.DB, profileId, targetId);
+        return Response.json({ deleted: true });
+      }
+      await assertProfileAdmin(env.DB, profileId);
+      let value: unknown;
+      try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
+      const input = parseRenameProfile(value);
+      if (!input) return error(400, "invalid_profile", "name is invalid");
+      return Response.json(await renameProfile(env.DB, profileId, targetId, input));
+    }
+
   return error(404, "not_found", "API route was not found");
 }
 
@@ -218,6 +244,7 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
     return record.pin_secret ? withCookie(response, await createSessionCookie(record.id, record.pin_secret, now)) : response;
   } catch (caught) {
     if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
+    if (caught instanceof ProfileError) return error(caught.status, caught.code, caught.message);
     if (caught instanceof UnitTestError) return error(caught.status, caught.code, caught.message);
     if (caught instanceof ReviewTargetNotFound) return error(404, "character_not_found", "character track was not found");
     console.error(caught);

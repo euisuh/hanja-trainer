@@ -5,6 +5,9 @@ export type ApiErrorBody = { error: { code: string; message: string } };
 export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };
 export type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
 export type ProfilesResponse = { profiles: PublicProfile[] };
+export type ManagedProfile = Pick<PublicProfile, "id" | "name" | "isAdmin">;
+export type CreateProfileRequest = { name: string; pin?: string };
+export type RenameProfileRequest = { name: string };
 
 export type CurriculumNode = {
   key: string;
@@ -175,7 +178,7 @@ export type PlacementAnswer = { characterKey: string; track: Track; correct: boo
 export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; saturated: boolean; floored: boolean; detail: string };
 export type PlacementScoreResponse = { results: PlacementScoreResult[] };
 
-export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string; onyomiScript: OnyomiScript; theme: ThemeId };
+export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string; onyomiScript: OnyomiScript; theme: ThemeId; isAdmin: boolean };
 export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number; timezone?: string; onyomiScript?: OnyomiScript; theme?: ThemeId };
 export type OnboardingStateResponse = { onboarded: boolean };
 

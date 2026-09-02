@@ -17,6 +17,7 @@ export function useSettings() {
   const [dailyGoal, setDailyGoal] = useState(DEFAULT_DAILY_GOAL);
   const [onyomiScript, setOnyomiScript] = useState<OnyomiScript>("katakana");
   const [theme, setTheme] = useState<ThemeId>("quiet-technical");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -29,6 +30,7 @@ export function useSettings() {
       setDailyGoal(settings.dailyGoal);
       setOnyomiScript(settings.onyomiScript);
       setTheme(settings.theme);
+      setIsAdmin(settings.isAdmin);
       setError("");
       setReady(true);
       const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -61,11 +63,13 @@ export function useSettings() {
         setDailyGoal(settings.dailyGoal);
         setOnyomiScript(settings.onyomiScript);
         setTheme(settings.theme);
+        setIsAdmin(settings.isAdmin);
       }).catch(() => apiClient.settings().then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
         setOnyomiScript(settings.onyomiScript);
         setTheme(settings.theme);
+        setIsAdmin(settings.isAdmin);
         window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { theme: settings.theme } }));
       }).catch(() => undefined));
     }, 150);
@@ -76,6 +80,7 @@ export function useSettings() {
     dailyGoal,
     onyomiScript,
     theme,
+    isAdmin,
     error,
     ready,
     retry: () => setRetryKey((value) => value + 1),
@@ -86,6 +91,7 @@ export function useSettings() {
       setDailyGoal(settings.dailyGoal);
       setOnyomiScript(settings.onyomiScript);
       setTheme(settings.theme);
+      setIsAdmin(settings.isAdmin);
     },
     toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript, theme),
     setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript, theme),

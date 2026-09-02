@@ -1,4 +1,4 @@
-import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, ProfilesResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
+import type { CharacterDetailResponse, CreateProfileRequest, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, ManagedProfile, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, ProfilesResponse, RenameProfileRequest, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
@@ -75,6 +75,9 @@ export const apiClient = {
   stats: (signal?: AbortSignal) => requestJson<StatsResponse>("/api/stats", { signal }),
   onboardingState: (signal?: AbortSignal) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }),
   profiles: (signal?: AbortSignal) => requestJson<ProfilesResponse>("/api/profiles", { signal }),
+  createProfile: (body: CreateProfileRequest) => requestJson<ManagedProfile>("/api/profiles", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }),
+  renameProfile: (profileId: number, body: RenameProfileRequest) => requestJson<ManagedProfile>(`/api/profiles/${profileId}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }),
+  deleteProfile: (profileId: number) => requestJson<{ deleted: true }>(`/api/profiles/${profileId}`, { method: "DELETE" }),
   selectProfile: (profileId: number) => requestJson<{ selected: true }>("/api/profiles/select", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }) }),
   pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }),
   unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }),

@@ -74,8 +74,8 @@ describe("profile, placement, and stats API", () => {
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
     const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" }), fixture.env);
-    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" });
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" });
+    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical", isAdmin: true });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical", isAdmin: true });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 1 });
     expect((await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: [] }), fixture.env)).status).toBe(400);
     const invalid = await routeApiRequest(request("/api/settings", "PATCH", { onyomiScript: "romaji" }), fixture.env);
