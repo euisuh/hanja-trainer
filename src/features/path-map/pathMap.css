@@ -139,6 +139,7 @@
 
 .lesson-cta,
 .study-cta,
+.speaking-cta,
 .unit-test-cta,
 .review-cta {
   border: 3px solid var(--ink);
@@ -171,6 +172,9 @@
 .study-cta small,
 .study-cta strong,
 .study-cta span,
+.speaking-cta small,
+.speaking-cta strong,
+.speaking-cta span,
 .unit-test-cta small,
 .unit-test-cta strong,
 .unit-test-cta span,
@@ -178,6 +182,7 @@
 .review-cta strong,
 .review-cta span { display: block; }
 .lesson-cta small,
+.speaking-cta small,
 .unit-test-cta small,
 .review-cta small { font-size: 12px; font-weight: 800; letter-spacing: .14em; }
 .lesson-cta small { opacity: .85; }
@@ -186,6 +191,7 @@
 .lesson-cta kbd { margin-left: 8px; background: var(--key-overlay); }
 
 .unit-test-cta,
+.speaking-cta,
 .review-cta {
   padding: 20px;
   border-radius: var(--radius-large);
@@ -194,10 +200,13 @@
 }
 
 .unit-test-cta small,
+.speaking-cta small,
 .review-cta small { color: var(--muted); }
 .unit-test-cta strong,
+.speaking-cta strong,
 .review-cta strong { margin: 5px 0 8px; font-size: 22px; font-weight: 800; }
 .unit-test-cta span,
+.speaking-cta span,
 .review-cta span { color: var(--muted); font-size: 13px; font-weight: 700; }
 .review-cta kbd { margin-left: 4px; }
 

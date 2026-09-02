@@ -79,3 +79,39 @@
   .unit-study__table th,
   .unit-study__table td { padding: 11px; }
 }
+
+.speaking-session { width: min(100%, 760px); margin-inline: auto; }
+.speaking-session__chrome { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.speaking-session__chrome button,
+.speaking-session__navigation button,
+.speaking-card button {
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-small);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 800;
+}
+.speaking-session button:disabled { cursor: not-allowed; opacity: .55; }
+.speaking-session__progress { flex: 1; height: 14px; overflow: hidden; border: 2px solid var(--ink); border-radius: var(--radius-pill); background: var(--progress-track); }
+.speaking-session__progress span { display: block; height: 100%; background: var(--speaking-accent); }
+.speaking-session__chrome strong { white-space: nowrap; }
+.speaking-card { padding: clamp(20px, 5vw, 38px); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
+.speaking-card__badge { margin-bottom: 10px; color: var(--speaking-accent-text); font-size: 12px; font-weight: 800; letter-spacing: .12em; }
+.speaking-card__sentence { color: var(--ink); font-family: var(--speaking-font); font-size: clamp(22px, 5vw, 34px); line-height: 1.55; }
+.speaking-card__reading { margin-top: 10px; color: var(--speaking-accent-text); font-family: var(--speaking-font); font-size: 16px; }
+.speaking-card__translation { margin-top: 8px; color: var(--body); font-size: 14px; }
+.speaking-card__source { display: block; margin-top: 10px; color: var(--muted); }
+.speaking-card__source a { color: inherit; }
+.speaking-card__compare { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 24px; padding: 16px; border-radius: var(--radius-panel); background: var(--speaking-soft); }
+.speaking-card__compare span { color: var(--muted); font-size: 12px; font-weight: 700; }
+.speaking-card__compare audio { max-width: 100%; }
+.speaking-card__recording { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; min-height: 48px; margin-top: 16px; }
+.speaking-card__recording p { flex-basis: 100%; }
+.speaking-card__recording button:first-of-type { background: var(--speaking-accent); color: var(--card); }
+.speaking-card__privacy { margin-top: 14px; font-size: 12px; }
+.speaking-session__navigation { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; }
+.speaking-session__navigation button:last-child { margin-left: auto; background: var(--ink); color: var(--paper); }
+.speaking-empty { display: grid; max-width: 620px; gap: 14px; margin-inline: auto; }
+.speaking-empty button { width: fit-content; padding: 10px 14px; border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); cursor: pointer; font-weight: 800; }

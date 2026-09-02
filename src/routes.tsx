@@ -9,6 +9,7 @@ import { PlacementScreen } from "./screens/PlacementScreen";
 import { ReviewScreen } from "./screens/ReviewScreen";
 import { SessionCompleteScreen } from "./screens/SessionCompleteScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
+import { SpeakingScreen } from "./screens/SpeakingScreen";
 import { StatsScreen } from "./screens/StatsScreen";
 import { UnitStudyScreen } from "./screens/UnitStudyScreen";
 
@@ -23,6 +24,7 @@ export type Screen =
   | "session-complete"
   | "detail"
   | "study"
+  | "speaking"
   | "stats"
   | "settings";
 
@@ -43,6 +45,7 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "session-complete", path: "/session-complete", Component: SessionCompleteScreen },
   { screen: "detail", path: "/detail/:key", Component: DetailScreen },
   { screen: "study", path: "/study/:unitId", Component: UnitStudyScreen },
+  { screen: "speaking", path: "/speaking/:unitId", Component: SpeakingScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
   { screen: "settings", path: "/settings", Component: SettingsScreen },
 ];

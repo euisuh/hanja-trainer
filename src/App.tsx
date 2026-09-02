@@ -12,7 +12,7 @@ import type { ThemeId } from "./shared/settings";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail", "study"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
-const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete"]);
+const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking"]);
 
 export function App() {
   const { pathname } = useLocation();
