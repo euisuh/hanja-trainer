@@ -267,12 +267,9 @@ export async function listPlacementMembersForTracks(db: D1Database, tracks: Trac
 export async function listFreshForTracks(db: D1Database, tracks: Track[], anchor: CurriculumAnchor): Promise<FreshRow[]> {
   if (tracks.length === 0) return [];
   const unit = anchor.unitId === undefined ? null : await db.prepare(`
-    SELECT cu.track, MIN(ct.level_ord) AS level_ord, cu.ord AS unit_ord
+    SELECT cu.track, cu.level_ord, cu.ord AS unit_ord
     FROM curriculum_units cu
-    JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
-    JOIN character_tracks ct ON ct.character_id = cum.character_id AND ct.track = cu.track
     WHERE cu.id = ?1
-    GROUP BY cu.id
   `).bind(anchor.unitId).first<UnitAnchorRow>();
   if (anchor.unitId !== undefined && !unit) return [];
 

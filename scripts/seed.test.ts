@@ -61,6 +61,7 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
   try {
     sqlite.exec(await readFile("migrations/0001_init.sql", "utf8"));
     sqlite.exec(await readFile("migrations/0013_sentence_readings.sql", "utf8"));
+    sqlite.exec(await readFile("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
     const sql = emitSeedSql(document);
     assert.doesNotMatch(sql, /\b(?:BEGIN|COMMIT)\b/);
     sqlite.exec(sql);
@@ -119,6 +120,7 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
       }],
     };
     sqlite.exec(emitSeedSql(oneTrack));
+    assert.equal((sqlite.prepare("SELECT level_ord FROM curriculum_units WHERE track = 'kr' AND level = '3급'").get() as { level_ord: number }).level_ord, 11);
     assert.equal((await getCharacter(db, "只"))?.tracks.length, 1);
     assert.deepEqual((await listByUnit(db, 1)).map((entry) => entry.key), ["只"]);
   } finally {
@@ -144,6 +146,7 @@ test("standalone sentence seeds validate and remain idempotent", () => {
   try {
     sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
+    sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
     const character = parseSeed([{
       key: "學", meaningEn: "study", meaningKo: "배우다", variants: { jp: "学" }, strokeCount: 16,
       tracks: [{ track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 1 }],

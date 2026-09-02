@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
-import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "../../scripts/seed";
+import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, levelOrdFor, parseSeed, parseSentenceSeed, parseWordSeed } from "../../scripts/seed";
 import type { Track } from "../../src/shared/types";
 import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
 import { listForTracks } from "../db/characters";
@@ -70,6 +70,7 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   for (const level of ["n5", "n4", "n3", "n2", "n1"]) {
     sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(`data/characters/jp-jlpt-${level}.json`, "utf8")) as unknown)));
@@ -98,6 +99,7 @@ function setupSeeds(files: string[]) {
   sqlite.exec(readFileSync("migrations/0009_stats_queries.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
+  sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
@@ -500,6 +502,39 @@ describe("content API", () => {
     expect(levelWalk).toEqual(["8급", "7급", "6급II", "6급", "5급II", "5급", "4급II", "4급"]);
     expect(curriculum.units.flatMap((unit) => unit.nodes)).toHaveLength(1000);
     expect(curriculum.units.every((unit) => unit.nodes.length >= 8 && unit.nodes.length <= 10)).toBe(true);
+  });
+
+  it("orders Chinese units by their own HSK level and ordinal", async () => {
+    const fixture = setupSeeds(["data/characters/cn-hsk3.json", "data/characters/cn-hsk1.json", "data/characters/cn-hsk2.json"]); databases.push(fixture.sqlite);
+    fixture.sqlite.prepare("INSERT INTO placement_results (track, level_ord, level_badge, accuracy, detail, taken_at) VALUES ('cn', 2, 'HSK 2', 80, '', 1)").run();
+    const curriculum = await (await routeApiRequest(new Request("https://test/api/curriculum?track=cn"), fixture.env)).json() as CurriculumResponse;
+    const order = curriculum.units.map((unit) => [levelOrdFor("cn", unit.level), unit.ord]);
+
+    expect(order).toEqual([...order].sort(([leftLevel, leftOrd], [rightLevel, rightOrd]) => leftLevel - rightLevel || leftOrd - rightOrd));
+    expect(curriculum.units.filter((unit) => unit.level === "HSK 1").map((unit) => unit.ord)).toEqual(Array.from({ length: 25 }, (_, index) => index + 1));
+    expect(curriculum.units.filter((unit) => unit.level === "HSK 2").map((unit) => unit.ord)).toEqual(Array.from({ length: 22 }, (_, index) => index + 1));
+    expect(curriculum.units.filter((unit) => unit.level === "HSK 3").map((unit) => unit.ord)).toEqual(Array.from({ length: 29 }, (_, index) => index + 1));
+    expect(curriculum.units.find((unit) => unit.current)).toMatchObject({ level: "HSK 2", ord: 1 });
+    const lesson = await startSession(fixture.env.DB, { mode: "lesson", tracks: ["cn"], limit: 4, unitId: curriculum.units.find((unit) => unit.level === "HSK 2")!.id }, "cn-hsk2-anchor");
+    expect(lesson.cards).toHaveLength(4);
+    expect(lesson.cards.every((card) => card.levelOrd >= 2)).toBe(true);
+  });
+
+  it.each(["kr", "jp"] as const)("preserves %s unit ordering", async (track) => {
+    const files = track === "kr" ? KR_THROUGH_4_FILES : CHARACTER_FILES.filter((path) => path.includes("/jp-"));
+    const fixture = setupSeeds(files); databases.push(fixture.sqlite);
+    const legacy = fixture.sqlite.prepare(`
+      SELECT cu.id
+      FROM curriculum_units cu
+      JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
+      JOIN character_tracks ct ON ct.character_id = cum.character_id AND ct.track = cu.track
+      WHERE cu.track = ?
+      GROUP BY cu.id
+      ORDER BY MIN(ct.level_ord), cu.ord
+    `).all(track) as Array<{ id: number }>;
+    const curriculum = await (await routeApiRequest(new Request(`https://test/api/curriculum?track=${track}`), fixture.env)).json() as CurriculumResponse;
+
+    expect(curriculum.units.map((unit) => unit.id)).toEqual(legacy.map((unit) => unit.id));
   });
 
   it("starts fresh lessons at placement levels and requested units", async () => {

@@ -244,6 +244,16 @@ function nullable(value: string | null): string {
   return value === null ? "NULL" : quote(value);
 }
 
+function curriculumLevelOrd(document: SeedDocument, unit: SeedCurriculumUnit): number {
+  // Chinese units intentionally repeat characters whose stored band remains earlier.
+  if (unit.track === "cn") return levelOrdFor(unit.track, unit.level);
+  const memberLevels = unit.members.flatMap((member) => document.characters
+    .find((character) => character.key === member.key)?.tracks
+    .filter((entry) => entry.track === unit.track)
+    .map((entry) => entry.levelOrd) ?? []);
+  return memberLevels.length > 0 ? Math.min(...memberLevels) : levelOrdFor(unit.track, unit.level);
+}
+
 export function emitSeedSql(document: SeedDocument): string {
   const sql = ["PRAGMA foreign_keys = ON;"];
   for (const item of document.characters) {
@@ -261,7 +271,7 @@ export function emitSeedSql(document: SeedDocument): string {
     }
   }
   for (const unit of document.curriculumUnits ?? []) {
-    sql.push(`INSERT INTO curriculum_units (track, level, ord, title, subtitle) VALUES (${quote(unit.track)}, ${quote(unit.level)}, ${unit.ord}, ${quote(unit.title)}, ${quote(unit.subtitle)}) ON CONFLICT(track, level, ord) DO UPDATE SET title=excluded.title, subtitle=excluded.subtitle;`);
+    sql.push(`INSERT INTO curriculum_units (track, level, level_ord, ord, title, subtitle) VALUES (${quote(unit.track)}, ${quote(unit.level)}, ${curriculumLevelOrd(document, unit)}, ${unit.ord}, ${quote(unit.title)}, ${quote(unit.subtitle)}) ON CONFLICT(track, level, ord) DO UPDATE SET level_ord=excluded.level_ord, title=excluded.title, subtitle=excluded.subtitle;`);
     for (const member of unit.members) {
       sql.push(`INSERT INTO curriculum_unit_members (unit_id, character_id, ord) VALUES ((SELECT id FROM curriculum_units WHERE track=${quote(unit.track)} AND level=${quote(unit.level)} AND ord=${unit.ord}), (SELECT id FROM characters WHERE key=${quote(member.key)}), ${member.ord}) ON CONFLICT(unit_id, character_id) DO UPDATE SET ord=excluded.ord;`);
     }

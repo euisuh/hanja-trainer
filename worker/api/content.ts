@@ -33,7 +33,7 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
   const [result, placementResult] = await db.batch([db.prepare(`
     SELECT cu.id AS unit_id, cu.level, cu.ord AS unit_ord, cu.title, cu.subtitle,
       cum.ord AS member_ord, c.key, ct.glyph, ct.kr_reading, ct.jp_on, ct.cn_pinyin,
-      rs.stability, ct.level_ord, ucc.character_id AS completion_character_id
+      rs.stability, cu.level_ord, ucc.character_id AS completion_character_id
     FROM curriculum_units cu
     JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
     JOIN characters c ON c.id = cum.character_id
@@ -41,7 +41,7 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
     LEFT JOIN review_states rs ON rs.character_id = c.id AND rs.track = cu.track
     LEFT JOIN curriculum_unit_completion_members ucc ON ucc.unit_id = cu.id AND ucc.character_id = c.id
     WHERE cu.track = ?1
-    ORDER BY MIN(ct.level_ord) OVER (PARTITION BY cu.id), cu.ord, cum.ord
+    ORDER BY cu.level_ord, cu.ord, cum.ord
   `).bind(track), db.prepare("SELECT level_ord FROM placement_results WHERE track = ?1 ORDER BY taken_at DESC, id DESC LIMIT 1").bind(track)]);
   const units = new Map<number, CurriculumResponse["units"][number]>();
   const unitLevels = new Map<number, number>();
@@ -52,7 +52,7 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
       unit = { id: row.unit_id, level: row.level, ord: row.unit_ord, title: row.title, subtitle: row.subtitle, progress: { known: 0, total: 0 }, nodes: [], current: false };
       units.set(row.unit_id, unit);
     }
-    unitLevels.set(row.unit_id, Math.min(unitLevels.get(row.unit_id) ?? row.level_ord, row.level_ord));
+    unitLevels.set(row.unit_id, row.level_ord);
     if (row.completion_character_id !== null) completedMembers.set(row.unit_id, (completedMembers.get(row.unit_id) ?? 0) + 1);
     const mastered = (row.stability ?? 0) >= MASTERY_STABILITY_DAYS;
     if (mastered) unit.progress.known += 1;
