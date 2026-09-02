@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.node.json",
     "lint": "eslint .",
     "lint:colors": "node scripts/check-colors.mjs",
-    "test": "node --test scripts/*.test.mjs && node --import tsx --test scripts/*.test.ts && vitest run src/design/tokens.test.ts src/shared/fsrs.test.ts src/shared/kana.test.ts src/shared/unitTestRetry.test.ts src/features/session/buildQueue.test.ts src/features/review/DueList.test.ts src/features/placement/adaptive.test.ts src/features/path-map/homeModel.test.ts src/features/detail/detailModel.test.ts src/features/stats/calendar.test.ts src/features/stats/levelProgress.test.ts src/features/settings/settings.test.ts src/features/study/speech.test.ts worker/audio.test.ts worker/db/reviews.test.ts worker/api/content.test.ts worker/api/reviews.test.ts worker/api/placement.test.ts worker/auth/pin.test.ts",
+    "test": "node --test scripts/*.test.mjs && node --import tsx --test scripts/*.test.ts && vitest run src/design/tokens.test.ts src/shared/fsrs.test.ts src/shared/kana.test.ts src/shared/unitTestRetry.test.ts src/features/session/buildQueue.test.ts src/features/review/DueList.test.ts src/features/placement/adaptive.test.ts src/features/path-map/homeModel.test.ts src/features/detail/detailModel.test.ts src/features/stats/calendar.test.ts src/features/stats/levelProgress.test.ts src/features/settings/settings.test.ts src/features/study/speech.test.ts worker/audio.test.ts worker/db/migrations.test.ts worker/db/reviews.test.ts worker/api/content.test.ts worker/api/reviews.test.ts worker/api/placement.test.ts worker/auth/pin.test.ts",
     "e2e:prepare": "node scripts/e2e-setup.mjs",
     "e2e": "playwright test",
     "e2e:ci": "node scripts/e2e-ci.mjs",

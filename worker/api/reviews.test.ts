@@ -73,7 +73,7 @@ describe("review and session API", () => {
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 0 });
 
     const ids = fixture.sqlite.prepare("SELECT id, key FROM characters ORDER BY id LIMIT 2").all() as Array<{ id: number; key: string }>;
-    const insert = fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, ?, ?, 1, 1)");
+    const insert = fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, ?, ?, 1, 1)");
     insert.run(ids[0].id, Date.now() - DAY, Date.now() - DAY * 3);
     insert.run(ids[1].id, Date.now() - DAY, Date.now() - DAY);
     const dueResponse = await routeApiRequest(new Request("https://test/api/reviews/due?tracks=kr&limit=1"), fixture.env);
@@ -98,7 +98,7 @@ describe("review and session API", () => {
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_submissions").get()).toEqual({ count: 0 });
 
     const members = fixture.sqlite.prepare("SELECT character_id FROM word_members WHERE word_id = ? ORDER BY position").all(wordId) as Array<{ character_id: number }>;
-    const insertState = fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
+    const insertState = fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
     for (const member of members) insertState.run(member.character_id);
     expect((await post("/api/reviews", input, fixture.env)).status).toBe(200);
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 2 });

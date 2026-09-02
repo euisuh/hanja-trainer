@@ -135,7 +135,7 @@ async function consumeAttempt(db: D1Database, attempt: AttemptRow, members: Memb
         SELECT 1 FROM curriculum_unit_test_attempts
         WHERE session_id = ?4 AND unit_id = ?1 AND consumed_token = ?5
       )
-      ON CONFLICT(unit_id, character_id) DO NOTHING
+      ON CONFLICT(profile_id, unit_id, character_id) DO NOTHING
     `).bind(attempt.unit_id, member.character_id, now, attempt.session_id, token)));
   }
   const [claim] = await db.batch(statements);

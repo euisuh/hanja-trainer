@@ -110,7 +110,7 @@ export function prepareUpsertState(db: D1Database, characterId: number, track: T
       character_id, track, stability, difficulty, elapsed_days, scheduled_days,
       learning_steps, reps, lapses, state, last_review, due, correct_count, total_count
     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)
-    ON CONFLICT (character_id, track) DO UPDATE SET
+    ON CONFLICT (profile_id, character_id, track) DO UPDATE SET
       stability = excluded.stability,
       difficulty = excluded.difficulty,
       elapsed_days = excluded.elapsed_days,

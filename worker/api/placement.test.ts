@@ -68,12 +68,11 @@ describe("profile, placement, and stats API", () => {
     expect(formatter.mock.calls.filter(([, options]) => options?.timeZone === timezone)).toHaveLength(1);
   });
 
-  it("enforces one profile row and persists validated settings without deleting review state", async () => {
+  it("persists validated settings without deleting review state", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    expect(() => fixture.sqlite.prepare("INSERT INTO profile (id) VALUES (2)").run()).toThrow();
     expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", theme: "quiet-technical" });
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
-    fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
+    fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
     const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" }), fixture.env);
     expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" });
     expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" });
@@ -158,7 +157,7 @@ describe("profile, placement, and stats API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["kr"], timezone: "Asia/Seoul" }), fixture.env);
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
-    fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
+    fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
     fixture.sqlite.prepare("INSERT INTO review_log (character_id, track, rating, answered_at, correct, elapsed_ms, scheduled_days_before, scheduled_days_after, mode) VALUES (?, 'kr', 3, ?, 1, 1000, 1, 2, 'lesson')").run(character.id, Date.parse("2026-08-28T14:50:00Z"));
     const now = new Date("2026-08-28T15:30:00Z");
     const stats = await getStats(fixture.env.DB, now) as StatsResponse;

@@ -448,7 +448,7 @@ describe("content API", () => {
     fixture.sqlite.exec(emitWordSeedSql(parseWordSeed(JSON.parse(readFileSync("data/words/kr-wiktionary.json", "utf8")) as unknown)));
     const members = fixture.sqlite.prepare("SELECT id FROM characters WHERE key IN ('學', '校') ORDER BY id").all() as Array<{ id: number }>;
     const others = fixture.sqlite.prepare("SELECT id FROM characters WHERE key NOT IN ('學', '校') ORDER BY id LIMIT 3").all() as Array<{ id: number }>;
-    const insert = fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
+    const insert = fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
     insert.run(members[0].id);
     for (const other of others) insert.run(other.id);
     let session = await startSession(fixture.env.DB, { mode: "review", tracks: ["kr"], limit: 4 }, "one-known");
@@ -634,7 +634,7 @@ describe("content API", () => {
     expect(lesson.cards.filter((card) => card.kind === "reading").flatMap((card) => card.options).every((option) => canonical.has(option.label))).toBe(true);
     expect(lesson.cards.filter((card) => card.kind === "kun").flatMap((card) => card.options).every((option) => option.label !== "なし")).toBe(true);
 
-    fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'jp', 2, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(stored.character_id);
+    fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'jp', 2, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(stored.character_id);
     const due = await (await routeApiRequest(new Request("https://test/api/reviews/due?tracks=jp&limit=1"), fixture.env)).json() as { cards: Array<{ reading: string }> };
     expect(due.cards[0].reading).toBe(stored.jp_on);
   });
