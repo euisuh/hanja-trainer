@@ -225,6 +225,9 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
       const body = await jsonBody(request);
       return withCookie(Response.json({ selected: true }), await selectProfile(env.DB, profileId(body.profileId), now));
     }
+    if (request.method === "POST" && pathname === "/api/session/end") {
+      return withCookie(Response.json({ ended: true }), clearSessionCookie);
+    }
 
     const record = await resolveSession(env.DB, request.headers.get("cookie"), now);
     if (!record) return error(401, "profile_required", "Select a profile");

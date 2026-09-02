@@ -1,61 +1,229 @@
-import { useEffect, useState, type CSSProperties } from "react";
-import { matchPath, useLocation } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { matchPath, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { themes } from "./design/tokens";
+import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
+import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
+import { resetSettingsClientState } from "./features/settings/useSettings";
+import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests } from "./lib/apiClient";
 import { AppRoutes, routes, type Screen } from "./routes";
+import { ProfilePicker } from "./screens/ProfilePicker";
+import { UnlockScreen } from "./screens/UnlockScreen";
+import type { ProfileResponse, PublicProfile, SettingsResponse } from "./shared/api";
+import type { ThemeId } from "./shared/settings";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
 import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";
-import { ApiClientError, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient } from "./lib/apiClient";
-import { UnlockScreen } from "./screens/UnlockScreen";
-import type { SettingsResponse } from "./shared/api";
-import type { ThemeId } from "./shared/settings";
 
-const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail", "study"]);
+const headerScreens = new Set<Screen>(["onboarding", "home", "review", "stats", "settings", "detail", "study"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
 const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking"]);
 
+type Gate = "checking" | "error" | "choosing" | "locked" | "unlocked";
+
+function isProfileRequired(caught: unknown): boolean {
+  return caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required");
+}
+
+function identity(profile: ProfileResponse): ActiveProfile {
+  return { id: profile.id, name: profile.name, isAdmin: profile.isAdmin };
+}
+
+function afterProfileUnmount(): Promise<void> {
+  return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+}
+
 export function App() {
   const { pathname } = useLocation();
-  const [pinGate, setPinGate] = useState<"checking" | "error" | "locked" | "unlocked">("checking");
-  const [pinRetry, setPinRetry] = useState(0);
+  const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  const [gate, setGate] = useState<Gate>("checking");
+  const [retryKey, setRetryKey] = useState(0);
+  const [profiles, setProfiles] = useState<PublicProfile[]>([]);
+  const [selectedProfile, setSelectedProfile] = useState<PublicProfile | null>(null);
+  const [activeProfile, setActiveProfile] = useState<ActiveProfile | null>(null);
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
+  const [onboardingRequired, setOnboardingRequired] = useState(false);
   const [theme, setTheme] = useState<ThemeId>("quiet-technical");
   const screen = routes.find((route) => matchPath({ path: route.path, end: true }, pathname))?.screen ?? "onboarding";
+  const screenRef = useRef(screen);
   const sessionActive = sessionScreens.has(screen);
 
-  useGlobalHotkeys({ sessionActive, modalOpen: pinGate !== "unlocked" });
+  useGlobalHotkeys({ sessionActive, modalOpen: gate !== "unlocked" });
+
+  useEffect(() => {
+    navigateRef.current = navigate;
+    screenRef.current = screen;
+  }, [navigate, screen]);
+
+  const activateCurrentProfile = useCallback(async (mode: "preserve" | "select" | "guard", signal?: AbortSignal) => {
+    const [profile, onboarding] = await Promise.all([
+      apiClient.profile(signal, false),
+      apiClient.onboardingState(signal, false),
+    ]);
+    setActiveProfile(identity(profile));
+    const needsOnboarding = mode !== "preserve" && !onboarding.onboarded;
+    setOnboardingRequired(needsOnboarding);
+    setSelectedProfile(null);
+    setGate("unlocked");
+    if (mode === "select") {
+      navigateRef.current(onboarding.onboarded ? "/home" : "/onboarding");
+      return;
+    }
+    if (needsOnboarding && !navlessScreens.has(screenRef.current)) navigateRef.current("/onboarding", { replace: true });
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
-    const requirePin = () => setPinGate("locked");
-    window.addEventListener(PIN_REQUIRED_EVENT, requirePin);
-    apiClient.pinState(controller.signal).then(async (state) => {
-      setLockedUntil(state.lockedUntil);
-      if (!state.enabled) { setPinGate("unlocked"); return; }
-      try { await apiClient.profile(controller.signal); setPinGate("unlocked"); }
-      catch (caught) { if (!controller.signal.aborted) setPinGate(caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required") ? "locked" : "error"); }
-    }).catch(() => { if (!controller.signal.aborted) setPinGate("error"); });
-    return () => { controller.abort(); window.removeEventListener(PIN_REQUIRED_EVENT, requirePin); };
-  }, [pinRetry]);
+    async function boot() {
+      resumeProfileRequests();
+      try {
+        const result = await apiClient.profiles(controller.signal);
+        if (controller.signal.aborted) return;
+        setProfiles(result.profiles);
+        if (result.profiles.length !== 1) {
+          try {
+            await activateCurrentProfile("guard", controller.signal);
+          } catch (caught) {
+            if (!controller.signal.aborted) setGate(isProfileRequired(caught) ? "choosing" : "error");
+          }
+          return;
+        }
+
+        const onlyProfile = result.profiles[0];
+        setSelectedProfile(onlyProfile);
+        const state = await apiClient.pinState(controller.signal);
+        setLockedUntil(state.lockedUntil);
+        try {
+          await activateCurrentProfile("preserve", controller.signal);
+        } catch (caught) {
+          if (!controller.signal.aborted) setGate(isProfileRequired(caught) && state.enabled ? "locked" : "error");
+        }
+      } catch {
+        if (!controller.signal.aborted) setGate("error");
+      }
+    }
+    void boot();
+    return () => controller.abort();
+  }, [activateCurrentProfile, retryKey]);
 
   useEffect(() => {
+    let active = true;
+    let transition: Promise<void> | null = null;
+    async function requireProfile() {
+      setAnswerSubmitProfile(null);
+      resetSettingsClientState();
+      setActiveProfile(null);
+      setTheme("quiet-technical");
+      setGate("checking");
+      await afterProfileUnmount();
+      await pauseProfileRequests();
+      try {
+        const result = await apiClient.profiles();
+        if (!active) return;
+        setProfiles(result.profiles);
+        if (result.profiles.length === 1) {
+          const onlyProfile = result.profiles[0];
+          setSelectedProfile(onlyProfile);
+          if (onlyProfile.hasPin) setGate("locked");
+          else {
+            resumeProfileRequests();
+            await activateCurrentProfile("preserve");
+          }
+          return;
+        }
+        setSelectedProfile(null);
+        setGate("choosing");
+      } catch {
+        if (active) setGate("error");
+      }
+    }
+    const handleRequired = () => {
+      transition ??= requireProfile().finally(() => { transition = null; });
+    };
+    window.addEventListener(PIN_REQUIRED_EVENT, handleRequired);
+    return () => { active = false; window.removeEventListener(PIN_REQUIRED_EVENT, handleRequired); };
+  }, [activateCurrentProfile]);
+
+  useEffect(() => {
+    setAnswerSubmitProfile(activeProfile?.id ?? null);
+    if (!activeProfile) resetSettingsClientState();
+  }, [activeProfile]);
+
+  useEffect(() => {
+    const completeOnboarding = () => setOnboardingRequired(false);
+    window.addEventListener(ONBOARDING_COMPLETED_EVENT, completeOnboarding);
+    return () => window.removeEventListener(ONBOARDING_COMPLETED_EVENT, completeOnboarding);
+  }, []);
+
+  useEffect(() => {
+    if (!activeProfile) return;
     const controller = new AbortController();
     const updateTheme = (event: Event) => {
       const next = (event as CustomEvent<Partial<SettingsResponse>>).detail?.theme;
       if (next) setTheme(next);
     };
     window.addEventListener(SETTINGS_UPDATED_EVENT, updateTheme);
-    if (pinGate === "unlocked") void apiClient.settings(controller.signal).then((settings) => setTheme(settings.theme)).catch(() => undefined);
+    void apiClient.settings(controller.signal).then((settings) => setTheme(settings.theme)).catch(() => undefined);
     return () => { controller.abort(); window.removeEventListener(SETTINGS_UPDATED_EVENT, updateTheme); };
-  }, [pinGate]);
+  }, [activeProfile]);
 
-  return (
-    <div className="app" data-theme={theme} style={themes[theme].cssVariables as CSSProperties}>
-      {pinGate === "checking" ? <main><p>잠금 상태 확인 중…</p></main> : pinGate === "error" ? <main className="session-empty"><p role="alert">잠금 상태를 확인하지 못했습니다.</p><button onClick={() => { setPinGate("checking"); setPinRetry((value) => value + 1); }} type="button">다시 시도</button></main> : pinGate === "locked" ? <UnlockScreen lockedUntil={lockedUntil} onUnlock={() => setPinGate("unlocked")} /> : <>
-        {headerScreens.has(screen) && <AppHeader />}
+  async function selectProfile(profile: PublicProfile) {
+    setSelectedProfile(profile);
+    setLockedUntil(null);
+    if (profile.hasPin) {
+      setGate("locked");
+      return;
+    }
+    await apiClient.selectProfile(profile.id);
+    resumeProfileRequests();
+    await activateCurrentProfile("select");
+  }
+
+  async function switchProfile() {
+    setAnswerSubmitProfile(null);
+    resetSettingsClientState();
+    setActiveProfile(null);
+    setTheme("quiet-technical");
+    setGate("checking");
+    try {
+      await afterProfileUnmount();
+      await pauseProfileRequests();
+      await apiClient.endSession();
+      const result = await apiClient.profiles();
+      setProfiles(result.profiles);
+      setSelectedProfile(null);
+      setGate("choosing");
+    } catch {
+      setGate("error");
+    }
+  }
+
+  let content;
+  if (gate === "checking") {
+    content = <main><p>프로필 확인 중…</p></main>;
+  } else if (gate === "error") {
+    content = <main className="session-empty"><p role="alert">잠금 상태를 확인하지 못했습니다.</p><button onClick={() => { setGate("checking"); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></main>;
+  } else if (gate === "choosing") {
+    content = <ProfilePicker onSelect={selectProfile} profiles={profiles} />;
+  } else if (gate === "locked" && selectedProfile) {
+    content = <UnlockScreen
+      key={selectedProfile.id}
+      lockedUntil={lockedUntil}
+      onBack={profiles.length > 1 ? () => { setSelectedProfile(null); setGate("choosing"); } : undefined}
+      onUnlock={() => { resumeProfileRequests(); return activateCurrentProfile(profiles.length > 1 ? "select" : "preserve"); }}
+      profile={selectedProfile}
+    />;
+  } else if (activeProfile) {
+    content = onboardingRequired && !navlessScreens.has(screen) ? <Navigate replace to="/onboarding" /> : (
+      <ProfileProvider key={activeProfile.id} profile={activeProfile}>
+        {headerScreens.has(screen) && <AppHeader onSwitch={() => void switchProfile()} />}
         <main><AppRoutes /></main>
         {!navlessScreens.has(screen) && !sessionActive && <BottomNav />}
-      </>}
-    </div>
-  );
+      </ProfileProvider>
+    );
+  } else {
+    content = <main><p>프로필 확인 중…</p></main>;
+  }
+
+  return <div className="app" data-theme={theme} style={themes[theme].cssVariables as CSSProperties}>{content}</div>;
 }

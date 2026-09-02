@@ -166,7 +166,7 @@ describe("content API", () => {
     const sessionCookie = selected.headers.get("set-cookie")!.split(";", 1)[0];
     const load = (path: string) => routeApiRequest(new Request(`https://test${path}`, { headers: { cookie: sessionCookie } }), fixture.env, now);
 
-    expect(await (await load("/api/profile")).json()).toMatchObject({ xp: 0, todayXp: 0, streak: 0, longestStreak: 0 });
+    expect(await (await load("/api/profile")).json()).toMatchObject({ id: profileId, name: "둘", isAdmin: false, xp: 0, todayXp: 0, streak: 0, longestStreak: 0 });
     expect(await (await load("/api/stats")).json()).toMatchObject({ answered: 0, skipped: 0, streak: 0, longestStreak: 0 });
     expect(await (await load("/api/reviews/due?tracks=kr&limit=10")).json()).toEqual({ total: 0, cards: [] });
     const curriculum = await (await load("/api/curriculum?track=kr")).json() as CurriculumResponse;

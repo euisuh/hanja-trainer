@@ -7,6 +7,10 @@ export { DAILY_GOAL, normalizeDailyGoal };
 
 let timezoneSent = false;
 
+export function resetSettingsClientState() {
+  timezoneSent = false;
+}
+
 export function toggleTrack(enabledTracks: Track[], track: Track): Track[] {
   if (!enabledTracks.includes(track)) return [...enabledTracks, track];
   return enabledTracks.length === 1 ? enabledTracks : enabledTracks.filter((candidate) => candidate !== track);

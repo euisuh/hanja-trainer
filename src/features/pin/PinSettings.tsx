@@ -57,6 +57,7 @@ export function PinSettings() {
         setEnabled(false);
         setAction(null);
         setMessage("기기 잠금이 해제되었습니다.");
+        window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
       } catch (caught) {
         fail(caught instanceof ApiClientError && caught.code === "admin_pin_required"
           ? "다른 프로필이 있는 동안에는 관리자 PIN을 해제할 수 없습니다."

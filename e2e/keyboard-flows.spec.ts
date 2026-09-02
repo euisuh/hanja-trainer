@@ -4,7 +4,7 @@ const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
 const meaningPrompts = { kr: "뜻을 고르세요", jp: "意味を選べ", cn: "选择正确的意思" } as const;
 type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; prompt: string; reading: string; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages; trackBadge: string; wordId?: number; wordSourceUrl?: string };
 type SessionResponse = { cards: Card[]; sessionId: string };
-const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
+const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes:1";
 const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
 
 async function expectClosestLang(locator: Locator, lang: string) {
@@ -726,6 +726,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "settings", testInfo);
 
     await page.keyboard.press("Tab");
+    await expect(page.getByRole("button", { name: "프로필 전환" })).toBeFocused();
+    await page.keyboard.press("Tab");
     expect(await page.evaluate(() => getComputedStyle(document.activeElement!).outlineStyle)).not.toBe("none");
     await page.keyboard.press("Space");
     await page.keyboard.press("Tab");
@@ -795,12 +797,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const first = await sessionStarted(page, () => page.keyboard.press("Enter"));
-    let failOnce = true;
     await page.route("**/api/reviews/batch", async (route) => {
-      if (failOnce) {
-        failOnce = false;
-        await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: { message: "temporary" } }) });
-      } else await route.continue();
+      await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: { message: "temporary" } }) });
     });
     await page.keyboard.press(String(first.cards[0].answerIndex + 1));
     await expect(page.getByRole("button", { name: /저장 재시도/u })).toBeVisible();

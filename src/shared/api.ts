@@ -166,6 +166,9 @@ export type CreateSessionRequest = {
 };
 
 export type ProfileResponse = {
+  id: number;
+  name: string;
+  isAdmin: boolean;
   xp: number;
   todayXp: number;
   goal: number;

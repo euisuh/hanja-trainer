@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
+import { useActiveProfile } from "../features/profile/ProfileContext";
 import { trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
@@ -13,11 +14,9 @@ import "../features/path-map/pathMap.css";
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 const DAY_MS = 86_400_000;
 
-// ponytail: localStorage — single-user app, and a missed nudge costs nothing.
-// Move to the profile table if he starts using two devices.
-function readSnoozes(): TrackSnoozes {
+function readSnoozes(storageKey: string): TrackSnoozes {
   try {
-    const parsed: unknown = JSON.parse(localStorage.getItem(NUDGE_SNOOZES_KEY) ?? "{}");
+    const parsed: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "{}");
     if (!parsed || typeof parsed !== "object") return {};
     return Object.fromEntries(TRACKS.flatMap((track) => typeof (parsed as Record<string, unknown>)[track] === "number" ? [[track, (parsed as Record<string, number>)[track]]] : []));
   } catch {
@@ -27,13 +26,15 @@ function readSnoozes(): TrackSnoozes {
 
 export function HomeScreen() {
   const navigate = useNavigate();
+  const { id: profileId } = useActiveProfile();
+  const snoozesKey = `${NUDGE_SNOOZES_KEY}:${profileId}`;
   const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
-  const [snoozes, setSnoozes] = useState<TrackSnoozes>(readSnoozes);
+  const [snoozes, setSnoozes] = useState<TrackSnoozes>(() => readSnoozes(snoozesKey));
   const [now] = useState(Date.now);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -49,10 +50,10 @@ export function HomeScreen() {
   const snooze = useCallback((track: Track, days: number) => {
     setSnoozes((current) => {
       const next = { ...current, [track]: Date.now() + days * DAY_MS };
-      try { localStorage.setItem(NUDGE_SNOOZES_KEY, JSON.stringify(next)); } catch { /* Session state still hides the nudge. */ }
+      try { localStorage.setItem(snoozesKey, JSON.stringify(next)); } catch { /* Session state still hides the nudge. */ }
       return next;
     });
-  }, []);
+  }, [snoozesKey]);
 
   const startLaggingLesson = useCallback(() => {
     if (!laggingTrack) return;
@@ -62,9 +63,9 @@ export function HomeScreen() {
 
   useEffect(() => {
     if (!laggingTrack) return;
-    const next = { ...readSnoozes(), [laggingTrack]: Date.now() + 7 * DAY_MS };
-    try { localStorage.setItem(NUDGE_SNOOZES_KEY, JSON.stringify(next)); } catch { /* Cooldown can fail without blocking the nudge. */ }
-  }, [laggingTrack]);
+    const next = { ...readSnoozes(snoozesKey), [laggingTrack]: Date.now() + 7 * DAY_MS };
+    try { localStorage.setItem(snoozesKey, JSON.stringify(next)); } catch { /* Cooldown can fail without blocking the nudge. */ }
+  }, [laggingTrack, snoozesKey]);
   useEffect(() => {
     if (!ready) return;
     const controller = new AbortController();

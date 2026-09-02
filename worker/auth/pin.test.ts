@@ -110,6 +110,19 @@ describe("device PIN", () => {
     expect((await routeApiRequest(request("/api/health", "GET", undefined, changedCookie), fixture.env)).status).toBe(401);
   });
 
+  it("ends authenticated and anonymous sessions idempotently", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    await routeApiRequest(request("/api/pin", "POST", { pin: "1234" }), fixture.env);
+    const activeCookie = cookie(await routeApiRequest(request("/api/pin/unlock", "POST", { profileId: 1, pin: "1234" }), fixture.env));
+
+    for (const currentCookie of [activeCookie, undefined]) {
+      const ended = await routeApiRequest(request("/api/session/end", "POST", undefined, currentCookie), fixture.env);
+      expect(ended.status).toBe(200);
+      expect(await ended.json()).toEqual({ ended: true });
+      expect(ended.headers.get("set-cookie")).toContain("hanja_session=; Max-Age=0");
+    }
+  });
+
   it("rejects a stale initial PIN set after a concurrent PIN set wins", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     let release!: () => void;

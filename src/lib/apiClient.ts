@@ -10,18 +10,49 @@ export class ApiClientError extends Error {
 export const PROFILE_UPDATED_EVENT = "hanja-trainer:profile-updated";
 export const SETTINGS_UPDATED_EVENT = "hanja-trainer:settings-updated";
 export const PIN_REQUIRED_EVENT = "hanja-trainer:pin-required";
+export const ONBOARDING_COMPLETED_EVENT = "hanja-trainer:onboarding-completed";
 
-async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(path, init);
-  const body: unknown = await response.json();
-  if (!response.ok) {
-    const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { code?: string; message?: string }; retryAfter?: number } : null;
-    const code = errorBody?.error?.code ?? "request_failed";
-    const message = errorBody?.error?.message ?? `Request failed (${response.status})`;
-    if (code === "pin_required" || code === "profile_required") window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
-    throw new ApiClientError(response.status, code, message, errorBody?.retryAfter);
+const profileRequests = new Map<AbortController, Promise<unknown>>();
+let profileRequestsPaused = false;
+
+function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, profileBound = true): Promise<T> {
+  if (profileBound && profileRequestsPaused) return Promise.reject(new Error("Profile request was cancelled"));
+  const controller = new AbortController();
+  const callerSignal = init?.signal;
+  const abort = () => controller.abort();
+  if (callerSignal?.aborted) abort();
+  else callerSignal?.addEventListener("abort", abort, { once: true });
+  const tracked = (async () => {
+    const response = await fetch(path, { ...init, signal: controller.signal });
+    const body: unknown = await response.json();
+    if (!response.ok) {
+      const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { code?: string; message?: string }; retryAfter?: number } : null;
+      const code = errorBody?.error?.code ?? "request_failed";
+      const message = errorBody?.error?.message ?? `Request failed (${response.status})`;
+      if (notifyAuth && (code === "pin_required" || code === "profile_required")) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+      throw new ApiClientError(response.status, code, message, errorBody?.retryAfter);
+    }
+    return body as T;
+  })().finally(() => {
+    callerSignal?.removeEventListener("abort", abort);
+    if (profileBound) profileRequests.delete(controller);
+  });
+  if (profileBound) profileRequests.set(controller, tracked);
+  return tracked;
+}
+
+export async function pauseProfileRequests(): Promise<void> {
+  profileRequestsPaused = true;
+  while (profileRequests.size > 0) {
+    const active = [...profileRequests.entries()];
+    active.forEach(([controller]) => controller.abort());
+    await Promise.allSettled(active.map(([, request]) => request));
+    await Promise.resolve();
   }
-  return body as T;
+}
+
+export function resumeProfileRequests() {
+  profileRequestsPaused = false;
 }
 
 export const apiClient = {
@@ -48,9 +79,9 @@ export const apiClient = {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body),
     signal,
-  }),
+  }, false),
   dueReviews: (tracks: Track[], limit = 50, signal?: AbortSignal) => requestJson<DueReviewsResponse>(`/api/reviews/due?tracks=${tracks.join(",")}&limit=${limit}`, { signal }),
-  profile: (signal?: AbortSignal) => requestJson<ProfileResponse>("/api/profile", { signal }),
+  profile: (signal?: AbortSignal, notifyAuth = true) => requestJson<ProfileResponse>("/api/profile", { signal }, notifyAuth),
   createSession: async (body: CreateSessionRequest): Promise<ProfileResponse> => {
     const profile = await requestJson<ProfileResponse>("/api/sessions", {
       method: "POST",
@@ -70,17 +101,23 @@ export const apiClient = {
   scorePlacement: async (answers: PlacementAnswer[]): Promise<PlacementScoreResponse> => {
     const result = await requestJson<PlacementScoreResponse>("/api/placement/score", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ answers }) });
     window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    window.dispatchEvent(new Event(ONBOARDING_COMPLETED_EVENT));
     return result;
   },
   stats: (signal?: AbortSignal) => requestJson<StatsResponse>("/api/stats", { signal }),
-  onboardingState: (signal?: AbortSignal) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }),
-  profiles: (signal?: AbortSignal) => requestJson<ProfilesResponse>("/api/profiles", { signal }),
+  onboardingState: (signal?: AbortSignal, notifyAuth = true) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }, notifyAuth),
+  profiles: (signal?: AbortSignal) => requestJson<ProfilesResponse>("/api/profiles", { signal }, true, false),
   createProfile: (body: CreateProfileRequest) => requestJson<ManagedProfile>("/api/profiles", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }),
-  renameProfile: (profileId: number, body: RenameProfileRequest) => requestJson<ManagedProfile>(`/api/profiles/${profileId}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }),
+  renameProfile: async (profileId: number, body: RenameProfileRequest) => {
+    const profile = await requestJson<ManagedProfile>(`/api/profiles/${profileId}`, { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    return profile;
+  },
   deleteProfile: (profileId: number) => requestJson<{ deleted: true }>(`/api/profiles/${profileId}`, { method: "DELETE" }),
-  selectProfile: (profileId: number) => requestJson<{ selected: true }>("/api/profiles/select", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }) }),
-  pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }),
-  unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }),
+  selectProfile: (profileId: number) => requestJson<{ selected: true }>("/api/profiles/select", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }) }, true, false),
+  endSession: () => requestJson<{ ended: true }>("/api/session/end", { method: "POST" }, true, false),
+  pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }, true, false),
+  unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }, true, false),
   setPin: (pin: string, currentPin?: string) => requestJson<{ enabled: true }>("/api/pin", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin, ...(currentPin ? { currentPin } : {}) }) }),
   removePin: (currentPin: string) => requestJson<{ enabled: false }>("/api/pin", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ currentPin }) }),
 };

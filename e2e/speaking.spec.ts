@@ -71,9 +71,11 @@ test("records and replays JP and CN locally without uploading audio", async ({ p
     } });
   });
 
-  const writes: Array<{ method: string; url: string }> = [];
+  const unexpectedWrites: Array<{ method: string; url: string }> = [];
   page.on("request", (request) => {
-    if (request.method() !== "GET") writes.push({ method: request.method(), url: request.url() });
+    const method = request.method();
+    const pathname = new URL(request.url()).pathname;
+    if (method !== "GET" && !(method === "PATCH" && pathname === "/api/settings")) unexpectedWrites.push({ method, url: request.url() });
   });
 
   for (const [track, language] of [["jp", "ja-JP"], ["cn", "zh-CN"]] as const) {
@@ -109,5 +111,5 @@ test("records and replays JP and CN locally without uploading audio", async ({ p
     expect(Number(await page.locator("html").getAttribute("data-stopped-tracks"))).toBe(stopped + 1);
   }
 
-  expect(writes).toEqual([]);
+  expect(unexpectedWrites).toEqual([]);
 });

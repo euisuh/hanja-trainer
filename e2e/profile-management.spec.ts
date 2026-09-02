@@ -1,6 +1,12 @@
+import { execFileSync } from "node:child_process";
 import { expect, test, type Page } from "@playwright/test";
 
 type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
+const npx = process.platform === "win32" ? "npx.cmd" : "npx";
+
+function executeSql(sql: string) {
+  execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--command", sql], { cwd: process.cwd(), stdio: "pipe" });
+}
 
 async function publicProfiles(page: Page): Promise<PublicProfile[]> {
   const response = await page.request.get("/api/profiles");
@@ -68,7 +74,14 @@ test("admin creates, renames, and permanently deletes a profile by keyboard", as
     await page.waitForLoadState("networkidle");
 
     expect((await page.request.post("/api/pin/unlock", { data: { profileId: 1, pin: "1234" } })).ok()).toBe(true);
-    await page.reload();
+    executeSql("UPDATE profile SET onboarded_at = 1 WHERE id = 1;");
+    await page.goto("/settings");
+    await expect(section).toBeVisible();
+    await section.getByRole("button", { name: "나 이름 변경" }).click();
+    const adminRenameInput = section.getByRole("textbox", { name: "나 새 이름" });
+    await adminRenameInput.fill("관리자");
+    await adminRenameInput.press("Enter");
+    await expect(page.locator(".active-profile strong")).toHaveText("관리자");
     await section.getByRole("button", { name: "아이 이름 변경" }).click();
     const renameInput = section.getByRole("textbox", { name: "아이 새 이름" });
     await renameInput.fill("가족");
@@ -109,6 +122,7 @@ test("admin creates, renames, and permanently deletes a profile by keyboard", as
     await expect(section).toBeFocused();
     expect((await publicProfiles(page)).some(({ id }) => id === created.id)).toBe(false);
   } finally {
-    await cleanUp(page);
+    try { await cleanUp(page); }
+    finally { executeSql("UPDATE profile SET name = '나', onboarded_at = NULL WHERE id = 1;"); }
   }
 });
