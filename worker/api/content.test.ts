@@ -200,7 +200,14 @@ describe("content API", () => {
     const lesson = await (await post({ mode: "lesson", tracks: ["kr"], limit: 6 })).json() as StartSessionResponse;
     expect(lesson.cards).toHaveLength(6);
     expect(lesson.cards.every((card) => card.meaningKo.length > 0)).toBe(true);
-    for (const card of lesson.cards.filter((item) => item.kind === "reading")) {
+    expect(new Set(lesson.cards.map((card) => card.kind))).toEqual(new Set(["reading", "meaning"]));
+    for (const card of lesson.cards.filter((item) => item.kind === "meaning")) {
+      expect(card.prompt).toBe("뜻을 고르세요");
+      expect(card.meaning).toBe(card.meaningKo);
+      expect(card.options[card.answerIndex]?.label).toBe(card.meaning);
+      expect(card.reading).not.toBe(card.meaning);
+    }
+    for (const card of lesson.cards) {
       expect(card.options).toHaveLength(4);
       expect(new Set(card.options.map((option) => option.label)).size).toBe(4);
       expect(card.options.every((option) => Object.keys(option).join() === "label")).toBe(true);
@@ -464,7 +471,7 @@ describe("content API", () => {
     insert.run(members[1].id);
     session = await startSession(fixture.env.DB, { mode: "review", tracks: ["kr"], limit: 4 }, "both-known");
     const word = session.cards.find((card) => card.kind === "word");
-    expect(session.cards.filter((card) => card.kind === "reading")).toHaveLength(4);
+    expect(session.cards.filter((card) => card.kind !== "word")).toHaveLength(4);
     expect(word).toMatchObject({ kind: "word", wordId: expect.any(Number), glyph: "學校", memberKeys: ["學", "校"], options: expect.any(Array), wordSourceUrl: expect.stringContaining("oldid=4219407") });
     expect(word?.options).toHaveLength(4);
     expect(new Set(word?.options.map((option) => option.label)).size).toBe(4);
@@ -603,7 +610,8 @@ describe("content API", () => {
     expect(detail.tracks.find((track) => track.track === "jp")?.reading).toBe(`音 ${stored.jp_on}`);
 
     const lesson = await (await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ mode: "lesson", tracks: ["jp"], limit: 4 }) }), fixture.env)).json() as StartSessionResponse;
-    expect(lesson.cards.flatMap((card) => card.options).every((option) => canonical.has(option.label))).toBe(true);
+    expect(lesson.cards.filter((card) => card.kind === "reading").flatMap((card) => card.options).every((option) => canonical.has(option.label))).toBe(true);
+    expect(lesson.cards.filter((card) => card.kind === "kun").flatMap((card) => card.options).every((option) => option.label !== "なし")).toBe(true);
 
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (?, 'jp', 2, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(stored.character_id);
     const due = await (await routeApiRequest(new Request("https://test/api/reviews/due?tracks=jp&limit=1"), fixture.env)).json() as { cards: Array<{ reading: string }> };

@@ -1,7 +1,8 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
-type Card = { answerIndex: number; characterKey: string; kind: "compare" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages; wordId?: number };
+const meaningPrompts = { kr: "뜻을 고르세요", jp: "意味を選べ", cn: "选择正确的意思" } as const;
+type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; reading: string; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages; wordId?: number };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
@@ -16,7 +17,7 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; skipAdvance?: "Enter" | "Space"; skipAnnouncement?: boolean; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyReducedMotion?: boolean };
+type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; skipAdvance?: "Enter" | "Space"; skipAnnouncement?: boolean; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyMeaningFeedback?: boolean; verifyReducedMotion?: boolean };
 
 async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
   let skipped = false;
@@ -28,10 +29,13 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
   let tierThreeParticles = 0;
   let maxLiveBursts = 0;
   let checkedSurvival = false;
+  let meaningKeyboardAnswers = 0;
+  let meaningFeedbackChecked = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
     const shouldSkip = card.kind === "reading" && Boolean(options.skipFirst) && !skipped;
-    const testKeyboardAdvance = card.kind !== "compare" && !shouldSkip && Boolean(options.keyboardAdvance) && !testedKeyboardAdvance;
+    const testMeaningFeedback = card.kind === "meaning" && Boolean(options.verifyMeaningFeedback) && !meaningFeedbackChecked;
+    const testKeyboardAdvance = card.kind !== "compare" && !shouldSkip && !testMeaningFeedback && Boolean(options.keyboardAdvance) && !testedKeyboardAdvance;
     if (testKeyboardAdvance) {
       const clockStart = Date.now();
       await page.clock.install({ time: clockStart });
@@ -41,7 +45,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     if (options.verifyLanguages) {
       await expectClosestLang(page.locator(".quiz-card__glyph"), languages[card.track]);
       if (card.kind !== "compare") {
-        await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[card.track]);
+        await expectClosestLang(page.locator(".answer-option__copy strong").first(), card.kind === "meaning" && card.track !== "kr" ? "en" : languages[card.track]);
         if (await page.locator(".quiz-card__sentence p").count() > 0) {
           await expectClosestLang(page.locator(".quiz-card__sentence p"), languages[card.track]);
           const translation = page.locator(".quiz-card__sentence small");
@@ -76,8 +80,15 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
           observer.observe(progress, { attributeFilter: ["aria-valuenow"], attributes: true });
         });
       }
-      await page.keyboard.press(shouldSkip ? "5" : String(card.answerIndex + 1));
-      if (options.announcement && !shouldSkip && !checkedAnnouncement) {
+      const choice = testMeaningFeedback ? (card.answerIndex + 1) % card.options.length : card.answerIndex;
+      if (testMeaningFeedback) await expect(page.getByText(meaningPrompts[card.track], { exact: true })).toBeVisible();
+      await page.keyboard.press(shouldSkip ? "5" : String(choice + 1));
+      if (card.kind === "meaning") meaningKeyboardAnswers += 1;
+      if (testMeaningFeedback) {
+        await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.reading}`);
+        meaningFeedbackChecked = true;
+      }
+      if (options.announcement && !shouldSkip && !testMeaningFeedback && !checkedAnnouncement) {
         await expect(page.locator(".session-announcement")).toContainText(options.announcement);
         checkedAnnouncement = true;
       }
@@ -112,7 +123,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         await expect(page.locator('[data-tested-no-double-advance="true"]')).toBeVisible();
       }
       await page.clock.resume();
-    } else if (!options.autoAdvance || card.kind === "compare" || shouldSkip) {
+    } else if (!options.autoAdvance || card.kind === "compare" || shouldSkip || testMeaningFeedback) {
       await page.keyboard.press(shouldSkip ? options.skipAdvance ?? "Enter" : "Enter");
     }
     if (index + 1 < cards.length) {
@@ -129,7 +140,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       }
       await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(completed + Number(next.kind !== "compare")));
     }
-    if (card.kind !== "compare" && !shouldSkip && (options.verifyCelebration || options.verifyReducedMotion)) {
+    if (card.kind !== "compare" && !shouldSkip && !testMeaningFeedback && (options.verifyCelebration || options.verifyReducedMotion)) {
       const layer = page.locator(".celebration-layer");
       const burst = layer.locator(".particle-burst").last();
       await expect(layer).toHaveAttribute("aria-hidden", "true");
@@ -159,7 +170,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
     expect(maxLiveBursts).toBeGreaterThan(1);
     expect(tierThreeParticles).toBeGreaterThan(firstBurstParticles);
   }
-  return { correctAdvanceMs, correctTransitions };
+  return { correctAdvanceMs, correctTransitions, meaningFeedbackChecked, meaningKeyboardAnswers };
 }
 
 async function answerUnitCard(page: Page, cards: Card[], correct: boolean, input: "keyboard" | "mouse" = "keyboard"): Promise<number> {
@@ -179,7 +190,7 @@ async function waitForUnitAdvance(page: Page) {
   await expect(page.locator(".answer-option").first()).toHaveAttribute("aria-disabled", "false");
 }
 
-function expectReadingOnly(cards: Card[]) {
+function expectLabelOnly(cards: Card[]) {
   for (const card of cards.filter((item) => item.kind !== "compare")) {
     expect(card.options.every((option) => Object.keys(option).join() === "label")).toBe(true);
   }
@@ -229,7 +240,7 @@ test.describe.serial("keyboard-only product flows", () => {
     const placement = await sessionStarted(page, () => page.keyboard.press("Enter"));
     expect((await placementRequest).postDataJSON()).toMatchObject({ mode: "placement", tracks: ["kr", "cn"], limit: 15 });
     expect(placement.cards).toHaveLength(15);
-    expectReadingOnly(placement.cards);
+    expectLabelOnly(placement.cards);
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
     await checkLayout(page, "placement", testInfo);
@@ -253,7 +264,8 @@ test.describe.serial("keyboard-only product flows", () => {
     const startRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
     const lesson = await sessionStarted(page, () => page.keyboard.press("Enter"));
     expect((await startRequest).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["kr"], limit: 8, unitId: expect.any(Number) });
-    expectReadingOnly(lesson.cards);
+    expectLabelOnly(lesson.cards);
+    expect(lesson.cards.some((card) => card.kind === "meaning")).toBe(true);
     await checkAnswerGrid(page);
     await page.setViewportSize({ width: 1080, height: 900 });
     await expect(page.locator(".quiz-card__glyph")).toHaveCSS("font-size", "150px");
@@ -271,18 +283,37 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Escape");
     expect(await page.evaluate(() => (document.activeElement as HTMLElement | null)?.getAttribute("aria-label"))).toBe(opener);
 
-    const sourceCardIndex = lesson.cards.findIndex((card, index) => card.kind === "reading" && card.sentence !== null && lesson.cards.slice(index + 1).some((later) => later.kind === "reading"));
+    const sourceCardIndex = lesson.cards.findIndex((card, index) => card.kind !== "compare" && card.kind !== "word" && card.sentence !== null && lesson.cards.slice(index + 1).some((later) => later.kind !== "compare"));
     expect(sourceCardIndex).toBeGreaterThanOrEqual(0);
+    let meaningKeyboardAnswers = 0;
+    let meaningFeedbackChecked = false;
     for (const card of lesson.cards.slice(0, sourceCardIndex)) {
-      if (card.kind !== "compare") await page.keyboard.press(String(card.answerIndex + 1));
+      if (card.kind !== "compare") {
+        const testMeaningFeedback = card.kind === "meaning" && !meaningFeedbackChecked;
+        if (testMeaningFeedback) await expect(page.getByText(meaningPrompts[card.track], { exact: true })).toBeVisible();
+        await page.keyboard.press(String((testMeaningFeedback ? (card.answerIndex + 1) % card.options.length : card.answerIndex) + 1));
+        if (card.kind === "meaning") {
+          meaningKeyboardAnswers += 1;
+          if (testMeaningFeedback) {
+            await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.reading}`);
+            meaningFeedbackChecked = true;
+          }
+        }
+      }
       await page.keyboard.press("Enter");
     }
+    const sourceCard = lesson.cards[sourceCardIndex];
     const sourceProgress = lesson.cards.slice(0, sourceCardIndex + 1).filter((card) => card.kind !== "compare").length;
-    await expectClosestLang(page.locator(".quiz-card__glyph"), languages[lesson.cards[sourceCardIndex].track]);
-    await expectClosestLang(page.locator(".answer-option__copy strong").first(), languages[lesson.cards[sourceCardIndex].track]);
-    const wrongIndex = lesson.cards[sourceCardIndex].answerIndex === 1 ? 2 : 1;
+    await expectClosestLang(page.locator(".quiz-card__glyph"), languages[sourceCard.track]);
+    await expectClosestLang(page.locator(".answer-option__copy strong").first(), sourceCard.kind === "meaning" && sourceCard.track !== "kr" ? "en" : languages[sourceCard.track]);
+    if (sourceCard.kind === "meaning") await expect(page.getByText(meaningPrompts[sourceCard.track], { exact: true })).toBeVisible();
+    const wrongIndex = sourceCard.answerIndex === 1 ? 2 : 1;
     const clickedAnswer = page.locator(".answer-option").nth(wrongIndex);
     await clickedAnswer.click();
+    if (sourceCard.kind === "meaning") {
+      await expect(page.locator(".feedback-bar")).toContainText(`${sourceCard.glyph} = ${sourceCard.reading}`);
+      meaningFeedbackChecked = true;
+    }
     await expect(clickedAnswer).toBeFocused();
     await expect(clickedAnswer).toHaveAttribute("aria-disabled", "true");
     await page.locator(".session-card-wrap").evaluate((card) => card.setAttribute("data-tested-hold", "true"));
@@ -307,7 +338,9 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator('[data-tested-hold="true"]')).toHaveCount(0);
 
-    await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true });
+    const finished = await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true, verifyMeaningFeedback: !meaningFeedbackChecked });
+    expect(meaningKeyboardAnswers + finished.meaningKeyboardAnswers).toBeGreaterThan(0);
+    expect(meaningFeedbackChecked || finished.meaningFeedbackChecked).toBe(true);
     await expect.poll(async () => (await (await page.request.get("/api/stats")).json() as { skipped: number }).skipped).toBeGreaterThan(0);
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
@@ -531,7 +564,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const review = await sessionStarted(page, () => page.keyboard.press("R"));
-    expectReadingOnly(review.cards);
+    expectLabelOnly(review.cards);
     const before = await page.request.get("/api/reviews/due?tracks=kr,cn&limit=100");
     const beforeTotal = (await before.json() as { total: number }).total;
     expect(beforeTotal).toBeGreaterThan(0);
@@ -588,7 +621,7 @@ test.describe.serial("keyboard-only product flows", () => {
     expect((await page.request.post("/api/reviews/batch", { data: seeded })).ok()).toBe(true);
 
     const lesson = await sessionStarted(page, () => page.goto("/lesson"));
-    expect(lesson.cards.filter((card) => card.kind === "reading")).toHaveLength(8);
+    expect(lesson.cards.filter((card) => card.kind !== "compare" && card.kind !== "word")).toHaveLength(8);
     const wordIndex = lesson.cards.findIndex((card) => card.kind === "word");
     expect(wordIndex).toBe(4);
     for (const card of lesson.cards.slice(0, wordIndex)) {

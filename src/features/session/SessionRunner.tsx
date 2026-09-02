@@ -6,10 +6,11 @@ import { gradeFromReview, initialState, schedule, type ReviewState } from "../..
 import { toHiragana } from "../../shared/kana";
 import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
+import { trackThemes } from "../tracks/trackTheme";
 import type { PlacementAnswer, ProfileResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
 import { unitTestRetryOffset } from "../../shared/unitTestRetry";
 import { AnswerOptions } from "./AnswerOptions";
-import { buildQueue, buildReadingItem, reviewKey, type SessionQueueItem } from "./buildQueue";
+import { buildQueue, buildReadingItem, readingFor, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
@@ -289,7 +290,10 @@ export function SessionRunner({
     return <div className="session-empty"><h1>복습할 카드가 없습니다.</h1><button onClick={onQuit} type="button">복습 큐로 돌아가기</button></div>;
   }
   const source = item.character.sentences.find((sentence) => sentence.track === item.track)?.source;
+  const entry = item.character.tracks.find((candidate) => candidate.track === item.track);
   const word = item.kind === "word" ? item.word : undefined;
+  const reading = entry ? readingFor(entry).label : "";
+  const displayedReading = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(reading) : reading;
   const feedbackNote = compare
     ? "이미 아는 글자를 다른 트랙과 함께 확인합니다."
     : mode === "unit-test"
@@ -302,16 +306,17 @@ export function SessionRunner({
       ? word ? "한국어 위키낱말사전의 한자어입니다." : source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
       : correct
         ? `다음 복습: ${nextInterval}`
-        : word ? `${word.glyph} = ${word.reading}` : `${item.character.tracks.find((entry) => entry.track === item.track)?.glyph} = ${item.character.meaningKo}`;
+        : word ? `${word.glyph} = ${word.reading}` : `${entry?.glyph} = ${item.kind === "meaning" ? displayedReading : item.character.meaningKo}`;
   const style = {
     "--session-accent": tracks[item.track].accent,
     "--session-accent-text": tracks[item.track].accentText,
     "--session-soft": tracks[item.track].soft,
     "--session-font": tracks[item.track].font,
   } as CSSProperties;
-  const displayOptions = item.kind !== "compare" && item.track === "jp" && onyomiScript === "hiragana"
+  const displayOptions = item.kind !== "compare" && item.kind !== "meaning" && item.track === "jp" && onyomiScript === "hiragana"
     ? item.options.map((option) => ({ ...option, label: toHiragana(option.label) }))
     : item.kind !== "compare" ? item.options : [];
+  const answerLang = item.kind === "meaning" && item.track !== "kr" ? "en" : trackThemes[item.track].lang;
 
   return (
     <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} ref={runnerRef} style={style}>
@@ -339,10 +344,10 @@ export function SessionRunner({
         ))}
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} word={word} />
+        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} kind={item.kind} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} word={word} />
         {item.kind !== "compare" && (
           <>
-            <AnswerOptions answerIndex={item.answerIndex} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} track={item.track} />
+            <AnswerOptions answerIndex={item.answerIndex} lang={answerLang} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} />
             <SkipAnswer disabled={answered} onSkip={() => pick(null)} />
           </>
         )}

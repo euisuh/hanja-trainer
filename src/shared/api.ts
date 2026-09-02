@@ -86,9 +86,12 @@ export type SessionOption = { label: string };
 export type SessionCompareEntry = { glyph: string; reading: string; levelBadge: string };
 
 export type SessionCard = {
-  kind: "reading" | "compare" | "word";
+  kind: "reading" | "meaning" | "kun" | "compare" | "word";
   characterKey: string;
   meaningKo: string;
+  meaning: string;
+  reading: string;
+  kun?: string;
   track: Track;
   glyph: string;
   levelBadge: string;

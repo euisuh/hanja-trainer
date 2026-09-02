@@ -1,16 +1,22 @@
 import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../src/shared/api";
 import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
-import { buildQueue, buildUnitTestQueue, readingFor, reviewKey } from "../../src/features/session/buildQueue";
+import { buildQueue, buildUnitTestQueue, meaningFor, readingFor, reviewKey } from "../../src/features/session/buildQueue";
 import { listByUnit, listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
 import { listWordsForTracks } from "../db/words";
 import { issueUnitTestAttempt, requireUnitTestTarget } from "./unitTest";
 
 const labels = {
-  kr: { badge: "한국 · 한자", prompt: "훈음을 고르세요" },
-  jp: { badge: "日本 · 漢字", prompt: "音読みを選べ" },
-  cn: { badge: "中国 · 汉字", prompt: "选择正确的拼音" },
+  kr: { badge: "한국 · 한자", prompt: "훈음을 고르세요", meaningPrompt: "뜻을 고르세요" },
+  jp: { badge: "日本 · 漢字", prompt: "音読みを選べ", meaningPrompt: "意味を選べ" },
+  cn: { badge: "中国 · 汉字", prompt: "选择正确的拼音", meaningPrompt: "选择正确的意思" },
 } as const;
+
+function promptFor(kind: SessionCard["kind"], track: keyof typeof labels): string {
+  if (kind === "meaning") return labels[track].meaningPrompt;
+  if (kind === "kun") return "訓読みを選べ";
+  return labels[track].prompt;
+}
 
 function levelBadge(entry: TrackEntry): string {
   if (entry.track === "kr") return `한자 ${entry.level}`;
@@ -60,6 +66,8 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
       wordId: item.word.id,
       memberKeys: item.word.members.map((member) => member.key),
       meaningKo: "한자어",
+      meaning: "한자어",
+      reading: item.word.reading,
       track: "kr",
       glyph: item.word.glyph,
       levelBadge: `한자어 ${item.word.level}`,
@@ -78,16 +86,19 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
     kind: item.kind,
     characterKey: item.character.key,
     meaningKo: item.character.meaningKo,
+    meaning: meaningFor(item.character, item.track).label,
+    reading: readingFor(entry).label,
+    ...(entry.track === "jp" ? { kun: entry.kun } : {}),
     track: item.track,
     glyph: entry.glyph,
     levelBadge: levelBadge(entry),
     levelOrd: entry.levelOrd,
     trackBadge: labels[item.track].badge,
-    prompt: item.kind === "compare" ? "한 글자, 세 소리" : labels[item.track].prompt,
+    prompt: item.kind === "compare" ? "한 글자, 세 소리" : promptFor(item.kind, item.track),
     sentence: sentence ? { text: sentence.text, translation: sentence.translationKo, source: sentence.source, targetIndex: sentence.targetIndex } : null,
   } as const;
   if (item.kind === "compare") return { ...base, kind: "compare", options: [], answerIndex: -1, compare: comparison(item.character) };
-  return { ...base, kind: "reading", options: item.options, answerIndex: item.answerIndex };
+  return { ...base, kind: item.kind, options: item.options, answerIndex: item.answerIndex };
 }
 
 export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID(), now = Date.now()): Promise<StartSessionResponse> {

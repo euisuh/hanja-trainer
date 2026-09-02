@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { parseSeed } from "../../../scripts/seed";
 import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
-import { buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, reviewKey } from "./buildQueue";
+import { buildKunItem, buildMeaningItem, buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, reviewKey } from "./buildQueue";
 
 function character(id: number): CharacterEntry {
   const glyph = String.fromCodePoint(0x4e00 + id);
@@ -75,12 +75,12 @@ describe("buildQueue", () => {
     const due = { ...initialState(now), due: new Date("2026-01-01T00:00:00Z"), correctCount: 1, totalCount: 1 };
     const states = new Map([[reviewKey(1, "kr"), due]]);
     const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 6, mode: "lesson", reviewStates: states, now });
-    const reading = queue.filter((item) => item.kind === "reading");
+    const recall = queue.filter((item) => item.kind !== "compare" && item.kind !== "word");
 
     expect(queue).toHaveLength(6);
-    expect(reading.some((item) => item.character.id === 1)).toBe(true);
-    expect(reading.some((item) => item.character.id !== 1)).toBe(true);
-    for (const item of reading) {
+    expect(recall.some((item) => item.character.id === 1)).toBe(true);
+    expect(recall.some((item) => item.character.id !== 1)).toBe(true);
+    for (const item of recall) {
       expect(item.track).toBe("kr");
       expect(item.options).toHaveLength(4);
       expect(new Set(item.options.map((option) => option.label)).size).toBe(4);
@@ -96,7 +96,8 @@ describe("buildQueue", () => {
     const compares = queue.filter((item) => item.kind === "compare");
 
     expect(compares).toHaveLength(1);
-    expect(queue.filter((item) => item.kind === "reading")).toHaveLength(8);
+    expect(queue.filter((item) => item.kind !== "compare")).toHaveLength(8);
+    expect(queue.some((item) => item.kind === "meaning")).toBe(true);
     expect(compares.every((item) => item.character.id === 2)).toBe(true);
     expect(compares.every((item) => item.character.tracks.length === 2)).toBe(true);
   });
@@ -106,7 +107,8 @@ describe("buildQueue", () => {
     const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 8, mode: "lesson", reviewStates: new Map([[reviewKey(1, "kr"), known]]) });
 
     expect(queue).toHaveLength(8);
-    expect(queue.every((item) => item.kind === "reading")).toBe(true);
+    expect(queue.every((item) => item.kind !== "compare" && item.kind !== "word")).toBe(true);
+    expect(queue.some((item) => item.kind === "meaning")).toBe(true);
   });
 
   it("balances placement cards across tracks and their full level ranges", () => {
@@ -137,7 +139,8 @@ describe("buildQueue", () => {
     const queue = buildQueue({ characters, enabledTracks: ["cn"], length: 2, mode: "review", reviewStates: states, now });
 
     expect(queue).toHaveLength(2);
-    expect(queue.every((item) => item.kind === "reading" && item.track === "cn")).toBe(true);
+    expect(queue.every((item) => item.kind !== "compare" && item.kind !== "word" && item.track === "cn")).toBe(true);
+    expect(new Set(queue.map((item) => item.kind))).toEqual(new Set(["reading", "meaning"]));
     expect(queue.map((item) => item.character.id)).toEqual([5, 4]);
   });
 
@@ -169,25 +172,25 @@ describe("buildQueue", () => {
       [reviewKey(2, "jp"), known],
     ]);
     const queue = buildQueue({ characters, enabledTracks: ["kr", "jp"], length: 8, mode: "lesson", reviewStates: states, now });
-    const reading = queue.filter((item) => item.kind === "reading");
-    const keys = reading.map((item) => `${item.character.id}:${item.track}`);
+    const recall = queue.filter((item) => item.kind !== "compare" && item.kind !== "word");
+    const keys = recall.map((item) => `${item.character.id}:${item.track}`);
 
     expect(queue.some((item) => item.kind === "compare")).toBe(true);
     expect(new Set(keys).size).toBe(keys.length);
-    expect(reading).toHaveLength(8);
+    expect(recall).toHaveLength(8);
   });
 
   it("adds relevant compare interstitials to review sessions", () => {
     const now = new Date("2026-01-02T00:00:00Z");
     const states = new Map(characters.flatMap((item) => (["kr", "jp"] as const).map((track) => [reviewKey(item.id, track), { ...initialState(now), due: new Date("2026-01-01T00:00:00Z"), correctCount: 1 }] as const)));
     const queue = buildQueue({ characters, enabledTracks: ["kr", "jp"], length: 8, mode: "review", reviewStates: states, now, random: random(3) });
-    const reading = queue.filter((item) => item.kind === "reading");
+    const recall = queue.filter((item) => item.kind !== "compare" && item.kind !== "word");
     const compares = queue.filter((item) => item.kind === "compare");
 
-    expect(reading).toHaveLength(8);
+    expect(recall).toHaveLength(8);
     expect(compares).toHaveLength(2);
-    expect(reading.slice(0, 4).map((item) => item.character.id)).toContain(compares[0].character.id);
-    expect(reading.slice(4, 8).map((item) => item.character.id)).toContain(compares[1].character.id);
+    expect(recall.slice(0, 4).map((item) => item.character.id)).toContain(compares[0].character.id);
+    expect(recall.slice(4, 8).map((item) => item.character.id)).toContain(compares[1].character.id);
   });
 
   it("varies relevant compare characters with the session seed", () => {
@@ -210,12 +213,11 @@ describe("buildQueue", () => {
     const queue = buildQueue({ characters: characters.slice(0, count), enabledTracks: ["kr"], length: 8, mode: "lesson" });
 
     expect(queue).toHaveLength(count < 4 ? 0 : count);
-    expect(queue.every((item) => item.kind === "reading" && item.options.length === 4)).toBe(true);
+    expect(queue.every((item) => item.kind !== "compare" && item.kind !== "word" && item.options.length === 4)).toBe(true);
   });
 
   it.each(["jp", "cn"] as const)("emits only reading labels for %s options", (track) => {
-    const queue = buildQueue({ characters, enabledTracks: [track], length: 1, mode: "lesson" });
-    const item = queue[0];
+    const item = buildReadingItem(characters[0], track, characters, 0);
     const entry = item?.character.tracks.find((candidate) => candidate.track === track);
 
     expect(item?.kind).toBe("reading");
@@ -223,6 +225,49 @@ describe("buildQueue", () => {
     expect(item.options.every((option) => Object.keys(option).join() === "label")).toBe(true);
     expect(item.options.some((option) => option.label.includes(item.character.meaningEn) || option.label.includes(item.character.meaningKo))).toBe(false);
     if (entry.track === "jp") expect(item.options.some((option) => option.label.includes(entry.kun))).toBe(false);
+  });
+
+  it.each(["lesson", "review"] as const)("mixes track-correct meaning recall into %s queues", (mode) => {
+    const now = new Date("2026-01-02T00:00:00Z");
+    for (const track of ["kr", "jp", "cn"] as const) {
+      const reviewStates = mode === "review" ? new Map(characters.map((item) => [reviewKey(item.id, track), { ...initialState(now), due: new Date("2026-01-01T00:00:00Z") }])) : undefined;
+      const queue = buildQueue({ characters, enabledTracks: [track], length: 8, mode, reviewStates, now });
+      const meanings = queue.filter((item) => item.kind === "meaning");
+      expect(meanings.length, track).toBeGreaterThan(0);
+      for (const item of meanings) {
+        const entry = item.character.tracks.find((candidate) => candidate.track === track)!;
+        const expected = entry.track === "kr" ? item.character.meaningKo : entry.track === "jp" ? item.character.meaningEn : entry.meaning;
+        expect(item.options[item.answerIndex].label).toBe(expected);
+      }
+    }
+  });
+
+  it("ranks meaning distractors by level proximity instead of pronunciation", () => {
+    const readings = ["장인 공", "글월 문", "물 수", "불 화", "빌 공", "강 강"];
+    const levels = [3, 3, 4, 2, 1, 5];
+    const corpus = readings.map((reading, index) => {
+      const item = withKorean(index + 1, reading);
+      return { ...item, tracks: item.tracks.map((entry) => entry.track === "kr" ? { ...entry, levelOrd: levels[index] } : entry) };
+    });
+    const item = buildQueue({ characters: corpus, enabledTracks: ["kr"], length: 1, mode: "lesson" })[0];
+
+    expect(item?.kind).toBe("meaning");
+    if (item?.kind !== "meaning") return;
+    expect(new Set(item.options.map((option) => option.label))).toEqual(new Set(["뜻-1", "뜻-2", "뜻-3", "뜻-4"]));
+    expect(item.options.some((option) => option.label === "뜻-5")).toBe(false);
+  });
+
+  it("quizzes Japanese kun readings without ever offering the なし sentinel", () => {
+    const corpus = characters.map((item, index) => ({
+      ...item,
+      tracks: item.tracks.map((entry) => entry.track === "jp" && index === 0 ? { ...entry, kun: "なし" } : entry),
+    }));
+    const queue = buildQueue({ characters: corpus, enabledTracks: ["jp"], length: 8, mode: "lesson", random: random(3) });
+    const kun = queue.filter((item) => item.kind === "kun");
+
+    expect(kun.length).toBeGreaterThan(0);
+    expect(kun.every((item) => item.character.id !== 1)).toBe(true);
+    expect(kun.flatMap((item) => item.options).every((option) => option.label !== "なし")).toBe(true);
   });
 
   it("prioritizes pinyin tone variants and Japanese minimal pairs", () => {
@@ -256,7 +301,7 @@ describe("buildQueue", () => {
     const words = [word(1, "학교", [1, 2]), word(2, "부모", [3, 4]), word(3, "시간", [5, 6]), word(4, "정답", [7, 8])];
     const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 8, mode: "review", reviewStates: states, now, words });
 
-    expect(queue.filter((item) => item.kind === "reading")).toHaveLength(8);
+    expect(queue.filter((item) => item.kind !== "word")).toHaveLength(8);
     expect(queue.filter((item) => item.kind === "word")).toHaveLength(2);
     expect(queue.filter((item) => item.kind === "word").length).toBeLessThan(queue.filter((item) => item.kind !== "word").length);
   });
@@ -345,6 +390,15 @@ describe("buildQueue", () => {
         expect(new Set(card?.options.map((option) => option.label)).size, `${item.key}:${entry.track}`).toBe(4);
         if (entry.track === "jp" && corpus.some((candidate) => candidate.id !== item.id && candidate.tracks.some((other) => other.track === "jp" && other.on !== entry.on && other.on.split("・").length === entry.on.split("・").length))) {
           expect(card?.options.filter((option) => option.label.split("・").length === entry.on.split("・").length).length, `${item.key}:jp shape`).toBeGreaterThan(1);
+        }
+        const meaning = buildMeaningItem(item, entry.track, corpus, item.id, random(item.id));
+        expect(meaning, `${item.key}:${entry.track} meaning`).toBeDefined();
+        expect(new Set(meaning?.options.map((option) => option.label)).size, `${item.key}:${entry.track} meaning`).toBe(4);
+        if (entry.track === "jp" && entry.kun !== "なし") {
+          const kun = buildKunItem(item, corpus, item.id, random(item.id));
+          expect(kun, `${item.key}:jp kun`).toBeDefined();
+          expect(new Set(kun?.options.map((option) => option.label)).size, `${item.key}:jp kun`).toBe(4);
+          expect(kun?.options.some((option) => option.label === "なし")).toBe(false);
         }
       }
     }

@@ -19,6 +19,14 @@ export type ReadingQueueItem = {
   answerIndex: number;
 };
 
+export type RecallQueueItem = {
+  kind: "reading" | "meaning" | "kun";
+  character: CharacterEntry;
+  track: Track;
+  options: AnswerOption[];
+  answerIndex: number;
+};
+
 export type CompareQueueItem = {
   kind: "compare";
   character: CharacterEntry;
@@ -34,7 +42,7 @@ export type WordQueueItem = {
   answerIndex: number;
 };
 
-export type SessionQueueItem = ReadingQueueItem | CompareQueueItem | WordQueueItem;
+export type SessionQueueItem = RecallQueueItem | CompareQueueItem | WordQueueItem;
 
 export type BuildQueueOptions = {
   characters: CharacterEntry[];
@@ -57,6 +65,8 @@ type QueuePair = {
 };
 
 export function reviewKey(characterId: number, track: Track): string {
+  // Recall kinds intentionally share one FSRS state. One pair yields one graded
+  // card per session, so meaning/reading variation never double-schedules it.
   return `${characterId}:${track}`;
 }
 
@@ -64,6 +74,14 @@ export function readingFor(entry: TrackEntry): AnswerOption {
   if (entry.track === "kr") return { label: entry.reading };
   if (entry.track === "jp") return { label: entry.on };
   return { label: entry.pinyin };
+}
+
+export function meaningFor(character: CharacterEntry, track: Track): AnswerOption {
+  const entry = character.tracks.find((candidate) => candidate.track === track);
+  if (!entry) throw new Error(`Character ${character.key} has no ${track} track`);
+  if (entry.track === "kr") return { label: character.meaningKo };
+  if (entry.track === "jp") return { label: character.meaningEn };
+  return { label: entry.meaning };
 }
 
 function tonelessPinyin(value: string): string {
@@ -213,6 +231,14 @@ function sampleDistractors(correctEntry: TrackEntry, entries: TrackEntry[], rand
   return picked.map(({ option }) => option);
 }
 
+function rotatedAnswer(correct: AnswerOption, distractors: AnswerOption[], offset: number): { options: AnswerOption[]; answerIndex: number } | undefined {
+  if (distractors.length < 3) return undefined;
+  const options = [correct, ...distractors.slice(0, 3)];
+  const shift = offset % options.length;
+  const rotated = [...options.slice(shift), ...options.slice(0, shift)];
+  return { options: rotated, answerIndex: rotated.findIndex((option) => option.label === correct.label) };
+}
+
 function optionsFor(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number, excluded?: Set<string>): { options: AnswerOption[]; answerIndex: number } | undefined {
   const correctEntry = character.tracks.find((entry) => entry.track === track);
   if (!correctEntry) throw new Error(`Character ${character.key} has no ${track} track`);
@@ -220,16 +246,46 @@ function optionsFor(character: CharacterEntry, track: Track, characters: Charact
   const distractors = sampleDistractors(correctEntry, characters
     .filter((candidate) => candidate.id !== character.id)
     .flatMap((candidate) => candidate.tracks.filter((entry) => entry.track === track)), random, excluded);
-  if (distractors.length < 3) return undefined;
-  const options = [correct, ...distractors];
-  const shift = offset % options.length;
-  const rotated = [...options.slice(shift), ...options.slice(0, shift)];
-  return { options: rotated, answerIndex: rotated.findIndex((option) => option.label === correct.label) };
+  return rotatedAnswer(correct, distractors, offset);
 }
 
 export function buildReadingItem(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number = () => 0.5): ReadingQueueItem | undefined {
   const answer = optionsFor(character, track, characters, offset, random);
   return answer ? { kind: "reading", character, track, ...answer } : undefined;
+}
+
+function alternateAnswer(kind: "meaning" | "kun", character: CharacterEntry, entry: TrackEntry): AnswerOption | undefined {
+  if (kind === "meaning") return meaningFor(character, entry.track);
+  return entry.track === "jp" && entry.kun !== "なし" ? { label: entry.kun } : undefined;
+}
+
+function buildAlternateItem(kind: "meaning" | "kun", character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number): RecallQueueItem | undefined {
+  const correctEntry = character.tracks.find((entry) => entry.track === track);
+  if (!correctEntry) throw new Error(`Character ${character.key} has no ${track} track`);
+  const correct = alternateAnswer(kind, character, correctEntry);
+  if (!correct) return undefined;
+  const seen = new Set([correct.label]);
+  const distractors = characters
+    .filter((candidate) => candidate.id !== character.id)
+    .flatMap((candidate) => {
+      const entry = candidate.tracks.find((item) => item.track === track);
+      const option = entry && alternateAnswer(kind, candidate, entry);
+      if (!entry || !option || seen.has(option.label)) return [];
+      seen.add(option.label);
+      return [{ option, levelOrd: entry.levelOrd, characterId: candidate.id, tie: random() }];
+    })
+    .sort((left, right) => Math.abs(left.levelOrd - correctEntry.levelOrd) - Math.abs(right.levelOrd - correctEntry.levelOrd) || left.tie - right.tie || left.characterId - right.characterId)
+    .map(({ option }) => option);
+  const answer = rotatedAnswer(correct, distractors, offset);
+  return answer ? { kind, character, track, ...answer } : undefined;
+}
+
+export function buildMeaningItem(character: CharacterEntry, track: Track, characters: CharacterEntry[], offset: number, random: () => number = () => 0.5): RecallQueueItem | undefined {
+  return buildAlternateItem("meaning", character, track, characters, offset, random);
+}
+
+export function buildKunItem(character: CharacterEntry, characters: CharacterEntry[], offset: number, random: () => number = () => 0.5): RecallQueueItem | undefined {
+  return buildAlternateItem("kun", character, "jp", characters, offset, random);
 }
 
 function wordTrack(word: WordEntry): KrTrackEntry {
@@ -338,13 +394,14 @@ export function buildQueue({
     .sort((a, b) => Math.max(...b.tracks.map((entry) => reviewStates.get(reviewKey(b.id, entry.track))?.lastReview?.getTime() ?? 0)) - Math.max(...a.tracks.map((entry) => reviewStates.get(reviewKey(a.id, entry.track))?.lastReview?.getTime() ?? 0)));
   const compareIds = new Set(compareCharacters.map((character) => character.id));
 
-  const readings: ReadingQueueItem[] = [];
+  const recalls: RecallQueueItem[] = [];
   const considered = new Set<string>();
+  const kindOffsets = new Map<Track, number>();
   let dueIndex = 0;
   let freshIndex = 0;
   let fallbackIndex = 0;
   let readingIndex = 0;
-  while (readings.length < length) {
+  while (recalls.length < length) {
     const preferred = mode === "lesson"
       ? (readingIndex % 2 === 0 ? fresh[freshIndex++] : due[dueIndex++])
       : undefined;
@@ -358,11 +415,20 @@ export function buildQueue({
     if (!pair) break;
     const key = reviewKey(pair.character.id, pair.track);
     considered.add(key);
-    const item = buildReadingItem(pair.character, pair.track, characters, readings.length + pair.character.id, random);
+    const entry = pair.character.tracks.find((candidate) => candidate.track === pair.track)!;
+    const kinds: RecallQueueItem["kind"][] = entry.track === "jp" && entry.kun !== "なし" ? ["reading", "meaning", "kun"] : ["reading", "meaning"];
+    const kindOffset = kindOffsets.get(pair.track) ?? Math.floor(random() * kinds.length);
+    kindOffsets.set(pair.track, kindOffset + 1);
+    const kind = mode === "placement" ? "reading" : kinds[kindOffset % kinds.length];
+    const item = kind === "reading"
+      ? buildReadingItem(pair.character, pair.track, characters, recalls.length + pair.character.id, random)
+      : kind === "meaning"
+        ? buildMeaningItem(pair.character, pair.track, characters, recalls.length + pair.character.id, random)
+        : buildKunItem(pair.character, characters, recalls.length + pair.character.id, random);
     if (!item) continue;
-    readings.push(item);
+    recalls.push(item);
   }
-  if (mode === "placement") return readings;
+  if (mode === "placement") return recalls;
 
   const charactersById = new Map(characters.map((character) => [character.id, character]));
   const eligibleWords = words.filter((word) => word.track === "kr"
@@ -372,10 +438,10 @@ export function buildQueue({
   const queue: SessionQueueItem[] = [];
   const compared = new Set<number>();
   const usedWords = new Set<number>();
-  for (let index = 0; index < readings.length; index += 1) {
-    queue.push(readings[index]);
+  for (let index = 0; index < recalls.length; index += 1) {
+    queue.push(recalls[index]);
     if ((index + 1) % WORD_CADENCE === 0) {
-      const recent = readings.slice(index + 1 - WORD_CADENCE, index + 1);
+      const recent = recalls.slice(index + 1 - WORD_CADENCE, index + 1);
       const recentIds = new Set(recent.map((item) => item.character.id));
       const wordCandidates = eligibleWords.filter((word) => !usedWords.has(word.id));
       const relevantWords = wordCandidates.filter((word) => word.members.some((member) => recentIds.has(member.characterId)));
@@ -389,7 +455,7 @@ export function buildQueue({
     }
     if ((index + 1) % COMPARE_CADENCE !== 0) continue;
     if (compareCharacters.length === 0) continue;
-    const recentComparisons = readings.slice(index + 1 - COMPARE_CADENCE, index + 1)
+    const recentComparisons = recalls.slice(index + 1 - COMPARE_CADENCE, index + 1)
       .filter((item, itemIndex, items) => compareIds.has(item.character.id) && !compared.has(item.character.id) && items.findIndex((candidate) => candidate.character.id === item.character.id) === itemIndex);
     const candidates = recentComparisons.length > 0 ? recentComparisons : mode === "lesson" ? compareCharacters
       .filter((character) => !compared.has(character.id))

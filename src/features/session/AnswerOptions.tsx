@@ -1,5 +1,3 @@
-import type { Track } from "../../shared/types";
-import { trackThemes } from "../tracks/trackTheme";
 import type { AnswerOption } from "./buildQueue";
 
 type Props = {
@@ -7,11 +5,11 @@ type Props = {
   answerIndex: number;
   spent: boolean;
   selectedIndex: number | null;
-  track: Track;
+  lang: string;
   onPick: (index: number) => void;
 };
 
-export function AnswerOptions({ options, answerIndex, spent, selectedIndex, track, onPick }: Props) {
+export function AnswerOptions({ options, answerIndex, spent, selectedIndex, lang, onPick }: Props) {
   return (
     <div className={`answer-options${options.length === 4 ? "" : " answer-options--flexible"}`} aria-label="답 선택">
       {options.map((option, index) => {
@@ -27,7 +25,7 @@ export function AnswerOptions({ options, answerIndex, spent, selectedIndex, trac
           >
             <span className="answer-option__key">{index + 1}</span>
             <span className="answer-option__copy">
-              <strong lang={trackThemes[track].lang}>{option.label}</strong>
+              <strong lang={lang}>{option.label}</strong>
             </span>
             <span className="answer-option__mark" aria-hidden="true">{correct ? "✓" : wrong ? "✕" : ""}</span>
           </button>

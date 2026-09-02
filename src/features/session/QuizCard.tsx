@@ -3,12 +3,21 @@ import type { OnyomiScript } from "../../shared/settings";
 import { SourceAttribution } from "../source/SourceAttribution";
 import { trackThemes } from "../tracks/trackTheme";
 import { CompareCard } from "./CompareCard";
+import type { SessionQueueItem } from "./buildQueue";
 
 const trackLabels = {
-  kr: { prompt: "훈음을 고르세요" },
-  jp: { prompt: "音読みを選べ" },
-  cn: { prompt: "选择正确的拼音" },
+  kr: { prompt: "훈음을 고르세요", meaningPrompt: "뜻을 고르세요" },
+  jp: { prompt: "音読みを選べ", meaningPrompt: "意味を選べ" },
+  cn: { prompt: "选择正确的拼音", meaningPrompt: "选择正确的意思" },
 } as const;
+
+function promptFor(kind: SessionQueueItem["kind"], track: Track): string {
+  if (kind === "compare") return "Enter로 계속";
+  if (kind === "word") return "한자어 독음을 고르세요";
+  if (kind === "meaning") return trackLabels[track].meaningPrompt;
+  if (kind === "kun") return "訓読みを選べ";
+  return trackLabels[track].prompt;
+}
 
 function levelLabel(entry: TrackEntry): string {
   if (entry.track === "kr") return `한자 ${entry.level}`;
@@ -42,17 +51,18 @@ type Props = {
   compare: boolean;
   answered: boolean;
   correct: boolean;
+  kind: SessionQueueItem["kind"];
   promptOverride?: string;
   onyomiScript: OnyomiScript;
   word?: WordEntry;
 };
 
-export function QuizCard({ character, track, compare, answered, correct, promptOverride, onyomiScript, word }: Props) {
+export function QuizCard({ character, track, compare, answered, correct, kind, promptOverride, onyomiScript, word }: Props) {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) return null;
   const theme = trackThemes[track];
   const sentence = word ? undefined : character.sentences.find((candidate) => candidate.track === track);
-  const prompt = promptOverride ?? (compare ? "Enter로 계속" : word ? "한자어 독음을 고르세요" : trackLabels[track].prompt);
+  const prompt = promptOverride ?? promptFor(kind, track);
   return (
     <article className={`quiz-card quiz-card--${track}${answered ? correct ? " quiz-card--correct" : " quiz-card--wrong" : ""}`}>
       <div className="quiz-card__badges">
