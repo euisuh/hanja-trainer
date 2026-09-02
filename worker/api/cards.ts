@@ -108,16 +108,16 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
   return { ...base, kind: item.kind, options: item.options, answerIndex: item.answerIndex };
 }
 
-export async function startSession(db: D1Database, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID(), now = Date.now()): Promise<StartSessionResponse> {
+export async function startSession(db: D1Database, profileId: number, input: StartSessionRequest & { limit: number }, sessionId: string = crypto.randomUUID(), now = Date.now()): Promise<StartSessionResponse> {
   if (input.testOut === true) {
     const track = input.tracks[0];
-    await requireUnitTestTarget(db, input.unitId!, track);
+    await requireUnitTestTarget(db, profileId, input.unitId!, track);
     const [targets, characters] = await Promise.all([listByUnit(db, input.unitId!), listForTracks(db, [track])]);
     const random = seededRandom(hashSeed(sessionId));
     const queue = buildUnitTestQueue({ targets, characters, track, random });
     const cards = queue.map(toCard);
     if (queue.length === targets.length * 2 && queue.length > 0) {
-      await issueUnitTestAttempt(db, sessionId, input.unitId!, cards.map((card) => ({ characterKey: card.characterKey, answerIndex: card.answerIndex })), now);
+      await issueUnitTestAttempt(db, profileId, sessionId, input.unitId!, cards.map((card) => ({ characterKey: card.characterKey, answerIndex: card.answerIndex })), now);
     }
     return {
       sessionId,
@@ -133,8 +133,8 @@ export async function startSession(db: D1Database, input: StartSessionRequest & 
   }
   const [characters, states, candidateRows, words] = await Promise.all([
     listForTracks(db, input.tracks),
-    listStatesForTracks(db, input.tracks),
-    input.mode === "lesson" ? listFreshForTracks(db, input.tracks, input) : input.mode === "placement" ? listPlacementMembersForTracks(db, input.tracks) : Promise.resolve([]),
+    listStatesForTracks(db, profileId, input.tracks),
+    input.mode === "lesson" ? listFreshForTracks(db, profileId, input.tracks, input) : input.mode === "placement" ? listPlacementMembersForTracks(db, input.tracks) : Promise.resolve([]),
     listWordsForTracks(db, input.tracks),
   ]);
   const stateMap = new Map(states.map((state) => [reviewKey(state.characterId, state.track), state]));

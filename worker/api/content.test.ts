@@ -141,6 +141,42 @@ describe("content API", () => {
   const databases: DatabaseSync[] = [];
   afterEach(() => { for (const database of databases.splice(0)) database.close(); });
 
+  it("keeps another profile's progress out of every learner-facing aggregate", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = Date.now();
+    const firstUnit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY level_ord, ord LIMIT 1").get() as { id: number };
+    const firstMember = fixture.sqlite.prepare("SELECT character_id FROM curriculum_unit_members WHERE unit_id = ? ORDER BY ord LIMIT 1").get(firstUnit.id) as { character_id: number };
+    fixture.sqlite.exec(`
+      UPDATE profile SET xp = 50 WHERE id = 1;
+      INSERT INTO sessions (profile_id, mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
+      VALUES (1, 'lesson', ${now}, ${now}, 1, 1, 0, 1, 50);
+      INSERT INTO placement_results (profile_id, track, level_ord, level_badge, accuracy, detail, taken_at)
+      VALUES (1, 'kr', 2, '7급', 100, '', ${now});
+    `);
+    fixture.sqlite.prepare(`
+      INSERT INTO curriculum_unit_completion_members (profile_id, unit_id, character_id, completed_at)
+      SELECT 1, unit_id, character_id, ? FROM curriculum_unit_members WHERE unit_id = ?
+    `).run(now, firstUnit.id);
+    const firstCurriculum = await (await routeApiRequest(new Request("https://test/api/curriculum?track=kr"), fixture.env, now)).json() as CurriculumResponse;
+    expect(firstCurriculum.units.find((unit) => unit.id === firstUnit.id)?.nodes.every((node) => node.state === "done")).toBe(true);
+    const profileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    const selected = await routeApiRequest(new Request("https://test/api/profiles/select", {
+      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }),
+    }), fixture.env, now);
+    const sessionCookie = selected.headers.get("set-cookie")!.split(";", 1)[0];
+    const load = (path: string) => routeApiRequest(new Request(`https://test${path}`, { headers: { cookie: sessionCookie } }), fixture.env, now);
+
+    expect(await (await load("/api/profile")).json()).toMatchObject({ xp: 0, todayXp: 0, streak: 0, longestStreak: 0 });
+    expect(await (await load("/api/stats")).json()).toMatchObject({ answered: 0, skipped: 0, streak: 0, longestStreak: 0 });
+    expect(await (await load("/api/reviews/due?tracks=kr&limit=10")).json()).toEqual({ total: 0, cards: [] });
+    const curriculum = await (await load("/api/curriculum?track=kr")).json() as CurriculumResponse;
+    expect(curriculum.units.find((unit) => unit.current)?.ord).toBe(1);
+    expect(curriculum.units.flatMap((unit) => unit.nodes).every((node) => node.state !== "done")).toBe(true);
+    const key = fixture.sqlite.prepare("SELECT key FROM characters WHERE id = ?").get(firstMember.character_id) as { key: string };
+    const detail = await (await load(`/api/characters/${encodeURIComponent(key.key)}`)).json() as CharacterDetailResponse;
+    expect(detail.tracks.find((track) => track.track === "kr")?.review_state).toBeNull();
+  });
+
   it("returns curriculum state, detail history, and a clean 404", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const curriculumResponse = await routeApiRequest(new Request("https://test/api/curriculum?track=kr"), fixture.env);
@@ -259,6 +295,19 @@ describe("content API", () => {
     expect(await completeResponse.json()).toMatchObject({ error: { code: "unit_already_complete" } });
   });
 
+  it("replaces unit-test attempts only inside the current profile", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const unit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY level_ord, ord LIMIT 1").get() as { id: number };
+    const profileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    await startSession(fixture.env.DB, 1, { mode: "lesson", tracks: ["kr"], limit: 8, unitId: unit.id, testOut: true }, "shared-session");
+    await startSession(fixture.env.DB, profileId, { mode: "lesson", tracks: ["kr"], limit: 8, unitId: unit.id, testOut: true }, "shared-session");
+    await startSession(fixture.env.DB, profileId, { mode: "lesson", tracks: ["kr"], limit: 8, unitId: unit.id, testOut: true }, "replacement");
+    expect(fixture.sqlite.prepare("SELECT profile_id, session_id FROM curriculum_unit_test_attempts ORDER BY profile_id").all()).toEqual([
+      { profile_id: 1, session_id: "shared-session" },
+      { profile_id: profileId, session_id: "replacement" },
+    ]);
+  });
+
   it("scores only issued one-time unit-test challenges and never mutates FSRS", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const post = (unitId: number, sessionId: string, answers: UnitTestAnswer[]) => routeApiRequest(new Request(`https://test/api/curriculum/units/${unitId}/test-out`, {
@@ -266,7 +315,7 @@ describe("content API", () => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ sessionId, answers }),
     }), fixture.env);
-    const start = async (unitId: number, sessionId: string) => startSession(fixture.env.DB, { mode: "lesson", tracks: ["kr"], limit: 8, unitId, testOut: true }, sessionId);
+    const start = async (unitId: number, sessionId: string) => startSession(fixture.env.DB, 1, { mode: "lesson", tracks: ["kr"], limit: 8, unitId, testOut: true }, sessionId);
     const answersFor = (session: StartSessionResponse): UnitTestAnswer[] => session.cards.map((card, cardIndex) => ({ cardIndex, characterKey: card.characterKey, selectedIndex: card.answerIndex }));
     const unit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY ord LIMIT 1").get() as { id: number };
     const otherUnit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY ord LIMIT 1 OFFSET 1").get() as { id: number };
@@ -397,7 +446,7 @@ describe("content API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const unit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY ord LIMIT 1").get() as { id: number };
     const beforeReviews = fixture.sqlite.prepare("SELECT * FROM review_states ORDER BY character_id, track").all();
-    const session = await startSession(fixture.env.DB, { mode: "lesson", tracks: ["kr"], limit: 8, unitId: unit.id, testOut: true }, `recovered-${mistakes}`);
+    const session = await startSession(fixture.env.DB, 1, { mode: "lesson", tracks: ["kr"], limit: 8, unitId: unit.id, testOut: true }, `recovered-${mistakes}`);
     const answers = recoveredUnitTestAnswers(session, mistakes);
     const response = await routeApiRequest(new Request(`https://test/api/curriculum/units/${unit.id}/test-out`, {
       method: "POST",
@@ -430,8 +479,8 @@ describe("content API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     fixture.sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/cn-hsk1.json", "utf8")) as unknown)));
     const input = { mode: "lesson" as const, tracks: ["cn" as const], limit: 50 };
-    const first = await startSession(fixture.env.DB, input, "session-a");
-    const second = await startSession(fixture.env.DB, input, "session-b");
+    const first = await startSession(fixture.env.DB, 1, input, "session-a");
+    const second = await startSession(fixture.env.DB, 1, input, "session-b");
     const secondByKey = new Map(second.cards.filter((card) => card.kind === "reading").map((card) => [card.characterKey, card]));
 
     expect(first.cards.some((card) => {
@@ -451,11 +500,11 @@ describe("content API", () => {
     const insert = fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)");
     insert.run(members[0].id);
     for (const other of others) insert.run(other.id);
-    let session = await startSession(fixture.env.DB, { mode: "review", tracks: ["kr"], limit: 4 }, "one-known");
+    let session = await startSession(fixture.env.DB, 1, { mode: "review", tracks: ["kr"], limit: 4 }, "one-known");
     expect(session.cards.every((card) => card.kind !== "word")).toBe(true);
 
     insert.run(members[1].id);
-    session = await startSession(fixture.env.DB, { mode: "review", tracks: ["kr"], limit: 4 }, "both-known");
+    session = await startSession(fixture.env.DB, 1, { mode: "review", tracks: ["kr"], limit: 4 }, "both-known");
     const word = session.cards.find((card) => card.kind === "word");
     expect(session.cards.filter((card) => card.kind !== "word")).toHaveLength(4);
     expect(word).toMatchObject({ kind: "word", wordId: expect.any(Number), glyph: "學校", memberKeys: ["學", "校"], options: expect.any(Array), wordSourceUrl: expect.stringContaining("oldid=4219407") });
@@ -479,7 +528,7 @@ describe("content API", () => {
     for (const id of [...members, ...others].map((row) => row.id)) insert.run(id, track);
 
     for (const mode of ["lesson", "review"] as const) {
-      const session = await startSession(fixture.env.DB, { mode, tracks: [track], limit: 4 }, `${track}-${mode}`);
+      const session = await startSession(fixture.env.DB, 1, { mode, tracks: [track], limit: 4 }, `${track}-${mode}`);
       const word = session.cards.find((card) => card.kind === "word");
       expect(session.cards.filter((card) => card.kind !== "word")).toHaveLength(4);
       expect(word).toMatchObject({
@@ -543,7 +592,7 @@ describe("content API", () => {
     expect(curriculum.units.filter((unit) => unit.level === "HSK 2").map((unit) => unit.ord)).toEqual(Array.from({ length: 22 }, (_, index) => index + 1));
     expect(curriculum.units.filter((unit) => unit.level === "HSK 3").map((unit) => unit.ord)).toEqual(Array.from({ length: 29 }, (_, index) => index + 1));
     expect(curriculum.units.find((unit) => unit.current)).toMatchObject({ level: "HSK 2", ord: 1 });
-    const lesson = await startSession(fixture.env.DB, { mode: "lesson", tracks: ["cn"], limit: 4, unitId: curriculum.units.find((unit) => unit.level === "HSK 2")!.id }, "cn-hsk2-anchor");
+    const lesson = await startSession(fixture.env.DB, 1, { mode: "lesson", tracks: ["cn"], limit: 4, unitId: curriculum.units.find((unit) => unit.level === "HSK 2")!.id }, "cn-hsk2-anchor");
     expect(lesson.cards).toHaveLength(4);
     expect(lesson.cards.every((card) => card.levelOrd >= 2)).toBe(true);
   });
@@ -596,7 +645,7 @@ describe("content API", () => {
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM character_tracks WHERE track = 'jp' AND level_ord = 9").get()).toEqual({ count: 1 });
     expect((await listForTracks(fixture.env.DB, ["jp"])).some((character) => character.key === "㐂")).toBe(true);
 
-    const placement = await startSession(fixture.env.DB, { mode: "placement", tracks: ["jp"], limit: 15 }, "legacy-placement");
+    const placement = await startSession(fixture.env.DB, 1, { mode: "placement", tracks: ["jp"], limit: 15 }, "legacy-placement");
 
     expect(placement.cards).toHaveLength(15);
     expect(placement.cards.some((card) => card.characterKey === "㐂")).toBe(false);

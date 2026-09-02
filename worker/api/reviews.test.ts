@@ -177,9 +177,9 @@ describe("review and session API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const now = new Date("2026-08-29T12:00:00Z");
     for (const endedAt of ["2026-08-27T12:00:00Z", "2026-08-28T12:00:00Z"]) {
-      await createSession(fixture.env.DB, { mode: "lesson", startedAt: endedAt, endedAt, answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10 }, now);
+      await createSession(fixture.env.DB, 1, { mode: "lesson", startedAt: endedAt, endedAt, answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10 }, now);
     }
-    const profile = await createSession(fixture.env.DB, { mode: "review", startedAt: now.toISOString(), endedAt: now.toISOString(), answered: 2, correct: 1, skipped: 1, bestCombo: 1, xp: 12 }, now);
+    const profile = await createSession(fixture.env.DB, 1, { mode: "review", startedAt: now.toISOString(), endedAt: now.toISOString(), answered: 2, correct: 1, skipped: 1, bestCombo: 1, xp: 12 }, now);
     expect(profile).toMatchObject<Partial<ProfileResponse>>({ xp: 32, todayXp: 12, streak: 3, longestStreak: 3 });
     expect(fixture.sqlite.prepare("SELECT skipped FROM sessions ORDER BY id DESC LIMIT 1").get()).toEqual({ skipped: 1 });
   });

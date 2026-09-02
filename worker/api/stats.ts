@@ -44,21 +44,21 @@ function addDays(key: string, amount: number): string {
   return new Date(date.getTime() + amount * DAY_MS).toISOString().slice(0, 10);
 }
 
-export async function getStats(db: D1Database, now = new Date()): Promise<StatsResponse> {
+export async function getStats(db: D1Database, profileId: number, now = new Date()): Promise<StatsResponse> {
   const [profileResult, totalsResult, sessionsRangeResult, masteryResult, levelsResult, placementResult, kankenResult] = await db.batch([
-    db.prepare("SELECT enabled_tracks, timezone FROM profile WHERE id = 1"),
+    db.prepare("SELECT enabled_tracks, timezone FROM profile WHERE id = ?1").bind(profileId),
     db.prepare(`SELECT MIN(answered_at) AS min_at, MAX(answered_at) AS max_at,
       COUNT(DISTINCT ${REVIEW_ATTEMPT_SQL}) AS answered,
       COUNT(DISTINCT CASE WHEN skipped = 1 THEN ${REVIEW_ATTEMPT_SQL} END) AS skipped
-      FROM review_log`),
-    db.prepare("SELECT MIN(ended_at) AS min_at, MAX(ended_at) AS max_at FROM sessions"),
+      FROM review_log WHERE profile_id = ?1`).bind(profileId),
+    db.prepare("SELECT MIN(ended_at) AS min_at, MAX(ended_at) AS max_at FROM sessions WHERE profile_id = ?1").bind(profileId),
     db.prepare(`
       SELECT ct.track, COUNT(*) AS total,
         SUM(CASE WHEN rs.stability >= ?1 THEN 1 ELSE 0 END) AS known
       FROM character_tracks ct
-      LEFT JOIN review_states rs ON rs.character_id = ct.character_id AND rs.track = ct.track
+      LEFT JOIN review_states rs ON rs.profile_id = ?2 AND rs.character_id = ct.character_id AND rs.track = ct.track
       GROUP BY ct.track
-    `).bind(MASTERY_STABILITY_DAYS),
+    `).bind(MASTERY_STABILITY_DAYS, profileId),
     db.prepare(`
       SELECT track, level_ord,
         CASE track WHEN 'kr' THEN kr_level WHEN 'jp' THEN jp_jlpt ELSE cn_hsk END AS level_badge
@@ -66,15 +66,15 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
     `),
     db.prepare(`
       SELECT pr.track, pr.level_badge, pr.level_ord FROM placement_results pr
-      WHERE pr.id = (SELECT latest.id FROM placement_results latest WHERE latest.track = pr.track ORDER BY latest.taken_at DESC, latest.id DESC LIMIT 1)
-    `),
+      WHERE pr.profile_id = ?1 AND pr.id = (SELECT latest.id FROM placement_results latest WHERE latest.profile_id = ?1 AND latest.track = pr.track ORDER BY latest.taken_at DESC, latest.id DESC LIMIT 1)
+    `).bind(profileId),
     // Kanken remains secondary metadata for the JLPT-ordered Japanese curriculum.
     db.prepare(`
       SELECT ct.jp_kanken AS level, rs.stability
       FROM character_tracks ct
-      LEFT JOIN review_states rs ON rs.character_id = ct.character_id AND rs.track = ct.track
+      LEFT JOIN review_states rs ON rs.profile_id = ?1 AND rs.character_id = ct.character_id AND rs.track = ct.track
       WHERE ct.track = 'jp' AND ct.jp_kanken IS NOT NULL
-    `),
+    `).bind(profileId),
   ]);
   const profile = profileResult.results[0] as unknown as ProfileRow | undefined;
   if (!profile) throw new Error("Profile row is missing");
@@ -89,9 +89,9 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
   const calendarStart = Date.parse(`${addDays(today, -CALENDAR_DAYS + 1)}T00:00:00Z`) - DAY_MS;
   const calendarEnd = Date.parse(`${addDays(today, 1)}T00:00:00Z`) + DAY_MS;
   const [logsResult, sessionsResult, calendarResult] = await db.batch([
-    db.prepare(`SELECT ${days.review} AS day FROM review_log GROUP BY day ORDER BY day`),
-    db.prepare(`SELECT ${days.session} AS day FROM sessions GROUP BY day ORDER BY day`),
-    db.prepare(`SELECT ${days.review} AS day, COUNT(DISTINCT ${REVIEW_ATTEMPT_SQL}) AS count FROM review_log WHERE answered_at >= ?1 AND answered_at < ?2 GROUP BY day ORDER BY day`).bind(calendarStart, calendarEnd),
+    db.prepare(`SELECT ${days.review} AS day FROM review_log WHERE profile_id = ?1 GROUP BY day ORDER BY day`).bind(profileId),
+    db.prepare(`SELECT ${days.session} AS day FROM sessions WHERE profile_id = ?1 GROUP BY day ORDER BY day`).bind(profileId),
+    db.prepare(`SELECT ${days.review} AS day, COUNT(DISTINCT ${REVIEW_ATTEMPT_SQL}) AS count FROM review_log WHERE profile_id = ?1 AND answered_at >= ?2 AND answered_at < ?3 GROUP BY day ORDER BY day`).bind(profileId, calendarStart, calendarEnd),
   ]);
   const counts = new Map((calendarResult.results as unknown as DailyCountRow[]).map((row) => [row.day, row.count]));
   const calendar = Array.from({ length: CALENDAR_DAYS }, (_, index) => {

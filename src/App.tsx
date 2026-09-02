@@ -33,7 +33,7 @@ export function App() {
       setLockedUntil(state.lockedUntil);
       if (!state.enabled) { setPinGate("unlocked"); return; }
       try { await apiClient.profile(controller.signal); setPinGate("unlocked"); }
-      catch (caught) { if (!controller.signal.aborted) setPinGate(caught instanceof ApiClientError && caught.code === "pin_required" ? "locked" : "error"); }
+      catch (caught) { if (!controller.signal.aborted) setPinGate(caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required") ? "locked" : "error"); }
     }).catch(() => { if (!controller.signal.aborted) setPinGate("error"); });
     return () => { controller.abort(); window.removeEventListener(PIN_REQUIRED_EVENT, requirePin); };
   }, [pinRetry]);

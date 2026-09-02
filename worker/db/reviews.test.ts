@@ -93,18 +93,18 @@ describe("review persistence", () => {
     const firstId = addCharacter(sqlite, "一", ["kr", "jp"]);
     const secondId = addCharacter(sqlite, "二", ["kr"]);
 
-    await upsertState(database, firstId, "kr", { ...initialState(now), due: new Date("2026-01-08T00:00:00.000Z") });
-    await upsertState(database, firstId, "jp", { ...initialState(now), due: new Date("2026-01-07T00:00:00.000Z") });
-    await upsertState(database, secondId, "kr", { ...initialState(now), due: new Date("2026-01-09T00:00:00.000Z") });
+    await upsertState(database, 1, firstId, "kr", { ...initialState(now), due: new Date("2026-01-08T00:00:00.000Z") });
+    await upsertState(database, 1, firstId, "jp", { ...initialState(now), due: new Date("2026-01-07T00:00:00.000Z") });
+    await upsertState(database, 1, secondId, "kr", { ...initialState(now), due: new Date("2026-01-09T00:00:00.000Z") });
 
-    const queue = await getDueQueue(database, ["kr"], 1, now);
+    const queue = await getDueQueue(database, 1, ["kr"], 1, now);
     expect(queue).toHaveLength(1);
     expect(queue[0]).toMatchObject({ characterId: firstId, track: "kr" });
-    expect((await getState(database, firstId, "jp"))?.due.toISOString()).toBe("2026-01-07T00:00:00.000Z");
+    expect((await getState(database, 1, firstId, "jp"))?.due.toISOString()).toBe("2026-01-07T00:00:00.000Z");
 
     const result = schedule(initialState(now), "good", now);
-    await upsertState(database, firstId, "kr", result.next);
-    await appendLog(database, {
+    await upsertState(database, 1, firstId, "kr", result.next);
+    await appendLog(database, 1, {
       ...result.log,
       characterId: firstId,
       track: "kr",
@@ -113,7 +113,7 @@ describe("review persistence", () => {
       elapsedMs: 5_000,
       mode: "lesson",
     });
-    expect(await getStatsForCharacter(database, firstId)).toMatchObject({
+    expect(await getStatsForCharacter(database, 1, firstId)).toMatchObject({
       correct: 1,
       total: 1,
       accuracy: 1,

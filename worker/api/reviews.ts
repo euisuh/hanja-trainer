@@ -48,9 +48,9 @@ export function parseDueRequest(search: URLSearchParams): { tracks: Track[]; lim
   return { tracks: tracks as Track[], limit };
 }
 
-async function existingSubmission(db: D1Database, input: Pick<SubmitReviewRequest, "sessionId" | "cardIndex">): Promise<SubmitReviewResponse | null> {
-  const row = await db.prepare("SELECT response_json FROM review_submissions WHERE session_id = ?1 AND card_index = ?2")
-    .bind(input.sessionId, input.cardIndex).first<SubmissionRow>();
+async function existingSubmission(db: D1Database, profileId: number, input: Pick<SubmitReviewRequest, "sessionId" | "cardIndex">): Promise<SubmitReviewResponse | null> {
+  const row = await db.prepare("SELECT response_json FROM review_submissions WHERE profile_id = ?1 AND session_id = ?2 AND card_index = ?3")
+    .bind(profileId, input.sessionId, input.cardIndex).first<SubmissionRow>();
   return row ? JSON.parse(row.response_json) as SubmitReviewResponse : null;
 }
 
@@ -64,8 +64,8 @@ function responseFor(due: Date, scheduledDays: number, stability: number, diffic
   };
 }
 
-export async function submitReview(db: D1Database, input: SubmitReviewRequest, now = new Date()): Promise<SubmitReviewResponse> {
-  const existing = await existingSubmission(db, input);
+export async function submitReview(db: D1Database, profileId: number, input: SubmitReviewRequest, now = new Date()): Promise<SubmitReviewResponse> {
+  const existing = await existingSubmission(db, profileId, input);
   if (existing) return existing;
   const result = input.wordId === undefined
     ? await db.prepare(`
@@ -80,10 +80,10 @@ export async function submitReview(db: D1Database, input: SubmitReviewRequest, n
         JOIN word_members wm ON wm.word_id = w.id
         JOIN characters c ON c.id = wm.character_id
         JOIN character_tracks ct ON ct.character_id = c.id AND ct.track = w.track
-        JOIN review_states rs ON rs.character_id = c.id AND rs.track = w.track
+        JOIN review_states rs ON rs.profile_id = ?3 AND rs.character_id = c.id AND rs.track = w.track
         WHERE w.id = ?1 AND w.track = ?2
         ORDER BY wm.position
-      `).bind(input.wordId, input.track).all<CharacterRow>();
+      `).bind(input.wordId, input.track, profileId).all<CharacterRow>();
   const characters = result.results;
   if (input.wordId === undefined) {
     if (characters.length !== 1) throw new ReviewTargetNotFound();
@@ -93,7 +93,7 @@ export async function submitReview(db: D1Database, input: SubmitReviewRequest, n
 
   const grade = gradeFromReview(input.correct, input.skipped, input.elapsedMs);
   const scheduled = await Promise.all(characters.map(async (character) => schedule(
-    input.mode === "placement" ? initialState(now) : await getState(db, character.id, input.track) ?? initialState(now),
+    input.mode === "placement" ? initialState(now) : await getState(db, profileId, character.id, input.track) ?? initialState(now),
     grade,
     now,
   )));
@@ -103,8 +103,8 @@ export async function submitReview(db: D1Database, input: SubmitReviewRequest, n
     : responseFor(primary.next.due, primary.next.scheduledDays, primary.next.stability, primary.next.difficulty);
   const statements = [
     ...characters.flatMap((character, index) => [
-      ...(input.mode === "placement" ? [] : [prepareUpsertState(db, character.id, input.track, scheduled[index].next)]),
-      prepareAppendLog(db, {
+      ...(input.mode === "placement" ? [] : [prepareUpsertState(db, profileId, character.id, input.track, scheduled[index].next)]),
+      prepareAppendLog(db, profileId, {
         ...scheduled[index].log,
         characterId: character.id,
         track: input.track,
@@ -116,31 +116,31 @@ export async function submitReview(db: D1Database, input: SubmitReviewRequest, n
         cardIndex: input.cardIndex,
       }),
     ]),
-    db.prepare("INSERT INTO review_submissions (session_id, card_index, response_json) VALUES (?1, ?2, ?3)")
-      .bind(input.sessionId, input.cardIndex, JSON.stringify(response)),
+    db.prepare("INSERT INTO review_submissions (profile_id, session_id, card_index, response_json) VALUES (?1, ?2, ?3, ?4)")
+      .bind(profileId, input.sessionId, input.cardIndex, JSON.stringify(response)),
   ];
   try {
     await db.batch(statements);
   } catch (error) {
-    const duplicate = await existingSubmission(db, input);
+    const duplicate = await existingSubmission(db, profileId, input);
     if (duplicate) return duplicate;
     throw error;
   }
   return response;
 }
 
-export async function submitReviewBatch(db: D1Database, inputs: SubmitReviewRequest[], now = new Date()): Promise<SubmitReviewResponse[]> {
+export async function submitReviewBatch(db: D1Database, profileId: number, inputs: SubmitReviewRequest[], now = new Date()): Promise<SubmitReviewResponse[]> {
   const responses: SubmitReviewResponse[] = [];
-  for (const input of inputs) responses.push(await submitReview(db, input, now));
+  for (const input of inputs) responses.push(await submitReview(db, profileId, input, now));
   return responses;
 }
 
-export async function getDueReviews(db: D1Database, tracks: Track[], limit: number, now = new Date()): Promise<DueReviewsResponse> {
-  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
-  const dueParameter = tracks.length + 1;
+export async function getDueReviews(db: D1Database, profileId: number, tracks: Track[], limit: number, now = new Date()): Promise<DueReviewsResponse> {
+  const placeholders = tracks.map((_, index) => `?${index + 2}`).join(", ");
+  const dueParameter = tracks.length + 2;
   const [countResult, cardsResult] = await db.batch([
-    db.prepare(`SELECT COUNT(*) AS total FROM review_states WHERE track IN (${placeholders}) AND due <= ?${dueParameter}`)
-      .bind(...tracks, now.getTime()),
+    db.prepare(`SELECT COUNT(*) AS total FROM review_states WHERE profile_id = ?1 AND track IN (${placeholders}) AND due <= ?${dueParameter}`)
+      .bind(profileId, ...tracks, now.getTime()),
     db.prepare(`
       SELECT c.key, rs.track, ct.glyph,
         CASE rs.track WHEN 'kr' THEN ct.kr_reading WHEN 'jp' THEN ct.jp_on ELSE ct.cn_pinyin END AS reading,
@@ -148,10 +148,10 @@ export async function getDueReviews(db: D1Database, tracks: Track[], limit: numb
       FROM review_states rs
       JOIN characters c ON c.id = rs.character_id
       JOIN character_tracks ct ON ct.character_id = rs.character_id AND ct.track = rs.track
-      WHERE rs.track IN (${placeholders}) AND rs.due <= ?${dueParameter}
+      WHERE rs.profile_id = ?1 AND rs.track IN (${placeholders}) AND rs.due <= ?${dueParameter}
       ORDER BY rs.due, rs.character_id
-      LIMIT ?${tracks.length + 2}
-    `).bind(...tracks, now.getTime(), limit),
+      LIMIT ?${tracks.length + 3}
+    `).bind(profileId, ...tracks, now.getTime(), limit),
   ]);
   const total = Number((countResult.results[0] as unknown as { total: number } | undefined)?.total ?? 0);
   const cards = (cardsResult.results as unknown as DueRow[]).map((row) => ({

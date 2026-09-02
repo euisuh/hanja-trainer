@@ -264,7 +264,7 @@ export async function listPlacementMembersForTracks(db: D1Database, tracks: Trac
   return result.results;
 }
 
-export async function listFreshForTracks(db: D1Database, tracks: Track[], anchor: CurriculumAnchor): Promise<FreshRow[]> {
+export async function listFreshForTracks(db: D1Database, profileId: number, tracks: Track[], anchor: CurriculumAnchor): Promise<FreshRow[]> {
   if (tracks.length === 0) return [];
   const unit = anchor.unitId === undefined ? null : await db.prepare(`
     SELECT cu.track, cu.level_ord, cu.ord AS unit_ord
@@ -274,12 +274,12 @@ export async function listFreshForTracks(db: D1Database, tracks: Track[], anchor
   if (anchor.unitId !== undefined && !unit) return [];
 
   const clauses: string[] = [];
-  const values: Array<string | number> = [];
+  const values: Array<string | number> = [profileId];
   for (const track of tracks) {
     const trackParam = `?${values.push(track)}`;
     const floor = anchor.levelOrd ?? (unit?.track === track ? unit.level_ord : null);
     const floorSql = floor === null
-      ? `COALESCE((SELECT level_ord FROM placement_results WHERE track = ${trackParam} ORDER BY taken_at DESC, id DESC LIMIT 1), (SELECT MIN(level_ord) FROM character_tracks WHERE track = ${trackParam}))`
+      ? `COALESCE((SELECT level_ord FROM placement_results WHERE profile_id = ?1 AND track = ${trackParam} ORDER BY taken_at DESC, id DESC LIMIT 1), (SELECT MIN(level_ord) FROM character_tracks WHERE track = ${trackParam}))`
       : `?${values.push(floor)}`;
     let clause = `(selected.track = ${trackParam} AND selected.level_ord >= ${floorSql}`;
     if (unit?.track === track) {

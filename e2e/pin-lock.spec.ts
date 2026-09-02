@@ -20,7 +20,7 @@ test("device PIN gates direct API calls and unlocks by keyboard and mouse", asyn
     await page.request.post("/api/session/start", { data: { mode: "lesson", tracks: ["kr"] } }),
   ]) {
     expect(direct.status()).toBe(401);
-    expect(await direct.json()).toMatchObject({ error: { code: "pin_required" } });
+    expect(await direct.json()).toMatchObject({ error: { code: "profile_required" } });
   }
 
   await page.reload();

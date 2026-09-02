@@ -3,6 +3,8 @@ import type { OnyomiScript, ThemeId } from "./settings";
 
 export type ApiErrorBody = { error: { code: string; message: string } };
 export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };
+export type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
+export type ProfilesResponse = { profiles: PublicProfile[] };
 
 export type CurriculumNode = {
   key: string;

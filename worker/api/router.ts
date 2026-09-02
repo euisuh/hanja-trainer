@@ -7,7 +7,7 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
-import { clearSessionCookie, createSessionCookie, PinError, readPinRecord, removeDevicePin, setDevicePin, unlockDevice, verifyPinSession } from "../auth/pin";
+import { clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 
 function error(status: number, code: string, message: string, retryAfter?: number): Response {
@@ -50,7 +50,7 @@ function startRequest(value: unknown): StartSessionRequest & { limit: number } |
   };
 }
 
-async function dispatchApiRequest(request: Request, env: Env): Promise<Response> {
+async function dispatchApiRequest(request: Request, env: Env, profileId: number): Promise<Response> {
   const url = new URL(request.url);
   const { pathname } = url;
   if (request.method === "GET" && pathname === "/api/health") return Response.json({ ok: true });
@@ -58,7 +58,7 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
     if (request.method === "GET" && pathname === "/api/curriculum") {
       const track = parseTrack(url.searchParams.get("track"));
       if (!track) return error(400, "invalid_track", "track must be kr, jp, or cn");
-      return Response.json(await getCurriculumContent(env.DB, track));
+      return Response.json(await getCurriculumContent(env.DB, profileId, track));
     }
 
     const unitStudyMatch = request.method === "GET" ? pathname.match(/^\/api\/curriculum\/units\/(\d+)$/) : null;
@@ -78,7 +78,7 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
       } catch {
         return error(400, "invalid_character_key", "character key must be URL encoded");
       }
-      const detail = await getCharacterContent(env.DB, key);
+      const detail = await getCharacterContent(env.DB, profileId, key);
       return detail ? Response.json(detail) : error(404, "character_not_found", "character was not found");
     }
 
@@ -91,7 +91,7 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
       }
       const input = startRequest(value);
       if (!input) return error(400, "invalid_session_request", "mode, tracks, or limit is invalid");
-      return Response.json(await startSession(env.DB, input));
+      return Response.json(await startSession(env.DB, profileId, input));
     }
 
     const unitTestMatch = request.method === "POST" ? pathname.match(/^\/api\/curriculum\/units\/(\d+)\/test-out$/) : null;
@@ -102,7 +102,7 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
       try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
       const submission = parseUnitTestSubmission(value);
       if (!submission) return error(400, "invalid_unit_test", "unit test submission is invalid");
-      return Response.json(await completeUnitTest(env.DB, unitId, submission.sessionId, submission.answers));
+      return Response.json(await completeUnitTest(env.DB, profileId, unitId, submission.sessionId, submission.answers));
     }
 
     if (request.method === "POST" && (pathname === "/api/reviews" || pathname === "/api/reviews/batch")) {
@@ -116,17 +116,17 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
         if (!Array.isArray(value) || value.length < 1 || value.length > 100) return error(400, "invalid_review_batch", "body must be an array of 1 to 100 reviews");
         const inputs = value.map(parseReviewRequest);
         if (inputs.some((input) => input === null)) return error(400, "invalid_review", "review fields are invalid");
-        return Response.json({ results: await submitReviewBatch(env.DB, inputs as NonNullable<(typeof inputs)[number]>[]) });
+        return Response.json({ results: await submitReviewBatch(env.DB, profileId, inputs as NonNullable<(typeof inputs)[number]>[]) });
       }
       const input = parseReviewRequest(value);
       if (!input) return error(400, "invalid_review", "review fields are invalid");
-      return Response.json(await submitReview(env.DB, input));
+      return Response.json(await submitReview(env.DB, profileId, input));
     }
 
     if (request.method === "GET" && pathname === "/api/reviews/due") {
       const input = parseDueRequest(url.searchParams);
       if (!input) return error(400, "invalid_due_request", "tracks or limit is invalid");
-      return Response.json(await getDueReviews(env.DB, input.tracks, input.limit));
+      return Response.json(await getDueReviews(env.DB, profileId, input.tracks, input.limit));
     }
 
     if (request.method === "POST" && pathname === "/api/sessions") {
@@ -138,31 +138,31 @@ async function dispatchApiRequest(request: Request, env: Env): Promise<Response>
       }
       const input = parseSessionRequest(value);
       if (!input) return error(400, "invalid_session_summary", "session fields are invalid");
-      return Response.json(await createSession(env.DB, input));
+      return Response.json(await createSession(env.DB, profileId, input));
     }
 
-    if (request.method === "GET" && pathname === "/api/profile") return Response.json(await getProfile(env.DB));
+    if (request.method === "GET" && pathname === "/api/profile") return Response.json(await getProfile(env.DB, profileId));
 
     if (request.method === "POST" && pathname === "/api/placement/score") {
       let value: unknown;
       try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
       const answers = parsePlacementAnswers(value);
       if (!answers) return error(400, "invalid_placement", "placement answers are invalid");
-      return Response.json(await scoreAndSavePlacement(env.DB, answers));
+      return Response.json(await scoreAndSavePlacement(env.DB, profileId, answers));
     }
 
-    if (request.method === "GET" && pathname === "/api/settings") return Response.json(await getSettings(env.DB));
+    if (request.method === "GET" && pathname === "/api/settings") return Response.json(await getSettings(env.DB, profileId));
 
     if (request.method === "PATCH" && pathname === "/api/settings") {
       let value: unknown;
       try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
       const patch = parseSettingsPatch(value);
       if (!patch) return error(400, "invalid_settings", "settings fields are invalid");
-      return Response.json(await patchSettings(env.DB, patch));
+      return Response.json(await patchSettings(env.DB, profileId, patch));
     }
 
-    if (request.method === "GET" && pathname === "/api/stats") return Response.json(await getStats(env.DB));
-    if (request.method === "GET" && pathname === "/api/onboarding-state") return Response.json(await getOnboardingState(env.DB));
+    if (request.method === "GET" && pathname === "/api/stats") return Response.json(await getStats(env.DB, profileId));
+    if (request.method === "GET" && pathname === "/api/onboarding-state") return Response.json(await getOnboardingState(env.DB, profileId));
 
   return error(404, "not_found", "API route was not found");
 }
@@ -174,37 +174,48 @@ async function jsonBody(request: Request): Promise<Record<string, unknown>> {
   return value as Record<string, unknown>;
 }
 
+function profileId(value: unknown): number {
+  if (!Number.isSafeInteger(value) || (value as number) < 1) throw new PinError(400, "invalid_profile", "profileId must be a positive integer");
+  return value as number;
+}
+
 export async function routeApiRequest(request: Request, env: Env, now = Date.now()): Promise<Response> {
   const { pathname } = new URL(request.url);
   try {
+    if (request.method === "GET" && pathname === "/api/profiles") {
+      return Response.json({ profiles: await listProfiles(env.DB) });
+    }
     if (request.method === "GET" && pathname === "/api/pin/state") {
-      const record = await readPinRecord(env.DB);
+      const record = await resolveSession(env.DB, request.headers.get("cookie"), now) ?? await readOnlyProfile(env.DB);
+      if (!record) return error(401, "profile_required", "Select a profile");
       const locked = Boolean(record.pin_locked_until && record.pin_locked_until > now);
       return Response.json({ enabled: Boolean(record.pin_hash), locked, lockedUntil: locked ? record.pin_locked_until : null });
     }
     if (request.method === "POST" && pathname === "/api/pin/unlock") {
       const body = await jsonBody(request);
-      return withCookie(Response.json({ unlocked: true }), await unlockDevice(env.DB, body.pin, now));
+      return withCookie(Response.json({ unlocked: true }), await unlockDevice(env.DB, profileId(body.profileId), body.pin, now));
+    }
+    if (request.method === "POST" && pathname === "/api/profiles/select") {
+      const body = await jsonBody(request);
+      return withCookie(Response.json({ selected: true }), await selectProfile(env.DB, profileId(body.profileId), now));
     }
 
-    const record = await readPinRecord(env.DB);
-    if (record.pin_hash && !await verifyPinSession(record, request.headers.get("cookie"), now)) {
-      return error(401, "pin_required", "Device PIN is required");
-    }
+    const record = await resolveSession(env.DB, request.headers.get("cookie"), now);
+    if (!record) return error(401, "profile_required", "Select a profile");
 
     if (request.method === "POST" && pathname === "/api/pin") {
       const body = await jsonBody(request);
-      await setDevicePin(env.DB, body.pin, body.currentPin, now);
+      await setDevicePin(env.DB, record.id, body.pin, body.currentPin, now);
       return withCookie(Response.json({ enabled: true }), clearSessionCookie);
     }
     if (request.method === "DELETE" && pathname === "/api/pin") {
       const body = await jsonBody(request);
-      await removeDevicePin(env.DB, body.currentPin, now);
+      await removeDevicePin(env.DB, record.id, body.currentPin, now);
       return withCookie(Response.json({ enabled: false }), clearSessionCookie);
     }
 
-    const response = await dispatchApiRequest(request, env);
-    return record.pin_hash && record.pin_secret ? withCookie(response, await createSessionCookie(record.pin_secret, now)) : response;
+    const response = await dispatchApiRequest(request, env, record.id);
+    return record.pin_secret ? withCookie(response, await createSessionCookie(record.id, record.pin_secret, now)) : response;
   } catch (caught) {
     if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
     if (caught instanceof UnitTestError) return error(caught.status, caught.code, caught.message);

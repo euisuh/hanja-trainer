@@ -25,10 +25,10 @@ function enabledTracks(json: string): Track[] {
   return tracks;
 }
 
-export async function requireUnitTestTarget(db: D1Database, unitId: number, requestedTrack?: Track): Promise<Track> {
+export async function requireUnitTestTarget(db: D1Database, profileId: number, unitId: number, requestedTrack?: Track): Promise<Track> {
   const [unit, profile] = await Promise.all([
     db.prepare("SELECT track FROM curriculum_units WHERE id = ?1").bind(unitId).first<UnitRow>(),
-    db.prepare("SELECT enabled_tracks FROM profile WHERE id = 1").first<ProfileRow>(),
+    db.prepare("SELECT enabled_tracks FROM profile WHERE id = ?1").bind(profileId).first<ProfileRow>(),
   ]);
   if (!unit) throw new UnitTestError(404, "unit_not_found", "Curriculum unit was not found");
   if (!profile) throw new Error("Profile row is missing");
@@ -38,7 +38,7 @@ export async function requireUnitTestTarget(db: D1Database, unitId: number, requ
   if (!enabledTracks(profile.enabled_tracks).includes(unit.track)) {
     throw new UnitTestError(409, "unit_track_disabled", "Curriculum unit track is not enabled");
   }
-  const target = (await getCurriculumContent(db, unit.track)).units.find((candidate) => candidate.id === unitId);
+  const target = (await getCurriculumContent(db, profileId, unit.track)).units.find((candidate) => candidate.id === unitId);
   if (!target) throw new UnitTestError(404, "unit_not_found", "Curriculum unit was not found");
   if (target.nodes.every((node) => node.state === "done")) {
     throw new UnitTestError(409, "unit_already_complete", "Curriculum unit is already complete");
@@ -47,15 +47,15 @@ export async function requireUnitTestTarget(db: D1Database, unitId: number, requ
   return unit.track;
 }
 
-export async function issueUnitTestAttempt(db: D1Database, sessionId: string, unitId: number, expected: ExpectedAnswer[], now = Date.now()): Promise<void> {
+export async function issueUnitTestAttempt(db: D1Database, profileId: number, sessionId: string, unitId: number, expected: ExpectedAnswer[], now = Date.now()): Promise<void> {
   await db.batch([
-    db.prepare("DELETE FROM curriculum_unit_test_attempts WHERE expires_at <= ?1").bind(now),
-    db.prepare("DELETE FROM curriculum_unit_test_attempts WHERE unit_id = ?1").bind(unitId),
+    db.prepare("DELETE FROM curriculum_unit_test_attempts WHERE profile_id = ?1 AND expires_at <= ?2").bind(profileId, now),
+    db.prepare("DELETE FROM curriculum_unit_test_attempts WHERE profile_id = ?1 AND unit_id = ?2").bind(profileId, unitId),
     db.prepare(`
       INSERT INTO curriculum_unit_test_attempts
-        (session_id, unit_id, expected_answers, created_at, expires_at, consumed_at, consumed_token)
-      VALUES (?1, ?2, ?3, ?4, ?5, NULL, NULL)
-    `).bind(sessionId, unitId, JSON.stringify(expected), now, now + UNIT_TEST_ATTEMPT_TTL_MS),
+        (profile_id, session_id, unit_id, expected_answers, created_at, expires_at, consumed_at, consumed_token)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, NULL, NULL)
+    `).bind(profileId, sessionId, unitId, JSON.stringify(expected), now, now + UNIT_TEST_ATTEMPT_TTL_MS),
   ]);
 }
 
@@ -119,44 +119,44 @@ function scoreUnitTestEvents(sessionId: string, expected: ExpectedAnswer[], answ
   };
 }
 
-async function consumeAttempt(db: D1Database, attempt: AttemptRow, members: MemberRow[], passed: boolean, now: number): Promise<void> {
+async function consumeAttempt(db: D1Database, profileId: number, attempt: AttemptRow, members: MemberRow[], passed: boolean, now: number): Promise<void> {
   const token = crypto.randomUUID();
   const statements = [db.prepare(`
     UPDATE curriculum_unit_test_attempts
-    SET consumed_at = ?3, consumed_token = ?4
-    WHERE session_id = ?1 AND unit_id = ?2 AND consumed_at IS NULL AND expires_at > ?3
+    SET consumed_at = ?4, consumed_token = ?5
+    WHERE profile_id = ?1 AND session_id = ?2 AND unit_id = ?3 AND consumed_at IS NULL AND expires_at > ?4
     RETURNING session_id
-  `).bind(attempt.session_id, attempt.unit_id, now, token)];
+  `).bind(profileId, attempt.session_id, attempt.unit_id, now, token)];
   if (passed) {
     statements.push(...members.map((member) => db.prepare(`
-      INSERT INTO curriculum_unit_completion_members (unit_id, character_id, completed_at)
-      SELECT ?1, ?2, ?3
+      INSERT INTO curriculum_unit_completion_members (profile_id, unit_id, character_id, completed_at)
+      SELECT ?1, ?2, ?3, ?4
       WHERE EXISTS (
         SELECT 1 FROM curriculum_unit_test_attempts
-        WHERE session_id = ?4 AND unit_id = ?1 AND consumed_token = ?5
+        WHERE profile_id = ?1 AND session_id = ?5 AND unit_id = ?2 AND consumed_token = ?6
       )
       ON CONFLICT(profile_id, unit_id, character_id) DO NOTHING
-    `).bind(attempt.unit_id, member.character_id, now, attempt.session_id, token)));
+    `).bind(profileId, attempt.unit_id, member.character_id, now, attempt.session_id, token)));
   }
   const [claim] = await db.batch(statements);
   if (claim.results.length === 0) throw new UnitTestError(409, "unit_test_replayed", "Unit test attempt was already consumed");
 }
 
-export async function completeUnitTest(db: D1Database, unitId: number, sessionId: string, answers: UnitTestAnswer[], now = Date.now()): Promise<UnitTestResult> {
+export async function completeUnitTest(db: D1Database, profileId: number, unitId: number, sessionId: string, answers: UnitTestAnswer[], now = Date.now()): Promise<UnitTestResult> {
   const attempt = await db.prepare(`
     SELECT session_id, unit_id, expected_answers, expires_at, consumed_at
     FROM curriculum_unit_test_attempts
-    WHERE session_id = ?1 AND unit_id = ?2
-  `).bind(sessionId, unitId).first<AttemptRow>();
+    WHERE profile_id = ?1 AND session_id = ?2 AND unit_id = ?3
+  `).bind(profileId, sessionId, unitId).first<AttemptRow>();
   if (!attempt) {
-    const other = await db.prepare("SELECT unit_id FROM curriculum_unit_test_attempts WHERE session_id = ?1 LIMIT 1").bind(sessionId).first<{ unit_id: number }>();
+    const other = await db.prepare("SELECT unit_id FROM curriculum_unit_test_attempts WHERE profile_id = ?1 AND session_id = ?2 LIMIT 1").bind(profileId, sessionId).first<{ unit_id: number }>();
     if (other) throw new UnitTestError(409, "unit_test_wrong_unit", "Unit test attempt belongs to another unit");
     throw new UnitTestError(404, "unit_test_attempt_not_found", "Unit test attempt was not found");
   }
   if (attempt.consumed_at !== null) throw new UnitTestError(409, "unit_test_replayed", "Unit test attempt was already consumed");
   if (attempt.expires_at <= now) throw new UnitTestError(410, "unit_test_expired", "Unit test attempt has expired");
 
-  await requireUnitTestTarget(db, unitId);
+  await requireUnitTestTarget(db, profileId, unitId);
   const members = await db.prepare(`
     SELECT cum.character_id, c.key
     FROM curriculum_unit_members cum
@@ -173,16 +173,16 @@ export async function completeUnitTest(db: D1Database, unitId: number, sessionId
     && expectedCounts.size === members.results.length
     && members.results.every((member) => expectedCounts.get(member.key) === 2);
   if (!currentMembership) {
-    await consumeAttempt(db, attempt, [], false, now);
+    await consumeAttempt(db, profileId, attempt, [], false, now);
     throw new UnitTestError(409, "unit_test_stale", "Curriculum unit membership changed; start a new test");
   }
 
   const score = scoreUnitTestEvents(sessionId, expected, answers);
   if (!score) {
-    await consumeAttempt(db, attempt, [], false, now);
+    await consumeAttempt(db, profileId, attempt, [], false, now);
     throw new UnitTestError(400, "unit_test_answers_mismatch", "Unit test answers do not match the issued challenge");
   }
 
-  await consumeAttempt(db, attempt, members.results, score.passed, now);
+  await consumeAttempt(db, profileId, attempt, members.results, score.passed, now);
   return score;
 }

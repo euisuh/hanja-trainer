@@ -38,7 +38,7 @@ export function UnlockScreen({ lockedUntil: initialLockedUntil, onUnlock }: Unlo
     setError("");
     setAnnouncement("");
     try {
-      await apiClient.unlockPin(value);
+      await apiClient.unlockPin(1, value);
       onUnlock();
     } catch (caught) {
       const wait = caught instanceof ApiClientError ? caught.retryAfter : undefined;

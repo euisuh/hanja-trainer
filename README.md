@@ -88,22 +88,21 @@ router does not expose that route.
 5. Generate and upload missing clips: `npm run audio:generate`.
 
 Future runs of `npm run audio:generate` issue `HEAD` checks through the audio
-route, which runs before device-PIN middleware, and synthesize only missing
+route, which runs before profile-session middleware, and synthesize only missing
 character keys. Use `--force` only when every clip must be regenerated.
 
-## Optional device PIN
+## Optional profile PIN
 
-Settings can enable a four-digit device PIN for unattended or shared screens.
-This remains a local device lock, not an identity system: Cloudflare Access is
-still the deployment access-control boundary. A four-digit value has only
-10,000 possibilities and does not protect copied D1 contents; Worker-side
-throttling protects the keyboard entry point. Unlock activity extends a
-two-hour inactivity window, while closing the browser clears the session.
+Each learner profile can use a four-digit PIN on unattended or shared screens.
+The signed session identifies the selected learner and keeps profile data
+separate; Cloudflare Access remains the deployment access-control boundary. A
+four-digit value has only 10,000 possibilities and does not protect copied D1
+contents, so Worker-side throttling applies independently to each profile.
+Activity extends a two-hour session window, while closing the browser clears
+the session.
 
-There is no recovery flow inside the app. An operator can remove a forgotten
-PIN through D1, which also invalidates every outstanding unlock cookie:
-
-```sh
-npx wrangler d1 execute hanja --remote --command \
-  "UPDATE profile SET pin_hash=NULL, pin_salt=NULL, pin_iterations=NULL, pin_secret=NULL, pin_failures=0, pin_locked_until=NULL WHERE id=1"
-```
+There is no recovery flow inside the app. Recover a forgotten PIN through an
+audited operator credential reset for only the affected profile, preserving
+its learner tables. Rotate rather than clear `pin_secret` so existing sessions
+are invalidated without making the profile unusable. The admin PIN must remain
+set whenever multiple profiles exist.

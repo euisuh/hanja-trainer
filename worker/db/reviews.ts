@@ -85,31 +85,33 @@ function hydrate(row: StateRow): StoredReviewState {
 
 export async function getState(
   db: D1Database,
+  profileId: number,
   characterId: number,
   track: Track,
 ): Promise<ReviewState | null> {
   const row = await db
-    .prepare(`${SELECT_STATE} WHERE character_id = ?1 AND track = ?2`)
-    .bind(characterId, track)
+    .prepare(`${SELECT_STATE} WHERE profile_id = ?1 AND character_id = ?2 AND track = ?3`)
+    .bind(profileId, characterId, track)
     .first<StateRow>();
   return row ? hydrate(row) : null;
 }
 
 export async function upsertState(
   db: D1Database,
+  profileId: number,
   characterId: number,
   track: Track,
   state: ReviewState,
 ): Promise<void> {
-  await prepareUpsertState(db, characterId, track, state).run();
+  await prepareUpsertState(db, profileId, characterId, track, state).run();
 }
 
-export function prepareUpsertState(db: D1Database, characterId: number, track: Track, state: ReviewState): D1PreparedStatement {
+export function prepareUpsertState(db: D1Database, profileId: number, characterId: number, track: Track, state: ReviewState): D1PreparedStatement {
   return db.prepare(`
     INSERT INTO review_states (
-      character_id, track, stability, difficulty, elapsed_days, scheduled_days,
+      profile_id, character_id, track, stability, difficulty, elapsed_days, scheduled_days,
       learning_steps, reps, lapses, state, last_review, due, correct_count, total_count
-    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)
+    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15)
     ON CONFLICT (profile_id, character_id, track) DO UPDATE SET
       stability = excluded.stability,
       difficulty = excluded.difficulty,
@@ -124,6 +126,7 @@ export function prepareUpsertState(db: D1Database, characterId: number, track: T
       correct_count = excluded.correct_count,
       total_count = excluded.total_count
   `).bind(
+    profileId,
     characterId,
     track,
     state.stability,
@@ -141,17 +144,18 @@ export function prepareUpsertState(db: D1Database, characterId: number, track: T
   );
 }
 
-export async function appendLog(db: D1Database, log: StoredReviewLog): Promise<void> {
-  await prepareAppendLog(db, log).run();
+export async function appendLog(db: D1Database, profileId: number, log: StoredReviewLog): Promise<void> {
+  await prepareAppendLog(db, profileId, log).run();
 }
 
-export function prepareAppendLog(db: D1Database, log: StoredReviewLog): D1PreparedStatement {
+export function prepareAppendLog(db: D1Database, profileId: number, log: StoredReviewLog): D1PreparedStatement {
   return db.prepare(`
     INSERT INTO review_log (
-      character_id, track, rating, answered_at, correct, elapsed_ms,
+      profile_id, character_id, track, rating, answered_at, correct, elapsed_ms,
       scheduled_days_before, scheduled_days_after, mode, session_id, card_index, skipped
-    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
+    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)
   `).bind(
+    profileId,
     log.characterId,
     log.track,
     ratingValues[log.rating],
@@ -169,34 +173,36 @@ export function prepareAppendLog(db: D1Database, log: StoredReviewLog): D1Prepar
 
 export async function getDueQueue(
   db: D1Database,
+  profileId: number,
   tracks: Track[],
   limit: number,
   now: Date,
 ): Promise<StoredReviewState[]> {
   if (tracks.length === 0 || limit <= 0) return [];
 
-  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
+  const placeholders = tracks.map((_, index) => `?${index + 2}`).join(", ");
   const result = await db.prepare(`
     ${SELECT_STATE}
-    WHERE track IN (${placeholders}) AND due <= ?${tracks.length + 1}
+    WHERE profile_id = ?1 AND track IN (${placeholders}) AND due <= ?${tracks.length + 2}
     ORDER BY due ASC
-    LIMIT ?${tracks.length + 2}
-  `).bind(...tracks, now.getTime(), Math.floor(limit)).all<StateRow>();
+    LIMIT ?${tracks.length + 3}
+  `).bind(profileId, ...tracks, now.getTime(), Math.floor(limit)).all<StateRow>();
   return result.results.map(hydrate);
 }
 
 export async function getStatsForCharacter(
   db: D1Database,
+  profileId: number,
   characterId: number,
 ): Promise<CharacterReviewStats> {
   const [statesResult, logsResult] = await db.batch([
-    db.prepare(`${SELECT_STATE} WHERE character_id = ?1 ORDER BY track`).bind(characterId),
+    db.prepare(`${SELECT_STATE} WHERE profile_id = ?1 AND character_id = ?2 ORDER BY track`).bind(profileId, characterId),
     db.prepare(`
       SELECT track, scheduled_days_after
       FROM review_log
-      WHERE character_id = ?1
+      WHERE profile_id = ?1 AND character_id = ?2
       ORDER BY answered_at, id
-    `).bind(characterId),
+    `).bind(profileId, characterId),
   ]);
   const states = (statesResult.results as unknown as StateRow[]).map(hydrate);
   const logs = logsResult.results as unknown as LogRow[];
@@ -216,9 +222,9 @@ export async function getStatsForCharacter(
   };
 }
 
-export async function listStatesForTracks(db: D1Database, tracks: Track[]): Promise<StoredReviewState[]> {
+export async function listStatesForTracks(db: D1Database, profileId: number, tracks: Track[]): Promise<StoredReviewState[]> {
   if (tracks.length === 0) return [];
-  const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
-  const result = await db.prepare(`${SELECT_STATE} WHERE track IN (${placeholders}) ORDER BY due`).bind(...tracks).all<StateRow>();
+  const placeholders = tracks.map((_, index) => `?${index + 2}`).join(", ");
+  const result = await db.prepare(`${SELECT_STATE} WHERE profile_id = ?1 AND track IN (${placeholders}) ORDER BY due`).bind(profileId, ...tracks).all<StateRow>();
   return result.results.map(hydrate);
 }

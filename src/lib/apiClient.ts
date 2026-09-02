@@ -1,4 +1,4 @@
-import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, ProfilesResponse, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
@@ -18,7 +18,7 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
     const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { code?: string; message?: string }; retryAfter?: number } : null;
     const code = errorBody?.error?.code ?? "request_failed";
     const message = errorBody?.error?.message ?? `Request failed (${response.status})`;
-    if (code === "pin_required") window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+    if (code === "pin_required" || code === "profile_required") window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
     throw new ApiClientError(response.status, code, message, errorBody?.retryAfter);
   }
   return body as T;
@@ -74,8 +74,10 @@ export const apiClient = {
   },
   stats: (signal?: AbortSignal) => requestJson<StatsResponse>("/api/stats", { signal }),
   onboardingState: (signal?: AbortSignal) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }),
+  profiles: (signal?: AbortSignal) => requestJson<ProfilesResponse>("/api/profiles", { signal }),
+  selectProfile: (profileId: number) => requestJson<{ selected: true }>("/api/profiles/select", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }) }),
   pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }),
-  unlockPin: (pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin }) }),
+  unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }),
   setPin: (pin: string, currentPin?: string) => requestJson<{ enabled: true }>("/api/pin", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin, ...(currentPin ? { currentPin } : {}) }) }),
   removePin: (currentPin: string) => requestJson<{ enabled: false }>("/api/pin", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ currentPin }) }),
 };

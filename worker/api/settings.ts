@@ -38,22 +38,22 @@ function decode(row: ProfileRow): SettingsResponse {
   return { enabledTracks, dailyGoal: row.daily_goal, timezone: row.timezone, onyomiScript: row.onyomi_script, theme: row.theme };
 }
 
-export async function getSettings(db: D1Database): Promise<SettingsResponse> {
-  const row = await db.prepare("SELECT enabled_tracks, daily_goal, timezone, onyomi_script, theme FROM profile WHERE id = 1").first<ProfileRow>();
+export async function getSettings(db: D1Database, profileId: number): Promise<SettingsResponse> {
+  const row = await db.prepare("SELECT enabled_tracks, daily_goal, timezone, onyomi_script, theme FROM profile WHERE id = ?1").bind(profileId).first<ProfileRow>();
   if (!row) throw new Error("Profile row is missing");
   return decode(row);
 }
 
-export async function patchSettings(db: D1Database, patch: PatchSettingsRequest, now = new Date()): Promise<SettingsResponse> {
-  const current = await getSettings(db);
+export async function patchSettings(db: D1Database, profileId: number, patch: PatchSettingsRequest, now = new Date()): Promise<SettingsResponse> {
+  const current = await getSettings(db, profileId);
   await db.prepare(`
     UPDATE profile SET enabled_tracks = ?1, daily_goal = ?2,
-      timezone = COALESCE(?3, timezone), onyomi_script = ?4, theme = ?5, updated_at = ?6 WHERE id = 1
-  `).bind(JSON.stringify(patch.enabledTracks ?? current.enabledTracks), patch.dailyGoal ?? current.dailyGoal, patch.timezone ?? null, patch.onyomiScript ?? current.onyomiScript, patch.theme ?? current.theme, now.getTime()).run();
-  return getSettings(db);
+      timezone = COALESCE(?3, timezone), onyomi_script = ?4, theme = ?5, updated_at = ?6 WHERE id = ?7
+  `).bind(JSON.stringify(patch.enabledTracks ?? current.enabledTracks), patch.dailyGoal ?? current.dailyGoal, patch.timezone ?? null, patch.onyomiScript ?? current.onyomiScript, patch.theme ?? current.theme, now.getTime(), profileId).run();
+  return getSettings(db, profileId);
 }
 
-export async function getOnboardingState(db: D1Database): Promise<OnboardingStateResponse> {
-  const row = await db.prepare("SELECT onboarded_at FROM profile WHERE id = 1").first<ProfileRow>();
+export async function getOnboardingState(db: D1Database, profileId: number): Promise<OnboardingStateResponse> {
+  const row = await db.prepare("SELECT onboarded_at FROM profile WHERE id = ?1").bind(profileId).first<ProfileRow>();
   return { onboarded: row?.onboarded_at != null };
 }

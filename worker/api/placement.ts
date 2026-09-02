@@ -29,7 +29,7 @@ function detail(track: Track, badge: string, known: number, total: number, accur
   return `拼音 정확도 ${accuracy}% · ${badge}`;
 }
 
-export async function scoreAndSavePlacement(db: D1Database, answers: PlacementAnswer[], now = new Date()): Promise<PlacementScoreResponse> {
+export async function scoreAndSavePlacement(db: D1Database, profileId: number, answers: PlacementAnswer[], now = new Date()): Promise<PlacementScoreResponse> {
   const tracks = [...new Set(answers.map((answer) => answer.track))];
   const placeholders = tracks.map((_, index) => `?${index + 1}`).join(", ");
   const boundRows = await db.prepare(`
@@ -56,10 +56,10 @@ export async function scoreAndSavePlacement(db: D1Database, answers: PlacementAn
   });
   await db.batch([
     ...results.map((result) => db.prepare(`
-      INSERT INTO placement_results (track, level_ord, level_badge, accuracy, detail, taken_at)
-      VALUES (?1, ?2, ?3, ?4, ?5, ?6)
-    `).bind(result.track, result.levelOrd, result.levelBadge, result.accuracy, result.detail, now.getTime())),
-    db.prepare("UPDATE profile SET onboarded_at = ?1, updated_at = ?1 WHERE id = 1").bind(now.getTime()),
+      INSERT INTO placement_results (profile_id, track, level_ord, level_badge, accuracy, detail, taken_at)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
+    `).bind(profileId, result.track, result.levelOrd, result.levelBadge, result.accuracy, result.detail, now.getTime())),
+    db.prepare("UPDATE profile SET onboarded_at = ?1, updated_at = ?1 WHERE id = ?2").bind(now.getTime(), profileId),
   ]);
   return { results };
 }

@@ -124,17 +124,17 @@ export function activityDaySql(timezone: string, minAt: number | null, maxAt: nu
   return { review: localDaySql("answered_at", periods), session: localDaySql("ended_at", periods) };
 }
 
-export async function getProfile(db: D1Database, now = new Date()): Promise<ProfileResponse> {
+export async function getProfile(db: D1Database, profileId: number, now = new Date()): Promise<ProfileResponse> {
   const [profileResult, rangeResult] = await db.batch([
-    db.prepare("SELECT enabled_tracks, daily_goal, timezone, xp FROM profile WHERE id = 1"),
+    db.prepare("SELECT enabled_tracks, daily_goal, timezone, xp FROM profile WHERE id = ?1").bind(profileId),
     db.prepare(`
       SELECT MIN(value) AS min_at, MAX(value) AS max_at FROM (
-        SELECT MIN(answered_at) AS value FROM review_log
-        UNION ALL SELECT MAX(answered_at) FROM review_log
-        UNION ALL SELECT MIN(ended_at) FROM sessions
-        UNION ALL SELECT MAX(ended_at) FROM sessions
+        SELECT MIN(answered_at) AS value FROM review_log WHERE profile_id = ?1
+        UNION ALL SELECT MAX(answered_at) FROM review_log WHERE profile_id = ?1
+        UNION ALL SELECT MIN(ended_at) FROM sessions WHERE profile_id = ?1
+        UNION ALL SELECT MAX(ended_at) FROM sessions WHERE profile_id = ?1
       )
-    `),
+    `).bind(profileId),
   ]);
   const profile = profileResult.results[0] as unknown as ProfileRow | undefined;
   if (!profile) throw new Error("Profile row is missing");
@@ -144,8 +144,8 @@ export async function getProfile(db: D1Database, now = new Date()): Promise<Prof
   const range = rangeResult.results[0] as unknown as ActivityRangeRow | undefined;
   const days = activityDaySql(profile.timezone, range?.min_at ?? null, range?.max_at ?? null);
   const [sessionsResult, logsResult] = await db.batch([
-    db.prepare(`SELECT ${days.session} AS day, SUM(xp) AS xp FROM sessions GROUP BY day ORDER BY day`),
-    db.prepare(`SELECT ${days.review} AS day FROM review_log GROUP BY day ORDER BY day`),
+    db.prepare(`SELECT ${days.session} AS day, SUM(xp) AS xp FROM sessions WHERE profile_id = ?1 GROUP BY day ORDER BY day`).bind(profileId),
+    db.prepare(`SELECT ${days.review} AS day FROM review_log WHERE profile_id = ?1 GROUP BY day ORDER BY day`).bind(profileId),
   ]);
   const sessionDays = sessionsResult.results as unknown as DailyXpRow[];
   const todayXp = sessionDays.find((row) => row.day === today)?.xp ?? 0;
@@ -156,13 +156,13 @@ export async function getProfile(db: D1Database, now = new Date()): Promise<Prof
   return { xp: profile.xp, todayXp, goal: profile.daily_goal, ...streaks(activeDays, new Date(`${today}T12:00:00Z`)), enabledTracks };
 }
 
-export async function createSession(db: D1Database, input: CreateSessionRequest, now = new Date()): Promise<ProfileResponse> {
+export async function createSession(db: D1Database, profileId: number, input: CreateSessionRequest, now = new Date()): Promise<ProfileResponse> {
   await db.batch([
     db.prepare(`
-      INSERT INTO sessions (mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
-      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
-    `).bind(input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.skipped, input.bestCombo, input.xp),
-    db.prepare("UPDATE profile SET xp = xp + ?1, updated_at = ?2 WHERE id = 1").bind(input.xp, now.getTime()),
+      INSERT INTO sessions (profile_id, mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+    `).bind(profileId, input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.skipped, input.bestCombo, input.xp),
+    db.prepare("UPDATE profile SET xp = xp + ?1, updated_at = ?2 WHERE id = ?3").bind(input.xp, now.getTime(), profileId),
   ]);
-  return getProfile(db, now);
+  return getProfile(db, profileId, now);
 }

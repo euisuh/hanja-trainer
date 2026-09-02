@@ -160,14 +160,14 @@ describe("profile, placement, and stats API", () => {
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
     fixture.sqlite.prepare("INSERT INTO review_log (character_id, track, rating, answered_at, correct, elapsed_ms, scheduled_days_before, scheduled_days_after, mode) VALUES (?, 'kr', 3, ?, 1, 1000, 1, 2, 'lesson')").run(character.id, Date.parse("2026-08-28T14:50:00Z"));
     const now = new Date("2026-08-28T15:30:00Z");
-    const stats = await getStats(fixture.env.DB, now) as StatsResponse;
+    const stats = await getStats(fixture.env.DB, 1, now) as StatsResponse;
     expect(stats.calendar).toHaveLength(126);
     expect(stats.calendar.find((day) => day.date === "2026-08-28")?.count).toBe(1);
     expect(stats.calendar.find((day) => day.date === "2026-08-29")?.count).toBe(0);
     expect(stats.tracks[0]).toMatchObject({ track: "kr", known: 1, total: 50, pct: 2 });
     const curriculum = await (await routeApiRequest(request("/api/curriculum?track=kr"), fixture.env)).json() as CurriculumResponse;
     expect(curriculum.units.reduce((sum, unit) => sum + unit.progress.known, 0)).toBe(stats.tracks[0].known);
-    expect((await getProfile(fixture.env.DB, now)).streak).toBe(stats.streak);
+    expect((await getProfile(fixture.env.DB, 1, now)).streak).toBe(stats.streak);
   });
 
   it("bounds event result sets by active days across a DST boundary", async () => {
@@ -201,8 +201,8 @@ describe("profile, placement, and stats API", () => {
     `).run(Date.parse("2026-03-09T16:00:00Z"), 7);
 
     const now = new Date("2026-03-09T17:00:00Z");
-    const profile = await getProfile(fixture.env.DB, now);
-    const stats = await getStats(fixture.env.DB, now);
+    const profile = await getProfile(fixture.env.DB, 1, now);
+    const stats = await getStats(fixture.env.DB, 1, now);
 
     expect(profile).toMatchObject({ todayXp: 7, streak: 4, longestStreak: 4 });
     expect(stats).toMatchObject({ answered: 3_000, skipped: 1_000, skipRate: 1_000 / 3_000 * 100, streak: 4, longestStreak: 4 });

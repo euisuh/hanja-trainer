@@ -29,7 +29,7 @@ function rowReading(row: CurriculumRow, track: Track): string {
   return reading;
 }
 
-export async function getCurriculumContent(db: D1Database, track: Track): Promise<CurriculumResponse> {
+export async function getCurriculumContent(db: D1Database, profileId: number, track: Track): Promise<CurriculumResponse> {
   const [result, placementResult] = await db.batch([db.prepare(`
     SELECT cu.id AS unit_id, cu.level, cu.ord AS unit_ord, cu.title, cu.subtitle,
       cum.ord AS member_ord, c.key, ct.glyph, ct.kr_reading, ct.jp_on, ct.cn_pinyin,
@@ -38,11 +38,11 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
     JOIN curriculum_unit_members cum ON cum.unit_id = cu.id
     JOIN characters c ON c.id = cum.character_id
     JOIN character_tracks ct ON ct.character_id = c.id AND ct.track = cu.track
-    LEFT JOIN review_states rs ON rs.character_id = c.id AND rs.track = cu.track
-    LEFT JOIN curriculum_unit_completion_members ucc ON ucc.unit_id = cu.id AND ucc.character_id = c.id
+    LEFT JOIN review_states rs ON rs.profile_id = ?2 AND rs.character_id = c.id AND rs.track = cu.track
+    LEFT JOIN curriculum_unit_completion_members ucc ON ucc.profile_id = ?2 AND ucc.unit_id = cu.id AND ucc.character_id = c.id
     WHERE cu.track = ?1
     ORDER BY cu.level_ord, cu.ord, cum.ord
-  `).bind(track), db.prepare("SELECT level_ord FROM placement_results WHERE track = ?1 ORDER BY taken_at DESC, id DESC LIMIT 1").bind(track)]);
+  `).bind(track, profileId), db.prepare("SELECT level_ord FROM placement_results WHERE profile_id = ?1 AND track = ?2 ORDER BY taken_at DESC, id DESC LIMIT 1").bind(profileId, track)]);
   const units = new Map<number, CurriculumResponse["units"][number]>();
   const unitLevels = new Map<number, number>();
   const completedMembers = new Map<number, number>();
@@ -77,10 +77,10 @@ export async function getCurriculumContent(db: D1Database, track: Track): Promis
   return { units: ordered };
 }
 
-export async function getCharacterContent(db: D1Database, key: string): Promise<CharacterDetailResponse | null> {
+export async function getCharacterContent(db: D1Database, profileId: number, key: string): Promise<CharacterDetailResponse | null> {
   const character = await getCharacter(db, key);
   if (!character) return null;
-  const stats = await getStatsForCharacter(db, character.id);
+  const stats = await getStatsForCharacter(db, profileId, character.id);
   const tracks: ApiTrackDetail[] = character.tracks.map((entry) => {
     const state = stats.states.find((candidate) => candidate.track === entry.track);
     const base = {
