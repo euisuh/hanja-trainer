@@ -5,10 +5,12 @@ import { URL, fileURLToPath, pathToFileURL } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const results = fileURLToPath(new URL("../test-results", import.meta.url));
-export const brokenPipeSignature = "kj/async-io-unix.c++:186: disconnected: ::write(fd, buffer.begin(), buffer.size()): Broken pipe";
+export const wranglerFatalPrompt = "If you think this is a bug then please create an issue at https://github.com/cloudflare/workers-sdk/issues/new/choose";
+export const proxyWorkerFailure = "Error in ProxyController: Error inside ProxyWorker";
+export const networkLost = "message: 'Network connection lost.'";
 
-export function retryableWranglerCrash(log) {
-  return log.includes(brokenPipeSignature);
+export function retryableWranglerCrash(log, debugLog = "") {
+  return log.includes(wranglerFatalPrompt) && debugLog.includes(proxyWorkerFailure) && debugLog.includes(networkLost);
 }
 
 function runE2E() {
@@ -20,10 +22,12 @@ export function main() {
   const status = runE2E();
   if (status === 0) return;
   let log = "";
+  let debugLog = "";
   try { log = readFileSync(`${results}/wrangler.log`, "utf8"); } catch { /* A missing log is not retryable. */ }
-  if (!retryableWranglerCrash(log)) process.exitCode = status;
+  try { debugLog = readFileSync(`${results}/wrangler-debug.log`, "utf8"); } catch { /* A missing log is not retryable. */ }
+  if (!retryableWranglerCrash(log, debugLog)) process.exitCode = status;
   else {
-    renameSync(results, `${results}-wrangler-epipe-first`);
+    renameSync(results, `${results}-wrangler-crash-first`);
     process.exitCode = runE2E();
   }
 }
