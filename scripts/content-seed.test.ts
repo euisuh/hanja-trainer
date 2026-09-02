@@ -7,6 +7,7 @@ import { sentenceAttribution } from "../src/shared/sentenceAttribution.ts";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../src/features/placement/adaptive.ts";
 import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
 import { tierForTgh } from "./tgh-tier.ts";
+import { buildAudioEntries } from "./generate-audio.ts";
 import type { CharacterEntry, SeedSentenceEntry, Track } from "../src/shared/types.ts";
 
 const files = {
@@ -50,6 +51,26 @@ test("curated character files validate and cross-link", async () => {
   }
 
   assert.ok([...linked.values()].filter((tracks) => tracks.size >= 2).length >= 30);
+});
+
+test("cached audio generation covers every unique character reading", async () => {
+  const paths = Object.keys(files);
+  const documents = await Promise.all(paths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const entries = buildAudioEntries(documents);
+  assert.equal(entries.length, 3866);
+  assert.deepEqual(Object.fromEntries(["kr", "jp", "cn"].map((track) => [track, entries.filter((entry) => entry.track === track).length])), {
+    kr: 1000,
+    jp: 2211,
+    cn: 655,
+  });
+  assert.equal(new Set(entries.map((entry) => entry.objectKey)).size, entries.length);
+  assert.ok(entries.filter((entry) => entry.track === "jp").every((entry) => (
+    entry.text.length > 0 && entry.text.split("、").every((reading) => reading !== "なし")
+  )), "no synthesized on/kun field is the なし sentinel");
+  assert.deepEqual(entries.find((entry) => entry.objectKey === "kr/校.mp3"), { key: "校", objectKey: "kr/校.mp3", text: "학교 교", track: "kr" });
+  assert.deepEqual(entries.find((entry) => entry.objectKey === "jp/一.mp3"), { key: "一", objectKey: "jp/一.mp3", text: "イチ・イツ、ひと-・ひと-つ", track: "jp" });
+  assert.equal(entries.find((entry) => entry.objectKey === "jp/電.mp3")?.text, "デン", "on-only reading");
+  assert.equal(entries.find((entry) => entry.objectKey === "jp/込.mp3")?.text, "-こ-む・こ-む・こ-み・-こ-み・こ-める", "kun-only reading");
 });
 
 test("Japanese JLPT curriculum, Kanken metadata, and variants match the pinned sources", async () => {

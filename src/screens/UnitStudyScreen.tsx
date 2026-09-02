@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SourceAttribution } from "../features/source/SourceAttribution";
-import { matchingVoice, speechLanguages, useSpeechVoices } from "../features/study/speech";
+import { cachedAudioUrl, matchingVoice, speechLanguages, useSpeechVoices } from "../features/study/speech";
 import { useSettings } from "../features/settings/useSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
 import { toHiragana } from "../shared/kana";
+import { joinSpokenReadings } from "../shared/spokenReading";
 import type { ApiSentence, UnitStudyResponse, UnitStudyTrackDetail } from "../shared/api";
 import type { Track } from "../shared/types";
 import "../features/study/study.css";
@@ -28,7 +29,7 @@ function HighlightedSentence({ sentence }: { sentence: ApiSentence }) {
 
 function speechReading(entry: UnitStudyTrackDetail, hiragana: boolean): string {
   const main = entry.track === "jp" && hiragana ? toHiragana(entry.reading) : entry.reading;
-  return entry.subreading ? `${main}、${entry.subreading}` : main;
+  return joinSpokenReadings(main, entry.subreading);
 }
 
 export function UnitStudyScreen() {
@@ -38,6 +39,7 @@ export function UnitStudyScreen() {
   const [detail, setDetail] = useState<UnitStudyResponse | null>(null);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const voices = useSpeechVoices();
   const unitId = Number(rawUnitId);
   const voiceByTrack = useMemo(() => new Map(enabledTracks.flatMap((track) => {
@@ -71,14 +73,34 @@ export function UnitStudyScreen() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [back]);
 
-  const speak = useCallback((text: string, track: Track) => {
+  useEffect(() => () => {
+    const audio = audioRef.current;
+    audioRef.current = null;
+    audio?.pause();
+  }, []);
+
+  const speak = useCallback((text: string, track: Track, key?: string) => {
+    audioRef.current?.pause();
+    audioRef.current = null;
     const voice = voiceByTrack.get(track);
-    if (!voice) return;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = speechLanguages[track];
-    utterance.voice = voice;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    const fallback = () => {
+      if (!voice) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = speechLanguages[track];
+      utterance.voice = voice;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    };
+    if (!key || typeof Audio !== "function") { fallback(); return; }
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    const audio = new Audio(cachedAudioUrl(track, key));
+    audioRef.current = audio;
+    let failed = false;
+    const release = () => { if (audioRef.current === audio) audioRef.current = null; };
+    const fallbackOnce = () => { if (!failed && audioRef.current === audio) { failed = true; release(); fallback(); } };
+    audio.addEventListener("error", fallbackOnce, { once: true });
+    audio.addEventListener("ended", release, { once: true });
+    void audio.play().catch(fallbackOnce);
   }, [voiceByTrack]);
 
   if (!Number.isSafeInteger(unitId) || unitId < 1) return <section><button className="unit-study__back" onClick={back} type="button">← 뒤로 (Esc)</button><p role="alert">유닛 번호가 올바르지 않습니다.</p></section>;
@@ -109,7 +131,7 @@ export function UnitStudyScreen() {
                 const displayedReading = entry.track === "jp" && onyomiScript === "hiragana" ? toHiragana(entry.reading) : entry.reading;
                 const supported = voiceByTrack.has(track);
                 return <td className="unit-study__track" key={track} lang={theme.lang} style={{ "--study-accent": theme.accent, "--study-soft": theme.soft, "--study-font": theme.font } as CSSProperties}>
-                  <AudioControl label={`${labels[track]} 읽기 듣기: ${reading}`} onPlay={() => speak(reading, track)} supported={supported}>
+                  <AudioControl label={`${labels[track]} 읽기 듣기: ${reading}`} onPlay={() => speak(reading, track, character.key)} supported={typeof Audio === "function" || supported}>
                     <span className="unit-study__reading"><span><strong>{displayedReading}</strong>{entry.subreading && <small>{entry.subreading}</small>}</span></span>
                   </AudioControl>
                   <div className="unit-study__badges">{entry.level_badges.map((badge) => <span key={badge}>{badge}</span>)}</div>

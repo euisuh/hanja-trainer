@@ -2,12 +2,24 @@ import { expect, test } from "@playwright/test";
 
 test("previews one unit with cross-track keyboard controls", async ({ page }) => {
   await page.addInitScript(() => {
+    const audios: TestAudio[] = [];
     class TestUtterance {
       lang = "";
       voice: { lang: string } | null = null;
       constructor(public text: string) {}
     }
+    class TestAudio extends EventTarget {
+      constructor(public src: string) { super(); audios.push(this); }
+      pause() { document.documentElement.dataset.audioPauses = String(Number(document.documentElement.dataset.audioPauses ?? 0) + 1); }
+      play() {
+        document.documentElement.dataset.audioPlays = String(Number(document.documentElement.dataset.audioPlays ?? 0) + 1);
+        return document.documentElement.dataset.audioSucceeds ? Promise.resolve() : Promise.reject(new Error("missing test clip"));
+      }
+    }
+    window.addEventListener("test-stale-audio-error", () => audios.at(-2)?.dispatchEvent(new Event("error")));
+    window.addEventListener("test-current-audio-error", () => audios.at(-1)?.dispatchEvent(new Event("error")));
     const voices = [{ lang: "ko-KR" }, { lang: "ja-JP" }];
+    Object.defineProperty(window, "Audio", { value: TestAudio });
     Object.defineProperty(window, "SpeechSynthesisUtterance", { value: TestUtterance });
     Object.defineProperty(window, "speechSynthesis", { value: {
       addEventListener: (name: string, listener: EventListener) => { if (name === "voiceschanged") window.addEventListener("test-voiceschanged", listener); },
@@ -32,14 +44,13 @@ test("previews one unit with cross-track keyboard controls", async ({ page }) =>
   await expect(page.getByRole("columnheader", { name: "日本 · 音/訓" })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: "中国 · 拼音" })).toBeVisible();
   expect(requests).toHaveLength(1);
-
   const curriculum = await (await page.request.get("/api/curriculum?track=kr")).json() as { units: Array<{ id: number }> };
   const firstUnitLoaded = page.waitForResponse((response) => /\/api\/curriculum\/units\/\d+$/u.test(response.url()) && response.ok());
   await page.goto(`/study/${curriculum.units[0].id}`);
   const firstUnit = await (await firstUnitLoaded).json() as { characters: unknown[] };
   await expect(page.locator(".unit-study__table tbody tr")).toHaveCount(firstUnit.characters.length);
 
-  await expect(page.locator("[data-study-audio]")).toHaveCount(0);
+  await expect(page.locator(".unit-study__reading").first().locator("xpath=ancestor::button")).toBeVisible();
   const silentControls = page.locator("[data-study-control]");
   const silentSentence = page.locator(".unit-study__sentence [data-study-control]").first();
   await silentControls.first().focus();
@@ -60,8 +71,18 @@ test("previews one unit with cross-track keyboard controls", async ({ page }) =>
   await expect.poll(() => page.locator("html").getAttribute("data-last-speech")).toContain('"lang":"ko-KR"');
   await jpReading.press("Enter");
   await expect.poll(() => page.locator("html").getAttribute("data-last-speech")).toContain('"lang":"ja-JP"');
-  await expect(page.getByRole("button", { name: /中国 · 拼音 .* 듣기/u })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /中国 · 拼音 읽기 듣기/u }).first()).toBeVisible();
   await expect(page.locator(".unit-study__sentence mark").first()).toBeVisible();
+  await page.evaluate(() => {
+    document.documentElement.dataset.audioSucceeds = "true";
+    document.documentElement.dataset.audioPauses = "0";
+  });
+  await krReading.press("Enter");
+  await jpReading.press("Enter");
+  await expect(page.locator("html")).toHaveAttribute("data-audio-pauses", "1");
+  const speechBeforeStaleError = await page.locator("html").getAttribute("data-last-speech");
+  await page.evaluate(() => window.dispatchEvent(new Event("test-stale-audio-error")));
+  await expect(page.locator("html")).toHaveAttribute("data-last-speech", speechBeforeStaleError!);
 
   const studyControls = page.locator("[data-study-control]");
   await studyControls.first().focus();
@@ -69,6 +90,9 @@ test("previews one unit with cross-track keyboard controls", async ({ page }) =>
   await expect(studyControls.nth(1)).toBeFocused();
   await page.setViewportSize({ width: 430, height: 900 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  await page.evaluate(() => { document.documentElement.dataset.lastSpeech = "before-unmount"; });
   await page.keyboard.press("Escape");
   await expect(page.locator(".home-screen")).toBeVisible();
+  await page.evaluate(() => window.dispatchEvent(new Event("test-current-audio-error")));
+  await expect(page.locator("html")).toHaveAttribute("data-last-speech", "before-unmount");
 });

@@ -24,5 +24,11 @@
       "database_id": "469e0815-fbeb-465b-8804-c118845b0f3d",
       "migrations_dir": "migrations"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "AUDIO",
+      "bucket_name": "hanja-audio"
+    }
   ]
 }

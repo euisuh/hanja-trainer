@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { LocalRecorder, MAX_RECORDING_MS, matchingVoice, speechLanguages, type LocalRecordingState } from "./speech";
+import { joinSpokenReadings } from "../../shared/spokenReading";
+import { cachedAudioUrl, LocalRecorder, MAX_RECORDING_MS, matchingVoice, speechLanguages, type LocalRecordingState } from "./speech";
 
 class FakeRecorder {
   state: RecordingState = "inactive";
@@ -21,12 +22,26 @@ function stream(stops: { count: number }): MediaStream {
 }
 
 describe("study speech voices", () => {
+  it("omits missing Japanese readings from generated and fallback speech", () => {
+    expect(joinSpokenReadings("デン", "なし")).toBe("デン");
+    expect(joinSpokenReadings("なし", "こ-む")).toBe("こ-む");
+  });
+
   it("uses only the requested locale and normalizes underscores", () => {
     const voices = [{ lang: "zh-TW" }, { lang: "ja_JP" }, { lang: "ko-KR" }];
     expect(matchingVoice(voices, "jp")).toBe(voices[1]);
     expect(matchingVoice(voices, "kr")).toBe(voices[2]);
     expect(matchingVoice(voices, "cn")).toBeUndefined();
     expect(speechLanguages.cn).toBe("zh-CN");
+  });
+
+  it("prefers a remote locale voice and encodes cached character keys", () => {
+    const voices = [
+      { lang: "ko-KR", localService: true },
+      { lang: "ko_KR", localService: false },
+    ];
+    expect(matchingVoice(voices, "kr")).toBe(voices[1]);
+    expect(cachedAudioUrl("cn", "愛")).toBe("/api/audio/cn/%E6%84%9B.mp3");
   });
 
   it("records for at most 15 seconds and revokes replaced or discarded clips", async () => {

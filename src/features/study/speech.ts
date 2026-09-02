@@ -182,9 +182,14 @@ export const speechLanguages: Record<Track, "ko-KR" | "ja-JP" | "zh-CN"> = {
   cn: "zh-CN",
 };
 
-export function matchingVoice<T extends { lang: string }>(voices: readonly T[], track: Track): T | undefined {
+export function matchingVoice<T extends { lang: string; localService?: boolean }>(voices: readonly T[], track: Track): T | undefined {
   const target = speechLanguages[track].toLowerCase();
-  return voices.find((voice) => voice.lang.replace("_", "-").toLowerCase() === target);
+  const matches = voices.filter((voice) => voice.lang.replace("_", "-").toLowerCase() === target);
+  return matches.find((voice) => voice.localService === false) ?? matches[0];
+}
+
+export function cachedAudioUrl(track: Track, key: string): string {
+  return `/api/audio/${track}/${encodeURIComponent(key)}.mp3`;
 }
 
 export function useSpeechVoices(): SpeechSynthesisVoice[] {

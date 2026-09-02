@@ -71,6 +71,26 @@ Cloudflare Access is the access-control layer in front of the Worker; the app
 does not implement authentication. An unauthenticated `curl` may therefore
 return the Access login response even while the deployment is healthy.
 
+### Cached reading audio
+
+The committed curriculum produces 3,866 unique character clips: 1,000 Korean,
+2,211 Japanese, and 655 Chinese.
+
+First-time setup must deploy the audio route before generation. The generator
+uses `HEAD /api/audio/...` to skip clips already stored in R2; the old API
+router does not expose that route.
+
+1. Enable R2 in the Cloudflare dashboard.
+2. Create the bound bucket: `npx wrangler r2 bucket create hanja-audio`.
+3. Deploy the Worker and empty audio route: `npm run deploy`.
+4. Configure Google ADC with a quota project, or set
+   `GOOGLE_CLOUD_ACCESS_TOKEN` and `GOOGLE_CLOUD_PROJECT`.
+5. Generate and upload missing clips: `npm run audio:generate`.
+
+Future runs of `npm run audio:generate` issue `HEAD` checks through the audio
+route, which runs before device-PIN middleware, and synthesize only missing
+character keys. Use `--force` only when every clip must be regenerated.
+
 ## Optional device PIN
 
 Settings can enable a four-digit device PIN for unattended or shared screens.
