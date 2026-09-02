@@ -39,7 +39,7 @@ export function TrackMasteryCard({ cardRef, index, progress, totalCards, track, 
       <p lang={theme.lang}>{progress.known}/{progress.total}{labels.unit}</p>
       <div aria-label={`${theme.label} 숙달 ${Math.round(progress.pct)}%`} className="track-mastery-card__bar" role="progressbar" aria-valuemax={100} aria-valuemin={0} aria-valuenow={Math.round(progress.pct)}><span style={{ width: `${progress.pct}%` }} /></div>
       <footer lang={theme.lang}><span>{labels.current} {current}</span><span>{progress.nextLevel ? `${labels.next} ${progress.nextLevel}` : "최고 단계"}</span></footer>
-      {progress.secondaryScale && <p className="track-mastery-card__secondary" lang={theme.lang} title="JLPT 한자 범위 기반 추정치이며 시험 점수나 합격 예측이 아닙니다.">JLPT {progress.secondaryScale.level} · 漢字 {progress.secondaryScale.known}/{progress.secondaryScale.total}{progress.secondaryScale.nextLevel ? ` · 次 ${progress.secondaryScale.nextLevel}` : ""}</p>}
+      {progress.secondaryScale && <p className="track-mastery-card__secondary" lang={theme.lang}>{progress.secondaryScale.name} {progress.secondaryScale.level} · 漢字 {progress.secondaryScale.known}/{progress.secondaryScale.total}{progress.secondaryScale.nextLevel ? ` · 次 ${progress.secondaryScale.nextLevel}` : ""}</p>}
     </article>
   );
 }

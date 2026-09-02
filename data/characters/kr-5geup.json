@@ -64,7 +64,8 @@
       "meaningEn": "command, order; 'commandant', magistrate; allow, cause",
       "meaningKo": "하여금",
       "variants": {
-        "kr": "令"
+        "kr": "令",
+        "jp": "令"
       },
       "strokeCount": 5,
       "tracks": [
@@ -83,7 +84,8 @@
       "meaningKo": "견줄",
       "variants": {
         "cn": "比",
-        "kr": "比"
+        "kr": "比",
+        "jp": "比"
       },
       "strokeCount": 4,
       "tracks": [
@@ -101,7 +103,8 @@
       "meaningEn": "show, manifest; demonstrate; Kangxi radical 113",
       "meaningKo": "보일",
       "variants": {
-        "kr": "示"
+        "kr": "示",
+        "jp": "示"
       },
       "strokeCount": 5,
       "tracks": [
@@ -119,7 +122,8 @@
       "meaningEn": "hundred million; many",
       "meaningKo": "억",
       "variants": {
-        "kr": "億"
+        "kr": "億",
+        "jp": "億"
       },
       "strokeCount": 15,
       "tracks": [
@@ -157,7 +161,8 @@
       "meaningEn": "male of species; hero; manly",
       "meaningKo": "수컷",
       "variants": {
-        "kr": "雄"
+        "kr": "雄",
+        "jp": "雄"
       },
       "strokeCount": 12,
       "tracks": [
@@ -176,7 +181,8 @@
       "meaningKo": "인할",
       "variants": {
         "cn": "因",
-        "kr": "因"
+        "kr": "因",
+        "jp": "因"
       },
       "strokeCount": 6,
       "tracks": [
@@ -194,7 +200,8 @@
       "meaningEn": "conduct, run, control, manage",
       "meaningKo": "잡을",
       "variants": {
-        "kr": "操"
+        "kr": "操",
+        "jp": "操"
       },
       "strokeCount": 16,
       "tracks": [
@@ -213,7 +220,8 @@
       "meaningKo": "부를",
       "variants": {
         "cn": "唱",
-        "kr": "唱"
+        "kr": "唱",
+        "jp": "唱"
       },
       "strokeCount": 11,
       "tracks": [
@@ -231,7 +239,8 @@
       "meaningEn": "rules, regulations, customs, law",
       "meaningKo": "법",
       "variants": {
-        "kr": "規"
+        "kr": "規",
+        "jp": "規"
       },
       "strokeCount": 11,
       "tracks": [
@@ -249,7 +258,8 @@
       "meaningEn": "altar; arena, examination hall",
       "meaningKo": "단",
       "variants": {
-        "kr": "壇"
+        "kr": "壇",
+        "jp": "壇"
       },
       "strokeCount": 16,
       "tracks": [
@@ -287,7 +297,8 @@
       "meaningEn": "measure, quantity, capacity",
       "meaningKo": "헤아릴",
       "variants": {
-        "kr": "量"
+        "kr": "量",
+        "jp": "量"
       },
       "strokeCount": 12,
       "tracks": [
@@ -306,7 +317,8 @@
       "meaningKo": "자리",
       "variants": {
         "cn": "位",
-        "kr": "位"
+        "kr": "位",
+        "jp": "位"
       },
       "strokeCount": 7,
       "tracks": [
@@ -324,7 +336,8 @@
       "meaningEn": "crime, sin, vice; evil; hardship",
       "meaningKo": "허물",
       "variants": {
-        "kr": "罪"
+        "kr": "罪",
+        "jp": "罪"
       },
       "strokeCount": 13,
       "tracks": [
@@ -342,7 +355,8 @@
       "meaningEn": "rule, law, regulation; grades",
       "meaningKo": "곧",
       "variants": {
-        "kr": "則"
+        "kr": "則",
+        "jp": "則"
       },
       "strokeCount": 9,
       "tracks": [
@@ -398,7 +412,8 @@
       "meaningEn": "to fish; seize; pursue; surname",
       "meaningKo": "고기 잡을",
       "variants": {
-        "kr": "漁"
+        "kr": "漁",
+        "jp": "漁"
       },
       "strokeCount": 14,
       "tracks": [
@@ -456,7 +471,8 @@
       "meaningKo": "두",
       "variants": {
         "cn": "再",
-        "kr": "再"
+        "kr": "再",
+        "jp": "再"
       },
       "strokeCount": 6,
       "tracks": [
@@ -475,7 +491,8 @@
       "meaningKo": "물",
       "variants": {
         "kr": "河",
-        "cn": "河"
+        "cn": "河",
+        "jp": "河"
       },
       "strokeCount": 8,
       "tracks": [
@@ -513,7 +530,8 @@
       "meaningKo": "굳셀",
       "variants": {
         "kr": "健",
-        "cn": "健"
+        "cn": "健",
+        "jp": "健"
       },
       "strokeCount": 10,
       "tracks": [
@@ -531,7 +549,8 @@
       "meaningEn": "skill, ability, talent, ingenuity",
       "meaningKo": "재주",
       "variants": {
-        "kr": "技"
+        "kr": "技",
+        "jp": "技"
       },
       "strokeCount": 7,
       "tracks": [
@@ -568,7 +587,8 @@
       "meaningEn": "bathe, wash; bath",
       "meaningKo": "목욕할",
       "variants": {
-        "kr": "浴"
+        "kr": "浴",
+        "jp": "浴"
       },
       "strokeCount": 10,
       "tracks": [
@@ -606,7 +626,8 @@
       "meaningEn": "profound, brilliant, lofty",
       "meaningKo": "높을",
       "variants": {
-        "kr": "卓"
+        "kr": "卓",
+        "jp": "卓"
       },
       "strokeCount": 8,
       "tracks": [
@@ -663,7 +684,8 @@
       "meaningEn": "investigate, examine, seek into",
       "meaningKo": "조사할",
       "variants": {
-        "kr": "査"
+        "kr": "査",
+        "jp": "査"
       },
       "strokeCount": 9,
       "tracks": [
@@ -761,7 +783,8 @@
       "meaningEn": "raise, lift up; recommend",
       "meaningKo": "들",
       "variants": {
-        "kr": "擧"
+        "kr": "擧",
+        "jp": "挙"
       },
       "strokeCount": 17,
       "tracks": [
@@ -779,7 +802,8 @@
       "meaningEn": "contend, vie, compete",
       "meaningKo": "다툴",
       "variants": {
-        "kr": "競"
+        "kr": "競",
+        "jp": "競"
       },
       "strokeCount": 20,
       "tracks": [
@@ -818,7 +842,8 @@
       "meaningKo": "끝",
       "variants": {
         "kr": "末",
-        "cn": "末"
+        "cn": "末",
+        "jp": "末"
       },
       "strokeCount": 5,
       "tracks": [
@@ -855,7 +880,8 @@
       "meaningEn": "expenses, expenditures, fee",
       "meaningKo": "쓸",
       "variants": {
-        "kr": "費"
+        "kr": "費",
+        "jp": "費"
       },
       "strokeCount": 12,
       "tracks": [
@@ -892,7 +918,8 @@
       "meaningEn": "to dispute, fight, contend, strive",
       "meaningKo": "다툴",
       "variants": {
-        "kr": "爭"
+        "kr": "爭",
+        "jp": "争"
       },
       "strokeCount": 8,
       "tracks": [
@@ -910,7 +937,8 @@
       "meaningEn": "stop, suspend, delay; suitable",
       "meaningKo": "머무를",
       "variants": {
-        "kr": "停"
+        "kr": "停",
+        "jp": "停"
       },
       "strokeCount": 11,
       "tracks": [
@@ -949,7 +977,8 @@
       "meaningKo": "처음",
       "variants": {
         "kr": "初",
-        "cn": "初"
+        "cn": "初",
+        "jp": "初"
       },
       "strokeCount": 7,
       "tracks": [
@@ -967,7 +996,8 @@
       "meaningEn": "send, deliver, present; cause",
       "meaningKo": "이를",
       "variants": {
-        "kr": "致"
+        "kr": "致",
+        "jp": "致"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1006,7 +1036,8 @@
       "meaningKo": "찰",
       "variants": {
         "cn": "冷",
-        "kr": "冷"
+        "kr": "冷",
+        "jp": "冷"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1045,7 +1076,8 @@
       "meaningKo": "완전할",
       "variants": {
         "cn": "完",
-        "kr": "完"
+        "kr": "完",
+        "jp": "完"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1082,7 +1114,8 @@
       "meaningEn": "lucky, propitious, good",
       "meaningKo": "길할",
       "variants": {
-        "kr": "吉"
+        "kr": "吉",
+        "jp": "吉"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1100,7 +1133,8 @@
       "meaningEn": "good, virtuous, charitable, kind",
       "meaningKo": "착할",
       "variants": {
-        "kr": "善"
+        "kr": "善",
+        "jp": "善"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1138,7 +1172,8 @@
       "meaningEn": "change, alter; improve, remodel",
       "meaningKo": "고칠",
       "variants": {
-        "kr": "改"
+        "kr": "改",
+        "jp": "改"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1156,7 +1191,8 @@
       "meaningEn": "build, establish, erect, found",
       "meaningKo": "세울",
       "variants": {
-        "kr": "建"
+        "kr": "建",
+        "jp": "建"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1174,7 +1210,8 @@
       "meaningEn": "to become solid, solidify; strength",
       "meaningKo": "굳을",
       "variants": {
-        "kr": "固"
+        "kr": "固",
+        "jp": "固"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1193,7 +1230,8 @@
       "meaningKo": "줄",
       "variants": {
         "cn": "给",
-        "kr": "給"
+        "kr": "給",
+        "jp": "給"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1230,7 +1268,8 @@
       "meaningEn": "neck; collar; lead, guide",
       "meaningKo": "옷깃",
       "variants": {
-        "kr": "領"
+        "kr": "領",
+        "jp": "領"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1249,7 +1288,8 @@
       "meaningKo": "더할",
       "variants": {
         "kr": "加",
-        "cn": "加"
+        "cn": "加",
+        "jp": "加"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1287,7 +1327,8 @@
       "meaningKo": "물건",
       "variants": {
         "cn": "件",
-        "kr": "件"
+        "kr": "件",
+        "jp": "件"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1325,7 +1366,8 @@
       "meaningEn": "scenery, view; conditions",
       "meaningKo": "볕",
       "variants": {
-        "kr": "景"
+        "kr": "景",
+        "jp": "景"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1343,7 +1385,8 @@
       "meaningEn": "save, rescue, relieve; help, aid",
       "meaningKo": "구원할",
       "variants": {
-        "kr": "救"
+        "kr": "救",
+        "jp": "救"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1362,7 +1405,8 @@
       "meaningKo": "귀할",
       "variants": {
         "cn": "贵",
-        "kr": "貴"
+        "kr": "貴",
+        "jp": "貴"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1420,7 +1464,8 @@
       "meaningKo": "헤아릴",
       "variants": {
         "kr": "料",
-        "cn": "料"
+        "cn": "料",
+        "jp": "料"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1458,7 +1503,8 @@
       "meaningEn": "death, destroyed; lose, perish",
       "meaningKo": "망할",
       "variants": {
-        "kr": "亡"
+        "kr": "亡",
+        "jp": "亡"
       },
       "strokeCount": 3,
       "tracks": [
@@ -1534,7 +1580,8 @@
       "meaningEn": "reward, grant, bestow; appreciate",
       "meaningKo": "상줄",
       "variants": {
-        "kr": "賞"
+        "kr": "賞",
+        "jp": "賞"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1552,7 +1599,8 @@
       "meaningEn": "series, serial order, sequence",
       "meaningKo": "차례",
       "variants": {
-        "kr": "序"
+        "kr": "序",
+        "jp": "序"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1570,7 +1618,8 @@
       "meaningEn": "choose, select; elect; election",
       "meaningKo": "가릴",
       "variants": {
-        "kr": "選"
+        "kr": "選",
+        "jp": "選"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1588,7 +1637,8 @@
       "meaningEn": "table, bench; legal case",
       "meaningKo": "책상",
       "variants": {
-        "kr": "案"
+        "kr": "案",
+        "jp": "案"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1606,7 +1656,8 @@
       "meaningEn": "hot; heat; fever; restless; zeal",
       "meaningKo": "더울",
       "variants": {
-        "kr": "熱"
+        "kr": "熱",
+        "jp": "熱"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1624,7 +1675,8 @@
       "meaningEn": "desire, want; wish; ambition",
       "meaningKo": "원할",
       "variants": {
-        "kr": "願"
+        "kr": "願",
+        "jp": "願"
       },
       "strokeCount": 19,
       "tracks": [
@@ -1642,7 +1694,8 @@
       "meaningEn": "calamity, disaster, catastrophe",
       "meaningKo": "재앙",
       "variants": {
-        "kr": "災"
+        "kr": "災",
+        "jp": "災"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1660,7 +1713,8 @@
       "meaningEn": "store, stockpile, hoard",
       "meaningKo": "쌓을",
       "variants": {
-        "kr": "貯"
+        "kr": "貯",
+        "jp": "貯"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1717,7 +1771,8 @@
       "meaningKo": "가장",
       "variants": {
         "cn": "最",
-        "kr": "最"
+        "kr": "最",
+        "jp": "最"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1735,7 +1790,8 @@
       "meaningEn": "pray for happiness or blessings",
       "meaningKo": "빌",
       "variants": {
-        "kr": "祝"
+        "kr": "祝",
+        "jp": "祝"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1812,7 +1868,8 @@
       "meaningEn": "be defeated, decline, fail",
       "meaningKo": "패할",
       "variants": {
-        "kr": "敗"
+        "kr": "敗",
+        "jp": "敗"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1830,7 +1887,8 @@
       "meaningEn": "allow, permit; promise; betroth",
       "meaningKo": "허락할",
       "variants": {
-        "kr": "許"
+        "kr": "許",
+        "jp": "許"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1867,7 +1925,8 @@
       "meaningEn": "suffer, worry about; suffering",
       "meaningKo": "근심",
       "variants": {
-        "kr": "患"
+        "kr": "患",
+        "jp": "患"
       },
       "strokeCount": 11,
       "tracks": [

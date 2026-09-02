@@ -4,7 +4,7 @@ import { trackThemes } from "../features/tracks/trackTheme";
 import type { PlacementScoreResponse } from "../shared/api";
 import "../features/onboarding/onboarding.css";
 
-const labels = { kr: "한자 · 급수", jp: "漢検 · JLPT", cn: "HSK · 汉字" } as const;
+const labels = { kr: "한자 · 급수", jp: "JLPT · 漢検", cn: "HSK · 汉字" } as const;
 const saturatedLabels = { kr: "측정 범위 상한", jp: "測定範囲の上限", cn: "测量范围上限" } as const;
 const flooredLabels = { kr: "처음부터 시작", jp: "最初から開始", cn: "从头开始" } as const;
 

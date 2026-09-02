@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import type { CurriculumResponse, PlacementAnswer, PlacementScoreResponse, StatsResponse } from "../../src/shared/api";
 import { getProfile, zonedDayKey } from "./sessions";
-import { getStats } from "./stats";
+import { getStats, kankenProgress } from "./stats";
 import { routeApiRequest } from "./router";
 
 type QueryObservation = { query: string; rows: number };
@@ -38,7 +38,7 @@ function d1(sqlite: DatabaseSync, observations: QueryObservation[]): D1Database 
 function setup(observations: QueryObservation[] = []) {
   const sqlite = new DatabaseSync(":memory:");
   for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0004_profile.sql", "0005_onyomi_script.sql", "0006_skipped.sql", "0007_pin.sql", "0008_unit_test_out.sql", "0009_stats_queries.sql", "0011_theme.sql", "0012_theme_default.sql", "0013_sentence_readings.sql"]) sqlite.exec(readFileSync(`migrations/${migration}`, "utf8"));
-  for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-kanken-10.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
+  for (const path of ["data/characters/kr-8geup.json", "data/characters/jp-jlpt-n5.json", "data/characters/cn-hsk1.json"]) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(path, "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite, observations) } as Env };
 }
 
@@ -51,6 +51,11 @@ describe("profile, placement, and stats API", () => {
   afterEach(() => {
     vi.restoreAllMocks();
     for (const database of databases.splice(0)) database.close();
+  });
+
+  it("finishes Kanken progress at the highest represented exact level", () => {
+    const rows = ["10級", "9級", "8級", "7級", "6級", "5級"].map((level) => ({ level, stability: 99 }));
+    expect(kankenProgress(rows)).toEqual({ name: "漢検", level: "5級", known: 1, total: 1 });
   });
 
   it("reuses one date formatter per timezone", () => {

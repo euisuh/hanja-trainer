@@ -2,7 +2,7 @@
 
 Duolingo-style spaced-repetition trainer for Chinese-origin characters,
 taught across three tracks at once: Korean Hanja (한자능력검정), Japanese
-Kanji (漢検/JLPT), Chinese Hanzi (HSK/通用规范汉字表). Same character, same
+Kanji (JLPT/漢検), Chinese Hanzi (HSK/通用规范汉字表). Same character, same
 core meaning, three pronunciations — reinforced side by side.
 
 - `design-prompt.md` — product/UX spec handed to Claude Design.

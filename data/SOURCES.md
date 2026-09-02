@@ -28,29 +28,28 @@ Coverage stops at 4급 in this pass. Extending through 3급II, 3급, 2급, or 1�
 remains a follow-up because those tiers add at least 500 more characters and
 require a separate content and QA pass.
 
-## Japanese: 漢検 10級 through 8級
+## Japanese: JLPT N5 through N1
 
-- Official membership: [日本漢字能力検定 級別漢字表](https://www.kanken.or.jp/kanken/outline/data/outline_degree_national_list20200217.pdf), published by 日本漢字能力検定協会 (retrieved 2026-08-31, SHA-256 `8c7513a4ecfc7d6ca2b8f8aa71313b9097e972bac7a43f8a568fe99a9a1d7285`). It identifies 10級, 9級, and 8級 as the 80 小学校一年生, 160 小学校二年生, and 200 小学校三年生 characters respectively, for exact cumulative counts of 80, 240, and 440. Only factual membership is retained.
-- Readings, meanings, stroke counts, and community JLPT mapping: [davidluzgouveia/kanji-data](https://github.com/davidluzgouveia/kanji-data/tree/00fd7079c3890f430759536f91aa5e854ec0ca4f), retrieved 2026-08-31 at commit `00fd7079c3890f430759536f91aa5e854ec0ca4f`. It is an MIT-licensed structured KANJIDIC2 derivative; KANJIDIC2 is maintained by the Electronic Dictionary Research and Development Group under its published dictionary license.
-- Shinjitai to kyūjitai facts: [dahlia/shinjitai-table](https://github.com/dahlia/shinjitai-table/tree/65fc03d9ad556d748d370c64d04c36d712df1708), retrieved 2026-08-31 at commit `65fc03d9ad556d748d370c64d04c36d712df1708` and derived from the official Jōyō table. The repository publishes no license, so only factual mappings are used. Unihan 17 does not yet expose the proposed Japanese old-variant property.
-- Korean dictionary glosses: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), retrieved 2026-08-31 at commit `39bbc7ba04514ec5d29eee79259823fa720b7065`, MIT license. The first sourced 훈음 supplies `meaningKo`; its reading syllable is removed without translating or paraphrasing the gloss.
+- Official scope statement: the [JLPT official guidebook, Q7–Q8](https://www.jlpt.jp/e/reference/pdf/guidebook_s_e.pdf) says the post-2010 test does not publish vocabulary, kanji, or grammar item lists. There is therefore no official per-kanji N5–N1 membership to import.
+- Curriculum membership, readings, meanings, stroke counts, and frequency: [davidluzgouveia/kanji-data](https://github.com/davidluzgouveia/kanji-data/tree/00fd7079c3890f430759536f91aa5e854ec0ca4f), retrieved 2026-08-31 at commit `00fd7079c3890f430759536f91aa5e854ec0ca4f`. The pinned [`kanji.json`](https://github.com/davidluzgouveia/kanji-data/blob/00fd7079c3890f430759536f91aa5e854ec0ca4f/kanji.json) has SHA-256 `561b72ea9df703c58fae0c68585812e172aaa7611d2fcee6719d55fd2dfd4fa4`. Its `jlpt_new` values are an unofficial community mapping: the pinned [`tools/jlpt.py`](https://github.com/davidluzgouveia/kanji-data/blob/00fd7079c3890f430759536f91aa5e854ec0ca4f/tools/jlpt.py) says it scraped Jonathan Waller's Tanos lists at `http://www.tanos.co.uk/jlpt/jlpt{1..5}/kanji/`, and the pinned [`tools/combine.py`](https://github.com/davidluzgouveia/kanji-data/blob/00fd7079c3890f430759536f91aa5e854ec0ca4f/tools/combine.py) copies that scraped mapping into `jlpt_new`. The commit and file hash freeze the imported membership, but the pinned provenance records neither an immutable Tanos revision nor a separate upstream data license; this is a provenance and licensing limitation. The source repository is [MIT-licensed](https://github.com/davidluzgouveia/kanji-data/blob/00fd7079c3890f430759536f91aa5e854ec0ca4f/LICENSE), and this project copies only the bare character-to-level assignments. KANJIDIC2 supplies the dictionary fields under its published license; it is not the authority for `jlpt_new`.
+- Secondary Kanken metadata: [日本漢字能力検定 級別漢字表](https://www.kanken.or.jp/kanken/outline/data/outline_degree_national_list20200217.pdf), published by 日本漢字能力検定協会 (retrieved 2026-08-31, SHA-256 `8c7513a4ecfc7d6ca2b8f8aa71313b9097e972bac7a43f8a568fe99a9a1d7285`). Source school grades 1–6 map to 10級 through 5級. Later source bands cannot identify an exact Kanken level, so they store `未指定` and the UI omits that badge.
+- Shinjitai to kyūjitai facts: [dahlia/shinjitai-table](https://github.com/dahlia/shinjitai-table/tree/65fc03d9ad556d748d370c64d04c36d712df1708), retrieved 2026-08-31 at commit `65fc03d9ad556d748d370c64d04c36d712df1708`; `shinjitai.json` has SHA-256 `e0d59f319748555eff8d6bb0db9c5938974a7b184094e4bebfb1ef02de8582be`. The mapping is derived from the official Jōyō table. The repository publishes no license, so only factual mappings are used. Unihan 17 does not yet expose the proposed Japanese old-variant property.
+- Korean dictionary glosses: [HanjaDict](https://github.com/seyoungsong/hanjadict/tree/39bbc7ba04514ec5d29eee79259823fa720b7065), retrieved 2026-08-31 at commit `39bbc7ba04514ec5d29eee79259823fa720b7065`, MIT license. `src/hanjadict/table.json` has SHA-256 `d36ceb0d37ed53b9af78a88517ebc1499502cdef0367c396ff723460af52e471`. The first sourced 훈음 supplies `meaningKo`; its reading syllable is removed without translating or paraphrasing the gloss.
 
-The post-2010 JLPT does not publish an official per-kanji list. `jlpt` therefore
-uses the dataset's documented `jlpt_new` mapping, falling back to its historical
-mapping when `jlpt_new` is absent (`分` and `里` at historical N5; `身` and
-`畑` at historical N2). `なし` truthfully marks a missing on'yomi or kun'yomi.
+The five files contain every pinned `jlpt_new` row: 79 at N5, 166 at N4, 367
+at N3, 367 at N2, and 1,232 at N1 (2,211 unique characters). Within a level,
+characters are ordered by the source frequency field and split into 8–10
+character units. Historical `jlpt_old` fallbacks are not mixed into the new
+scale. `なし` truthfully marks a missing on'yomi or kun'yomi.
 For linked shinjitai/kyūjitai rows, `strokeCount` comes from the canonical
 key's pinned `kanji-data` entry while the Japanese readings use the JP glyph.
 
-`scripts/generate-jp-through-8kyu.mjs` reproduces the 200-character 8級 file
-from the exact `kanji-data`, `shinjitai-table`, and HanjaDict pins above. It
-contains the official PDF's row-order membership as an independent exact-set
-check and performs no network lookup. The 51 sentence rows are exact reusable
-matches from the already-frozen Tatoeba selection; the remaining 149
-characters ship without a sentence rather than introducing new prose.
+`scripts/generate-jp-jlpt.mjs` reproduces the five JLPT files from the exact
+`kanji-data`, `shinjitai-table`, and HanjaDict pins above. It performs no
+network lookup and emits no sentence prose.
 
 ```sh
-node scripts/generate-jp-through-8kyu.mjs /path/to/kanji-data /path/to/shinjitai-table /path/to/hanjadict/src/hanjadict/table.json
+node scripts/generate-jp-jlpt.mjs /path/to/kanji-data /path/to/shinjitai-table /path/to/hanjadict/src/hanjadict/table.json
 ```
 
 ## Chinese: HSK 3.0 2026 HSK1 through HSK3

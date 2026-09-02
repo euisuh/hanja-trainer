@@ -680,17 +680,17 @@ test.describe.serial("keyboard-only product flows", () => {
   test("retakes placement for one curriculum and returns to settings", async ({ page }) => {
     await page.goto("/settings");
     await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
-    const launch = page.locator(".placement-retest").getByRole("button", { name: /漢字 · 漢検.*15문항/u });
+    const launch = page.locator(".placement-retest").getByRole("button", { name: /漢字 · JLPT.*15문항/u });
     await expect(launch).toHaveCount(0);
     const enabledBefore = await page.locator(".placement-retest").getByRole("button").count();
-    await page.locator(".track-toggles").getByRole("button", { name: /漢字 · 漢検/u }).click();
+    await page.locator(".track-toggles").getByRole("button", { name: /漢字 · JLPT/u }).click();
     await expect(page.locator(".placement-retest").getByRole("button")).toHaveCount(enabledBefore + 1);
     const startRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
     const first = await sessionStarted(page, () => launch.click());
     expect((await startRequest).postDataJSON()).toMatchObject({ mode: "placement", tracks: ["jp"], limit: 15 });
     expect(first.cards).toHaveLength(15);
     expect(first.cards.every((card) => card.track === "jp")).toBe(true);
-    expect([...new Set(first.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3]);
+    expect([...new Set(first.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3, 4, 5]);
     await page.locator(".skip-answer").click();
     const displayedAnswer = await page.locator(".answer-option").nth(first.cards[0].answerIndex).locator("strong").textContent();
     await expect(page.locator(".answer-option").nth(first.cards[0].answerIndex)).toHaveClass(/answer-option--correct/u);

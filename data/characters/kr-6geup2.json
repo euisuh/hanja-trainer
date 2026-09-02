@@ -242,7 +242,8 @@
       "meaningKo": "나타날",
       "variants": {
         "cn": "现",
-        "kr": "現"
+        "kr": "現",
+        "jp": "現"
       },
       "strokeCount": 11,
       "tracks": [
@@ -260,7 +261,8 @@
       "meaningEn": "hall; government office",
       "meaningKo": "집",
       "variants": {
-        "kr": "堂"
+        "kr": "堂",
+        "jp": "堂"
       },
       "strokeCount": 11,
       "tracks": [
@@ -299,7 +301,8 @@
       "meaningKo": "나눌",
       "variants": {
         "cn": "班",
-        "kr": "班"
+        "kr": "班",
+        "jp": "班"
       },
       "strokeCount": 10,
       "tracks": [
@@ -317,7 +320,8 @@
       "meaningEn": "province; save, economize",
       "meaningKo": "살필",
       "variants": {
-        "kr": "省"
+        "kr": "省",
+        "jp": "省"
       },
       "strokeCount": 9,
       "tracks": [
@@ -414,7 +418,8 @@
       "meaningEn": "window",
       "meaningKo": "창",
       "variants": {
-        "kr": "窓"
+        "kr": "窓",
+        "jp": "窓"
       },
       "strokeCount": 11,
       "tracks": [
@@ -491,7 +496,8 @@
       "meaningEn": "art, skill, special feat; method, technique",
       "meaningKo": "재주",
       "variants": {
-        "kr": "術"
+        "kr": "術",
+        "jp": "術"
       },
       "strokeCount": 11,
       "tracks": [
@@ -684,7 +690,8 @@
       "meaningKo": "어제",
       "variants": {
         "cn": "昨",
-        "kr": "昨"
+        "kr": "昨",
+        "jp": "昨"
       },
       "strokeCount": 9,
       "tracks": [
@@ -820,7 +827,8 @@
       "meaningEn": "achievement, merit, good result",
       "meaningKo": "공",
       "variants": {
-        "kr": "功"
+        "kr": "功",
+        "jp": "功"
       },
       "strokeCount": 5,
       "tracks": [
@@ -858,7 +866,8 @@
       "meaningKo": "믿을",
       "variants": {
         "kr": "信",
-        "cn": "信"
+        "cn": "信",
+        "jp": "信"
       },
       "strokeCount": 9,
       "tracks": [
@@ -954,7 +963,8 @@
       "meaningKo": "이룰",
       "variants": {
         "kr": "成",
-        "cn": "成"
+        "cn": "成",
+        "jp": "成"
       },
       "strokeCount": 6,
       "tracks": [
@@ -991,7 +1001,8 @@
       "meaningEn": "each, individually, every, all",
       "meaningKo": "각각",
       "variants": {
-        "kr": "各"
+        "kr": "各",
+        "jp": "各"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1089,7 +1100,8 @@
       "meaningKo": "함께",
       "variants": {
         "kr": "共",
-        "cn": "共"
+        "cn": "共",
+        "jp": "共"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1108,7 +1120,8 @@
       "meaningKo": "실과",
       "variants": {
         "cn": "果",
-        "kr": "果"
+        "kr": "果",
+        "jp": "果"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1184,7 +1197,8 @@
       "meaningEn": "gains, advantage, profit, merit",
       "meaningKo": "날카로울",
       "variants": {
-        "kr": "利"
+        "kr": "利",
+        "jp": "利"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1300,7 +1314,8 @@
       "meaningEn": "brave, courageous, fierce",
       "meaningKo": "날랠",
       "variants": {
-        "kr": "勇"
+        "kr": "勇",
+        "jp": "勇"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1358,7 +1373,8 @@
       "meaningEn": "war, fighting, battle",
       "meaningKo": "싸움",
       "variants": {
-        "kr": "戰"
+        "kr": "戰",
+        "jp": "戦"
       },
       "strokeCount": 16,
       "tracks": [

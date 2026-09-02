@@ -105,7 +105,7 @@ export async function getCharacterContent(db: D1Database, key: string): Promise<
       } : null,
     };
     if (entry.track === "kr") return { ...base, track: "kr", reading: entry.reading, level_badges: [`한자 ${entry.level}`] };
-    if (entry.track === "jp") return { ...base, track: "jp", reading: `音 ${entry.on}`, subreading: `訓 ${entry.kun}`, level_badges: [`漢検 ${entry.kanken}`, entry.jlpt] };
+    if (entry.track === "jp") return { ...base, track: "jp", reading: `音 ${entry.on}`, subreading: `訓 ${entry.kun}`, level_badges: [entry.jlpt, ...(entry.kanken === "未指定" ? [] : [`漢検 ${entry.kanken}`])] };
     return { ...base, track: "cn", reading: entry.pinyin, level_badges: [entry.hsk, entry.tier] };
   });
   return { key: character.key, variants: character.variants, meaning_en: character.meaningEn, meaning_ko: character.meaningKo, tracks };
@@ -124,7 +124,7 @@ function sentences(character: CharacterEntry, track: Track): ApiSentence[] {
 function studyTrack(character: CharacterEntry, entry: TrackEntry): UnitStudyTrackDetail {
   const base = { track: entry.track, glyph: entry.glyph, sentences: sentences(character, entry.track) };
   if (entry.track === "kr") return { ...base, track: "kr", reading: entry.reading, meaning: character.meaningKo, level_badges: [`한자 ${entry.level}`] };
-  if (entry.track === "jp") return { ...base, track: "jp", reading: entry.on, subreading: entry.kun, meaning: character.meaningEn, level_badges: [`漢検 ${entry.kanken}`, entry.jlpt] };
+  if (entry.track === "jp") return { ...base, track: "jp", reading: entry.on, subreading: entry.kun, meaning: character.meaningEn, level_badges: [entry.jlpt, ...(entry.kanken === "未指定" ? [] : [`漢検 ${entry.kanken}`])] };
   return { ...base, track: "cn", reading: entry.pinyin, meaning: entry.meaning, level_badges: [entry.hsk, entry.tier] };
 }
 

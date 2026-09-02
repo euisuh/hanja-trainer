@@ -64,7 +64,7 @@
       <div data-screen-label="01 Onboarding" style="padding:36px 4px 0;animation:om-rise .35s ease-out">
         <p style="margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#6E675C">Step 1 / 2 · 트랙 선택</p>
         <h1 style="margin:0 0 8px;font-size:38px;line-height:1.05;font-weight:800;max-width:16ch;text-wrap:pretty">한 글자, 세 개의 시험.</h1>
-        <p style="margin:0 0 26px;font-size:16px;line-height:1.5;color:#4A443B;max-width:56ch;text-wrap:pretty">같은 글자를 급수·漢検·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
+        <p style="margin:0 0 26px;font-size:16px;line-height:1.5;color:#4A443B;max-width:56ch;text-wrap:pretty">같은 글자를 급수·JLPT·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:28px">
           <button onClick="{{ toggleKr }}" style="text-align:left;padding:20px;border-radius:22px;cursor:pointer;background:{{ krCardBg }};border:3px solid {{ krCardBorder }};box-shadow:0 5px 0 {{ krCardBorder }}">
@@ -82,7 +82,7 @@
               <span style="width:26px;height:26px;border-radius:8px;border:2px solid #16130F;background:{{ jpTick }};color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ jpMark }}</span>
             </div>
             <div style="font-size:19px;font-weight:800">日本 · 漢字</div>
-            <div style="font-size:13px;color:#6E675C;margin-top:3px;font-weight:600">漢検 10級 → 1級 · JLPT N5→N1</div>
+            <div style="font-size:13px;color:#6E675C;margin-top:3px;font-weight:600">JLPT N5 → N1 · 漢検 metadata</div>
             <div style="margin-top:12px;display:inline-flex;padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">2</div>
           </button>
           <button onClick="{{ toggleCn }}" style="text-align:left;padding:20px;border-radius:22px;cursor:pointer;background:{{ cnCardBg }};border:3px solid {{ cnCardBorder }};box-shadow:0 5px 0 {{ cnCardBorder }}">
@@ -115,9 +115,9 @@
             <div style="font-size:13px;color:#6E675C;font-weight:600">148/300자 인식 · 8급 완료</div>
           </div>
           <div style="padding:20px;background:#FFFFFF;border:3px solid #E14B32;border-radius:20px;box-shadow:0 5px 0 #E14B32">
-            <div style="font-size:12px;font-weight:800;color:#E14B32;letter-spacing:.1em">漢検 · JLPT</div>
-            <div style="font-size:40px;font-weight:800;margin:6px 0 2px">9級</div>
-            <div style="font-size:13px;color:#6E675C;font-weight:600">音読み 정확도 62% · N5 수준</div>
+            <div style="font-size:12px;font-weight:800;color:#E14B32;letter-spacing:.1em">JLPT · 漢検</div>
+            <div style="font-size:40px;font-weight:800;margin:6px 0 2px">N4</div>
+            <div style="font-size:13px;color:#6E675C;font-weight:600">音読み 정확도 62% · 漢検 9級 메타데이터</div>
           </div>
           <div style="padding:20px;background:#FFFFFF;border:3px solid #0E9F6E;border-radius:20px;box-shadow:0 5px 0 #0E9F6E">
             <div style="font-size:12px;font-weight:800;color:#0E9F6E;letter-spacing:.1em">HSK · 汉字</div>
@@ -135,7 +135,7 @@
       <div data-screen-label="03 Home path map">
         <div style="display:flex;gap:8px;padding:2px 2px 16px;flex-wrap:wrap">
           <button onClick="{{ pickKr }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabKrBg }};color:{{ tabKrFg }};border:2px solid #3B5BDB;box-shadow:{{ tabKrShadow }}">한자 · 급수</button>
-          <button onClick="{{ pickJp }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabJpBg }};color:{{ tabJpFg }};border:2px solid #E14B32;box-shadow:{{ tabJpShadow }}">漢字 · 漢検</button>
+          <button onClick="{{ pickJp }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabJpBg }};color:{{ tabJpFg }};border:2px solid #E14B32;box-shadow:{{ tabJpShadow }}">漢字 · JLPT</button>
           <button onClick="{{ pickCn }}" style="flex:1;min-width:96px;padding:12px 10px;border-radius:16px;cursor:pointer;font-weight:800;font-size:14px;background:{{ tabCnBg }};color:{{ tabCnFg }};border:2px solid #0E9F6E;box-shadow:{{ tabCnShadow }}">汉字 · HSK</button>
         </div>
 
@@ -339,7 +339,7 @@
               <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:#E14B32">日本 · 漢字</div>
               <div style="font-size:26px;font-weight:800;margin:8px 0 4px">{{ dJpOn }}</div>
               <div style="font-size:14px;font-weight:700;color:#4A443B;margin-bottom:8px">訓 {{ dJpKun }}</div>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span style="padding:4px 9px;border-radius:7px;background:#E14B32;color:#fff;font-size:11px;font-weight:800">{{ dJpKanken }}</span><span style="padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">{{ dJpJlpt }}</span></div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><span style="padding:4px 9px;border-radius:7px;background:#E14B32;color:#fff;font-size:11px;font-weight:800">{{ dJpJlpt }}</span><span style="padding:4px 9px;border-radius:7px;background:#16130F;color:#EFEAE0;font-size:11px;font-weight:800">{{ dJpKanken }}</span></div>
               <div style="font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;line-height:1.5">{{ dJpSent }}</div>
               <div style="font-size:12px;font-weight:600;color:#4A443B;margin-top:5px">{{ dJpTrans }}</div>
             </div>
@@ -429,7 +429,7 @@
               <div style="font-size:13px;font-weight:800;margin-bottom:14px">트랙 사용</div>
               <div style="display:flex;flex-direction:column;gap:10px">
                 <button onClick="{{ toggleKr }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #3B5BDB;background:{{ krCardBg }};cursor:pointer;font-size:14px;font-weight:800">한자 · 급수 <span style="font-size:12px;color:#3B5BDB">{{ krState }}</span></button>
-                <button onClick="{{ toggleJp }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #E14B32;background:{{ jpCardBg }};cursor:pointer;font-size:14px;font-weight:800">漢字 · 漢検 <span style="font-size:12px;color:#E14B32">{{ jpState }}</span></button>
+                <button onClick="{{ toggleJp }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #E14B32;background:{{ jpCardBg }};cursor:pointer;font-size:14px;font-weight:800">漢字 · JLPT <span style="font-size:12px;color:#E14B32">{{ jpState }}</span></button>
                 <button onClick="{{ toggleCn }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:15px;border:2px solid #0E9F6E;background:{{ cnCardBg }};cursor:pointer;font-size:14px;font-weight:800">汉字 · HSK <span style="font-size:12px;color:#0E9F6E">{{ cnState }}</span></button>
               </div>
             </div>
@@ -532,9 +532,9 @@ class Component extends DCLogic {
     kr:{ label:'한자 · 급수', badge:'한국 · 한자', accent:'#3B5BDB', soft:'#EEF1FD',
       font:"'Noto Serif KR',serif", prompt:'훈음을 고르세요', scale:'620/1000자 · 한자 3급',
       pct:'62%', note:'현재 7급 · 다음 관문 6급 (150자 남음)', unit:'8급 · UNIT 3', title:'자연과 사람' },
-    jp:{ label:'漢字 · 漢検', badge:'日本 · 漢字', accent:'#E14B32', soft:'#FDEEEB',
-      font:"'Noto Serif JP',serif", prompt:'音読みを選べ', scale:'440/640字 · 漢検 8級',
-      pct:'69%', note:'現在 9級 · JLPT N4 相当', unit:'10級 · UNIT 3', title:'自然と人' },
+    jp:{ label:'漢字 · JLPT', badge:'日本 · 漢字', accent:'#E14B32', soft:'#FDEEEB',
+      font:"'Noto Serif JP',serif", prompt:'音読みを選べ', scale:'152/2,211字 · JLPT N1まで',
+      pct:'7%', note:'現在 N4 · 漢検 9級 (補助)', unit:'N4 · UNIT 3', title:'自然と人' },
     cn:{ label:'汉字 · HSK', badge:'中国 · 汉字', accent:'#0E9F6E', soft:'#E7F6F0',
       font:"'Noto Serif SC',serif", prompt:'选择正确的拼音', scale:'510/900字 · HSK 4',
       pct:'57%', note:'当前 HSK 2 · 声调是弱点', unit:'HSK 1 · UNIT 3', title:'自然与人' }
@@ -790,7 +790,7 @@ class Component extends DCLogic {
       cal: this.cal(),
       trackStats: [
         {label:'한자 · 급수', accent:'#3B5BDB', pct:'62%', goal:'620/1000자 · 한자 3급까지', now:'현재 7급', next:'다음 6급'},
-        {label:'漢字 · 漢検', accent:'#E14B32', pct:'69%', goal:'440/640字 · 漢検 8級まで', now:'現在 9級', next:'次 8級'},
+        {label:'漢字 · JLPT', accent:'#E14B32', pct:'7%', goal:'152/2,211字 · JLPT N1まで', now:'現在 N4', next:'次 N3'},
         {label:'汉字 · HSK', accent:'#0E9F6E', pct:'57%', goal:'510/900字 · HSK 4 目标', now:'当前 HSK 2', next:'下一 HSK 3'}
       ],
 
@@ -865,7 +865,7 @@ class Component extends DCLogic {
     const pos = sent.indexOf(glyphInSent);
     const revealed = chosen !== null || isCompare;
     const ok = chosen !== null && chosen === card.answer;
-    const level = card.track === 'kr' ? '한자 ' + ch.kr.lv : card.track === 'jp' ? '漢検 ' + ch.jp.kanken + ' · ' + ch.jp.jlpt : ch.cn.hsk + ' · ' + ch.cn.tier;
+    const level = card.track === 'kr' ? '한자 ' + ch.kr.lv : card.track === 'jp' ? 'JLPT ' + ch.jp.jlpt + ' · 漢検 ' + ch.jp.kanken : ch.cn.hsk + ' · ' + ch.cn.tier;
 
     Object.assign(v, {
       accent: tt.accent, accentSoft: tt.soft, glyphFont: tt.font,
@@ -887,7 +887,7 @@ class Component extends DCLogic {
       cardAnim: s.lastResult === 'wrong' ? 'om-shake .45s' : 'none',
       glyphAnim: s.lastResult === 'right' ? 'om-glyph .45s' : 'none',
       cmpKr: ch.kr.r, cmpKrLv: '한자 ' + ch.kr.lv,
-      cmpJp: ch.jp.on + ' · ' + ch.jp.kun, cmpJpLv: '漢検 ' + ch.jp.kanken + ' · ' + ch.jp.jlpt,
+      cmpJp: ch.jp.on + ' · ' + ch.jp.kun, cmpJpLv: 'JLPT ' + ch.jp.jlpt + ' · 漢検 ' + ch.jp.kanken,
       cmpCn: ch.cn.p, cmpCnLv: ch.cn.hsk,
       options: isCompare ? [] : card.opts.map((o, i) => {
         const picked = chosen === i, correct = chosen !== null && i === card.answer;

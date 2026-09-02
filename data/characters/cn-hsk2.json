@@ -46,7 +46,8 @@
       "meaningKo": "갖출",
       "variants": {
         "cn": "备",
-        "kr": "備"
+        "kr": "備",
+        "jp": "備"
       },
       "strokeCount": 12,
       "tracks": [
@@ -67,7 +68,8 @@
       "meaningKo": "견줄",
       "variants": {
         "cn": "比",
-        "kr": "比"
+        "kr": "比",
+        "jp": "比"
       },
       "strokeCount": 4,
       "tracks": [
@@ -193,7 +195,8 @@
       "meaningEn": "words",
       "meaningKo": "말",
       "variants": {
-        "cn": "词"
+        "cn": "词",
+        "jp": "詞"
       },
       "strokeCount": 12,
       "tracks": [
@@ -255,7 +258,8 @@
       "meaningEn": "error, blunder, mistake, wrong",
       "meaningKo": "어긋날",
       "variants": {
-        "cn": "错"
+        "cn": "错",
+        "jp": "錯"
       },
       "strokeCount": 16,
       "tracks": [
@@ -275,7 +279,8 @@
       "meaningEn": "only",
       "meaningKo": "다만",
       "variants": {
-        "cn": "但"
+        "cn": "但",
+        "jp": "但"
       },
       "strokeCount": 7,
       "tracks": [
@@ -422,7 +427,8 @@
       "meaningKo": "지아비",
       "variants": {
         "kr": "夫",
-        "cn": "夫"
+        "cn": "夫",
+        "jp": "夫"
       },
       "strokeCount": 4,
       "tracks": [
@@ -443,7 +449,8 @@
       "meaningKo": "고할",
       "variants": {
         "cn": "告",
-        "kr": "告"
+        "kr": "告",
+        "jp": "告"
       },
       "strokeCount": 7,
       "tracks": [
@@ -547,7 +554,8 @@
       "meaningKo": "붉을",
       "variants": {
         "cn": "红",
-        "kr": "紅"
+        "kr": "紅",
+        "jp": "紅"
       },
       "strokeCount": 9,
       "tracks": [
@@ -632,7 +640,8 @@
       "meaningKo": "몸",
       "variants": {
         "cn": "己",
-        "kr": "己"
+        "kr": "己",
+        "jp": "己"
       },
       "strokeCount": 3,
       "tracks": [
@@ -717,7 +726,8 @@
       "meaningEn": "forerunner, herald, harbinger",
       "meaningKo": "낄",
       "variants": {
-        "cn": "介"
+        "cn": "介",
+        "jp": "介"
       },
       "strokeCount": 4,
       "tracks": [
@@ -782,7 +792,8 @@
       "meaningKo": "날",
       "variants": {
         "cn": "经",
-        "kr": "經"
+        "kr": "經",
+        "jp": "経"
       },
       "strokeCount": 13,
       "tracks": [
@@ -845,7 +856,8 @@
       "meaningKo": "나아갈",
       "variants": {
         "cn": "就",
-        "kr": "就"
+        "kr": "就",
+        "jp": "就"
       },
       "strokeCount": 12,
       "tracks": [
@@ -928,7 +940,8 @@
       "meaningKo": "쾌할",
       "variants": {
         "cn": "快",
-        "kr": "快"
+        "kr": "快",
+        "jp": "快"
       },
       "strokeCount": 7,
       "tracks": [
@@ -988,7 +1001,8 @@
       "meaningEn": "tired",
       "meaningKo": "묶을",
       "variants": {
-        "cn": "累"
+        "cn": "累",
+        "jp": "累"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1009,7 +1023,8 @@
       "meaningKo": "떠날",
       "variants": {
         "cn": "离",
-        "kr": "離"
+        "kr": "離",
+        "jp": "離"
       },
       "strokeCount": 18,
       "tracks": [
@@ -1030,7 +1045,8 @@
       "meaningKo": "머무를",
       "variants": {
         "cn": "留",
-        "kr": "留"
+        "kr": "留",
+        "jp": "留"
       },
       "strokeCount": 10,
       "tracks": [
@@ -1050,7 +1066,8 @@
       "meaningEn": "building of two or more stories",
       "meaningKo": "다락",
       "variants": {
-        "cn": "楼"
+        "cn": "楼",
+        "jp": "楼"
       },
       "strokeCount": 15,
       "tracks": [
@@ -1134,7 +1151,8 @@
       "meaningEn": "slow(ly), leisurely, sluggish",
       "meaningKo": "거만할",
       "variants": {
-        "cn": "慢"
+        "cn": "慢",
+        "jp": "慢"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1281,7 +1299,8 @@
       "meaningKo": "표",
       "variants": {
         "cn": "票",
-        "kr": "票"
+        "kr": "票",
+        "jp": "票"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1301,7 +1320,8 @@
       "meaningEn": "wife",
       "meaningKo": "아내",
       "variants": {
-        "cn": "妻"
+        "cn": "妻",
+        "jp": "妻"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1322,7 +1342,8 @@
       "meaningKo": "뜻",
       "variants": {
         "cn": "情",
-        "kr": "情"
+        "kr": "情",
+        "jp": "情"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1386,7 +1407,8 @@
       "meaningKo": "불탈",
       "variants": {
         "kr": "然",
-        "cn": "然"
+        "cn": "然",
+        "jp": "然"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1406,7 +1428,8 @@
       "meaningEn": "allow, permit, yield, concede",
       "meaningKo": "사양할",
       "variants": {
-        "cn": "让"
+        "cn": "让",
+        "jp": "譲"
       },
       "strokeCount": 24,
       "tracks": [
@@ -1470,7 +1493,8 @@
       "meaningEn": "continue, carry on",
       "meaningKo": "이을",
       "variants": {
-        "cn": "绍"
+        "cn": "绍",
+        "jp": "紹"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1535,7 +1559,8 @@
       "meaningKo": "시험할",
       "variants": {
         "cn": "试",
-        "kr": "試"
+        "kr": "試",
+        "jp": "試"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1641,7 +1666,8 @@
       "meaningEn": "accuse",
       "meaningKo": "호소할",
       "variants": {
-        "cn": "诉"
+        "cn": "诉",
+        "jp": "訴"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1765,7 +1791,8 @@
       "meaningEn": "jump, leap, vault, bounce",
       "meaningKo": "뛸",
       "variants": {
-        "cn": "跳"
+        "cn": "跳",
+        "jp": "跳"
       },
       "strokeCount": 13,
       "tracks": [
@@ -1828,7 +1855,8 @@
       "meaningKo": "완전할",
       "variants": {
         "cn": "完",
-        "kr": "完"
+        "kr": "完",
+        "jp": "完"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1891,7 +1919,8 @@
       "meaningKo": "갈",
       "variants": {
         "cn": "往",
-        "kr": "往"
+        "kr": "往",
+        "jp": "往"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1911,7 +1940,8 @@
       "meaningEn": "forget",
       "meaningKo": "잊을",
       "variants": {
-        "cn": "忘"
+        "cn": "忘",
+        "jp": "忘"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1932,7 +1962,8 @@
       "meaningKo": "바랄",
       "variants": {
         "cn": "望",
-        "kr": "望"
+        "kr": "望",
+        "jp": "望"
       },
       "strokeCount": 11,
       "tracks": [
@@ -1973,7 +2004,8 @@
       "meaningKo": "자리",
       "variants": {
         "cn": "位",
-        "kr": "位"
+        "kr": "位",
+        "jp": "位"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1994,7 +2026,8 @@
       "meaningKo": "춤출",
       "variants": {
         "cn": "舞",
-        "kr": "舞"
+        "kr": "舞",
+        "jp": "舞"
       },
       "strokeCount": 14,
       "tracks": [
@@ -2015,7 +2048,8 @@
       "meaningKo": "바랄",
       "variants": {
         "cn": "希",
-        "kr": "希"
+        "kr": "希",
+        "jp": "希"
       },
       "strokeCount": 7,
       "tracks": [
@@ -2036,7 +2070,8 @@
       "meaningKo": "씻을",
       "variants": {
         "cn": "洗",
-        "kr": "洗"
+        "kr": "洗",
+        "jp": "洗"
       },
       "strokeCount": 9,
       "tracks": [
@@ -2057,7 +2092,8 @@
       "meaningKo": "웃음",
       "variants": {
         "cn": "笑",
-        "kr": "笑"
+        "kr": "笑",
+        "jp": "笑"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2078,7 +2114,8 @@
       "meaningKo": "성씨",
       "variants": {
         "kr": "姓",
-        "cn": "姓"
+        "cn": "姓",
+        "jp": "姓"
       },
       "strokeCount": 8,
       "tracks": [
@@ -2119,7 +2156,8 @@
       "meaningKo": "눈",
       "variants": {
         "cn": "眼",
-        "kr": "眼"
+        "kr": "眼",
+        "jp": "眼"
       },
       "strokeCount": 11,
       "tracks": [
@@ -2222,7 +2260,8 @@
       "meaningKo": "인할",
       "variants": {
         "cn": "因",
-        "kr": "因"
+        "kr": "因",
+        "jp": "因"
       },
       "strokeCount": 6,
       "tracks": [
@@ -2243,7 +2282,8 @@
       "meaningKo": "그늘",
       "variants": {
         "cn": "阴",
-        "kr": "陰"
+        "kr": "陰",
+        "jp": "陰"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2453,7 +2493,8 @@
       "meaningKo": "두루",
       "variants": {
         "cn": "周",
-        "kr": "周"
+        "kr": "周",
+        "jp": "周"
       },
       "strokeCount": 8,
       "tracks": [
@@ -2495,7 +2536,8 @@
       "meaningEn": "approve, allow, permit",
       "meaningKo": "준할",
       "variants": {
-        "cn": "准"
+        "cn": "准",
+        "jp": "准"
       },
       "strokeCount": 10,
       "tracks": [
@@ -2582,7 +2624,8 @@
       "meaningKo": "가장",
       "variants": {
         "cn": "最",
-        "kr": "最"
+        "kr": "最",
+        "jp": "最"
       },
       "strokeCount": 12,
       "tracks": [
@@ -2625,7 +2668,8 @@
       "meaningKo": "사랑",
       "variants": {
         "cn": "爱",
-        "kr": "愛"
+        "kr": "愛",
+        "jp": "愛"
       },
       "strokeCount": 13,
       "tracks": [
@@ -2752,7 +2796,8 @@
       "meaningKo": "아닐",
       "variants": {
         "kr": "不",
-        "cn": "不"
+        "cn": "不",
+        "jp": "不"
       },
       "strokeCount": 4,
       "tracks": [
@@ -3135,7 +3180,8 @@
       "meaningKo": "좋을",
       "variants": {
         "cn": "好",
-        "kr": "好"
+        "kr": "好",
+        "jp": "好"
       },
       "strokeCount": 6,
       "tracks": [
@@ -3197,7 +3243,8 @@
       "meaningEn": "queen, empress, sovereign",
       "meaningKo": "임금",
       "variants": {
-        "cn": "后"
+        "cn": "后",
+        "jp": "后"
       },
       "strokeCount": 6,
       "tracks": [
@@ -3303,7 +3350,8 @@
       "meaningEn": "cry, shout",
       "meaningKo": "부르짖을",
       "variants": {
-        "cn": "叫"
+        "cn": "叫",
+        "jp": "叫"
       },
       "strokeCount": 5,
       "tracks": [
@@ -3452,7 +3500,8 @@
       "meaningEn": "to finish",
       "meaningKo": "마칠",
       "variants": {
-        "cn": "了"
+        "cn": "了",
+        "jp": "了"
       },
       "strokeCount": 2,
       "tracks": [
@@ -3574,7 +3623,8 @@
       "meaningEn": "not, have not, none",
       "meaningKo": "빠질",
       "variants": {
-        "cn": "没"
+        "cn": "没",
+        "jp": "没"
       },
       "strokeCount": 7,
       "tracks": [
@@ -3636,7 +3686,8 @@
       "meaningEn": "that, that one, those",
       "meaningKo": "어찌",
       "variants": {
-        "cn": "那"
+        "cn": "那",
+        "jp": "那"
       },
       "strokeCount": 6,
       "tracks": [
@@ -3937,7 +3988,8 @@
       "meaningKo": "이",
       "variants": {
         "cn": "是",
-        "kr": "是"
+        "kr": "是",
+        "jp": "是"
       },
       "strokeCount": 9,
       "tracks": [
@@ -4149,7 +4201,8 @@
       "meaningEn": "our, us, i, me, my, we",
       "meaningKo": "나",
       "variants": {
-        "cn": "我"
+        "cn": "我",
+        "jp": "我"
       },
       "strokeCount": 7,
       "tracks": [
@@ -4280,7 +4333,8 @@
       "meaningKo": "나타날",
       "variants": {
         "cn": "现",
-        "kr": "現"
+        "kr": "現",
+        "jp": "現"
       },
       "strokeCount": 11,
       "tracks": [
@@ -4345,7 +4399,8 @@
       "meaningKo": "요긴할",
       "variants": {
         "cn": "要",
-        "kr": "要"
+        "kr": "要",
+        "jp": "要"
       },
       "strokeCount": 9,
       "tracks": [
@@ -4365,7 +4420,8 @@
       "meaningEn": "also",
       "meaningKo": "잇기",
       "variants": {
-        "cn": "也"
+        "cn": "也",
+        "jp": "也"
       },
       "strokeCount": 3,
       "tracks": [
@@ -4408,7 +4464,8 @@
       "meaningKo": "써",
       "variants": {
         "cn": "以",
-        "kr": "以"
+        "kr": "以",
+        "jp": "以"
       },
       "strokeCount": 4,
       "tracks": [
@@ -4495,7 +4552,8 @@
       "meaningKo": "있을",
       "variants": {
         "cn": "在",
-        "kr": "在"
+        "kr": "在",
+        "jp": "在"
       },
       "strokeCount": 6,
       "tracks": [

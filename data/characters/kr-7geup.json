@@ -45,7 +45,8 @@
       "meaningEn": "large river",
       "meaningKo": "강",
       "variants": {
-        "kr": "江"
+        "kr": "江",
+        "jp": "江"
       },
       "strokeCount": 6,
       "tracks": [
@@ -398,7 +399,8 @@
       "meaningKo": "아닐",
       "variants": {
         "kr": "不",
-        "cn": "不"
+        "cn": "不",
+        "jp": "不"
       },
       "strokeCount": 4,
       "tracks": [
@@ -457,7 +459,8 @@
       "meaningKo": "성씨",
       "variants": {
         "kr": "姓",
-        "cn": "姓"
+        "cn": "姓",
+        "jp": "姓"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1029,7 +1032,8 @@
       "meaningEn": "banner, flag, streamer",
       "meaningKo": "기",
       "variants": {
-        "kr": "旗"
+        "kr": "旗",
+        "jp": "旗"
       },
       "strokeCount": 14,
       "tracks": [
@@ -1067,7 +1071,8 @@
       "meaningEn": "cave, grotto",
       "meaningKo": "골",
       "variants": {
-        "kr": "洞"
+        "kr": "洞",
+        "jp": "洞"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1145,7 +1150,8 @@
       "meaningKo": "늙을",
       "variants": {
         "kr": "老",
-        "cn": "老"
+        "cn": "老",
+        "jp": "老"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1302,7 +1308,8 @@
       "meaningKo": "지아비",
       "variants": {
         "kr": "夫",
-        "cn": "夫"
+        "cn": "夫",
+        "jp": "夫"
       },
       "strokeCount": 4,
       "tracks": [
@@ -1499,7 +1506,8 @@
       "meaningKo": "불탈",
       "variants": {
         "kr": "然",
-        "cn": "然"
+        "cn": "然",
+        "jp": "然"
       },
       "strokeCount": 12,
       "tracks": [
@@ -1557,7 +1565,8 @@
       "meaningEn": "area",
       "meaningKo": "고을",
       "variants": {
-        "kr": "邑"
+        "kr": "邑",
+        "jp": "邑"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1614,7 +1623,8 @@
       "meaningEn": "ancestor, forefather",
       "meaningKo": "할아버지",
       "variants": {
-        "kr": "祖"
+        "kr": "祖",
+        "jp": "祖"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1891,7 +1901,8 @@
       "meaningKo": "편할",
       "variants": {
         "kr": "便",
-        "cn": "便"
+        "cn": "便",
+        "jp": "便"
       },
       "strokeCount": 9,
       "tracks": [

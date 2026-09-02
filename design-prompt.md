@@ -25,11 +25,11 @@ made-up unified scale:
 | Track | Tests used | Level scale shown |
 |---|---|---|
 | Korean | 한자능력검정시험 (급수) | 8급 → 특급 |
-| Japanese | 漢字検定 (Kanken) + JLPT | 10級→1級, N5→N1 |
+| Japanese | JLPT + 漢字検定 metadata | N5→N1; Kanken badge when known |
 | Chinese | HSK 汉字 list + 通用规范汉字表 | HSK1→7-9, 常用字 tiers |
 
-Content starts at absolute basics (급수 8, Kanken 10級, HSK1) and climbs to
-advanced (특급, 1級, HSK7-9/生僻字 fringe).
+Content starts at absolute basics (급수 8, JLPT N5, HSK1) and climbs to
+advanced (특급, JLPT N1, HSK7-9/生僻字 fringe).
 
 Example sentences are pulled from real corpus/textbook/past-paper material
 per test — not AI-generated — so what you study matches what you'll
@@ -39,7 +39,7 @@ actually see on the exam.
 
 One "character entry" = 1 glyph +:
 - KR: 훈/음 (meaning+sound), 급수 level
-- JP: on'yomi + kun'yomi, Kanken level, JLPT level
+- JP: on'yomi + kun'yomi, JLPT curriculum level, optional Kanken metadata
 - CN: pinyin + meaning, HSK level, 通用规范汉字表 tier
 - Real example sentence per track, target character highlighted
 - Your personal FSRS review state (stability, difficulty, due date, history)

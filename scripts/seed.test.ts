@@ -39,8 +39,8 @@ function comparableTrack(track: SeedTrackEntry): Record<string, unknown> {
 test("seed validation, round-trip, idempotency, and queries", async () => {
   assert.equal(levelOrdFor("kr", "8급"), 1);
   assert.equal(levelOrdFor("kr", "특급"), 15);
-  assert.equal(levelOrdFor("jp", "10級"), 1);
-  assert.equal(levelOrdFor("jp", "1級"), 12);
+  assert.equal(levelOrdFor("jp", "N5"), 1);
+  assert.equal(levelOrdFor("jp", "N1"), 5);
   assert.equal(levelOrdFor("cn", "HSK 7-9"), 7);
   assert.throws(() => levelOrdFor("cn", "HSK 10"), /Unknown cn level/);
 
@@ -146,7 +146,7 @@ test("standalone sentence seeds validate and remain idempotent", () => {
     sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
     const character = parseSeed([{
       key: "學", meaningEn: "study", meaningKo: "배우다", variants: { jp: "学" }, strokeCount: 16,
-      tracks: [{ track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 12 }],
+      tracks: [{ track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 1 }],
     }]);
     sqlite.exec(emitSeedSql(character));
     const sql = emitSentenceSeedSql(document);

@@ -51,7 +51,7 @@
     "key": "時", "meaningEn": "time", "meaningKo": "때", "variants": { "kr": "時", "jp": "時", "cn": "时" }, "strokeCount": 10,
     "tracks": [
       { "track": "kr", "glyph": "時", "reading": "때 시", "level": "7급", "levelOrd": 3, "sentences": [{ "text": "時間이 부족하다.", "translationKo": "시간이 부족하다.", "source": "7급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0, "reading": null }] },
-      { "track": "jp", "glyph": "時", "on": "ジ", "kun": "とき", "kanken": "9級", "jlpt": "N5", "levelOrd": 2, "sentences": [{ "text": "時間がない。", "translationKo": "시간이 없다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "じかんがない。" }] },
+      { "track": "jp", "glyph": "時", "on": "ジ", "kun": "とき", "kanken": "9級", "jlpt": "N5", "levelOrd": 1, "sentences": [{ "text": "時間がない。", "translationKo": "시간이 없다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "じかんがない。" }] },
       { "track": "cn", "glyph": "时", "pinyin": "shí", "meaning": "time", "hsk": "HSK 1", "tier": "一级字", "levelOrd": 1, "sentences": [{ "text": "时间不多了。", "translationKo": "시간이 많지 않다.", "source": "HSK1 教材", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "shí jiān bù duō le。" }] }
     ]
   },
@@ -59,7 +59,7 @@
     "key": "心", "meaningEn": "heart, mind", "meaningKo": "마음", "variants": { "kr": "心", "jp": "心", "cn": "心" }, "strokeCount": 4,
     "tracks": [
       { "track": "kr", "glyph": "心", "reading": "마음 심", "level": "7급", "levelOrd": 3, "sentences": [{ "text": "安心하고 기다리세요.", "translationKo": "안심하고 기다리세요.", "source": "7급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 1, "rank": 0, "reading": null }] },
-      { "track": "jp", "glyph": "心", "on": "シン", "kun": "こころ", "kanken": "9級", "jlpt": "N3", "levelOrd": 2, "sentences": [{ "text": "心が広い人だ。", "translationKo": "마음이 넓은 사람이다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "こころがひろいひとだ。" }] },
+      { "track": "jp", "glyph": "心", "on": "シン", "kun": "こころ", "kanken": "9級", "jlpt": "N3", "levelOrd": 3, "sentences": [{ "text": "心が広い人だ。", "translationKo": "마음이 넓은 사람이다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "こころがひろいひとだ。" }] },
       { "track": "cn", "glyph": "心", "pinyin": "xīn", "meaning": "heart, mind", "hsk": "HSK 2", "tier": "一级字", "levelOrd": 2, "sentences": [{ "text": "我很关心你。", "translationKo": "나는 너를 매우 걱정한다.", "source": "HSK2 教材", "sourceKind": "textbook", "targetIndex": 3, "rank": 0, "reading": "wǒ hěn guān xīn nǐ。" }] }
     ]
   },
@@ -75,7 +75,7 @@
     "key": "森", "meaningEn": "forest", "meaningKo": "수풀", "variants": { "kr": "森", "jp": "森", "cn": "森" }, "strokeCount": 12,
     "tracks": [
       { "track": "kr", "glyph": "森", "reading": "수풀 삼", "level": "7급", "levelOrd": 3, "sentences": [{ "text": "森林을 보호해야 한다.", "translationKo": "삼림을 보호해야 한다.", "source": "7급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0, "reading": null }] },
-      { "track": "jp", "glyph": "森", "on": "シン", "kun": "もり", "kanken": "9級", "jlpt": "N3", "levelOrd": 2, "sentences": [{ "text": "森を歩く。", "translationKo": "숲을 걷는다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "もりをあるく。" }] },
+      { "track": "jp", "glyph": "森", "on": "シン", "kun": "もり", "kanken": "9級", "jlpt": "N3", "levelOrd": 3, "sentences": [{ "text": "森を歩く。", "translationKo": "숲을 걷는다.", "source": "漢検9級 例文", "sourceKind": "textbook", "targetIndex": 0, "rank": 0, "reading": "もりをあるく。" }] },
       { "track": "cn", "glyph": "森", "pinyin": "sēn", "meaning": "forest", "hsk": "HSK 5", "tier": "二级字", "levelOrd": 5, "sentences": [{ "text": "这片森林很大。", "translationKo": "이 숲은 매우 크다.", "source": "HSK5 教材", "sourceKind": "textbook", "targetIndex": 2, "rank": 0, "reading": "zhè piàn sēn lín hěn dà。" }] }
     ]
   },
@@ -91,7 +91,7 @@
     "key": "憂", "meaningEn": "worry", "meaningKo": "근심", "variants": { "kr": "憂", "jp": "憂", "cn": "忧" }, "strokeCount": 15,
     "tracks": [
       { "track": "kr", "glyph": "憂", "reading": "근심 우", "level": "3급", "levelOrd": 11, "sentences": [{ "text": "憂鬱한 날씨가 이어진다.", "translationKo": "우울한 날씨가 이어진다.", "source": "3급 기출 어휘", "sourceKind": "past_paper", "targetIndex": 0, "rank": 0, "reading": null }] },
-      { "track": "jp", "glyph": "憂", "on": "ユウ", "kun": "うれ-い", "kanken": "準2級", "jlpt": "N1", "levelOrd": 9, "sentences": [{ "text": "一抹の憂いが残る。", "translationKo": "한 줄기 근심이 남는다.", "source": "漢検準2級 過去問", "sourceKind": "past_paper", "targetIndex": 3, "rank": 0, "reading": "いちまつのうれいがのこる。" }] },
+      { "track": "jp", "glyph": "憂", "on": "ユウ", "kun": "うれ-い", "kanken": "準2級", "jlpt": "N1", "levelOrd": 5, "sentences": [{ "text": "一抹の憂いが残る。", "translationKo": "한 줄기 근심이 남는다.", "source": "漢検準2級 過去問", "sourceKind": "past_paper", "targetIndex": 3, "rank": 0, "reading": "いちまつのうれいがのこる。" }] },
       { "track": "cn", "glyph": "忧", "pinyin": "yōu", "meaning": "anxiety, worry", "hsk": "HSK 7-9", "tier": "二级字", "levelOrd": 7, "sentences": [{ "text": "他很忧虑。", "translationKo": "그는 매우 근심한다.", "source": "HSK7-9 语料", "sourceKind": "corpus", "targetIndex": 2, "rank": 0, "reading": "tā hěn yōu lǜ。" }] }
     ]
   }

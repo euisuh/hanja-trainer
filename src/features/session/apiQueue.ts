@@ -5,7 +5,7 @@ import type { SessionQueueItem } from "./buildQueue";
 function trackEntry(track: Track, card: Pick<SessionCard, "glyph" | "levelBadge" | "levelOrd">, reading: string, characterId: number): TrackEntry {
   if (track === "kr") return { characterId, track, glyph: card.glyph, reading, level: card.levelBadge.replace(/^한자 /u, ""), levelOrd: card.levelOrd };
   if (track === "jp") {
-    const [kanken = "—", jlpt = "—"] = card.levelBadge.replace(/^漢検 /u, "").split(" · ");
+    const [jlpt = "—", kanken = "未指定"] = card.levelBadge.split(" · 漢検 ");
     return { characterId, track, glyph: card.glyph, on: reading.replace(/^音 /u, ""), kun: "", kanken, jlpt, levelOrd: card.levelOrd };
   }
   const [hsk = "—", tier = "—"] = card.levelBadge.split(" · ");

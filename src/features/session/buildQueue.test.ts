@@ -50,7 +50,7 @@ function word(id: number, reading: string, members: [number, number] = [1, 2]): 
 }
 
 function seededCharacters(): CharacterEntry[] {
-  const files = ["kr-8geup", "kr-7geup", "jp-kanken-10", "jp-kanken-9", "cn-hsk1", "cn-hsk2"];
+  const files = ["kr-8geup", "kr-7geup", "jp-jlpt-n5", "jp-jlpt-n4", "cn-hsk1", "cn-hsk2"];
   const merged = new Map<string, SeedCharacterEntry>();
   for (const file of files) {
     for (const item of parseSeed(JSON.parse(readFileSync(`data/characters/${file}.json`, "utf8")) as unknown).characters) {

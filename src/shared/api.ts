@@ -175,6 +175,6 @@ export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number
 export type OnboardingStateResponse = { onboarded: boolean };
 
 export type StatsCalendarDay = { date: string; count: number };
-export type StatsSecondaryScale = { name: "JLPT"; level: string; known: number; total: number; nextLevel?: string };
+export type StatsSecondaryScale = { name: "漢検"; level: string; known: number; total: number; nextLevel?: string };
 export type StatsTrack = { track: Track; known: number; total: number; pct: number; currentLevel: string; nextLevel?: string; secondaryScale?: StatsSecondaryScale };
 export type StatsResponse = { streak: number; longestStreak: number; calendar: StatsCalendarDay[]; tracks: StatsTrack[]; answered: number; skipped: number; skipRate: number };

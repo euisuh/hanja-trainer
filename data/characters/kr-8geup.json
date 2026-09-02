@@ -83,7 +83,8 @@
       "meaningEn": "army, military",
       "meaningKo": "군사",
       "variants": {
-        "kr": "軍"
+        "kr": "軍",
+        "jp": "軍"
       },
       "strokeCount": 9,
       "tracks": [
@@ -318,7 +319,8 @@
       "meaningEn": "people, subjects, citizens",
       "meaningKo": "백성",
       "variants": {
-        "kr": "民"
+        "kr": "民",
+        "jp": "民"
       },
       "strokeCount": 5,
       "tracks": [
@@ -832,7 +834,8 @@
       "meaningEn": "inch",
       "meaningKo": "마디",
       "variants": {
-        "kr": "寸"
+        "kr": "寸",
+        "jp": "寸"
       },
       "strokeCount": 3,
       "tracks": [

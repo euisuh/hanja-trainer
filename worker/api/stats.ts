@@ -14,27 +14,29 @@ type MasteryRow = { track: Track; known: number; total: number };
 type LevelRow = { track: Track; level_ord: number; level_badge: string };
 type PlacementRow = { track: Track; level_badge: string; level_ord: number };
 type ReviewTotalsRow = ActivityRangeRow & { answered: number; skipped: number };
-type JlptRow = { level: string; stability: number | null };
+type KankenRow = { level: string; stability: number | null };
 
-const JLPT_LEVELS = ["N5", "N4", "N3", "N2", "N1"] as const;
+const KANKEN_LEVELS = ["10級", "9級", "8級", "7級", "6級", "5級", "4級", "3級", "準2級", "2級", "準1級", "1級"] as const;
 
-export function jlptProgress(rows: JlptRow[]): StatsSecondaryScale {
-  const counts = new Map(JLPT_LEVELS.map((level) => [level, { known: 0, total: 0 }]));
+export function kankenProgress(rows: KankenRow[]): StatsSecondaryScale {
+  const counts = new Map(KANKEN_LEVELS.map((level) => [level, { known: 0, total: 0 }]));
   for (const row of rows) {
-    const count = counts.get(row.level as (typeof JLPT_LEVELS)[number]);
+    const count = counts.get(row.level as (typeof KANKEN_LEVELS)[number]);
     if (!count) continue;
     count.total += 1;
     if ((row.stability ?? 0) >= MASTERY_STABILITY_DAYS) count.known += 1;
   }
+  const representedLevels = KANKEN_LEVELS.filter((level) => counts.get(level)!.total > 0);
+  if (representedLevels.length === 0) return { name: "漢検", level: "開始前", known: 0, total: 0 };
   let current = "開始前";
-  for (const level of JLPT_LEVELS) {
+  for (const level of representedLevels) {
     const count = counts.get(level)!;
-    if (count.total === 0 || count.known / count.total < 0.8) {
-      return { name: "JLPT", level: current, ...count, nextLevel: level };
+    if (count.known / count.total < 0.8) {
+      return { name: "漢検", level: current, ...count, nextLevel: level };
     }
     current = level;
   }
-  return { name: "JLPT", level: current, ...counts.get("N1")! };
+  return { name: "漢検", level: current, ...counts.get(representedLevels.at(-1)!)! };
 }
 
 function addDays(key: string, amount: number): string {
@@ -43,7 +45,7 @@ function addDays(key: string, amount: number): string {
 }
 
 export async function getStats(db: D1Database, now = new Date()): Promise<StatsResponse> {
-  const [profileResult, totalsResult, sessionsRangeResult, masteryResult, levelsResult, placementResult, jlptResult] = await db.batch([
+  const [profileResult, totalsResult, sessionsRangeResult, masteryResult, levelsResult, placementResult, kankenResult] = await db.batch([
     db.prepare("SELECT enabled_tracks, timezone FROM profile WHERE id = 1"),
     db.prepare(`SELECT MIN(answered_at) AS min_at, MAX(answered_at) AS max_at,
       COUNT(DISTINCT ${REVIEW_ATTEMPT_SQL}) AS answered,
@@ -59,19 +61,19 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
     `).bind(MASTERY_STABILITY_DAYS),
     db.prepare(`
       SELECT track, level_ord,
-        CASE track WHEN 'kr' THEN kr_level WHEN 'jp' THEN jp_kanken ELSE cn_hsk END AS level_badge
+        CASE track WHEN 'kr' THEN kr_level WHEN 'jp' THEN jp_jlpt ELSE cn_hsk END AS level_badge
       FROM character_tracks GROUP BY track, level_ord, level_badge ORDER BY track, level_ord
     `),
     db.prepare(`
       SELECT pr.track, pr.level_badge, pr.level_ord FROM placement_results pr
       WHERE pr.id = (SELECT latest.id FROM placement_results latest WHERE latest.track = pr.track ORDER BY latest.taken_at DESC, latest.id DESC LIMIT 1)
     `),
-    // Kanji-coverage approximation only; provenance and post-2010 caveat: data/SOURCES.md.
+    // Kanken remains secondary metadata for the JLPT-ordered Japanese curriculum.
     db.prepare(`
-      SELECT ct.jp_jlpt AS level, rs.stability
+      SELECT ct.jp_kanken AS level, rs.stability
       FROM character_tracks ct
       LEFT JOIN review_states rs ON rs.character_id = ct.character_id AND rs.track = ct.track
-      WHERE ct.track = 'jp' AND ct.jp_jlpt IS NOT NULL
+      WHERE ct.track = 'jp' AND ct.jp_kanken IS NOT NULL
     `),
   ]);
   const profile = profileResult.results[0] as unknown as ProfileRow | undefined;
@@ -118,7 +120,7 @@ export async function getStats(db: D1Database, now = new Date()): Promise<StatsR
       pct: progress.total === 0 ? 0 : progress.known / progress.total * 100,
       currentLevel: current,
       ...(nextLevel ? { nextLevel } : {}),
-      ...(track === "jp" ? { secondaryScale: jlptProgress(jlptResult.results as unknown as JlptRow[]) } : {}),
+      ...(track === "jp" ? { secondaryScale: kankenProgress(kankenResult.results as unknown as KankenRow[]) } : {}),
     };
   });
   return { streak: streak.streak, longestStreak: streak.longestStreak, calendar, tracks, answered: totals.answered, skipped: totals.skipped, skipRate: totals.answered === 0 ? 0 : totals.skipped / totals.answered * 100 };

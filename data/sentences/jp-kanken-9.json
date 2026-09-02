@@ -89,17 +89,6 @@
       "reading": "ないしょだよ。"
     },
     {
-      "character_key": "分",
-      "track": "jp",
-      "text": "分かった！",
-      "translation_ko": "알겠어!",
-      "source": "Tatoeba #1293330",
-      "source_kind": "corpus",
-      "target_index": 0,
-      "rank": 0,
-      "reading": "わかった！"
-    },
-    {
       "character_key": "切",
       "track": "jp",
       "text": "家族は大切だ。",

@@ -7,7 +7,7 @@ import "../features/onboarding/onboarding.css";
 
 const cards = {
   kr: { glyph: "漢", name: "한국 · 한자", detail: "한자능력검정 8급 → 특급", key: "1" },
-  jp: { glyph: "漢", name: "日本 · 漢字", detail: "漢検 10級 → 1級 · JLPT N5→N1", key: "2" },
+  jp: { glyph: "漢", name: "日本 · 漢字", detail: "JLPT N5 → N1 · 漢検 메타데이터", key: "2" },
   cn: { glyph: "汉", name: "中国 · 汉字", detail: "HSK 1 → 7-9 · 通用规范汉字表", key: "3" },
 } as const;
 
@@ -69,7 +69,7 @@ export function OnboardingScreen() {
     <section className="onboarding-screen">
       <p className="onboarding-eyebrow">Step 1 / 2 · 트랙 선택</p>
       <h1>한 글자, 세 개의 시험.</h1>
-      <p className="onboarding-copy">같은 글자를 급수·漢検·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
+      <p className="onboarding-copy">같은 글자를 급수·JLPT·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
       {error && <div><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
       <div className="track-picker">
         {TRACKS.map((track) => {

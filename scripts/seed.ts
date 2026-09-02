@@ -25,8 +25,7 @@ export const LEVEL_ORDS: Record<Track, Readonly<Record<string, number>>> = {
     "3급": 11, "2급": 12, "1급": 13, "특급II": 14, "특급": 15,
   },
   jp: {
-    "10級": 1, "9級": 2, "8級": 3, "7級": 4, "6級": 5, "5級": 6,
-    "4級": 7, "3級": 8, "準2級": 9, "2級": 10, "準1級": 11, "1級": 12,
+    N5: 1, N4: 2, N3: 3, N2: 4, N1: 5,
   },
   cn: { "HSK 1": 1, "HSK 2": 2, "HSK 3": 3, "HSK 4": 4, "HSK 5": 5, "HSK 6": 6, "HSK 7-9": 7 },
 };
@@ -93,7 +92,7 @@ function seedTrack(value: unknown, path: string, key: string, variants: Partial<
   const kind = track(input.track, `${path}.track`);
   const glyph = string(input.glyph, `${path}.glyph`);
   if (glyph !== (variants[kind] ?? key)) throw new Error(`${path}.glyph: expected ${variants[kind] ?? key}`);
-  const levelField = kind === "kr" ? "level" : kind === "jp" ? "kanken" : "hsk";
+  const levelField = kind === "kr" ? "level" : kind === "jp" ? "jlpt" : "hsk";
   const level = string(input[levelField], `${path}.${levelField}`);
   const levelOrd = integer(input.levelOrd, `${path}.levelOrd`, 1);
   if (levelOrd !== levelOrdFor(kind, level)) throw new Error(`${path}.levelOrd: expected ${levelOrdFor(kind, level)} for ${level}`);
@@ -111,8 +110,8 @@ function seedTrack(value: unknown, path: string, key: string, variants: Partial<
       track: "jp",
       on: string(input.on, `${path}.on`),
       kun: string(input.kun, `${path}.kun`),
-      kanken: level,
-      jlpt: string(input.jlpt, `${path}.jlpt`),
+      kanken: string(input.kanken, `${path}.kanken`),
+      jlpt: level,
     };
   }
   return {

@@ -44,7 +44,8 @@
       "meaningEn": "teach, instruct; exegesis",
       "meaningKo": "가르칠",
       "variants": {
-        "kr": "訓"
+        "kr": "訓",
+        "jp": "訓"
       },
       "strokeCount": 10,
       "tracks": [
@@ -121,7 +122,8 @@
       "meaningEn": "grandchild, descendent; surname",
       "meaningKo": "손자",
       "variants": {
-        "kr": "孫"
+        "kr": "孫",
+        "jp": "孫"
       },
       "strokeCount": 10,
       "tracks": [
@@ -333,7 +335,8 @@
       "meaningEn": "simple, unadorned; sincere; surname; a tree",
       "meaningKo": "나무 껍질",
       "variants": {
-        "kr": "朴"
+        "kr": "朴",
+        "jp": "朴"
       },
       "strokeCount": 6,
       "tracks": [
@@ -371,7 +374,8 @@
       "meaningEn": "seat; mat; take seat; banquet",
       "meaningKo": "자리",
       "variants": {
-        "kr": "席"
+        "kr": "席",
+        "jp": "席"
       },
       "strokeCount": 10,
       "tracks": [
@@ -390,7 +394,8 @@
       "meaningKo": "나무",
       "variants": {
         "kr": "樹",
-        "cn": "树"
+        "cn": "树",
+        "jp": "樹"
       },
       "strokeCount": 16,
       "tracks": [
@@ -467,7 +472,8 @@
       "meaningEn": "petal, flower, leaf; brave, a hero; England, English",
       "meaningKo": "꽃부리",
       "variants": {
-        "kr": "英"
+        "kr": "英",
+        "jp": "英"
       },
       "strokeCount": 8,
       "tracks": [
@@ -642,7 +648,8 @@
       "meaningKo": "옷",
       "variants": {
         "cn": "衣",
-        "kr": "衣"
+        "kr": "衣",
+        "jp": "衣"
       },
       "strokeCount": 6,
       "tracks": [
@@ -893,7 +900,8 @@
       "meaningKo": "사랑",
       "variants": {
         "cn": "爱",
-        "kr": "愛"
+        "kr": "愛",
+        "jp": "愛"
       },
       "strokeCount": 13,
       "tracks": [
@@ -950,7 +958,8 @@
       "meaningEn": "lose; make mistake, neglect",
       "meaningKo": "잃을",
       "variants": {
-        "kr": "失"
+        "kr": "失",
+        "jp": "失"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1008,7 +1017,8 @@
       "meaningEn": "administrative division",
       "meaningKo": "고을",
       "variants": {
-        "kr": "郡"
+        "kr": "郡",
+        "jp": "郡"
       },
       "strokeCount": 9,
       "tracks": [
@@ -1046,7 +1056,8 @@
       "meaningEn": "precedent, example; regulation",
       "meaningKo": "법식",
       "variants": {
-        "kr": "例"
+        "kr": "例",
+        "jp": "例"
       },
       "strokeCount": 8,
       "tracks": [
@@ -1084,7 +1095,8 @@
       "meaningKo": "오얏",
       "variants": {
         "kr": "李",
-        "cn": "李"
+        "cn": "李",
+        "jp": "李"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1102,7 +1114,8 @@
       "meaningEn": "separate, other; do not",
       "meaningKo": "나눌",
       "variants": {
-        "kr": "別"
+        "kr": "別",
+        "jp": "別"
       },
       "strokeCount": 7,
       "tracks": [
@@ -1197,7 +1210,8 @@
       "meaningEn": "long, perpetual, eternal, forever",
       "meaningKo": "길",
       "variants": {
-        "kr": "永"
+        "kr": "永",
+        "jp": "永"
       },
       "strokeCount": 5,
       "tracks": [
@@ -1293,7 +1307,8 @@
       "meaningKo": "있을",
       "variants": {
         "cn": "在",
-        "kr": "在"
+        "kr": "在",
+        "jp": "在"
       },
       "strokeCount": 6,
       "tracks": [
@@ -1390,7 +1405,8 @@
       "meaningKo": "특별할",
       "variants": {
         "kr": "特",
-        "cn": "特"
+        "cn": "特",
+        "jp": "特"
       },
       "strokeCount": 10,
       "tracks": [

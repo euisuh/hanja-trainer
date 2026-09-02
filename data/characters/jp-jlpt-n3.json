@@ -1,0 +1,9583 @@
+{
+  "characters": [
+    {
+      "key": "政",
+      "meaningEn": "politics",
+      "meaningKo": "정사",
+      "variants": {
+        "jp": "政",
+        "kr": "政"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "政",
+          "on": "セイ・ショウ",
+          "kun": "まつりごと・まん",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "議",
+      "meaningEn": "deliberation",
+      "meaningKo": "의논할",
+      "variants": {
+        "cn": "议",
+        "kr": "議",
+        "jp": "議"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "議",
+          "on": "ギ",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "民",
+      "meaningEn": "people",
+      "meaningKo": "백성",
+      "variants": {
+        "kr": "民",
+        "jp": "民"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "民",
+          "on": "ミン",
+          "kun": "たみ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "連",
+      "meaningEn": "take along",
+      "meaningKo": "잇닿을",
+      "variants": {
+        "jp": "連",
+        "kr": "連"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "連",
+          "on": "レン",
+          "kun": "つら-なる・つら-ねる・つ-れる・-づ-れ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "對",
+      "meaningEn": "vis-a-vis",
+      "meaningKo": "대할",
+      "variants": {
+        "kr": "對",
+        "jp": "対"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "対",
+          "on": "タイ・ツイ",
+          "kun": "あいて・こた-える・そろ-い・つれあ-い・なら-ぶ・むか-う",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "部",
+      "meaningEn": "section",
+      "meaningKo": "거느릴",
+      "variants": {
+        "kr": "部",
+        "jp": "部"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "部",
+          "on": "ブ",
+          "kun": "-べ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "合",
+      "meaningEn": "fit",
+      "meaningKo": "합할",
+      "variants": {
+        "jp": "合",
+        "kr": "合",
+        "cn": "合"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "合",
+          "on": "ゴウ・ガッ・カッ",
+          "kun": "あ-う・-あ-う・あ-い・あい-・-あ-い・-あい・あ-わす・あ-わせる・-あ-わせる",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "市",
+      "meaningEn": "market",
+      "meaningKo": "저자",
+      "variants": {
+        "kr": "市",
+        "jp": "市",
+        "cn": "市"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "市",
+          "on": "シ",
+          "kun": "いち",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "内",
+      "meaningEn": "inside",
+      "meaningKo": "안",
+      "variants": {
+        "jp": "内"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "内",
+          "on": "ナイ・ダイ",
+          "kun": "うち",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "相",
+      "meaningEn": "inter-",
+      "meaningKo": "서로",
+      "variants": {
+        "kr": "相",
+        "jp": "相",
+        "cn": "相"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "相",
+          "on": "ソウ・ショウ",
+          "kun": "あい-",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "定",
+      "meaningEn": "determine",
+      "meaningKo": "정할",
+      "variants": {
+        "kr": "定",
+        "jp": "定",
+        "cn": "定"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "定",
+          "on": "テイ・ジョウ",
+          "kun": "さだ-める・さだ-まる・さだ-か",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "回",
+      "meaningEn": "-times",
+      "meaningKo": "돌아올",
+      "variants": {
+        "jp": "回",
+        "cn": "回",
+        "kr": "回"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "回",
+          "on": "カイ・エ",
+          "kun": "まわ-る・-まわ-る・-まわ-り・まわ-す・-まわ-す・まわ-し-・-まわ-し・もとお-る・か-える",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "選",
+      "meaningEn": "elect",
+      "meaningKo": "가릴",
+      "variants": {
+        "kr": "選",
+        "jp": "選"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "選",
+          "on": "セン",
+          "kun": "えら-ぶ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "米",
+      "meaningEn": "rice",
+      "meaningKo": "쌀",
+      "variants": {
+        "jp": "米",
+        "cn": "米",
+        "kr": "米"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "米",
+          "on": "ベイ・マイ・メエトル",
+          "kun": "こめ・よね",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "實",
+      "meaningEn": "reality",
+      "meaningKo": "열매",
+      "variants": {
+        "kr": "實",
+        "jp": "実"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "実",
+          "on": "ジツ・シツ",
+          "kun": "み・みの-る・まこと・みの・みち-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "關",
+      "meaningEn": "connection",
+      "meaningKo": "관계할",
+      "variants": {
+        "cn": "关",
+        "kr": "關",
+        "jp": "関"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "関",
+          "on": "カン",
+          "kun": "せき・-ぜき・かか-わる・からくり・かんぬき",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "決",
+      "meaningEn": "decide",
+      "meaningKo": "결단할",
+      "variants": {
+        "kr": "決",
+        "jp": "決",
+        "cn": "决"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "決",
+          "on": "ケツ",
+          "kun": "き-める・-ぎ-め・き-まる・さ-く",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "全",
+      "meaningEn": "whole",
+      "meaningKo": "온전할",
+      "variants": {
+        "kr": "全",
+        "jp": "全",
+        "cn": "全"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "全",
+          "on": "ゼン",
+          "kun": "まった-く・すべ-て",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "表",
+      "meaningEn": "surface",
+      "meaningKo": "겉",
+      "variants": {
+        "cn": "表",
+        "kr": "表",
+        "jp": "表"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "表",
+          "on": "ヒョウ",
+          "kun": "おもて・-おもて・あらわ-す・あらわ-れる・あら-わす",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "戰",
+      "meaningEn": "war",
+      "meaningKo": "싸움",
+      "variants": {
+        "kr": "戰",
+        "jp": "戦"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "戦",
+          "on": "セン",
+          "kun": "いくさ・たたか-う・おのの-く・そよ-ぐ・わなな-く",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "經",
+      "meaningEn": "sutra",
+      "meaningKo": "날",
+      "variants": {
+        "cn": "经",
+        "kr": "經",
+        "jp": "経"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "経",
+          "on": "ケイ・キョウ・キン",
+          "kun": "へ-る・た-つ・たていと・はか-る・のり",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "最",
+      "meaningEn": "utmost",
+      "meaningKo": "가장",
+      "variants": {
+        "cn": "最",
+        "kr": "最",
+        "jp": "最"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "最",
+          "on": "サイ・シュ",
+          "kun": "もっと-も・つま",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "現",
+      "meaningEn": "present",
+      "meaningKo": "나타날",
+      "variants": {
+        "cn": "现",
+        "kr": "現",
+        "jp": "現"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "現",
+          "on": "ゲン",
+          "kun": "あらわ-れる・あらわ-す・うつつ・うつ-つ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "調",
+      "meaningEn": "tune",
+      "meaningKo": "고를",
+      "variants": {
+        "kr": "調",
+        "jp": "調",
+        "cn": "调"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "調",
+          "on": "チョウ",
+          "kun": "しら-べる・しら-べ・ととの-う・ととの-える",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "化",
+      "meaningEn": "change",
+      "meaningKo": "될",
+      "variants": {
+        "kr": "化",
+        "jp": "化",
+        "cn": "化"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "化",
+          "on": "カ・ケ",
+          "kun": "ば-ける・ば-かす・ふ-ける・け-する",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "當",
+      "meaningEn": "hit",
+      "meaningKo": "마땅",
+      "variants": {
+        "jp": "当",
+        "kr": "當",
+        "cn": "当"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "当",
+          "on": "トウ",
+          "kun": "あ-たる・あ-たり・あ-てる・あ-て・まさ-に・まさ-にべし",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "約",
+      "meaningEn": "promise",
+      "meaningKo": "맺을",
+      "variants": {
+        "kr": "約",
+        "jp": "約"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "約",
+          "on": "ヤク",
+          "kun": "つづ-まる・つづ-める・つづま-やか",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "首",
+      "meaningEn": "neck",
+      "meaningKo": "머리",
+      "variants": {
+        "jp": "首",
+        "kr": "首"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "首",
+          "on": "シュ",
+          "kun": "くび",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "法",
+      "meaningEn": "method",
+      "meaningKo": "법",
+      "variants": {
+        "kr": "法",
+        "cn": "法",
+        "jp": "法"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "法",
+          "on": "ホウ・ハッ・ホッ・フラン",
+          "kun": "のり",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "性",
+      "meaningEn": "sex",
+      "meaningKo": "성품",
+      "variants": {
+        "kr": "性",
+        "jp": "性"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "性",
+          "on": "セイ・ショウ",
+          "kun": "さが",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "要",
+      "meaningEn": "need",
+      "meaningKo": "요긴할",
+      "variants": {
+        "cn": "要",
+        "kr": "要",
+        "jp": "要"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "要",
+          "on": "ヨウ",
+          "kun": "い-る・かなめ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "制",
+      "meaningEn": "system",
+      "meaningKo": "절제할",
+      "variants": {
+        "jp": "制",
+        "kr": "制"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "制",
+          "on": "セイ",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "治",
+      "meaningEn": "reign",
+      "meaningKo": "다스릴",
+      "variants": {
+        "jp": "治",
+        "kr": "治"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "治",
+          "on": "ジ・チ",
+          "kun": "おさ-める・おさ-まる・なお-る・なお-す",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "務",
+      "meaningEn": "task",
+      "meaningKo": "힘쓸",
+      "variants": {
+        "cn": "务",
+        "kr": "務",
+        "jp": "務"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "務",
+          "on": "ム",
+          "kun": "つと-める",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "成",
+      "meaningEn": "turn into",
+      "meaningKo": "이룰",
+      "variants": {
+        "kr": "成",
+        "cn": "成",
+        "jp": "成"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "成",
+          "on": "セイ・ジョウ",
+          "kun": "な-る・な-す・-な-す",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "期",
+      "meaningEn": "period",
+      "meaningKo": "기약할",
+      "variants": {
+        "cn": "期",
+        "kr": "期",
+        "jp": "期"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "期",
+          "on": "キ・ゴ",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "取",
+      "meaningEn": "take",
+      "meaningKo": "가질",
+      "variants": {
+        "jp": "取",
+        "kr": "取"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "取",
+          "on": "シュ",
+          "kun": "と-る・と-り・と-り-・とり・-ど-り",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "都",
+      "meaningEn": "metropolis",
+      "meaningKo": "도읍",
+      "variants": {
+        "cn": "都",
+        "kr": "都",
+        "jp": "都"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "都",
+          "on": "ト・ツ",
+          "kun": "みやこ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "和",
+      "meaningEn": "harmony",
+      "meaningKo": "화할",
+      "variants": {
+        "cn": "和",
+        "kr": "和",
+        "jp": "和"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "和",
+          "on": "ワ・オ・カ",
+          "kun": "やわ-らぐ・やわ-らげる・なご-む・なご-やか・あ-える",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "機",
+      "meaningEn": "loom",
+      "meaningKo": "틀",
+      "variants": {
+        "jp": "機",
+        "kr": "機"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "機",
+          "on": "キ",
+          "kun": "はた",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "平",
+      "meaningEn": "even",
+      "meaningKo": "평평할",
+      "variants": {
+        "kr": "平",
+        "jp": "平",
+        "cn": "平"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "平",
+          "on": "ヘイ・ビョウ・ヒョウ",
+          "kun": "たい-ら・-だいら・ひら・ひら-",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "加",
+      "meaningEn": "add",
+      "meaningKo": "더할",
+      "variants": {
+        "kr": "加",
+        "cn": "加",
+        "jp": "加"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "加",
+          "on": "カ",
+          "kun": "くわ-える・くわ-わる",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "受",
+      "meaningEn": "accept",
+      "meaningKo": "받을",
+      "variants": {
+        "jp": "受",
+        "cn": "受",
+        "kr": "受"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "受",
+          "on": "ジュ",
+          "kun": "う-ける・-う-け・う-かる",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "續",
+      "meaningEn": "continue",
+      "meaningKo": "이을",
+      "variants": {
+        "jp": "続",
+        "kr": "續"
+      },
+      "strokeCount": 21,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "続",
+          "on": "ゾク・ショク・コウ・キョウ",
+          "kun": "つづ-く・つづ-ける・つぐ-ない",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "進",
+      "meaningEn": "advance",
+      "meaningKo": "나아갈",
+      "variants": {
+        "cn": "进",
+        "jp": "進",
+        "kr": "進"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "進",
+          "on": "シン",
+          "kun": "すす-む・すす-める",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "數",
+      "meaningEn": "number",
+      "meaningKo": "셈",
+      "variants": {
+        "kr": "數",
+        "jp": "数",
+        "cn": "数"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "数",
+          "on": "スウ・ス・サク・ソク・シュ",
+          "kun": "かず・かぞ-える・しばしば・せ-める・わずらわ-しい",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "記",
+      "meaningEn": "scribe",
+      "meaningKo": "기록할",
+      "variants": {
+        "kr": "記",
+        "jp": "記",
+        "cn": "记"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "記",
+          "on": "キ",
+          "kun": "しる-す",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "初",
+      "meaningEn": "first time",
+      "meaningKo": "처음",
+      "variants": {
+        "kr": "初",
+        "cn": "初",
+        "jp": "初"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "初",
+          "on": "ショ",
+          "kun": "はじ-め・はじ-めて・はつ・はつ-・うい-・-そ-める・-ぞ-め",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "指",
+      "meaningEn": "finger",
+      "meaningKo": "가리킬",
+      "variants": {
+        "jp": "指",
+        "kr": "指"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "指",
+          "on": "シ",
+          "kun": "ゆび・さ-す・-さ-し",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "權",
+      "meaningEn": "authority",
+      "meaningKo": "저울추",
+      "variants": {
+        "jp": "権",
+        "kr": "權"
+      },
+      "strokeCount": 21,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "権",
+          "on": "ケン・ゴン",
+          "kun": "おもり・かり・はか-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "支",
+      "meaningEn": "branch",
+      "meaningKo": "지탱할",
+      "variants": {
+        "jp": "支",
+        "kr": "支"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "支",
+          "on": "シ",
+          "kun": "ささ-える・つか-える・か-う",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "産",
+      "meaningEn": "products",
+      "meaningKo": "낳을",
+      "variants": {
+        "kr": "産",
+        "jp": "産"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "産",
+          "on": "サン",
+          "kun": "う-む・う-まれる・うぶ-・む-す",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "點",
+      "meaningEn": "spot",
+      "meaningKo": "점",
+      "variants": {
+        "jp": "点",
+        "cn": "点",
+        "kr": "點"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "点",
+          "on": "テン",
+          "kun": "つ-ける・つ-く・た-てる・さ-す・とぼ-す・とも-す・ぼち",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "報",
+      "meaningEn": "report",
+      "meaningKo": "갚을",
+      "variants": {
+        "jp": "報",
+        "kr": "報"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "報",
+          "on": "ホウ",
+          "kun": "むく-いる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "濟",
+      "meaningEn": "settle (debt, etc.)",
+      "meaningKo": "건널",
+      "variants": {
+        "jp": "済",
+        "kr": "濟"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "済",
+          "on": "サイ・セイ",
+          "kun": "す-む・-ず-み・-ずみ・す-まない・す-ます・-す-ます・すく-う・な-す・わたし・わた-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "活",
+      "meaningEn": "lively",
+      "meaningKo": "살",
+      "variants": {
+        "kr": "活",
+        "jp": "活",
+        "cn": "活"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "活",
+          "on": "カツ",
+          "kun": "い-きる・い-かす・い-ける",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "原",
+      "meaningEn": "meadow",
+      "meaningKo": "언덕",
+      "variants": {
+        "jp": "原",
+        "kr": "原"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "原",
+          "on": "ゲン",
+          "kun": "はら",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "共",
+      "meaningEn": "together",
+      "meaningKo": "함께",
+      "variants": {
+        "kr": "共",
+        "cn": "共",
+        "jp": "共"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "共",
+          "on": "キョウ",
+          "kun": "とも・とも-に・-ども",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "得",
+      "meaningEn": "gain",
+      "meaningKo": "얻을",
+      "variants": {
+        "cn": "得",
+        "kr": "得",
+        "jp": "得"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "得",
+          "on": "トク",
+          "kun": "え-る・う-る",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "解",
+      "meaningEn": "unravel",
+      "meaningKo": "풀",
+      "variants": {
+        "cn": "解",
+        "kr": "解",
+        "jp": "解"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "解",
+          "on": "カイ・ゲ",
+          "kun": "と-く・と-かす・と-ける・ほど-く・ほど-ける・わか-る・さと-る",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "交",
+      "meaningEn": "mingle",
+      "meaningKo": "사귈",
+      "variants": {
+        "jp": "交",
+        "cn": "交",
+        "kr": "交"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "交",
+          "on": "コウ",
+          "kun": "まじ-わる・まじ-える・ま-じる・まじ-る・ま-ざる・ま-ぜる・-か-う・か-わす・かわ-す・こもごも",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "資",
+      "meaningEn": "assets",
+      "meaningKo": "재물",
+      "variants": {
+        "jp": "資",
+        "kr": "資"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "資",
+          "on": "シ",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "豫",
+      "meaningEn": "beforehand",
+      "meaningKo": "미리",
+      "variants": {
+        "jp": "予",
+        "kr": "豫"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "予",
+          "on": "ヨ・シャ",
+          "kun": "あらかじ-め",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "向",
+      "meaningEn": "yonder",
+      "meaningKo": "향할",
+      "variants": {
+        "kr": "向",
+        "jp": "向",
+        "cn": "向"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "向",
+          "on": "コウ",
+          "kun": "む-く・む-い・-む-き・む-ける・-む-け・む-かう・む-かい・む-こう・む-こう-・むこ・むか-い",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "際",
+      "meaningEn": "occasion",
+      "meaningKo": "이음새",
+      "variants": {
+        "jp": "際",
+        "kr": "際"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "際",
+          "on": "サイ",
+          "kun": "きわ・-ぎわ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "勝",
+      "meaningEn": "victory",
+      "meaningKo": "이길",
+      "variants": {
+        "kr": "勝",
+        "jp": "勝"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "勝",
+          "on": "ショウ",
+          "kun": "か-つ・-が-ち・まさ-る・すぐ-れる・かつ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "面",
+      "meaningEn": "mask",
+      "meaningKo": "낯",
+      "variants": {
+        "kr": "面",
+        "cn": "面",
+        "jp": "面"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "面",
+          "on": "メン・ベン",
+          "kun": "おも・おもて・つら",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "告",
+      "meaningEn": "revelation",
+      "meaningKo": "고할",
+      "variants": {
+        "cn": "告",
+        "kr": "告",
+        "jp": "告"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "告",
+          "on": "コク",
+          "kun": "つ-げる",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "反",
+      "meaningEn": "anti-",
+      "meaningKo": "돌이킬",
+      "variants": {
+        "kr": "反",
+        "jp": "反"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "反",
+          "on": "ハン・ホン・タン・ホ",
+          "kun": "そ-る・そ-らす・かえ-す・かえ-る・-かえ-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "判",
+      "meaningEn": "judgement",
+      "meaningKo": "판단할",
+      "variants": {
+        "jp": "判",
+        "kr": "判"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "判",
+          "on": "ハン・バン",
+          "kun": "わか-る",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "認",
+      "meaningEn": "acknowledge",
+      "meaningKo": "알",
+      "variants": {
+        "cn": "认",
+        "kr": "認",
+        "jp": "認"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "認",
+          "on": "ニン",
+          "kun": "みと-める・したた-める",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "参",
+      "meaningEn": "nonplussed",
+      "meaningKo": "참여할",
+      "variants": {
+        "cn": "参",
+        "jp": "参"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "参",
+          "on": "サン・シン",
+          "kun": "まい-る・まい-・まじわる・みつ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "利",
+      "meaningEn": "profit",
+      "meaningKo": "날카로울",
+      "variants": {
+        "kr": "利",
+        "jp": "利"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "利",
+          "on": "リ",
+          "kun": "き-く",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "組",
+      "meaningEn": "association",
+      "meaningKo": "짤",
+      "variants": {
+        "jp": "組",
+        "kr": "組"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "組",
+          "on": "ソ",
+          "kun": "く-む・くみ・-ぐみ",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "信",
+      "meaningEn": "faith",
+      "meaningKo": "믿을",
+      "variants": {
+        "kr": "信",
+        "cn": "信",
+        "jp": "信"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "信",
+          "on": "シン",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "在",
+      "meaningEn": "exist",
+      "meaningKo": "있을",
+      "variants": {
+        "cn": "在",
+        "kr": "在",
+        "jp": "在"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "在",
+          "on": "ザイ",
+          "kun": "あ-る",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "件",
+      "meaningEn": "affair",
+      "meaningKo": "물건",
+      "variants": {
+        "cn": "件",
+        "kr": "件",
+        "jp": "件"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "件",
+          "on": "ケン",
+          "kun": "くだん",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "側",
+      "meaningEn": "side",
+      "meaningKo": "곁",
+      "variants": {
+        "jp": "側"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "側",
+          "on": "ソク",
+          "kun": "かわ・がわ・そば",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "任",
+      "meaningEn": "responsibility",
+      "meaningKo": "맡길",
+      "variants": {
+        "kr": "任",
+        "jp": "任"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "任",
+          "on": "ニン",
+          "kun": "まか-せる・まか-す",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "引",
+      "meaningEn": "pull",
+      "meaningKo": "끌",
+      "variants": {
+        "jp": "引",
+        "kr": "引"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "引",
+          "on": "イン",
+          "kun": "ひ-く・ひ-き・ひ-き-・-び-き・ひ-ける",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "求",
+      "meaningEn": "request",
+      "meaningKo": "구할",
+      "variants": {
+        "cn": "求",
+        "kr": "求",
+        "jp": "求"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "求",
+          "on": "キュウ・グ",
+          "kun": "もと-める",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "所",
+      "meaningEn": "place",
+      "meaningKo": "바",
+      "variants": {
+        "kr": "所",
+        "cn": "所",
+        "jp": "所"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "所",
+          "on": "ショ",
+          "kun": "ところ・-ところ・どころ・とこ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "次",
+      "meaningEn": "next",
+      "meaningKo": "버금",
+      "variants": {
+        "cn": "次",
+        "jp": "次",
+        "kr": "次"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "次",
+          "on": "ジ・シ",
+          "kun": "つ-ぐ・つぎ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "昨",
+      "meaningEn": "yesterday",
+      "meaningKo": "어제",
+      "variants": {
+        "cn": "昨",
+        "kr": "昨",
+        "jp": "昨"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "昨",
+          "on": "サク",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "論",
+      "meaningEn": "argument",
+      "meaningKo": "논할",
+      "variants": {
+        "jp": "論",
+        "kr": "論"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "論",
+          "on": "ロン",
+          "kun": "なし",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "官",
+      "meaningEn": "bureaucrat",
+      "meaningKo": "벼슬",
+      "variants": {
+        "jp": "官",
+        "kr": "官"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "官",
+          "on": "カン",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "增",
+      "meaningEn": "increase",
+      "meaningKo": "더할",
+      "variants": {
+        "jp": "増",
+        "kr": "增"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "増",
+          "on": "ゾウ",
+          "kun": "ま-す・ま-し・ふ-える・ふ-やす",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "係",
+      "meaningEn": "person in charge",
+      "meaningKo": "맬",
+      "variants": {
+        "jp": "係",
+        "kr": "係"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "係",
+          "on": "ケイ",
+          "kun": "かか-る・かかり・-がかり・かか-わる",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "感",
+      "meaningEn": "emotion",
+      "meaningKo": "느낄",
+      "variants": {
+        "kr": "感",
+        "jp": "感",
+        "cn": "感"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "感",
+          "on": "カン",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "情",
+      "meaningEn": "feelings",
+      "meaningKo": "뜻",
+      "variants": {
+        "cn": "情",
+        "kr": "情",
+        "jp": "情"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "情",
+          "on": "ジョウ・セイ",
+          "kun": "なさ-け",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "投",
+      "meaningEn": "throw",
+      "meaningKo": "던질",
+      "variants": {
+        "jp": "投",
+        "kr": "投"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "投",
+          "on": "トウ",
+          "kun": "な-げる・-な-げ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "示",
+      "meaningEn": "show",
+      "meaningKo": "보일",
+      "variants": {
+        "kr": "示",
+        "jp": "示"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "示",
+          "on": "ジ・シ",
+          "kun": "しめ-す",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "變",
+      "meaningEn": "unusual",
+      "meaningKo": "변할",
+      "variants": {
+        "kr": "變",
+        "cn": "变",
+        "jp": "変"
+      },
+      "strokeCount": 23,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "変",
+          "on": "ヘン",
+          "kun": "か-わる・か-わり・か-える",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "打",
+      "meaningEn": "strike",
+      "meaningKo": "칠",
+      "variants": {
+        "cn": "打",
+        "kr": "打",
+        "jp": "打"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "打",
+          "on": "ダ・ダアス",
+          "kun": "う-つ・う-ち-・ぶ-つ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "直",
+      "meaningEn": "straightaway",
+      "meaningKo": "곧을",
+      "variants": {
+        "kr": "直",
+        "jp": "直",
+        "cn": "直"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "直",
+          "on": "チョク・ジキ・ジカ",
+          "kun": "ただ-ちに・なお-す・-なお-す・なお-る・なお-き・す-ぐ",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "兩",
+      "meaningEn": "both",
+      "meaningKo": "두",
+      "variants": {
+        "jp": "両",
+        "kr": "兩"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "両",
+          "on": "リョウ",
+          "kun": "てる・ふたつ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "式",
+      "meaningEn": "style",
+      "meaningKo": "법",
+      "variants": {
+        "kr": "式",
+        "jp": "式"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "式",
+          "on": "シキ",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "確",
+      "meaningEn": "assurance",
+      "meaningKo": "굳을",
+      "variants": {
+        "jp": "確",
+        "kr": "確"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "確",
+          "on": "カク・コウ",
+          "kun": "たし-か・たし-かめる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "果",
+      "meaningEn": "fruit",
+      "meaningKo": "실과",
+      "variants": {
+        "cn": "果",
+        "kr": "果",
+        "jp": "果"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "果",
+          "on": "カ",
+          "kun": "は-たす・はた-す・-は-たす・は-てる・-は-てる・は-て",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "容",
+      "meaningEn": "contain",
+      "meaningKo": "얼굴",
+      "variants": {
+        "cn": "容",
+        "kr": "容",
+        "jp": "容"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "容",
+          "on": "ヨウ",
+          "kun": "い-れる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "必",
+      "meaningEn": "invariably",
+      "meaningKo": "반드시",
+      "variants": {
+        "kr": "必",
+        "cn": "必",
+        "jp": "必"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "必",
+          "on": "ヒツ",
+          "kun": "かなら-ず",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "演",
+      "meaningEn": "performance",
+      "meaningKo": "펼",
+      "variants": {
+        "cn": "演",
+        "kr": "演",
+        "jp": "演"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "演",
+          "on": "エン",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "歳",
+      "meaningEn": "year-end",
+      "meaningKo": "해",
+      "variants": {
+        "jp": "歳"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "歳",
+          "on": "サイ・セイ",
+          "kun": "とし・とせ・よわい",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "爭",
+      "meaningEn": "contend",
+      "meaningKo": "다툴",
+      "variants": {
+        "kr": "爭",
+        "jp": "争"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "争",
+          "on": "ソウ",
+          "kun": "あらそ-う・いか-でか",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "談",
+      "meaningEn": "discuss",
+      "meaningKo": "말씀",
+      "variants": {
+        "kr": "談",
+        "jp": "談"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "談",
+          "on": "ダン",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "能",
+      "meaningEn": "ability",
+      "meaningKo": "능할",
+      "variants": {
+        "cn": "能",
+        "kr": "能",
+        "jp": "能"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "能",
+          "on": "ノウ",
+          "kun": "よ-く",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "位",
+      "meaningEn": "rank",
+      "meaningKo": "자리",
+      "variants": {
+        "cn": "位",
+        "kr": "位",
+        "jp": "位"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "位",
+          "on": "イ",
+          "kun": "くらい・ぐらい",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "置",
+      "meaningEn": "placement",
+      "meaningKo": "둘",
+      "variants": {
+        "jp": "置",
+        "kr": "置"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "置",
+          "on": "チ",
+          "kun": "お-く・-お-き",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "流",
+      "meaningEn": "current",
+      "meaningKo": "흐를",
+      "variants": {
+        "kr": "流",
+        "jp": "流"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "流",
+          "on": "リュウ・ル",
+          "kun": "なが-れる・なが-れ・なが-す・-なが-す",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "格",
+      "meaningEn": "status",
+      "meaningKo": "격식",
+      "variants": {
+        "kr": "格",
+        "jp": "格"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "格",
+          "on": "カク・コウ・キャク・ゴウ",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "疑",
+      "meaningEn": "doubt",
+      "meaningKo": "의심할",
+      "variants": {
+        "jp": "疑",
+        "kr": "疑"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "疑",
+          "on": "ギ",
+          "kun": "うたが-う",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "過",
+      "meaningEn": "overdo",
+      "meaningKo": "지날",
+      "variants": {
+        "kr": "過",
+        "jp": "過"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "過",
+          "on": "カ",
+          "kun": "す-ぎる・-す-ぎる・-す-ぎ・す-ごす・あやま-つ・あやま-ち・よ-ぎる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "局",
+      "meaningEn": "bureau",
+      "meaningKo": "판",
+      "variants": {
+        "kr": "局",
+        "jp": "局"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "局",
+          "on": "キョク",
+          "kun": "つぼね",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "放",
+      "meaningEn": "set free",
+      "meaningKo": "놓을",
+      "variants": {
+        "kr": "放",
+        "jp": "放",
+        "cn": "放"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "放",
+          "on": "ホウ",
+          "kun": "はな-す・-っぱな-し・はな-つ・はな-れる・こ-く・ほう-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "常",
+      "meaningEn": "usual",
+      "meaningKo": "떳떳할",
+      "variants": {
+        "cn": "常",
+        "kr": "常",
+        "jp": "常"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "常",
+          "on": "ジョウ",
+          "kun": "つね・とこ-",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "狀",
+      "meaningEn": "status quo",
+      "meaningKo": "형상",
+      "variants": {
+        "jp": "状",
+        "kr": "狀"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "状",
+          "on": "ジョウ",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "球",
+      "meaningEn": "ball",
+      "meaningKo": "공",
+      "variants": {
+        "cn": "球",
+        "kr": "球",
+        "jp": "球"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "球",
+          "on": "キュウ",
+          "kun": "たま",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "職",
+      "meaningEn": "post",
+      "meaningKo": "직분",
+      "variants": {
+        "jp": "職",
+        "kr": "職"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "職",
+          "on": "ショク・ソク",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "與",
+      "meaningEn": "bestow",
+      "meaningKo": "더불",
+      "variants": {
+        "jp": "与",
+        "kr": "與"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "与",
+          "on": "ヨ",
+          "kun": "あた-える・あずか-る・くみ-する・ともに",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "供",
+      "meaningEn": "submit",
+      "meaningKo": "이바지할",
+      "variants": {
+        "jp": "供"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "供",
+          "on": "キョウ・ク・クウ・グ",
+          "kun": "そな-える・とも・-ども",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "役",
+      "meaningEn": "duty",
+      "meaningKo": "부역",
+      "variants": {
+        "jp": "役"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "役",
+          "on": "ヤク・エキ",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "構",
+      "meaningEn": "posture",
+      "meaningKo": "얽을",
+      "variants": {
+        "jp": "構",
+        "kr": "構"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "構",
+          "on": "コウ",
+          "kun": "かま-える・かま-う",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "割",
+      "meaningEn": "proportion",
+      "meaningKo": "벨",
+      "variants": {
+        "jp": "割"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "割",
+          "on": "カツ",
+          "kun": "わ-る・わり・わ-り・わ-れる・さ-く",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "費",
+      "meaningEn": "expense",
+      "meaningKo": "쓸",
+      "variants": {
+        "kr": "費",
+        "jp": "費"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "費",
+          "on": "ヒ",
+          "kun": "つい-やす・つい-える",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "付",
+      "meaningEn": "adhere",
+      "meaningKo": "줄",
+      "variants": {
+        "jp": "付"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "付",
+          "on": "フ",
+          "kun": "つ-ける・-つ-ける・-づ-ける・つ-け・つ-け-・-つ-け・-づ-け・-づけ・つ-く・-づ-く・つ-き・-つ-き・-つき・-づ-き・-づき",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "由",
+      "meaningEn": "wherefore",
+      "meaningKo": "말미암을",
+      "variants": {
+        "kr": "由",
+        "jp": "由"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "由",
+          "on": "ユ・ユウ・ユイ",
+          "kun": "よし・よ-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "説",
+      "meaningEn": "opinion",
+      "meaningKo": "말씀",
+      "variants": {
+        "jp": "説"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "説",
+          "on": "セツ・ゼイ",
+          "kun": "と-く",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "難",
+      "meaningEn": "difficult",
+      "meaningKo": "어려울",
+      "variants": {
+        "jp": "難",
+        "kr": "難"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "難",
+          "on": "ナン",
+          "kun": "かた-い・-がた-い・むずか-しい・むづか-しい・むつか-しい・-にく-い",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "優",
+      "meaningEn": "tenderness",
+      "meaningKo": "넉넉할",
+      "variants": {
+        "jp": "優",
+        "kr": "優"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "優",
+          "on": "ユウ・ウ",
+          "kun": "やさ-しい・すぐ-れる・まさ-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "夫",
+      "meaningEn": "husband",
+      "meaningKo": "지아비",
+      "variants": {
+        "kr": "夫",
+        "cn": "夫",
+        "jp": "夫"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "夫",
+          "on": "フ・フウ・ブ",
+          "kun": "おっと・それ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "收",
+      "meaningEn": "income",
+      "meaningKo": "거둘",
+      "variants": {
+        "cn": "收",
+        "kr": "收",
+        "jp": "収"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "収",
+          "on": "シュウ",
+          "kun": "おさ-める・おさ-まる",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "斷",
+      "meaningEn": "severance",
+      "meaningKo": "끊을",
+      "variants": {
+        "jp": "断",
+        "kr": "斷"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "断",
+          "on": "ダン",
+          "kun": "た-つ・ことわ-る・さだ-める",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "石",
+      "meaningEn": "stone",
+      "meaningKo": "돌",
+      "variants": {
+        "jp": "石",
+        "kr": "石"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "石",
+          "on": "セキ・シャク・コク",
+          "kun": "いし",
+          "kanken": "10級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "違",
+      "meaningEn": "difference",
+      "meaningKo": "어긋날",
+      "variants": {
+        "jp": "違"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "違",
+          "on": "イ",
+          "kun": "ちが-う・ちが-い・ちが-える・-ちが-える・たが-う・たが-える",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "消",
+      "meaningEn": "extinguish",
+      "meaningKo": "사라질",
+      "variants": {
+        "kr": "消",
+        "jp": "消"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "消",
+          "on": "ショウ",
+          "kun": "き-える・け-す",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "神",
+      "meaningEn": "gods",
+      "meaningKo": "귀신",
+      "variants": {
+        "kr": "神",
+        "jp": "神"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "神",
+          "on": "シン・ジン",
+          "kun": "かみ・かん-・こう-",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "番",
+      "meaningEn": "turn",
+      "meaningKo": "차례",
+      "variants": {
+        "jp": "番",
+        "kr": "番"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "番",
+          "on": "バン",
+          "kun": "つが-い",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "規",
+      "meaningEn": "standard",
+      "meaningKo": "법",
+      "variants": {
+        "kr": "規",
+        "jp": "規"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "規",
+          "on": "キ",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "術",
+      "meaningEn": "art",
+      "meaningKo": "재주",
+      "variants": {
+        "kr": "術",
+        "jp": "術"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "術",
+          "on": "ジュツ",
+          "kun": "すべ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "備",
+      "meaningEn": "equip",
+      "meaningKo": "갖출",
+      "variants": {
+        "cn": "备",
+        "kr": "備",
+        "jp": "備"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "備",
+          "on": "ビ",
+          "kun": "そな-える・そな-わる・つぶさ-に",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "宅",
+      "meaningEn": "home",
+      "meaningKo": "댁",
+      "variants": {
+        "kr": "宅",
+        "jp": "宅"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "宅",
+          "on": "タク",
+          "kun": "なし",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "害",
+      "meaningEn": "harm",
+      "meaningKo": "해할",
+      "variants": {
+        "kr": "害",
+        "cn": "害",
+        "jp": "害"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "害",
+          "on": "ガイ",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "配",
+      "meaningEn": "distribute",
+      "meaningKo": "짝",
+      "variants": {
+        "jp": "配",
+        "kr": "配"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "配",
+          "on": "ハイ",
+          "kun": "くば-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "警",
+      "meaningEn": "admonish",
+      "meaningKo": "경계할",
+      "variants": {
+        "jp": "警",
+        "kr": "警"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "警",
+          "on": "ケイ",
+          "kun": "いまし-める",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "育",
+      "meaningEn": "bring up",
+      "meaningKo": "기를",
+      "variants": {
+        "kr": "育",
+        "jp": "育",
+        "cn": "育"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "育",
+          "on": "イク",
+          "kun": "そだ-つ・そだ-ち・そだ-てる・はぐく-む",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "席",
+      "meaningEn": "seat",
+      "meaningKo": "자리",
+      "variants": {
+        "kr": "席",
+        "jp": "席"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "席",
+          "on": "セキ",
+          "kun": "むしろ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "訪",
+      "meaningEn": "call on",
+      "meaningKo": "찾을",
+      "variants": {
+        "jp": "訪",
+        "kr": "訪"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "訪",
+          "on": "ホウ",
+          "kun": "おとず-れる・たず-ねる・と-う",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "乘",
+      "meaningEn": "ride",
+      "meaningKo": "탈",
+      "variants": {
+        "jp": "乗"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "乗",
+          "on": "ジョウ・ショウ",
+          "kun": "の-る・-の-り・の-せる",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "殘",
+      "meaningEn": "remainder",
+      "meaningKo": "잔인할",
+      "variants": {
+        "jp": "残",
+        "kr": "殘"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "残",
+          "on": "ザン・サン",
+          "kun": "のこ-る・のこ-す・そこな-う・のこ-り",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "想",
+      "meaningEn": "concept",
+      "meaningKo": "생각",
+      "variants": {
+        "cn": "想",
+        "jp": "想",
+        "kr": "想"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "想",
+          "on": "ソウ・ソ",
+          "kun": "おも-う",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "聲",
+      "meaningEn": "voice",
+      "meaningKo": "소리",
+      "variants": {
+        "jp": "声",
+        "cn": "声",
+        "kr": "聲"
+      },
+      "strokeCount": 17,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "声",
+          "on": "セイ・ショウ",
+          "kun": "こえ・こわ-",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "念",
+      "meaningEn": "wish",
+      "meaningKo": "생각",
+      "variants": {
+        "kr": "念",
+        "jp": "念"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "念",
+          "on": "ネン",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "助",
+      "meaningEn": "help",
+      "meaningKo": "도울",
+      "variants": {
+        "jp": "助",
+        "cn": "助",
+        "kr": "助"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "助",
+          "on": "ジョ",
+          "kun": "たす-ける・たす-かる・す-ける・すけ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "勞",
+      "meaningEn": "labor",
+      "meaningKo": "일할",
+      "variants": {
+        "kr": "勞",
+        "jp": "労"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "労",
+          "on": "ロウ",
+          "kun": "ろう-する・いたわ-る・いた-ずき・ねぎら・つか-れる・ねぎら-う",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "例",
+      "meaningEn": "example",
+      "meaningKo": "법식",
+      "variants": {
+        "kr": "例",
+        "jp": "例"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "例",
+          "on": "レイ",
+          "kun": "たと-える",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "然",
+      "meaningEn": "sort of thing",
+      "meaningKo": "불탈",
+      "variants": {
+        "kr": "然",
+        "cn": "然",
+        "jp": "然"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "然",
+          "on": "ゼン・ネン",
+          "kun": "しか・しか-り・しか-し・さ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "限",
+      "meaningEn": "limit",
+      "meaningKo": "한할",
+      "variants": {
+        "jp": "限",
+        "kr": "限"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "限",
+          "on": "ゲン",
+          "kun": "かぎ-る・かぎ-り・-かぎ-り",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "追",
+      "meaningEn": "chase",
+      "meaningKo": "쫓을",
+      "variants": {
+        "jp": "追"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "追",
+          "on": "ツイ",
+          "kun": "お-う",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "商",
+      "meaningEn": "make a deal",
+      "meaningKo": "헤아릴",
+      "variants": {
+        "cn": "商",
+        "kr": "商",
+        "jp": "商"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "商",
+          "on": "ショウ",
+          "kun": "あきな-う",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "葉",
+      "meaningEn": "leaf",
+      "meaningKo": "잎",
+      "variants": {
+        "kr": "葉",
+        "jp": "葉"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "葉",
+          "on": "ヨウ",
+          "kun": "は",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "傳",
+      "meaningEn": "transmit",
+      "meaningKo": "전할",
+      "variants": {
+        "kr": "傳",
+        "jp": "伝"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "伝",
+          "on": "デン・テン",
+          "kun": "つた-わる・つた-える・つた-う・つだ-う・-づた-い・つて",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "働",
+      "meaningEn": "work",
+      "meaningKo": "일할",
+      "variants": {
+        "jp": "働"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "働",
+          "on": "ドウ",
+          "kun": "はたら-く",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "形",
+      "meaningEn": "shape",
+      "meaningKo": "모양",
+      "variants": {
+        "jp": "形",
+        "kr": "形"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "形",
+          "on": "ケイ・ギョウ",
+          "kun": "かた・-がた・かたち・なり",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "景",
+      "meaningEn": "scenery",
+      "meaningKo": "볕",
+      "variants": {
+        "kr": "景",
+        "jp": "景"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "景",
+          "on": "ケイ",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "落",
+      "meaningEn": "fall",
+      "meaningKo": "떨어질",
+      "variants": {
+        "kr": "落",
+        "jp": "落"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "落",
+          "on": "ラク",
+          "kun": "お-ちる・お-ち・お-とす",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "好",
+      "meaningEn": "fond",
+      "meaningKo": "좋을",
+      "variants": {
+        "cn": "好",
+        "kr": "好",
+        "jp": "好"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "好",
+          "on": "コウ",
+          "kun": "この-む・す-く・よ-い・い-い",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "退",
+      "meaningEn": "retreat",
+      "meaningKo": "물러날",
+      "variants": {
+        "jp": "退",
+        "kr": "退"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "退",
+          "on": "タイ",
+          "kun": "しりぞ-く・しりぞ-ける・ひ-く・の-く・の-ける・ど-く",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "頭",
+      "meaningEn": "head",
+      "meaningKo": "머리",
+      "variants": {
+        "jp": "頭",
+        "kr": "頭"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "頭",
+          "on": "トウ・ズ・ト",
+          "kun": "あたま・かしら・-がしら・かぶり",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "負",
+      "meaningEn": "defeat",
+      "meaningKo": "질",
+      "variants": {
+        "jp": "負",
+        "kr": "負"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "負",
+          "on": "フ",
+          "kun": "ま-ける・ま-かす・お-う",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "渡",
+      "meaningEn": "transit",
+      "meaningKo": "건널",
+      "variants": {
+        "jp": "渡"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "渡",
+          "on": "ト",
+          "kun": "わた-る・-わた-る・わた-す",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "失",
+      "meaningEn": "lose",
+      "meaningKo": "잃을",
+      "variants": {
+        "kr": "失",
+        "jp": "失"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "失",
+          "on": "シツ",
+          "kun": "うしな-う・う-せる",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "差",
+      "meaningEn": "distinction",
+      "meaningKo": "다를",
+      "variants": {
+        "cn": "差",
+        "kr": "差",
+        "jp": "差"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "差",
+          "on": "サ",
+          "kun": "さ-す・さ-し",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "末",
+      "meaningEn": "end",
+      "meaningKo": "끝",
+      "variants": {
+        "kr": "末",
+        "cn": "末",
+        "jp": "末"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "末",
+          "on": "マツ・バツ",
+          "kun": "すえ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "守",
+      "meaningEn": "guard",
+      "meaningKo": "지킬",
+      "variants": {
+        "jp": "守",
+        "kr": "守"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "守",
+          "on": "シュ・ス",
+          "kun": "まも-る・まも-り・もり・-もり・かみ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "若",
+      "meaningEn": "young",
+      "meaningKo": "같을",
+      "variants": {
+        "jp": "若"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "若",
+          "on": "ジャク・ニャク・ニャ",
+          "kun": "わか-い・わか-・も-しくわ・も-し・も-しくは・ごと-し",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "種",
+      "meaningEn": "species",
+      "meaningKo": "씨",
+      "variants": {
+        "kr": "種",
+        "jp": "種"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "種",
+          "on": "シュ",
+          "kun": "たね・-ぐさ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "美",
+      "meaningEn": "beauty",
+      "meaningKo": "아름다울",
+      "variants": {
+        "kr": "美",
+        "jp": "美"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "美",
+          "on": "ビ・ミ",
+          "kun": "うつく-しい",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "命",
+      "meaningEn": "fate",
+      "meaningKo": "목숨",
+      "variants": {
+        "kr": "命",
+        "jp": "命"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "命",
+          "on": "メイ・ミョウ",
+          "kun": "いのち",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "福",
+      "meaningEn": "blessing",
+      "meaningKo": "복",
+      "variants": {
+        "kr": "福",
+        "jp": "福"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "福",
+          "on": "フク",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "望",
+      "meaningEn": "ambition",
+      "meaningKo": "바랄",
+      "variants": {
+        "cn": "望",
+        "kr": "望",
+        "jp": "望"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "望",
+          "on": "ボウ・モウ",
+          "kun": "のぞ-む・もち",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "非",
+      "meaningEn": "un-",
+      "meaningKo": "아닐",
+      "variants": {
+        "cn": "非",
+        "kr": "非",
+        "jp": "非"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "非",
+          "on": "ヒ",
+          "kun": "あら-ず",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "觀",
+      "meaningEn": "outlook",
+      "meaningKo": "볼",
+      "variants": {
+        "kr": "觀",
+        "jp": "観"
+      },
+      "strokeCount": 24,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "観",
+          "on": "カン",
+          "kun": "み-る・しめ-す",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "察",
+      "meaningEn": "guess",
+      "meaningKo": "살필",
+      "variants": {
+        "jp": "察",
+        "kr": "察"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "察",
+          "on": "サツ",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "段",
+      "meaningEn": "grade",
+      "meaningKo": "조각",
+      "variants": {
+        "cn": "段",
+        "kr": "段",
+        "jp": "段"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "段",
+          "on": "ダン・タン",
+          "kun": "なし",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "橫",
+      "meaningEn": "sideways",
+      "meaningKo": "가로",
+      "variants": {
+        "jp": "横"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "横",
+          "on": "オウ",
+          "kun": "よこ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "深",
+      "meaningEn": "deep",
+      "meaningKo": "깊을",
+      "variants": {
+        "jp": "深",
+        "kr": "深"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "深",
+          "on": "シン",
+          "kun": "ふか-い・-ぶか-い・ふか-まる・ふか-める・み-",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "申",
+      "meaningEn": "have the honor to",
+      "meaningKo": "거듭",
+      "variants": {
+        "jp": "申",
+        "kr": "申"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "申",
+          "on": "シン",
+          "kun": "もう-す・もう-し-・さる",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "樣",
+      "meaningEn": "esq.",
+      "meaningKo": "모양",
+      "variants": {
+        "cn": "样",
+        "jp": "様",
+        "kr": "樣"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "様",
+          "on": "ヨウ・ショウ",
+          "kun": "さま・さん",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "財",
+      "meaningEn": "property",
+      "meaningKo": "재물",
+      "variants": {
+        "kr": "財",
+        "jp": "財"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "財",
+          "on": "ザイ・サイ・ゾク",
+          "kun": "たから",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "港",
+      "meaningEn": "harbor",
+      "meaningKo": "항구",
+      "variants": {
+        "jp": "港",
+        "kr": "港"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "港",
+          "on": "コウ",
+          "kun": "みなと",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "識",
+      "meaningEn": "discriminating",
+      "meaningKo": "알",
+      "variants": {
+        "cn": "识",
+        "kr": "識",
+        "jp": "識"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "識",
+          "on": "シキ",
+          "kun": "し-る・しる-す",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "呼",
+      "meaningEn": "call",
+      "meaningKo": "부를",
+      "variants": {
+        "jp": "呼",
+        "kr": "呼"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "呼",
+          "on": "コ",
+          "kun": "よ-ぶ",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "達",
+      "meaningEn": "accomplished",
+      "meaningKo": "통달할",
+      "variants": {
+        "jp": "達",
+        "kr": "達"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "達",
+          "on": "タツ・ダ",
+          "kun": "-たち",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "良",
+      "meaningEn": "good",
+      "meaningKo": "어질",
+      "variants": {
+        "kr": "良",
+        "jp": "良"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "良",
+          "on": "リョウ",
+          "kun": "よ-い・-よ-い・い-い・-い-い",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "候",
+      "meaningEn": "climate",
+      "meaningKo": "기후",
+      "variants": {
+        "cn": "候",
+        "kr": "候",
+        "jp": "候"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "候",
+          "on": "コウ",
+          "kun": "そうろう",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "程",
+      "meaningEn": "extent",
+      "meaningKo": "한도",
+      "variants": {
+        "jp": "程",
+        "kr": "程"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "程",
+          "on": "テイ",
+          "kun": "ほど・-ほど",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "滿",
+      "meaningEn": "full",
+      "meaningKo": "찰",
+      "variants": {
+        "cn": "满",
+        "kr": "滿",
+        "jp": "満"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "満",
+          "on": "マン・バン",
+          "kun": "み-ちる・み-つ・み-たす",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "敗",
+      "meaningEn": "failure",
+      "meaningKo": "패할",
+      "variants": {
+        "kr": "敗",
+        "jp": "敗"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "敗",
+          "on": "ハイ",
+          "kun": "やぶ-れる",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "値",
+      "meaningEn": "price",
+      "meaningKo": "값",
+      "variants": {
+        "jp": "値"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "値",
+          "on": "チ",
+          "kun": "ね・あたい",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "突",
+      "meaningEn": "stab",
+      "meaningKo": "갑자기",
+      "variants": {
+        "cn": "突",
+        "jp": "突"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "突",
+          "on": "トツ・カ",
+          "kun": "つ-く",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "光",
+      "meaningEn": "ray",
+      "meaningKo": "빛",
+      "variants": {
+        "jp": "光",
+        "kr": "光"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "光",
+          "on": "コウ",
+          "kun": "ひか-る・ひかり",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "路",
+      "meaningEn": "path",
+      "meaningKo": "길",
+      "variants": {
+        "cn": "路",
+        "kr": "路",
+        "jp": "路"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "路",
+          "on": "ロ・ル",
+          "kun": "-じ・みち",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "科",
+      "meaningEn": "department",
+      "meaningKo": "과목",
+      "variants": {
+        "jp": "科",
+        "kr": "科"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "科",
+          "on": "カ",
+          "kun": "なし",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "積",
+      "meaningEn": "volume",
+      "meaningKo": "쌓을",
+      "variants": {
+        "jp": "積",
+        "kr": "積"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "積",
+          "on": "セキ",
+          "kun": "つ-む・-づ-み・つ-もる・つ-もり",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "他",
+      "meaningEn": "other",
+      "meaningKo": "다를",
+      "variants": {
+        "cn": "他",
+        "kr": "他",
+        "jp": "他"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "他",
+          "on": "タ",
+          "kun": "ほか",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "處",
+      "meaningEn": "dispose",
+      "meaningKo": "곳",
+      "variants": {
+        "cn": "处",
+        "kr": "處",
+        "jp": "処"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "処",
+          "on": "ショ",
+          "kun": "ところ・-こ・お-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "太",
+      "meaningEn": "plump",
+      "meaningKo": "클",
+      "variants": {
+        "jp": "太",
+        "cn": "太",
+        "kr": "太"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "太",
+          "on": "タイ・タ",
+          "kun": "ふと-い・ふと-る",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "客",
+      "meaningEn": "guest",
+      "meaningKo": "손",
+      "variants": {
+        "cn": "客",
+        "kr": "客",
+        "jp": "客"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "客",
+          "on": "キャク・カク",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "否",
+      "meaningEn": "negate",
+      "meaningKo": "아닐",
+      "variants": {
+        "jp": "否",
+        "kr": "否"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "否",
+          "on": "ヒ",
+          "kun": "いな・いや",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "師",
+      "meaningEn": "expert",
+      "meaningKo": "스승",
+      "variants": {
+        "jp": "師",
+        "kr": "師"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "師",
+          "on": "シ",
+          "kun": "いくさ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "登",
+      "meaningEn": "ascend",
+      "meaningKo": "오를",
+      "variants": {
+        "kr": "登",
+        "jp": "登"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "登",
+          "on": "トウ・ト・ドウ・ショウ・チョウ",
+          "kun": "のぼ-る・あ-がる",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "易",
+      "meaningEn": "easy",
+      "meaningKo": "바꿀",
+      "variants": {
+        "cn": "易",
+        "kr": "易",
+        "jp": "易"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "易",
+          "on": "エキ・イ",
+          "kun": "やさ-しい・やす-い",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "速",
+      "meaningEn": "quick",
+      "meaningKo": "빠를",
+      "variants": {
+        "kr": "速",
+        "jp": "速"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "速",
+          "on": "ソク",
+          "kun": "はや-い・はや-・はや-める・すみ-やか",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "存",
+      "meaningEn": "exist",
+      "meaningKo": "있을",
+      "variants": {
+        "jp": "存",
+        "kr": "存"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "存",
+          "on": "ソン・ゾン",
+          "kun": "ながら-える・あ-る・たも-つ・と-う",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "飛",
+      "meaningEn": "fly",
+      "meaningKo": "날",
+      "variants": {
+        "cn": "飞",
+        "kr": "飛",
+        "jp": "飛"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "飛",
+          "on": "ヒ",
+          "kun": "と-ぶ・と-ばす・-と-ばす",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "殺",
+      "meaningEn": "kill",
+      "meaningKo": "죽일",
+      "variants": {
+        "jp": "殺",
+        "kr": "殺"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "殺",
+          "on": "サツ・サイ・セツ",
+          "kun": "ころ-す・-ごろ-し・そ-ぐ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "號",
+      "meaningEn": "nickname",
+      "meaningKo": "이름",
+      "variants": {
+        "cn": "号",
+        "kr": "號",
+        "jp": "号"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "号",
+          "on": "ゴウ",
+          "kun": "さけ-ぶ・よびな",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "單",
+      "meaningEn": "simple",
+      "meaningKo": "홑",
+      "variants": {
+        "jp": "単",
+        "kr": "單"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "単",
+          "on": "タン",
+          "kun": "ひとえ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "座",
+      "meaningEn": "squat",
+      "meaningKo": "자리",
+      "variants": {
+        "jp": "座",
+        "kr": "座"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "座",
+          "on": "ザ",
+          "kun": "すわ-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "破",
+      "meaningEn": "rend",
+      "meaningKo": "깨뜨릴",
+      "variants": {
+        "jp": "破",
+        "kr": "破"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "破",
+          "on": "ハ",
+          "kun": "やぶ-る・やぶ-れる・わ-れる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "除",
+      "meaningEn": "exclude",
+      "meaningKo": "덜",
+      "variants": {
+        "cn": "除",
+        "kr": "除",
+        "jp": "除"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "除",
+          "on": "ジョ・ジ",
+          "kun": "のぞ-く・-よ-け",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "完",
+      "meaningEn": "perfect",
+      "meaningKo": "완전할",
+      "variants": {
+        "cn": "完",
+        "kr": "完",
+        "jp": "完"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "完",
+          "on": "カン",
+          "kun": "なし",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "降",
+      "meaningEn": "descend",
+      "meaningKo": "내릴",
+      "variants": {
+        "jp": "降",
+        "kr": "降"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "降",
+          "on": "コウ・ゴ",
+          "kun": "お-りる・お-ろす・ふ-る・ふ-り・くだ-る・くだ-す",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "責",
+      "meaningEn": "blame",
+      "meaningKo": "꾸짖을",
+      "variants": {
+        "kr": "責",
+        "jp": "責"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "責",
+          "on": "セキ",
+          "kun": "せ-める",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "捕",
+      "meaningEn": "catch",
+      "meaningKo": "잡을",
+      "variants": {
+        "jp": "捕"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "捕",
+          "on": "ホ",
+          "kun": "と-らえる・と-らわれる・と-る・とら-える・とら-われる・つか-まえる・つか-まる",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "危",
+      "meaningEn": "dangerous",
+      "meaningKo": "위태할",
+      "variants": {
+        "jp": "危",
+        "kr": "危"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "危",
+          "on": "キ",
+          "kun": "あぶ-ない・あや-うい・あや-ぶむ",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "給",
+      "meaningEn": "salary",
+      "meaningKo": "줄",
+      "variants": {
+        "cn": "给",
+        "kr": "給",
+        "jp": "給"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "給",
+          "on": "キュウ",
+          "kun": "たま-う・たも-う・-たま-え",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "苦",
+      "meaningEn": "suffering",
+      "meaningKo": "쓸",
+      "variants": {
+        "kr": "苦",
+        "jp": "苦"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "苦",
+          "on": "ク",
+          "kun": "くる-しい・-ぐる-しい・くる-しむ・くる-しめる・にが-い・にが-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "迎",
+      "meaningEn": "welcome",
+      "meaningKo": "맞을",
+      "variants": {
+        "cn": "迎",
+        "kr": "迎",
+        "jp": "迎"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "迎",
+          "on": "ゲイ",
+          "kun": "むか-える",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "園",
+      "meaningEn": "park",
+      "meaningKo": "동산",
+      "variants": {
+        "jp": "園",
+        "kr": "園"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "園",
+          "on": "エン",
+          "kun": "その",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "具",
+      "meaningEn": "tool",
+      "meaningKo": "갖출",
+      "variants": {
+        "kr": "具",
+        "jp": "具"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "具",
+          "on": "グ",
+          "kun": "そな-える・つぶさ-に",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "辭",
+      "meaningEn": "resign",
+      "meaningKo": "말씀",
+      "variants": {
+        "jp": "辞",
+        "kr": "辭"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "辞",
+          "on": "ジ",
+          "kun": "や-める・いな-む",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "因",
+      "meaningEn": "cause",
+      "meaningKo": "인할",
+      "variants": {
+        "cn": "因",
+        "kr": "因",
+        "jp": "因"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "因",
+          "on": "イン",
+          "kun": "よ-る・ちな-む",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "馬",
+      "meaningEn": "horse",
+      "meaningKo": "말",
+      "variants": {
+        "jp": "馬",
+        "kr": "馬",
+        "cn": "马"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "馬",
+          "on": "バ",
+          "kun": "うま・うま-・ま",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "愛",
+      "meaningEn": "love",
+      "meaningKo": "사랑",
+      "variants": {
+        "cn": "爱",
+        "kr": "愛",
+        "jp": "愛"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "愛",
+          "on": "アイ",
+          "kun": "いと-しい・かな-しい・め-でる・お-しむ・まな",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "富",
+      "meaningEn": "wealth",
+      "meaningKo": "부유할",
+      "variants": {
+        "jp": "富",
+        "kr": "富"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "富",
+          "on": "フ・フウ",
+          "kun": "と-む・とみ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "彼",
+      "meaningEn": "he",
+      "meaningKo": "저",
+      "variants": {
+        "jp": "彼"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "彼",
+          "on": "ヒ",
+          "kun": "かれ・かの・か-の",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "未",
+      "meaningEn": "un-",
+      "meaningKo": "아닐",
+      "variants": {
+        "jp": "未",
+        "kr": "未"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "未",
+          "on": "ミ・ビ",
+          "kun": "いま-だ・ま-だ・ひつじ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "舞",
+      "meaningEn": "dance",
+      "meaningKo": "춤출",
+      "variants": {
+        "cn": "舞",
+        "kr": "舞",
+        "jp": "舞"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "舞",
+          "on": "ブ",
+          "kun": "ま-う・-ま-う・まい",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "亡",
+      "meaningEn": "deceased",
+      "meaningKo": "망할",
+      "variants": {
+        "kr": "亡",
+        "jp": "亡"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "亡",
+          "on": "ボウ・モウ",
+          "kun": "な-い・な-き-・ほろ-びる・ほろ-ぶ・ほろ-ぼす",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "冷",
+      "meaningEn": "cool",
+      "meaningKo": "찰",
+      "variants": {
+        "cn": "冷",
+        "kr": "冷",
+        "jp": "冷"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "冷",
+          "on": "レイ",
+          "kun": "つめ-たい・ひ-える・ひ-や・ひ-ややか・ひ-やす・ひ-やかす・さ-める・さ-ます",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "適",
+      "meaningEn": "suitable",
+      "meaningKo": "맞을",
+      "variants": {
+        "jp": "適",
+        "kr": "適"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "適",
+          "on": "テキ",
+          "kun": "かな-う",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "婦",
+      "meaningEn": "lady",
+      "meaningKo": "며느리",
+      "variants": {
+        "jp": "婦",
+        "kr": "婦"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "婦",
+          "on": "フ",
+          "kun": "よめ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "寄",
+      "meaningEn": "draw near",
+      "meaningKo": "부칠",
+      "variants": {
+        "jp": "寄",
+        "kr": "寄"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "寄",
+          "on": "キ",
+          "kun": "よ-る・-よ-り・よ-せる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "込",
+      "meaningEn": "crowded",
+      "meaningKo": "혼잡할",
+      "variants": {
+        "jp": "込"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "込",
+          "on": "なし",
+          "kun": "-こ-む・こ-む・こ-み・-こ-み・こ-める",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "顔",
+      "meaningEn": "face",
+      "meaningKo": "낯",
+      "variants": {
+        "jp": "顔"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "顔",
+          "on": "ガン",
+          "kun": "かお",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "類",
+      "meaningEn": "sort",
+      "meaningKo": "무리",
+      "variants": {
+        "kr": "類",
+        "jp": "類"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "類",
+          "on": "ルイ",
+          "kun": "たぐ-い",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "餘",
+      "meaningEn": "too much",
+      "meaningKo": "남을",
+      "variants": {
+        "jp": "余",
+        "kr": "餘"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "余",
+          "on": "ヨ",
+          "kun": "あま-る・あま-り・あま-す・あんま-り",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "王",
+      "meaningEn": "king",
+      "meaningKo": "임금",
+      "variants": {
+        "kr": "王",
+        "jp": "王"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "王",
+          "on": "オウ・-ノウ",
+          "kun": "なし",
+          "kanken": "10級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "返",
+      "meaningEn": "return",
+      "meaningKo": "돌이킬",
+      "variants": {
+        "jp": "返"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "返",
+          "on": "ヘン",
+          "kun": "かえ-す・-かえ-す・かえ-る・-かえ-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "妻",
+      "meaningEn": "wife",
+      "meaningKo": "아내",
+      "variants": {
+        "cn": "妻",
+        "jp": "妻"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "妻",
+          "on": "サイ",
+          "kun": "つま",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "背",
+      "meaningEn": "stature",
+      "meaningKo": "등",
+      "variants": {
+        "jp": "背",
+        "kr": "背"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "背",
+          "on": "ハイ",
+          "kun": "せ・せい・そむ-く・そむ-ける",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "熱",
+      "meaningEn": "heat",
+      "meaningKo": "더울",
+      "variants": {
+        "kr": "熱",
+        "jp": "熱"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "熱",
+          "on": "ネツ",
+          "kun": "あつ-い",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "宿",
+      "meaningEn": "inn",
+      "meaningKo": "잘",
+      "variants": {
+        "kr": "宿",
+        "jp": "宿"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "宿",
+          "on": "シュク",
+          "kun": "やど・やど-る・やど-す",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "藥",
+      "meaningEn": "medicine",
+      "meaningKo": "약",
+      "variants": {
+        "kr": "藥",
+        "jp": "薬"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "薬",
+          "on": "ヤク",
+          "kun": "くすり",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "險",
+      "meaningEn": "precipitous",
+      "meaningKo": "험할",
+      "variants": {
+        "jp": "険",
+        "kr": "險"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "険",
+          "on": "ケン",
+          "kun": "けわ-しい",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "賴",
+      "meaningEn": "trust",
+      "meaningKo": "의뢰할",
+      "variants": {
+        "jp": "頼"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "頼",
+          "on": "ライ",
+          "kun": "たの-む・たの-もしい・たよ-る",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "覺",
+      "meaningEn": "memorize",
+      "meaningKo": "깨달을",
+      "variants": {
+        "cn": "觉",
+        "kr": "覺",
+        "jp": "覚"
+      },
+      "strokeCount": 20,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "覚",
+          "on": "カク",
+          "kun": "おぼ-える・さ-ます・さ-める・さと-る",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "船",
+      "meaningEn": "ship",
+      "meaningKo": "배",
+      "variants": {
+        "jp": "船",
+        "kr": "船",
+        "cn": "船"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "船",
+          "on": "セン",
+          "kun": "ふね・ふな-",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "途",
+      "meaningEn": "route",
+      "meaningKo": "길",
+      "variants": {
+        "jp": "途"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "途",
+          "on": "ト",
+          "kun": "みち",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "許",
+      "meaningEn": "permit",
+      "meaningKo": "허락할",
+      "variants": {
+        "kr": "許",
+        "jp": "許"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "許",
+          "on": "キョ",
+          "kun": "ゆる-す・もと",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "拔",
+      "meaningEn": "slip out",
+      "meaningKo": "뽑을",
+      "variants": {
+        "jp": "抜"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "抜",
+          "on": "バツ・ハツ・ハイ",
+          "kun": "ぬ-く・-ぬ-く・ぬ-き・ぬ-ける・ぬ-かす・ぬ-かる",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "便",
+      "meaningEn": "convenience",
+      "meaningKo": "편할",
+      "variants": {
+        "kr": "便",
+        "cn": "便",
+        "jp": "便"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "便",
+          "on": "ベン・ビン",
+          "kun": "たよ-り",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "留",
+      "meaningEn": "detain",
+      "meaningKo": "머무를",
+      "variants": {
+        "cn": "留",
+        "kr": "留",
+        "jp": "留"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "留",
+          "on": "リュウ・ル",
+          "kun": "と-める・と-まる・とど-める・とど-まる・るうぶる",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "罪",
+      "meaningEn": "guilt",
+      "meaningKo": "허물",
+      "variants": {
+        "kr": "罪",
+        "jp": "罪"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "罪",
+          "on": "ザイ",
+          "kun": "つみ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "努",
+      "meaningEn": "toil",
+      "meaningKo": "힘쓸",
+      "variants": {
+        "cn": "努",
+        "kr": "努",
+        "jp": "努"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "努",
+          "on": "ド",
+          "kun": "つと-める",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "精",
+      "meaningEn": "refined",
+      "meaningKo": "정할",
+      "variants": {
+        "jp": "精",
+        "kr": "精"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "精",
+          "on": "セイ・ショウ",
+          "kun": "しら-げる・くわ-しい",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "散",
+      "meaningEn": "scatter",
+      "meaningKo": "흩을",
+      "variants": {
+        "jp": "散",
+        "kr": "散"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "散",
+          "on": "サン",
+          "kun": "ち-る・ち-らす・-ち-らす・ち-らかす・ち-らかる・ち-らばる・ばら・ばら-ける",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "静",
+      "meaningEn": "quiet",
+      "meaningKo": "고요할",
+      "variants": {
+        "cn": "静",
+        "jp": "静"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "静",
+          "on": "セイ・ジョウ",
+          "kun": "しず-・しず-か・しず-まる・しず-める",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "婚",
+      "meaningEn": "marriage",
+      "meaningKo": "혼인할",
+      "variants": {
+        "cn": "婚",
+        "kr": "婚",
+        "jp": "婚"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "婚",
+          "on": "コン",
+          "kun": "なし",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "喜",
+      "meaningEn": "rejoice",
+      "meaningKo": "기쁠",
+      "variants": {
+        "cn": "喜",
+        "kr": "喜",
+        "jp": "喜"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "喜",
+          "on": "キ",
+          "kun": "よろこ-ぶ・よろこ-ばす",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "浮",
+      "meaningEn": "floating",
+      "meaningKo": "뜰",
+      "variants": {
+        "jp": "浮"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "浮",
+          "on": "フ",
+          "kun": "う-く・う-かれる・う-かぶ・む・う-かべる",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "絶",
+      "meaningEn": "discontinue",
+      "meaningKo": "끊을",
+      "variants": {
+        "jp": "絶",
+        "kr": "絶"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "絶",
+          "on": "ゼツ",
+          "kun": "た-える・た-やす・た-つ",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "幸",
+      "meaningEn": "happiness",
+      "meaningKo": "다행",
+      "variants": {
+        "kr": "幸",
+        "jp": "幸"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "幸",
+          "on": "コウ",
+          "kun": "さいわ-い・さち・しあわ-せ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "押",
+      "meaningEn": "push",
+      "meaningKo": "누를",
+      "variants": {
+        "jp": "押"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "押",
+          "on": "オウ",
+          "kun": "お-す・お-し-・お-っ-・お-さえる・おさ-える",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "倒",
+      "meaningEn": "overthrow",
+      "meaningKo": "넘어질",
+      "variants": {
+        "jp": "倒"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "倒",
+          "on": "トウ",
+          "kun": "たお-れる・-だお-れ・たお-す・さかさま・さかさ・さかしま",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "等",
+      "meaningEn": "etc.",
+      "meaningKo": "무리",
+      "variants": {
+        "cn": "等",
+        "kr": "等",
+        "jp": "等"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "等",
+          "on": "トウ",
+          "kun": "ひと-しい・など・-ら",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "老",
+      "meaningEn": "old man",
+      "meaningKo": "늙을",
+      "variants": {
+        "kr": "老",
+        "cn": "老",
+        "jp": "老"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "老",
+          "on": "ロウ",
+          "kun": "お-いる・ふ-ける",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "曲",
+      "meaningEn": "bend",
+      "meaningKo": "굽을",
+      "variants": {
+        "kr": "曲",
+        "jp": "曲"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "曲",
+          "on": "キョク",
+          "kun": "ま-がる・ま-げる・くま",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "拂",
+      "meaningEn": "pay",
+      "meaningKo": "떨칠",
+      "variants": {
+        "jp": "払"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "払",
+          "on": "フツ・ヒツ・ホツ",
+          "kun": "はら-う・-はら-い・-ばら-い",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "庭",
+      "meaningEn": "courtyard",
+      "meaningKo": "뜰",
+      "variants": {
+        "kr": "庭",
+        "jp": "庭"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "庭",
+          "on": "テイ",
+          "kun": "にわ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "徒",
+      "meaningEn": "on foot",
+      "meaningKo": "무리",
+      "variants": {
+        "jp": "徒",
+        "kr": "徒"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "徒",
+          "on": "ト",
+          "kun": "いたずら・あだ",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "勤",
+      "meaningEn": "diligence",
+      "meaningKo": "부지런할",
+      "variants": {
+        "jp": "勤",
+        "kr": "勤"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "勤",
+          "on": "キン・ゴン",
+          "kun": "つと-める・-づと-め・つと-まる・いそ-しむ",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "遲",
+      "meaningEn": "slow",
+      "meaningKo": "더딜",
+      "variants": {
+        "cn": "迟",
+        "jp": "遅"
+      },
+      "strokeCount": 16,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "遅",
+          "on": "チ",
+          "kun": "おく-れる・おく-らす・おそ-い",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "居",
+      "meaningEn": "reside",
+      "meaningKo": "살",
+      "variants": {
+        "cn": "居",
+        "kr": "居",
+        "jp": "居"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "居",
+          "on": "キョ・コ",
+          "kun": "い-る・-い・お-る",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "雜",
+      "meaningEn": "miscellaneous",
+      "meaningKo": "섞일",
+      "variants": {
+        "jp": "雑",
+        "kr": "雜"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "雑",
+          "on": "ザツ・ゾウ",
+          "kun": "まじ-える・まじ-る",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "招",
+      "meaningEn": "beckon",
+      "meaningKo": "부를",
+      "variants": {
+        "jp": "招",
+        "kr": "招"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "招",
+          "on": "ショウ",
+          "kun": "まね-く",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "困",
+      "meaningEn": "quandary",
+      "meaningKo": "곤할",
+      "variants": {
+        "jp": "困",
+        "kr": "困"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "困",
+          "on": "コン",
+          "kun": "こま-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "缺",
+      "meaningEn": "lack",
+      "meaningKo": "이지러질",
+      "variants": {
+        "jp": "欠",
+        "kr": "缺"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "欠",
+          "on": "ケツ・ケン",
+          "kun": "か-ける・か-く",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "更",
+      "meaningEn": "grow late",
+      "meaningKo": "고칠",
+      "variants": {
+        "cn": "更",
+        "kr": "更",
+        "jp": "更"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "更",
+          "on": "コウ",
+          "kun": "さら・さら-に・ふ-ける・ふ-かす",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "刻",
+      "meaningEn": "engrave",
+      "meaningKo": "새길",
+      "variants": {
+        "cn": "刻",
+        "kr": "刻",
+        "jp": "刻"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "刻",
+          "on": "コク",
+          "kun": "きざ-む・きざ-み",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "贊",
+      "meaningEn": "approve",
+      "meaningKo": "도울",
+      "variants": {
+        "jp": "賛"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "賛",
+          "on": "サン",
+          "kun": "たす-ける・たた-える",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "抱",
+      "meaningEn": "embrace",
+      "meaningKo": "덮을",
+      "variants": {
+        "jp": "抱"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "抱",
+          "on": "ホウ",
+          "kun": "だ-く・いだ-く・かか-える",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "犯",
+      "meaningEn": "crime",
+      "meaningKo": "범할",
+      "variants": {
+        "jp": "犯",
+        "kr": "犯"
+      },
+      "strokeCount": 5,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "犯",
+          "on": "ハン・ボン",
+          "kun": "おか-す",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "恐",
+      "meaningEn": "fear",
+      "meaningKo": "두려울",
+      "variants": {
+        "jp": "恐"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "恐",
+          "on": "キョウ",
+          "kun": "おそ-れる・おそ-る・おそ-ろしい・こわ-い・こわ-がる",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "息",
+      "meaningEn": "breath",
+      "meaningKo": "쉴",
+      "variants": {
+        "cn": "息",
+        "jp": "息",
+        "kr": "息"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "息",
+          "on": "ソク",
+          "kun": "いき",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "遠",
+      "meaningEn": "distant",
+      "meaningKo": "멀",
+      "variants": {
+        "jp": "遠",
+        "kr": "遠"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "遠",
+          "on": "エン・オン",
+          "kun": "とお-い",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "戾",
+      "meaningEn": "re-",
+      "meaningKo": "어그러질",
+      "variants": {
+        "jp": "戻"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "戻",
+          "on": "レイ",
+          "kun": "もど-す・もど-る",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "願",
+      "meaningEn": "petition",
+      "meaningKo": "원할",
+      "variants": {
+        "kr": "願",
+        "jp": "願"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "願",
+          "on": "ガン",
+          "kun": "ねが-う・-ねがい",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "繪",
+      "meaningEn": "picture",
+      "meaningKo": "그림",
+      "variants": {
+        "jp": "絵"
+      },
+      "strokeCount": 19,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "絵",
+          "on": "カイ・エ",
+          "kun": "なし",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "越",
+      "meaningEn": "surpass",
+      "meaningKo": "넘을",
+      "variants": {
+        "cn": "越",
+        "jp": "越"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "越",
+          "on": "エツ・オツ",
+          "kun": "こ-す・-こ-す・-ご-し・こ-える・-ご-え",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "欲",
+      "meaningEn": "longing",
+      "meaningKo": "하고자 할",
+      "variants": {
+        "jp": "欲"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "欲",
+          "on": "ヨク",
+          "kun": "ほっ-する・ほ-しい",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "痛",
+      "meaningEn": "pain",
+      "meaningKo": "아플",
+      "variants": {
+        "jp": "痛",
+        "kr": "痛"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "痛",
+          "on": "ツウ",
+          "kun": "いた-い・いた-む・いた-ましい・いた-める",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "笑",
+      "meaningEn": "laugh",
+      "meaningKo": "웃음",
+      "variants": {
+        "cn": "笑",
+        "kr": "笑",
+        "jp": "笑"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "笑",
+          "on": "ショウ",
+          "kun": "わら-う・え-む",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "互",
+      "meaningEn": "mutually",
+      "meaningKo": "서로",
+      "variants": {
+        "jp": "互"
+      },
+      "strokeCount": 4,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "互",
+          "on": "ゴ",
+          "kun": "たが-い・かたみ-に",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "束",
+      "meaningEn": "bundle",
+      "meaningKo": "묶을",
+      "variants": {
+        "kr": "束",
+        "cn": "束",
+        "jp": "束"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "束",
+          "on": "ソク",
+          "kun": "たば・たば-ねる・つか・つか-ねる",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "似",
+      "meaningEn": "becoming",
+      "meaningKo": "같을",
+      "variants": {
+        "jp": "似"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "似",
+          "on": "ジ",
+          "kun": "に-る・ひ-る",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "列",
+      "meaningEn": "file",
+      "meaningKo": "벌일",
+      "variants": {
+        "jp": "列",
+        "kr": "列"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "列",
+          "on": "レツ・レ",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "探",
+      "meaningEn": "grope",
+      "meaningKo": "찾을",
+      "variants": {
+        "jp": "探",
+        "kr": "探"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "探",
+          "on": "タン",
+          "kun": "さぐ-る・さが-す",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "逃",
+      "meaningEn": "escape",
+      "meaningKo": "도망할",
+      "variants": {
+        "jp": "逃",
+        "kr": "逃"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "逃",
+          "on": "トウ",
+          "kun": "に-げる・に-がす・のが-す・のが-れる",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "遊",
+      "meaningEn": "play",
+      "meaningKo": "놀",
+      "variants": {
+        "jp": "遊",
+        "kr": "遊"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "遊",
+          "on": "ユウ・ユ",
+          "kun": "あそ-ぶ・あそ-ばす",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "迷",
+      "meaningEn": "astray",
+      "meaningKo": "미혹할",
+      "variants": {
+        "jp": "迷"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "迷",
+          "on": "メイ",
+          "kun": "まよ-う",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "夢",
+      "meaningEn": "dream",
+      "meaningKo": "꿈",
+      "variants": {
+        "jp": "夢"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "夢",
+          "on": "ム・ボウ",
+          "kun": "ゆめ・ゆめ-みる・くら-い",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "君",
+      "meaningEn": "mister",
+      "meaningKo": "임금",
+      "variants": {
+        "jp": "君",
+        "kr": "君"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "君",
+          "on": "クン",
+          "kun": "きみ・-ぎみ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "閉",
+      "meaningEn": "closed",
+      "meaningKo": "닫을",
+      "variants": {
+        "jp": "閉",
+        "kr": "閉"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "閉",
+          "on": "ヘイ",
+          "kun": "と-じる・と-ざす・し-める・し-まる・た-てる",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "緖",
+      "meaningEn": "thong",
+      "meaningKo": "실마리",
+      "variants": {
+        "jp": "緒"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "緒",
+          "on": "ショ・チョ",
+          "kun": "お・いとぐち",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "折",
+      "meaningEn": "fold",
+      "meaningKo": "꺾을",
+      "variants": {
+        "jp": "折",
+        "kr": "折"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "折",
+          "on": "セツ・シャク",
+          "kun": "お-る・おり・お-り・-お-り・お-れる",
+          "kanken": "7級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "草",
+      "meaningEn": "grass",
+      "meaningKo": "풀",
+      "variants": {
+        "kr": "草",
+        "jp": "草",
+        "cn": "草"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "草",
+          "on": "ソウ",
+          "kun": "くさ・くさ-・-ぐさ",
+          "kanken": "10級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "暮",
+      "meaningEn": "evening",
+      "meaningKo": "저물",
+      "variants": {
+        "jp": "暮"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "暮",
+          "on": "ボ",
+          "kun": "く-れる・く-らす",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "酒",
+      "meaningEn": "sake",
+      "meaningKo": "술",
+      "variants": {
+        "cn": "酒",
+        "jp": "酒",
+        "kr": "酒"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "酒",
+          "on": "シュ",
+          "kun": "さけ・さか-",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "悲",
+      "meaningEn": "grieve",
+      "meaningKo": "슬플",
+      "variants": {
+        "jp": "悲",
+        "kr": "悲"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "悲",
+          "on": "ヒ",
+          "kun": "かな-しい・かな-しむ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "晴",
+      "meaningEn": "clear up",
+      "meaningKo": "갤",
+      "variants": {
+        "jp": "晴",
+        "cn": "晴"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "晴",
+          "on": "セイ",
+          "kun": "は-れる・は-れ・は-れ-・-ば-れ・は-らす",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "掛",
+      "meaningEn": "hang",
+      "meaningKo": "걸",
+      "variants": {
+        "jp": "掛"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "掛",
+          "on": "カイ・ケイ",
+          "kun": "か-ける・-か-ける・か-け・-か-け・-が-け・か-かる・-か-かる・-が-かる・か-かり・-が-かり・かかり・-がかり",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "到",
+      "meaningEn": "arrival",
+      "meaningKo": "이를",
+      "variants": {
+        "cn": "到",
+        "kr": "到",
+        "jp": "到"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "到",
+          "on": "トウ",
+          "kun": "いた-る",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "寢",
+      "meaningEn": "lie down",
+      "meaningKo": "잘",
+      "variants": {
+        "jp": "寝",
+        "kr": "寢"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "寝",
+          "on": "シン",
+          "kun": "ね-る・ね-かす・い-ぬ・みたまや・や-める",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "暗",
+      "meaningEn": "darkness",
+      "meaningKo": "어두울",
+      "variants": {
+        "jp": "暗",
+        "kr": "暗"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "暗",
+          "on": "アン",
+          "kun": "くら-い・くら-む・くれ-る",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "盜",
+      "meaningEn": "steal",
+      "meaningKo": "도둑",
+      "variants": {
+        "jp": "盗",
+        "kr": "盜"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "盗",
+          "on": "トウ",
+          "kun": "ぬす-む・ぬす-み",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "吸",
+      "meaningEn": "suck",
+      "meaningKo": "마실",
+      "variants": {
+        "jp": "吸",
+        "kr": "吸"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "吸",
+          "on": "キュウ",
+          "kun": "す-う",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "陽",
+      "meaningEn": "sunshine",
+      "meaningKo": "볕",
+      "variants": {
+        "kr": "陽",
+        "jp": "陽",
+        "cn": "阳"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "陽",
+          "on": "ヨウ",
+          "kun": "ひ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "御",
+      "meaningEn": "honorable",
+      "meaningKo": "거느릴",
+      "variants": {
+        "jp": "御"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "御",
+          "on": "ギョ・ゴ",
+          "kun": "おん-・お-・み-",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "齒",
+      "meaningEn": "tooth",
+      "meaningKo": "이",
+      "variants": {
+        "jp": "歯",
+        "kr": "齒"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "歯",
+          "on": "シ",
+          "kun": "よわい・は・よわ-い・よわい-する",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "忘",
+      "meaningEn": "forget",
+      "meaningKo": "잊을",
+      "variants": {
+        "cn": "忘",
+        "jp": "忘"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "忘",
+          "on": "ボウ",
+          "kun": "わす-れる",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "雪",
+      "meaningEn": "snow",
+      "meaningKo": "눈",
+      "variants": {
+        "jp": "雪",
+        "cn": "雪",
+        "kr": "雪"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "雪",
+          "on": "セツ",
+          "kun": "ゆき",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "吹",
+      "meaningEn": "blow",
+      "meaningKo": "불",
+      "variants": {
+        "jp": "吹"
+      },
+      "strokeCount": 7,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "吹",
+          "on": "スイ",
+          "kun": "ふ-く",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "娘",
+      "meaningEn": "daughter",
+      "meaningKo": "여자",
+      "variants": {
+        "jp": "娘"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "娘",
+          "on": "ジョウ",
+          "kun": "むすめ・こ",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "誤",
+      "meaningEn": "mistake",
+      "meaningKo": "그르칠",
+      "variants": {
+        "jp": "誤",
+        "kr": "誤"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "誤",
+          "on": "ゴ",
+          "kun": "あやま-る・-あやま-る",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "洗",
+      "meaningEn": "wash",
+      "meaningKo": "씻을",
+      "variants": {
+        "cn": "洗",
+        "kr": "洗",
+        "jp": "洗"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "洗",
+          "on": "セン",
+          "kun": "あら-う",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "慣",
+      "meaningEn": "accustomed",
+      "meaningKo": "익숙할",
+      "variants": {
+        "cn": "惯",
+        "jp": "慣"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "慣",
+          "on": "カン",
+          "kun": "な-れる・な-らす",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "禮",
+      "meaningEn": "salute",
+      "meaningKo": "예도",
+      "variants": {
+        "kr": "禮",
+        "jp": "礼",
+        "cn": "礼"
+      },
+      "strokeCount": 18,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "礼",
+          "on": "レイ・ライ",
+          "kun": "なし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "窓",
+      "meaningEn": "window",
+      "meaningKo": "창",
+      "variants": {
+        "kr": "窓",
+        "jp": "窓"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "窓",
+          "on": "ソウ・ス",
+          "kun": "まど・てんまど・けむだし",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "昔",
+      "meaningEn": "once upon a time",
+      "meaningKo": "예",
+      "variants": {
+        "jp": "昔"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "昔",
+          "on": "セキ・シャク",
+          "kun": "むかし",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "貧",
+      "meaningEn": "poverty",
+      "meaningKo": "가난할",
+      "variants": {
+        "jp": "貧",
+        "kr": "貧"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "貧",
+          "on": "ヒン・ビン",
+          "kun": "まず-しい",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "怒",
+      "meaningEn": "angry",
+      "meaningKo": "성낼",
+      "variants": {
+        "jp": "怒",
+        "kr": "怒"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "怒",
+          "on": "ド・ヌ",
+          "kun": "いか-る・おこ-る",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "泳",
+      "meaningEn": "swim",
+      "meaningKo": "헤엄칠",
+      "variants": {
+        "cn": "泳",
+        "jp": "泳"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "泳",
+          "on": "エイ",
+          "kun": "およ-ぐ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "祖",
+      "meaningEn": "ancestor",
+      "meaningKo": "할아버지",
+      "variants": {
+        "kr": "祖",
+        "jp": "祖"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "祖",
+          "on": "ソ",
+          "kun": "なし",
+          "kanken": "6級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "杯",
+      "meaningEn": "counter for cupfuls",
+      "meaningKo": "잔",
+      "variants": {
+        "cn": "杯",
+        "jp": "杯"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "杯",
+          "on": "ハイ",
+          "kun": "さかずき",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "疲",
+      "meaningEn": "exhausted",
+      "meaningKo": "피곤할",
+      "variants": {
+        "jp": "疲",
+        "kr": "疲"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "疲",
+          "on": "ヒ",
+          "kun": "つか-れる・-づか-れ・つか-らす",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "皆",
+      "meaningEn": "all",
+      "meaningKo": "다",
+      "variants": {
+        "jp": "皆"
+      },
+      "strokeCount": 9,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "皆",
+          "on": "カイ",
+          "kun": "みな・みんな",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "鳴",
+      "meaningEn": "chirp",
+      "meaningKo": "울",
+      "variants": {
+        "jp": "鳴",
+        "kr": "鳴"
+      },
+      "strokeCount": 14,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "鳴",
+          "on": "メイ",
+          "kun": "な-く・な-る・な-らす",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "腹",
+      "meaningEn": "abdomen",
+      "meaningKo": "배",
+      "variants": {
+        "jp": "腹"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "腹",
+          "on": "フク",
+          "kun": "はら",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "煙",
+      "meaningEn": "smoke",
+      "meaningKo": "연기",
+      "variants": {
+        "jp": "煙",
+        "kr": "煙"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "煙",
+          "on": "エン",
+          "kun": "けむ-る・けむり・けむ-い",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "眠",
+      "meaningEn": "sleep",
+      "meaningKo": "잘",
+      "variants": {
+        "jp": "眠"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "眠",
+          "on": "ミン",
+          "kun": "ねむ-る・ねむ-い",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "怖",
+      "meaningEn": "dreadful",
+      "meaningKo": "두려워할",
+      "variants": {
+        "jp": "怖"
+      },
+      "strokeCount": 8,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "怖",
+          "on": "フ・ホ",
+          "kun": "こわ-い・こわ-がる・お-じる・おそ-れる",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "耳",
+      "meaningEn": "ear",
+      "meaningKo": "귀",
+      "variants": {
+        "jp": "耳",
+        "kr": "耳",
+        "cn": "耳"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "耳",
+          "on": "ジ",
+          "kun": "みみ",
+          "kanken": "10級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "頂",
+      "meaningEn": "place on the head",
+      "meaningKo": "정수리",
+      "variants": {
+        "jp": "頂"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "頂",
+          "on": "チョウ",
+          "kun": "いただ-く・いただき",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "箱",
+      "meaningEn": "box",
+      "meaningKo": "상자",
+      "variants": {
+        "jp": "箱",
+        "cn": "箱"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "箱",
+          "on": "ソウ",
+          "kun": "はこ",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "晚",
+      "meaningEn": "nightfall",
+      "meaningKo": "늦을",
+      "variants": {
+        "cn": "晚",
+        "jp": "晩"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "晩",
+          "on": "バン",
+          "kun": "なし",
+          "kanken": "5級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "寒",
+      "meaningEn": "cold",
+      "meaningKo": "찰",
+      "variants": {
+        "kr": "寒",
+        "jp": "寒"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "寒",
+          "on": "カン",
+          "kun": "さむ-い",
+          "kanken": "8級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "髮",
+      "meaningEn": "hair of the head",
+      "meaningKo": "터럭",
+      "variants": {
+        "jp": "髪",
+        "kr": "髮"
+      },
+      "strokeCount": 15,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "髪",
+          "on": "ハツ",
+          "kun": "かみ",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "忙",
+      "meaningEn": "busy",
+      "meaningKo": "바쁠",
+      "variants": {
+        "cn": "忙",
+        "jp": "忙"
+      },
+      "strokeCount": 6,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "忙",
+          "on": "ボウ・モウ",
+          "kun": "いそが-しい・せわ-しい・おそ-れる・うれえるさま",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "才",
+      "meaningEn": "genius",
+      "meaningKo": "재주",
+      "variants": {
+        "jp": "才",
+        "kr": "才",
+        "cn": "才"
+      },
+      "strokeCount": 3,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "才",
+          "on": "サイ",
+          "kun": "なし",
+          "kanken": "9級",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "靴",
+      "meaningEn": "shoes",
+      "meaningKo": "신",
+      "variants": {
+        "jp": "靴"
+      },
+      "strokeCount": 13,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "靴",
+          "on": "カ",
+          "kun": "くつ",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "恥",
+      "meaningEn": "shame",
+      "meaningKo": "부끄러울",
+      "variants": {
+        "jp": "恥"
+      },
+      "strokeCount": 10,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "恥",
+          "on": "チ",
+          "kun": "は-じる・はじ・は-じらう・は-ずかしい",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "偶",
+      "meaningEn": "accidentally",
+      "meaningKo": "짝",
+      "variants": {
+        "jp": "偶"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "偶",
+          "on": "グウ",
+          "kun": "たま",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "偉",
+      "meaningEn": "admirable",
+      "meaningKo": "클",
+      "variants": {
+        "kr": "偉",
+        "jp": "偉"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "偉",
+          "on": "イ",
+          "kun": "えら-い",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "猫",
+      "meaningEn": "cat",
+      "meaningKo": "고양이",
+      "variants": {
+        "cn": "猫",
+        "jp": "猫"
+      },
+      "strokeCount": 11,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "猫",
+          "on": "ビョウ",
+          "kun": "ねこ",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    },
+    {
+      "key": "幾",
+      "meaningEn": "how many",
+      "meaningKo": "조짐",
+      "variants": {
+        "jp": "幾"
+      },
+      "strokeCount": 12,
+      "tracks": [
+        {
+          "track": "jp",
+          "glyph": "幾",
+          "on": "キ",
+          "kun": "いく-・いく-つ・いく-ら",
+          "kanken": "未指定",
+          "jlpt": "N3",
+          "levelOrd": 3
+        }
+      ]
+    }
+  ],
+  "curriculumUnits": [
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 1,
+      "title": "N3 1",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "政",
+          "ord": 1
+        },
+        {
+          "key": "議",
+          "ord": 2
+        },
+        {
+          "key": "民",
+          "ord": 3
+        },
+        {
+          "key": "連",
+          "ord": 4
+        },
+        {
+          "key": "對",
+          "ord": 5
+        },
+        {
+          "key": "部",
+          "ord": 6
+        },
+        {
+          "key": "合",
+          "ord": 7
+        },
+        {
+          "key": "市",
+          "ord": 8
+        },
+        {
+          "key": "内",
+          "ord": 9
+        },
+        {
+          "key": "相",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 2,
+      "title": "N3 2",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "定",
+          "ord": 1
+        },
+        {
+          "key": "回",
+          "ord": 2
+        },
+        {
+          "key": "選",
+          "ord": 3
+        },
+        {
+          "key": "米",
+          "ord": 4
+        },
+        {
+          "key": "實",
+          "ord": 5
+        },
+        {
+          "key": "關",
+          "ord": 6
+        },
+        {
+          "key": "決",
+          "ord": 7
+        },
+        {
+          "key": "全",
+          "ord": 8
+        },
+        {
+          "key": "表",
+          "ord": 9
+        },
+        {
+          "key": "戰",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 3,
+      "title": "N3 3",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "經",
+          "ord": 1
+        },
+        {
+          "key": "最",
+          "ord": 2
+        },
+        {
+          "key": "現",
+          "ord": 3
+        },
+        {
+          "key": "調",
+          "ord": 4
+        },
+        {
+          "key": "化",
+          "ord": 5
+        },
+        {
+          "key": "當",
+          "ord": 6
+        },
+        {
+          "key": "約",
+          "ord": 7
+        },
+        {
+          "key": "首",
+          "ord": 8
+        },
+        {
+          "key": "法",
+          "ord": 9
+        },
+        {
+          "key": "性",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 4,
+      "title": "N3 4",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "要",
+          "ord": 1
+        },
+        {
+          "key": "制",
+          "ord": 2
+        },
+        {
+          "key": "治",
+          "ord": 3
+        },
+        {
+          "key": "務",
+          "ord": 4
+        },
+        {
+          "key": "成",
+          "ord": 5
+        },
+        {
+          "key": "期",
+          "ord": 6
+        },
+        {
+          "key": "取",
+          "ord": 7
+        },
+        {
+          "key": "都",
+          "ord": 8
+        },
+        {
+          "key": "和",
+          "ord": 9
+        },
+        {
+          "key": "機",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 5,
+      "title": "N3 5",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "平",
+          "ord": 1
+        },
+        {
+          "key": "加",
+          "ord": 2
+        },
+        {
+          "key": "受",
+          "ord": 3
+        },
+        {
+          "key": "續",
+          "ord": 4
+        },
+        {
+          "key": "進",
+          "ord": 5
+        },
+        {
+          "key": "數",
+          "ord": 6
+        },
+        {
+          "key": "記",
+          "ord": 7
+        },
+        {
+          "key": "初",
+          "ord": 8
+        },
+        {
+          "key": "指",
+          "ord": 9
+        },
+        {
+          "key": "權",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 6,
+      "title": "N3 6",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "支",
+          "ord": 1
+        },
+        {
+          "key": "産",
+          "ord": 2
+        },
+        {
+          "key": "點",
+          "ord": 3
+        },
+        {
+          "key": "報",
+          "ord": 4
+        },
+        {
+          "key": "濟",
+          "ord": 5
+        },
+        {
+          "key": "活",
+          "ord": 6
+        },
+        {
+          "key": "原",
+          "ord": 7
+        },
+        {
+          "key": "共",
+          "ord": 8
+        },
+        {
+          "key": "得",
+          "ord": 9
+        },
+        {
+          "key": "解",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 7,
+      "title": "N3 7",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "交",
+          "ord": 1
+        },
+        {
+          "key": "資",
+          "ord": 2
+        },
+        {
+          "key": "豫",
+          "ord": 3
+        },
+        {
+          "key": "向",
+          "ord": 4
+        },
+        {
+          "key": "際",
+          "ord": 5
+        },
+        {
+          "key": "勝",
+          "ord": 6
+        },
+        {
+          "key": "面",
+          "ord": 7
+        },
+        {
+          "key": "告",
+          "ord": 8
+        },
+        {
+          "key": "反",
+          "ord": 9
+        },
+        {
+          "key": "判",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 8,
+      "title": "N3 8",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "認",
+          "ord": 1
+        },
+        {
+          "key": "参",
+          "ord": 2
+        },
+        {
+          "key": "利",
+          "ord": 3
+        },
+        {
+          "key": "組",
+          "ord": 4
+        },
+        {
+          "key": "信",
+          "ord": 5
+        },
+        {
+          "key": "在",
+          "ord": 6
+        },
+        {
+          "key": "件",
+          "ord": 7
+        },
+        {
+          "key": "側",
+          "ord": 8
+        },
+        {
+          "key": "任",
+          "ord": 9
+        },
+        {
+          "key": "引",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 9,
+      "title": "N3 9",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "求",
+          "ord": 1
+        },
+        {
+          "key": "所",
+          "ord": 2
+        },
+        {
+          "key": "次",
+          "ord": 3
+        },
+        {
+          "key": "昨",
+          "ord": 4
+        },
+        {
+          "key": "論",
+          "ord": 5
+        },
+        {
+          "key": "官",
+          "ord": 6
+        },
+        {
+          "key": "增",
+          "ord": 7
+        },
+        {
+          "key": "係",
+          "ord": 8
+        },
+        {
+          "key": "感",
+          "ord": 9
+        },
+        {
+          "key": "情",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 10,
+      "title": "N3 10",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "投",
+          "ord": 1
+        },
+        {
+          "key": "示",
+          "ord": 2
+        },
+        {
+          "key": "變",
+          "ord": 3
+        },
+        {
+          "key": "打",
+          "ord": 4
+        },
+        {
+          "key": "直",
+          "ord": 5
+        },
+        {
+          "key": "兩",
+          "ord": 6
+        },
+        {
+          "key": "式",
+          "ord": 7
+        },
+        {
+          "key": "確",
+          "ord": 8
+        },
+        {
+          "key": "果",
+          "ord": 9
+        },
+        {
+          "key": "容",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 11,
+      "title": "N3 11",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "必",
+          "ord": 1
+        },
+        {
+          "key": "演",
+          "ord": 2
+        },
+        {
+          "key": "歳",
+          "ord": 3
+        },
+        {
+          "key": "爭",
+          "ord": 4
+        },
+        {
+          "key": "談",
+          "ord": 5
+        },
+        {
+          "key": "能",
+          "ord": 6
+        },
+        {
+          "key": "位",
+          "ord": 7
+        },
+        {
+          "key": "置",
+          "ord": 8
+        },
+        {
+          "key": "流",
+          "ord": 9
+        },
+        {
+          "key": "格",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 12,
+      "title": "N3 12",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "疑",
+          "ord": 1
+        },
+        {
+          "key": "過",
+          "ord": 2
+        },
+        {
+          "key": "局",
+          "ord": 3
+        },
+        {
+          "key": "放",
+          "ord": 4
+        },
+        {
+          "key": "常",
+          "ord": 5
+        },
+        {
+          "key": "狀",
+          "ord": 6
+        },
+        {
+          "key": "球",
+          "ord": 7
+        },
+        {
+          "key": "職",
+          "ord": 8
+        },
+        {
+          "key": "與",
+          "ord": 9
+        },
+        {
+          "key": "供",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 13,
+      "title": "N3 13",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "役",
+          "ord": 1
+        },
+        {
+          "key": "構",
+          "ord": 2
+        },
+        {
+          "key": "割",
+          "ord": 3
+        },
+        {
+          "key": "費",
+          "ord": 4
+        },
+        {
+          "key": "付",
+          "ord": 5
+        },
+        {
+          "key": "由",
+          "ord": 6
+        },
+        {
+          "key": "説",
+          "ord": 7
+        },
+        {
+          "key": "難",
+          "ord": 8
+        },
+        {
+          "key": "優",
+          "ord": 9
+        },
+        {
+          "key": "夫",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 14,
+      "title": "N3 14",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "收",
+          "ord": 1
+        },
+        {
+          "key": "斷",
+          "ord": 2
+        },
+        {
+          "key": "石",
+          "ord": 3
+        },
+        {
+          "key": "違",
+          "ord": 4
+        },
+        {
+          "key": "消",
+          "ord": 5
+        },
+        {
+          "key": "神",
+          "ord": 6
+        },
+        {
+          "key": "番",
+          "ord": 7
+        },
+        {
+          "key": "規",
+          "ord": 8
+        },
+        {
+          "key": "術",
+          "ord": 9
+        },
+        {
+          "key": "備",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 15,
+      "title": "N3 15",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "宅",
+          "ord": 1
+        },
+        {
+          "key": "害",
+          "ord": 2
+        },
+        {
+          "key": "配",
+          "ord": 3
+        },
+        {
+          "key": "警",
+          "ord": 4
+        },
+        {
+          "key": "育",
+          "ord": 5
+        },
+        {
+          "key": "席",
+          "ord": 6
+        },
+        {
+          "key": "訪",
+          "ord": 7
+        },
+        {
+          "key": "乘",
+          "ord": 8
+        },
+        {
+          "key": "殘",
+          "ord": 9
+        },
+        {
+          "key": "想",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 16,
+      "title": "N3 16",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "聲",
+          "ord": 1
+        },
+        {
+          "key": "念",
+          "ord": 2
+        },
+        {
+          "key": "助",
+          "ord": 3
+        },
+        {
+          "key": "勞",
+          "ord": 4
+        },
+        {
+          "key": "例",
+          "ord": 5
+        },
+        {
+          "key": "然",
+          "ord": 6
+        },
+        {
+          "key": "限",
+          "ord": 7
+        },
+        {
+          "key": "追",
+          "ord": 8
+        },
+        {
+          "key": "商",
+          "ord": 9
+        },
+        {
+          "key": "葉",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 17,
+      "title": "N3 17",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "傳",
+          "ord": 1
+        },
+        {
+          "key": "働",
+          "ord": 2
+        },
+        {
+          "key": "形",
+          "ord": 3
+        },
+        {
+          "key": "景",
+          "ord": 4
+        },
+        {
+          "key": "落",
+          "ord": 5
+        },
+        {
+          "key": "好",
+          "ord": 6
+        },
+        {
+          "key": "退",
+          "ord": 7
+        },
+        {
+          "key": "頭",
+          "ord": 8
+        },
+        {
+          "key": "負",
+          "ord": 9
+        },
+        {
+          "key": "渡",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 18,
+      "title": "N3 18",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "失",
+          "ord": 1
+        },
+        {
+          "key": "差",
+          "ord": 2
+        },
+        {
+          "key": "末",
+          "ord": 3
+        },
+        {
+          "key": "守",
+          "ord": 4
+        },
+        {
+          "key": "若",
+          "ord": 5
+        },
+        {
+          "key": "種",
+          "ord": 6
+        },
+        {
+          "key": "美",
+          "ord": 7
+        },
+        {
+          "key": "命",
+          "ord": 8
+        },
+        {
+          "key": "福",
+          "ord": 9
+        },
+        {
+          "key": "望",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 19,
+      "title": "N3 19",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "非",
+          "ord": 1
+        },
+        {
+          "key": "觀",
+          "ord": 2
+        },
+        {
+          "key": "察",
+          "ord": 3
+        },
+        {
+          "key": "段",
+          "ord": 4
+        },
+        {
+          "key": "橫",
+          "ord": 5
+        },
+        {
+          "key": "深",
+          "ord": 6
+        },
+        {
+          "key": "申",
+          "ord": 7
+        },
+        {
+          "key": "樣",
+          "ord": 8
+        },
+        {
+          "key": "財",
+          "ord": 9
+        },
+        {
+          "key": "港",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 20,
+      "title": "N3 20",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "識",
+          "ord": 1
+        },
+        {
+          "key": "呼",
+          "ord": 2
+        },
+        {
+          "key": "達",
+          "ord": 3
+        },
+        {
+          "key": "良",
+          "ord": 4
+        },
+        {
+          "key": "候",
+          "ord": 5
+        },
+        {
+          "key": "程",
+          "ord": 6
+        },
+        {
+          "key": "滿",
+          "ord": 7
+        },
+        {
+          "key": "敗",
+          "ord": 8
+        },
+        {
+          "key": "値",
+          "ord": 9
+        },
+        {
+          "key": "突",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 21,
+      "title": "N3 21",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "光",
+          "ord": 1
+        },
+        {
+          "key": "路",
+          "ord": 2
+        },
+        {
+          "key": "科",
+          "ord": 3
+        },
+        {
+          "key": "積",
+          "ord": 4
+        },
+        {
+          "key": "他",
+          "ord": 5
+        },
+        {
+          "key": "處",
+          "ord": 6
+        },
+        {
+          "key": "太",
+          "ord": 7
+        },
+        {
+          "key": "客",
+          "ord": 8
+        },
+        {
+          "key": "否",
+          "ord": 9
+        },
+        {
+          "key": "師",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 22,
+      "title": "N3 22",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "登",
+          "ord": 1
+        },
+        {
+          "key": "易",
+          "ord": 2
+        },
+        {
+          "key": "速",
+          "ord": 3
+        },
+        {
+          "key": "存",
+          "ord": 4
+        },
+        {
+          "key": "飛",
+          "ord": 5
+        },
+        {
+          "key": "殺",
+          "ord": 6
+        },
+        {
+          "key": "號",
+          "ord": 7
+        },
+        {
+          "key": "單",
+          "ord": 8
+        },
+        {
+          "key": "座",
+          "ord": 9
+        },
+        {
+          "key": "破",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 23,
+      "title": "N3 23",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "除",
+          "ord": 1
+        },
+        {
+          "key": "完",
+          "ord": 2
+        },
+        {
+          "key": "降",
+          "ord": 3
+        },
+        {
+          "key": "責",
+          "ord": 4
+        },
+        {
+          "key": "捕",
+          "ord": 5
+        },
+        {
+          "key": "危",
+          "ord": 6
+        },
+        {
+          "key": "給",
+          "ord": 7
+        },
+        {
+          "key": "苦",
+          "ord": 8
+        },
+        {
+          "key": "迎",
+          "ord": 9
+        },
+        {
+          "key": "園",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 24,
+      "title": "N3 24",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "具",
+          "ord": 1
+        },
+        {
+          "key": "辭",
+          "ord": 2
+        },
+        {
+          "key": "因",
+          "ord": 3
+        },
+        {
+          "key": "馬",
+          "ord": 4
+        },
+        {
+          "key": "愛",
+          "ord": 5
+        },
+        {
+          "key": "富",
+          "ord": 6
+        },
+        {
+          "key": "彼",
+          "ord": 7
+        },
+        {
+          "key": "未",
+          "ord": 8
+        },
+        {
+          "key": "舞",
+          "ord": 9
+        },
+        {
+          "key": "亡",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 25,
+      "title": "N3 25",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "冷",
+          "ord": 1
+        },
+        {
+          "key": "適",
+          "ord": 2
+        },
+        {
+          "key": "婦",
+          "ord": 3
+        },
+        {
+          "key": "寄",
+          "ord": 4
+        },
+        {
+          "key": "込",
+          "ord": 5
+        },
+        {
+          "key": "顔",
+          "ord": 6
+        },
+        {
+          "key": "類",
+          "ord": 7
+        },
+        {
+          "key": "餘",
+          "ord": 8
+        },
+        {
+          "key": "王",
+          "ord": 9
+        },
+        {
+          "key": "返",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 26,
+      "title": "N3 26",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "妻",
+          "ord": 1
+        },
+        {
+          "key": "背",
+          "ord": 2
+        },
+        {
+          "key": "熱",
+          "ord": 3
+        },
+        {
+          "key": "宿",
+          "ord": 4
+        },
+        {
+          "key": "藥",
+          "ord": 5
+        },
+        {
+          "key": "險",
+          "ord": 6
+        },
+        {
+          "key": "賴",
+          "ord": 7
+        },
+        {
+          "key": "覺",
+          "ord": 8
+        },
+        {
+          "key": "船",
+          "ord": 9
+        },
+        {
+          "key": "途",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 27,
+      "title": "N3 27",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "許",
+          "ord": 1
+        },
+        {
+          "key": "拔",
+          "ord": 2
+        },
+        {
+          "key": "便",
+          "ord": 3
+        },
+        {
+          "key": "留",
+          "ord": 4
+        },
+        {
+          "key": "罪",
+          "ord": 5
+        },
+        {
+          "key": "努",
+          "ord": 6
+        },
+        {
+          "key": "精",
+          "ord": 7
+        },
+        {
+          "key": "散",
+          "ord": 8
+        },
+        {
+          "key": "静",
+          "ord": 9
+        },
+        {
+          "key": "婚",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 28,
+      "title": "N3 28",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "喜",
+          "ord": 1
+        },
+        {
+          "key": "浮",
+          "ord": 2
+        },
+        {
+          "key": "絶",
+          "ord": 3
+        },
+        {
+          "key": "幸",
+          "ord": 4
+        },
+        {
+          "key": "押",
+          "ord": 5
+        },
+        {
+          "key": "倒",
+          "ord": 6
+        },
+        {
+          "key": "等",
+          "ord": 7
+        },
+        {
+          "key": "老",
+          "ord": 8
+        },
+        {
+          "key": "曲",
+          "ord": 9
+        },
+        {
+          "key": "拂",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 29,
+      "title": "N3 29",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "庭",
+          "ord": 1
+        },
+        {
+          "key": "徒",
+          "ord": 2
+        },
+        {
+          "key": "勤",
+          "ord": 3
+        },
+        {
+          "key": "遲",
+          "ord": 4
+        },
+        {
+          "key": "居",
+          "ord": 5
+        },
+        {
+          "key": "雜",
+          "ord": 6
+        },
+        {
+          "key": "招",
+          "ord": 7
+        },
+        {
+          "key": "困",
+          "ord": 8
+        },
+        {
+          "key": "缺",
+          "ord": 9
+        },
+        {
+          "key": "更",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 30,
+      "title": "N3 30",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "刻",
+          "ord": 1
+        },
+        {
+          "key": "贊",
+          "ord": 2
+        },
+        {
+          "key": "抱",
+          "ord": 3
+        },
+        {
+          "key": "犯",
+          "ord": 4
+        },
+        {
+          "key": "恐",
+          "ord": 5
+        },
+        {
+          "key": "息",
+          "ord": 6
+        },
+        {
+          "key": "遠",
+          "ord": 7
+        },
+        {
+          "key": "戾",
+          "ord": 8
+        },
+        {
+          "key": "願",
+          "ord": 9
+        },
+        {
+          "key": "繪",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 31,
+      "title": "N3 31",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "越",
+          "ord": 1
+        },
+        {
+          "key": "欲",
+          "ord": 2
+        },
+        {
+          "key": "痛",
+          "ord": 3
+        },
+        {
+          "key": "笑",
+          "ord": 4
+        },
+        {
+          "key": "互",
+          "ord": 5
+        },
+        {
+          "key": "束",
+          "ord": 6
+        },
+        {
+          "key": "似",
+          "ord": 7
+        },
+        {
+          "key": "列",
+          "ord": 8
+        },
+        {
+          "key": "探",
+          "ord": 9
+        },
+        {
+          "key": "逃",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 32,
+      "title": "N3 32",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "遊",
+          "ord": 1
+        },
+        {
+          "key": "迷",
+          "ord": 2
+        },
+        {
+          "key": "夢",
+          "ord": 3
+        },
+        {
+          "key": "君",
+          "ord": 4
+        },
+        {
+          "key": "閉",
+          "ord": 5
+        },
+        {
+          "key": "緖",
+          "ord": 6
+        },
+        {
+          "key": "折",
+          "ord": 7
+        },
+        {
+          "key": "草",
+          "ord": 8
+        },
+        {
+          "key": "暮",
+          "ord": 9
+        },
+        {
+          "key": "酒",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 33,
+      "title": "N3 33",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "悲",
+          "ord": 1
+        },
+        {
+          "key": "晴",
+          "ord": 2
+        },
+        {
+          "key": "掛",
+          "ord": 3
+        },
+        {
+          "key": "到",
+          "ord": 4
+        },
+        {
+          "key": "寢",
+          "ord": 5
+        },
+        {
+          "key": "暗",
+          "ord": 6
+        },
+        {
+          "key": "盜",
+          "ord": 7
+        },
+        {
+          "key": "吸",
+          "ord": 8
+        },
+        {
+          "key": "陽",
+          "ord": 9
+        },
+        {
+          "key": "御",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 34,
+      "title": "N3 34",
+      "subtitle": "10字",
+      "members": [
+        {
+          "key": "齒",
+          "ord": 1
+        },
+        {
+          "key": "忘",
+          "ord": 2
+        },
+        {
+          "key": "雪",
+          "ord": 3
+        },
+        {
+          "key": "吹",
+          "ord": 4
+        },
+        {
+          "key": "娘",
+          "ord": 5
+        },
+        {
+          "key": "誤",
+          "ord": 6
+        },
+        {
+          "key": "洗",
+          "ord": 7
+        },
+        {
+          "key": "慣",
+          "ord": 8
+        },
+        {
+          "key": "禮",
+          "ord": 9
+        },
+        {
+          "key": "窓",
+          "ord": 10
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 35,
+      "title": "N3 35",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "昔",
+          "ord": 1
+        },
+        {
+          "key": "貧",
+          "ord": 2
+        },
+        {
+          "key": "怒",
+          "ord": 3
+        },
+        {
+          "key": "泳",
+          "ord": 4
+        },
+        {
+          "key": "祖",
+          "ord": 5
+        },
+        {
+          "key": "杯",
+          "ord": 6
+        },
+        {
+          "key": "疲",
+          "ord": 7
+        },
+        {
+          "key": "皆",
+          "ord": 8
+        },
+        {
+          "key": "鳴",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 36,
+      "title": "N3 36",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "腹",
+          "ord": 1
+        },
+        {
+          "key": "煙",
+          "ord": 2
+        },
+        {
+          "key": "眠",
+          "ord": 3
+        },
+        {
+          "key": "怖",
+          "ord": 4
+        },
+        {
+          "key": "耳",
+          "ord": 5
+        },
+        {
+          "key": "頂",
+          "ord": 6
+        },
+        {
+          "key": "箱",
+          "ord": 7
+        },
+        {
+          "key": "晚",
+          "ord": 8
+        },
+        {
+          "key": "寒",
+          "ord": 9
+        }
+      ]
+    },
+    {
+      "track": "jp",
+      "level": "N3",
+      "ord": 37,
+      "title": "N3 37",
+      "subtitle": "9字",
+      "members": [
+        {
+          "key": "髮",
+          "ord": 1
+        },
+        {
+          "key": "忙",
+          "ord": 2
+        },
+        {
+          "key": "才",
+          "ord": 3
+        },
+        {
+          "key": "靴",
+          "ord": 4
+        },
+        {
+          "key": "恥",
+          "ord": 5
+        },
+        {
+          "key": "偶",
+          "ord": 6
+        },
+        {
+          "key": "偉",
+          "ord": 7
+        },
+        {
+          "key": "猫",
+          "ord": 8
+        },
+        {
+          "key": "幾",
+          "ord": 9
+        }
+      ]
+    }
+  ]
+}

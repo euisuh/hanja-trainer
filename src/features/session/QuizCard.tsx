@@ -12,7 +12,7 @@ const trackLabels = {
 
 function levelLabel(entry: TrackEntry): string {
   if (entry.track === "kr") return `한자 ${entry.level}`;
-  if (entry.track === "jp") return `漢検 ${entry.kanken} · ${entry.jlpt}`;
+  if (entry.track === "jp") return entry.kanken === "未指定" ? entry.jlpt : `${entry.jlpt} · 漢検 ${entry.kanken}`;
   return `${entry.hsk} · ${entry.tier}`;
 }
 

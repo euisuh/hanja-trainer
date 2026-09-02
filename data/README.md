@@ -61,9 +61,12 @@ Ascending values mean harder material.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `levelOrd` | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
 
-| JP level | 10級 | 9級 | 8級 | 7級 | 6級 | 5級 | 4級 | 3級 | 準2級 | 2級 | 準1級 | 1級 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `levelOrd` | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+| JP level | N5 | N4 | N3 | N2 | N1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `levelOrd` | 1 | 2 | 3 | 4 | 5 |
+
+Japanese `jlpt` is the curriculum level. `kanken` is secondary metadata and
+is `未指定` when the source cannot identify one exact Kanken level.
 
 | CN level | HSK 1 | HSK 2 | HSK 3 | HSK 4 | HSK 5 | HSK 6 | HSK 7-9 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |

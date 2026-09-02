@@ -46,7 +46,7 @@ export async function scoreAndSavePlacement(db: D1Database, answers: PlacementAn
   }])) as PlacementBounds;
   const scores = scorePlacementAnswers(answers, bounds);
   const badgeResults = await db.batch(scores.map((score) => db.prepare(`
-    SELECT CASE track WHEN 'kr' THEN kr_level WHEN 'jp' THEN jp_kanken ELSE cn_hsk END AS level_badge
+    SELECT CASE track WHEN 'kr' THEN kr_level WHEN 'jp' THEN jp_jlpt ELSE cn_hsk END AS level_badge
     FROM character_tracks WHERE track = ?1
     ORDER BY ABS(level_ord - ?2), level_ord LIMIT 1
   `).bind(score.track, score.levelOrd)));

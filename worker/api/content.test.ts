@@ -12,8 +12,11 @@ import { routeApiRequest } from "./router";
 const CHARACTER_FILES = [
   "data/characters/cn-hsk1.json",
   "data/characters/cn-hsk2.json",
-  "data/characters/jp-kanken-10.json",
-  "data/characters/jp-kanken-9.json",
+  "data/characters/jp-jlpt-n5.json",
+  "data/characters/jp-jlpt-n4.json",
+  "data/characters/jp-jlpt-n3.json",
+  "data/characters/jp-jlpt-n2.json",
+  "data/characters/jp-jlpt-n1.json",
   "data/characters/kr-7geup.json",
   "data/characters/kr-8geup.json",
 ];
@@ -68,7 +71,9 @@ function setup() {
   sqlite.exec(readFileSync("migrations/0010_words.sql", "utf8"));
   sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
-  sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-kanken-10.json", "utf8")) as unknown)));
+  for (const level of ["n5", "n4", "n3", "n2", "n1"]) {
+    sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(`data/characters/jp-jlpt-${level}.json`, "utf8")) as unknown)));
+  }
   sqlite.exec(emitSentenceSeedSql(parseSentenceSeed(JSON.parse(readFileSync("data/sentences/kr-8geup.json", "utf8")) as unknown)));
   sqlite.exec(emitSentenceSeedSql(parseSentenceSeed(JSON.parse(readFileSync("data/sentences/jp-kanken-10.json", "utf8")) as unknown)));
   const members = sqlite.prepare("SELECT character_id FROM curriculum_unit_members ORDER BY unit_id, ord LIMIT 3").all() as Array<{ character_id: number }>;
@@ -503,8 +508,11 @@ describe("content API", () => {
     const placement = await (await post({ mode: "placement", tracks: ["kr", "jp", "cn"], limit: 15 })).json() as StartSessionResponse;
     expect(placement.cards.map((card) => card.track)).toEqual(Array.from({ length: 15 }, (_, index) => (["kr", "jp", "cn"] as const)[index % 3]));
     expect([...new Set(placement.cards.filter((card) => card.track === "kr").map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3]);
-    expect([...new Set(placement.cards.filter((card) => card.track === "jp").map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    expect([...new Set(placement.cards.filter((card) => card.track === "jp").map((card) => card.levelOrd))].sort()).toEqual([1, 3, 5]);
     expect([...new Set(placement.cards.filter((card) => card.track === "cn").map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    const unmappedKanken = new Set((fixture.sqlite.prepare("SELECT c.key FROM characters c JOIN character_tracks ct ON ct.character_id = c.id WHERE ct.track = 'jp' AND ct.jp_kanken = '未指定'").all() as Array<{ key: string }>).map((row) => row.key));
+    expect(placement.cards.some((card) => unmappedKanken.has(card.characterKey))).toBe(true);
+    expect(JSON.stringify(placement.cards)).not.toContain("未指定");
 
     fixture.sqlite.prepare("INSERT INTO placement_results (track, level_ord, level_badge, accuracy, detail, taken_at) VALUES ('kr', 2, '7급II', 90, '', 1)").run();
     const placed = await (await post({ mode: "lesson", tracks: ["kr"], limit: 4 })).json() as StartSessionResponse;
@@ -516,29 +524,34 @@ describe("content API", () => {
   });
 
   it("keeps legacy non-curriculum rows out of placement questions", async () => {
-    const fixture = setupSeeds(["data/characters.sample.json", ...CHARACTER_FILES]); databases.push(fixture.sqlite);
+    const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
+    fixture.sqlite.exec(`
+      INSERT INTO characters (key, meaning_en, meaning_ko, variants, stroke_count) VALUES ('㐂', 'joy', '기쁠', '{"jp":"㐂"}', 6);
+      INSERT INTO character_tracks (character_id, track, glyph, jp_on, jp_kun, jp_kanken, jp_jlpt, level_ord)
+      SELECT id, 'jp', '㐂', 'キ', 'よろこ-ぶ', '未指定', 'N1', 9 FROM characters WHERE key = '㐂';
+    `);
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM character_tracks WHERE track = 'jp' AND level_ord = 9").get()).toEqual({ count: 1 });
-    expect((await listForTracks(fixture.env.DB, ["jp"])).some((character) => character.key === "憂")).toBe(true);
+    expect((await listForTracks(fixture.env.DB, ["jp"])).some((character) => character.key === "㐂")).toBe(true);
 
     const placement = await startSession(fixture.env.DB, { mode: "placement", tracks: ["jp"], limit: 15 }, "legacy-placement");
 
     expect(placement.cards).toHaveLength(15);
-    expect(placement.cards.some((card) => card.characterKey === "憂")).toBe(false);
-    expect([...new Set(placement.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2]);
+    expect(placement.cards.some((card) => card.characterKey === "㐂")).toBe(false);
+    expect([...new Set(placement.cards.map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3, 4, 5]);
   });
 
-  it("reports JLPT kanji coverage from review mastery for JP only", async () => {
+  it("reports Kanken coverage as secondary metadata for JP only", async () => {
     const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
     const load = async () => await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json() as StatsResponse;
     const initial = await load();
-    expect(initial.tracks.find((track) => track.track === "jp")?.secondaryScale).toMatchObject({ name: "JLPT", level: "開始前", known: 0, nextLevel: "N5" });
+    expect(initial.tracks.find((track) => track.track === "jp")?.secondaryScale).toMatchObject({ name: "漢検", level: "開始前", known: 0, nextLevel: "10級" });
     expect(initial.tracks.filter((track) => track.track !== "jp").every((track) => track.secondaryScale === undefined)).toBe(true);
 
-    const n5 = fixture.sqlite.prepare("SELECT character_id FROM character_tracks WHERE track = 'jp' AND jp_jlpt = 'N5'").all() as Array<{ character_id: number }>;
+    const gradeOne = fixture.sqlite.prepare("SELECT character_id FROM character_tracks WHERE track = 'jp' AND jp_kanken = '10級'").all() as Array<{ character_id: number }>;
     const insert = fixture.sqlite.prepare("INSERT INTO review_states (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count) VALUES (?, 'jp', 7, 5, 1, 2, 0, 2, 0, 2, 1, 1, 2, 2)");
-    for (const row of n5.slice(0, Math.ceil(n5.length * 0.8))) insert.run(row.character_id);
+    for (const row of gradeOne.slice(0, Math.ceil(gradeOne.length * 0.8))) insert.run(row.character_id);
 
-    expect((await load()).tracks.find((track) => track.track === "jp")?.secondaryScale).toMatchObject({ name: "JLPT", level: "N5", known: 0, nextLevel: "N4" });
+    expect((await load()).tracks.find((track) => track.track === "jp")?.secondaryScale).toMatchObject({ name: "漢検", level: "10級", known: 0, nextLevel: "9級" });
   });
 
   it("keeps every Japanese API payload canonical when display setting is hiragana", async () => {

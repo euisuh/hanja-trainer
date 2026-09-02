@@ -165,7 +165,7 @@ export function HomeScreen() {
             <strong>{progress?.known ?? 0}/{progress?.total ?? 0}자</strong>
             <div aria-label={`시험 기준 진도 ${Math.round(scalePercent)}%`} className="exam-progress__bar" role="progressbar" aria-valuemax={100} aria-valuemin={0} aria-valuenow={Math.round(scalePercent)}><span style={{ width: `${scalePercent}%` }} /></div>
             <p>{progress?.currentLevel ?? "시작 전"}{progress?.nextLevel ? ` → ${progress.nextLevel}` : ""}</p>
-            {progress?.secondaryScale && <p title="JLPT 한자 범위 기반 추정치이며 시험 점수나 합격 예측이 아닙니다.">JLPT {progress.secondaryScale.level} 漢字 · {progress.secondaryScale.known}/{progress.secondaryScale.total}{progress.secondaryScale.nextLevel ? ` → ${progress.secondaryScale.nextLevel}` : ""}</p>}
+            {progress?.secondaryScale && <p>{progress.secondaryScale.name} {progress.secondaryScale.level} · {progress.secondaryScale.known}/{progress.secondaryScale.total}{progress.secondaryScale.nextLevel ? ` → ${progress.secondaryScale.nextLevel}` : ""}</p>}
           </section>
         </aside>
       </div>

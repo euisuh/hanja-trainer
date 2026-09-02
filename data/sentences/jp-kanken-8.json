@@ -144,17 +144,6 @@
       "reading": "ゆりはしゅっこんそうです。"
     },
     {
-      "character_key": "身",
-      "track": "jp",
-      "text": "自由の身ね。",
-      "translation_ko": "자유로운 사람이야.",
-      "source": "Tatoeba #13354000",
-      "source_kind": "corpus",
-      "target_index": 3,
-      "rank": 0,
-      "reading": "じゆうのみね。"
-    },
-    {
       "character_key": "問",
       "track": "jp",
       "text": "それは死活問題だ。",
