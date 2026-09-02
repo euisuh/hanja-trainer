@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SourceAttribution } from "../features/source/SourceAttribution";
 import { cachedAudioUrl, matchingVoice, speechLanguages, useSpeechVoices } from "../features/study/speech";
@@ -73,7 +73,7 @@ export function UnitStudyScreen() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [back]);
 
-  useEffect(() => () => {
+  useLayoutEffect(() => () => {
     const audio = audioRef.current;
     audioRef.current = null;
     audio?.pause();
