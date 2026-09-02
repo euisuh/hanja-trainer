@@ -671,6 +671,7 @@ test.describe.serial("keyboard-only product flows", () => {
     expect((await page.request.post("/api/reviews/batch", { data: seeded })).ok()).toBe(true);
 
     const lesson = await sessionStarted(page, () => page.goto("/lesson"));
+    await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     const wordIndex = lesson.cards.findIndex((card) => card.kind === "word");
     expect(wordIndex).toBeGreaterThanOrEqual(0);
     for (const card of lesson.cards.slice(0, wordIndex)) {
