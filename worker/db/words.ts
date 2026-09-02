@@ -2,7 +2,7 @@ import type { Track, WordEntry } from "../../src/shared/types";
 
 type WordRow = {
   id: number;
-  track: "kr";
+  track: Track;
   glyph: string;
   reading: string;
   level: string;
@@ -14,16 +14,17 @@ type WordRow = {
 };
 
 export async function listWordsForTracks(db: D1Database, tracks: Track[]): Promise<WordEntry[]> {
-  if (!tracks.includes("kr")) return [];
+  if (tracks.length === 0) return [];
+  const placeholders = tracks.map(() => "?").join(", ");
   const result = await db.prepare(`
     SELECT w.id, w.track, w.glyph, w.reading, w.level, w.level_ord, w.source_url,
       wm.character_id, c.key, wm.position
     FROM words w
     JOIN word_members wm ON wm.word_id = w.id
     JOIN characters c ON c.id = wm.character_id
-    WHERE w.track = 'kr'
-    ORDER BY w.level_ord, w.id, wm.position
-  `).all<WordRow>();
+    WHERE w.track IN (${placeholders})
+    ORDER BY w.track, w.level_ord, w.id, wm.position
+  `).bind(...tracks).all<WordRow>();
   const words = new Map<number, WordEntry>();
   for (const row of result.results) {
     const word = words.get(row.id) ?? {

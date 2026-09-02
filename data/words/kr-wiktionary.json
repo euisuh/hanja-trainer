@@ -33,6 +33,59 @@
     { "track": "kr", "glyph": "原因", "reading": "원인", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9B%90%EC%9D%B8&oldid=4267550", "members": ["原", "因"] },
     { "track": "kr", "glyph": "汽車", "reading": "기차", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EC%B0%A8&oldid=4162821", "members": ["汽", "車"] },
     { "track": "kr", "glyph": "許可", "reading": "허가", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%97%88%EA%B0%80&oldid=4219754", "members": ["許", "可"] },
-    { "track": "kr", "glyph": "停止", "reading": "정지", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EC%A7%80&oldid=4142204", "members": ["停", "止"] }
+    { "track": "kr", "glyph": "停止", "reading": "정지", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EC%A7%80&oldid=4142204", "members": ["停", "止"] },
+
+    { "track": "kr", "glyph": "韓國", "reading": "한국", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%95%9C%EA%B5%AD&oldid=4123623", "members": ["韓", "國"] },
+    { "track": "kr", "glyph": "軍人", "reading": "군인", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B5%B0%EC%9D%B8&oldid=4211800", "members": ["軍", "人"] },
+    { "track": "kr", "glyph": "國王", "reading": "국왕", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B5%AD%EC%99%95&oldid=4172587", "members": ["國", "王"] },
+    { "track": "kr", "glyph": "東西", "reading": "동서", "level": "8급", "levelOrd": 1, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%8F%99%EC%84%9C&oldid=4118580", "members": ["東", "西"] },
+
+    { "track": "kr", "glyph": "男子", "reading": "남자", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%82%A8%EC%9E%90&oldid=4154605", "members": ["男", "子"] },
+    { "track": "kr", "glyph": "女子", "reading": "여자", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%97%AC%EC%9E%90&oldid=4386009", "members": ["女", "子"] },
+    { "track": "kr", "glyph": "電氣", "reading": "전기", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%84%EA%B8%B0&oldid=4483903", "members": ["電", "氣"] },
+    { "track": "kr", "glyph": "動物", "reading": "동물", "level": "7급II", "levelOrd": 2, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%8F%99%EB%AC%BC&oldid=4483095", "members": ["動", "物"] },
+
+    { "track": "kr", "glyph": "歌手", "reading": "가수", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B0%80%EC%88%98&oldid=4384038", "members": ["歌", "手"] },
+    { "track": "kr", "glyph": "老人", "reading": "노인", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%85%B8%EC%9D%B8&oldid=4214154", "members": ["老", "人"] },
+    { "track": "kr", "glyph": "人口", "reading": "인구", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9D%B8%EA%B5%AC&oldid=4135974", "members": ["人", "口"] },
+    { "track": "kr", "glyph": "文字", "reading": "문자", "level": "7급", "levelOrd": 3, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%AC%B8%EC%9E%90&oldid=4481388", "members": ["文", "字"] },
+
+    { "track": "kr", "glyph": "讀書", "reading": "독서", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%8F%85%EC%84%9C&oldid=4392052", "members": ["讀", "書"] },
+    { "track": "kr", "glyph": "作家", "reading": "작가", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9E%91%EA%B0%80&oldid=4213314", "members": ["作", "家"] },
+    { "track": "kr", "glyph": "世界", "reading": "세계", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%84%B8%EA%B3%84&oldid=4210393", "members": ["世", "界"] },
+    { "track": "kr", "glyph": "社會", "reading": "사회", "level": "6급II", "levelOrd": 4, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%82%AC%ED%9A%8C&oldid=4161856", "members": ["社", "會"] },
+
+    { "track": "kr", "glyph": "銀行", "reading": "은행", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9D%80%ED%96%89&oldid=4480706", "members": ["銀", "行"] },
+    { "track": "kr", "glyph": "夜間", "reading": "야간", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%95%BC%EA%B0%84&oldid=4147930", "members": ["夜", "間"] },
+    { "track": "kr", "glyph": "石油", "reading": "석유", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%84%9D%EC%9C%A0&oldid=4198573", "members": ["石", "油"] },
+    { "track": "kr", "glyph": "愛人", "reading": "애인", "level": "6급", "levelOrd": 5, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%95%A0%EC%9D%B8&oldid=4234288", "members": ["愛", "人"] },
+
+    { "track": "kr", "glyph": "課題", "reading": "과제", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B3%BC%EC%A0%9C&oldid=4245710", "members": ["課", "題"] },
+    { "track": "kr", "glyph": "流行", "reading": "유행", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9C%A0%ED%96%89&oldid=4172092", "members": ["流", "行"] },
+    { "track": "kr", "glyph": "獨立", "reading": "독립", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%8F%85%EB%A6%BD&oldid=4481901", "members": ["獨", "立"] },
+    { "track": "kr", "glyph": "記念", "reading": "기념", "level": "5급II", "levelOrd": 6, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EB%85%90&oldid=4280986", "members": ["記", "念"] },
+
+    { "track": "kr", "glyph": "病院", "reading": "병원", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%B3%91%EC%9B%90&oldid=4137242", "members": ["病", "院"] },
+    { "track": "kr", "glyph": "都市", "reading": "도시", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%8F%84%EC%8B%9C&oldid=4176630", "members": ["都", "市"] },
+    { "track": "kr", "glyph": "競爭", "reading": "경쟁", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B2%BD%EC%9F%81&oldid=4290020", "members": ["競", "爭"] },
+    { "track": "kr", "glyph": "期間", "reading": "기간", "level": "5급", "levelOrd": 7, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EA%B0%84&oldid=4270340", "members": ["期", "間"] },
+
+    { "track": "kr", "glyph": "講師", "reading": "강사", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B0%95%EC%82%AC&oldid=4289089", "members": ["講", "師"] },
+    { "track": "kr", "glyph": "記錄", "reading": "기록", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EB%A1%9D&oldid=4267189", "members": ["記", "錄"] },
+    { "track": "kr", "glyph": "準備", "reading": "준비", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A4%80%EB%B9%84&oldid=4123452", "members": ["準", "備"] },
+    { "track": "kr", "glyph": "政府", "reading": "정부", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EB%B6%80&oldid=4235860", "members": ["政", "府"] },
+    { "track": "kr", "glyph": "敎師", "reading": "교사", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B5%90%EC%82%AC&oldid=4141982", "members": ["敎", "師"] },
+    { "track": "kr", "glyph": "態度", "reading": "태도", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%83%9C%EB%8F%84&oldid=4143997", "members": ["態", "度"] },
+    { "track": "kr", "glyph": "統計", "reading": "통계", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%86%B5%EA%B3%84&oldid=4252448", "members": ["統", "計"] },
+    { "track": "kr", "glyph": "觀察", "reading": "관찰", "level": "4급II", "levelOrd": 8, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B4%80%EC%B0%B0&oldid=4277337", "members": ["觀", "察"] },
+
+    { "track": "kr", "glyph": "辭典", "reading": "사전", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%82%AC%EC%A0%84&oldid=4479687", "members": ["辭", "典"] },
+    { "track": "kr", "glyph": "組織", "reading": "조직", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A1%B0%EC%A7%81&oldid=4182439", "members": ["組", "織"] },
+    { "track": "kr", "glyph": "犯罪", "reading": "범죄", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EB%B2%94%EC%A3%84&oldid=4185878", "members": ["犯", "罪"] },
+    { "track": "kr", "glyph": "資料", "reading": "자료", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%9E%90%EB%A3%8C&oldid=4240514", "members": ["資", "料"] },
+    { "track": "kr", "glyph": "帝國", "reading": "제국", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EC%A0%9C%EA%B5%AD&oldid=4174310", "members": ["帝", "國"] },
+    { "track": "kr", "glyph": "刑事", "reading": "형사", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%ED%98%95%EC%82%AC&oldid=4201851", "members": ["刑", "事"] },
+    { "track": "kr", "glyph": "拒否", "reading": "거부", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B1%B0%EB%B6%80&oldid=4241544", "members": ["拒", "否"] },
+    { "track": "kr", "glyph": "改革", "reading": "개혁", "level": "4급", "levelOrd": 9, "sourceUrl": "https://ko.wiktionary.org/w/index.php?title=%EA%B0%9C%ED%98%81&oldid=4195752", "members": ["改", "革"] }
   ]
 }

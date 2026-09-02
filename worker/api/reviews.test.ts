@@ -36,6 +36,8 @@ function setup() {
   const sqlite = new DatabaseSync(":memory:");
   applyMigrations(sqlite);
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
+  sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-jlpt-n5.json", "utf8")) as unknown)));
+  sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/cn-hsk1.json", "utf8")) as unknown)));
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
 
@@ -113,6 +115,32 @@ describe("review and session API", () => {
     const stats = await (await routeApiRequest(new Request("https://test/api/stats"), fixture.env)).json() as { answered: number; calendar: Array<{ count: number }> };
     expect(stats.answered).toBe(1);
     expect(stats.calendar.reduce((total, day) => total + day.count, 0)).toBe(1);
+  });
+
+  it.each([
+    { track: "jp" as const, glyph: "学校", reading: "がっこう", level: "N5", source: "https://ja.wiktionary.org/w/index.php?title=学校&oldid=2215211" },
+    { track: "cn" as const, glyph: "学校", reading: "xué xiào", level: "HSK 1", source: "https://zh.wiktionary.org/w/index.php?title=學校&oldid=9870347" },
+  ])("schedules both $track compound members in their shared FSRS states", async ({ track, glyph, reading, level, source }) => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const inserted = fixture.sqlite.prepare("INSERT INTO words (track, glyph, reading, level, level_ord, source_url) VALUES (?, ?, ?, ?, 1, ?)").run(track, glyph, reading, level, source);
+    const wordId = Number(inserted.lastInsertRowid);
+    for (const [position, key] of ["學", "校"].entries()) {
+      fixture.sqlite.prepare("INSERT INTO word_members (word_id, character_id, position) SELECT ?, id, ? FROM characters WHERE key = ?").run(wordId, position, key);
+    }
+    const members = fixture.sqlite.prepare("SELECT character_id FROM word_members WHERE word_id = ? ORDER BY position").all(wordId) as Array<{ character_id: number }>;
+    const insertState = fixture.sqlite.prepare(`
+      INSERT INTO review_states
+        (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count)
+      VALUES (?, ?, 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)
+    `);
+    for (const member of members) insertState.run(member.character_id, track);
+
+    const input: SubmitReviewRequest = { sessionId: `${track}-word`, cardIndex: 3, characterKey: "學", wordId, track, correct: true, skipped: false, elapsedMs: 1_200, mode: "review" };
+    expect((await post("/api/reviews", input, fixture.env)).status).toBe(200);
+    expect(fixture.sqlite.prepare("SELECT character_id, track, correct_count FROM review_states WHERE track = ? ORDER BY character_id").all(track)).toEqual(
+      members.map(({ character_id }) => ({ character_id, track, correct_count: 2 })).sort((a, b) => a.character_id - b.character_id),
+    );
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log WHERE session_id = ? AND track = ?").get(`${track}-word`, track)).toEqual({ count: 2 });
   });
 
   it("keeps submitted attempts distinct from legacy log identities", async () => {

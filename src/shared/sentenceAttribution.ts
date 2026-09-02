@@ -4,6 +4,28 @@ export type Attribution = {
   licenseUrl: string;
 };
 
+export type WordAttribution = Attribution & { source: string };
+
+export function wordAttribution(sourceUrl: string): WordAttribution | null {
+  let host: string;
+  try {
+    host = new URL(sourceUrl).hostname;
+  } catch {
+    return null;
+  }
+  const source = {
+    "ko.wiktionary.org": "한국어 위키낱말사전",
+    "ja.wiktionary.org": "日本語ウィクショナリー",
+    "zh.wiktionary.org": "中文维基词典",
+  }[host];
+  return source ? {
+    source,
+    sourceUrl,
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+  } : null;
+}
+
 export function sentenceAttribution(source: string): Attribution | null {
   const id = source.match(/#(\d+)$/u)?.[1];
   if (!id) return null;

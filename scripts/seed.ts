@@ -218,18 +218,39 @@ export function parseWordSeed(value: unknown): SeedWordDocument {
   const words: SeedWordEntry[] = rows.map((value, index) => {
     const path = `words[${index}]`;
     const input = record(value, path);
-    if (input.track !== "kr") throw new Error(`${path}.track: only kr compounds are supported`);
+    const kind = track(input.track, `${path}.track`);
     const glyph = string(input.glyph, `${path}.glyph`);
     const reading = string(input.reading, `${path}.reading`);
     const level = string(input.level, `${path}.level`);
     const levelOrd = integer(input.levelOrd, `${path}.levelOrd`, 1);
     const members = array(input.members, `${path}.members`).map((member, memberIndex) => string(member, `${path}.members[${memberIndex}]`));
+    // Keep compounds at two characters: the card grades exactly two existing
+    // character states and the current UI is designed for a two-glyph target.
     if (Array.from(glyph).length !== 2 || members.length !== 2) throw new Error(`${path}: expected a two-character compound`);
+    if (!/^\p{Script=Han}{2}$/u.test(glyph)) throw new Error(`${path}.glyph: expected two Han characters`);
     if (new Set(members).size !== members.length) throw new Error(`${path}.members: duplicate character`);
-    if (levelOrd !== levelOrdFor("kr", level)) throw new Error(`${path}.levelOrd: expected ${levelOrdFor("kr", level)} for ${level}`);
+    const validReading = kind === "kr"
+      ? /^\p{Script=Hangul}{2}$/u.test(reading)
+      : kind === "jp"
+        ? /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u.test(reading)
+        : /^(?=[a-züāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+ [a-züāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]+$)(?=.*[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ])/u.test(reading);
+    if (!validReading) throw new Error(`${path}.reading: expected ${kind === "kr" ? "two Hangul syllables" : kind === "jp" ? "kana" : "two-syllable tone-marked pinyin"}`);
+    if (levelOrd !== levelOrdFor(kind, level)) throw new Error(`${path}.levelOrd: expected ${levelOrdFor(kind, level)} for ${level}`);
     const sourceUrl = string(input.sourceUrl, `${path}.sourceUrl`);
-    if (!/^https:\/\/ko\.wiktionary\.org\/w\/index\.php\?title=[^&]+&oldid=\d+$/u.test(sourceUrl)) throw new Error(`${path}.sourceUrl: expected an immutable Korean Wiktionary revision`);
-    return { track: "kr", glyph, reading, level, levelOrd, sourceUrl, members };
+    const sourceHost = { kr: "ko.wiktionary.org", jp: "ja.wiktionary.org", cn: "zh.wiktionary.org" }[kind];
+    let source: URL;
+    try {
+      source = new URL(sourceUrl);
+    } catch {
+      throw new Error(`${path}.sourceUrl: expected an immutable ${kind} Wiktionary revision`);
+    }
+    const params = [...source.searchParams.keys()];
+    if (source.origin !== `https://${sourceHost}` || source.username || source.password || source.hash || source.pathname !== "/w/index.php"
+      || params.length !== 2 || params[0] !== "title" || params[1] !== "oldid"
+      || !source.searchParams.get("title") || !/^\d+$/u.test(source.searchParams.get("oldid") ?? "")) {
+      throw new Error(`${path}.sourceUrl: expected an immutable ${kind} Wiktionary revision`);
+    }
+    return { track: kind, glyph, reading, level, levelOrd, sourceUrl, members };
   });
   const identities = words.map((word) => `${word.track}:${word.glyph}:${word.reading}`);
   if (new Set(identities).size !== identities.length) throw new Error("seed.words: duplicate track, glyph, and reading");

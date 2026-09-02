@@ -47,11 +47,12 @@ Sentence `reading` is `null` for Korean, hiragana for Japanese, and tone-marked 
 
 Files that also define curriculum use `{ "characters": [...], "curriculumUnits": [...] }`. Each unit contains `track`, `level`, `ord`, `title`, `subtitle`, and `members: [{ "key", "ord" }]`. Every member key must occur in that file's `characters` array.
 
-Korean compound files use `{ "words": [...] }`. Each row contains `track:
-"kr"`, the exact two-character `glyph`, its Hangul `reading`, the highest
-constituent `level` and `levelOrd`, an immutable Korean Wiktionary `sourceUrl`,
-and the two canonical character keys in `members`. Word rows are seeded after
-character rows.
+Compound files use `{ "words": [...] }`. Each row contains a `kr`, `jp`, or
+`cn` track, the exact two-character `glyph`, its track-specific `reading`
+(two Hangul syllables, kana, or two-syllable tone-marked pinyin), the highest
+constituent `level` and `levelOrd`, an immutable same-language Wiktionary
+`sourceUrl`, and the two canonical character keys in `members`. Word rows are
+seeded after character rows.
 
 ## Level ordinals
 

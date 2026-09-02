@@ -1,5 +1,6 @@
 import { isDue, type ReviewState } from "../../shared/fsrs";
-import type { CharacterEntry, KrTrackEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
+import { toHiragana } from "../../shared/kana";
+import type { CharacterEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
 
 // Compare cards are ungraded interstitials. After each cadence block in lesson
 // and review, prefer a character just answered; one known enabled track is enough
@@ -37,7 +38,7 @@ export type WordQueueItem = {
   kind: "word";
   word: WordEntry;
   character: CharacterEntry;
-  track: "kr";
+  track: Track;
   options: AnswerOption[];
   answerIndex: number;
 };
@@ -288,18 +289,48 @@ export function buildKunItem(character: CharacterEntry, characters: CharacterEnt
   return buildAlternateItem("kun", character, "jp", characters, offset, random);
 }
 
-function wordTrack(word: WordEntry): KrTrackEntry {
-  return { characterId: word.id, track: "kr", glyph: word.glyph, reading: word.reading, level: word.level, levelOrd: word.levelOrd };
+function editDistance(left: string, right: string): number {
+  const a = Array.from(left);
+  const b = Array.from(right);
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let x = 1; x <= a.length; x += 1) {
+    let diagonal = row[0];
+    row[0] = x;
+    for (let y = 1; y <= b.length; y += 1) {
+      const previous = row[y];
+      row[y] = Math.min(row[y] + 1, row[y - 1] + 1, diagonal + Number(a[x - 1] !== b[y - 1]));
+      diagonal = previous;
+    }
+  }
+  return row[b.length];
+}
+
+function normalizedWordReading(word: WordEntry): string {
+  if (word.track === "jp") return toHiragana(word.reading);
+  if (word.track === "cn") return tonelessPinyin(word.reading).replaceAll(" ", "");
+  return word.reading;
+}
+
+function wordDistractors(word: WordEntry, words: WordEntry[], random: () => number): AnswerOption[] {
+  const seen = new Set([word.reading]);
+  const correct = normalizedWordReading(word);
+  return words
+    .filter((candidate) => candidate.track === word.track && candidate.id !== word.id && !seen.has(candidate.reading) && seen.add(candidate.reading))
+    .map((candidate) => ({
+      candidate,
+      distance: editDistance(correct, normalizedWordReading(candidate)),
+      levelDistance: Math.abs(word.levelOrd - candidate.levelOrd),
+      tie: random(),
+    }))
+    .sort((left, right) => left.distance - right.distance || left.levelDistance - right.levelDistance || left.tie - right.tie || left.candidate.id - right.candidate.id)
+    .slice(0, 3)
+    .map(({ candidate }) => ({ label: candidate.reading }));
 }
 
 export function buildWordItem(word: WordEntry, words: WordEntry[], character: CharacterEntry, offset: number, random: () => number = () => 0.5): WordQueueItem | undefined {
   const correct = { label: word.reading };
-  const distractors = sampleDistractors(wordTrack(word), words.filter((candidate) => candidate.id !== word.id).map(wordTrack), random);
-  if (distractors.length < 3) return undefined;
-  const options = [correct, ...distractors];
-  const shift = offset % options.length;
-  const rotated = [...options.slice(shift), ...options.slice(0, shift)];
-  return { kind: "word", word, character, track: "kr", options: rotated, answerIndex: rotated.findIndex((option) => option.label === word.reading) };
+  const answer = rotatedAnswer(correct, wordDistractors(word, words, random), offset);
+  return answer ? { kind: "word", word, character, track: word.track, ...answer } : undefined;
 }
 
 function shuffle<T>(items: T[], random: () => number): T[] {
@@ -431,9 +462,8 @@ export function buildQueue({
   if (mode === "placement") return recalls;
 
   const charactersById = new Map(characters.map((character) => [character.id, character]));
-  const eligibleWords = words.filter((word) => word.track === "kr"
-    && enabled.has("kr")
-    && word.members.every((member) => reviewStates.has(reviewKey(member.characterId, "kr"))));
+  const eligibleWords = words.filter((word) => enabled.has(word.track)
+    && word.members.every((member) => reviewStates.has(reviewKey(member.characterId, word.track))));
 
   const queue: SessionQueueItem[] = [];
   const compared = new Set<number>();
@@ -442,10 +472,11 @@ export function buildQueue({
     queue.push(recalls[index]);
     if ((index + 1) % WORD_CADENCE === 0) {
       const recent = recalls.slice(index + 1 - WORD_CADENCE, index + 1);
-      const recentIds = new Set(recent.map((item) => item.character.id));
+      const recentKeys = new Set(recent.map((item) => reviewKey(item.character.id, item.track)));
       const wordCandidates = eligibleWords.filter((word) => !usedWords.has(word.id));
-      const relevantWords = wordCandidates.filter((word) => word.members.some((member) => recentIds.has(member.characterId)));
-      const word = (relevantWords.length > 0 ? relevantWords : wordCandidates)[0];
+      const relevantWords = wordCandidates.filter((word) => word.members.some((member) => recentKeys.has(reviewKey(member.characterId, word.track))));
+      const sameTrackWords = wordCandidates.filter((word) => word.track === recent.at(-1)?.track);
+      const word = (relevantWords.length > 0 ? relevantWords : sameTrackWords.length > 0 ? sameTrackWords : wordCandidates)[0];
       const firstMember = word ? charactersById.get(word.members[0].characterId) : undefined;
       const wordItem = word && firstMember ? buildWordItem(word, words, firstMember, index + word.id, random) : undefined;
       if (wordItem) {

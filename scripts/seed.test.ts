@@ -6,7 +6,7 @@ import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { getCharacter, listByTrackLevel, listByUnit, searchDistractors } from "../worker/db/characters.ts";
 import type { SeedDocument, SeedTrackEntry } from "../src/shared/types.ts";
 import { applyMigrations } from "../worker/test/schema.ts";
-import { emitSeedSql, emitSentenceSeedSql, levelOrdFor, parseSeed, parseSentenceSeed } from "./seed.ts";
+import { emitSeedSql, emitSentenceSeedSql, levelOrdFor, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
 
 function d1(sqlite: DatabaseSync): D1Database {
   const adapter = {
@@ -174,4 +174,15 @@ test("standalone sentence seeds validate and remain idempotent", () => {
   } finally {
     sqlite.close();
   }
+});
+
+test("word seeds validate track-specific readings, levels, and revision hosts", () => {
+  const base = { glyph: "學校", levelOrd: 1, members: ["學", "校"] };
+  assert.equal(parseWordSeed({ words: [{ ...base, track: "kr", reading: "학교", level: "8급", sourceUrl: "https://ko.wiktionary.org/w/index.php?title=학교&oldid=1" }] }).words[0].track, "kr");
+  assert.equal(parseWordSeed({ words: [{ ...base, track: "jp", glyph: "学校", reading: "がっこう", level: "N5", sourceUrl: "https://ja.wiktionary.org/w/index.php?title=学校&oldid=2" }] }).words[0].track, "jp");
+  assert.equal(parseWordSeed({ words: [{ ...base, track: "cn", glyph: "学校", reading: "xué xiào", level: "HSK 1", sourceUrl: "https://zh.wiktionary.org/w/index.php?title=學校&oldid=3" }] }).words[0].track, "cn");
+  assert.throws(() => parseWordSeed({ words: [{ ...base, track: "jp", reading: "gakkou", level: "N5", sourceUrl: "https://ja.wiktionary.org/w/index.php?title=学校&oldid=2" }] }), /expected kana/);
+  assert.throws(() => parseWordSeed({ words: [{ ...base, track: "cn", reading: "xue2 xiao4", level: "HSK 1", sourceUrl: "https://zh.wiktionary.org/w/index.php?title=學校&oldid=3" }] }), /tone-marked pinyin/);
+  assert.throws(() => parseWordSeed({ words: [{ ...base, track: "cn", reading: "xué xiào", level: "HSK 1", sourceUrl: "https://ja.wiktionary.org/w/index.php?title=學校&oldid=3" }] }), /immutable cn Wiktionary revision/);
+  assert.throws(() => parseWordSeed({ words: [{ ...base, track: "kr", glyph: "韓國語", reading: "한국어", level: "8급", sourceUrl: "https://ko.wiktionary.org/w/index.php?title=한국어&oldid=1", members: ["韓", "國", "語"] }] }), /two-character compound/);
 });

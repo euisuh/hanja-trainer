@@ -1,0 +1,24 @@
+{
+  "words": [
+    { "track": "jp", "glyph": "学校", "reading": "がっこう", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E5%AD%A6%E6%A0%A1&oldid=2215211", "members": ["學", "校"] },
+    { "track": "jp", "glyph": "学生", "reading": "がくせい", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E5%AD%A6%E7%94%9F&oldid=2151335", "members": ["學", "生"] },
+    { "track": "jp", "glyph": "日本", "reading": "にほん", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E6%97%A5%E6%9C%AC&oldid=2301892", "members": ["日", "本"] },
+    { "track": "jp", "glyph": "時間", "reading": "じかん", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E6%99%82%E9%96%93&oldid=2328451", "members": ["時", "間"] },
+    { "track": "jp", "glyph": "電話", "reading": "でんわ", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E9%9B%BB%E8%A9%B1&oldid=2321518", "members": ["電", "話"] },
+    { "track": "jp", "glyph": "電車", "reading": "でんしゃ", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E9%9B%BB%E8%BB%8A&oldid=2181516", "members": ["電", "車"] },
+    { "track": "jp", "glyph": "先生", "reading": "せんせい", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E5%85%88%E7%94%9F&oldid=2335168", "members": ["先", "生"] },
+    { "track": "jp", "glyph": "大学", "reading": "だいがく", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E5%A4%A7%E5%AD%A6&oldid=2152029", "members": ["大", "學"] },
+    { "track": "jp", "glyph": "人間", "reading": "にんげん", "level": "N5", "levelOrd": 1, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E4%BA%BA%E9%96%93&oldid=2292707", "members": ["人", "間"] },
+    { "track": "jp", "glyph": "会社", "reading": "かいしゃ", "level": "N4", "levelOrd": 2, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E4%BC%9A%E7%A4%BE&oldid=2025753", "members": ["會", "社"] },
+    { "track": "jp", "glyph": "社会", "reading": "しゃかい", "level": "N4", "levelOrd": 2, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E7%A4%BE%E4%BC%9A&oldid=2291904", "members": ["社", "會"] },
+    { "track": "jp", "glyph": "生活", "reading": "せいかつ", "level": "N3", "levelOrd": 3, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E7%94%9F%E6%B4%BB&oldid=2152448", "members": ["生", "活"] },
+    { "track": "jp", "glyph": "文化", "reading": "ぶんか", "level": "N3", "levelOrd": 3, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E6%96%87%E5%8C%96&oldid=2273462", "members": ["文", "化"] },
+    { "track": "jp", "glyph": "自然", "reading": "しぜん", "level": "N3", "levelOrd": 3, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E8%87%AA%E7%84%B6&oldid=2212300", "members": ["自", "然"] },
+    { "track": "jp", "glyph": "問題", "reading": "もんだい", "level": "N4", "levelOrd": 2, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E5%95%8F%E9%A1%8C&oldid=2239245", "members": ["問", "題"] },
+    { "track": "jp", "glyph": "運動", "reading": "うんどう", "level": "N4", "levelOrd": 2, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E9%81%8B%E5%8B%95&oldid=2279417", "members": ["運", "動"] },
+    { "track": "jp", "glyph": "科学", "reading": "かがく", "level": "N3", "levelOrd": 3, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E7%A7%91%E5%AD%A6&oldid=2239459", "members": ["科", "學"] },
+    { "track": "jp", "glyph": "英語", "reading": "えいご", "level": "N4", "levelOrd": 2, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E8%8B%B1%E8%AA%9E&oldid=2338620", "members": ["英", "語"] },
+    { "track": "jp", "glyph": "道路", "reading": "どうろ", "level": "N3", "levelOrd": 3, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E9%81%93%E8%B7%AF&oldid=2182564", "members": ["道", "路"] },
+    { "track": "jp", "glyph": "原因", "reading": "げんいん", "level": "N3", "levelOrd": 3, "sourceUrl": "https://ja.wiktionary.org/w/index.php?title=%E5%8E%9F%E5%9B%A0&oldid=2296882", "members": ["原", "因"] }
+  ]
+}

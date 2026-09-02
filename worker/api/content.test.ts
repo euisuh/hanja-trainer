@@ -33,6 +33,13 @@ const KR_THROUGH_4_FILES = [
   "data/characters/kr-4geup.json",
 ];
 
+const JP_FILES = CHARACTER_FILES.filter((file) => file.includes("/jp-"));
+const CN_FILES = [
+  "data/characters/cn-hsk1.json",
+  "data/characters/cn-hsk2.json",
+  "data/characters/cn-hsk3.json",
+];
+
 function d1Result<T>(results: T[]): D1Result<T> {
   return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: 0, last_row_id: 0, changed_db: false, changes: 0 } };
 }
@@ -454,6 +461,41 @@ describe("content API", () => {
     expect(word).toMatchObject({ kind: "word", wordId: expect.any(Number), glyph: "學校", memberKeys: ["學", "校"], options: expect.any(Array), wordSourceUrl: expect.stringContaining("oldid=4219407") });
     expect(word?.options).toHaveLength(4);
     expect(new Set(word?.options.map((option) => option.label)).size).toBe(4);
+  });
+
+  it.each([
+    { track: "jp" as const, files: JP_FILES, wordFile: "data/words/jp-wiktionary.json", glyph: "学校", prompt: "熟語の読みを選べ", badge: "日本 · 熟語", levelBadge: "熟語 N5", sourceHost: "ja.wiktionary.org" },
+    { track: "cn" as const, files: CN_FILES, wordFile: "data/words/cn-wiktionary.json", glyph: "学校", prompt: "选择正确的词语读音", badge: "中国 · 词语", levelBadge: "词语 HSK 1", sourceHost: "zh.wiktionary.org" },
+  ])("issues sourced $track word cards in lesson and review", async ({ track, files, wordFile, glyph, prompt, badge, levelBadge, sourceHost }) => {
+    const fixture = setupSeeds(files); databases.push(fixture.sqlite);
+    fixture.sqlite.exec(emitWordSeedSql(parseWordSeed(JSON.parse(readFileSync(wordFile, "utf8")) as unknown)));
+    const members = fixture.sqlite.prepare("SELECT id FROM characters WHERE key IN ('學', '校') ORDER BY id").all() as Array<{ id: number }>;
+    const others = fixture.sqlite.prepare("SELECT character_id AS id FROM character_tracks WHERE track = ? AND character_id NOT IN (?, ?) ORDER BY character_id LIMIT 2").all(track, members[0].id, members[1].id) as Array<{ id: number }>;
+    const insert = fixture.sqlite.prepare(`
+      INSERT INTO review_states
+        (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count)
+      VALUES (?, ?, 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1)
+    `);
+    for (const id of [...members, ...others].map((row) => row.id)) insert.run(id, track);
+
+    for (const mode of ["lesson", "review"] as const) {
+      const session = await startSession(fixture.env.DB, { mode, tracks: [track], limit: 4 }, `${track}-${mode}`);
+      const word = session.cards.find((card) => card.kind === "word");
+      expect(session.cards.filter((card) => card.kind !== "word")).toHaveLength(4);
+      expect(word).toMatchObject({
+        kind: "word",
+        track,
+        glyph,
+        characterKey: "學",
+        memberKeys: ["學", "校"],
+        prompt,
+        trackBadge: badge,
+        levelBadge,
+        wordSourceUrl: expect.stringContaining(sourceHost),
+      });
+      expect(word?.options).toHaveLength(4);
+      expect(new Set(word?.options.map((option) => option.label)).size).toBe(4);
+    }
   });
 
   it("rejects invalid tracks, limits, and malformed bodies as JSON 400s", async () => {

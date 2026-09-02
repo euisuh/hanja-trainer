@@ -11,9 +11,15 @@ const trackLabels = {
   cn: { prompt: "选择正确的拼音", meaningPrompt: "选择正确的意思" },
 } as const;
 
+export const wordLabels = {
+  kr: { badge: "한국 · 한자어", name: "한자어", prompt: "한자어 독음을 고르세요" },
+  jp: { badge: "日本 · 熟語", name: "熟語", prompt: "熟語の読みを選べ" },
+  cn: { badge: "中国 · 词语", name: "词语", prompt: "选择正确的词语读音" },
+} as const;
+
 function promptFor(kind: SessionQueueItem["kind"], track: Track): string {
   if (kind === "compare") return "Enter로 계속";
-  if (kind === "word") return "한자어 독음을 고르세요";
+  if (kind === "word") return wordLabels[track].prompt;
   if (kind === "meaning") return trackLabels[track].meaningPrompt;
   if (kind === "kun") return "訓読みを選べ";
   return trackLabels[track].prompt;
@@ -66,14 +72,14 @@ export function QuizCard({ character, track, compare, answered, correct, kind, p
   return (
     <article className={`quiz-card quiz-card--${track}${answered ? correct ? " quiz-card--correct" : " quiz-card--wrong" : ""}`}>
       <div className="quiz-card__badges">
-        <span lang={compare ? undefined : theme.lang}>{compare ? "교차 강화 · 한 글자 세 소리" : theme.badge}</span>
-        <span lang={theme.lang}>{word ? `한자어 ${word.level}` : levelLabel(entry)}</span>
+        <span lang={compare ? undefined : theme.lang}>{compare ? "교차 강화 · 한 글자 세 소리" : word ? wordLabels[track].badge : theme.badge}</span>
+        <span lang={theme.lang}>{word ? `${wordLabels[track].name} ${word.level}` : levelLabel(entry)}</span>
         <strong lang={promptOverride || compare ? undefined : theme.lang}>{prompt}</strong>
       </div>
       <div className="quiz-card__body">
         <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`} lang={theme.lang}>{word?.glyph ?? entry.glyph}</div>
         {sentence && <SentencePanel revealed={answered || compare} sentence={sentence} />}
-        {word && <div className="quiz-card__sentence" lang="ko"><div>한자어 · <a href={word.sourceUrl}>한국어 위키낱말사전</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div>}
+        {word && <div className="quiz-card__sentence" lang={theme.lang}><div>{wordLabels[track].name} · <SourceAttribution sourceUrl={word.sourceUrl} /></div></div>}
       </div>
       {compare && <CompareCard character={character} onyomiScript={onyomiScript} />}
     </article>

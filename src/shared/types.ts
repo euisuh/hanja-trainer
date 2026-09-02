@@ -60,7 +60,7 @@ export interface CharacterEntry {
 
 export interface WordEntry {
   id: number;
-  track: "kr";
+  track: Track;
   glyph: string;
   reading: string;
   level: string;
@@ -129,7 +129,7 @@ export interface SeedSentenceDocument {
 }
 
 export interface SeedWordEntry {
-  track: "kr";
+  track: Track;
   glyph: string;
   reading: string;
   level: string;

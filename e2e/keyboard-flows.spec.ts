@@ -2,7 +2,7 @@ import { expect, test, type Locator, type Page, type TestInfo } from "@playwrigh
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
 const meaningPrompts = { kr: "뜻을 고르세요", jp: "意味を選べ", cn: "选择正确的意思" } as const;
-type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; reading: string; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages; wordId?: number };
+type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; prompt: string; reading: string; sentence: { source: string; targetIndex: number; text: string; translation: string } | null; track: keyof typeof languages; trackBadge: string; wordId?: number; wordSourceUrl?: string };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
@@ -649,6 +649,46 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.clock.resume();
     await finishSession(page, lesson.cards.slice(wordIndex + 1), /세션 완료/u, { autoAdvance: true, progressOffset: wordIndex + 1 });
     await page.keyboard.press("Enter");
+    await expect(page.locator(".home-screen")).toBeVisible();
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
+  });
+
+  for (const { track, prompt, badge, feedback, sourceHost } of [
+    { track: "jp" as const, prompt: "熟語の読みを選べ", badge: "日本 · 熟語", feedback: "日本語ウィクショナリーの熟語です。", sourceHost: "ja.wiktionary.org" },
+    { track: "cn" as const, prompt: "选择正确的词语读音", badge: "中国 · 词语", feedback: "这是中文维基词典收录的词语。", sourceHost: "zh.wiktionary.org" },
+  ]) test(`known ${track} compounds render and submit by keyboard`, async ({ page }) => {
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: [track] } })).ok()).toBe(true);
+    const seeded = ["學", "校", "生", "國"].map((characterKey, cardIndex) => ({
+      sessionId: `e2e-${track}-word-eligibility`,
+      cardIndex,
+      characterKey,
+      track,
+      correct: false,
+      skipped: false,
+      elapsedMs: 1,
+      mode: "lesson",
+    }));
+    expect((await page.request.post("/api/reviews/batch", { data: seeded })).ok()).toBe(true);
+
+    const lesson = await sessionStarted(page, () => page.goto("/lesson"));
+    const wordIndex = lesson.cards.findIndex((card) => card.kind === "word");
+    expect(wordIndex).toBeGreaterThanOrEqual(0);
+    for (const card of lesson.cards.slice(0, wordIndex)) {
+      if (card.kind !== "compare") await page.keyboard.press(String(card.answerIndex + 1));
+      else await page.keyboard.press("Enter");
+      await expect(page.locator(".quiz-card__glyph")).not.toHaveText(card.glyph);
+    }
+
+    const word = lesson.cards[wordIndex];
+    await expect(page.getByText(badge, { exact: true })).toBeVisible();
+    await expect(page.getByText(prompt, { exact: true })).toBeVisible();
+    await expect(page.locator(".feedback-bar")).toContainText(feedback);
+    await expect(page.locator(`.quiz-card__sentence a[href*="${sourceHost}"]`)).toBeVisible();
+    const submission = page.waitForRequest((request) => request.url().endsWith("/api/reviews/batch") && (request.postDataJSON() as Array<{ wordId?: number }>).some((answer) => answer.wordId === word.wordId));
+    await page.keyboard.press(String(word.answerIndex + 1));
+    expect((await submission).postDataJSON()).toEqual(expect.arrayContaining([expect.objectContaining({ characterKey: "學", wordId: word.wordId, track, correct: true })]));
+    await page.keyboard.press("Escape");
+    await page.keyboard.press("Q");
     await expect(page.locator(".home-screen")).toBeVisible();
     expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
   });

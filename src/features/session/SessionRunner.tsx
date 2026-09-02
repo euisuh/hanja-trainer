@@ -4,6 +4,7 @@ import { tracks } from "../../design/tokens";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../placement/adaptive";
 import { gradeFromReview, initialState, schedule, type ReviewState } from "../../shared/fsrs";
 import { toHiragana } from "../../shared/kana";
+import { wordAttribution } from "../../shared/sentenceAttribution";
 import type { OnyomiScript } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { trackThemes } from "../tracks/trackTheme";
@@ -15,7 +16,7 @@ import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
 import { PauseModal } from "./PauseModal";
-import { QuizCard } from "./QuizCard";
+import { QuizCard, wordLabels } from "./QuizCard";
 import { SkipAnswer } from "./SkipAnswer";
 import { useSessionKeys } from "./useSessionKeys";
 import { useAnswerSubmit } from "./useAnswerSubmit";
@@ -292,6 +293,12 @@ export function SessionRunner({
   const source = item.character.sentences.find((sentence) => sentence.track === item.track)?.source;
   const entry = item.character.tracks.find((candidate) => candidate.track === item.track);
   const word = item.kind === "word" ? item.word : undefined;
+  const wordSource = word ? wordAttribution(word.sourceUrl)?.source ?? word.sourceUrl : "";
+  const wordFeedback = word ? item.track === "jp"
+    ? `${wordSource}の${wordLabels.jp.name}です。`
+    : item.track === "cn"
+      ? `这是${wordSource}收录的${wordLabels.cn.name}。`
+      : `${wordSource}의 ${wordLabels.kr.name}입니다.` : "";
   const reading = entry ? readingFor(entry).label : "";
   const displayedReading = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(reading) : reading;
   const feedbackNote = compare
@@ -303,7 +310,7 @@ export function SessionRunner({
     : mode === "placement"
       ? answered ? "응답에 맞춰 시작 급수를 조정했습니다." : "정답에 따라 다음 문항 난이도가 바뀝니다."
     : !answered
-      ? word ? "한국어 위키낱말사전의 한자어입니다." : source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
+      ? word ? wordFeedback : source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
       : correct
         ? `다음 복습: ${nextInterval}`
         : word ? `${word.glyph} = ${word.reading}` : `${entry?.glyph} = ${item.kind === "meaning" ? displayedReading : item.character.meaningKo}`;

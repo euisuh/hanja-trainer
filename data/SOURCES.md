@@ -108,23 +108,36 @@ Curriculum units group 8–10 characters by dictionary meaning into localized
 themes such as `수와 시간`, `自然`, and `学习与语言`; mixed boundary units name
 both represented themes.
 
-# Korean compound source
+# Compound sources
 
-Retrieved 2026-08-30 from [Korean Wiktionary](https://ko.wiktionary.org/),
-whose text is reusable under
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The
-`data/words/kr-wiktionary.json` selection is separately offered under that
-license. Each row links to an immutable revision so its contributors and the
-published Korean entry remain auditable.
+Korean rows were retrieved 2026-08-30 and 2026-09-02 from [Korean
+Wiktionary](https://ko.wiktionary.org/); Japanese and Chinese rows were
+retrieved 2026-09-02 from [Japanese Wiktionary](https://ja.wiktionary.org/) and
+[Chinese Wiktionary](https://zh.wiktionary.org/). Each edition's primary
+MediaWiki `rightsinfo` endpoint reports Creative Commons Attribution-Share
+Alike 4.0: [ko](https://ko.wiktionary.org/w/api.php?action=query&meta=siteinfo&siprop=rightsinfo&format=json),
+[ja](https://ja.wiktionary.org/w/api.php?action=query&meta=siteinfo&siprop=rightsinfo&format=json),
+and [zh](https://zh.wiktionary.org/w/api.php?action=query&meta=siteinfo&siprop=rightsinfo&format=json).
+The three `data/words/*-wiktionary.json` selections are separately offered
+under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Every
+row links to an immutable revision so its contributors and published entry
+remain auditable.
 
-Selection is deliberately mechanical: retain a two-character Hanja spelling
-only when the corresponding Hangul-titled Korean Wiktionary entry explicitly
-identifies that exact spelling as its Hanja origin, and both characters already
-exist in the Korean seed. The page title is retained byte-for-byte as the
-reading. Four entries are selected at each highest-constituent grade from 8급
-through 5급, for 28 compounds total. No spelling, reading, meaning, or distractor
-is AI-generated, machine-translated, or paraphrased. JP 熟語 and CN 词语 remain
-separate sourcing and implementation work.
+Selection is deliberately mechanical: retain the published two-character
+spelling and reading only when both characters already exist in that track.
+Korean rows use the Hangul page title; Japanese and Chinese rows use the
+revision's published kana or tone-marked Mandarin reading. `levelOrd` is the
+higher of the two member ordinals. No spelling, reading, meaning, or distractor
+is AI-generated, machine-translated, or paraphrased.
+
+Compounds remain exactly two characters. This keeps the product aligned with
+the existing two-glyph card and with one answer scheduling exactly two member
+FSRS states; the arbitrary `word_members.position` schema remains available if
+a later product change adds three- or four-character compounds.
+
+The Korean pool now contains 72 compounds: at least eight at every
+highest-constituent grade through 4급. The original 28 revisions follow; the 44
+additions and all JP/CN revisions are recorded below.
 
 | Highest grade | Immutable Korean Wiktionary revisions |
 | --- | --- |
@@ -135,6 +148,36 @@ separate sourcing and implementation work.
 | 6급 | [英語/영어 #4395517](https://ko.wiktionary.org/w/index.php?title=%EC%98%81%EC%96%B4&oldid=4395517), [衣服/의복 #4186752](https://ko.wiktionary.org/w/index.php?title=%EC%9D%98%EB%B3%B5&oldid=4186752), [道路/도로 #4483939](https://ko.wiktionary.org/w/index.php?title=%EB%8F%84%EB%A1%9C&oldid=4483939), [溫度/온도 #4137778](https://ko.wiktionary.org/w/index.php?title=%EC%98%A8%EB%8F%84&oldid=4137778) |
 | 5급II | [幸福/행복 #4192892](https://ko.wiktionary.org/w/index.php?title=%ED%96%89%EB%B3%B5&oldid=4192892), [責任/책임 #4241290](https://ko.wiktionary.org/w/index.php?title=%EC%B1%85%EC%9E%84&oldid=4241290), [品質/품질 #4235882](https://ko.wiktionary.org/w/index.php?title=%ED%92%88%EC%A7%88&oldid=4235882), [商店/상점 #4382869](https://ko.wiktionary.org/w/index.php?title=%EC%83%81%EC%A0%90&oldid=4382869) |
 | 5급 | [原因/원인 #4267550](https://ko.wiktionary.org/w/index.php?title=%EC%9B%90%EC%9D%B8&oldid=4267550), [汽車/기차 #4162821](https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EC%B0%A8&oldid=4162821), [許可/허가 #4219754](https://ko.wiktionary.org/w/index.php?title=%ED%97%88%EA%B0%80&oldid=4219754), [停止/정지 #4142204](https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EC%A7%80&oldid=4142204) |
+
+## Expanded Korean compounds
+
+| Highest grade | Immutable Korean Wiktionary revisions |
+| --- | --- |
+| 8급 | [韓國/한국 #4123623](https://ko.wiktionary.org/w/index.php?title=%ED%95%9C%EA%B5%AD&oldid=4123623), [軍人/군인 #4211800](https://ko.wiktionary.org/w/index.php?title=%EA%B5%B0%EC%9D%B8&oldid=4211800), [國王/국왕 #4172587](https://ko.wiktionary.org/w/index.php?title=%EA%B5%AD%EC%99%95&oldid=4172587), [東西/동서 #4118580](https://ko.wiktionary.org/w/index.php?title=%EB%8F%99%EC%84%9C&oldid=4118580) |
+| 7급II | [男子/남자 #4154605](https://ko.wiktionary.org/w/index.php?title=%EB%82%A8%EC%9E%90&oldid=4154605), [女子/여자 #4386009](https://ko.wiktionary.org/w/index.php?title=%EC%97%AC%EC%9E%90&oldid=4386009), [電氣/전기 #4483903](https://ko.wiktionary.org/w/index.php?title=%EC%A0%84%EA%B8%B0&oldid=4483903), [動物/동물 #4483095](https://ko.wiktionary.org/w/index.php?title=%EB%8F%99%EB%AC%BC&oldid=4483095) |
+| 7급 | [歌手/가수 #4384038](https://ko.wiktionary.org/w/index.php?title=%EA%B0%80%EC%88%98&oldid=4384038), [老人/노인 #4214154](https://ko.wiktionary.org/w/index.php?title=%EB%85%B8%EC%9D%B8&oldid=4214154), [人口/인구 #4135974](https://ko.wiktionary.org/w/index.php?title=%EC%9D%B8%EA%B5%AC&oldid=4135974), [文字/문자 #4481388](https://ko.wiktionary.org/w/index.php?title=%EB%AC%B8%EC%9E%90&oldid=4481388) |
+| 6급II | [讀書/독서 #4392052](https://ko.wiktionary.org/w/index.php?title=%EB%8F%85%EC%84%9C&oldid=4392052), [作家/작가 #4213314](https://ko.wiktionary.org/w/index.php?title=%EC%9E%91%EA%B0%80&oldid=4213314), [世界/세계 #4210393](https://ko.wiktionary.org/w/index.php?title=%EC%84%B8%EA%B3%84&oldid=4210393), [社會/사회 #4161856](https://ko.wiktionary.org/w/index.php?title=%EC%82%AC%ED%9A%8C&oldid=4161856) |
+| 6급 | [銀行/은행 #4480706](https://ko.wiktionary.org/w/index.php?title=%EC%9D%80%ED%96%89&oldid=4480706), [夜間/야간 #4147930](https://ko.wiktionary.org/w/index.php?title=%EC%95%BC%EA%B0%84&oldid=4147930), [石油/석유 #4198573](https://ko.wiktionary.org/w/index.php?title=%EC%84%9D%EC%9C%A0&oldid=4198573), [愛人/애인 #4234288](https://ko.wiktionary.org/w/index.php?title=%EC%95%A0%EC%9D%B8&oldid=4234288) |
+| 5급II | [課題/과제 #4245710](https://ko.wiktionary.org/w/index.php?title=%EA%B3%BC%EC%A0%9C&oldid=4245710), [流行/유행 #4172092](https://ko.wiktionary.org/w/index.php?title=%EC%9C%A0%ED%96%89&oldid=4172092), [獨立/독립 #4481901](https://ko.wiktionary.org/w/index.php?title=%EB%8F%85%EB%A6%BD&oldid=4481901), [記念/기념 #4280986](https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EB%85%90&oldid=4280986) |
+| 5급 | [病院/병원 #4137242](https://ko.wiktionary.org/w/index.php?title=%EB%B3%91%EC%9B%90&oldid=4137242), [都市/도시 #4176630](https://ko.wiktionary.org/w/index.php?title=%EB%8F%84%EC%8B%9C&oldid=4176630), [競爭/경쟁 #4290020](https://ko.wiktionary.org/w/index.php?title=%EA%B2%BD%EC%9F%81&oldid=4290020), [期間/기간 #4270340](https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EA%B0%84&oldid=4270340) |
+| 4급II | [講師/강사 #4289089](https://ko.wiktionary.org/w/index.php?title=%EA%B0%95%EC%82%AC&oldid=4289089), [記錄/기록 #4267189](https://ko.wiktionary.org/w/index.php?title=%EA%B8%B0%EB%A1%9D&oldid=4267189), [準備/준비 #4123452](https://ko.wiktionary.org/w/index.php?title=%EC%A4%80%EB%B9%84&oldid=4123452), [政府/정부 #4235860](https://ko.wiktionary.org/w/index.php?title=%EC%A0%95%EB%B6%80&oldid=4235860), [敎師/교사 #4141982](https://ko.wiktionary.org/w/index.php?title=%EA%B5%90%EC%82%AC&oldid=4141982), [態度/태도 #4143997](https://ko.wiktionary.org/w/index.php?title=%ED%83%9C%EB%8F%84&oldid=4143997), [統計/통계 #4252448](https://ko.wiktionary.org/w/index.php?title=%ED%86%B5%EA%B3%84&oldid=4252448), [觀察/관찰 #4277337](https://ko.wiktionary.org/w/index.php?title=%EA%B4%80%EC%B0%B0&oldid=4277337) |
+| 4급 | [辭典/사전 #4479687](https://ko.wiktionary.org/w/index.php?title=%EC%82%AC%EC%A0%84&oldid=4479687), [組織/조직 #4182439](https://ko.wiktionary.org/w/index.php?title=%EC%A1%B0%EC%A7%81&oldid=4182439), [犯罪/범죄 #4185878](https://ko.wiktionary.org/w/index.php?title=%EB%B2%94%EC%A3%84&oldid=4185878), [資料/자료 #4240514](https://ko.wiktionary.org/w/index.php?title=%EC%9E%90%EB%A3%8C&oldid=4240514), [帝國/제국 #4174310](https://ko.wiktionary.org/w/index.php?title=%EC%A0%9C%EA%B5%AD&oldid=4174310), [刑事/형사 #4201851](https://ko.wiktionary.org/w/index.php?title=%ED%98%95%EC%82%AC&oldid=4201851), [拒否/거부 #4241544](https://ko.wiktionary.org/w/index.php?title=%EA%B1%B0%EB%B6%80&oldid=4241544), [改革/개혁 #4195752](https://ko.wiktionary.org/w/index.php?title=%EA%B0%9C%ED%98%81&oldid=4195752) |
+
+## Japanese compounds
+
+| JLPT | Immutable Japanese Wiktionary revisions |
+| --- | --- |
+| N5 | [学校/がっこう #2215211](https://ja.wiktionary.org/w/index.php?title=%E5%AD%A6%E6%A0%A1&oldid=2215211), [学生/がくせい #2151335](https://ja.wiktionary.org/w/index.php?title=%E5%AD%A6%E7%94%9F&oldid=2151335), [日本/にほん #2301892](https://ja.wiktionary.org/w/index.php?title=%E6%97%A5%E6%9C%AC&oldid=2301892), [時間/じかん #2328451](https://ja.wiktionary.org/w/index.php?title=%E6%99%82%E9%96%93&oldid=2328451), [電話/でんわ #2321518](https://ja.wiktionary.org/w/index.php?title=%E9%9B%BB%E8%A9%B1&oldid=2321518), [電車/でんしゃ #2181516](https://ja.wiktionary.org/w/index.php?title=%E9%9B%BB%E8%BB%8A&oldid=2181516), [先生/せんせい #2335168](https://ja.wiktionary.org/w/index.php?title=%E5%85%88%E7%94%9F&oldid=2335168), [大学/だいがく #2152029](https://ja.wiktionary.org/w/index.php?title=%E5%A4%A7%E5%AD%A6&oldid=2152029), [人間/にんげん #2292707](https://ja.wiktionary.org/w/index.php?title=%E4%BA%BA%E9%96%93&oldid=2292707) |
+| N4 | [会社/かいしゃ #2025753](https://ja.wiktionary.org/w/index.php?title=%E4%BC%9A%E7%A4%BE&oldid=2025753), [社会/しゃかい #2291904](https://ja.wiktionary.org/w/index.php?title=%E7%A4%BE%E4%BC%9A&oldid=2291904), [問題/もんだい #2239245](https://ja.wiktionary.org/w/index.php?title=%E5%95%8F%E9%A1%8C&oldid=2239245), [運動/うんどう #2279417](https://ja.wiktionary.org/w/index.php?title=%E9%81%8B%E5%8B%95&oldid=2279417), [英語/えいご #2338620](https://ja.wiktionary.org/w/index.php?title=%E8%8B%B1%E8%AA%9E&oldid=2338620) |
+| N3 | [生活/せいかつ #2152448](https://ja.wiktionary.org/w/index.php?title=%E7%94%9F%E6%B4%BB&oldid=2152448), [文化/ぶんか #2273462](https://ja.wiktionary.org/w/index.php?title=%E6%96%87%E5%8C%96&oldid=2273462), [自然/しぜん #2212300](https://ja.wiktionary.org/w/index.php?title=%E8%87%AA%E7%84%B6&oldid=2212300), [科学/かがく #2239459](https://ja.wiktionary.org/w/index.php?title=%E7%A7%91%E5%AD%A6&oldid=2239459), [道路/どうろ #2182564](https://ja.wiktionary.org/w/index.php?title=%E9%81%93%E8%B7%AF&oldid=2182564), [原因/げんいん #2296882](https://ja.wiktionary.org/w/index.php?title=%E5%8E%9F%E5%9B%A0&oldid=2296882) |
+
+## Chinese compounds
+
+| HSK | Immutable Chinese Wiktionary revisions |
+| --- | --- |
+| HSK 1 | [学校/xué xiào #9870347](https://zh.wiktionary.org/w/index.php?title=%E5%AD%B8%E6%A0%A1&oldid=9870347), [学生/xué shēng #8544897](https://zh.wiktionary.org/w/index.php?title=%E5%AD%B8%E7%94%9F&oldid=8544897), [中国/zhōng guó #9178809](https://zh.wiktionary.org/w/index.php?title=%E4%B8%AD%E5%9C%8B&oldid=9178809), [时间/shí jiān #9689495](https://zh.wiktionary.org/w/index.php?title=%E6%99%82%E9%96%93&oldid=9689495), [工作/gōng zuò #9032678](https://zh.wiktionary.org/w/index.php?title=%E5%B7%A5%E4%BD%9C&oldid=9032678), [问题/wèn tí #9019980](https://zh.wiktionary.org/w/index.php?title=%E5%95%8F%E9%A1%8C&oldid=9019980), [学习/xué xí #9130387](https://zh.wiktionary.org/w/index.php?title=%E5%AD%B8%E7%BF%92&oldid=9130387), [老师/lǎo shī #8545956](https://zh.wiktionary.org/w/index.php?title=%E8%80%81%E5%B8%AB&oldid=8545956), [电脑/diàn nǎo #9612530](https://zh.wiktionary.org/w/index.php?title=%E9%9B%BB%E8%85%A6&oldid=9612530), [电话/diàn huà #9475885](https://zh.wiktionary.org/w/index.php?title=%E9%9B%BB%E8%A9%B1&oldid=9475885), [医生/yī shēng #8417997](https://zh.wiktionary.org/w/index.php?title=%E9%86%AB%E7%94%9F&oldid=8417997), [医院/yī yuàn #8827505](https://zh.wiktionary.org/w/index.php?title=%E9%86%AB%E9%99%A2&oldid=8827505), [电影/diàn yǐng #9880969](https://zh.wiktionary.org/w/index.php?title=%E9%9B%BB%E5%BD%B1&oldid=9880969), [飞机/fēi jī #9612514](https://zh.wiktionary.org/w/index.php?title=%E9%A3%9B%E6%A9%9F&oldid=9612514), [火车/huǒ chē #9786992](https://zh.wiktionary.org/w/index.php?title=%E7%81%AB%E8%BB%8A&oldid=9786992), [国语/guó yǔ #9488282](https://zh.wiktionary.org/w/index.php?title=%E5%9C%8B%E8%AA%9E&oldid=9488282), [天气/tiān qì #8544150](https://zh.wiktionary.org/w/index.php?title=%E5%A4%A9%E6%B0%A3&oldid=8544150), [明年/míng nián #9731419](https://zh.wiktionary.org/w/index.php?title=%E6%98%8E%E5%B9%B4&oldid=9731419), [上午/shàng wǔ #9327633](https://zh.wiktionary.org/w/index.php?title=%E4%B8%8A%E5%8D%88&oldid=9327633), [下午/xià wǔ #9855018](https://zh.wiktionary.org/w/index.php?title=%E4%B8%8B%E5%8D%88&oldid=9855018) |
+| HSK 2 | [商店/shāng diàn #9728360](https://zh.wiktionary.org/w/index.php?title=%E5%95%86%E5%BA%97&oldid=9728360), [运动/yùn dòng #9375210](https://zh.wiktionary.org/w/index.php?title=%E9%81%8B%E5%8B%95&oldid=9375210), [自然/zì rán #8546463](https://zh.wiktionary.org/w/index.php?title=%E8%87%AA%E7%84%B6&oldid=8546463), [每天/měi tiān #8543754](https://zh.wiktionary.org/w/index.php?title=%E6%AF%8F%E5%A4%A9&oldid=8543754) |
+| HSK 3 | [生活/shēng huó #8911823](https://zh.wiktionary.org/w/index.php?title=%E7%94%9F%E6%B4%BB&oldid=8911823), [汽车/qì chē #8544785](https://zh.wiktionary.org/w/index.php?title=%E6%B1%BD%E8%BB%8A&oldid=8544785), [文化/wén huà #9775436](https://zh.wiktionary.org/w/index.php?title=%E6%96%87%E5%8C%96&oldid=9775436), [银行/yín háng #9728757](https://zh.wiktionary.org/w/index.php?title=%E9%8A%80%E8%A1%8C&oldid=9728757), [空气/kōng qì #9728695](https://zh.wiktionary.org/w/index.php?title=%E7%A9%BA%E6%B0%A3&oldid=9728695), [南北/nán běi #9424757](https://zh.wiktionary.org/w/index.php?title=%E5%8D%97%E5%8C%97&oldid=9424757) |
 
 # Example sentence sources
 

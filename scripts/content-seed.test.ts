@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
-import { sentenceAttribution } from "../src/shared/sentenceAttribution.ts";
+import { sentenceAttribution, wordAttribution } from "../src/shared/sentenceAttribution.ts";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../src/features/placement/adaptive.ts";
 import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
 import { tierForTgh } from "./tgh-tier.ts";
@@ -431,22 +431,20 @@ test("Korean sentence gap ledger names every uncovered character exactly once", 
   assert.deepEqual(documented, expected);
 });
 
-test("Korean compounds are sourced and contain only seeded grade members", async () => {
-  const krPaths = Object.keys(files).filter((path) => path.includes("/kr-"));
-  const characters = (await Promise.all(krPaths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
-    .flatMap((document) => document.characters)
-    .map((character) => ({ character, track: character.tracks.find((entry) => entry.track === "kr")! }));
-  const byKey = new Map(characters.map((entry) => [entry.character.key, entry]));
-  const document = parseWordSeed(JSON.parse(await readFile("data/words/kr-wiktionary.json", "utf8")) as unknown);
+test("compounds are sourced and contain only seeded same-track members", async () => {
+  const characters = (await Promise.all(Object.keys(files).map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown))))
+    .flatMap((document) => document.characters);
+  const byTrackKey = new Map(characters.flatMap((character) => character.tracks.map((entry) => [`${entry.track}:${character.key}`, { character, track: entry }] as const)));
+  const wordPaths = (await readdir("data/words")).filter((name) => name.endsWith(".json")).map((name) => `data/words/${name}`).sort();
+  const documents = await Promise.all(wordPaths.map(async (path) => parseWordSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const words = documents.flatMap((document) => document.words);
   const sources = await readFile("data/SOURCES.md", "utf8");
 
-  assert.equal(document.words.length, 28);
-  assert.deepEqual([...new Set(document.words.map((word) => word.levelOrd))], [1, 2, 3, 4, 5, 6, 7]);
-  for (let levelOrd = 1; levelOrd <= 7; levelOrd += 1) assert.equal(document.words.filter((word) => word.levelOrd === levelOrd).length, 4);
-  for (const word of document.words) {
+  assert.deepEqual(Object.fromEntries(["kr", "jp", "cn"].map((track) => [track, words.filter((word) => word.track === track).length])), { kr: 72, jp: 20, cn: 30 });
+  for (let levelOrd = 1; levelOrd <= 9; levelOrd += 1) assert.ok(words.filter((word) => word.track === "kr" && word.levelOrd === levelOrd).length >= 8, `kr level ${levelOrd}`);
+  for (const word of words) {
     assert.match(word.glyph, /^\p{Script=Han}{2}$/u, word.glyph);
-    assert.match(word.reading, /^\p{Script=Hangul}{2}$/u, word.reading);
-    const members = word.members.map((key) => byKey.get(key));
+    const members = word.members.map((key) => byTrackKey.get(`${word.track}:${key}`));
     assert.ok(members.every(Boolean), `${word.glyph}: unseeded member`);
     assert.equal(word.glyph, members.map((member) => member!.track.glyph).join(""), word.glyph);
     assert.equal(word.levelOrd, Math.max(...members.map((member) => member!.track.levelOrd)), `${word.glyph}: highest grade`);
@@ -458,12 +456,12 @@ test("Korean compounds are sourced and contain only seeded grade members", async
     // Deliberately isolate character/word seed SQL from unrelated application migrations.
     for (const migration of ["0001_init.sql", "0002_fsrs.sql", "0003_sessions.sql", "0010_words.sql", "0015_curriculum_unit_level_ord.sql"]) sqlite.exec(await readFile(`migrations/${migration}`, "utf8"));
     for (const path of Object.keys(files)) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
-    const sql = emitWordSeedSql(document);
+    const sql = documents.map(emitWordSeedSql).join("\n");
     sqlite.exec(sql);
     sqlite.exec(sql);
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM words) AS words, (SELECT COUNT(*) FROM word_members) AS members").get();
-    assert.equal(counts?.words, 28);
-    assert.equal(counts?.members, 56);
+    assert.equal(counts?.words, 122);
+    assert.equal(counts?.members, 244);
   } finally {
     sqlite.close();
   }
@@ -479,12 +477,17 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const sentenceSql = await Promise.all((await readdir("data/sentences")).filter((name) => name.endsWith(".json")).map(async (name) => (
       emitSentenceSeedSql(parseSentenceSeed(JSON.parse(await readFile(`data/sentences/${name}`, "utf8")) as unknown))
     )));
-    const sql = [...characterSql, ...sentenceSql].join("\n");
+    const wordSql = await Promise.all((await readdir("data/words")).filter((name) => name.endsWith(".json")).map(async (name) => (
+      emitWordSeedSql(parseWordSeed(JSON.parse(await readFile(`data/words/${name}`, "utf8")) as unknown))
+    )));
+    const sql = [...characterSql, ...sentenceSql, ...wordSql].join("\n");
     sqlite.exec(sql);
-    const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
+    const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences, (SELECT COUNT(*) FROM words) AS words, (SELECT COUNT(*) FROM word_members) AS word_members").get();
     sqlite.exec(sql);
-    assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
+    assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences, (SELECT COUNT(*) FROM words) AS words, (SELECT COUNT(*) FROM word_members) AS word_members").get(), counts);
     assert.equal(counts?.sentences, 776);
+    assert.equal(counts?.words, 122);
+    assert.equal(counts?.word_members, 244);
   } finally {
     sqlite.close();
   }
@@ -502,4 +505,11 @@ test("sentence attribution links source revisions and licenses", () => {
     licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
   });
   assert.equal(sentenceAttribution("알 수 없는 출처 #123"), null);
+  assert.deepEqual(wordAttribution("https://ja.wiktionary.org/w/index.php?title=%E5%AD%A6%E6%A0%A1&oldid=2215211"), {
+    source: "日本語ウィクショナリー",
+    sourceUrl: "https://ja.wiktionary.org/w/index.php?title=%E5%AD%A6%E6%A0%A1&oldid=2215211",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+  });
+  assert.equal(wordAttribution("https://example.com/word"), null);
 });

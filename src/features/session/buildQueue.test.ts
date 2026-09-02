@@ -36,15 +36,16 @@ function withKorean(id: number, reading: string): CharacterEntry {
   return { ...base, tracks: base.tracks.map((entry) => entry.track === "kr" ? { ...entry, reading } : entry) };
 }
 
-function word(id: number, reading: string, members: [number, number] = [1, 2]): WordEntry {
+function word(id: number, reading: string, members: [number, number] = [1, 2], track: Track = "kr"): WordEntry {
+  const sourceHost = { kr: "ko", jp: "ja", cn: "zh" }[track];
   return {
     id,
-    track: "kr",
+    track,
     glyph: members.map((member) => character(member).key).join(""),
     reading,
-    level: "8급",
+    level: track === "kr" ? "8급" : track === "jp" ? "N5" : "HSK 1",
     levelOrd: 1,
-    sourceUrl: `https://ko.wiktionary.org/w/index.php?title=${reading}&oldid=${id}`,
+    sourceUrl: `https://${sourceHost}.wiktionary.org/w/index.php?title=${reading}&oldid=${id}`,
     members: members.map((characterId, position) => ({ characterId, key: character(characterId).key, position })),
   };
 }
@@ -287,11 +288,40 @@ describe("buildQueue", () => {
     expect(item?.options.slice(1, 3).map((option) => option.label)).toEqual(["빌 공", "강 강"]);
   });
 
-  it("ranks compound near misses through the existing Korean distractor path", () => {
+  it("ranks compound near misses through the compound-specific distractor path", () => {
     const words = ["학교", "학고", "악교", "부모", "정답"].map((reading, index) => word(index + 1, reading));
     const item = buildWordItem(words[0], words, characters[0], 0, random(1));
 
     expect(item?.options.slice(1, 3).map((option) => option.label)).toEqual(["학고", "악교"]);
+  });
+
+  it.each([
+    { track: "jp" as const, readings: ["がっこう", "がくこう", "がっこ", "せんせい", "だいがく"], near: ["がくこう", "がっこ"] },
+    { track: "cn" as const, readings: ["xué xiào", "xué shēng", "xué xí", "gōng zuò", "shí jiān"], near: ["xué xí", "xué shēng"] },
+  ])("builds distinct same-track $track compound distractors", ({ track, readings, near }) => {
+    const words = readings.map((reading, index) => word(index + 1, reading, [1, 2], track));
+    const item = buildWordItem(words[0], [...words, word(99, "학교")], characters[0], 0, random(1));
+
+    expect(item?.track).toBe(track);
+    expect(item?.options).toHaveLength(4);
+    expect(new Set(item?.options.map((option) => option.label)).size).toBe(4);
+    expect(item?.options.every((option) => readings.includes(option.label))).toBe(true);
+    expect(item?.options.slice(1, 3).map((option) => option.label)).toEqual(near);
+  });
+
+  it.each(["lesson", "review"] as const)("adds eligible Japanese and Chinese word cards in %s", (mode) => {
+    const now = new Date("2026-01-02T00:00:00Z");
+    const due = { ...initialState(now), due: new Date("2026-01-01T00:00:00Z"), correctCount: 1 };
+    for (const track of ["jp", "cn"] as const) {
+      const states = new Map(characters.map((item) => [reviewKey(item.id, track), due]));
+      const readings = track === "jp" ? ["がっこう", "がくせい", "にほん", "じかん"] : ["xué xiào", "xué shēng", "zhōng guó", "shí jiān"];
+      const words = readings.map((reading, index) => word(index + 1, reading, [index * 2 + 1, index * 2 + 2], track));
+      const queue = buildQueue({ characters, enabledTracks: [track], length: 4, mode, reviewStates: states, now, words });
+
+      expect(queue.filter((item) => item.kind !== "word")).toHaveLength(4);
+      expect(queue.filter((item) => item.kind === "word")).toHaveLength(1);
+      expect(queue.find((item) => item.kind === "word")?.track).toBe(track);
+    }
   });
 
   it("adds only eligible minority word cards without replacing due reviews", () => {

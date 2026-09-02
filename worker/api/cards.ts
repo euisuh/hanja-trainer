@@ -12,6 +12,12 @@ const labels = {
   cn: { badge: "中国 · 汉字", prompt: "选择正确的拼音", meaningPrompt: "选择正确的意思" },
 } as const;
 
+const wordLabels = {
+  kr: { badge: "한국 · 한자어", name: "한자어", prompt: "한자어 독음을 고르세요" },
+  jp: { badge: "日本 · 熟語", name: "熟語", prompt: "熟語の読みを選べ" },
+  cn: { badge: "中国 · 词语", name: "词语", prompt: "选择正确的词语读音" },
+} as const;
+
 function promptFor(kind: SessionCard["kind"], track: keyof typeof labels): string {
   if (kind === "meaning") return labels[track].meaningPrompt;
   if (kind === "kun") return "訓読みを選べ";
@@ -60,20 +66,21 @@ function comparison(character: CharacterEntry): SessionCard["compare"] {
 
 function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
   if (item.kind === "word") {
+    const copy = wordLabels[item.track];
     return {
       kind: "word",
       characterKey: item.word.members[0].key,
       wordId: item.word.id,
       memberKeys: item.word.members.map((member) => member.key),
-      meaningKo: "한자어",
-      meaning: "한자어",
+      meaningKo: copy.name,
+      meaning: copy.name,
       reading: item.word.reading,
-      track: "kr",
+      track: item.track,
       glyph: item.word.glyph,
-      levelBadge: `한자어 ${item.word.level}`,
+      levelBadge: `${copy.name} ${item.word.level}`,
       levelOrd: item.word.levelOrd,
-      trackBadge: labels.kr.badge,
-      prompt: "한자어 독음을 고르세요",
+      trackBadge: copy.badge,
+      prompt: copy.prompt,
       sentence: null,
       options: item.options,
       answerIndex: item.answerIndex,
