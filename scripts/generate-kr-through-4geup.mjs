@@ -97,6 +97,13 @@ for (const name of ["kr-8geup.json", "kr-7geup.json"]) {
   const document = JSON.parse(await readFile(join("data/sentences", name), "utf8"));
   sentenceRows.push(...document.sentences);
 }
+const maxSentenceRowsPerLane = 19;
+const sentenceLane = (source) => source.replace(/ #\d+$/u, "").replace(/^군정법령 제\d+호$/u, "군정법령");
+const sentenceLaneCounts = new Map();
+for (const sentence of sentenceRows) {
+  const lane = sentenceLane(sentence.source);
+  sentenceLaneCounts.set(lane, (sentenceLaneCounts.get(lane) ?? 0) + 1);
+}
 
 const seenKeys = new Set();
 const report = {};
@@ -162,12 +169,18 @@ for (const config of levels) {
   for (const entry of characters) {
     const glyph = entry.variants.kr;
     const candidate = sentenceRows
-      .filter((sentence) => sentence.text.includes(glyph))
-      .sort((left, right) => Array.from(left.text).length - Array.from(right.text).length || left.source.localeCompare(right.source))[0];
+      .filter((sentence) => sentence.text.includes(glyph) && (sentenceLaneCounts.get(sentenceLane(sentence.source)) ?? 0) < maxSentenceRowsPerLane)
+      .sort((left, right) => (
+        (sentenceLaneCounts.get(sentenceLane(left.source)) ?? 0) - (sentenceLaneCounts.get(sentenceLane(right.source)) ?? 0)
+        || Array.from(left.text).length - Array.from(right.text).length
+        || left.source.localeCompare(right.source)
+      ))[0];
     if (!candidate) {
       gaps.push(entry.key);
       continue;
     }
+    const lane = sentenceLane(candidate.source);
+    sentenceLaneCounts.set(lane, (sentenceLaneCounts.get(lane) ?? 0) + 1);
     sentences.push({
       character_key: entry.key,
       track: "kr",

@@ -1,54 +1,10 @@
 {
   "sentences": [
     {
-      "character_key": "組",
-      "track": "kr",
-      "text": "最高法院인大法院과下級法院의組織은法律로써定한다",
-      "translation_ko": "最高法院인大法院과下級法院의組織은法律로써定한다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 14,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "憲",
-      "track": "kr",
-      "text": "法官은憲法과法律에依하여獨立하여審判한다",
-      "translation_ko": "法官은憲法과法律에依하여獨立하여審判한다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 3,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "穀",
-      "track": "kr",
-      "text": "穀食 떠는 소의 입에 網을 씌우지 말지니라",
-      "translation_ko": "穀食 떠는 소의 입에 網을 씌우지 말지니라",
-      "source": "개역간이국한문한글판 #393281",
-      "source_kind": "corpus",
-      "target_index": 0,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "略",
-      "track": "kr",
-      "text": "에서 곧 에돔의 大略이 이러하니라",
-      "translation_ko": "에서 곧 에돔의 大略이 이러하니라",
-      "source": "개역간이국한문한글판 #393095",
-      "source_kind": "corpus",
-      "target_index": 10,
-      "rank": 0,
-      "reading": null
-    },
-    {
       "character_key": "華",
       "track": "kr",
       "text": "春滿한 大界에 民族的 精華를 結紐할지로다",
-      "translation_ko": "春滿한 大界에 民族的 精華를 結紐할지로다",
+      "translation_ko": "춘만한 대계에 민족적 정화를 결뉴할지로다",
       "source": "3·1독립선언서 #430581",
       "source_kind": "corpus",
       "target_index": 13,
@@ -56,123 +12,13 @@
       "reading": null
     },
     {
-      "character_key": "額",
-      "track": "kr",
-      "text": "收入印紙의 額面 及 色別은 如左함.",
-      "translation_ko": "收入印紙의 額面 及 色別은 如左함.",
-      "source": "군정법령 제110호 #455286",
-      "source_kind": "corpus",
-      "target_index": 6,
-      "rank": 0,
-      "reading": null
-    },
-    {
       "character_key": "勉",
       "track": "kr",
       "text": "勉從ᄒᆞ야 겨우 我家ㅣ라 稱ᄒᆞᄂᆞ니라",
-      "translation_ko": "勉從ᄒᆞ야 겨우 我家ㅣ라 稱ᄒᆞᄂᆞ니라",
+      "translation_ko": "면종ᄒᆞ야 겨우 아가ㅣ라 칭ᄒᆞᄂᆞ니라",
       "source": "국민 소학 독본 #436021",
       "source_kind": "textbook",
       "target_index": 0,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "樣",
-      "track": "kr",
-      "text": "每樣 저물매 저희가 城밖으로 나가더라",
-      "translation_ko": "每樣 저물매 저희가 城밖으로 나가더라",
-      "source": "개역간이국한문한글판 #393999",
-      "source_kind": "corpus",
-      "target_index": 1,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "構",
-      "track": "kr",
-      "text": "서울市는現在의區劃에따라八區로構成함",
-      "translation_ko": "서울市는現在의區劃에따라八區로構成함",
-      "source": "군정법령 제106호 #456157",
-      "source_kind": "corpus",
-      "target_index": 15,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "納",
-      "track": "kr",
-      "text": "모든國民은法律의定하는바에依하여納稅의義務를진다",
-      "translation_ko": "모든國民은法律의定하는바에依하여納稅의義務를진다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 16,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "居",
-      "track": "kr",
-      "text": "居留人과 他國 품軍은 먹지 못하리라",
-      "translation_ko": "居留人과 他國 품軍은 먹지 못하리라",
-      "source": "개역간이국한문한글판 #393092",
-      "source_kind": "corpus",
-      "target_index": 0,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "窮",
-      "track": "kr",
-      "text": "權力이 世世無窮토록 그에게 있을찌어다 아멘",
-      "translation_ko": "權力이 世世無窮토록 그에게 있을찌어다 아멘",
-      "source": "개역간이국한문한글판 #394148",
-      "source_kind": "corpus",
-      "target_index": 7,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "均",
-      "track": "kr",
-      "text": "모든國民은均等하게敎育을받을權利가있다",
-      "translation_ko": "모든國民은均等하게敎育을받을權利가있다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 5,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "勤",
-      "track": "kr",
-      "text": "女子와少年의勤勞는特別한保護를받는다",
-      "translation_ko": "女子와少年의勤勞는特別한保護를받는다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 6,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "豫",
-      "track": "kr",
-      "text": "이는 萬民 앞에 豫備하신 것이요",
-      "translation_ko": "이는 萬民 앞에 豫備하신 것이요",
-      "source": "개역간이국한문한글판 #394008",
-      "source_kind": "corpus",
-      "target_index": 9,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "依",
-      "track": "kr",
-      "text": "法官은憲法과法律에依하여獨立하여審判한다",
-      "translation_ko": "法官은憲法과法律에依하여獨立하여審判한다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 9,
       "rank": 0,
       "reading": null
     },
@@ -180,7 +26,7 @@
       "character_key": "從",
       "track": "kr",
       "text": "勉從ᄒᆞ야 겨우 我家ㅣ라 稱ᄒᆞᄂᆞ니라",
-      "translation_ko": "勉從ᄒᆞ야 겨우 我家ㅣ라 稱ᄒᆞᄂᆞ니라",
+      "translation_ko": "면종ᄒᆞ야 겨우 아가ㅣ라 칭ᄒᆞᄂᆞ니라",
       "source": "국민 소학 독본 #436021",
       "source_kind": "textbook",
       "target_index": 1,
@@ -188,46 +34,13 @@
       "reading": null
     },
     {
-      "character_key": "織",
-      "track": "kr",
-      "text": "最高法院인大法院과下級法院의組織은法律로써定한다",
-      "translation_ko": "最高法院인大法院과下級法院의組織은法律로써定한다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 15,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "陣",
-      "track": "kr",
-      "text": "모세와 이스라엘 長老들이 陣中으로 돌아왔더라",
-      "translation_ko": "모세와 이스라엘 長老들이 陣中으로 돌아왔더라",
-      "source": "개역간이국한문한글판 #393109",
-      "source_kind": "corpus",
-      "target_index": 14,
-      "rank": 0,
-      "reading": null
-    },
-    {
       "character_key": "稱",
       "track": "kr",
       "text": "勉從ᄒᆞ야 겨우 我家ㅣ라 稱ᄒᆞᄂᆞ니라",
-      "translation_ko": "勉從ᄒᆞ야 겨우 我家ㅣ라 稱ᄒᆞᄂᆞ니라",
+      "translation_ko": "면종ᄒᆞ야 겨우 아가ㅣ라 칭ᄒᆞᄂᆞ니라",
       "source": "국민 소학 독본 #436021",
       "source_kind": "textbook",
       "target_index": 14,
-      "rank": 0,
-      "reading": null
-    },
-    {
-      "character_key": "判",
-      "track": "kr",
-      "text": "法官은憲法과法律에依하여獨立하여審判한다",
-      "translation_ko": "法官은憲法과法律에依하여獨立하여審判한다",
-      "source": "대한민국헌법 #418801",
-      "source_kind": "corpus",
-      "target_index": 17,
       "rank": 0,
       "reading": null
     }

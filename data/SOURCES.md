@@ -139,10 +139,11 @@ separate sourcing and implementation work.
 # Example sentence sources
 
 All selections require an exact target-glyph match, at least one Hangul syllable
-for Korean rows, and no more than 24 Unicode code points. No row is generated,
-machine-translated, back-translated, or paraphrased. Korean source text is
-retained byte-for-byte as `translation_ko`; the UI suppresses that duplicate
-instead of presenting it as a translation.
+for Korean rows, and no more than 24 Unicode code points. No source sentence is
+generated, machine-translated, back-translated, or paraphrased. Korean `text` is
+retained byte-for-byte. Its `translation_ko` is an all-Hangul reading gloss, not
+a modernization or translation; the existing study and quiz views show that
+distinct value below the mixed-script sentence.
 
 ## Tatoeba corpus
 
@@ -154,12 +155,11 @@ contributor, and license record. Tatoeba exports are released under
 individual entries under CC0. These rows use `source_kind: corpus`.
 
 The frozen Tatoeba sentence selection remains unchanged for Japanese and
-Chinese. Exact reuse for new 8級 target glyphs raises the mappings to 283
-Japanese and 363 Chinese `(character, track)` pairs. The original two Korean
-rows were replaced because their parenthetical gloss format did not meet the
-required mixed-script convention.
+Chinese: 281 Japanese rank-0 mappings and 431 Chinese identities (430 rank-0
+and one rank-1). The original two Korean rows were replaced because their
+parenthetical gloss format did not meet the required mixed-script convention.
 
-## Korean public-domain corpus and textbook lanes
+## Korean verified public-domain and official-text lanes
 
 Retrieved 2026-08-29 from Korean Wikisource. Each row records the immutable
 Wikisource revision as `#{oldid}` and links to
@@ -169,757 +169,1042 @@ provides contributor history; Wikisource contributions are published under
 are display annotations, so rows retain the published Hanja base text and
 surrounding Hangul without copying the ruby annotation into the sentence.
 
-- [개역간이국한문한글판](https://ko.wikisource.org/w/index.php?oldid=361959),
-  published in 1964 and marked public domain after its copyright expired in
-  2014. Exact verse text supplies 99 rows; `source_kind: corpus`.
 - [대한민국헌법 (제1호) 국한문](https://ko.wikisource.org/w/index.php?oldid=418801).
-  The official 1948 constitutional text supplies 16 rows. Constitution and law
-  text is excluded from copyright protection by
+  The official 1948 constitutional text supplies 19 active rows. Constitution
+  and law text is excluded from copyright protection by
   [Copyright Act Article 7](https://www.law.go.kr/lsLinkCommonInfo.do?lsJoLnkSeq=1029423769);
   `source_kind: corpus`.
 - [노동야학독본](https://ko.wikisource.org/w/index.php?oldid=431030), a 1908
   textbook by 유길준, marked `PD-old-100`. Exact page revisions `#423248` and
-  `#425566` supply two rows; `source_kind: textbook`.
+  `#425566` supply 10 active rows; `source_kind: textbook`.
 - [국민 소학 독본](https://ko.wikisource.org/w/index.php?oldid=415110), the
-  1895 학부 textbook. Exact page revision `#436021` supplies one row;
+  1895 학부 textbook. Exact page revision `#436021` supplies four active rows;
   `source_kind: textbook`. The publication is public domain by age.
 - [산중신곡](https://ko.wikisource.org/w/index.php?oldid=430664), 윤선도's
-  1642 work, marked `PD-old-100`, supplies one exact line; `source_kind: corpus`.
-- [3·1독립선언서](https://ko.wikisource.org/w/index.php?oldid=430581), the
-  1919 declaration, marked `PD-old-100`, supplies one exact clause;
+  1642 work, marked `PD-old-100`, supplies two active rows from one exact line;
   `source_kind: corpus`.
-- Seven rows from six exact sentences in 1946 [USAMGIK ordinances](https://ko.wikisource.org/wiki/분류:군정법령)
-  supply `學`, `校`, `市`, `文`, `有`, `住`, and `紙`. They link to the
+- [3·1독립선언서](https://ko.wikisource.org/w/index.php?oldid=430581), the
+  1919 declaration, marked `PD-old-100`, supplies 10 active rows from one exact
+  clause; `source_kind: corpus`.
+- Nineteen rows from six exact sentences in 1946
+  [USAMGIK ordinances](https://ko.wikisource.org/wiki/분류:군정법령) link to the
   immutable revisions of ordinances 102, 106, 104, 110, 112, and 123. These
   official laws are excluded from copyright protection by Copyright Act
   Article 7; `source_kind: corpus`.
 
-These lanes cover 289 of 1,000 Korean `(character, kr)` pairs: the existing 127
-through 7급 plus 162 higher-grade characters already present in the same exact,
-immutable licensed selections. No sentence text was generated or altered.
-Across all tracks, 1,002 of 2,095 pairs now have rank-0 sentences; one existing
-extra rank makes 1,003 unique seeded sentence identities.
+### Active Korean lane counts
+
+Counts are character-to-sentence mappings, not distinct source sentences. The
+19-row build-time ceiling balances candidates by current lane count before
+sentence length. It keeps every lane below 30% while preferring existing exact
+licensed text and is reproduced for higher grades by
+`scripts/generate-kr-through-4geup.mjs`.
+
+| Lane | Rows |
+| --- | ---: |
+| 대한민국헌법 | 19 |
+| 군정법령 | 19 |
+| 3·1독립선언서 | 10 |
+| 노동야학독본 | 10 |
+| 국민 소학 독본 | 4 |
+| 산중신곡 | 2 |
+| Total | 64 |
+
+These lanes cover 64 of 1,000 Korean `(character, kr)` pairs. Rebalancing
+deliberately reduces the previous 289-row coverage rather than retaining a
+source-dominant curriculum. No source sentence was generated or altered.
+Across all tracks, 775 of 3,866 pairs now have rank-0 sentences; one existing
+extra rank makes 776 unique seeded sentence identities.
+
+### Hangul gloss policy
+
+Glosses use source-provided readings wherever the frozen source has them.
+노동야학독본 publishes ruby, including its historical spellings, and
+산중신곡 prints Hangul readings beside the Hanja. The 1948 constitution's
+immutable parallel Hangul revision
+[`#418800`](https://ko.wikisource.org/w/index.php?oldid=418800) checks
+the readings and spacing used for mixed-script revision `#418801`. Five of the
+six ordinance revisions contain their own parallel Hangul section. For the
+remaining ordinance, 3·1독립선언서, and 국민 소학 독본 rows, the gloss only
+replaces Hanja with its documented Korean reading and preserves the surrounding
+source spelling. It does not modernize or paraphrase the sentence.
+
+### Modern-register source decision
+
+No modern lane was added because the two evaluated primary sources cannot
+responsibly satisfy the existing literal-glyph rule. The official Tatoeba
+Korean sentence export (retrieved 2026-09-02, SHA-256
+`6ddb636c5e598ca65c29e27c0a57e547d4854264fc594aaa1adc6af527eee095`)
+contains 15,897 rows but only three with both Hangul and Hanja. One is 87 code
+points; of the two within 24 code points, `Tatoeba #907715` uses a parenthetical
+Hanja annotation and `Tatoeba #3447235` is not suitable modern standard learner
+text. Tatoeba's [official download page](https://tatoeba.org/en/downloads)
+licenses the export under CC BY 2.0 FR, so licensing was not the blocker.
+
+The National Institute of Korean Language was also evaluated, but its official
+[2021 corpus project report](https://www.korean.go.kr/common/download.do?c_file_name=7456053f-8fd8-47d2-b317-f18498cf769e.pdf&file_path=reportData&o_file_name=2021%EB%85%84+%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%99%B8%EA%B5%AD%EC%96%B4+%EB%B3%91%EB%A0%AC+%EB%A7%90%EB%AD%89%EC%B9%98+%EA%B5%AC%EC%B6%95+%EC%82%AC%EC%97%85_%EC%B5%9C%EC%A2%85+%EA%B2%B0%EA%B3%BC+%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf)
+records that secondary copyright prevented reuse of 모두의 말뭉치 for that
+project. Without an explicit redistribution grant for candidate sentence text,
+this repository does not import it. Modern all-Hangul sentences plus separately
+added Hanja would change the exact-source and `target_index` contract; that
+product/schema change remains outside this data correction.
+
+The previous Bible lane was also removed after primary-source verification.
+The Korean Bible Society's [copyright FAQ](https://www.bskorea.or.kr/bbs/board.php?bo_table=copyright_faq&wr_id=3)
+identifies the 1964 관주성경전서 간이국한문 as a work whose copyright it owns.
+The 2011 [Copyright Act amendment](https://www.law.go.kr/LSW/nwRvsLsInfoR.do?lsiSeq=114443)
+extended the publication term for corporate works from 50 to 70 years in 2013
+and excludes only rights that had already expired before the extension. The
+1964 edition had not expired then, so the Wikisource `PD-old-50` tag is not a
+sufficient redistribution grant. The active archaic lanes are therefore
+limited to official legal text excluded by Copyright Act Article 7 and old
+works with independently expired terms.
 
 ### Remaining Korean gaps
 
 Each character below lacked a complete, exact, mixed-script sentence of at
-most 24 code points in the licensed lanes above. Longer text, isolated labels,
-parenthetical Hanja glosses, and incomplete clauses were rejected.
+most 24 code points in the retained licensed lanes after applying the source
+balance policy. Longer text, isolated labels, parenthetical Hanja glosses, and
+incomplete clauses were rejected.
 
 | Character | Reason |
 | --- | --- |
-| 小 | No qualifying licensed sentence found. |
-| 寸 | No qualifying licensed sentence found. |
-| 車 | No qualifying licensed sentence found. |
-| 氣 | No qualifying licensed sentence found. |
-| 午 | No qualifying licensed sentence found. |
-| 場 | No qualifying licensed sentence found. |
-| 電 | No qualifying licensed sentence found. |
-| 足 | No qualifying licensed sentence found. |
-| 直 | No qualifying licensed sentence found. |
-| 漢 | No qualifying licensed sentence found. |
-| 話 | No qualifying licensed sentence found. |
-| 活 | No qualifying licensed sentence found. |
-| 孝 | No qualifying licensed sentence found. |
-| 旗 | No qualifying licensed sentence found. |
-| 冬 | No qualifying licensed sentence found. |
-| 登 | No qualifying licensed sentence found. |
-| 林 | No qualifying licensed sentence found. |
-| 夕 | No qualifying licensed sentence found. |
-| 植 | No qualifying licensed sentence found. |
-| 然 | No qualifying licensed sentence found. |
-| 川 | No qualifying licensed sentence found. |
-| 秋 | No qualifying licensed sentence found. |
-| 夏 | No qualifying licensed sentence found. |
-| 讀 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 書 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 線 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 題 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 角 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 短 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 代 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 童 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 理 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 表 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 堂 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 班 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 省 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 庭 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 體 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 雪 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 窓 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 術 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 身 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 藥 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 淸 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 形 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 社 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 運 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 今 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 昨 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 科 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 球 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 功 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 信 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 弱 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 飮 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 共 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 果 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 急 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 圖 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 樂 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 反 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 放 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 消 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 新 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 業 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 勇 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 用 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 才 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 戰 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 幸 | 6급II: No qualifying sentence occurs in the retained licensed selections. |
-| 章 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 訓 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 多 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 度 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 禮 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 孫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 由 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 京 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 古 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 路 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 米 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 朴 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 病 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 席 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 樹 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 習 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 洋 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 英 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 近 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 頭 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 服 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 醫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 苦 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 油 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 衣 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 番 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 使 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 夜 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 晝 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 向 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 野 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 號 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 強 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 美 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 愛 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 交 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 待 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 失 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 感 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 郡 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 根 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 例 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 綠 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 李 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 死 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 速 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 勝 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 永 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 溫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 園 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 遠 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 親 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 通 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 畫 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 黃 | 6급: No qualifying sentence occurs in the retained licensed selections. |
-| 具 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 念 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 典 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 筆 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 客 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 課 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 兵 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 仕 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 臣 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 兒 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 友 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 卒 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 流 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 類 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 雲 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 州 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 價 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 局 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 練 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 束 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 雨 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 任 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 切 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 觀 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 朗 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 洗 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 首 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 養 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 充 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 害 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 廣 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 歷 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 宿 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 展 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 情 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 格 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 舊 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 變 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 實 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 參 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 責 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 化 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 良 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 福 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 奉 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 見 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 關 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 到 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 産 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 順 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 着 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 基 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 團 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 德 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 旅 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 陸 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 史 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 商 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 相 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 說 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 性 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 識 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 約 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 偉 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 財 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 材 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 店 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 種 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 週 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 質 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 品 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 必 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 凶 | 5급II: No qualifying sentence occurs in the retained licensed selections. |
-| 寫 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 葉 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 比 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 億 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 牛 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 雄 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 因 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 操 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 唱 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 規 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 壇 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 都 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 量 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 位 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 則 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 島 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 氷 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 漁 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 魚 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 曜 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 再 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 寒 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 健 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 技 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 鼻 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 浴 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 耳 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 卓 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 考 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 橋 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 船 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 屋 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 板 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 擧 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 競 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 末 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 倍 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 原 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 爭 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 停 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 致 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 去 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 冷 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 思 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 曲 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 吉 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 善 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 黑 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 改 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 建 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 固 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 給 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 落 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 領 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 加 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 可 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 輕 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 景 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 救 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 貴 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 汽 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 談 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 料 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 馬 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 亡 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 買 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 賣 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 賞 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 序 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 選 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 案 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 熱 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 願 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 災 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 貯 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 赤 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 止 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 祝 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 打 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 炭 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 敗 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 許 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 湖 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 患 | 5급: No qualifying sentence occurs in the retained licensed selections. |
-| 講 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 師 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 修 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 解 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 故 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 求 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 毒 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 斗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 房 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 壁 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 婦 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 佛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 星 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 謠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 員 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 製 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 統 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 虛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 戶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 列 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 武 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 府 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 寺 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 申 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 政 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 準 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 志 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 街 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 檀 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 羅 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 麗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 液 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 祭 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 鳥 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 職 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 察 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 康 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 端 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 擔 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 脈 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 未 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 殺 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 盛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 掃 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 受 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 眼 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 將 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 早 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 走 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 齒 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 鄕 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 血 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 博 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 伐 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 舍 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 玉 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 票 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 航 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 貨 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 起 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 牧 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 防 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 配 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 勢 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 細 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 送 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 守 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 息 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 衛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 移 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 低 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 程 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 回 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 單 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 黨 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 帶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 豆 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 兩 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 連 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 誠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 素 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 演 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 圓 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 測 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 假 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 想 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 是 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 恩 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 尊 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 眞 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 賢 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 惠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 好 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 確 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 宮 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 努 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 導 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 密 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 步 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 飛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 床 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 續 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 授 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 施 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 誤 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 接 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 除 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 進 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 築 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 蓄 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 取 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 治 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 減 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 監 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 個 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 潔 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 缺 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 境 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 警 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 慶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 係 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 句 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 極 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 器 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 暖 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 難 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 怒 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 斷 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 達 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 隊 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 督 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 銅 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 得 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 燈 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 論 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 毛 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 味 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 訪 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 拜 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 背 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 邊 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 報 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 復 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 富 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 副 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 非 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 悲 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 貧 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 謝 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 常 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 聖 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 笑 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 俗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 純 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 詩 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 試 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 視 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 深 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 暗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 壓 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 餘 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 逆 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 煙 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 藝 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 肉 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 陰 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 應 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 益 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 引 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 障 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 敵 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 田 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 絶 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 濟 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 制 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 際 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 助 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 竹 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 衆 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 增 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 指 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 至 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 請 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 總 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 銃 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 忠 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 蟲 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 侵 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 快 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 退 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 波 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 砲 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 包 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 港 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 驗 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 協 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 呼 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 吸 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 興 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 希 | 4급II: No qualifying sentence occurs in the retained licensed selections. |
-| 券 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 紀 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 普 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 辭 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 絲 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 籍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 智 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 誌 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 冊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 派 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 篇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 季 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 孤 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 柳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 私 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 叔 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 氏 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 緣 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 營 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 危 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 儒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 仁 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 姿 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 張 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 差 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 討 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 顯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 階 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 君 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 亂 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 犯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 範 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 屬 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 域 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 資 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 帝 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 刑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 驚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 孔 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 管 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 糧 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鳴 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 松 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 秀 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 燃 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 郵 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 座 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 探 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 革 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 拒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 更 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 骨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 徒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 負 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 傷 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 源 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 裝 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 靜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 聽 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 就 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 紅 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 庫 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 碑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 殘 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 廳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 暇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 干 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 降 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 屈 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 勸 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 筋 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 寄 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 粉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 委 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 乳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 雜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 折 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 讚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鬪 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 胞 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 閑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 混 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 犬 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 困 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 離 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 否 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 批 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 延 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 遇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 圍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 錢 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 整 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 泉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 趣 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 堅 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 肅 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 疲 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 喜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 繼 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 卷 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 龍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 嚴 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 與 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 易 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鉛 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 迎 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 援 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 獎 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 轉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 丁 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鍾 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 持 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 採 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 閉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 候 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 刻 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 覺 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 簡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 看 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 甘 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 敢 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 甲 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 據 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 巨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 傑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 儉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 擊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 激 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 傾 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鏡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鷄 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 系 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 戒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 攻 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 鑛 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 群 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 歸 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 劇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 機 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 奇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 段 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 盜 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 逃 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 卵 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 覽 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 慮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 烈 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 輪 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 妹 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 模 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 墓 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 妙 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 舞 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 拍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 髮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 妨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 辯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 伏 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 複 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 憤 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 祕 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 射 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 散 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 象 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 宣 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 舌 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 損 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 頌 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 崇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 映 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 優 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 怨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 威 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 慰 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 遊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 遺 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 隱 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 儀 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 疑 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 異 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 姉 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 腸 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 壯 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 帳 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 底 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 積 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 適 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 績 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 賊 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 專 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 點 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 占 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 條 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 潮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 存 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 酒 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 朱 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 周 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 證 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 珍 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 盡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 招 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 推 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 縮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 層 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 寢 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 針 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 歎 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 彈 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 脫 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 擇 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 痛 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 投 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 評 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 爆 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 標 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 避 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 恨 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 抗 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 核 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 險 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 或 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 婚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 歡 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 環 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 況 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 灰 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 厚 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-| 揮 | 4급: No qualifying sentence occurs in the retained licensed selections. |
-
+| 丁 | No qualifying licensed sentence retained. |
+| 七 | No qualifying licensed sentence retained. |
+| 不 | No qualifying licensed sentence retained. |
+| 世 | No qualifying licensed sentence retained. |
+| 中 | No qualifying licensed sentence retained. |
+| 主 | No qualifying licensed sentence retained. |
+| 九 | No qualifying licensed sentence retained. |
+| 乳 | No qualifying licensed sentence retained. |
+| 亂 | No qualifying licensed sentence retained. |
+| 五 | No qualifying licensed sentence retained. |
+| 亡 | No qualifying licensed sentence retained. |
+| 交 | No qualifying licensed sentence retained. |
+| 京 | No qualifying licensed sentence retained. |
+| 人 | No qualifying licensed sentence retained. |
+| 仁 | No qualifying licensed sentence retained. |
+| 今 | No qualifying licensed sentence retained. |
+| 仕 | No qualifying licensed sentence retained. |
+| 他 | No qualifying licensed sentence retained. |
+| 仙 | No qualifying licensed sentence retained. |
+| 代 | No qualifying licensed sentence retained. |
+| 令 | No qualifying licensed sentence retained. |
+| 以 | No qualifying licensed sentence retained. |
+| 件 | No qualifying licensed sentence retained. |
+| 任 | No qualifying licensed sentence retained. |
+| 伏 | No qualifying licensed sentence retained. |
+| 伐 | No qualifying licensed sentence retained. |
+| 休 | No qualifying licensed sentence retained. |
+| 位 | No qualifying licensed sentence retained. |
+| 低 | No qualifying licensed sentence retained. |
+| 佛 | No qualifying licensed sentence retained. |
+| 作 | No qualifying licensed sentence retained. |
+| 使 | No qualifying licensed sentence retained. |
+| 來 | No qualifying licensed sentence retained. |
+| 例 | No qualifying licensed sentence retained. |
+| 依 | No qualifying licensed sentence retained. |
+| 侵 | No qualifying licensed sentence retained. |
+| 便 | No qualifying licensed sentence retained. |
+| 係 | No qualifying licensed sentence retained. |
+| 俗 | No qualifying licensed sentence retained. |
+| 保 | No qualifying licensed sentence retained. |
+| 信 | No qualifying licensed sentence retained. |
+| 修 | No qualifying licensed sentence retained. |
+| 個 | No qualifying licensed sentence retained. |
+| 倍 | No qualifying licensed sentence retained. |
+| 候 | No qualifying licensed sentence retained. |
+| 假 | No qualifying licensed sentence retained. |
+| 偉 | No qualifying licensed sentence retained. |
+| 停 | No qualifying licensed sentence retained. |
+| 健 | No qualifying licensed sentence retained. |
+| 傑 | No qualifying licensed sentence retained. |
+| 備 | No qualifying licensed sentence retained. |
+| 傳 | No qualifying licensed sentence retained. |
+| 傷 | No qualifying licensed sentence retained. |
+| 傾 | No qualifying licensed sentence retained. |
+| 價 | No qualifying licensed sentence retained. |
+| 儀 | No qualifying licensed sentence retained. |
+| 億 | No qualifying licensed sentence retained. |
+| 儉 | No qualifying licensed sentence retained. |
+| 儒 | No qualifying licensed sentence retained. |
+| 優 | No qualifying licensed sentence retained. |
+| 元 | No qualifying licensed sentence retained. |
+| 充 | No qualifying licensed sentence retained. |
+| 先 | No qualifying licensed sentence retained. |
+| 光 | No qualifying licensed sentence retained. |
+| 兒 | No qualifying licensed sentence retained. |
+| 全 | No qualifying licensed sentence retained. |
+| 兩 | No qualifying licensed sentence retained. |
+| 公 | No qualifying licensed sentence retained. |
+| 六 | No qualifying licensed sentence retained. |
+| 共 | No qualifying licensed sentence retained. |
+| 兵 | No qualifying licensed sentence retained. |
+| 具 | No qualifying licensed sentence retained. |
+| 典 | No qualifying licensed sentence retained. |
+| 冊 | No qualifying licensed sentence retained. |
+| 再 | No qualifying licensed sentence retained. |
+| 冬 | No qualifying licensed sentence retained. |
+| 冷 | No qualifying licensed sentence retained. |
+| 凶 | No qualifying licensed sentence retained. |
+| 出 | No qualifying licensed sentence retained. |
+| 分 | No qualifying licensed sentence retained. |
+| 切 | No qualifying licensed sentence retained. |
+| 刑 | No qualifying licensed sentence retained. |
+| 列 | No qualifying licensed sentence retained. |
+| 初 | No qualifying licensed sentence retained. |
+| 判 | No qualifying licensed sentence retained. |
+| 別 | No qualifying licensed sentence retained. |
+| 利 | No qualifying licensed sentence retained. |
+| 到 | No qualifying licensed sentence retained. |
+| 制 | No qualifying licensed sentence retained. |
+| 券 | No qualifying licensed sentence retained. |
+| 刻 | No qualifying licensed sentence retained. |
+| 則 | No qualifying licensed sentence retained. |
+| 副 | No qualifying licensed sentence retained. |
+| 創 | No qualifying licensed sentence retained. |
+| 劇 | No qualifying licensed sentence retained. |
+| 力 | No qualifying licensed sentence retained. |
+| 功 | No qualifying licensed sentence retained. |
+| 加 | No qualifying licensed sentence retained. |
+| 助 | No qualifying licensed sentence retained. |
+| 努 | No qualifying licensed sentence retained. |
+| 勇 | No qualifying licensed sentence retained. |
+| 動 | No qualifying licensed sentence retained. |
+| 務 | No qualifying licensed sentence retained. |
+| 勝 | No qualifying licensed sentence retained. |
+| 勞 | No qualifying licensed sentence retained. |
+| 勢 | No qualifying licensed sentence retained. |
+| 勤 | No qualifying licensed sentence retained. |
+| 勸 | No qualifying licensed sentence retained. |
+| 包 | No qualifying licensed sentence retained. |
+| 化 | No qualifying licensed sentence retained. |
+| 北 | No qualifying licensed sentence retained. |
+| 區 | No qualifying licensed sentence retained. |
+| 午 | No qualifying licensed sentence retained. |
+| 半 | No qualifying licensed sentence retained. |
+| 卒 | No qualifying licensed sentence retained. |
+| 卓 | No qualifying licensed sentence retained. |
+| 協 | No qualifying licensed sentence retained. |
+| 南 | No qualifying licensed sentence retained. |
+| 博 | No qualifying licensed sentence retained. |
+| 占 | No qualifying licensed sentence retained. |
+| 印 | No qualifying licensed sentence retained. |
+| 危 | No qualifying licensed sentence retained. |
+| 卵 | No qualifying licensed sentence retained. |
+| 卷 | No qualifying licensed sentence retained. |
+| 厚 | No qualifying licensed sentence retained. |
+| 原 | No qualifying licensed sentence retained. |
+| 去 | No qualifying licensed sentence retained. |
+| 參 | No qualifying licensed sentence retained. |
+| 友 | No qualifying licensed sentence retained. |
+| 反 | No qualifying licensed sentence retained. |
+| 叔 | No qualifying licensed sentence retained. |
+| 取 | No qualifying licensed sentence retained. |
+| 受 | No qualifying licensed sentence retained. |
+| 口 | No qualifying licensed sentence retained. |
+| 古 | No qualifying licensed sentence retained. |
+| 句 | No qualifying licensed sentence retained. |
+| 可 | No qualifying licensed sentence retained. |
+| 史 | No qualifying licensed sentence retained. |
+| 右 | No qualifying licensed sentence retained. |
+| 各 | No qualifying licensed sentence retained. |
+| 合 | No qualifying licensed sentence retained. |
+| 吉 | No qualifying licensed sentence retained. |
+| 名 | No qualifying licensed sentence retained. |
+| 向 | No qualifying licensed sentence retained. |
+| 君 | No qualifying licensed sentence retained. |
+| 否 | No qualifying licensed sentence retained. |
+| 吸 | No qualifying licensed sentence retained. |
+| 告 | No qualifying licensed sentence retained. |
+| 周 | No qualifying licensed sentence retained. |
+| 味 | No qualifying licensed sentence retained. |
+| 呼 | No qualifying licensed sentence retained. |
+| 和 | No qualifying licensed sentence retained. |
+| 品 | No qualifying licensed sentence retained. |
+| 員 | No qualifying licensed sentence retained. |
+| 唱 | No qualifying licensed sentence retained. |
+| 商 | No qualifying licensed sentence retained. |
+| 問 | No qualifying licensed sentence retained. |
+| 善 | No qualifying licensed sentence retained. |
+| 喜 | No qualifying licensed sentence retained. |
+| 單 | No qualifying licensed sentence retained. |
+| 器 | No qualifying licensed sentence retained. |
+| 嚴 | No qualifying licensed sentence retained. |
+| 四 | No qualifying licensed sentence retained. |
+| 回 | No qualifying licensed sentence retained. |
+| 因 | No qualifying licensed sentence retained. |
+| 困 | No qualifying licensed sentence retained. |
+| 固 | No qualifying licensed sentence retained. |
+| 圍 | No qualifying licensed sentence retained. |
+| 園 | No qualifying licensed sentence retained. |
+| 圓 | No qualifying licensed sentence retained. |
+| 圖 | No qualifying licensed sentence retained. |
+| 團 | No qualifying licensed sentence retained. |
+| 土 | No qualifying licensed sentence retained. |
+| 在 | No qualifying licensed sentence retained. |
+| 地 | No qualifying licensed sentence retained. |
+| 均 | No qualifying licensed sentence retained. |
+| 城 | No qualifying licensed sentence retained. |
+| 域 | No qualifying licensed sentence retained. |
+| 基 | No qualifying licensed sentence retained. |
+| 堂 | No qualifying licensed sentence retained. |
+| 堅 | No qualifying licensed sentence retained. |
+| 報 | No qualifying licensed sentence retained. |
+| 場 | No qualifying licensed sentence retained. |
+| 境 | No qualifying licensed sentence retained. |
+| 墓 | No qualifying licensed sentence retained. |
+| 增 | No qualifying licensed sentence retained. |
+| 壁 | No qualifying licensed sentence retained. |
+| 壇 | No qualifying licensed sentence retained. |
+| 壓 | No qualifying licensed sentence retained. |
+| 士 | No qualifying licensed sentence retained. |
+| 壯 | No qualifying licensed sentence retained. |
+| 夏 | No qualifying licensed sentence retained. |
+| 夕 | No qualifying licensed sentence retained. |
+| 外 | No qualifying licensed sentence retained. |
+| 多 | No qualifying licensed sentence retained. |
+| 夜 | No qualifying licensed sentence retained. |
+| 天 | No qualifying licensed sentence retained. |
+| 太 | No qualifying licensed sentence retained. |
+| 夫 | No qualifying licensed sentence retained. |
+| 失 | No qualifying licensed sentence retained. |
+| 奇 | No qualifying licensed sentence retained. |
+| 奉 | No qualifying licensed sentence retained. |
+| 好 | No qualifying licensed sentence retained. |
+| 如 | No qualifying licensed sentence retained. |
+| 妙 | No qualifying licensed sentence retained. |
+| 妨 | No qualifying licensed sentence retained. |
+| 妹 | No qualifying licensed sentence retained. |
+| 姉 | No qualifying licensed sentence retained. |
+| 始 | No qualifying licensed sentence retained. |
+| 姓 | No qualifying licensed sentence retained. |
+| 委 | No qualifying licensed sentence retained. |
+| 姿 | No qualifying licensed sentence retained. |
+| 威 | No qualifying licensed sentence retained. |
+| 婚 | No qualifying licensed sentence retained. |
+| 婦 | No qualifying licensed sentence retained. |
+| 孔 | No qualifying licensed sentence retained. |
+| 字 | No qualifying licensed sentence retained. |
+| 存 | No qualifying licensed sentence retained. |
+| 孝 | No qualifying licensed sentence retained. |
+| 季 | No qualifying licensed sentence retained. |
+| 孤 | No qualifying licensed sentence retained. |
+| 孫 | No qualifying licensed sentence retained. |
+| 宅 | No qualifying licensed sentence retained. |
+| 守 | No qualifying licensed sentence retained. |
+| 安 | No qualifying licensed sentence retained. |
+| 完 | No qualifying licensed sentence retained. |
+| 官 | No qualifying licensed sentence retained. |
+| 定 | No qualifying licensed sentence retained. |
+| 客 | No qualifying licensed sentence retained. |
+| 宣 | No qualifying licensed sentence retained. |
+| 宮 | No qualifying licensed sentence retained. |
+| 害 | No qualifying licensed sentence retained. |
+| 容 | No qualifying licensed sentence retained. |
+| 宿 | No qualifying licensed sentence retained. |
+| 寄 | No qualifying licensed sentence retained. |
+| 密 | No qualifying licensed sentence retained. |
+| 富 | No qualifying licensed sentence retained. |
+| 寒 | No qualifying licensed sentence retained. |
+| 察 | No qualifying licensed sentence retained. |
+| 寢 | No qualifying licensed sentence retained. |
+| 實 | No qualifying licensed sentence retained. |
+| 寫 | No qualifying licensed sentence retained. |
+| 寶 | No qualifying licensed sentence retained. |
+| 寸 | No qualifying licensed sentence retained. |
+| 寺 | No qualifying licensed sentence retained. |
+| 射 | No qualifying licensed sentence retained. |
+| 將 | No qualifying licensed sentence retained. |
+| 專 | No qualifying licensed sentence retained. |
+| 尊 | No qualifying licensed sentence retained. |
+| 對 | No qualifying licensed sentence retained. |
+| 導 | No qualifying licensed sentence retained. |
+| 小 | No qualifying licensed sentence retained. |
+| 就 | No qualifying licensed sentence retained. |
+| 局 | No qualifying licensed sentence retained. |
+| 居 | No qualifying licensed sentence retained. |
+| 屈 | No qualifying licensed sentence retained. |
+| 屋 | No qualifying licensed sentence retained. |
+| 展 | No qualifying licensed sentence retained. |
+| 層 | No qualifying licensed sentence retained. |
+| 屬 | No qualifying licensed sentence retained. |
+| 島 | No qualifying licensed sentence retained. |
+| 崇 | No qualifying licensed sentence retained. |
+| 川 | No qualifying licensed sentence retained. |
+| 州 | No qualifying licensed sentence retained. |
+| 工 | No qualifying licensed sentence retained. |
+| 巨 | No qualifying licensed sentence retained. |
+| 差 | No qualifying licensed sentence retained. |
+| 己 | No qualifying licensed sentence retained. |
+| 布 | No qualifying licensed sentence retained. |
+| 希 | No qualifying licensed sentence retained. |
+| 帝 | No qualifying licensed sentence retained. |
+| 師 | No qualifying licensed sentence retained. |
+| 席 | No qualifying licensed sentence retained. |
+| 帳 | No qualifying licensed sentence retained. |
+| 帶 | No qualifying licensed sentence retained. |
+| 常 | No qualifying licensed sentence retained. |
+| 干 | No qualifying licensed sentence retained. |
+| 平 | No qualifying licensed sentence retained. |
+| 幸 | No qualifying licensed sentence retained. |
+| 床 | No qualifying licensed sentence retained. |
+| 序 | No qualifying licensed sentence retained. |
+| 底 | No qualifying licensed sentence retained. |
+| 店 | No qualifying licensed sentence retained. |
+| 府 | No qualifying licensed sentence retained. |
+| 度 | No qualifying licensed sentence retained. |
+| 座 | No qualifying licensed sentence retained. |
+| 庫 | No qualifying licensed sentence retained. |
+| 庭 | No qualifying licensed sentence retained. |
+| 康 | No qualifying licensed sentence retained. |
+| 廣 | No qualifying licensed sentence retained. |
+| 廳 | No qualifying licensed sentence retained. |
+| 延 | No qualifying licensed sentence retained. |
+| 建 | No qualifying licensed sentence retained. |
+| 式 | No qualifying licensed sentence retained. |
+| 引 | No qualifying licensed sentence retained. |
+| 弱 | No qualifying licensed sentence retained. |
+| 張 | No qualifying licensed sentence retained. |
+| 強 | No qualifying licensed sentence retained. |
+| 彈 | No qualifying licensed sentence retained. |
+| 形 | No qualifying licensed sentence retained. |
+| 往 | No qualifying licensed sentence retained. |
+| 待 | No qualifying licensed sentence retained. |
+| 律 | No qualifying licensed sentence retained. |
+| 後 | No qualifying licensed sentence retained. |
+| 徒 | No qualifying licensed sentence retained. |
+| 得 | No qualifying licensed sentence retained. |
+| 復 | No qualifying licensed sentence retained. |
+| 德 | No qualifying licensed sentence retained. |
+| 心 | No qualifying licensed sentence retained. |
+| 必 | No qualifying licensed sentence retained. |
+| 志 | No qualifying licensed sentence retained. |
+| 忠 | No qualifying licensed sentence retained. |
+| 快 | No qualifying licensed sentence retained. |
+| 念 | No qualifying licensed sentence retained. |
+| 怒 | No qualifying licensed sentence retained. |
+| 思 | No qualifying licensed sentence retained. |
+| 急 | No qualifying licensed sentence retained. |
+| 性 | No qualifying licensed sentence retained. |
+| 怨 | No qualifying licensed sentence retained. |
+| 恨 | No qualifying licensed sentence retained. |
+| 恩 | No qualifying licensed sentence retained. |
+| 息 | No qualifying licensed sentence retained. |
+| 患 | No qualifying licensed sentence retained. |
+| 悲 | No qualifying licensed sentence retained. |
+| 情 | No qualifying licensed sentence retained. |
+| 惠 | No qualifying licensed sentence retained. |
+| 惡 | No qualifying licensed sentence retained. |
+| 想 | No qualifying licensed sentence retained. |
+| 意 | No qualifying licensed sentence retained. |
+| 愛 | No qualifying licensed sentence retained. |
+| 感 | No qualifying licensed sentence retained. |
+| 態 | No qualifying licensed sentence retained. |
+| 慮 | No qualifying licensed sentence retained. |
+| 慰 | No qualifying licensed sentence retained. |
+| 慶 | No qualifying licensed sentence retained. |
+| 憤 | No qualifying licensed sentence retained. |
+| 憲 | No qualifying licensed sentence retained. |
+| 應 | No qualifying licensed sentence retained. |
+| 成 | No qualifying licensed sentence retained. |
+| 戒 | No qualifying licensed sentence retained. |
+| 或 | No qualifying licensed sentence retained. |
+| 戰 | No qualifying licensed sentence retained. |
+| 戶 | No qualifying licensed sentence retained. |
+| 房 | No qualifying licensed sentence retained. |
+| 所 | No qualifying licensed sentence retained. |
+| 手 | No qualifying licensed sentence retained. |
+| 才 | No qualifying licensed sentence retained. |
+| 打 | No qualifying licensed sentence retained. |
+| 批 | No qualifying licensed sentence retained. |
+| 承 | No qualifying licensed sentence retained. |
+| 技 | No qualifying licensed sentence retained. |
+| 投 | No qualifying licensed sentence retained. |
+| 抗 | No qualifying licensed sentence retained. |
+| 折 | No qualifying licensed sentence retained. |
+| 拍 | No qualifying licensed sentence retained. |
+| 拒 | No qualifying licensed sentence retained. |
+| 招 | No qualifying licensed sentence retained. |
+| 拜 | No qualifying licensed sentence retained. |
+| 持 | No qualifying licensed sentence retained. |
+| 指 | No qualifying licensed sentence retained. |
+| 掃 | No qualifying licensed sentence retained. |
+| 授 | No qualifying licensed sentence retained. |
+| 採 | No qualifying licensed sentence retained. |
+| 探 | No qualifying licensed sentence retained. |
+| 接 | No qualifying licensed sentence retained. |
+| 推 | No qualifying licensed sentence retained. |
+| 提 | No qualifying licensed sentence retained. |
+| 揮 | No qualifying licensed sentence retained. |
+| 援 | No qualifying licensed sentence retained. |
+| 損 | No qualifying licensed sentence retained. |
+| 擇 | No qualifying licensed sentence retained. |
+| 擊 | No qualifying licensed sentence retained. |
+| 操 | No qualifying licensed sentence retained. |
+| 擔 | No qualifying licensed sentence retained. |
+| 據 | No qualifying licensed sentence retained. |
+| 擧 | No qualifying licensed sentence retained. |
+| 支 | No qualifying licensed sentence retained. |
+| 收 | No qualifying licensed sentence retained. |
+| 改 | No qualifying licensed sentence retained. |
+| 攻 | No qualifying licensed sentence retained. |
+| 放 | No qualifying licensed sentence retained. |
+| 政 | No qualifying licensed sentence retained. |
+| 故 | No qualifying licensed sentence retained. |
+| 效 | No qualifying licensed sentence retained. |
+| 救 | No qualifying licensed sentence retained. |
+| 敗 | No qualifying licensed sentence retained. |
+| 敢 | No qualifying licensed sentence retained. |
+| 散 | No qualifying licensed sentence retained. |
+| 敬 | No qualifying licensed sentence retained. |
+| 整 | No qualifying licensed sentence retained. |
+| 敵 | No qualifying licensed sentence retained. |
+| 斗 | No qualifying licensed sentence retained. |
+| 料 | No qualifying licensed sentence retained. |
+| 新 | No qualifying licensed sentence retained. |
+| 斷 | No qualifying licensed sentence retained. |
+| 方 | No qualifying licensed sentence retained. |
+| 施 | No qualifying licensed sentence retained. |
+| 旅 | No qualifying licensed sentence retained. |
+| 旗 | No qualifying licensed sentence retained. |
+| 早 | No qualifying licensed sentence retained. |
+| 明 | No qualifying licensed sentence retained. |
+| 易 | No qualifying licensed sentence retained. |
+| 星 | No qualifying licensed sentence retained. |
+| 映 | No qualifying licensed sentence retained. |
+| 昨 | No qualifying licensed sentence retained. |
+| 是 | No qualifying licensed sentence retained. |
+| 晝 | No qualifying licensed sentence retained. |
+| 普 | No qualifying licensed sentence retained. |
+| 景 | No qualifying licensed sentence retained. |
+| 智 | No qualifying licensed sentence retained. |
+| 暇 | No qualifying licensed sentence retained. |
+| 暖 | No qualifying licensed sentence retained. |
+| 暗 | No qualifying licensed sentence retained. |
+| 暴 | No qualifying licensed sentence retained. |
+| 曜 | No qualifying licensed sentence retained. |
+| 曲 | No qualifying licensed sentence retained. |
+| 更 | No qualifying licensed sentence retained. |
+| 書 | No qualifying licensed sentence retained. |
+| 最 | No qualifying licensed sentence retained. |
+| 會 | No qualifying licensed sentence retained. |
+| 月 | No qualifying licensed sentence retained. |
+| 服 | No qualifying licensed sentence retained. |
+| 朗 | No qualifying licensed sentence retained. |
+| 望 | No qualifying licensed sentence retained. |
+| 朝 | No qualifying licensed sentence retained. |
+| 期 | No qualifying licensed sentence retained. |
+| 木 | No qualifying licensed sentence retained. |
+| 未 | No qualifying licensed sentence retained. |
+| 末 | No qualifying licensed sentence retained. |
+| 朱 | No qualifying licensed sentence retained. |
+| 朴 | No qualifying licensed sentence retained. |
+| 李 | No qualifying licensed sentence retained. |
+| 材 | No qualifying licensed sentence retained. |
+| 村 | No qualifying licensed sentence retained. |
+| 束 | No qualifying licensed sentence retained. |
+| 東 | No qualifying licensed sentence retained. |
+| 松 | No qualifying licensed sentence retained. |
+| 板 | No qualifying licensed sentence retained. |
+| 林 | No qualifying licensed sentence retained. |
+| 果 | No qualifying licensed sentence retained. |
+| 柳 | No qualifying licensed sentence retained. |
+| 査 | No qualifying licensed sentence retained. |
+| 核 | No qualifying licensed sentence retained. |
+| 根 | No qualifying licensed sentence retained. |
+| 格 | No qualifying licensed sentence retained. |
+| 案 | No qualifying licensed sentence retained. |
+| 條 | No qualifying licensed sentence retained. |
+| 植 | No qualifying licensed sentence retained. |
+| 業 | No qualifying licensed sentence retained. |
+| 極 | No qualifying licensed sentence retained. |
+| 榮 | No qualifying licensed sentence retained. |
+| 構 | No qualifying licensed sentence retained. |
+| 樂 | No qualifying licensed sentence retained. |
+| 標 | No qualifying licensed sentence retained. |
+| 模 | No qualifying licensed sentence retained. |
+| 樣 | No qualifying licensed sentence retained. |
+| 樹 | No qualifying licensed sentence retained. |
+| 橋 | No qualifying licensed sentence retained. |
+| 機 | No qualifying licensed sentence retained. |
+| 檀 | No qualifying licensed sentence retained. |
+| 檢 | No qualifying licensed sentence retained. |
+| 權 | No qualifying licensed sentence retained. |
+| 次 | No qualifying licensed sentence retained. |
+| 歌 | No qualifying licensed sentence retained. |
+| 歎 | No qualifying licensed sentence retained. |
+| 歡 | No qualifying licensed sentence retained. |
+| 止 | No qualifying licensed sentence retained. |
+| 正 | No qualifying licensed sentence retained. |
+| 步 | No qualifying licensed sentence retained. |
+| 武 | No qualifying licensed sentence retained. |
+| 歲 | No qualifying licensed sentence retained. |
+| 歷 | No qualifying licensed sentence retained. |
+| 歸 | No qualifying licensed sentence retained. |
+| 死 | No qualifying licensed sentence retained. |
+| 殘 | No qualifying licensed sentence retained. |
+| 段 | No qualifying licensed sentence retained. |
+| 殺 | No qualifying licensed sentence retained. |
+| 母 | No qualifying licensed sentence retained. |
+| 毒 | No qualifying licensed sentence retained. |
+| 比 | No qualifying licensed sentence retained. |
+| 毛 | No qualifying licensed sentence retained. |
+| 氏 | No qualifying licensed sentence retained. |
+| 氣 | No qualifying licensed sentence retained. |
+| 水 | No qualifying licensed sentence retained. |
+| 氷 | No qualifying licensed sentence retained. |
+| 永 | No qualifying licensed sentence retained. |
+| 求 | No qualifying licensed sentence retained. |
+| 決 | No qualifying licensed sentence retained. |
+| 汽 | No qualifying licensed sentence retained. |
+| 河 | No qualifying licensed sentence retained. |
+| 油 | No qualifying licensed sentence retained. |
+| 治 | No qualifying licensed sentence retained. |
+| 況 | No qualifying licensed sentence retained. |
+| 泉 | No qualifying licensed sentence retained. |
+| 法 | No qualifying licensed sentence retained. |
+| 波 | No qualifying licensed sentence retained. |
+| 注 | No qualifying licensed sentence retained. |
+| 洋 | No qualifying licensed sentence retained. |
+| 洗 | No qualifying licensed sentence retained. |
+| 洞 | No qualifying licensed sentence retained. |
+| 活 | No qualifying licensed sentence retained. |
+| 派 | No qualifying licensed sentence retained. |
+| 流 | No qualifying licensed sentence retained. |
+| 浴 | No qualifying licensed sentence retained. |
+| 海 | No qualifying licensed sentence retained. |
+| 消 | No qualifying licensed sentence retained. |
+| 液 | No qualifying licensed sentence retained. |
+| 深 | No qualifying licensed sentence retained. |
+| 混 | No qualifying licensed sentence retained. |
+| 淸 | No qualifying licensed sentence retained. |
+| 減 | No qualifying licensed sentence retained. |
+| 測 | No qualifying licensed sentence retained. |
+| 港 | No qualifying licensed sentence retained. |
+| 湖 | No qualifying licensed sentence retained. |
+| 源 | No qualifying licensed sentence retained. |
+| 準 | No qualifying licensed sentence retained. |
+| 溫 | No qualifying licensed sentence retained. |
+| 漁 | No qualifying licensed sentence retained. |
+| 演 | No qualifying licensed sentence retained. |
+| 漢 | No qualifying licensed sentence retained. |
+| 潔 | No qualifying licensed sentence retained. |
+| 潮 | No qualifying licensed sentence retained. |
+| 激 | No qualifying licensed sentence retained. |
+| 濟 | No qualifying licensed sentence retained. |
+| 火 | No qualifying licensed sentence retained. |
+| 灰 | No qualifying licensed sentence retained. |
+| 災 | No qualifying licensed sentence retained. |
+| 炭 | No qualifying licensed sentence retained. |
+| 烈 | No qualifying licensed sentence retained. |
+| 無 | No qualifying licensed sentence retained. |
+| 然 | No qualifying licensed sentence retained. |
+| 煙 | No qualifying licensed sentence retained. |
+| 熱 | No qualifying licensed sentence retained. |
+| 燃 | No qualifying licensed sentence retained. |
+| 燈 | No qualifying licensed sentence retained. |
+| 營 | No qualifying licensed sentence retained. |
+| 爆 | No qualifying licensed sentence retained. |
+| 爭 | No qualifying licensed sentence retained. |
+| 爲 | No qualifying licensed sentence retained. |
+| 父 | No qualifying licensed sentence retained. |
+| 牛 | No qualifying licensed sentence retained. |
+| 牧 | No qualifying licensed sentence retained. |
+| 物 | No qualifying licensed sentence retained. |
+| 特 | No qualifying licensed sentence retained. |
+| 犬 | No qualifying licensed sentence retained. |
+| 犯 | No qualifying licensed sentence retained. |
+| 狀 | No qualifying licensed sentence retained. |
+| 獎 | No qualifying licensed sentence retained. |
+| 獨 | No qualifying licensed sentence retained. |
+| 玉 | No qualifying licensed sentence retained. |
+| 王 | No qualifying licensed sentence retained. |
+| 珍 | No qualifying licensed sentence retained. |
+| 班 | No qualifying licensed sentence retained. |
+| 球 | No qualifying licensed sentence retained. |
+| 理 | No qualifying licensed sentence retained. |
+| 環 | No qualifying licensed sentence retained. |
+| 甘 | No qualifying licensed sentence retained. |
+| 生 | No qualifying licensed sentence retained. |
+| 産 | No qualifying licensed sentence retained. |
+| 用 | No qualifying licensed sentence retained. |
+| 田 | No qualifying licensed sentence retained. |
+| 由 | No qualifying licensed sentence retained. |
+| 甲 | No qualifying licensed sentence retained. |
+| 申 | No qualifying licensed sentence retained. |
+| 男 | No qualifying licensed sentence retained. |
+| 留 | No qualifying licensed sentence retained. |
+| 略 | No qualifying licensed sentence retained. |
+| 番 | No qualifying licensed sentence retained. |
+| 畫 | No qualifying licensed sentence retained. |
+| 異 | No qualifying licensed sentence retained. |
+| 當 | No qualifying licensed sentence retained. |
+| 疑 | No qualifying licensed sentence retained. |
+| 疲 | No qualifying licensed sentence retained. |
+| 病 | No qualifying licensed sentence retained. |
+| 痛 | No qualifying licensed sentence retained. |
+| 登 | No qualifying licensed sentence retained. |
+| 發 | No qualifying licensed sentence retained. |
+| 白 | No qualifying licensed sentence retained. |
+| 百 | No qualifying licensed sentence retained. |
+| 益 | No qualifying licensed sentence retained. |
+| 盛 | No qualifying licensed sentence retained. |
+| 盜 | No qualifying licensed sentence retained. |
+| 盡 | No qualifying licensed sentence retained. |
+| 監 | No qualifying licensed sentence retained. |
+| 目 | No qualifying licensed sentence retained. |
+| 直 | No qualifying licensed sentence retained. |
+| 相 | No qualifying licensed sentence retained. |
+| 省 | No qualifying licensed sentence retained. |
+| 看 | No qualifying licensed sentence retained. |
+| 眞 | No qualifying licensed sentence retained. |
+| 眼 | No qualifying licensed sentence retained. |
+| 着 | No qualifying licensed sentence retained. |
+| 督 | No qualifying licensed sentence retained. |
+| 知 | No qualifying licensed sentence retained. |
+| 短 | No qualifying licensed sentence retained. |
+| 石 | No qualifying licensed sentence retained. |
+| 砲 | No qualifying licensed sentence retained. |
+| 破 | No qualifying licensed sentence retained. |
+| 硏 | No qualifying licensed sentence retained. |
+| 碑 | No qualifying licensed sentence retained. |
+| 確 | No qualifying licensed sentence retained. |
+| 示 | No qualifying licensed sentence retained. |
+| 社 | No qualifying licensed sentence retained. |
+| 祕 | No qualifying licensed sentence retained. |
+| 祖 | No qualifying licensed sentence retained. |
+| 祝 | No qualifying licensed sentence retained. |
+| 神 | No qualifying licensed sentence retained. |
+| 票 | No qualifying licensed sentence retained. |
+| 祭 | No qualifying licensed sentence retained. |
+| 禁 | No qualifying licensed sentence retained. |
+| 福 | No qualifying licensed sentence retained. |
+| 禮 | No qualifying licensed sentence retained. |
+| 秀 | No qualifying licensed sentence retained. |
+| 私 | No qualifying licensed sentence retained. |
+| 秋 | No qualifying licensed sentence retained. |
+| 科 | No qualifying licensed sentence retained. |
+| 移 | No qualifying licensed sentence retained. |
+| 稅 | No qualifying licensed sentence retained. |
+| 程 | No qualifying licensed sentence retained. |
+| 種 | No qualifying licensed sentence retained. |
+| 穀 | No qualifying licensed sentence retained. |
+| 積 | No qualifying licensed sentence retained. |
+| 究 | No qualifying licensed sentence retained. |
+| 空 | No qualifying licensed sentence retained. |
+| 窓 | No qualifying licensed sentence retained. |
+| 窮 | No qualifying licensed sentence retained. |
+| 章 | No qualifying licensed sentence retained. |
+| 童 | No qualifying licensed sentence retained. |
+| 端 | No qualifying licensed sentence retained. |
+| 競 | No qualifying licensed sentence retained. |
+| 竹 | No qualifying licensed sentence retained. |
+| 笑 | No qualifying licensed sentence retained. |
+| 第 | No qualifying licensed sentence retained. |
+| 筆 | No qualifying licensed sentence retained. |
+| 等 | No qualifying licensed sentence retained. |
+| 筋 | No qualifying licensed sentence retained. |
+| 答 | No qualifying licensed sentence retained. |
+| 管 | No qualifying licensed sentence retained. |
+| 節 | No qualifying licensed sentence retained. |
+| 範 | No qualifying licensed sentence retained. |
+| 篇 | No qualifying licensed sentence retained. |
+| 築 | No qualifying licensed sentence retained. |
+| 簡 | No qualifying licensed sentence retained. |
+| 籍 | No qualifying licensed sentence retained. |
+| 米 | No qualifying licensed sentence retained. |
+| 粉 | No qualifying licensed sentence retained. |
+| 糧 | No qualifying licensed sentence retained. |
+| 系 | No qualifying licensed sentence retained. |
+| 紀 | No qualifying licensed sentence retained. |
+| 約 | No qualifying licensed sentence retained. |
+| 紅 | No qualifying licensed sentence retained. |
+| 納 | No qualifying licensed sentence retained. |
+| 純 | No qualifying licensed sentence retained. |
+| 級 | No qualifying licensed sentence retained. |
+| 素 | No qualifying licensed sentence retained. |
+| 細 | No qualifying licensed sentence retained. |
+| 終 | No qualifying licensed sentence retained. |
+| 組 | No qualifying licensed sentence retained. |
+| 給 | No qualifying licensed sentence retained. |
+| 統 | No qualifying licensed sentence retained. |
+| 絲 | No qualifying licensed sentence retained. |
+| 絶 | No qualifying licensed sentence retained. |
+| 經 | No qualifying licensed sentence retained. |
+| 綠 | No qualifying licensed sentence retained. |
+| 線 | No qualifying licensed sentence retained. |
+| 緣 | No qualifying licensed sentence retained. |
+| 練 | No qualifying licensed sentence retained. |
+| 縮 | No qualifying licensed sentence retained. |
+| 總 | No qualifying licensed sentence retained. |
+| 績 | No qualifying licensed sentence retained. |
+| 織 | No qualifying licensed sentence retained. |
+| 繼 | No qualifying licensed sentence retained. |
+| 續 | No qualifying licensed sentence retained. |
+| 缺 | No qualifying licensed sentence retained. |
+| 罪 | No qualifying licensed sentence retained. |
+| 置 | No qualifying licensed sentence retained. |
+| 罰 | No qualifying licensed sentence retained. |
+| 羅 | No qualifying licensed sentence retained. |
+| 羊 | No qualifying licensed sentence retained. |
+| 美 | No qualifying licensed sentence retained. |
+| 群 | No qualifying licensed sentence retained. |
+| 義 | No qualifying licensed sentence retained. |
+| 習 | No qualifying licensed sentence retained. |
+| 老 | No qualifying licensed sentence retained. |
+| 考 | No qualifying licensed sentence retained. |
+| 者 | No qualifying licensed sentence retained. |
+| 耳 | No qualifying licensed sentence retained. |
+| 聖 | No qualifying licensed sentence retained. |
+| 聞 | No qualifying licensed sentence retained. |
+| 聲 | No qualifying licensed sentence retained. |
+| 職 | No qualifying licensed sentence retained. |
+| 聽 | No qualifying licensed sentence retained. |
+| 肅 | No qualifying licensed sentence retained. |
+| 肉 | No qualifying licensed sentence retained. |
+| 育 | No qualifying licensed sentence retained. |
+| 背 | No qualifying licensed sentence retained. |
+| 胞 | No qualifying licensed sentence retained. |
+| 能 | No qualifying licensed sentence retained. |
+| 脈 | No qualifying licensed sentence retained. |
+| 脫 | No qualifying licensed sentence retained. |
+| 腸 | No qualifying licensed sentence retained. |
+| 臣 | No qualifying licensed sentence retained. |
+| 自 | No qualifying licensed sentence retained. |
+| 至 | No qualifying licensed sentence retained. |
+| 致 | No qualifying licensed sentence retained. |
+| 與 | No qualifying licensed sentence retained. |
+| 興 | No qualifying licensed sentence retained. |
+| 舊 | No qualifying licensed sentence retained. |
+| 舌 | No qualifying licensed sentence retained. |
+| 舍 | No qualifying licensed sentence retained. |
+| 舞 | No qualifying licensed sentence retained. |
+| 航 | No qualifying licensed sentence retained. |
+| 船 | No qualifying licensed sentence retained. |
+| 良 | No qualifying licensed sentence retained. |
+| 花 | No qualifying licensed sentence retained. |
+| 苦 | No qualifying licensed sentence retained. |
+| 英 | No qualifying licensed sentence retained. |
+| 草 | No qualifying licensed sentence retained. |
+| 落 | No qualifying licensed sentence retained. |
+| 葉 | No qualifying licensed sentence retained. |
+| 蓄 | No qualifying licensed sentence retained. |
+| 藝 | No qualifying licensed sentence retained. |
+| 藥 | No qualifying licensed sentence retained. |
+| 處 | No qualifying licensed sentence retained. |
+| 虛 | No qualifying licensed sentence retained. |
+| 號 | No qualifying licensed sentence retained. |
+| 蟲 | No qualifying licensed sentence retained. |
+| 血 | No qualifying licensed sentence retained. |
+| 衆 | No qualifying licensed sentence retained. |
+| 行 | No qualifying licensed sentence retained. |
+| 術 | No qualifying licensed sentence retained. |
+| 街 | No qualifying licensed sentence retained. |
+| 衛 | No qualifying licensed sentence retained. |
+| 衣 | No qualifying licensed sentence retained. |
+| 表 | No qualifying licensed sentence retained. |
+| 裝 | No qualifying licensed sentence retained. |
+| 製 | No qualifying licensed sentence retained. |
+| 複 | No qualifying licensed sentence retained. |
+| 西 | No qualifying licensed sentence retained. |
+| 要 | No qualifying licensed sentence retained. |
+| 見 | No qualifying licensed sentence retained. |
+| 規 | No qualifying licensed sentence retained. |
+| 視 | No qualifying licensed sentence retained. |
+| 親 | No qualifying licensed sentence retained. |
+| 覺 | No qualifying licensed sentence retained. |
+| 覽 | No qualifying licensed sentence retained. |
+| 觀 | No qualifying licensed sentence retained. |
+| 角 | No qualifying licensed sentence retained. |
+| 解 | No qualifying licensed sentence retained. |
+| 言 | No qualifying licensed sentence retained. |
+| 計 | No qualifying licensed sentence retained. |
+| 討 | No qualifying licensed sentence retained. |
+| 訓 | No qualifying licensed sentence retained. |
+| 訪 | No qualifying licensed sentence retained. |
+| 設 | No qualifying licensed sentence retained. |
+| 許 | No qualifying licensed sentence retained. |
+| 評 | No qualifying licensed sentence retained. |
+| 試 | No qualifying licensed sentence retained. |
+| 詩 | No qualifying licensed sentence retained. |
+| 話 | No qualifying licensed sentence retained. |
+| 誌 | No qualifying licensed sentence retained. |
+| 認 | No qualifying licensed sentence retained. |
+| 語 | No qualifying licensed sentence retained. |
+| 誠 | No qualifying licensed sentence retained. |
+| 誤 | No qualifying licensed sentence retained. |
+| 說 | No qualifying licensed sentence retained. |
+| 課 | No qualifying licensed sentence retained. |
+| 調 | No qualifying licensed sentence retained. |
+| 談 | No qualifying licensed sentence retained. |
+| 請 | No qualifying licensed sentence retained. |
+| 論 | No qualifying licensed sentence retained. |
+| 講 | No qualifying licensed sentence retained. |
+| 謝 | No qualifying licensed sentence retained. |
+| 謠 | No qualifying licensed sentence retained. |
+| 證 | No qualifying licensed sentence retained. |
+| 識 | No qualifying licensed sentence retained. |
+| 警 | No qualifying licensed sentence retained. |
+| 議 | No qualifying licensed sentence retained. |
+| 護 | No qualifying licensed sentence retained. |
+| 讀 | No qualifying licensed sentence retained. |
+| 變 | No qualifying licensed sentence retained. |
+| 讚 | No qualifying licensed sentence retained. |
+| 豆 | No qualifying licensed sentence retained. |
+| 豊 | No qualifying licensed sentence retained. |
+| 象 | No qualifying licensed sentence retained. |
+| 豫 | No qualifying licensed sentence retained. |
+| 負 | No qualifying licensed sentence retained. |
+| 財 | No qualifying licensed sentence retained. |
+| 貧 | No qualifying licensed sentence retained. |
+| 貨 | No qualifying licensed sentence retained. |
+| 責 | No qualifying licensed sentence retained. |
+| 貯 | No qualifying licensed sentence retained. |
+| 貴 | No qualifying licensed sentence retained. |
+| 買 | No qualifying licensed sentence retained. |
+| 費 | No qualifying licensed sentence retained. |
+| 資 | No qualifying licensed sentence retained. |
+| 賊 | No qualifying licensed sentence retained. |
+| 賞 | No qualifying licensed sentence retained. |
+| 賢 | No qualifying licensed sentence retained. |
+| 賣 | No qualifying licensed sentence retained. |
+| 質 | No qualifying licensed sentence retained. |
+| 赤 | No qualifying licensed sentence retained. |
+| 走 | No qualifying licensed sentence retained. |
+| 起 | No qualifying licensed sentence retained. |
+| 趣 | No qualifying licensed sentence retained. |
+| 足 | No qualifying licensed sentence retained. |
+| 路 | No qualifying licensed sentence retained. |
+| 身 | No qualifying licensed sentence retained. |
+| 車 | No qualifying licensed sentence retained. |
+| 軍 | No qualifying licensed sentence retained. |
+| 輕 | No qualifying licensed sentence retained. |
+| 輪 | No qualifying licensed sentence retained. |
+| 轉 | No qualifying licensed sentence retained. |
+| 辭 | No qualifying licensed sentence retained. |
+| 辯 | No qualifying licensed sentence retained. |
+| 農 | No qualifying licensed sentence retained. |
+| 迎 | No qualifying licensed sentence retained. |
+| 近 | No qualifying licensed sentence retained. |
+| 退 | No qualifying licensed sentence retained. |
+| 送 | No qualifying licensed sentence retained. |
+| 逃 | No qualifying licensed sentence retained. |
+| 逆 | No qualifying licensed sentence retained. |
+| 通 | No qualifying licensed sentence retained. |
+| 速 | No qualifying licensed sentence retained. |
+| 造 | No qualifying licensed sentence retained. |
+| 連 | No qualifying licensed sentence retained. |
+| 週 | No qualifying licensed sentence retained. |
+| 進 | No qualifying licensed sentence retained. |
+| 遇 | No qualifying licensed sentence retained. |
+| 遊 | No qualifying licensed sentence retained. |
+| 運 | No qualifying licensed sentence retained. |
+| 過 | No qualifying licensed sentence retained. |
+| 道 | No qualifying licensed sentence retained. |
+| 達 | No qualifying licensed sentence retained. |
+| 遠 | No qualifying licensed sentence retained. |
+| 適 | No qualifying licensed sentence retained. |
+| 選 | No qualifying licensed sentence retained. |
+| 遺 | No qualifying licensed sentence retained. |
+| 避 | No qualifying licensed sentence retained. |
+| 邊 | No qualifying licensed sentence retained. |
+| 邑 | No qualifying licensed sentence retained. |
+| 郡 | No qualifying licensed sentence retained. |
+| 郵 | No qualifying licensed sentence retained. |
+| 都 | No qualifying licensed sentence retained. |
+| 鄕 | No qualifying licensed sentence retained. |
+| 配 | No qualifying licensed sentence retained. |
+| 酒 | No qualifying licensed sentence retained. |
+| 醫 | No qualifying licensed sentence retained. |
+| 里 | No qualifying licensed sentence retained. |
+| 重 | No qualifying licensed sentence retained. |
+| 野 | No qualifying licensed sentence retained. |
+| 量 | No qualifying licensed sentence retained. |
+| 金 | No qualifying licensed sentence retained. |
+| 針 | No qualifying licensed sentence retained. |
+| 鉛 | No qualifying licensed sentence retained. |
+| 銀 | No qualifying licensed sentence retained. |
+| 銃 | No qualifying licensed sentence retained. |
+| 銅 | No qualifying licensed sentence retained. |
+| 錄 | No qualifying licensed sentence retained. |
+| 錢 | No qualifying licensed sentence retained. |
+| 鍾 | No qualifying licensed sentence retained. |
+| 鏡 | No qualifying licensed sentence retained. |
+| 鐵 | No qualifying licensed sentence retained. |
+| 鑛 | No qualifying licensed sentence retained. |
+| 門 | No qualifying licensed sentence retained. |
+| 閉 | No qualifying licensed sentence retained. |
+| 開 | No qualifying licensed sentence retained. |
+| 閑 | No qualifying licensed sentence retained. |
+| 關 | No qualifying licensed sentence retained. |
+| 防 | No qualifying licensed sentence retained. |
+| 降 | No qualifying licensed sentence retained. |
+| 限 | No qualifying licensed sentence retained. |
+| 院 | No qualifying licensed sentence retained. |
+| 陣 | No qualifying licensed sentence retained. |
+| 除 | No qualifying licensed sentence retained. |
+| 陰 | No qualifying licensed sentence retained. |
+| 陸 | No qualifying licensed sentence retained. |
+| 陽 | No qualifying licensed sentence retained. |
+| 隊 | No qualifying licensed sentence retained. |
+| 階 | No qualifying licensed sentence retained. |
+| 際 | No qualifying licensed sentence retained. |
+| 障 | No qualifying licensed sentence retained. |
+| 險 | No qualifying licensed sentence retained. |
+| 隱 | No qualifying licensed sentence retained. |
+| 雄 | No qualifying licensed sentence retained. |
+| 集 | No qualifying licensed sentence retained. |
+| 雜 | No qualifying licensed sentence retained. |
+| 離 | No qualifying licensed sentence retained. |
+| 難 | No qualifying licensed sentence retained. |
+| 雨 | No qualifying licensed sentence retained. |
+| 雪 | No qualifying licensed sentence retained. |
+| 雲 | No qualifying licensed sentence retained. |
+| 電 | No qualifying licensed sentence retained. |
+| 靑 | No qualifying licensed sentence retained. |
+| 靜 | No qualifying licensed sentence retained. |
+| 非 | No qualifying licensed sentence retained. |
+| 革 | No qualifying licensed sentence retained. |
+| 音 | No qualifying licensed sentence retained. |
+| 順 | No qualifying licensed sentence retained. |
+| 頌 | No qualifying licensed sentence retained. |
+| 領 | No qualifying licensed sentence retained. |
+| 頭 | No qualifying licensed sentence retained. |
+| 題 | No qualifying licensed sentence retained. |
+| 額 | No qualifying licensed sentence retained. |
+| 願 | No qualifying licensed sentence retained. |
+| 類 | No qualifying licensed sentence retained. |
+| 顯 | No qualifying licensed sentence retained. |
+| 風 | No qualifying licensed sentence retained. |
+| 飛 | No qualifying licensed sentence retained. |
+| 食 | No qualifying licensed sentence retained. |
+| 飮 | No qualifying licensed sentence retained. |
+| 養 | No qualifying licensed sentence retained. |
+| 餘 | No qualifying licensed sentence retained. |
+| 首 | No qualifying licensed sentence retained. |
+| 香 | No qualifying licensed sentence retained. |
+| 馬 | No qualifying licensed sentence retained. |
+| 驗 | No qualifying licensed sentence retained. |
+| 驚 | No qualifying licensed sentence retained. |
+| 骨 | No qualifying licensed sentence retained. |
+| 體 | No qualifying licensed sentence retained. |
+| 高 | No qualifying licensed sentence retained. |
+| 髮 | No qualifying licensed sentence retained. |
+| 鬪 | No qualifying licensed sentence retained. |
+| 魚 | No qualifying licensed sentence retained. |
+| 鮮 | No qualifying licensed sentence retained. |
+| 鳥 | No qualifying licensed sentence retained. |
+| 鳴 | No qualifying licensed sentence retained. |
+| 鷄 | No qualifying licensed sentence retained. |
+| 麗 | No qualifying licensed sentence retained. |
+| 黃 | No qualifying licensed sentence retained. |
+| 黑 | No qualifying licensed sentence retained. |
+| 點 | No qualifying licensed sentence retained. |
+| 黨 | No qualifying licensed sentence retained. |
+| 鼻 | No qualifying licensed sentence retained. |
+| 齒 | No qualifying licensed sentence retained. |
+| 龍 | No qualifying licensed sentence retained. |
 ## Past-paper sourcing position
 
 Past-paper sentences from 한국어문회 기출 문제, 漢検 過去問, or another exam

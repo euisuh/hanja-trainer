@@ -30,6 +30,10 @@ const files = {
   "data/characters/cn-hsk3.json": 284,
 };
 
+function koreanSentenceLane(source: string): string {
+  return source.replace(/ #\d+$/u, "").replace(/^군정법령 제\d+호$/u, "군정법령");
+}
+
 test("curated character files validate and cross-link", async () => {
   const linked = new Map<string, Set<Track>>();
   for (const [path, expectedCount] of Object.entries(files)) {
@@ -249,8 +253,8 @@ test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage 
   for (const [path, expectedHash] of [
     ["data/characters/kr-4geup2.json", "f6a6e2c58d36aa03cb1ed8e615f9553f7a79cead2976e5dac823f51b35683ebb"],
     ["data/characters/kr-4geup.json", "114300f1063a099a014d70a8ab38122f430ca3f9a52e49871f2a565aa97eefe0"],
-    ["data/sentences/kr-4geup2.json", "bf909ff25b00f0571ac12208caed49515a0fb185f34020713360ef2fced5aabb"],
-    ["data/sentences/kr-4geup.json", "56ac5fa261114e2da2915818c52a16e5fe37cae2e26398b6c30eb2e173a18c06"],
+    ["data/sentences/kr-4geup2.json", "d176577c82ed9d83469a012995271b0c098c2f1b40bf165b6f44508ef71f649c"],
+    ["data/sentences/kr-4geup.json", "cb90744ad6364915653332a1fb0a60f1cbdb7a680e29ced5622f3b38ff23be18"],
   ] as const) {
     assert.equal(
       createHash("sha256").update(await readFile(path)).digest("hex"),
@@ -363,6 +367,9 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
         assert.equal(entry.reading, null, `${sentencePath}: ${entry.characterKey} reading`);
         assert.match(entry.text, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul`);
         assert.ok(entry.text.includes(glyph), `${sentencePath}: ${entry.characterKey} Hanja`);
+        assert.notEqual(entry.translationKo, entry.text, `${sentencePath}: ${entry.characterKey} distinct gloss`);
+        assert.match(entry.translationKo, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul gloss`);
+        assert.doesNotMatch(entry.translationKo, /\p{Script=Han}/u, `${sentencePath}: ${entry.characterKey} all-Hangul gloss`);
         assert.equal(entry.sourceKind, entry.source.includes("독본") ? "textbook" : "corpus", `${sentencePath}: ${entry.characterKey} source kind`);
       } else {
         assert.ok(entry.reading, `${sentencePath}: ${entry.characterKey} reading`);
@@ -380,9 +387,23 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   }
 
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
-  assert.equal(krCovered.length, 289);
-  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 289);
-  assert.equal(byIdentity.size, 1001);
+  assert.equal(krCovered.length, 64);
+  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 64);
+  const laneCounts = new Map<string, number>();
+  for (const entry of krCovered) {
+    const lane = koreanSentenceLane(entry.source);
+    laneCounts.set(lane, (laneCounts.get(lane) ?? 0) + 1);
+  }
+  assert.ok(Math.max(...laneCounts.values()) / krCovered.length <= 0.3, "a Korean source lane exceeds 30%");
+
+  const sources = await readFile("data/SOURCES.md", "utf8");
+  const countSection = sources.slice(sources.indexOf("### Active Korean lane counts"), sources.indexOf("### Hangul gloss policy"));
+  const documentedCounts = new Map([...countSection.matchAll(/^\| ([^|]+) \| (\d+) \|$/gmu)].map((match) => [match[1].trim(), Number(match[2])]));
+  assert.equal(documentedCounts.get("Total"), krCovered.length);
+  documentedCounts.delete("Total");
+  assert.deepEqual([...documentedCounts].toSorted(), [...laneCounts].toSorted());
+
+  assert.equal(byIdentity.size, 776);
   assert.ok([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length > 1093);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3 && legacyTrackCounts.get(key)?.size === 3) {
@@ -463,7 +484,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get();
     sqlite.exec(sql);
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences").get(), counts);
-    assert.equal(counts?.sentences, 1001);
+    assert.equal(counts?.sentences, 776);
   } finally {
     sqlite.close();
   }
