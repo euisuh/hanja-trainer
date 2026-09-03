@@ -180,7 +180,7 @@ function hydrate(rows: CharacterRow[]): CharacterEntry[] {
         translationKo: required(row.translation_ko, "example_sentences.translation_ko"),
         source: required(row.source, "example_sentences.source"),
         sourceKind: requiredSourceKind(row.source_kind),
-        targetIndex: requiredNumber(row.target_index, "example_sentences.target_index"),
+        targetIndex: row.target_index,
         rank: requiredNumber(row.sentence_rank, "example_sentences.rank"),
       });
       sentences.add(row.sentence_id);

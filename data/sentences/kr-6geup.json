@@ -3,22 +3,22 @@
     {
       "character_key": "族",
       "track": "kr",
-      "text": "春滿한 大界에 民族的 精華를 結紐할지로다",
-      "translation_ko": "춘만한 대계에 민족적 정화를 결뉴할지로다",
-      "source": "3·1독립선언서 #430581",
+      "text": "우리는 가족같이 친해요.",
+      "translation_ko": "우리는 가족같이 친해요.",
+      "source": "Tatoeba #13187810",
       "source_kind": "corpus",
-      "target_index": 9,
+      "target_index": null,
       "rank": 0,
       "reading": null
     },
     {
       "character_key": "本",
       "track": "kr",
-      "text": "此 셰 죠목은 사람이 事ᄒᆞ는 本色이니라",
-      "translation_ko": "이 셰 죠목은 사람이 일ᄒᆞ는 본색이니라",
-      "source": "노동야학독본 #423248",
-      "source_kind": "textbook",
-      "target_index": 17,
+      "text": "이것은 책입니다.",
+      "translation_ko": "이것은 책입니다.",
+      "source": "Tatoeba #2812867",
+      "source_kind": "corpus",
+      "target_index": null,
       "rank": 0,
       "reading": null
     }

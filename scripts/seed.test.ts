@@ -62,6 +62,22 @@ test("seed validation, round-trip, idempotency, and queries", async () => {
   assert.equal(document.characters.length, 12);
   assert.equal(document.characters.flatMap((entry) => entry.tracks).length, 36);
 
+  const embeddedKorean = parseSeed([{
+    key: "學", meaningEn: "learn", meaningKo: "배울", variants: { kr: "學" }, strokeCount: 16,
+    tracks: [{
+      track: "kr", glyph: "學", reading: "배울 학", level: "8급", levelOrd: 1,
+      sentences: [{ text: "한자는 배우기 어려워요.", reading: null, translationKo: "한자는 배우기 어려워요.", source: "Tatoeba #2", sourceKind: "corpus", targetIndex: null, rank: 0 }],
+    }],
+  }]);
+  assert.equal(embeddedKorean.characters[0].tracks[0].sentences?.[0].targetIndex, null);
+  assert.throws(() => parseSeed([{
+    key: "學", meaningEn: "learn", meaningKo: "배울", variants: { jp: "学" }, strokeCount: 16,
+    tracks: [{
+      track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 1,
+      sentences: [{ text: "学校へ行きます。", reading: "がっこうへいきます。", translationKo: "학교에 갑니다.", source: "Tatoeba #3", sourceKind: "corpus", targetIndex: null, rank: 0 }],
+    }],
+  }]), /expected integer/);
+
   assert.throws(
     () => parseSeed([{
       key: "壞", meaningEn: "", meaningKo: "나쁠", variants: { kr: "壞" }, strokeCount: null,
@@ -155,6 +171,15 @@ test("standalone sentence seeds validate and remain idempotent", () => {
     character_key: "學", track: "jp", text: "学校へ行く。", reading: "がっこうへいく。", translation_ko: "학교에 간다.",
     source: "Tatoeba #1", source_kind: "corpus", target_index: 20, rank: 0,
   }] }), /outside text/);
+  const korean = parseSentenceSeed({ sentences: [{
+    character_key: "學", track: "kr", text: "한자는 배우기 어려워요.", reading: null, translation_ko: "한자는 배우기 어려워요.",
+    source: "Tatoeba #2", source_kind: "corpus", target_index: null, rank: 0,
+  }] });
+  assert.equal(korean.sentences[0].targetIndex, null);
+  assert.throws(() => parseSentenceSeed({ sentences: [{
+    character_key: "學", track: "jp", text: "学校へ行きます。", reading: "がっこうへいきます。", translation_ko: "학교에 갑니다.",
+    source: "Tatoeba #3", source_kind: "corpus", target_index: null, rank: 0,
+  }] }), /expected integer/);
 
   const sqlite = new DatabaseSync(":memory:");
   try {
@@ -162,15 +187,25 @@ test("standalone sentence seeds validate and remain idempotent", () => {
     sqlite.exec(readFileSync("migrations/0001_init.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0013_sentence_readings.sql", "utf8"));
     sqlite.exec(readFileSync("migrations/0015_curriculum_unit_level_ord.sql", "utf8"));
+    sqlite.exec(readFileSync("migrations/0020_nullable_kr_sentence_target.sql", "utf8"));
     const character = parseSeed([{
       key: "學", meaningEn: "study", meaningKo: "배우다", variants: { jp: "学" }, strokeCount: 16,
-      tracks: [{ track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 1 }],
+      tracks: [
+        { track: "kr", glyph: "學", reading: "배울 학", level: "8급", levelOrd: 1 },
+        { track: "jp", glyph: "学", on: "ガク", kun: "まなぶ", kanken: "1級", jlpt: "N5", levelOrd: 1 },
+      ],
     }]);
     sqlite.exec(emitSeedSql(character));
     const sql = emitSentenceSeedSql(document);
     sqlite.exec(sql);
     sqlite.exec(sql);
-    assert.equal(sqlite.prepare("SELECT COUNT(*) AS count FROM example_sentences").get()?.count, 1);
+    sqlite.exec(emitSentenceSeedSql(korean));
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS count FROM example_sentences").get()?.count, 2);
+    assert.equal(sqlite.prepare("SELECT target_index FROM example_sentences WHERE track = 'kr'").get()?.target_index, null);
+    assert.throws(() => sqlite.prepare(`
+      INSERT INTO example_sentences (character_id, track, text, translation_ko, source, source_kind, target_index, rank)
+      VALUES ((SELECT id FROM characters WHERE key = '學'), 'jp', '学校です。', '학교입니다.', 'Tatoeba #4', 'corpus', NULL, 1)
+    `).run(), /CHECK constraint failed/u);
   } finally {
     sqlite.close();
   }

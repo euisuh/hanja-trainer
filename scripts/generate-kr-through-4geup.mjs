@@ -92,19 +92,6 @@ for (const [, document] of sourceDocuments) {
   }
 }
 
-const sentenceRows = [];
-for (const name of ["kr-8geup.json", "kr-7geup.json"]) {
-  const document = JSON.parse(await readFile(join("data/sentences", name), "utf8"));
-  sentenceRows.push(...document.sentences);
-}
-const maxSentenceRowsPerLane = 19;
-const sentenceLane = (source) => source.replace(/ #\d+$/u, "").replace(/^군정법령 제\d+호$/u, "군정법령");
-const sentenceLaneCounts = new Map();
-for (const sentence of sentenceRows) {
-  const lane = sentenceLane(sentence.source);
-  sentenceLaneCounts.set(lane, (sentenceLaneCounts.get(lane) ?? 0) + 1);
-}
-
 const seenKeys = new Set();
 const report = {};
 const generatedVariants = new Map();
@@ -164,37 +151,7 @@ for (const config of levels) {
   for (const character of characters) generatedVariants.set(character.key, character.variants);
   await writeFile(join("data/characters", config.output), `${JSON.stringify({ characters, curriculumUnits }, null, 2)}\n`);
 
-  const sentences = [];
-  const gaps = [];
-  for (const entry of characters) {
-    const glyph = entry.variants.kr;
-    const candidate = sentenceRows
-      .filter((sentence) => sentence.text.includes(glyph) && (sentenceLaneCounts.get(sentenceLane(sentence.source)) ?? 0) < maxSentenceRowsPerLane)
-      .sort((left, right) => (
-        (sentenceLaneCounts.get(sentenceLane(left.source)) ?? 0) - (sentenceLaneCounts.get(sentenceLane(right.source)) ?? 0)
-        || Array.from(left.text).length - Array.from(right.text).length
-        || left.source.localeCompare(right.source)
-      ))[0];
-    if (!candidate) {
-      gaps.push(entry.key);
-      continue;
-    }
-    const lane = sentenceLane(candidate.source);
-    sentenceLaneCounts.set(lane, (sentenceLaneCounts.get(lane) ?? 0) + 1);
-    sentences.push({
-      character_key: entry.key,
-      track: "kr",
-      text: candidate.text,
-      translation_ko: candidate.translation_ko,
-      source: candidate.source,
-      source_kind: candidate.source_kind,
-      target_index: Array.from(candidate.text).indexOf(glyph),
-      rank: 0,
-      reading: null,
-    });
-  }
-  await writeFile(join("data/sentences", config.output), `${JSON.stringify({ sentences }, null, 2)}\n`);
-  report[config.level] = { characters: characters.length, sentences: sentences.length, gaps };
+  report[config.level] = { characters: characters.length };
 }
 
 for (const [name, document] of sourceDocuments) {

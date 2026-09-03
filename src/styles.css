@@ -238,3 +238,15 @@ kbd {
     padding-inline: var(--space-4);
   }
 }
+.sentence-target {
+  display: inline-block;
+  margin: 0 var(--space-2) var(--space-2) 0;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-keycap);
+  color: var(--muted);
+  font-family: var(--font-kr);
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}

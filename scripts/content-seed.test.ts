@@ -30,10 +30,6 @@ const files = {
   "data/characters/cn-hsk3.json": 284,
 };
 
-function koreanSentenceLane(source: string): string {
-  return source.replace(/ #\d+$/u, "").replace(/^군정법령 제\d+호$/u, "군정법령");
-}
-
 test("curated character files validate and cross-link", async () => {
   const linked = new Map<string, Set<Track>>();
   for (const [path, expectedCount] of Object.entries(files)) {
@@ -253,13 +249,13 @@ test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage 
   for (const [path, expectedHash] of [
     ["data/characters/kr-4geup2.json", "f6a6e2c58d36aa03cb1ed8e615f9553f7a79cead2976e5dac823f51b35683ebb"],
     ["data/characters/kr-4geup.json", "114300f1063a099a014d70a8ab38122f430ca3f9a52e49871f2a565aa97eefe0"],
-    ["data/sentences/kr-4geup2.json", "d176577c82ed9d83469a012995271b0c098c2f1b40bf165b6f44508ef71f649c"],
-    ["data/sentences/kr-4geup.json", "cb90744ad6364915653332a1fb0a60f1cbdb7a680e29ced5622f3b38ff23be18"],
+    ["data/sentences/kr-4geup2.json", "202a29337e5b51fe51e1a71dd6fee368d923ca1c19b26ed93cf54ccf043b04a7"],
+    ["data/sentences/kr-4geup.json", "a041db323e43df44862ac0bb13cd9ebc66cbf6d17cbe62c8e4c81468891e5155"],
   ] as const) {
     assert.equal(
       createHash("sha256").update(await readFile(path)).digest("hex"),
       expectedHash,
-      "re-run the Korean and Japanese generators when the frozen output changes",
+      "re-run the Korean character or sentence generator when frozen output changes",
     );
   }
 
@@ -328,7 +324,7 @@ test("seeded Korean placement bounds and all-correct estimate reach 4급", async
   assert.equal(placementResults(state)[0].levelOrd, 9);
 });
 
-test("sourced sentence files resolve to their exact target glyph", async () => {
+test("sourced sentence files follow each track's target contract", async () => {
   const glyphs = new Map<string, string>();
   const trackCounts = new Map<string, Set<Track>>();
   const legacyTrackCounts = new Map<string, Set<Track>>();
@@ -359,18 +355,23 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
     for (const entry of document.sentences) {
       const glyph = glyphs.get(`${entry.characterKey}:${entry.track}`);
       assert.ok(glyph, `${sentencePath}: unknown ${entry.characterKey}:${entry.track}`);
-      assert.equal(Array.from(entry.text)[entry.targetIndex], glyph, `${sentencePath}: ${entry.characterKey}`);
-      assert.equal(entry.text.codePointAt(entry.targetIndex), glyph.codePointAt(0), `${sentencePath}: ${entry.characterKey} code point`);
+      if (entry.targetIndex === null) {
+        assert.equal(entry.track, "kr", `${sentencePath}: ${entry.characterKey} null target`);
+      } else {
+        assert.equal(Array.from(entry.text)[entry.targetIndex], glyph, `${sentencePath}: ${entry.characterKey}`);
+        assert.equal(entry.text.codePointAt(entry.targetIndex), glyph.codePointAt(0), `${sentencePath}: ${entry.characterKey} code point`);
+      }
       assert.match(entry.source, /^(?:Tatoeba|개역간이국한문한글판|대한민국헌법|노동야학독본|국민 소학 독본|산중신곡|3·1독립선언서|군정법령 제\d+호) #\d+$/u, `${sentencePath}: ${entry.characterKey}`);
       assert.ok(sentenceAttribution(entry.source), `${sentencePath}: ${entry.characterKey} attribution`);
       if (entry.track === "kr") {
         assert.equal(entry.reading, null, `${sentencePath}: ${entry.characterKey} reading`);
+        assert.equal(entry.targetIndex, null, `${sentencePath}: ${entry.characterKey} separate target`);
         assert.match(entry.text, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul`);
-        assert.ok(entry.text.includes(glyph), `${sentencePath}: ${entry.characterKey} Hanja`);
-        assert.notEqual(entry.translationKo, entry.text, `${sentencePath}: ${entry.characterKey} distinct gloss`);
-        assert.match(entry.translationKo, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul gloss`);
-        assert.doesNotMatch(entry.translationKo, /\p{Script=Han}/u, `${sentencePath}: ${entry.characterKey} all-Hangul gloss`);
-        assert.equal(entry.sourceKind, entry.source.includes("독본") ? "textbook" : "corpus", `${sentencePath}: ${entry.characterKey} source kind`);
+        assert.doesNotMatch(entry.text, /\p{Script=Han}/u, `${sentencePath}: ${entry.characterKey} modern Hangul`);
+        assert.match(entry.text, /(?:요|니다|니까|세요|예요|이에요)[.!?。！？…]*$/u, `${sentencePath}: ${entry.characterKey} polite register`);
+        assert.equal(entry.translationKo, entry.text, `${sentencePath}: ${entry.characterKey} Korean text`);
+        assert.match(entry.source, /^Tatoeba #\d+$/u, `${sentencePath}: ${entry.characterKey} Tatoeba source`);
+        assert.equal(entry.sourceKind, "corpus", `${sentencePath}: ${entry.characterKey} source kind`);
       } else {
         assert.ok(entry.reading, `${sentencePath}: ${entry.characterKey} reading`);
         if (entry.track === "jp") assert.doesNotMatch(entry.reading, /[\p{Script=Han}\p{Script=Katakana}\p{Number}]/u, `${sentencePath}: ${entry.characterKey} hiragana`);
@@ -389,19 +390,6 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
   assert.equal(krCovered.length, 64);
   assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 64);
-  const laneCounts = new Map<string, number>();
-  for (const entry of krCovered) {
-    const lane = koreanSentenceLane(entry.source);
-    laneCounts.set(lane, (laneCounts.get(lane) ?? 0) + 1);
-  }
-  assert.ok(Math.max(...laneCounts.values()) / krCovered.length <= 0.3, "a Korean source lane exceeds 30%");
-
-  const sources = await readFile("data/SOURCES.md", "utf8");
-  const countSection = sources.slice(sources.indexOf("### Active Korean lane counts"), sources.indexOf("### Hangul gloss policy"));
-  const documentedCounts = new Map([...countSection.matchAll(/^\| ([^|]+) \| (\d+) \|$/gmu)].map((match) => [match[1].trim(), Number(match[2])]));
-  assert.equal(documentedCounts.get("Total"), krCovered.length);
-  documentedCounts.delete("Total");
-  assert.deepEqual([...documentedCounts].toSorted(), [...laneCounts].toSorted());
 
   assert.equal(byIdentity.size, 776);
   assert.deepEqual(Object.fromEntries(["jp", "cn"].map((track) => [track, [...byIdentity.values()].filter((entry) => (

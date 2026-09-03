@@ -22,7 +22,8 @@ function AudioControl({ children, label, onPlay, supported }: { children: ReactN
   return <button aria-label={label} className="unit-study__audio" data-study-audio data-study-control onClick={onPlay} type="button"><span>{children}</span><SpeakerIcon /></button>;
 }
 
-function HighlightedSentence({ sentence }: { sentence: ApiSentence }) {
+function HighlightedSentence({ glyph, sentence }: { glyph: string; sentence: ApiSentence }) {
+  if (sentence.target_index === null) return <><span className="sentence-target">한자 {glyph}</span>{sentence.text}</>;
   const points = Array.from(sentence.text);
   return <>{points.slice(0, sentence.target_index).join("")}<mark>{points[sentence.target_index]}</mark>{points.slice(sentence.target_index + 1).join("")}</>;
 }
@@ -137,7 +138,7 @@ export function UnitStudyScreen() {
                   <div className="unit-study__badges">{entry.level_badges.map((badge) => <span key={badge}>{badge}</span>)}</div>
                   <p className="unit-study__meaning">{entry.meaning}</p>
                   {entry.sentences.length > 0 ? <div className="unit-study__sentences">{entry.sentences.map((sentence) => <div className="unit-study__sentence" key={`${sentence.target_index}:${sentence.text}`}>
-                    <AudioControl label={`${labels[track]} 예문 듣기: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence sentence={sentence} /></AudioControl>
+                    <AudioControl label={`${labels[track]} 예문 듣기${sentence.target_index === null ? `, 한자 ${entry.glyph}` : ""}: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence glyph={entry.glyph} sentence={sentence} /></AudioControl>
                     {sentence.reading && <small lang={theme.lang}>{sentence.reading}</small>}
                     {sentence.translation !== sentence.text && <small lang="ko">{sentence.translation}</small>}
                     <small className="unit-study__source" lang="ko">예문 · <SourceAttribution source={sentence.source} /></small>

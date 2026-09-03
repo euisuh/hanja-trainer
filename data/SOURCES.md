@@ -19,10 +19,9 @@ forms `樂` and `宅` in the cross-check pack are normalized to their canonical
 Unicode forms `樂` and `宅` before HanjaDict and Unihan lookup. Curriculum
 units are deterministically grouped by sourced dictionary definitions into
 8–10-character units; their title terms come directly from sourced 훈음.
-`scripts/generate-kr-through-4geup.mjs` reproduces the six character and
-sentence files from checkouts of the pinned grade pack and HanjaDict plus an
-extracted Unihan directory; it performs no network lookup and emits no sentence
-prose.
+`scripts/generate-kr-through-4geup.mjs` reproduces the six character files from
+checkouts of the pinned grade pack and HanjaDict plus an extracted Unihan
+directory; it performs no network lookup and emits no sentence prose.
 
 Coverage stops at 4급 in this pass. Extending through 3급II, 3급, 2급, or 1급
 remains a follow-up because those tiers add at least 500 more characters and
@@ -181,12 +180,11 @@ additions and all JP/CN revisions are recorded below.
 
 # Example sentence sources
 
-All selections require an exact target-glyph match, at least one Hangul syllable
-for Korean rows, and no more than 24 Unicode code points. No source sentence is
-generated, machine-translated, back-translated, or paraphrased. Korean `text` is
-retained byte-for-byte. Its `translation_ko` is an all-Hangul reading gloss, not
-a modernization or translation; the existing study and quiz views show that
-distinct value below the mixed-script sentence.
+Japanese and Chinese selections require an exact target-glyph match and store
+its Unicode codepoint offset in `target_index`. Korean selections are modern
+Hangul sentences with `target_index: null`; the target Hanja is displayed as a
+separate label. All rows contain at most 24 Unicode code points. No source
+sentence is generated, machine-translated, back-translated, or paraphrased.
 
 ## Tatoeba corpus
 
@@ -214,117 +212,37 @@ Chinese retains 431 identities (430 rank-0 and one rank-1) serialized as 526
 rows because later HSK files repeat lower-level identities. Of those, 104
 identities (146 serialized rows) contain 您; all 96 newly eligible identities
 (136 serialized rows) changed, while 327 identities had no qualifying
-simplified-Chinese candidate and retained their prior sentence. The original
-two Korean Tatoeba rows were replaced because their parenthetical gloss format
-did not meet the required mixed-script convention.
+simplified-Chinese candidate and retained their prior sentence.
 
-## Korean verified public-domain and official-text lanes
+## Korean modern polite lane
 
-Retrieved 2026-08-29 from Korean Wikisource. Each row records the immutable
-Wikisource revision as `#{oldid}` and links to
-`https://ko.wikisource.org/w/index.php?oldid={oldid}`. That revision page
-provides contributor history; Wikisource contributions are published under
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Ruby readings
-are display annotations, so rows retain the published Hanja base text and
-surrounding Hangul without copying the ruby annotation into the sentence.
+Issue #156 adopts the issue #150 decision to relax the literal-glyph rule only
+for Korean. The official per-language
+[Korean Tatoeba export](https://downloads.tatoeba.org/exports/per_language/kor/kor_sentences.tsv.bz2)
+was retrieved 2026-09-02. It contains 15,897 rows and has SHA-256
+`6ddb636c5e598ca65c29e27c0a57e547d4854264fc594aaa1adc6af527eee095`.
+The export is covered by the Tatoeba license and attribution terms above.
 
-- [대한민국헌법 (제1호) 국한문](https://ko.wikisource.org/w/index.php?oldid=418801).
-  The official 1948 constitutional text supplies 19 active rows. Constitution
-  and law text is excluded from copyright protection by
-  [Copyright Act Article 7](https://www.law.go.kr/lsLinkCommonInfo.do?lsJoLnkSeq=1029423769);
-  `source_kind: corpus`.
-- [노동야학독본](https://ko.wikisource.org/w/index.php?oldid=431030), a 1908
-  textbook by 유길준, marked `PD-old-100`. Exact page revisions `#423248` and
-  `#425566` supply 10 active rows; `source_kind: textbook`.
-- [국민 소학 독본](https://ko.wikisource.org/w/index.php?oldid=415110), the
-  1895 학부 textbook. Exact page revision `#436021` supplies four active rows;
-  `source_kind: textbook`. The publication is public domain by age.
-- [산중신곡](https://ko.wikisource.org/w/index.php?oldid=430664), 윤선도's
-  1642 work, marked `PD-old-100`, supplies two active rows from one exact line;
-  `source_kind: corpus`.
-- [3·1독립선언서](https://ko.wikisource.org/w/index.php?oldid=430581), the
-  1919 declaration, marked `PD-old-100`, supplies 10 active rows from one exact
-  clause; `source_kind: corpus`.
-- Nineteen rows from six exact sentences in 1946
-  [USAMGIK ordinances](https://ko.wikisource.org/wiki/분류:군정법령) link to the
-  immutable revisions of ordinances 102, 106, 104, 110, 112, and 123. These
-  official laws are excluded from copyright protection by Copyright Act
-  Article 7; `source_kind: corpus`.
+The 64 existing Korean character-to-sentence mappings were replaced with
+unmodified rows from that frozen export. Each selection contains Hangul, no Han
+code point, at most 24 code points, and ends in a polite `-요` or `-습니다`
+family form. Selection favors a word or native-Korean meaning that illustrates
+the target character; a source sentence may serve more than one related
+character. Every row records its `Tatoeba #{id}` attribution and uses
+`source_kind: corpus`. `translation_ko` equals the Korean source text.
 
-### Active Korean lane counts
-
-Counts are character-to-sentence mappings, not distinct source sentences. The
-19-row build-time ceiling balances candidates by current lane count before
-sentence length. It keeps every lane below 30% while preferring existing exact
-licensed text and is reproduced for higher grades by
-`scripts/generate-kr-through-4geup.mjs`.
-
-| Lane | Rows |
-| --- | ---: |
-| 대한민국헌법 | 19 |
-| 군정법령 | 19 |
-| 3·1독립선언서 | 10 |
-| 노동야학독본 | 10 |
-| 국민 소학 독본 | 4 |
-| 산중신곡 | 2 |
-| Total | 64 |
-
-These lanes cover 64 of 1,000 Korean `(character, kr)` pairs. Rebalancing
-deliberately reduces the previous 289-row coverage rather than retaining a
-source-dominant curriculum. No source sentence was generated or altered.
-Across all tracks, 775 of 3,866 pairs now have rank-0 sentences; one existing
-extra rank makes 776 unique seeded sentence identities.
-
-### Hangul gloss policy
-
-Glosses use source-provided readings wherever the frozen source has them.
-노동야학독본 publishes ruby, including its historical spellings, and
-산중신곡 prints Hangul readings beside the Hanja. The 1948 constitution's
-immutable parallel Hangul revision
-[`#418800`](https://ko.wikisource.org/w/index.php?oldid=418800) checks
-the readings and spacing used for mixed-script revision `#418801`. Five of the
-six ordinance revisions contain their own parallel Hangul section. For the
-remaining ordinance, 3·1독립선언서, and 국민 소학 독본 rows, the gloss only
-replaces Hanja with its documented Korean reading and preserves the surrounding
-source spelling. It does not modernize or paraphrase the sentence.
-
-### Modern-register source decision
-
-No modern lane was added because the two evaluated primary sources cannot
-responsibly satisfy the existing literal-glyph rule. The official Tatoeba
-Korean sentence export (retrieved 2026-09-02, SHA-256
-`6ddb636c5e598ca65c29e27c0a57e547d4854264fc594aaa1adc6af527eee095`)
-contains 15,897 rows but only three with both Hangul and Hanja. One is 87 code
-points; of the two within 24 code points, `Tatoeba #907715` uses a parenthetical
-Hanja annotation and `Tatoeba #3447235` is not suitable modern standard learner
-text. Tatoeba's [official download page](https://tatoeba.org/en/downloads)
-licenses the export under CC BY 2.0 FR, so licensing was not the blocker.
-
-The National Institute of Korean Language was also evaluated, but its official
-[2021 corpus project report](https://www.korean.go.kr/common/download.do?c_file_name=7456053f-8fd8-47d2-b317-f18498cf769e.pdf&file_path=reportData&o_file_name=2021%EB%85%84+%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%99%B8%EA%B5%AD%EC%96%B4+%EB%B3%91%EB%A0%AC+%EB%A7%90%EB%AD%89%EC%B9%98+%EA%B5%AC%EC%B6%95+%EC%82%AC%EC%97%85_%EC%B5%9C%EC%A2%85+%EA%B2%B0%EA%B3%BC+%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf)
-records that secondary copyright prevented reuse of 모두의 말뭉치 for that
-project. Without an explicit redistribution grant for candidate sentence text,
-this repository does not import it. Modern all-Hangul sentences plus separately
-added Hanja would change the exact-source and `target_index` contract; that
-product/schema change remains outside this data correction.
-
-The previous Bible lane was also removed after primary-source verification.
-The Korean Bible Society's [copyright FAQ](https://www.bskorea.or.kr/bbs/board.php?bo_table=copyright_faq&wr_id=3)
-identifies the 1964 관주성경전서 간이국한문 as a work whose copyright it owns.
-The 2011 [Copyright Act amendment](https://www.law.go.kr/LSW/nwRvsLsInfoR.do?lsiSeq=114443)
-extended the publication term for corporate works from 50 to 70 years in 2013
-and excludes only rights that had already expired before the extension. The
-1964 edition had not expired then, so the Wikisource `PD-old-50` tag is not a
-sufficient redistribution grant. The active archaic lanes are therefore
-limited to official legal text excluded by Copyright Act Article 7 and old
-works with independently expired terms.
+`scripts/refresh-kr-polite-sentences.mjs` verifies the frozen export hash and
+reproduces the 64 reviewed selections. Korean rows store `target_index: null`,
+and the study, quiz, and detail views display the target Hanja separately.
+Japanese and Chinese retain the literal-glyph offset contract unchanged.
+Across all tracks, 775 of 3,866 pairs have rank-0 sentences; one extra rank
+makes 776 unique seeded sentence identities.
 
 ### Remaining Korean gaps
 
-Each character below lacked a complete, exact, mixed-script sentence of at
-most 24 code points in the retained licensed lanes after applying the source
-balance policy. Longer text, isolated labels, parenthetical Hanja glosses, and
-incomplete clauses were rejected.
+Coverage remains at the previously reviewed 64 Korean mappings; expanding it
+was not part of the register migration. Each character below has no modern
+polite sentence curated in this pass.
 
 | Character | Reason |
 | --- | --- |

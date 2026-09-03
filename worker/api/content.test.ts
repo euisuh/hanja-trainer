@@ -209,6 +209,7 @@ describe("content API", () => {
       const response = await routeApiRequest(new Request(`https://test/api/characters/${encodeURIComponent(row.key)}`), fixture.env);
       const sentence = ((await response.json()) as CharacterDetailResponse).tracks.find((track) => track.track === row.track)?.sentences[0];
       expect(sentence?.reading).toEqual(row.track === "kr" ? null : expect.any(String));
+      expect(sentence?.target_index).toEqual(row.track === "kr" ? null : expect.any(Number));
     }
 
     const missing = await routeApiRequest(new Request("https://test/api/characters/%E7%84%A1"), fixture.env);

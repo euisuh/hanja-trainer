@@ -35,7 +35,7 @@ export type ApiSentence = {
   reading: string | null;
   translation: string;
   source: string;
-  target_index: number;
+  target_index: number | null;
 };
 
 export type ApiReviewState = {
@@ -104,7 +104,7 @@ export type SessionCard = {
   levelOrd: number;
   trackBadge: string;
   prompt: string;
-  sentence: { text: string; translation: string; source: string; targetIndex: number } | null;
+  sentence: { text: string; translation: string; source: string; targetIndex: number | null } | null;
   options: SessionOption[];
   answerIndex: number;
   compare?: Partial<Record<Track, SessionCompareEntry>>;

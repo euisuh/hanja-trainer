@@ -12,7 +12,7 @@ export interface ExampleSentence {
   translationKo: string;
   source: string;
   sourceKind: SourceKind;
-  targetIndex: number;
+  targetIndex: number | null;
   rank: number;
 }
 

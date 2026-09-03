@@ -3,22 +3,22 @@
     {
       "character_key": "結",
       "track": "kr",
-      "text": "春滿한 大界에 民族的 精華를 結紐할지로다",
-      "translation_ko": "춘만한 대계에 민족적 정화를 결뉴할지로다",
-      "source": "3·1독립선언서 #430581",
+      "text": "저는 결혼했습니다.",
+      "translation_ko": "저는 결혼했습니다.",
+      "source": "Tatoeba #13114035",
       "source_kind": "corpus",
-      "target_index": 16,
+      "target_index": null,
       "rank": 0,
       "reading": null
     },
     {
       "character_key": "的",
       "track": "kr",
-      "text": "春滿한 大界에 民族的 精華를 結紐할지로다",
-      "translation_ko": "춘만한 대계에 민족적 정화를 결뉴할지로다",
-      "source": "3·1독립선언서 #430581",
+      "text": "그것이 그의 목적이라고 생각해요.",
+      "translation_ko": "그것이 그의 목적이라고 생각해요.",
+      "source": "Tatoeba #6289889",
       "source_kind": "corpus",
-      "target_index": 10,
+      "target_index": null,
       "rank": 0,
       "reading": null
     }

@@ -31,17 +31,16 @@ function levelLabel(entry: TrackEntry): string {
   return `${entry.hsk} · ${entry.tier}`;
 }
 
-function SentencePanel({ sentence, revealed }: { sentence: ExampleSentence; revealed: boolean }) {
+function SentencePanel({ glyph, sentence, revealed }: { glyph: string; sentence: ExampleSentence; revealed: boolean }) {
   const points = Array.from(sentence.text);
   const theme = trackThemes[sentence.track];
   return (
     <div className="quiz-card__sentence" lang={theme.lang}>
       <div lang={trackThemes.kr.lang}>예문 · <SourceAttribution source={sentence.source} /></div>
-      <p>
-        {points.slice(0, sentence.targetIndex).join("")}
-        <mark>{points[sentence.targetIndex]}</mark>
-        {points.slice(sentence.targetIndex + 1).join("")}
-      </p>
+      {sentence.targetIndex === null && <span className="sentence-target">한자 {glyph}</span>}
+      <p>{sentence.targetIndex === null ? sentence.text : <>
+        {points.slice(0, sentence.targetIndex).join("")}<mark>{points[sentence.targetIndex]}</mark>{points.slice(sentence.targetIndex + 1).join("")}
+      </>}</p>
       {sentence.translationKo !== sentence.text && (
         <small className={revealed ? "quiz-card__translation--revealed" : ""} lang={trackThemes.kr.lang}>
           {revealed ? sentence.translationKo : "정답 후 번역이 공개됩니다"}
@@ -78,7 +77,7 @@ export function QuizCard({ character, track, compare, answered, correct, kind, p
       </div>
       <div className="quiz-card__body">
         <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`} lang={theme.lang}>{word?.glyph ?? entry.glyph}</div>
-        {sentence && <SentencePanel revealed={answered || compare} sentence={sentence} />}
+        {sentence && <SentencePanel glyph={entry.glyph} revealed={answered || compare} sentence={sentence} />}
         {word && <div className="quiz-card__sentence" lang={theme.lang}><div>{wordLabels[track].name} · <SourceAttribution sourceUrl={word.sourceUrl} /></div></div>}
       </div>
       {compare && <CompareCard character={character} onyomiScript={onyomiScript} />}

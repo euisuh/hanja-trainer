@@ -42,7 +42,7 @@ A simple seed file is an array of character entries, as in `characters.sample.js
 - `jp`: `on`, `kun`, `kanken`, `jlpt`
 - `cn`: `pinyin`, `meaning`, `hsk`, `tier`
 
-`sourceKind` is `textbook`, `past_paper`, or `corpus`. `targetIndex` is a zero-based Unicode codepoint offset, not a UTF-16 string index.
+`sourceKind` is `textbook`, `past_paper`, or `corpus`. `targetIndex` is a zero-based Unicode codepoint offset, not a UTF-16 string index; Korean sentences may use `null` when the target Hanja is displayed separately, while Japanese and Chinese require an offset.
 Sentence `reading` is `null` for Korean, hiragana for Japanese, and tone-marked pinyin for Chinese. Run `npm run sentences:readings` after adding rows; it fills missing values while preserving reviewed edits, and seed commands run it automatically. `npm run sentences:readings -- --force` refreshes all readings, using Tatoeba transcriptions plus curated corrections for Japanese.
 
 Files that also define curriculum use `{ "characters": [...], "curriculumUnits": [...] }`. Each unit contains `track`, `level`, `ord`, `title`, `subtitle`, and `members: [{ "key", "ord" }]`. Every member key must occur in that file's `characters` array.

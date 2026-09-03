@@ -17,6 +17,7 @@ export function TrackPanel({ entry, onyomiScript }: { entry: ApiTrackDetail; ony
       <div className="track-panel__badges">{entry.level_badges.map((badge) => <span key={badge}>{badge}</span>)}</div>
       {visible.length === 0 ? <p className="track-panel__empty" lang={trackThemes.kr.lang}>확인된 예문이 없습니다.</p> : visible.map((sentence) => (
         <div className="track-panel__sentence" key={`${sentence.target_index}:${sentence.text}`}>
+          {sentence.target_index === null && <span className="sentence-target">한자 {entry.glyph}</span>}
           <p>{sentence.text}</p>
           {sentence.translation !== sentence.text && <small lang={trackThemes.kr.lang}>{sentence.translation}</small>}
           <small className="track-panel__source" lang={trackThemes.kr.lang}>예문 · <SourceAttribution source={sentence.source} /></small>
