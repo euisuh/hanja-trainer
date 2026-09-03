@@ -1,6 +1,6 @@
 .unit-study__back {
-  margin-bottom: 14px;
-  padding: 9px 14px;
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   border: 2px solid var(--ink);
   border-radius: var(--radius-small);
   background: var(--card);
@@ -10,9 +10,9 @@
   font-weight: 800;
 }
 
-.unit-study__heading { margin-bottom: 18px; }
+.unit-study__heading { margin-bottom: var(--space-5); }
 .unit-study__heading span { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .12em; }
-.unit-study__heading h1 { margin: 4px 0; }
+.unit-study__heading h1 { margin: var(--space-2) 0; }
 .unit-study__heading p { font-size: 13px; }
 
 .unit-study__table-wrap {
@@ -29,7 +29,7 @@
 
 .unit-study__table th,
 .unit-study__table td {
-  padding: 14px;
+  padding: var(--space-4);
   border-right: 1px solid var(--dashed);
   border-bottom: 1px solid var(--dashed);
   text-align: left;
@@ -41,21 +41,21 @@
 .unit-study__table thead th { background: var(--panel); font-size: 12px; font-weight: 800; }
 .unit-study__glyph { width: 96px; text-align: center !important; }
 .unit-study__glyph strong { display: block; font-family: var(--study-font); font-size: 46px; line-height: 1; }
-.unit-study__glyph small { display: block; margin-top: 7px; color: var(--muted); font-size: 11px; }
+.unit-study__glyph small { display: block; margin-top: var(--space-3); color: var(--muted); font-size: 11px; }
 
 .unit-study__track { min-width: 220px; background: var(--study-soft); }
 .unit-study__reading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .unit-study__reading strong { font-size: 18px; }
 .unit-study__reading small { display: block; margin-top: 3px; color: var(--body); font-size: 12px; }
-.unit-study__badges { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
-.unit-study__badges span { padding: 3px 7px; border-radius: var(--radius-keycap); background: var(--study-accent); color: var(--card); font-size: 10px; font-weight: 800; }
+.unit-study__badges { display: flex; flex-wrap: wrap; gap: 5px; margin: var(--space-3) 0; }
+.unit-study__badges span { padding: var(--space-2) var(--space-3); border-radius: var(--radius-keycap); background: var(--study-accent); color: var(--card); font-size: 10px; font-weight: 800; }
 .unit-study__meaning { color: var(--ink); font-size: 13px; font-weight: 700; }
-.unit-study__sentences { display: grid; gap: 8px; margin-top: 12px; }
-.unit-study__sentence { padding-top: 8px; border-top: 1px solid var(--study-accent); }
-.unit-study__sentence small { display: block; margin-top: 4px; color: var(--body); font-size: 11px; }
+.unit-study__sentences { display: grid; gap: 8px; margin-top: var(--space-4); }
+.unit-study__sentence { padding-top: var(--space-3); border-top: 1px solid var(--study-accent); }
+.unit-study__sentence small { display: block; margin-top: var(--space-2); color: var(--body); font-size: 11px; }
 .unit-study__source { color: var(--muted) !important; }
 .unit-study__source a { color: inherit; }
-.unit-study__empty { margin-top: 10px; color: var(--muted); font-size: 11px; }
+.unit-study__empty { margin-top: var(--space-4); color: var(--muted); font-size: 11px; }
 
 .unit-study__audio {
   display: flex;
@@ -73,19 +73,19 @@
 
 .unit-study__audio svg { flex: 0 0 auto; fill: var(--study-accent); }
 .unit-study__sentence .unit-study__audio { font-family: var(--study-font); font-size: 14px; font-weight: 650; line-height: 1.5; }
-.unit-study__sentence mark { padding: 0 2px; background: var(--gold-soft); color: var(--ink); }
+.unit-study__sentence mark { padding: 0 var(--space-1); background: var(--gold-soft); color: var(--ink); }
 
 @media (max-width: 560px) {
   .unit-study__table th,
-  .unit-study__table td { padding: 11px; }
+  .unit-study__table td { padding: var(--space-4); }
 }
 
 .speaking-session { width: min(100%, 760px); margin-inline: auto; }
-.speaking-session__chrome { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.speaking-session__chrome { display: flex; align-items: center; gap: 12px; margin-bottom: var(--space-5); }
 .speaking-session__chrome button,
 .speaking-session__navigation button,
 .speaking-card button {
-  padding: 10px 14px;
+  padding: var(--space-4);
   border: 2px solid var(--ink);
   border-radius: var(--radius-small);
   background: var(--card);
@@ -97,21 +97,21 @@
 .speaking-session__progress { flex: 1; height: 14px; overflow: hidden; border: 2px solid var(--ink); border-radius: var(--radius-pill); background: var(--progress-track); }
 .speaking-session__progress span { display: block; height: 100%; background: var(--speaking-accent); }
 .speaking-session__chrome strong { white-space: nowrap; }
-.speaking-card { padding: clamp(20px, 5vw, 38px); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
-.speaking-card__badge { margin-bottom: 10px; color: var(--speaking-accent-text); font-size: 12px; font-weight: 800; letter-spacing: .12em; }
+.speaking-card { padding: clamp(var(--space-6), 5vw, var(--space-9)); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
+.speaking-card__badge { margin-bottom: var(--space-4); color: var(--speaking-accent-text); font-size: 12px; font-weight: 800; letter-spacing: .12em; }
 .speaking-card__sentence { color: var(--ink); font-family: var(--speaking-font); font-size: clamp(22px, 5vw, 34px); line-height: 1.55; }
-.speaking-card__reading { margin-top: 10px; color: var(--speaking-accent-text); font-family: var(--speaking-font); font-size: 16px; }
-.speaking-card__translation { margin-top: 8px; color: var(--body); font-size: 14px; }
-.speaking-card__source { display: block; margin-top: 10px; color: var(--muted); }
+.speaking-card__reading { margin-top: var(--space-4); color: var(--speaking-accent-text); font-family: var(--speaking-font); font-size: 16px; }
+.speaking-card__translation { margin-top: var(--space-3); color: var(--body); font-size: 14px; }
+.speaking-card__source { display: block; margin-top: var(--space-4); color: var(--muted); }
 .speaking-card__source a { color: inherit; }
-.speaking-card__compare { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 24px; padding: 16px; border-radius: var(--radius-panel); background: var(--speaking-soft); }
+.speaking-card__compare { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: var(--space-7); padding: var(--space-5); border-radius: var(--radius-panel); background: var(--speaking-soft); }
 .speaking-card__compare span { color: var(--muted); font-size: 12px; font-weight: 700; }
 .speaking-card__compare audio { max-width: 100%; }
-.speaking-card__recording { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; min-height: 48px; margin-top: 16px; }
+.speaking-card__recording { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; min-height: 48px; margin-top: var(--space-5); }
 .speaking-card__recording p { flex-basis: 100%; }
 .speaking-card__recording button:first-of-type { background: var(--speaking-accent); color: var(--card); }
-.speaking-card__privacy { margin-top: 14px; font-size: 12px; }
-.speaking-session__navigation { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; }
+.speaking-card__privacy { margin-top: var(--space-4); font-size: 12px; }
+.speaking-session__navigation { display: flex; justify-content: space-between; gap: 12px; margin-top: var(--space-5); }
 .speaking-session__navigation button:last-child { margin-left: auto; background: var(--ink); color: var(--paper); }
 .speaking-empty { display: grid; max-width: 620px; gap: 14px; margin-inline: auto; }
-.speaking-empty button { width: fit-content; padding: 10px 14px; border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); cursor: pointer; font-weight: 800; }
+.speaking-empty button { width: fit-content; padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); cursor: pointer; font-weight: 800; }

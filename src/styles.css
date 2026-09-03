@@ -1,4 +1,14 @@
 :root {
+  /* Compact 2px step, 4px rhythm, wider upper steps. */
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+  --space-8: 32px;
+  --space-9: 40px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -34,7 +44,7 @@ select {
 
 .app {
   min-height: 100vh;
-  padding: 0 16px 104px;
+  padding: 0 var(--space-5) 104px;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui);
@@ -62,7 +72,7 @@ main,
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-right: 4px;
+  margin-right: var(--space-2);
 }
 
 .active-profile > strong {
@@ -70,7 +80,7 @@ main,
 }
 
 .active-profile > button {
-  padding: 7px 10px;
+  padding: var(--space-3) var(--space-4);
   border: 2px solid var(--ink);
   border-radius: var(--radius-pill);
   background: var(--card);
@@ -81,7 +91,7 @@ main,
 }
 
 main {
-  padding: 44px 4px;
+  padding: 44px var(--space-2);
   animation: om-rise .35s ease-out;
 }
 
@@ -97,7 +107,7 @@ main {
 }
 
 h1 {
-  margin: 0 0 10px;
+  margin: 0 0 var(--space-4);
   font-size: clamp(2rem, 7vw, 3rem);
   font-weight: 800;
   letter-spacing: -.03em;
@@ -114,14 +124,14 @@ p {
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  padding: 18px 4px 14px;
+  padding: var(--space-5) var(--space-2) var(--space-4);
 }
 
 .metric {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 8px 14px;
+  padding: var(--space-3) var(--space-4);
   border: 2px solid var(--ink);
   border-radius: var(--radius-pill);
   background: var(--card);
@@ -148,7 +158,7 @@ p {
   align-items: center;
   gap: 10px;
   margin-left: auto;
-  padding: 7px 14px 7px 8px;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-3);
   border-radius: var(--radius-pill);
   background: var(--ink);
   color: var(--paper);
@@ -170,7 +180,7 @@ p {
   z-index: 30;
   display: flex;
   justify-content: center;
-  padding: 12px;
+  padding: var(--space-4);
   pointer-events: none;
 }
 
@@ -179,7 +189,7 @@ p {
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px;
-  padding: 8px;
+  padding: var(--space-3);
   border-radius: var(--radius-large);
   background: var(--ink);
   box-shadow: var(--shadow-nav);
@@ -190,7 +200,7 @@ p {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 16px;
+  padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-nav-item);
   color: var(--nav-muted);
   font-size: 13px;
@@ -204,7 +214,7 @@ p {
 }
 
 kbd {
-  padding: 2px 7px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-keycap);
   background: var(--ink);
   color: var(--paper);
@@ -225,6 +235,6 @@ kbd {
   }
 
   .bottom-nav a {
-    padding-inline: 10px;
+    padding-inline: var(--space-4);
   }
 }

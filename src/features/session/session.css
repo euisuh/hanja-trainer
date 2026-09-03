@@ -2,14 +2,14 @@
   position: relative;
   width: min(100%, 920px);
   margin-inline: auto;
-  padding-top: 14px;
+  padding-top: var(--space-4);
 }
 
 .session-chrome {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-5);
 }
 
 .session-chrome > button:first-child {
@@ -63,7 +63,7 @@ button.session-sync {
 }
 
 .combo-badge {
-  padding: 6px 12px;
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-pill);
   background: var(--ink);
   color: var(--gold);
@@ -101,7 +101,7 @@ button.session-sync {
 }
 
 .quiz-card {
-  padding: 26px 22px;
+  padding: var(--space-7);
   border: 3px solid var(--ink);
   border-radius: var(--radius-extra-large);
   background: var(--card);
@@ -117,11 +117,11 @@ button.session-sync {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: var(--space-5);
 }
 
 .quiz-card__badges span {
-  padding: 5px 11px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-badge);
   font-size: 11px;
   font-weight: 800;
@@ -169,14 +169,14 @@ button.session-sync {
 .quiz-card__sentence {
   flex: 1 1 260px;
   min-width: 240px;
-  padding: 16px;
+  padding: var(--space-5);
   border: 2px solid var(--border-tan);
   border-radius: var(--radius-panel);
   background: var(--panel);
 }
 
 .quiz-card__sentence > div {
-  margin-bottom: 8px;
+  margin-bottom: var(--space-3);
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
@@ -201,7 +201,7 @@ button.session-sync {
 
 .quiz-card__sentence small {
   display: block;
-  margin-top: 10px;
+  margin-top: var(--space-4);
   color: var(--locked-text);
   font-size: 13px;
   font-weight: 600;
@@ -215,11 +215,11 @@ button.session-sync {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
-  margin-top: 20px;
+  margin-top: var(--space-6);
 }
 
 .compare-card__panel {
-  padding: 14px;
+  padding: var(--space-4);
   border: 2px solid;
   border-radius: var(--radius-panel);
 }
@@ -236,13 +236,13 @@ button.session-sync {
 }
 
 .compare-card__panel strong {
-  margin-top: 5px;
+  margin-top: var(--space-2);
   font-size: 22px;
   font-weight: 800;
 }
 
 .compare-card__panel small {
-  margin-top: 2px;
+  margin-top: var(--space-1);
   color: var(--muted);
   font-size: 12px;
   font-weight: 700;
@@ -259,7 +259,7 @@ button.session-sync {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  margin-top: 16px;
+  margin-top: var(--space-5);
 }
 
 .answer-options--flexible { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -268,7 +268,7 @@ button.session-sync {
   display: flex;
   align-items: center;
   gap: 13px;
-  padding: 15px 16px;
+  padding: var(--space-5);
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
   background: var(--card);
@@ -336,8 +336,8 @@ button.session-sync {
   width: 100%;
   align-items: center;
   gap: 13px;
-  margin-top: 12px;
-  padding: 12px 16px;
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-5);
   border: 2px solid var(--border-tan);
   border-radius: var(--radius-control);
   background: var(--panel);
@@ -346,7 +346,7 @@ button.session-sync {
 }
 
 .skip-answer:disabled { cursor: default; opacity: .65; }
-.skip-answer kbd { width: 30px; padding: 6px 0; border-radius: var(--radius-answer-key); background: var(--chip-bg); text-align: center; }
+.skip-answer kbd { width: 30px; padding: var(--space-3) 0; border-radius: var(--radius-answer-key); background: var(--chip-bg); text-align: center; }
 .skip-answer strong { font-size: 15px; }
 
 .feedback-bar {
@@ -354,8 +354,8 @@ button.session-sync {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 16px;
-  padding: 16px 18px;
+  margin-top: var(--space-5);
+  padding: var(--space-5);
   border: 3px solid var(--border-tan);
   border-radius: var(--radius-medium);
   background: var(--panel);
@@ -380,7 +380,7 @@ button.session-sync {
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 11px 18px;
+  padding: var(--space-4) var(--space-5);
   border: 3px solid var(--ink);
   border-radius: var(--radius-control);
   background: var(--gold);
@@ -492,14 +492,14 @@ button.session-sync {
   inset: 0;
   z-index: 60;
   display: grid;
-  padding: 20px;
+  padding: var(--space-6);
   place-items: center;
   background: var(--session-overlay);
 }
 
 .pause-modal__panel {
   width: min(100%, 380px);
-  padding: 26px;
+  padding: var(--space-7);
   border: 3px solid var(--ink);
   border-radius: var(--radius-modal);
   background: var(--paper);
@@ -507,13 +507,13 @@ button.session-sync {
 }
 
 .pause-modal h2 {
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-3);
   font-size: 26px;
   font-weight: 800;
 }
 
 .pause-modal p {
-  margin-bottom: 18px;
+  margin-bottom: var(--space-5);
   color: var(--body);
   font-size: 14px;
   font-weight: 600;
@@ -523,8 +523,8 @@ button.session-sync {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-top: 10px;
-  padding: 14px 16px;
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-5);
   border: 3px solid var(--ink);
   border-radius: var(--radius-panel);
   background: var(--card);
@@ -543,7 +543,7 @@ button.session-sync {
 }
 
 .session-complete {
-  padding: 34px 4px;
+  padding: var(--space-8) var(--space-2);
   animation: om-rise .35s ease-out;
 }
 
@@ -557,7 +557,7 @@ button.session-sync {
 }
 
 .session-complete h1 {
-  margin: 12px 0 20px;
+  margin: var(--space-4) 0 var(--space-6);
   font-size: 32px;
   font-weight: 800;
 }
@@ -567,11 +567,11 @@ button.session-sync {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
   max-width: 620px;
-  margin-bottom: 22px;
+  margin-bottom: var(--space-7);
 }
 
 .session-complete__stats > div {
-  padding: 18px;
+  padding: var(--space-6);
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
   background: var(--card);
@@ -590,7 +590,7 @@ button.session-sync {
 }
 
 .session-complete__stats strong {
-  margin-top: 4px;
+  margin-top: var(--space-2);
   font-size: 30px;
   font-weight: 800;
 }
@@ -599,7 +599,7 @@ button.session-sync {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 24px;
+  padding: var(--space-5) var(--space-7);
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
   background: var(--gold);
@@ -613,10 +613,10 @@ button.session-sync {
 @media (max-width: 560px) {
   .session-runner { padding-top: 0; }
   .session-runner--unit-test { margin-top: -24px; }
-  .session-runner--unit-test .session-chrome { margin-bottom: 8px; }
+  .session-runner--unit-test .session-chrome { margin-bottom: var(--space-3); }
   .session-chrome { gap: 8px; }
-  .combo-badge { padding-inline: 9px; font-size: 12px; }
-  .quiz-card { padding: 22px 18px; }
+  .combo-badge { padding-inline: var(--space-3); font-size: 12px; }
+  .quiz-card { padding: var(--space-7) var(--space-5); }
   .quiz-card__glyph { font-size: 108px; }
   .quiz-card__sentence { min-width: 100%; }
   .answer-options { grid-template-columns: 1fr; }
