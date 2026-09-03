@@ -154,8 +154,8 @@ test("Chinese source counts, HSK 3 membership, units, and variants match the pin
   );
   assert.equal(
     createHash("sha256").update(await readFile("data/sentences/cn-hsk3.json")).digest("hex"),
-    "7802410f35fb70d200a9ea0abaadfca869ec23897c09e00ec4b99069a20fcf45",
-    "re-run generate-cn-through-hsk3.mjs when the frozen output changes",
+    "341f4d7cc2bfc590abc72c8342c3226d08c297ebda28050853abf0aa9d44f814",
+    "re-run refresh-polite-sentences.mjs when the frozen output changes",
   );
   const documents = await Promise.all(Object.keys(files).map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
   const byPath = new Map(Object.keys(files).map((path, index) => [path, documents[index]]));
@@ -404,6 +404,11 @@ test("sourced sentence files resolve to their exact target glyph", async () => {
   assert.deepEqual([...documentedCounts].toSorted(), [...laneCounts].toSorted());
 
   assert.equal(byIdentity.size, 776);
+  assert.deepEqual(Object.fromEntries(["jp", "cn"].map((track) => [track, [...byIdentity.values()].filter((entry) => (
+    entry.track === track && (track === "jp"
+      ? /(?:です|でし(?:た|ょう)|ます|まし(?:た|ょう)|ません(?:でした)?)(?:[。！？!?]|よ|ね|か)*$/u.test(entry.text)
+      : entry.text.includes("您"))
+  )).length])), { jp: 252, cn: 104 });
   assert.ok([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length > 1093);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3 && legacyTrackCounts.get(key)?.size === 3) {

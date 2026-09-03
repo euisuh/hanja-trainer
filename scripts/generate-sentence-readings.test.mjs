@@ -22,11 +22,11 @@ test("committed readings cover reviewed regressions", async () => {
   const paths = ["jp-kanken-10.json", "jp-kanken-9.json", "jp-kanken-8.json", "cn-hsk1.json", "cn-hsk2.json"];
   const rows = (await Promise.all(paths.map(async (name) => JSON.parse(await readFile(join("data/sentences", name), "utf8")).sentences))).flat();
   const expected = new Map([
-    ["お腹一杯！", "おなかいっぱい！"],
+    ["私は一番です。", "わたしはいちばんです。"],
     ["もう九時です。", "もうくじです。"],
-    ["七時三十分だった。", "しちじさんじゅっぷんだった。"],
-    ["灯台下暗し。", "とうだいもとくらし。"],
-    ["外に出ろ。", "そとにでろ。"],
+    ["トムは子供が三人います。", "とむはこどもがさんにんいます。"],
+    ["手伝って下さいますか。", "てつだってくださいますか。"],
+    ["咳が出ますか。", "せきがでますか。"],
     ["３角形のすべての角の和は１８０度に等しい。", "さんかくけいのすべてのかくのわはひゃくはちじゅうどにひとしい。"],
     ["木は緑色です。", "きはみどりいろです。"],
     ["新竹は風が強いため、「風の街」という美称がある。", "しんちくはかぜがつよいため、「かぜのまち」というびしょうがある。"],

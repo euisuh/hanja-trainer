@@ -3,13 +3,13 @@
     {
       "character_key": "愛",
       "track": "cn",
-      "text": "你爱我吗？",
-      "translation_ko": "나를 사랑해?",
-      "source": "Tatoeba #10966779",
+      "text": "我爱您。",
+      "translation_ko": "사랑해요.",
+      "source": "Tatoeba #380195",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "nǐ ài wǒ ma？"
+      "reading": "wǒ ài nín。"
     },
     {
       "character_key": "八",
@@ -47,13 +47,13 @@
     {
       "character_key": "里",
       "track": "cn",
-      "text": "请来这里",
-      "translation_ko": "이쪽으로 오세요.",
-      "source": "Tatoeba #13209829",
+      "text": "您是哪里人？",
+      "translation_ko": "어디에서 오셨어요?",
+      "source": "Tatoeba #5581097",
       "source_kind": "corpus",
       "target_index": 3,
       "rank": 1,
-      "reading": "qǐng lái zhè lǐ"
+      "reading": "nín shì nǎ lǐ rén？"
     },
     {
       "character_key": "白",
@@ -146,13 +146,13 @@
     {
       "character_key": "便",
       "track": "cn",
-      "text": "似乎很便宜。",
-      "translation_ko": "싼 것 같았습니다.",
-      "source": "Tatoeba #333228",
+      "text": "您可以随便去哪儿。",
+      "translation_ko": "당신은 어디든 가도 돼요.",
+      "source": "Tatoeba #469416",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 4,
       "rank": 0,
-      "reading": "sì hū hěn pián yi。"
+      "reading": "nín kě yǐ suí biàn qù nǎ ér。"
     },
     {
       "character_key": "病",
@@ -168,13 +168,13 @@
     {
       "character_key": "不",
       "track": "cn",
-      "text": "对不起......",
-      "translation_ko": "죄송합니다",
-      "source": "Tatoeba #9400910",
+      "text": "您不必感谢我。",
+      "translation_ko": "아니에요.",
+      "source": "Tatoeba #7767730",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "duì bù qǐ......"
+      "reading": "nín bú bì gǎn xiè wǒ。"
     },
     {
       "character_key": "菜",
@@ -256,13 +256,13 @@
     {
       "character_key": "出",
       "track": "cn",
-      "text": "不能出去。",
-      "translation_ko": "밖에 나갈 수 없어요.",
-      "source": "Tatoeba #13521857",
+      "text": "您是在哪儿出生的呢？",
+      "translation_ko": "어디에서 태어나셨습니까?",
+      "source": "Tatoeba #2055824",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 5,
       "rank": 0,
-      "reading": "bù néng chū qù。"
+      "reading": "nín shì zài nǎ ér chū shēng de ne？"
     },
     {
       "character_key": "穿",
@@ -333,13 +333,13 @@
     {
       "character_key": "道",
       "track": "cn",
-      "text": "你知道吗？",
-      "translation_ko": "너는 알고 있어?",
-      "source": "Tatoeba #11512354",
+      "text": "您知道为什么吗？",
+      "translation_ko": "왜인지 아시나요?",
+      "source": "Tatoeba #10695962",
       "source_kind": "corpus",
       "target_index": 2,
       "rank": 0,
-      "reading": "nǐ zhī dào ma？"
+      "reading": "nín zhī dào wèi shén me ma？"
     },
     {
       "character_key": "得",
@@ -355,13 +355,13 @@
     {
       "character_key": "的",
       "track": "cn",
-      "text": "我的天哪!",
-      "translation_ko": "세상에!",
-      "source": "Tatoeba #3702831",
+      "text": "这是您的义务。",
+      "translation_ko": "그건 네 책임이야.",
+      "source": "Tatoeba #4263781",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 3,
       "rank": 0,
-      "reading": "wǒ de tiān nǎ!"
+      "reading": "zhè shì nín de yì wù。"
     },
     {
       "character_key": "弟",
@@ -443,35 +443,35 @@
     {
       "character_key": "对",
       "track": "cn",
-      "text": "对不起......",
-      "translation_ko": "죄송합니다",
-      "source": "Tatoeba #9400910",
+      "text": "很遗憾您不能来派对。",
+      "translation_ko": "당신이 파티에 못와서 아쉽습니다.",
+      "source": "Tatoeba #791636",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 8,
       "rank": 0,
-      "reading": "duì bù qǐ......"
+      "reading": "hěn yí hàn nín bù néng lái pài duì。"
     },
     {
       "character_key": "多",
       "track": "cn",
-      "text": "多可爱啊！",
-      "translation_ko": "귀여워!",
-      "source": "Tatoeba #5092632",
+      "text": "您身上有多少钱？",
+      "translation_ko": "돈을 얼마나 가지고 계세요?",
+      "source": "Tatoeba #346456",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 4,
       "rank": 0,
-      "reading": "duō kě ài a！"
+      "reading": "nín shēn shàng yǒu duō shǎo qián？"
     },
     {
       "character_key": "儿",
       "track": "cn",
-      "text": "你去哪儿？",
-      "translation_ko": "어디에 가요?",
-      "source": "Tatoeba #389803",
+      "text": "您可以随便去哪儿。",
+      "translation_ko": "당신은 어디든 가도 돼요.",
+      "source": "Tatoeba #469416",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 7,
       "rank": 0,
-      "reading": "nǐ qù nǎ ér？"
+      "reading": "nín kě yǐ suí biàn qù nǎ ér。"
     },
     {
       "character_key": "二",
@@ -498,13 +498,13 @@
     {
       "character_key": "房",
       "track": "cn",
-      "text": "禁止前往房屋。",
-      "translation_ko": "집에 가는 것은 금지되어 있습니다.",
-      "source": "Tatoeba #12674855",
+      "text": "您能看到那栋小房子吗？",
+      "translation_ko": "저기 작은 집이 보이나요?",
+      "source": "Tatoeba #10261059",
       "source_kind": "corpus",
-      "target_index": 4,
+      "target_index": 7,
       "rank": 0,
-      "reading": "jìn zhǐ qián wǎng fáng wū。"
+      "reading": "nín néng kàn dào nà dòng xiǎo fáng zi ma？"
     },
     {
       "character_key": "飛",
@@ -553,13 +553,13 @@
     {
       "character_key": "高",
       "track": "cn",
-      "text": "我比你高。",
-      "translation_ko": "나는 너보다 크다.",
-      "source": "Tatoeba #833198",
+      "text": "很高兴见到您。",
+      "translation_ko": "만나서 반갑습니다.",
+      "source": "Tatoeba #1317017",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 1,
       "rank": 0,
-      "reading": "wǒ bǐ nǐ gāo。"
+      "reading": "hěn gāo xìng jiàn dào nín。"
     },
     {
       "character_key": "哥",
@@ -586,24 +586,24 @@
     {
       "character_key": "个",
       "track": "cn",
-      "text": "这个几块？",
-      "translation_ko": "얼마에요?",
-      "source": "Tatoeba #10052320",
+      "text": "我能问您一个问题吗？",
+      "translation_ko": "질문 해도 돼요?",
+      "source": "Tatoeba #795623",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 5,
       "rank": 0,
-      "reading": "zhè ge jǐ kuài？"
+      "reading": "wǒ néng wèn nín yí gè wèn tí ma？"
     },
     {
       "character_key": "給",
       "track": "cn",
-      "text": "可以给我吗？",
-      "translation_ko": "가져도 될까요?",
-      "source": "Tatoeba #8725787",
+      "text": "请给我看看您的护照。",
+      "translation_ko": "여권을 보여 주세요.",
+      "source": "Tatoeba #462032",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 1,
       "rank": 0,
-      "reading": "kě yǐ gěi wǒ ma？"
+      "reading": "qǐng gěi wǒ kàn kàn nín de hù zhào。"
     },
     {
       "character_key": "工",
@@ -652,13 +652,13 @@
     {
       "character_key": "貴",
       "track": "cn",
-      "text": "太贵了吧！",
-      "translation_ko": "너무 비싸요.",
-      "source": "Tatoeba #4761386",
+      "text": "请问您贵姓",
+      "translation_ko": "이름이 뭐예요?",
+      "source": "Tatoeba #4563003",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 3,
       "rank": 0,
-      "reading": "tài guì le ba！"
+      "reading": "qǐng wèn nín guì xìng"
     },
     {
       "character_key": "國",
@@ -718,57 +718,57 @@
     {
       "character_key": "好",
       "track": "cn",
-      "text": "哇，好冷！",
-      "translation_ko": "아이, 추워!",
-      "source": "Tatoeba #762012",
+      "text": "您好！",
+      "translation_ko": "저기요!",
+      "source": "Tatoeba #13174770",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 1,
       "rank": 0,
-      "reading": "wā， hǎo lěng！"
+      "reading": "nín hǎo！"
     },
     {
       "character_key": "號",
       "track": "cn",
-      "text": "今天是几号？",
-      "translation_ko": "오늘이 며칠이지?",
-      "source": "Tatoeba #408909",
+      "text": "您的手机号码是多少？",
+      "translation_ko": "전화번호가 뭐예요?",
+      "source": "Tatoeba #3378151",
       "source_kind": "corpus",
       "target_index": 4,
       "rank": 0,
-      "reading": "jīn tiān shì jǐ hào？"
+      "reading": "nín de shǒu jī hào mǎ shì duō shǎo？"
     },
     {
       "character_key": "喝",
       "track": "cn",
-      "text": "喝牛奶吧！",
-      "translation_ko": "우유 마셔!",
-      "source": "Tatoeba #9543844",
+      "text": "您想喝什么？",
+      "translation_ko": "무엇을 마십니까?",
+      "source": "Tatoeba #419679",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 2,
       "rank": 0,
-      "reading": "hē niú nǎi ba！"
+      "reading": "nín xiǎng hē shén me？"
     },
     {
       "character_key": "和",
       "track": "cn",
-      "text": "和我约会好吗？",
-      "translation_ko": "저랑 데이트하실래요?",
-      "source": "Tatoeba #8696221",
+      "text": "我能问一下您的姓名和住址吗？",
+      "translation_ko": "혹시 제가 당신의 이름과 주소를 물어봐도 될까요?",
+      "source": "Tatoeba #334622",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 9,
       "rank": 0,
-      "reading": "hé wǒ yuē huì hǎo ma？"
+      "reading": "wǒ néng wèn yí xià nín de xìng míng hé zhù zhǐ ma？"
     },
     {
       "character_key": "很",
       "track": "cn",
-      "text": "我很想你！",
-      "translation_ko": "보고 싶어!",
-      "source": "Tatoeba #6055174",
+      "text": "很高兴见到您。",
+      "translation_ko": "만나서 반갑습니다.",
+      "source": "Tatoeba #1317017",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 0,
       "rank": 0,
-      "reading": "wǒ hěn xiǎng nǐ！"
+      "reading": "hěn gāo xìng jiàn dào nín。"
     },
     {
       "character_key": "后",
@@ -795,24 +795,24 @@
     {
       "character_key": "話",
       "track": "cn",
-      "text": "他说话了。",
-      "translation_ko": "그가 말했다.",
-      "source": "Tatoeba #9409628",
+      "text": "您可以再重复一遍刚才说的话吗？",
+      "translation_ko": "방금 말씀하신 것을 다시 한번 말씀해 주시겠어요?",
+      "source": "Tatoeba #5668922",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 12,
       "rank": 0,
-      "reading": "tā shuō huà le。"
+      "reading": "nín kě yǐ zài chóng fù yí biàn gāng cái shuō de huà ma？"
     },
     {
       "character_key": "欢",
       "track": "cn",
-      "text": "欢迎你们！",
-      "translation_ko": "어서 오세요!",
-      "source": "Tatoeba #9991999",
+      "text": "欢迎您来！",
+      "translation_ko": "어서오세요.",
+      "source": "Tatoeba #1216122",
       "source_kind": "corpus",
       "target_index": 0,
       "rank": 0,
-      "reading": "huān yíng nǐ men！"
+      "reading": "huān yíng nín lái！"
     },
     {
       "character_key": "回",
@@ -828,24 +828,24 @@
     {
       "character_key": "會",
       "track": "cn",
-      "text": "一会儿见！",
-      "translation_ko": "곧 다시 보자!",
-      "source": "Tatoeba #337874",
+      "text": "您会骑马吗？",
+      "translation_ko": "너 말을 탈 줄 아니?",
+      "source": "Tatoeba #472381",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "yí huì er jiàn！"
+      "reading": "nín huì qí mǎ ma？"
     },
     {
       "character_key": "火",
       "track": "cn",
-      "text": "火车来了！",
-      "translation_ko": "기차 온다!",
-      "source": "Tatoeba #1441855",
+      "text": "您有火柴吗？",
+      "translation_ko": "성냥 있으세요?",
+      "source": "Tatoeba #676993",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 2,
       "rank": 0,
-      "reading": "huǒ chē lái le！"
+      "reading": "nín yǒu huǒ chái ma？"
     },
     {
       "character_key": "机",
@@ -883,13 +883,13 @@
     {
       "character_key": "家",
       "track": "cn",
-      "text": "家里有人吗？",
-      "translation_ko": "누구 집에 있어?",
-      "source": "Tatoeba #12918650",
+      "text": "您成家了吗？",
+      "translation_ko": "결혼했나요?",
+      "source": "Tatoeba #413061",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 2,
       "rank": 0,
-      "reading": "jiā lǐ yǒu rén ma？"
+      "reading": "nín chéng jiā le ma？"
     },
     {
       "character_key": "間",
@@ -905,13 +905,13 @@
     {
       "character_key": "見",
       "track": "cn",
-      "text": "好久不见！",
-      "translation_ko": "오래간만입니다!",
-      "source": "Tatoeba #1357629",
+      "text": "很高兴见到您。",
+      "translation_ko": "만나서 반갑습니다.",
+      "source": "Tatoeba #1317017",
       "source_kind": "corpus",
       "target_index": 3,
       "rank": 0,
-      "reading": "hǎo jiǔ bú jiàn！"
+      "reading": "hěn gāo xìng jiàn dào nín。"
     },
     {
       "character_key": "件",
@@ -927,13 +927,13 @@
     {
       "character_key": "叫",
       "track": "cn",
-      "text": "你叫什么？",
+      "text": "您叫什么名字？",
       "translation_ko": "이름이 뭐예요?",
-      "source": "Tatoeba #10966808",
+      "source": "Tatoeba #444659",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "nǐ jiào shén me？"
+      "reading": "nín jiào shén me míng zì？"
     },
     {
       "character_key": "姐",
@@ -982,35 +982,35 @@
     {
       "character_key": "开",
       "track": "cn",
-      "text": "把嘴张开！",
-      "translation_ko": "입을 벌리세요!",
-      "source": "Tatoeba #501554",
+      "text": "您昨天为什么离开教室？",
+      "translation_ko": "어제 왜 교실을 나갔어요?",
+      "source": "Tatoeba #471334",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 7,
       "rank": 0,
-      "reading": "bǎ zuǐ zhāng kāi！"
+      "reading": "nín zuó tiān wèi shén me lí kāi jiào shì？"
     },
     {
       "character_key": "看",
       "track": "cn",
-      "text": "能看清吧？",
-      "translation_ko": "잘 보이죠?",
-      "source": "Tatoeba #13521812",
+      "text": "请给我看看您的护照。",
+      "translation_ko": "여권을 보여 주세요.",
+      "source": "Tatoeba #462032",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 3,
       "rank": 0,
-      "reading": "néng kàn qīng ba？"
+      "reading": "qǐng gěi wǒ kàn kàn nín de hù zhào。"
     },
     {
       "character_key": "可",
       "track": "cn",
-      "text": "有可能吗？",
-      "translation_ko": "그게 가능해?",
-      "source": "Tatoeba #9432340",
+      "text": "您可以随便去哪儿。",
+      "translation_ko": "당신은 어디든 가도 돼요.",
+      "source": "Tatoeba #469416",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "yǒu kě néng ma？"
+      "reading": "nín kě yǐ suí biàn qù nǎ ér。"
     },
     {
       "character_key": "客",
@@ -1059,13 +1059,13 @@
     {
       "character_key": "來",
       "track": "cn",
-      "text": "我回来了！",
-      "translation_ko": "나 돌아왔어!",
-      "source": "Tatoeba #10153684",
+      "text": "欢迎您来！",
+      "translation_ko": "어서오세요.",
+      "source": "Tatoeba #1216122",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 3,
       "rank": 0,
-      "reading": "wǒ huí lái le！"
+      "reading": "huān yíng nín lái！"
     },
     {
       "character_key": "老",
@@ -1081,13 +1081,13 @@
     {
       "character_key": "了",
       "track": "cn",
-      "text": "我回来了！",
-      "translation_ko": "나 돌아왔어!",
-      "source": "Tatoeba #10153684",
+      "text": "您成家了吗？",
+      "translation_ko": "결혼했나요?",
+      "source": "Tatoeba #413061",
       "source_kind": "corpus",
       "target_index": 3,
       "rank": 0,
-      "reading": "wǒ huí lái le！"
+      "reading": "nín chéng jiā le ma？"
     },
     {
       "character_key": "冷",
@@ -1103,13 +1103,13 @@
     {
       "character_key": "里",
       "track": "cn",
-      "text": "猫在哪里？",
-      "translation_ko": "고양이는 어딨어?",
-      "source": "Tatoeba #1851461",
+      "text": "您是哪里人？",
+      "translation_ko": "어디에서 오셨어요?",
+      "source": "Tatoeba #5581097",
       "source_kind": "corpus",
       "target_index": 3,
       "rank": 0,
-      "reading": "māo zài nǎ lǐ？"
+      "reading": "nín shì nǎ lǐ rén？"
     },
     {
       "character_key": "两",
@@ -1158,13 +1158,13 @@
     {
       "character_key": "嗎",
       "track": "cn",
-      "text": "你知道吗？",
-      "translation_ko": "너는 알고 있어?",
-      "source": "Tatoeba #11512354",
+      "text": "您忙吗？",
+      "translation_ko": "바쁘세요?",
+      "source": "Tatoeba #2881090",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 2,
       "rank": 0,
-      "reading": "nǐ zhī dào ma？"
+      "reading": "nín máng ma？"
     },
     {
       "character_key": "買",
@@ -1213,13 +1213,13 @@
     {
       "character_key": "么",
       "track": "cn",
-      "text": "你叫什么？",
-      "translation_ko": "이름이 뭐예요?",
-      "source": "Tatoeba #10966808",
+      "text": "您想喝什么？",
+      "translation_ko": "무엇을 마십니까?",
+      "source": "Tatoeba #419679",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 4,
       "rank": 0,
-      "reading": "nǐ jiào shén me？"
+      "reading": "nín xiǎng hē shén me？"
     },
     {
       "character_key": "没",
@@ -1279,13 +1279,13 @@
     {
       "character_key": "名",
       "track": "cn",
-      "text": "成名作了。",
-      "translation_ko": "그것은 그의 출세작이 되었다.",
-      "source": "Tatoeba #13522188",
+      "text": "您叫什么名字？",
+      "translation_ko": "이름이 뭐예요?",
+      "source": "Tatoeba #444659",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 4,
       "rank": 0,
-      "reading": "chéng míng zuò le。"
+      "reading": "nín jiào shén me míng zì？"
     },
     {
       "character_key": "明",
@@ -1301,24 +1301,24 @@
     {
       "character_key": "哪",
       "track": "cn",
-      "text": "我的天哪!",
-      "translation_ko": "세상에!",
-      "source": "Tatoeba #3702831",
+      "text": "您是哪里人？",
+      "translation_ko": "어디에서 오셨어요?",
+      "source": "Tatoeba #5581097",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 2,
       "rank": 0,
-      "reading": "wǒ de tiān nǎ!"
+      "reading": "nín shì nǎ lǐ rén？"
     },
     {
       "character_key": "那",
       "track": "cn",
-      "text": "那人谁啊？",
-      "translation_ko": "저 사람 누구죠?",
-      "source": "Tatoeba #2442276",
+      "text": "您能看到那栋小房子吗？",
+      "translation_ko": "저기 작은 집이 보이나요?",
+      "source": "Tatoeba #10261059",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 4,
       "rank": 0,
-      "reading": "nà rén shuí a？"
+      "reading": "nín néng kàn dào nà dòng xiǎo fáng zi ma？"
     },
     {
       "character_key": "奶",
@@ -1356,24 +1356,24 @@
     {
       "character_key": "呢",
       "track": "cn",
-      "text": "他在哪儿呢？",
-      "translation_ko": "그 사람 어디 있지?",
-      "source": "Tatoeba #4265122",
+      "text": "您呢？",
+      "translation_ko": "넌 어때?",
+      "source": "Tatoeba #1623188",
       "source_kind": "corpus",
-      "target_index": 4,
+      "target_index": 1,
       "rank": 0,
-      "reading": "tā zài nǎ ér ne？"
+      "reading": "nín ne？"
     },
     {
       "character_key": "能",
       "track": "cn",
-      "text": "能看清吧？",
-      "translation_ko": "잘 보이죠?",
-      "source": "Tatoeba #13521812",
+      "text": "您能帮我吗？",
+      "translation_ko": "저를 좀 도와 주실래요?",
+      "source": "Tatoeba #7772052",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 1,
       "rank": 0,
-      "reading": "néng kàn qīng ba？"
+      "reading": "nín néng bāng wǒ ma？"
     },
     {
       "character_key": "你",
@@ -1488,13 +1488,13 @@
     {
       "character_key": "起",
       "track": "cn",
-      "text": "对不起......",
-      "translation_ko": "죄송합니다",
-      "source": "Tatoeba #9400910",
+      "text": "我希望您快就会好起来。",
+      "translation_ko": "좀 더 건강해지시길 기원합니다.",
+      "source": "Tatoeba #335512",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 8,
       "rank": 0,
-      "reading": "duì bù qǐ......"
+      "reading": "wǒ xī wàng nín kuài jiù huì hǎo qǐ lái。"
     },
     {
       "character_key": "气",
@@ -1532,35 +1532,35 @@
     {
       "character_key": "錢",
       "track": "cn",
-      "text": "这个多少钱？",
-      "translation_ko": "얼마에요?",
-      "source": "Tatoeba #10052325",
+      "text": "您身上有多少钱？",
+      "translation_ko": "돈을 얼마나 가지고 계세요?",
+      "source": "Tatoeba #346456",
       "source_kind": "corpus",
-      "target_index": 4,
+      "target_index": 6,
       "rank": 0,
-      "reading": "zhè ge duō shǎo qián？"
+      "reading": "nín shēn shàng yǒu duō shǎo qián？"
     },
     {
       "character_key": "請",
       "track": "cn",
-      "text": "请笑一笑！",
-      "translation_ko": "웃어줘.",
-      "source": "Tatoeba #10617861",
+      "text": "请您原谅。",
+      "translation_ko": "용서해 주세요.",
+      "source": "Tatoeba #426430",
       "source_kind": "corpus",
       "target_index": 0,
       "rank": 0,
-      "reading": "qǐng xiào yi xiào！"
+      "reading": "qǐng nín yuán liàng。"
     },
     {
       "character_key": "去",
       "track": "cn",
-      "text": "我的个去！",
-      "translation_ko": "세상에!",
-      "source": "Tatoeba #1185719",
+      "text": "您可以随便去哪儿。",
+      "translation_ko": "당신은 어디든 가도 돼요.",
+      "source": "Tatoeba #469416",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 5,
       "rank": 0,
-      "reading": "wǒ de gè qù！"
+      "reading": "nín kě yǐ suí biàn qù nǎ ér。"
     },
     {
       "character_key": "热",
@@ -1576,13 +1576,13 @@
     {
       "character_key": "人",
       "track": "cn",
-      "text": "那人谁啊？",
-      "translation_ko": "저 사람 누구죠?",
-      "source": "Tatoeba #2442276",
+      "text": "您是哪里人？",
+      "translation_ko": "어디에서 오셨어요?",
+      "source": "Tatoeba #5581097",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 4,
       "rank": 0,
-      "reading": "nà rén shuí a？"
+      "reading": "nín shì nǎ lǐ rén？"
     },
     {
       "character_key": "認",
@@ -1631,57 +1631,57 @@
     {
       "character_key": "上",
       "track": "cn",
-      "text": "马上回来。",
-      "translation_ko": "즉시 돌아와.",
-      "source": "Tatoeba #9475952",
+      "text": "您身上有多少钱？",
+      "translation_ko": "돈을 얼마나 가지고 계세요?",
+      "source": "Tatoeba #346456",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 2,
       "rank": 0,
-      "reading": "mǎ shàng huí lái。"
+      "reading": "nín shēn shàng yǒu duō shǎo qián？"
     },
     {
       "character_key": "少",
       "track": "cn",
-      "text": "多少苹果？",
-      "translation_ko": "사과가 몇 개인가요?",
-      "source": "Tatoeba #755840",
+      "text": "您身上有多少钱？",
+      "translation_ko": "돈을 얼마나 가지고 계세요?",
+      "source": "Tatoeba #346456",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 5,
       "rank": 0,
-      "reading": "duō shǎo píng guǒ？"
+      "reading": "nín shēn shàng yǒu duō shǎo qián？"
     },
     {
       "character_key": "誰",
       "track": "cn",
-      "text": "那人谁啊？",
-      "translation_ko": "저 사람 누구죠?",
-      "source": "Tatoeba #2442276",
+      "text": "您到底是谁？",
+      "translation_ko": "대체 누구세요?",
+      "source": "Tatoeba #10260749",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 4,
       "rank": 0,
-      "reading": "nà rén shuí a？"
+      "reading": "nín dào dǐ shì shuí？"
     },
     {
       "character_key": "什",
       "track": "cn",
-      "text": "你叫什么？",
-      "translation_ko": "이름이 뭐예요?",
-      "source": "Tatoeba #10966808",
+      "text": "您想喝什么？",
+      "translation_ko": "무엇을 마십니까?",
+      "source": "Tatoeba #419679",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 3,
       "rank": 0,
-      "reading": "nǐ jiào shén me？"
+      "reading": "nín xiǎng hē shén me？"
     },
     {
       "character_key": "生",
       "track": "cn",
-      "text": "生日快乐！",
-      "translation_ko": "생일 축하합니다!",
-      "source": "Tatoeba #346492",
+      "text": "您是学生吗？",
+      "translation_ko": "학생입니까?",
+      "source": "Tatoeba #2202342",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 3,
       "rank": 0,
-      "reading": "shēng rì kuài lè！"
+      "reading": "nín shì xué shēng ma？"
     },
     {
       "character_key": "师",
@@ -1752,13 +1752,13 @@
     {
       "character_key": "事",
       "track": "cn",
-      "text": "你没事吧？",
-      "translation_ko": "괜찮으세요?",
-      "source": "Tatoeba #10981515",
+      "text": "您有什么事想对我说吗？",
+      "translation_ko": "저한테 하실 말씀 있으신가요?",
+      "source": "Tatoeba #408894",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 4,
       "rank": 0,
-      "reading": "nǐ méi shì ba？"
+      "reading": "nín yǒu shén me shì xiǎng duì wǒ shuō ma？"
     },
     {
       "character_key": "視",
@@ -1774,24 +1774,24 @@
     {
       "character_key": "是",
       "track": "cn",
-      "text": "它是什么？",
-      "translation_ko": "그게뭐야?",
-      "source": "Tatoeba #4887708",
+      "text": "您是哪里人？",
+      "translation_ko": "어디에서 오셨어요?",
+      "source": "Tatoeba #5581097",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "tā shì shén me？"
+      "reading": "nín shì nǎ lǐ rén？"
     },
     {
       "character_key": "手",
       "track": "cn",
-      "text": "举起手来！",
-      "translation_ko": "손들어!",
-      "source": "Tatoeba #392278",
+      "text": "您有手机吗？",
+      "translation_ko": "핸드폰을 가지고 계신가요?",
+      "source": "Tatoeba #745160",
       "source_kind": "corpus",
       "target_index": 2,
       "rank": 0,
-      "reading": "jǔ qǐ shǒu lái！"
+      "reading": "nín yǒu shǒu jī ma？"
     },
     {
       "character_key": "書",
@@ -1829,13 +1829,13 @@
     {
       "character_key": "说",
       "track": "cn",
-      "text": "你说什么？",
-      "translation_ko": "뭐라고 했어요?",
-      "source": "Tatoeba #10756037",
+      "text": "您不会说法语，是吗？",
+      "translation_ko": "프랑스어는 못하지?",
+      "source": "Tatoeba #613921",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 3,
       "rank": 0,
-      "reading": "nǐ shuō shén me？"
+      "reading": "nín bú huì shuō fǎ yǔ， shì ma？"
     },
     {
       "character_key": "司",
@@ -1917,24 +1917,24 @@
     {
       "character_key": "題",
       "track": "cn",
-      "text": "有问题吗？",
-      "translation_ko": "질문 있나요?",
-      "source": "Tatoeba #718677",
+      "text": "我能问您一个问题吗？",
+      "translation_ko": "질문 해도 돼요?",
+      "source": "Tatoeba #795623",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 7,
       "rank": 0,
-      "reading": "yǒu wèn tí ma？"
+      "reading": "wǒ néng wèn nín yí gè wèn tí ma？"
     },
     {
       "character_key": "天",
       "track": "cn",
-      "text": "我的天哪!",
-      "translation_ko": "세상에!",
-      "source": "Tatoeba #3702831",
+      "text": "您昨天为什么离开教室？",
+      "translation_ko": "어제 왜 교실을 나갔어요?",
+      "source": "Tatoeba #471334",
       "source_kind": "corpus",
       "target_index": 2,
       "rank": 0,
-      "reading": "wǒ de tiān nǎ!"
+      "reading": "nín zuó tiān wèi shén me lí kāi jiào shì？"
     },
     {
       "character_key": "條",
@@ -2027,24 +2027,24 @@
     {
       "character_key": "問",
       "track": "cn",
-      "text": "有问题吗？",
-      "translation_ko": "질문 있나요?",
-      "source": "Tatoeba #718677",
+      "text": "请问您贵姓",
+      "translation_ko": "이름이 뭐예요?",
+      "source": "Tatoeba #4563003",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "yǒu wèn tí ma？"
+      "reading": "qǐng wèn nín guì xìng"
     },
     {
       "character_key": "我",
       "track": "cn",
-      "text": "你爱我吗？",
-      "translation_ko": "나를 사랑해?",
-      "source": "Tatoeba #10966779",
+      "text": "我爱您。",
+      "translation_ko": "사랑해요.",
+      "source": "Tatoeba #380195",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 0,
       "rank": 0,
-      "reading": "nǐ ài wǒ ma？"
+      "reading": "wǒ ài nín。"
     },
     {
       "character_key": "五",
@@ -2126,13 +2126,13 @@
     {
       "character_key": "下",
       "track": "cn",
-      "text": "在下雨吗？",
-      "translation_ko": "비와?",
-      "source": "Tatoeba #10617221",
+      "text": "请把您的护照给我看一下。",
+      "translation_ko": "여권을 보여 주세요.",
+      "source": "Tatoeba #395562",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 10,
       "rank": 0,
-      "reading": "zài xià yǔ ma？"
+      "reading": "qǐng bǎ nín de hù zhào gěi wǒ kàn yí xià。"
     },
     {
       "character_key": "先",
@@ -2159,24 +2159,24 @@
     {
       "character_key": "想",
       "track": "cn",
-      "text": "我很想你！",
-      "translation_ko": "보고 싶어!",
-      "source": "Tatoeba #6055174",
+      "text": "您想喝什么？",
+      "translation_ko": "무엇을 마십니까?",
+      "source": "Tatoeba #419679",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 1,
       "rank": 0,
-      "reading": "wǒ hěn xiǎng nǐ！"
+      "reading": "nín xiǎng hē shén me？"
     },
     {
       "character_key": "小",
       "track": "cn",
-      "text": "小偷跑了。",
-      "translation_ko": "그 도둑은 달아났다.",
-      "source": "Tatoeba #9963109",
+      "text": "您能看到那栋小房子吗？",
+      "translation_ko": "저기 작은 집이 보이나요?",
+      "source": "Tatoeba #10261059",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 6,
       "rank": 0,
-      "reading": "xiǎo tōu pǎo le。"
+      "reading": "nín néng kàn dào nà dòng xiǎo fáng zi ma？"
     },
     {
       "character_key": "校",
@@ -2214,13 +2214,13 @@
     {
       "character_key": "謝",
       "track": "cn",
-      "text": "鱼，谢谢。",
-      "translation_ko": "물고기요.",
-      "source": "Tatoeba #9409615",
+      "text": "您不必感谢我。",
+      "translation_ko": "아니에요.",
+      "source": "Tatoeba #7767730",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 4,
       "rank": 0,
-      "reading": "yú， xiè xiè。"
+      "reading": "nín bú bì gǎn xiè wǒ。"
     },
     {
       "character_key": "新",
@@ -2324,13 +2324,13 @@
     {
       "character_key": "一",
       "track": "cn",
-      "text": "请笑一笑！",
-      "translation_ko": "웃어줘.",
-      "source": "Tatoeba #10617861",
+      "text": "我能问您一个问题吗？",
+      "translation_ko": "질문 해도 돼요?",
+      "source": "Tatoeba #795623",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 4,
       "rank": 0,
-      "reading": "qǐng xiào yi xiào！"
+      "reading": "wǒ néng wèn nín yí gè wèn tí ma？"
     },
     {
       "character_key": "衣",
@@ -2368,13 +2368,13 @@
     {
       "character_key": "以",
       "track": "cn",
-      "text": "难以置信！",
-      "translation_ko": "설마!",
-      "source": "Tatoeba #4505070",
+      "text": "您可以随便去哪儿。",
+      "translation_ko": "당신은 어디든 가도 돼요.",
+      "source": "Tatoeba #469416",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 2,
       "rank": 0,
-      "reading": "nán yǐ zhì xìn！"
+      "reading": "nín kě yǐ suí biàn qù nǎ ér。"
     },
     {
       "character_key": "椅",
@@ -2412,13 +2412,13 @@
     {
       "character_key": "有",
       "track": "cn",
-      "text": "有可能吗？",
-      "translation_ko": "그게 가능해?",
-      "source": "Tatoeba #9432340",
+      "text": "您有手机吗？",
+      "translation_ko": "핸드폰을 가지고 계신가요?",
+      "source": "Tatoeba #745160",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 1,
       "rank": 0,
-      "reading": "yǒu kě néng ma？"
+      "reading": "nín yǒu shǒu jī ma？"
     },
     {
       "character_key": "雨",
@@ -2434,13 +2434,13 @@
     {
       "character_key": "語",
       "track": "cn",
-      "text": "她说法语。",
-      "translation_ko": "그는 프랑스어를 한다.",
-      "source": "Tatoeba #10260759",
+      "text": "您不会说法语，是吗？",
+      "translation_ko": "프랑스어는 못하지?",
+      "source": "Tatoeba #613921",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 5,
       "rank": 0,
-      "reading": "tā shuō fǎ yǔ。"
+      "reading": "nín bú huì shuō fǎ yǔ， shì ma？"
     },
     {
       "character_key": "元",
@@ -2478,24 +2478,24 @@
     {
       "character_key": "再",
       "track": "cn",
-      "text": "再试一下。",
-      "translation_ko": "다시 한 번 해봐.",
-      "source": "Tatoeba #8496264",
+      "text": "您可以再重复一遍刚才说的话吗？",
+      "translation_ko": "방금 말씀하신 것을 다시 한번 말씀해 주시겠어요?",
+      "source": "Tatoeba #5668922",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 3,
       "rank": 0,
-      "reading": "zài shì yí xià。"
+      "reading": "nín kě yǐ zài chóng fù yí biàn gāng cái shuō de huà ma？"
     },
     {
       "character_key": "在",
       "track": "cn",
-      "text": "在下雨吗？",
-      "translation_ko": "비와?",
-      "source": "Tatoeba #10617221",
+      "text": "您在忙吗？",
+      "translation_ko": "바쁘세요?",
+      "source": "Tatoeba #7772049",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 1,
       "rank": 0,
-      "reading": "zài xià yǔ ma？"
+      "reading": "nín zài máng ma？"
     },
     {
       "character_key": "早",
@@ -2533,13 +2533,13 @@
     {
       "character_key": "这",
       "track": "cn",
-      "text": "这个几块？",
-      "translation_ko": "얼마에요?",
-      "source": "Tatoeba #10052320",
+      "text": "这是您的义务。",
+      "translation_ko": "그건 네 책임이야.",
+      "source": "Tatoeba #4263781",
       "source_kind": "corpus",
       "target_index": 0,
       "rank": 0,
-      "reading": "zhè ge jǐ kuài？"
+      "reading": "zhè shì nín de yì wù。"
     },
     {
       "character_key": "眞",
@@ -2566,13 +2566,13 @@
     {
       "character_key": "知",
       "track": "cn",
-      "text": "你知道吗？",
-      "translation_ko": "너는 알고 있어?",
-      "source": "Tatoeba #11512354",
+      "text": "您知道为什么吗？",
+      "translation_ko": "왜인지 아시나요?",
+      "source": "Tatoeba #10695962",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "nǐ zhī dào ma？"
+      "reading": "nín zhī dào wèi shén me ma？"
     },
     {
       "character_key": "只",
@@ -2610,13 +2610,13 @@
     {
       "character_key": "住",
       "track": "cn",
-      "text": "抓住汤姆。",
-      "translation_ko": "톰을 잡아.",
-      "source": "Tatoeba #5092688",
+      "text": "您住在哪里？",
+      "translation_ko": "어디에 사십니까?",
+      "source": "Tatoeba #393584",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "zhuā zhù tāng mǔ。"
+      "reading": "nín zhù zài nǎ lǐ？"
     },
     {
       "character_key": "桌",
@@ -2632,35 +2632,35 @@
     {
       "character_key": "子",
       "track": "cn",
-      "text": "你有屋子吗？",
-      "translation_ko": "집 있어요?",
-      "source": "Tatoeba #9453433",
+      "text": "您能看到那栋小房子吗？",
+      "translation_ko": "저기 작은 집이 보이나요?",
+      "source": "Tatoeba #10261059",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 8,
       "rank": 0,
-      "reading": "nǐ yǒu wū zi ma？"
+      "reading": "nín néng kàn dào nà dòng xiǎo fáng zi ma？"
     },
     {
       "character_key": "字",
       "track": "cn",
-      "text": "我有本字典。",
-      "translation_ko": "나에게 사전이 있다.",
-      "source": "Tatoeba #6203798",
+      "text": "您叫什么名字？",
+      "translation_ko": "이름이 뭐예요?",
+      "source": "Tatoeba #444659",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 5,
       "rank": 0,
-      "reading": "wǒ yǒu běn zì diǎn。"
+      "reading": "nín jiào shén me míng zì？"
     },
     {
       "character_key": "昨",
       "track": "cn",
-      "text": "昨天做了什么？",
-      "translation_ko": "어제 뭐 했어요?",
-      "source": "Tatoeba #13209828",
+      "text": "您昨天为什么离开教室？",
+      "translation_ko": "어제 왜 교실을 나갔어요?",
+      "source": "Tatoeba #471334",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 1,
       "rank": 0,
-      "reading": "zuó tiān zuò le shén me？"
+      "reading": "nín zuó tiān wèi shén me lí kāi jiào shì？"
     },
     {
       "character_key": "作",

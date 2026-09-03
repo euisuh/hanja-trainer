@@ -190,17 +190,33 @@ distinct value below the mixed-script sentence.
 
 ## Tatoeba corpus
 
-Retrieved 2026-08-28 through the public [Tatoeba sentence search API](https://api.tatoeba.org/).
+Originally retrieved 2026-08-28 and refreshed 2026-09-03 through the public
+[Tatoeba sentence search API](https://api.tatoeba.org/).
 Every `Tatoeba #{id}` row links to
 `https://tatoeba.org/sentences/show/{id}`, which carries the sentence,
 contributor, and license record. Tatoeba exports are released under
 [CC BY 2.0 FR](https://creativecommons.org/licenses/by/2.0/fr/), with some
 individual entries under CC0. These rows use `source_kind: corpus`.
 
-The frozen Tatoeba sentence selection remains unchanged for Japanese and
-Chinese: 281 Japanese rank-0 mappings and 431 Chinese identities (430 rank-0
-and one rank-1). The original two Korean rows were replaced because their
-parenthetical gloss format did not meet the required mixed-script convention.
+`scripts/refresh-polite-sentences.mjs` reproduces the register refresh. It
+searches for Japanese です/ます-family endings and simplified-Chinese (`Hans`)
+sentences containing 您, excludes unapproved source and Korean translation
+rows, requires an exact target glyph and a linked Korean translation, and
+keeps the 24-code-point ceiling. Japanese candidates containing numeric glyphs
+are excluded to preserve the kana-only reading contract. Existing polite rows
+remain frozen. For each casual row with qualifying candidates, the shortest
+source sentence wins; polite and direct Korean translations break ties. Rows
+without a qualifying candidate remain unchanged.
+
+The refreshed selection contains 281 Japanese rank-0 mappings, 252 with a
+です/ます-family ending; 205 rows changed and 29 retained their casual fallback.
+Chinese retains 431 identities (430 rank-0 and one rank-1) serialized as 526
+rows because later HSK files repeat lower-level identities. Of those, 104
+identities (146 serialized rows) contain 您; all 96 newly eligible identities
+(136 serialized rows) changed, while 327 identities had no qualifying
+simplified-Chinese candidate and retained their prior sentence. The original
+two Korean Tatoeba rows were replaced because their parenthetical gloss format
+did not meet the required mixed-script convention.
 
 ## Korean verified public-domain and official-text lanes
 

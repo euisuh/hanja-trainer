@@ -3,13 +3,13 @@
     {
       "character_key": "把",
       "track": "cn",
-      "text": "把嘴张开！",
-      "translation_ko": "입을 벌리세요!",
-      "source": "Tatoeba #501554",
+      "text": "请把您的护照给我看一下。",
+      "translation_ko": "여권을 보여 주세요.",
+      "source": "Tatoeba #395562",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 1,
       "rank": 0,
-      "reading": "bǎ zuǐ zhāng kāi！"
+      "reading": "qǐng bǎ nín de hù zhào gěi wǒ kàn yí xià。"
     },
     {
       "character_key": "担",
@@ -91,13 +91,13 @@
     {
       "character_key": "接",
       "track": "cn",
-      "text": "接一下电话。",
-      "translation_ko": "전화 좀 받아.",
-      "source": "Tatoeba #4104698",
+      "text": "很遗憾我无法接受您的邀请。",
+      "translation_ko": "유감스럽게도 저는 당신의 초대를 거절해야 합니다.",
+      "source": "Tatoeba #2051380",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 6,
       "rank": 0,
-      "reading": "jiē yí xià diàn huà。"
+      "reading": "hěn yí hàn wǒ wú fǎ jiē shòu nín de yāo qǐng。"
     },
     {
       "character_key": "久",
@@ -190,24 +190,24 @@
     {
       "character_key": "迎",
       "track": "cn",
-      "text": "欢迎你们！",
-      "translation_ko": "어서 오세요!",
-      "source": "Tatoeba #9991999",
+      "text": "欢迎您来！",
+      "translation_ko": "어서오세요.",
+      "source": "Tatoeba #1216122",
       "source_kind": "corpus",
       "target_index": 1,
       "rank": 0,
-      "reading": "huān yíng nǐ men！"
+      "reading": "huān yíng nín lái！"
     },
     {
       "character_key": "用",
       "track": "cn",
-      "text": "不用客气。",
-      "translation_ko": "천만에요.",
-      "source": "Tatoeba #700676",
+      "text": "您会使用计算机吗？",
+      "translation_ko": "컴퓨터를 다를 수 있습니까?",
+      "source": "Tatoeba #7781512",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 3,
       "rank": 0,
-      "reading": "bú yòng kè qì。"
+      "reading": "nín huì shǐ yòng jì suàn jī ma？"
     },
     {
       "character_key": "于",
@@ -399,13 +399,13 @@
     {
       "character_key": "法",
       "track": "cn",
-      "text": "她说法语。",
-      "translation_ko": "그는 프랑스어를 한다.",
-      "source": "Tatoeba #10260759",
+      "text": "您不会说法语，是吗？",
+      "translation_ko": "프랑스어는 못하지?",
+      "source": "Tatoeba #613921",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 4,
       "rank": 0,
-      "reading": "tā shuō fǎ yǔ。"
+      "reading": "nín bú huì shuō fǎ yǔ， shì ma？"
     },
     {
       "character_key": "被",
@@ -421,13 +421,13 @@
     {
       "character_key": "才",
       "track": "cn",
-      "text": "我也才刚到。",
-      "translation_ko": "저도 이제서야 도착했어요.",
-      "source": "Tatoeba #8832719",
+      "text": "您可以再重复一遍刚才说的话吗？",
+      "translation_ko": "방금 말씀하신 것을 다시 한번 말씀해 주시겠어요?",
+      "source": "Tatoeba #5668922",
       "source_kind": "corpus",
-      "target_index": 2,
+      "target_index": 9,
       "rank": 0,
-      "reading": "wǒ yě cái gāng dào。"
+      "reading": "nín kě yǐ zài chóng fù yí biàn gāng cái shuō de huà ma？"
     },
     {
       "character_key": "層",
@@ -443,13 +443,13 @@
     {
       "character_key": "成",
       "track": "cn",
-      "text": "成名作了。",
-      "translation_ko": "그것은 그의 출세작이 되었다.",
-      "source": "Tatoeba #13522188",
+      "text": "您成家了吗？",
+      "translation_ko": "결혼했나요?",
+      "source": "Tatoeba #413061",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 1,
       "rank": 0,
-      "reading": "chéng míng zuò le。"
+      "reading": "nín chéng jiā le ma？"
     },
     {
       "character_key": "方",
@@ -476,13 +476,13 @@
     {
       "character_key": "剛",
       "track": "cn",
-      "text": "他刚刚离开。",
-      "translation_ko": "그는 방금 떠났다.",
-      "source": "Tatoeba #13893600",
+      "text": "您可以再重复一遍刚才说的话吗？",
+      "translation_ko": "방금 말씀하신 것을 다시 한번 말씀해 주시겠어요?",
+      "source": "Tatoeba #5668922",
       "source_kind": "corpus",
-      "target_index": 1,
+      "target_index": 8,
       "rank": 0,
-      "reading": "tā gāng gāng lí kāi。"
+      "reading": "nín kě yǐ zài chóng fù yí biàn gāng cái shuō de huà ma？"
     },
     {
       "character_key": "乎",
@@ -564,13 +564,13 @@
     {
       "character_key": "馬",
       "track": "cn",
-      "text": "马上回来。",
-      "translation_ko": "즉시 돌아와.",
-      "source": "Tatoeba #9475952",
+      "text": "您会骑马吗？",
+      "translation_ko": "너 말을 탈 줄 아니?",
+      "source": "Tatoeba #472381",
       "source_kind": "corpus",
-      "target_index": 0,
+      "target_index": 3,
       "rank": 0,
-      "reading": "mǎ shàng huí lái。"
+      "reading": "nín huì qí mǎ ma？"
     },
     {
       "character_key": "毛",
@@ -707,13 +707,13 @@
     {
       "character_key": "照",
       "track": "cn",
-      "text": "请多关照！",
-      "translation_ko": "잘 부탁합니다!",
-      "source": "Tatoeba #1216144",
+      "text": "请给我看看您的护照。",
+      "translation_ko": "여권을 보여 주세요.",
+      "source": "Tatoeba #462032",
       "source_kind": "corpus",
-      "target_index": 3,
+      "target_index": 8,
       "rank": 0,
-      "reading": "qǐng duō guān zhào！"
+      "reading": "qǐng gěi wǒ kàn kàn nín de hù zhào。"
     },
     {
       "character_key": "注",
