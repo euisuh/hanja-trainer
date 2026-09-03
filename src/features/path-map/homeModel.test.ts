@@ -3,7 +3,7 @@ import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { lessonTracks } from "../../screens/LessonScreen";
 import { reviewKey } from "../session/buildQueue";
-import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, trackImbalance } from "./homeModel";
+import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, reviewableUnits, trackImbalance } from "./homeModel";
 
 function character(id: number): CharacterEntry {
   return {
@@ -63,5 +63,12 @@ describe("lesson track scope", () => {
     expect(lessonTracks("invalid" as Track, ["kr", "cn"])).toEqual(["kr", "cn"]);
     expect(lessonTracks("jp", ["kr", "cn"])).toEqual(["kr", "cn"]);
     expect(lessonTracks(["jp"], ["kr", "cn"])).toEqual(["kr", "cn"]);
+  });
+});
+
+describe("previous-unit review", () => {
+  it("includes placement-skipped and completed units, never a current partial unit", () => {
+    const unit = (id: number, current: boolean, done: boolean) => ({ id, level: "8급", levelOrd: id, ord: 1, title: "", subtitle: "", progress: { known: 0, total: 1 }, current, nodes: [{ key: String(id), glyph: String(id), reading: "", state: done ? "done" : "locked" as const }] });
+    expect(reviewableUnits([unit(1, false, false), unit(2, true, false), unit(3, false, false), unit(4, false, true)]).map((item) => item.id)).toEqual([1, 4]);
   });
 });

@@ -1,4 +1,5 @@
 import type { ReviewState } from "../../shared/fsrs";
+import type { CurriculumUnitPayload } from "../../shared/api";
 import { TRACKS, type CharacterEntry, type Track } from "../../shared/types";
 import { readingFor, reviewKey } from "../session/buildQueue";
 import { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
@@ -15,6 +16,11 @@ export type PathNodeModel = {
 };
 
 export type TrackSnoozes = Partial<Record<Track, number>>;
+
+export function reviewableUnits(units: CurriculumUnitPayload[]): CurriculumUnitPayload[] {
+  const current = units.findIndex((unit) => unit.current);
+  return units.filter((unit, index) => index < current || unit.nodes.every((node) => node.state === "done"));
+}
 
 const MIN_LEADER_MASTERY = 20;
 const LAGGING_RATIO = 0.5;

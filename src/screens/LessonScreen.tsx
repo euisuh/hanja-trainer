@@ -28,14 +28,14 @@ export function LessonScreen() {
   const mode = lessonState?.mode === "level-review" ? "level-review" : "lesson";
   const testOut = lessonState?.testOut === true;
   const validUnit = Number.isInteger(lessonState?.unitId) && lessonState!.unitId! > 0;
-  const validLevelReview = mode !== "level-review" || Number.isInteger(lessonState?.levelOrd) && lessonState!.levelOrd! > 0 && tracks.length === 1 && Array.isArray(lessonState?.tracks) && lessonState.tracks.length === 1 && lessonState.tracks[0] === tracks[0];
+  const validLevelReview = mode !== "level-review" || ((Number.isInteger(lessonState?.levelOrd) && lessonState!.levelOrd! > 0) !== (Number.isInteger(lessonState?.unitId) && lessonState!.unitId! > 0) && tracks.length === 1 && Array.isArray(lessonState?.tracks) && lessonState.tracks.length === 1 && lessonState.tracks[0] === tracks[0]);
   const validTestOut = testOut && mode === "lesson" && validUnit && tracks.length === 1 && Array.isArray(lessonState?.tracks) && lessonState.tracks.length === 1 && lessonState.tracks[0] === tracks[0];
   const unitId = validUnit ? lessonState?.unitId : undefined;
   const levelOrd = mode === "level-review" && validLevelReview ? lessonState?.levelOrd : undefined;
   useEffect(() => {
     if (!ready || testOut && !validTestOut || !validLevelReview) return;
     const controller = new AbortController();
-    apiClient.startSession({ mode, tracks, limit: 8, ...(mode === "level-review" ? { levelOrd } : { unitId }), ...(testOut ? { testOut: true } : {}) }, controller.signal)
+    apiClient.startSession({ mode, tracks, limit: 8, ...(mode === "level-review" ? levelOrd ? { levelOrd } : { unitId } : { unitId }), ...(testOut ? { testOut: true } : {}) }, controller.signal)
       .then((result) => setSession({ id: result.sessionId, queue: apiCardsToQueue(result.cards) }))
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "레슨을 불러오지 못했습니다."); });
     return () => controller.abort();

@@ -296,6 +296,25 @@ describe("content API", () => {
     expect(await completeResponse.json()).toMatchObject({ error: { code: "unit_already_complete" } });
   });
 
+  it("lets learners revisit placement-skipped units but not the current unfinished unit", async () => {
+    const fixture = setupSeeds(KR_THROUGH_4_FILES); databases.push(fixture.sqlite);
+    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    const [previous, current] = fixture.sqlite.prepare("SELECT id, level_ord FROM curriculum_units WHERE track = 'kr' GROUP BY level_ord ORDER BY level_ord LIMIT 2").all() as Array<{ id: number; level_ord: number }>;
+    fixture.sqlite.prepare("INSERT INTO placement_results (profile_id, track, level_ord, level_badge, accuracy, detail, taken_at) VALUES (1, 'kr', ?1, '7급II', 100, '', 1)").run(current.level_ord);
+
+    const unitReview = await post({ mode: "level-review", tracks: ["kr"], unitId: previous.id, limit: 4 });
+    expect(unitReview.status).toBe(200);
+    expect((await unitReview.json() as StartSessionResponse).cards).toHaveLength(4);
+
+    const levelReview = await post({ mode: "level-review", tracks: ["kr"], levelOrd: previous.level_ord, limit: 4 });
+    expect(levelReview.status).toBe(200);
+    expect((await levelReview.json() as StartSessionResponse).cards).toHaveLength(4);
+
+    const locked = await post({ mode: "level-review", tracks: ["kr"], unitId: current.id });
+    expect(locked.status).toBe(409);
+    expect(await locked.json()).toMatchObject({ error: { code: "review_target_locked" } });
+  });
+
   it("replaces unit-test attempts only inside the current profile", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const unit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY level_ord, ord LIMIT 1").get() as { id: number };

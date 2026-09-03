@@ -1,6 +1,6 @@
 import { TRACKS, type Track } from "../../src/shared/types";
 import type { ApiErrorBody, SessionMode, StartSessionRequest } from "../../src/shared/api";
-import { startSession } from "./cards";
+import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
 import { createSession, getProfile, parseSessionRequest } from "./sessions";
@@ -43,7 +43,7 @@ function startRequest(value: unknown): StartSessionRequest & { limit: number } |
   if (body.testOut !== undefined && body.testOut !== true) return null;
   const mode = body.mode as SessionMode;
   const tracks = [...new Set(body.tracks as Track[])];
-  if (mode === "level-review" && (tracks.length !== 1 || body.levelOrd === undefined || body.unitId !== undefined)) return null;
+  if (mode === "level-review" && (tracks.length !== 1 || (body.levelOrd === undefined) === (body.unitId === undefined))) return null;
   if (body.testOut === true && (mode !== "lesson" || tracks.length !== 1 || body.unitId === undefined || body.levelOrd !== undefined)) return null;
   return {
     mode,
@@ -247,6 +247,7 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
     if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
     if (caught instanceof ProfileError) return error(caught.status, caught.code, caught.message);
     if (caught instanceof UnitTestError) return error(caught.status, caught.code, caught.message);
+    if (caught instanceof ReviewTargetLocked) return error(409, "review_target_locked", "This review target is not available yet");
     if (caught instanceof ReviewTargetNotFound) return error(404, "character_not_found", "character track was not found");
     console.error(caught);
     return error(500, "internal_error", "request could not be completed");

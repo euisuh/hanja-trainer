@@ -5,6 +5,7 @@ import { listByTrackLevel, listByUnit, listForTracks, listFreshForTracks, listPl
 import { listStatesForTracks } from "../db/reviews";
 import { listWordsForTracks } from "../db/words";
 import { issueUnitTestAttempt, requireUnitTestTarget } from "./unitTest";
+import { getCurriculumContent } from "./content";
 
 const labels = {
   kr: { badge: "한국 · 한자", prompt: "훈음을 고르세요", meaningPrompt: "뜻을 고르세요" },
@@ -17,6 +18,19 @@ const wordLabels = {
   jp: { badge: "日本 · 熟語", name: "熟語", prompt: "熟語の読みを選べ" },
   cn: { badge: "中国 · 词语", name: "词语", prompt: "选择正确的词语读音" },
 } as const;
+
+export class ReviewTargetLocked extends Error {}
+
+async function levelReviewKeys(db: D1Database, profileId: number, input: StartSessionRequest): Promise<string[]> {
+  const track = input.tracks[0];
+  const curriculum = await getCurriculumContent(db, profileId, track);
+  const current = curriculum.units.findIndex((unit) => unit.current);
+  const reviewable = (unit: (typeof curriculum.units)[number], index: number) => index < current || unit.nodes.every((node) => node.state === "done");
+  const targets = curriculum.units.map((unit, index) => ({ unit, index })).filter(({ unit }) => input.unitId === undefined ? unit.levelOrd === input.levelOrd : unit.id === input.unitId);
+  if (targets.length === 0 || targets.some(({ unit, index }) => !reviewable(unit, index))) throw new ReviewTargetLocked("This review target is not available yet");
+  const entries = input.unitId === undefined ? await listByTrackLevel(db, track, input.levelOrd!) : await listByUnit(db, input.unitId);
+  return entries.map((character) => reviewKey(character.id, track));
+}
 
 function promptFor(kind: SessionCard["kind"], track: keyof typeof labels): string {
   if (kind === "meaning") return labels[track].meaningPrompt;
@@ -137,7 +151,7 @@ export async function startSession(db: D1Database, profileId: number, input: Sta
     input.mode === "lesson"
       ? listFreshForTracks(db, profileId, input.tracks, input).then((rows) => rows.map((row) => reviewKey(row.character_id, row.track)))
       : input.mode === "level-review"
-        ? listByTrackLevel(db, input.tracks[0], input.levelOrd!).then((rows) => rows.map((row) => reviewKey(row.id, input.tracks[0])))
+        ? levelReviewKeys(db, profileId, input)
         : input.mode === "placement"
           ? listPlacementMembersForTracks(db, input.tracks).then((rows) => rows.map((row) => reviewKey(row.character_id, row.track)))
           : Promise.resolve([]),
