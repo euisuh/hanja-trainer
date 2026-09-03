@@ -182,6 +182,7 @@ describe("content API", () => {
     const curriculumResponse = await routeApiRequest(new Request("https://test/api/curriculum?track=kr"), fixture.env);
     const curriculum = await curriculumResponse.json() as CurriculumResponse;
     expect(curriculumResponse.headers.get("content-type")).toContain("application/json");
+    expect(curriculum.units[0].levelOrd).toBe(1);
     expect(curriculum.units[0].nodes.slice(0, 3).map((node) => node.state)).toEqual(["done", "current", "locked"]);
     expect(curriculum.units[0].progress).toMatchObject({ known: 1, total: 10 });
 
@@ -550,7 +551,7 @@ describe("content API", () => {
   it("rejects invalid tracks, limits, and malformed bodies as JSON 400s", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect((await routeApiRequest(new Request("https://test/api/curriculum?track=xx"), fixture.env)).status).toBe(400);
-    for (const body of [{ mode: "lesson", tracks: ["xx"] }, { mode: "lesson", tracks: ["kr"], limit: -1 }, { mode: "lesson", tracks: ["kr"], limit: 51 }, { mode: "lesson", tracks: ["kr"], unitId: 1, levelOrd: 1 }]) {
+    for (const body of [{ mode: "lesson", tracks: ["xx"] }, { mode: "lesson", tracks: ["kr"], limit: -1 }, { mode: "lesson", tracks: ["kr"], limit: 51 }, { mode: "lesson", tracks: ["kr"], unitId: 1, levelOrd: 1 }, { mode: "level-review", tracks: ["kr"] }, { mode: "level-review", tracks: ["kr", "jp"], levelOrd: 1 }]) {
       const response = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", body: JSON.stringify(body) }), fixture.env);
       expect(response.status).toBe(400);
       expect(response.headers.get("content-type")).toContain("application/json");

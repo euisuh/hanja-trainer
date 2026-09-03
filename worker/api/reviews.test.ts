@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, DueReviewsResponse, ProfileResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
+import type { CharacterDetailResponse, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import { applyMigrations } from "../test/schema";
 import { createSession } from "./sessions";
@@ -64,6 +64,47 @@ describe("review and session API", () => {
     const detail = await routeApiRequest(new Request("https://test/api/characters/%E9%87%91"), fixture.env);
     const payload = await detail.json() as CharacterDetailResponse;
     expect(payload.tracks.find((track) => track.track === "kr")?.review_state).toMatchObject({ total_count: 1, correct_count: 1 });
+  });
+
+  it("starts a level review outside the due queue and updates real FSRS state", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = Date.now();
+    fixture.sqlite.prepare(`
+      INSERT INTO review_states (
+        character_id, track, stability, difficulty, elapsed_days, scheduled_days,
+        learning_steps, reps, lapses, state, last_review, due, correct_count, total_count
+      )
+      SELECT c.id, 'kr', 30, 5, 1, 30, 0, 3, 0, 2, ?, ?, 3, 3
+      FROM characters c JOIN character_tracks ct ON ct.character_id = c.id
+      WHERE ct.track = 'kr' AND ct.level_ord = 1
+    `).run(now - DAY, now + 30 * DAY);
+
+    const startResponse = await post("/api/session/start", { mode: "level-review", tracks: ["kr"], levelOrd: 1, limit: 8 }, fixture.env);
+    expect(startResponse.status).toBe(200);
+    const session = await startResponse.json() as StartSessionResponse;
+    expect(session.cards).toHaveLength(8);
+    expect(session.cards.every((card) => card.track === "kr" && card.levelOrd === 1)).toBe(true);
+
+    const card = session.cards[0];
+    const before = fixture.sqlite.prepare(`
+      SELECT rs.correct_count, rs.total_count, rs.due
+      FROM review_states rs JOIN characters c ON c.id = rs.character_id
+      WHERE c.key = ? AND rs.track = 'kr'
+    `).get(card.characterKey) as { correct_count: number; total_count: number; due: number };
+    const answerResponse = await post("/api/reviews", { sessionId: session.sessionId, cardIndex: 0, characterKey: card.characterKey, track: "kr", correct: true, skipped: false, elapsedMs: 1_000, mode: "level-review" }, fixture.env);
+    expect(answerResponse.status).toBe(200);
+    const after = fixture.sqlite.prepare(`
+      SELECT rs.correct_count, rs.total_count, rs.due
+      FROM review_states rs JOIN characters c ON c.id = rs.character_id
+      WHERE c.key = ? AND rs.track = 'kr'
+    `).get(card.characterKey) as typeof before;
+    expect(after).toMatchObject({ correct_count: before.correct_count + 1, total_count: before.total_count + 1 });
+    expect(after.due).not.toBe(before.due);
+    expect(fixture.sqlite.prepare("SELECT mode FROM review_log WHERE session_id = ?").get(session.sessionId)).toEqual({ mode: "level-review" });
+
+    const endedAt = new Date().toISOString();
+    expect((await post("/api/sessions", { mode: "level-review", startedAt: endedAt, endedAt, answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10 }, fixture.env)).status).toBe(200);
+    expect(fixture.sqlite.prepare("SELECT mode FROM sessions ORDER BY id DESC LIMIT 1").get()).toEqual({ mode: "level-review" });
   });
 
   it("logs placement without creating state and returns ordered, uncapped due totals", async () => {

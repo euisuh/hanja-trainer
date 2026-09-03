@@ -155,6 +155,27 @@ describe("buildQueue", () => {
     expect(buildQueue({ characters, enabledTracks: ["cn"], length: 8, mode: "review", reviewStates: states, now })).toHaveLength(2);
   });
 
+  it("filters level reviews by selected level regardless of FSRS state", () => {
+    const now = new Date("2026-01-02T00:00:00Z");
+    const states = new Map([
+      [reviewKey(1, "kr"), { ...initialState(now), due: new Date("2027-01-01T00:00:00Z"), correctCount: 10 }],
+      [reviewKey(3, "kr"), { ...initialState(now), due: new Date("2026-01-01T00:00:00Z") }],
+    ]);
+    const queue = buildQueue({
+      characters,
+      enabledTracks: ["kr"],
+      length: 8,
+      mode: "level-review",
+      reviewStates: states,
+      levelReviewKeys: new Set([reviewKey(1, "kr"), reviewKey(2, "kr")]),
+      now,
+    });
+
+    expect(queue).toHaveLength(2);
+    expect(queue.map((item) => item.character.id)).toEqual([1, 2]);
+    expect(new Set(queue.map((item) => item.kind))).toEqual(new Set(["reading", "meaning"]));
+  });
+
   it("does not repeat fresh cards when no cards are due", () => {
     const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 8, mode: "lesson" });
     const keys = queue.map((item) => `${item.character.id}:${item.track}`);

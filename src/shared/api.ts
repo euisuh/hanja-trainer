@@ -19,6 +19,7 @@ export type CurriculumNode = {
 export type CurriculumUnitPayload = {
   id: number;
   level: string;
+  levelOrd: number;
   ord: number;
   title: string;
   subtitle: string;
@@ -86,7 +87,7 @@ export type UnitStudyResponse = {
   }>;
 };
 
-export type SessionMode = "lesson" | "review" | "placement";
+export type SessionMode = "lesson" | "review" | "level-review" | "placement";
 export type SessionOption = { label: string };
 export type SessionCompareEntry = { glyph: string; reading: string; levelBadge: string };
 

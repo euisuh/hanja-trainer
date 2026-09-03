@@ -34,7 +34,7 @@ export function parseReviewRequest(value: unknown): SubmitReviewRequest | null {
   if (typeof body.correct !== "boolean") return null;
   if (typeof body.skipped !== "boolean" || body.skipped && body.correct) return null;
   if (!Number.isInteger(body.elapsedMs) || (body.elapsedMs as number) < 0 || (body.elapsedMs as number) > 3_600_000) return null;
-  if (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "placement") return null;
+  if (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "level-review" && body.mode !== "placement") return null;
   if (body.wordId !== undefined && body.mode === "placement") return null;
   return body as SubmitReviewRequest;
 }

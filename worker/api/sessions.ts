@@ -16,7 +16,7 @@ function record(value: unknown): Record<string, unknown> | null {
 
 export function parseSessionRequest(value: unknown): CreateSessionRequest | null {
   const body = record(value);
-  if (!body || (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "placement")) return null;
+  if (!body || (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "level-review" && body.mode !== "placement")) return null;
   if (typeof body.startedAt !== "string" || typeof body.endedAt !== "string") return null;
   const started = Date.parse(body.startedAt);
   const ended = Date.parse(body.endedAt);

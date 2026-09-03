@@ -22,7 +22,7 @@ import { useSessionKeys } from "./useSessionKeys";
 import { useAnswerSubmit } from "./useAnswerSubmit";
 import "./session.css";
 
-export type SessionMode = "lesson" | "review" | "placement" | "unit-test";
+export type SessionMode = "lesson" | "review" | "level-review" | "placement" | "unit-test";
 
 const AUTO_ADVANCE_DELAY_MS = 250;
 type Burst = { anchor: BurstAnchor; id: number; tier: 1 | 2 | 3; track: Track };

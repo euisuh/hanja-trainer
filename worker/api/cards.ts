@@ -1,7 +1,7 @@
 import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../src/shared/api";
 import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
 import { buildQueue, buildUnitTestQueue, meaningFor, readingFor, reviewKey } from "../../src/features/session/buildQueue";
-import { listByUnit, listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
+import { listByTrackLevel, listByUnit, listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
 import { listWordsForTracks } from "../db/words";
 import { issueUnitTestAttempt, requireUnitTestTarget } from "./unitTest";
@@ -131,16 +131,22 @@ export async function startSession(db: D1Database, profileId: number, input: Sta
       }),
     };
   }
-  const [characters, states, candidateRows, words] = await Promise.all([
+  const [characters, states, candidateKeys, words] = await Promise.all([
     listForTracks(db, input.tracks),
     listStatesForTracks(db, profileId, input.tracks),
-    input.mode === "lesson" ? listFreshForTracks(db, profileId, input.tracks, input) : input.mode === "placement" ? listPlacementMembersForTracks(db, input.tracks) : Promise.resolve([]),
+    input.mode === "lesson"
+      ? listFreshForTracks(db, profileId, input.tracks, input).then((rows) => rows.map((row) => reviewKey(row.character_id, row.track)))
+      : input.mode === "level-review"
+        ? listByTrackLevel(db, input.tracks[0], input.levelOrd!).then((rows) => rows.map((row) => reviewKey(row.id, input.tracks[0])))
+        : input.mode === "placement"
+          ? listPlacementMembersForTracks(db, input.tracks).then((rows) => rows.map((row) => reviewKey(row.character_id, row.track)))
+          : Promise.resolve([]),
     listWordsForTracks(db, input.tracks),
   ]);
   const stateMap = new Map(states.map((state) => [reviewKey(state.characterId, state.track), state]));
-  const candidateKeys = new Set(candidateRows.map((row) => reviewKey(row.character_id, row.track)));
+  const candidates = new Set(candidateKeys);
   const random = seededRandom(hashSeed(sessionId));
-  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys: input.mode === "lesson" ? candidateKeys : undefined, placementKeys: input.mode === "placement" ? candidateKeys : undefined, random, words });
+  const queue = buildQueue({ characters, enabledTracks: input.tracks, length: input.limit, mode: input.mode, reviewStates: stateMap, freshKeys: input.mode === "lesson" ? candidates : undefined, levelReviewKeys: input.mode === "level-review" ? candidates : undefined, placementKeys: input.mode === "placement" ? candidates : undefined, random, words });
   return {
     sessionId,
     cards: queue.map(toCard).map((card) => shuffleOptions(card, random)),

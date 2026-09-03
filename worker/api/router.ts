@@ -34,7 +34,7 @@ function parseTrack(value: string | null): Track | null {
 function startRequest(value: unknown): StartSessionRequest & { limit: number } | null {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
   const body = value as Record<string, unknown>;
-  if (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "placement") return null;
+  if (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "level-review" && body.mode !== "placement") return null;
   if (!Array.isArray(body.tracks) || body.tracks.length === 0 || !body.tracks.every((track) => typeof track === "string" && TRACKS.includes(track as Track))) return null;
   if (body.limit !== undefined && (!Number.isInteger(body.limit) || (body.limit as number) < 1 || (body.limit as number) > 50)) return null;
   if (body.unitId !== undefined && (!Number.isInteger(body.unitId) || (body.unitId as number) < 1)) return null;
@@ -43,6 +43,7 @@ function startRequest(value: unknown): StartSessionRequest & { limit: number } |
   if (body.testOut !== undefined && body.testOut !== true) return null;
   const mode = body.mode as SessionMode;
   const tracks = [...new Set(body.tracks as Track[])];
+  if (mode === "level-review" && (tracks.length !== 1 || body.levelOrd === undefined || body.unitId !== undefined)) return null;
   if (body.testOut === true && (mode !== "lesson" || tracks.length !== 1 || body.unitId === undefined || body.levelOrd !== undefined)) return null;
   return {
     mode,

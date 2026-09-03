@@ -34,6 +34,7 @@ export function HomeScreen() {
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
+  const [chosenReviewLevelOrd, setChosenReviewLevelOrd] = useState<number | null>(null);
   const [snoozes, setSnoozes] = useState<TrackSnoozes>(() => readSnoozes(snoozesKey));
   const [now] = useState(Date.now);
   const [error, setError] = useState("");
@@ -42,6 +43,12 @@ export function HomeScreen() {
   const selectedTrack = enabledTracks.includes(track) ? track : enabledTracks[0] ?? "kr";
   const theme = trackThemes[selectedTrack];
   const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
+  const completedLevels = useMemo(() => {
+    const units = curriculum?.units ?? [];
+    const incomplete = new Set(units.filter((item) => item.nodes.some((node) => node.state !== "done")).map((item) => item.levelOrd));
+    return [...new Map(units.filter((item) => !incomplete.has(item.levelOrd)).map((item) => [item.levelOrd, item] as const)).values()];
+  }, [curriculum]);
+  const reviewLevelOrd = completedLevels.some((item) => item.levelOrd === chosenReviewLevelOrd) ? chosenReviewLevelOrd : completedLevels.at(-1)?.levelOrd ?? null;
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
   const progress = stats?.tracks.find((item) => item.track === selectedTrack);
   const scalePercent = progress?.pct ?? 0;
@@ -158,6 +165,16 @@ export function HomeScreen() {
           {unit.nodes.some((node) => node.state !== "done") && <button className="unit-test-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack], testOut: true } })} type="button">
             <small>실력으로 잠금 해제</small><strong>이 유닛 건너뛰기</strong><span>전 글자 2회 · 전부 정답</span>
           </button>}
+          {completedLevels.length > 0 && <section className="level-review-picker">
+            <label htmlFor="level-review-select">완료한 레벨 복습</label>
+            <div className="level-review-picker__controls">
+              <select id="level-review-select" onChange={(event) => setChosenReviewLevelOrd(Number(event.target.value))} value={reviewLevelOrd ?? ""}>
+                {completedLevels.map((item) => <option key={item.levelOrd} value={item.levelOrd}>{item.level}</option>)}
+              </select>
+              <button disabled={reviewLevelOrd === null} onClick={() => navigate("/lesson", { state: { mode: "level-review", tracks: [selectedTrack], levelOrd: reviewLevelOrd } })} type="button">복습하기</button>
+            </div>
+            <small>만기 여부와 관계없이 선택한 레벨을 연습합니다.</small>
+          </section>}
           <button className="review-cta" onClick={() => navigate("/review")} type="button">
             <small>FSRS 복습 큐</small><strong>{dueCount}장 만기</strong><span>가장 급한 카드부터 <kbd>R</kbd></span>
           </button>

@@ -49,7 +49,7 @@ export async function getCurriculumContent(db: D1Database, profileId: number, tr
   for (const row of result.results as unknown as CurriculumRow[]) {
     let unit = units.get(row.unit_id);
     if (!unit) {
-      unit = { id: row.unit_id, level: row.level, ord: row.unit_ord, title: row.title, subtitle: row.subtitle, progress: { known: 0, total: 0 }, nodes: [], current: false };
+      unit = { id: row.unit_id, level: row.level, levelOrd: row.level_ord, ord: row.unit_ord, title: row.title, subtitle: row.subtitle, progress: { known: 0, total: 0 }, nodes: [], current: false };
       units.set(row.unit_id, unit);
     }
     unitLevels.set(row.unit_id, row.level_ord);
