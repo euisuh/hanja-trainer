@@ -1,40 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useFocusTrap } from "../../shared/useFocusTrap";
 
 type Props = { onResume: () => void; onQuit: () => void };
 
 export function PauseModal({ onResume, onQuit }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const panel = panelRef.current;
-    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const controls = panel?.querySelectorAll<HTMLElement>("button") ?? [];
-    controls[0]?.focus();
-    function onKeyDown(event: KeyboardEvent) {
+  useFocusTrap({
+    active: true,
+    containerRef: panelRef,
+    onKeyDown: (event) => {
       if (event.key === "Escape" || event.key === "Enter") {
         event.preventDefault();
         onResume();
       } else if (event.key.toLowerCase() === "q") {
         event.preventDefault();
         onQuit();
-      } else if (event.key === "Tab" && controls.length > 0) {
-        const first = controls[0];
-        const last = controls[controls.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
       }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      previousFocus?.focus();
-    };
-  }, [onQuit, onResume]);
+    },
+  });
 
   return (
     <div className="pause-modal" role="presentation">

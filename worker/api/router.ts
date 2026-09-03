@@ -7,9 +7,9 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
-import { clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
+import { clearLegacyPinCookie, clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
-import { assertProfileAdmin, createProfile, deleteProfile, parseCreateProfile, parseRenameProfile, ProfileError, renameProfile } from "./profiles";
+import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 
 function error(status: number, code: string, message: string, retryAfter?: number): Response {
   return Response.json(
@@ -21,6 +21,9 @@ function error(status: number, code: string, message: string, retryAfter?: numbe
 function withCookie(response: Response, cookie: string): Response {
   const headers = new Headers(response.headers);
   headers.append("set-cookie", cookie);
+  // Garbage-collect the pre-multi-profile cookie name on every cookie-bearing
+  // response so a browser that still holds one doesn't keep sending it forever.
+  headers.append("set-cookie", clearLegacyPinCookie);
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 
@@ -166,12 +169,9 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
     if (request.method === "GET" && pathname === "/api/onboarding-state") return Response.json(await getOnboardingState(env.DB, profileId));
 
     if (request.method === "POST" && pathname === "/api/profiles") {
-      await assertProfileAdmin(env.DB, profileId);
       let value: unknown;
       try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
-      const input = parseCreateProfile(value);
-      if (!input) return error(400, "invalid_profile", "name or PIN is invalid");
-      return Response.json(await createProfile(env.DB, profileId, input), { status: 201 });
+      return Response.json(await createProfile(env.DB, profileId, value), { status: 201 });
     }
 
     const managedProfileMatch = pathname.match(/^\/api\/profiles\/(\d+)$/);
@@ -182,12 +182,9 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
         await deleteProfile(env.DB, profileId, targetId);
         return Response.json({ deleted: true });
       }
-      await assertProfileAdmin(env.DB, profileId);
       let value: unknown;
       try { value = await request.json(); } catch { return error(400, "invalid_json", "request body must be valid JSON"); }
-      const input = parseRenameProfile(value);
-      if (!input) return error(400, "invalid_profile", "name is invalid");
-      return Response.json(await renameProfile(env.DB, profileId, targetId, input));
+      return Response.json(await renameProfile(env.DB, profileId, targetId, value));
     }
 
   return error(404, "not_found", "API route was not found");

@@ -55,6 +55,14 @@ export function App() {
     screenRef.current = screen;
   }, [navigate, screen]);
 
+  const teardownActiveProfile = useCallback(() => {
+    setAnswerSubmitProfile(null);
+    resetSettingsClientState();
+    setActiveProfile(null);
+    setTheme("quiet-technical");
+    setGate("checking");
+  }, []);
+
   const activateCurrentProfile = useCallback(async (mode: "preserve" | "select" | "guard", signal?: AbortSignal) => {
     const [profile, onboarding] = await Promise.all([
       apiClient.profile(signal, false),
@@ -71,6 +79,29 @@ export function App() {
     }
     if (needsOnboarding && !navlessScreens.has(screenRef.current)) navigateRef.current("/onboarding", { replace: true });
   }, []);
+
+  // Shared by requireProfile and switchProfile: fetch profiles and land on the
+  // right gate -- auto-activate a single PIN-less profile, lock screen for a
+  // single PIN-protected one, otherwise the picker. `isActive` lets callers with
+  // their own cancellation flag (requireProfile's effect) skip applying stale state.
+  const resolveProfileGate = useCallback(async (isActive: () => boolean = () => true) => {
+    const result = await apiClient.profiles();
+    if (!isActive()) return;
+    setProfiles(result.profiles);
+    if (result.profiles.length === 1) {
+      const onlyProfile = result.profiles[0];
+      setSelectedProfile(onlyProfile);
+      if (onlyProfile.hasPin) {
+        setGate("locked");
+        return;
+      }
+      resumeProfileRequests();
+      await activateCurrentProfile("preserve");
+      return;
+    }
+    setSelectedProfile(null);
+    setGate("choosing");
+  }, [activateCurrentProfile]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -110,29 +141,11 @@ export function App() {
     let active = true;
     let transition: Promise<void> | null = null;
     async function requireProfile() {
-      setAnswerSubmitProfile(null);
-      resetSettingsClientState();
-      setActiveProfile(null);
-      setTheme("quiet-technical");
-      setGate("checking");
+      teardownActiveProfile();
       await afterProfileUnmount();
       await pauseProfileRequests();
       try {
-        const result = await apiClient.profiles();
-        if (!active) return;
-        setProfiles(result.profiles);
-        if (result.profiles.length === 1) {
-          const onlyProfile = result.profiles[0];
-          setSelectedProfile(onlyProfile);
-          if (onlyProfile.hasPin) setGate("locked");
-          else {
-            resumeProfileRequests();
-            await activateCurrentProfile("preserve");
-          }
-          return;
-        }
-        setSelectedProfile(null);
-        setGate("choosing");
+        await resolveProfileGate(() => active);
       } catch {
         if (active) setGate("error");
       }
@@ -142,7 +155,7 @@ export function App() {
     };
     window.addEventListener(PIN_REQUIRED_EVENT, handleRequired);
     return () => { active = false; window.removeEventListener(PIN_REQUIRED_EVENT, handleRequired); };
-  }, [activateCurrentProfile]);
+  }, [resolveProfileGate, teardownActiveProfile]);
 
   useEffect(() => {
     setAnswerSubmitProfile(activeProfile?.id ?? null);
@@ -180,19 +193,12 @@ export function App() {
   }
 
   async function switchProfile() {
-    setAnswerSubmitProfile(null);
-    resetSettingsClientState();
-    setActiveProfile(null);
-    setTheme("quiet-technical");
-    setGate("checking");
+    teardownActiveProfile();
     try {
       await afterProfileUnmount();
       await pauseProfileRequests();
       await apiClient.endSession();
-      const result = await apiClient.profiles();
-      setProfiles(result.profiles);
-      setSelectedProfile(null);
-      setGate("choosing");
+      await resolveProfileGate();
     } catch {
       setGate("error");
     }

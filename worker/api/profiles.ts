@@ -1,7 +1,15 @@
 import type { ManagedProfile } from "../../src/shared/api";
 import { createPinCredentials, derivePinHash, isPin, type PinCredentials } from "../auth/pin";
 
+// Kept in sync by hand with the `profile_limit` trigger's `>= 5` in
+// migrations/0017_multi_profile.sql (SQLite triggers can't reference a JS
+// constant). Changing this value requires a new migration updating the
+// trigger's WHEN clause to match -- editing 0017 in place is a no-op against
+// a database that already applied it.
 const PROFILE_LIMIT = 5;
+// Exact text of the trigger's `RAISE(ABORT, ...)` message -- must match
+// migrations/0017_multi_profile.sql's `profile_limit` trigger verbatim.
+const PROFILE_LIMIT_TRIGGER_MESSAGE = "profile limit reached";
 
 type AdminRow = { is_admin: number; pin_hash: string | null; profile_count: number };
 type ProfileRow = { id: number; name: string; is_admin: number };
@@ -15,17 +23,23 @@ export class ProfileError extends Error {
   }
 }
 
+const graphemeSegmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+
+function graphemeLength(value: string): number {
+  return [...graphemeSegmenter.segment(value)].length;
+}
+
 function normalizedName(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const name = value.trim();
-  return name && [...name].length <= 24 ? name : null;
+  return name && graphemeLength(name) <= 24 ? name : null;
 }
 
 function hasOnlyKeys(body: Record<string, unknown>, allowed: string[]): boolean {
   return Object.keys(body).every((key) => allowed.includes(key));
 }
 
-export function parseCreateProfile(value: unknown): CreateProfileInput | null {
+function parseCreateProfile(value: unknown): CreateProfileInput | null {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
   const body = value as Record<string, unknown>;
   if (!hasOnlyKeys(body, ["name", "pin"])) return null;
@@ -34,7 +48,7 @@ export function parseCreateProfile(value: unknown): CreateProfileInput | null {
   return { name, ...(body.pin === undefined ? {} : { pin: body.pin }) };
 }
 
-export function parseRenameProfile(value: unknown): RenameProfileInput | null {
+function parseRenameProfile(value: unknown): RenameProfileInput | null {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
   const body = value as Record<string, unknown>;
   if (!hasOnlyKeys(body, ["name"])) return null;
@@ -55,16 +69,16 @@ async function requireAdmin(db: D1Database, callerId: number): Promise<AdminRow>
   return row;
 }
 
-export async function assertProfileAdmin(db: D1Database, callerId: number): Promise<void> {
-  await requireAdmin(db, callerId);
-}
-
 function profileLimitError(caught: unknown): boolean {
-  return String(caught instanceof Error ? caught.message : caught).includes("profile limit reached");
+  return String(caught instanceof Error ? caught.message : caught).includes(PROFILE_LIMIT_TRIGGER_MESSAGE);
 }
 
-export async function createProfile(db: D1Database, callerId: number, input: CreateProfileInput, now = Date.now(), derive = derivePinHash): Promise<ManagedProfile> {
+export async function createProfile(db: D1Database, callerId: number, rawInput: unknown, now = Date.now(), derive = derivePinHash): Promise<ManagedProfile> {
+  // Admin check runs before body-shape validation so a non-admin caller always
+  // gets 403, even with a malformed/privileged-looking payload -- never 400.
   const admin = await requireAdmin(db, callerId);
+  const input = parseCreateProfile(rawInput);
+  if (!input) throw new ProfileError(400, "invalid_profile", "name or PIN is invalid");
   if (!admin.pin_hash) throw new ProfileError(409, "admin_pin_required", "Set an admin PIN before adding another profile");
   if (admin.profile_count >= PROFILE_LIMIT) throw new ProfileError(409, "profile_limit", `At most ${PROFILE_LIMIT} profiles are allowed`);
   const credentials: PinCredentials | null = input.pin ? await createPinCredentials(input.pin, derive) : null;
@@ -96,8 +110,11 @@ export async function createProfile(db: D1Database, callerId: number, input: Cre
   }
 }
 
-export async function renameProfile(db: D1Database, callerId: number, targetId: number, input: RenameProfileInput, now = Date.now()): Promise<ManagedProfile> {
+export async function renameProfile(db: D1Database, callerId: number, targetId: number, rawInput: unknown, now = Date.now()): Promise<ManagedProfile> {
+  // Same ordering as createProfile: admin check before body-shape validation.
   await requireAdmin(db, callerId);
+  const input = parseRenameProfile(rawInput);
+  if (!input) throw new ProfileError(400, "invalid_profile", "name is invalid");
   const renamed = await db.prepare(`
     UPDATE profile SET name = ?1, updated_at = ?2 WHERE id = ?3
     RETURNING id, name, is_admin
@@ -112,5 +129,6 @@ export async function deleteProfile(db: D1Database, callerId: number, targetId: 
   const target = await db.prepare("SELECT id, is_admin FROM profile WHERE id = ?1").bind(targetId).first<{ id: number; is_admin: number }>();
   if (!target) throw new ProfileError(404, "profile_not_found", "Profile was not found");
   if (target.is_admin) throw new ProfileError(409, "admin_profile_protected", "The admin profile cannot be deleted");
-  await db.prepare("DELETE FROM profile WHERE id = ?1 AND is_admin = 0").bind(targetId).run();
+  const result = await db.prepare("DELETE FROM profile WHERE id = ?1 AND is_admin = 0").bind(targetId).run();
+  if (result.meta.changes !== 1) throw new ProfileError(404, "profile_not_found", "Profile was not found");
 }

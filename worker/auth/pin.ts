@@ -1,6 +1,12 @@
 export const PIN_ITERATIONS = 100_000;
 export const PIN_SESSION_MS = 2 * 60 * 60 * 1_000;
 export const PIN_COOKIE = "hanja_session";
+// Pre-multi-profile cookie name (single-part expiry.signature payload, no profile
+// id). Never parsed anymore -- anyone still holding one is treated as logged out
+// and re-prompted for their PIN. Cleared alongside every session cookie response
+// so it doesn't linger in the browser forever.
+const LEGACY_PIN_COOKIE = "hanja_pin";
+export const clearLegacyPinCookie = `${LEGACY_PIN_COOKIE}=; Max-Age=0; HttpOnly; Secure; SameSite=Strict; Path=/`;
 
 export type PinRecord = {
   id: number;

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ApiClientError, apiClient } from "../../lib/apiClient";
 import type { PublicProfile } from "../../shared/api";
+import { useFocusTrap } from "../../shared/useFocusTrap";
 import { Keypad } from "../pin/Keypad";
 
 type PinStage = "first" | "confirm";
@@ -46,37 +47,25 @@ export function ProfileSettings() {
     return () => controller.abort();
   }, []);
 
-  useEffect(() => {
-    if (!deleteTarget) return;
-    const dialog = deleteDialog.current;
-    const trigger = deleteTrigger.current;
-    const fallback = profileSection.current;
-    const controls = dialog?.querySelectorAll<HTMLButtonElement>("button:not(:disabled)") ?? [];
-    cancelDelete.current?.focus();
-    function onKeyDown(event: KeyboardEvent) {
+  useFocusTrap({
+    active: deleteTarget !== null,
+    containerRef: deleteDialog,
+    target: "container",
+    selector: "button:not(:disabled)",
+    initialFocusRef: cancelDelete,
+    onKeyDown: (event) => {
       event.stopPropagation();
       if (event.key === "Escape") {
         event.preventDefault();
         setDeleteTarget(null);
-      } else if (event.key === "Tab" && controls.length > 0) {
-        const first = controls[0];
-        const last = controls[controls.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
       }
-    }
-    dialog?.addEventListener("keydown", onKeyDown);
-    return () => {
-      dialog?.removeEventListener("keydown", onKeyDown);
+    },
+    restoreFocus: () => {
+      const trigger = deleteTrigger.current;
       if (trigger?.isConnected) trigger.focus();
-      else fallback?.focus();
-    };
-  }, [deleteTarget]);
+      else profileSection.current?.focus();
+    },
+  });
 
   function resetCreate() {
     setCreateOpen(false);

@@ -75,7 +75,10 @@ describe("device PIN", () => {
     await routeApiRequest(request("/api/pin", "POST", { pin: "1234" }), fixture.env, start);
     const unlocked = await routeApiRequest(request("/api/pin/unlock", "POST", { profileId: 1, pin: "1234" }), fixture.env, start);
     const originalCookie = cookie(unlocked);
-    const setCookie = unlocked.headers.get("set-cookie")!;
+    // Every cookie-bearing response also clears the legacy pre-multi-profile
+    // cookie name (a second Set-Cookie header) -- inspect the session cookie's
+    // own header, not the combined value, so this only asserts its attributes.
+    const setCookie = unlocked.headers.getSetCookie().find((entry) => entry.startsWith("hanja_session="))!;
     expect(setCookie).toContain("HttpOnly");
     expect(setCookie).toContain("Secure");
     expect(setCookie).toContain("SameSite=Strict");
