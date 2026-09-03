@@ -11,7 +11,7 @@ import { trackThemes } from "../tracks/trackTheme";
 import type { PlacementAnswer, ProfileResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
 import { unitTestRetryOffset } from "../../shared/unitTestRetry";
 import { AnswerOptions } from "./AnswerOptions";
-import { buildQueue, buildReadingItem, readingFor, reviewKey, type SessionQueueItem } from "./buildQueue";
+import { buildQueue, buildReadingItem, meaningFor, readingFor, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
@@ -313,7 +313,11 @@ export function SessionRunner({
       ? word ? wordFeedback : source ? `${source}에서 발췌` : "이 글자는 출처가 확인된 예문이 없습니다."
       : correct
         ? `다음 복습: ${nextInterval}`
-        : word ? `${word.glyph} = ${word.reading}` : `${entry?.glyph} = ${item.kind === "meaning" ? displayedReading : item.character.meaningKo}`;
+        : word ? `${word.glyph} = ${word.reading}` : `${entry?.glyph} = ${
+            item.kind === "meaning" ? meaningFor(item.character, item.track).label
+              : item.kind === "kun" && entry?.track === "jp" ? entry.kun
+              : displayedReading
+          }`;
   const style = {
     "--session-accent": tracks[item.track].accent,
     "--session-accent-text": tracks[item.track].accentText,

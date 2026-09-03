@@ -456,8 +456,11 @@ export function buildQueue({
       : kind === "meaning"
         ? buildMeaningItem(pair.character, pair.track, characters, recalls.length + pair.character.id, random)
         : buildKunItem(pair.character, characters, recalls.length + pair.character.id, random);
-    if (!item) continue;
-    recalls.push(item);
+    // Falls back to the reading-kind item rather than dropping this pair for the session:
+    // meaning/kun builds need 3+ distractors and can fail on a small enabled-track set.
+    const built = item ?? (kind !== "reading" ? buildReadingItem(pair.character, pair.track, characters, recalls.length + pair.character.id, random) : undefined);
+    if (!built) continue;
+    recalls.push(built);
   }
   if (mode === "placement") return recalls;
 
