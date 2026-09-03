@@ -85,7 +85,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       await page.keyboard.press(shouldSkip ? "5" : String(choice + 1));
       if (card.kind === "meaning") meaningKeyboardAnswers += 1;
       if (testMeaningFeedback) {
-        await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.reading}`);
+        await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.options[card.answerIndex].label}`);
         meaningFeedbackChecked = true;
       }
       if (options.announcement && !shouldSkip && !testMeaningFeedback && !checkedAnnouncement) {
@@ -295,7 +295,7 @@ test.describe.serial("keyboard-only product flows", () => {
         if (card.kind === "meaning") {
           meaningKeyboardAnswers += 1;
           if (testMeaningFeedback) {
-            await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.reading}`);
+            await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.options[card.answerIndex].label}`);
             meaningFeedbackChecked = true;
           }
         }
@@ -311,7 +311,7 @@ test.describe.serial("keyboard-only product flows", () => {
     const clickedAnswer = page.locator(".answer-option").nth(wrongIndex);
     await clickedAnswer.click();
     if (sourceCard.kind === "meaning") {
-      await expect(page.locator(".feedback-bar")).toContainText(`${sourceCard.glyph} = ${sourceCard.reading}`);
+      await expect(page.locator(".feedback-bar")).toContainText(`${sourceCard.glyph} = ${sourceCard.options[sourceCard.answerIndex].label}`);
       meaningFeedbackChecked = true;
     }
     await expect(clickedAnswer).toBeFocused();
