@@ -5,6 +5,13 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Credentials — never commit
+*.pem
+*.key
+credentials.json
+*credentials*.json
+*secret*.json
 .DS_Store
 *.tsbuildinfo
 playwright-report/
