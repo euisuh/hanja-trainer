@@ -32,27 +32,36 @@ export function SettingsScreen() {
     <section className="settings-screen">
       <h1>설정</h1>
       <div className="settings-layout">
-        <ShortcutSheet />
         <div className="settings-controls">
-          <TrackToggles enabled={settings.enabledTracks} onToggle={settings.toggle} />
-          <OnyomiScript onChange={settings.setOnyomiScript} value={settings.onyomiScript} />
-          <DailyGoal goal={settings.dailyGoal} onChange={settings.setGoal} />
-          <ThemePicker onChange={settings.setTheme} value={settings.theme} />
-          <SoundSetting onChange={settings.setSoundMode} value={settings.soundMode} />
-          <section className="settings-card placement-retest">
-            <header>레벨 다시 측정</header>
-            <div>
-              {settings.enabledTracks.map((track) => {
-                const theme = trackThemes[track];
-                return <button key={track} onClick={() => void startRetest(track)} style={{ "--settings-accent": theme.accent, "--settings-accent-text": theme.accentText, "--settings-soft": theme.soft } as CSSProperties} type="button"><span lang={theme.lang}>{theme.label}</span><small>15문항</small></button>;
-              })}
-            </div>
-            <p>커리큘럼별 시작 레벨만 새 결과로 갱신합니다.</p>
-            {retestError && <p role="alert">{retestError}</p>}
+          <section className="settings-group">
+            <h2 className="settings-group__title">학습</h2>
+            <TrackToggles enabled={settings.enabledTracks} onToggle={settings.toggle} />
+            <OnyomiScript onChange={settings.setOnyomiScript} value={settings.onyomiScript} />
+            <DailyGoal goal={settings.dailyGoal} onChange={settings.setGoal} />
           </section>
-          <PinSettings />
-          {settings.isAdmin && <ProfileSettings />}
+          <section className="settings-group">
+            <h2 className="settings-group__title">화면과 소리</h2>
+            <ThemePicker onChange={settings.setTheme} value={settings.theme} />
+            <SoundSetting onChange={settings.setSoundMode} value={settings.soundMode} />
+          </section>
+          <section className="settings-group">
+            <h2 className="settings-group__title">계정</h2>
+            <section className="settings-card settings-card--action placement-retest">
+              <header>레벨 다시 측정</header>
+              <div>
+                {settings.enabledTracks.map((track) => {
+                  const theme = trackThemes[track];
+                  return <button key={track} onClick={() => void startRetest(track)} style={{ "--settings-accent": theme.accent, "--settings-accent-text": theme.accentText, "--settings-soft": theme.soft } as CSSProperties} type="button"><span lang={theme.lang}>{theme.label}</span><small>15문항</small></button>;
+                })}
+              </div>
+              <p>커리큘럼별 시작 레벨만 새 결과로 갱신합니다.</p>
+              {retestError && <p role="alert">{retestError}</p>}
+            </section>
+            <PinSettings />
+            {settings.isAdmin && <ProfileSettings />}
+          </section>
         </div>
+        <ShortcutSheet />
       </div>
     </section>
   );

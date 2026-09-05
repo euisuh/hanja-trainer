@@ -166,7 +166,7 @@ export function ProfileSettings() {
                     <span><strong>{profile.name}</strong>{profile.isAdmin && <small>관리자</small>}</span>
                     <div>
                       <button disabled={pending} onClick={() => { setRenameId(profile.id); setRenameName(profile.name); setMessage(""); }} type="button" aria-label={`${profile.name} 이름 변경`}>이름 변경</button>
-                      {!profile.isAdmin && <button disabled={pending} onClick={(event) => { deleteTrigger.current = event.currentTarget; setDeleteTarget(profile); }} type="button" aria-label={`${profile.name} 프로필 삭제`}>삭제</button>}
+                      {!profile.isAdmin && <button className="profile-setting__delete" disabled={pending} onClick={(event) => { deleteTrigger.current = event.currentTarget; setDeleteTarget(profile); }} type="button" aria-label={`${profile.name} 프로필 삭제`}>삭제</button>}
                     </div>
                   </>
                 )}
@@ -179,7 +179,7 @@ export function ProfileSettings() {
               <div aria-describedby="profile-delete-description" aria-labelledby="profile-delete-title" aria-modal="true" className="profile-setting__confirm" ref={deleteDialog} role="alertdialog">
                 <strong id="profile-delete-title">{deleteTarget.name} 프로필을 삭제할까요?</strong>
                 <p id="profile-delete-description">이 프로필의 모든 학습 진도는 영구적으로 삭제되며 되돌릴 수 없습니다.</p>
-                <div><button disabled={pending} onClick={() => void remove()} type="button">영구 삭제</button><button disabled={pending} onClick={() => setDeleteTarget(null)} ref={cancelDelete} type="button">취소</button></div>
+                <div><button className="profile-setting__delete" disabled={pending} onClick={() => void remove()} type="button">영구 삭제</button><button disabled={pending} onClick={() => setDeleteTarget(null)} ref={cancelDelete} type="button">취소</button></div>
               </div>
             </div>
           )}

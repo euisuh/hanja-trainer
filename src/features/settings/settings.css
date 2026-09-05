@@ -6,8 +6,12 @@
 .shortcut-sheet__row kbd { min-width: 74px; padding: var(--space-2) var(--space-4); border-radius: var(--radius-badge); background: var(--paper); color: var(--ink); font-size: var(--text-xs); text-align: center; }
 .shortcut-sheet__row span { font-size: var(--text-base); font-weight: var(--weight-body); }
 .settings-controls { display: flex; flex: 1 1 280px; min-width: 260px; flex-direction: column; gap: var(--space-5); }
+.settings-group { display: flex; margin-bottom: var(--space-8); flex-direction: column; gap: var(--space-5); }
+.settings-group__title { margin: 0 0 var(--space-4) var(--space-2); color: var(--muted); font-size: var(--text-2xs); font-weight: var(--weight-medium); letter-spacing: .14em; text-transform: uppercase; }
 .settings-card { padding: var(--space-6); border: 3px solid var(--ink); border-radius: var(--radius-large); background: var(--card); box-shadow: var(--shadow-5); }
 .settings-card > header { margin-bottom: var(--space-4); font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.settings-card--action { border-color: var(--dashed); border-style: dashed; background: var(--panel); }
+.settings-card--action > header { color: var(--body); }
 .theme-picker > div, .sound-setting > div { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
 .theme-picker button, .sound-setting button { padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-weight: var(--weight-strong); }
 .theme-picker button[aria-pressed="true"], .sound-setting button[aria-pressed="true"] { border-color: var(--gold); background: var(--chip-bg); color: var(--ink); }
@@ -33,6 +37,8 @@
 .profile-setting > header small, .profile-setting__message, .profile-setting > p { color: var(--muted); }
 .profile-setting button { padding: var(--space-3) var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-badge); background: var(--card); color: var(--ink); cursor: pointer; font-weight: var(--weight-strong); }
 .profile-setting button:disabled { cursor: not-allowed; opacity: .5; }
+.profile-setting__delete { border-color: var(--wrong) !important; color: var(--wrong-fg) !important; }
+.profile-setting__delete:hover:not(:disabled) { background: var(--wrong-bg) !important; }
 .profile-setting__list { display: flex; margin: 0 0 var(--space-4); padding: 0; flex-direction: column; gap: var(--space-3); list-style: none; }
 .profile-setting__list li, .profile-setting__list form, .profile-setting__list li > span, .profile-setting__list li > div { display: flex; align-items: center; gap: var(--space-3); }
 .profile-setting__list li { justify-content: space-between; flex-wrap: wrap; }
