@@ -22,6 +22,24 @@ export function reviewableUnits(units: CurriculumUnitPayload[]): CurriculumUnitP
   return units.filter((unit, index) => index < current || unit.nodes.every((node) => node.state === "done"));
 }
 
+export function reviewableLevels(units: CurriculumUnitPayload[]): Pick<CurriculumUnitPayload, "level" | "levelOrd">[] {
+  const unitIds = new Set(reviewableUnits(units).map((unit) => unit.id));
+  return [...new Map(units.map((unit) => [unit.levelOrd, { level: unit.level, levelOrd: unit.levelOrd }])).values()]
+    .filter(({ levelOrd }) => units.every((unit) => unit.levelOrd !== levelOrd || unitIds.has(unit.id)))
+    .sort((left, right) => left.levelOrd - right.levelOrd);
+}
+
+export function reviewLevelOptions(units: CurriculumUnitPayload[]): { label: string; levelOrd: number }[] {
+  const levels = [...new Map(units.map((unit) => [unit.levelOrd, unit.level])).entries()].sort(([left], [right]) => left - right);
+  const remaining = new Map<string, number>();
+  for (const [, level] of levels) remaining.set(level, (remaining.get(level) ?? 0) + 1);
+  return levels.map(([levelOrd, level]) => {
+    const count = remaining.get(level)!;
+    remaining.set(level, count - 1);
+    return { label: count > 1 ? `${level}${"I".repeat(count)}` : level, levelOrd };
+  });
+}
+
 const MIN_LEADER_MASTERY = 20;
 const LAGGING_RATIO = 0.5;
 

@@ -415,7 +415,7 @@ export function buildQueue({
     .filter((pair) => pair.state && isDue(pair.state, now))
     .sort((a, b) => a.state!.due.getTime() - b.state!.due.getTime());
   const fresh = pairs.filter((pair) => !pair.state && (!freshKeys || freshKeys.has(reviewKey(pair.character.id, pair.track))));
-  const levelReview = levelReviewKeys ? pairs.filter((pair) => levelReviewKeys.has(reviewKey(pair.character.id, pair.track))) : [];
+  const levelReview = levelReviewKeys ? shuffle(pairs.filter((pair) => levelReviewKeys.has(reviewKey(pair.character.id, pair.track))), random) : [];
   const placement = placementKeys ? pairs.filter((pair) => placementKeys.has(reviewKey(pair.character.id, pair.track))) : pairs;
   const available = mode === "review" ? due : mode === "lesson" ? [...due, ...fresh] : mode === "level-review" ? levelReview : placementPairs(placement, enabledTracks, length);
   if (available.length === 0) return [];

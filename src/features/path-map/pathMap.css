@@ -218,7 +218,7 @@
 }
 
 .level-review-picker label { display: block; margin-bottom: 10px; color: var(--home-accent-text); font-size: 13px; font-weight: 800; }
-.level-review-picker__controls { display: flex; gap: 8px; }
+.level-review-picker__controls { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) auto; gap: 8px; }
 .level-review-picker select,
 .level-review-picker button { min-height: 42px; border: 2px solid var(--ink); border-radius: var(--radius-small); font: inherit; font-weight: 800; }
 .level-review-picker select { min-width: 0; flex: 1; padding: 0 10px; background: var(--card); color: var(--ink); }
@@ -243,4 +243,5 @@
   .track-tab { flex-basis: 160px; }
   .home-layout { display: block; }
   .home-rail { margin-top: var(--space-5); }
+  .level-review-picker__controls { grid-template-columns: 1fr; }
 }

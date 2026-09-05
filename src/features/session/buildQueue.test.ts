@@ -176,6 +176,30 @@ describe("buildQueue", () => {
     expect(new Set(queue.map((item) => item.kind))).toEqual(new Set(["reading", "meaning"]));
   });
 
+  it("covers every character in a unit review larger than the lesson size", () => {
+    const unitCharacters = Array.from({ length: 10 }, (_, index) => character(index + 1));
+    const keys = new Set(unitCharacters.map((item) => reviewKey(item.id, "kr")));
+    const queue = buildQueue({ characters: unitCharacters, enabledTracks: ["kr"], length: 10, mode: "level-review", levelReviewKeys: keys, random: random(1) });
+    const reviewed = queue.filter((item) => item.kind !== "compare" && item.kind !== "word").map((item) => item.character.id);
+
+    expect(reviewed).toHaveLength(10);
+    expect(new Set(reviewed)).toEqual(new Set(unitCharacters.map((item) => item.id)));
+  });
+
+  it("rotates a bounded whole-level sample with the session seed", () => {
+    const levelCharacters = Array.from({ length: 30 }, (_, index) => character(index + 1));
+    const keys = new Set(levelCharacters.map((item) => reviewKey(item.id, "kr")));
+    const sample = (seed: number) => buildQueue({ characters: levelCharacters, enabledTracks: ["kr"], length: 20, mode: "level-review", levelReviewKeys: keys, random: random(seed) })
+      .filter((item) => item.kind !== "compare" && item.kind !== "word").map((item) => item.character.id);
+    const first = sample(1);
+    const second = sample(2);
+
+    expect(first).toHaveLength(20);
+    expect(new Set(first).size).toBe(20);
+    expect(first).not.toEqual(second);
+    expect(new Set(first)).not.toEqual(new Set(second));
+  });
+
   it("does not repeat fresh cards when no cards are due", () => {
     const queue = buildQueue({ characters, enabledTracks: ["kr"], length: 8, mode: "lesson" });
     const keys = queue.map((item) => `${item.character.id}:${item.track}`);

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
-import { lessonTracks } from "../../screens/LessonScreen";
+import { lessonLimit, lessonTracks } from "../../screens/LessonScreen";
 import { reviewKey } from "../session/buildQueue";
-import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, reviewableUnits, trackImbalance } from "./homeModel";
+import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, reviewableLevels, reviewableUnits, reviewLevelOptions, trackImbalance } from "./homeModel";
 
 function character(id: number): CharacterEntry {
   return {
@@ -64,11 +64,33 @@ describe("lesson track scope", () => {
     expect(lessonTracks("jp", ["kr", "cn"])).toEqual(["kr", "cn"]);
     expect(lessonTracks(["jp"], ["kr", "cn"])).toEqual(["kr", "cn"]);
   });
+
+  it("accepts bounded session limits and falls back to the lesson size", () => {
+    expect(lessonLimit(10)).toBe(10);
+    expect(lessonLimit(20)).toBe(20);
+    expect([undefined, 0, 51, 1.5, Number.NaN].map(lessonLimit)).toEqual([8, 8, 8, 8, 8]);
+  });
 });
 
 describe("previous-unit review", () => {
   it("includes placement-skipped and completed units, never a current partial unit", () => {
     const unit = (id: number, current: boolean, done: boolean) => ({ id, level: "8급", levelOrd: id, ord: 1, title: "", subtitle: "", progress: { known: 0, total: 1 }, current, nodes: [{ key: String(id), glyph: String(id), reading: "", state: done ? "done" : "locked" as const }] });
     expect(reviewableUnits([unit(1, false, false), unit(2, true, false), unit(3, false, false), unit(4, false, true)]).map((item) => item.id)).toEqual([1, 4]);
+  });
+
+  it("offers only levels whose every unit is reviewable", () => {
+    const unit = (id: number, levelOrd: number, current: boolean, done: boolean) => ({ id, level: `L${levelOrd}`, levelOrd, ord: id, title: "", subtitle: "", progress: { known: 0, total: 1 }, current, nodes: [{ key: String(id), glyph: String(id), reading: "", state: done ? "done" : "locked" as const }] });
+    const units = [unit(1, 1, false, false), unit(2, 1, false, false), unit(3, 2, true, false), unit(4, 2, false, false), unit(5, 3, false, true)];
+
+    expect(reviewableLevels(units)).toEqual([{ level: "L1", levelOrd: 1 }, { level: "L3", levelOrd: 3 }]);
+  });
+
+  it("disambiguates duplicate Korean unit labels by canonical level order", () => {
+    const unit = (id: number, levelOrd: number, level: string) => ({ id, level, levelOrd, ord: id, title: "", subtitle: "", progress: { known: 1, total: 1 }, current: false, nodes: [{ key: String(id), glyph: String(id), reading: "", state: "done" as const }] });
+
+    expect(reviewLevelOptions([unit(1, 2, "7급"), unit(2, 2, "7급"), unit(3, 3, "7급"), unit(4, 3, "7급")])).toEqual([
+      { label: "7급II", levelOrd: 2 },
+      { label: "7급", levelOrd: 3 },
+    ]);
   });
 });

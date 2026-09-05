@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { useActiveProfile } from "../features/profile/ProfileContext";
-import { reviewableUnits, trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
+import { reviewableLevels, reviewableUnits, reviewLevelOptions, trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
@@ -13,6 +13,7 @@ import "../features/path-map/pathMap.css";
 
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
 const DAY_MS = 86_400_000;
+const WHOLE_LEVEL_REVIEW_LIMIT = 20;
 
 function readSnoozes(storageKey: string): TrackSnoozes {
   try {
@@ -34,7 +35,9 @@ export function HomeScreen() {
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
+  const [chosenReviewLevelOrd, setChosenReviewLevelOrd] = useState<number | null>(null);
   const [chosenReviewUnitId, setChosenReviewUnitId] = useState<number | null>(null);
+  const [reviewWholeLevel, setReviewWholeLevel] = useState(false);
   const [snoozes, setSnoozes] = useState<TrackSnoozes>(() => readSnoozes(snoozesKey));
   const [now] = useState(Date.now);
   const [error, setError] = useState("");
@@ -44,7 +47,15 @@ export function HomeScreen() {
   const theme = trackThemes[selectedTrack];
   const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
   const previousUnits = useMemo(() => reviewableUnits(curriculum?.units ?? []), [curriculum]);
-  const reviewUnitId = previousUnits.some((item) => item.id === chosenReviewUnitId) ? chosenReviewUnitId : previousUnits.at(-1)?.id ?? null;
+  const reviewLevels = useMemo(() => {
+    const levelOrds = new Set(previousUnits.map((item) => item.levelOrd));
+    return reviewLevelOptions(curriculum?.units ?? []).filter((item) => levelOrds.has(item.levelOrd));
+  }, [curriculum, previousUnits]);
+  const fullyReviewableLevelOrds = useMemo(() => new Set(reviewableLevels(curriculum?.units ?? []).map((item) => item.levelOrd)), [curriculum]);
+  const reviewLevelOrd = reviewLevels.some((item) => item.levelOrd === chosenReviewLevelOrd) ? chosenReviewLevelOrd : previousUnits.at(-1)?.levelOrd ?? null;
+  const reviewUnits = previousUnits.filter((item) => item.levelOrd === reviewLevelOrd);
+  const reviewUnit = reviewUnits.find((item) => item.id === chosenReviewUnitId) ?? reviewUnits.at(-1);
+  const wholeLevelReview = reviewWholeLevel && reviewLevelOrd !== null && fullyReviewableLevelOrds.has(reviewLevelOrd);
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
   const progress = stats?.tracks.find((item) => item.track === selectedTrack);
   const scalePercent = progress?.pct ?? 0;
@@ -162,14 +173,18 @@ export function HomeScreen() {
             <small>실력으로 잠금 해제</small><strong>이 유닛 건너뛰기</strong><span>전 글자 2회 · 전부 정답</span>
           </button>}
           {previousUnits.length > 0 && <section className="level-review-picker">
-            <label htmlFor="level-review-select">이전 레벨 복습</label>
+            <label htmlFor="level-review-level">이전 레벨 복습</label>
             <div className="level-review-picker__controls">
-              <select id="level-review-select" onChange={(event) => setChosenReviewUnitId(Number(event.target.value))} value={reviewUnitId ?? ""}>
-                {previousUnits.map((item) => <option key={item.id} value={item.id}>{item.level} · UNIT {item.ord}</option>)}
+              <select id="level-review-level" onChange={(event) => { setChosenReviewLevelOrd(Number(event.target.value)); setChosenReviewUnitId(null); setReviewWholeLevel(false); }} value={reviewLevelOrd ?? ""}>
+                {reviewLevels.map(({ label, levelOrd }) => <option key={levelOrd} value={levelOrd}>{label}</option>)}
               </select>
-              <button disabled={reviewUnitId === null} onClick={() => navigate("/lesson", { state: { mode: "level-review", tracks: [selectedTrack], unitId: reviewUnitId } })} type="button">복습하기</button>
+              <select aria-label="복습 범위" onChange={(event) => { setReviewWholeLevel(event.target.value === "level"); if (event.target.value !== "level") setChosenReviewUnitId(Number(event.target.value)); }} value={wholeLevelReview ? "level" : reviewUnit?.id ?? ""}>
+                {reviewLevelOrd !== null && fullyReviewableLevelOrds.has(reviewLevelOrd) && <option value="level">레벨 전체 · {WHOLE_LEVEL_REVIEW_LIMIT}자</option>}
+                {reviewUnits.map((item) => <option key={item.id} value={item.id}>UNIT {item.ord} · {item.progress.total}자</option>)}
+              </select>
+              <button disabled={!wholeLevelReview && !reviewUnit} onClick={() => navigate("/lesson", { state: { mode: "level-review", tracks: [selectedTrack], ...(wholeLevelReview ? { levelOrd: reviewLevelOrd, limit: WHOLE_LEVEL_REVIEW_LIMIT } : { unitId: reviewUnit?.id, limit: reviewUnit?.progress.total }) } })} type="button">복습하기</button>
             </div>
-            <small>레벨 테스트로 건너뛴 유닛도 다시 연습할 수 있어요.</small>
+            <small>완료한 레벨 전체 또는 유닛별로 다시 연습할 수 있어요.</small>
           </section>}
           <button className="review-cta" onClick={() => navigate("/review")} type="button">
             <small>FSRS 복습 큐</small><strong>{dueCount}장 만기</strong><span>가장 급한 카드부터 <kbd>R</kbd></span>

@@ -14,6 +14,10 @@ export function lessonTracks(requested: Track | readonly Track[] | undefined, en
   return tracks.length > 0 && tracks.every((track) => enabledTracks.includes(track)) ? tracks : enabledTracks;
 }
 
+export function lessonLimit(requested: number | undefined): number {
+  return Number.isInteger(requested) && requested! >= 1 && requested! <= 50 ? requested! : 8;
+}
+
 export function LessonScreen() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -22,7 +26,7 @@ export function LessonScreen() {
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
   const startedAt = useRef(new Date());
-  const lessonState = location.state as { mode?: "level-review"; track?: Track; tracks?: Track[]; unitId?: number; levelOrd?: number; testOut?: boolean } | null;
+  const lessonState = location.state as { mode?: "level-review"; track?: Track; tracks?: Track[]; unitId?: number; levelOrd?: number; limit?: number; testOut?: boolean } | null;
   const requestedTracks = lessonState?.tracks ?? lessonState?.track;
   const tracks = useMemo(() => lessonTracks(requestedTracks, enabledTracks), [enabledTracks, requestedTracks]);
   const mode = lessonState?.mode === "level-review" ? "level-review" : "lesson";
@@ -32,14 +36,15 @@ export function LessonScreen() {
   const validTestOut = testOut && mode === "lesson" && validUnit && tracks.length === 1 && Array.isArray(lessonState?.tracks) && lessonState.tracks.length === 1 && lessonState.tracks[0] === tracks[0];
   const unitId = validUnit ? lessonState?.unitId : undefined;
   const levelOrd = mode === "level-review" && validLevelReview ? lessonState?.levelOrd : undefined;
+  const limit = lessonLimit(lessonState?.limit);
   useEffect(() => {
     if (!ready || testOut && !validTestOut || !validLevelReview) return;
     const controller = new AbortController();
-    apiClient.startSession({ mode, tracks, limit: 8, ...(mode === "level-review" ? levelOrd ? { levelOrd } : { unitId } : { unitId }), ...(testOut ? { testOut: true } : {}) }, controller.signal)
+    apiClient.startSession({ mode, tracks, limit, ...(mode === "level-review" ? levelOrd ? { levelOrd } : { unitId } : { unitId }), ...(testOut ? { testOut: true } : {}) }, controller.signal)
       .then((result) => setSession({ id: result.sessionId, queue: apiCardsToQueue(result.cards) }))
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "레슨을 불러오지 못했습니다."); });
     return () => controller.abort();
-  }, [levelOrd, mode, ready, retryKey, testOut, tracks, unitId, validLevelReview, validTestOut]);
+  }, [levelOrd, limit, mode, ready, retryKey, testOut, tracks, unitId, validLevelReview, validTestOut]);
   if (testOut && !validTestOut || !validLevelReview) return <Navigate replace to="/home" />;
   if (settingsError) return <div className="session-empty"><h1>설정을 불러오지 못했습니다.</h1><p role="alert">{settingsError}</p><button onClick={retrySettings}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
   if (error) return <div className="session-empty"><h1>{testOut ? "유닛 테스트를 완료하지 못했습니다." : "레슨을 불러오지 못했습니다."}</h1><p role="alert">{error}</p><button onClick={() => { startedAt.current = new Date(); setError(""); setRetryKey((value) => value + 1); }}>다시 시도</button><button onClick={() => navigate("/home")}>지도로 돌아가기</button></div>;
