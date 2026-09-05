@@ -30,6 +30,29 @@ async function openCompletion(page: Page, result: object) {
   }, result);
 }
 
+async function completionXpContrast(page: Page) {
+  return page.locator(".session-complete__xp").evaluate((xp) => {
+    const channel = (value: number) => {
+      const normalized = value / 255;
+      return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+    };
+    const luminance = (value: string) => {
+      const [red, green, blue] = value.match(/[\d.]+/gu)!.slice(0, 3).map(Number);
+      return 0.2126 * channel(red) + 0.7152 * channel(green) + 0.0722 * channel(blue);
+    };
+    const foreground = getComputedStyle(xp).color;
+    const background = getComputedStyle(xp.closest(".app")!).backgroundColor;
+    const foregroundLuminance = luminance(foreground);
+    const backgroundLuminance = luminance(background);
+    return {
+      background,
+      foreground,
+      ratio: (Math.max(foregroundLuminance, backgroundLuminance) + 0.05)
+        / (Math.min(foregroundLuminance, backgroundLuminance) + 0.05),
+    };
+  });
+}
+
 test("session completion stages celebration, XP, stats, and profile payoff", async ({ page }) => {
   await openCompletion(page, completion);
 
@@ -51,6 +74,22 @@ test("session completion stages celebration, XP, stats, and profile payoff", asy
 
   await page.keyboard.press("Enter");
   await expect(page.locator(".home-screen")).toBeVisible();
+});
+
+test("completion XP stays readable in both themes", async ({ page }) => {
+  for (const theme of ["default", "quiet-technical"] as const) {
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme } })).ok()).toBe(true);
+    await openCompletion(page, completion);
+    await expect(page.locator(".app")).toHaveAttribute("data-theme", theme);
+
+    const contrast = await completionXpContrast(page);
+    expect(
+      contrast.ratio,
+      `${theme}: ${contrast.foreground} on ${contrast.background}`,
+    ).toBeGreaterThanOrEqual(3);
+  }
+
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
 });
 
 test("failed unit test does not celebrate", async ({ page }) => {

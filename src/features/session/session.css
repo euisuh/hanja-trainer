@@ -609,6 +609,8 @@ button.session-sync {
 
 .session-complete__xp { color: var(--correct-fg); font-variant-numeric: tabular-nums; }
 
+.app[data-theme="quiet-technical"] .session-complete__xp { color: var(--gold-hover); }
+
 .session-complete__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
