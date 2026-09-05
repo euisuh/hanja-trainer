@@ -27,7 +27,7 @@ function characterFor(card: SessionCard, characterId: number): CharacterEntry {
     characterId,
     track: card.track,
     text: card.sentence.text,
-    reading: null,
+    reading: card.sentence.reading,
     translationKo: card.sentence.translation,
     source: card.sentence.source,
     sourceKind: "corpus",

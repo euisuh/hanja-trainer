@@ -104,7 +104,7 @@ export type SessionCard = {
   levelOrd: number;
   trackBadge: string;
   prompt: string;
-  sentence: { text: string; translation: string; source: string; targetIndex: number | null } | null;
+  sentence: { text: string; reading: string | null; translation: string; source: string; targetIndex: number | null } | null;
   options: SessionOption[];
   answerIndex: number;
   compare?: Partial<Record<Track, SessionCompareEntry>>;

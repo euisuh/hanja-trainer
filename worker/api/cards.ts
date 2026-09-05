@@ -116,7 +116,7 @@ function toCard(item: ReturnType<typeof buildQueue>[number]): SessionCard {
     levelOrd: entry.levelOrd,
     trackBadge: labels[item.track].badge,
     prompt: item.kind === "compare" ? "한 글자, 세 소리" : promptFor(item.kind, item.track),
-    sentence: sentence ? { text: sentence.text, translation: sentence.translationKo, source: sentence.source, targetIndex: sentence.targetIndex } : null,
+    sentence: sentence ? { text: sentence.text, reading: sentence.reading, translation: sentence.translationKo, source: sentence.source, targetIndex: sentence.targetIndex } : null,
   } as const;
   if (item.kind === "compare") return { ...base, kind: "compare", options: [], answerIndex: -1, compare: comparison(item.character) };
   return { ...base, kind: item.kind, options: item.options, answerIndex: item.answerIndex };

@@ -2,7 +2,7 @@ import { expect, test, type Locator, type Page, type TestInfo } from "@playwrigh
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
 const meaningPrompts = { kr: "뜻을 고르세요", jp: "意味を選べ", cn: "选择正确的意思" } as const;
-type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; prompt: string; reading: string; sentence: { source: string; targetIndex: number | null; text: string; translation: string } | null; track: keyof typeof languages; trackBadge: string; wordId?: number; wordSourceUrl?: string };
+type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; prompt: string; reading: string; sentence: { reading: string | null; source: string; targetIndex: number | null; text: string; translation: string } | null; track: keyof typeof languages; trackBadge: string; wordId?: number; wordSourceUrl?: string };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes:1";
 const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
@@ -709,7 +709,13 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.locator('.track-panel[lang="ko"]')).toHaveCount(1);
     await expect(page.locator('.track-panel[lang="ja"]')).toHaveCount(1);
     await expect(page.locator('.track-panel[lang="zh-Hans"]')).toHaveCount(1);
-    await expectClosestLang(page.locator('.track-panel[lang="zh-Hans"] .track-panel__sentence small').first(), languages.kr);
+    const chineseSentence = page.locator('.track-panel[lang="zh-Hans"] .track-panel__sentence').first();
+    const reading = chineseSentence.locator('small[lang="zh-Hans"]');
+    const translation = chineseSentence.locator('small[lang="ko"]:not(.track-panel__source)');
+    await expect(reading).toHaveCount(1);
+    await expect(translation).toHaveCount(1);
+    await expectClosestLang(reading, languages.cn);
+    await expectClosestLang(translation, languages.kr);
     await checkLayout(page, "detail", testInfo);
     expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
     await page.keyboard.press("Escape");

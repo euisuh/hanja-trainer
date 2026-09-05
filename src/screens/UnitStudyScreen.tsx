@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { HighlightedSentence } from "../features/source/HighlightedSentence";
 import { SourceAttribution } from "../features/source/SourceAttribution";
 import { cachedAudioUrl, matchingVoice, speechLanguages, useSpeechVoices } from "../features/study/speech";
 import { useSettings } from "../features/settings/useSettings";
@@ -7,7 +8,7 @@ import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
 import { toHiragana } from "../shared/kana";
 import { joinSpokenReadings } from "../shared/spokenReading";
-import type { ApiSentence, UnitStudyResponse, UnitStudyTrackDetail } from "../shared/api";
+import type { UnitStudyResponse, UnitStudyTrackDetail } from "../shared/api";
 import type { Track } from "../shared/types";
 import "../features/study/study.css";
 
@@ -20,12 +21,6 @@ function SpeakerIcon() {
 function AudioControl({ children, label, onPlay, supported }: { children: ReactNode; label: string; onPlay: () => void; supported: boolean }) {
   if (!supported) return <div data-study-control tabIndex={0}>{children}</div>;
   return <button aria-label={label} className="unit-study__audio" data-study-audio data-study-control onClick={onPlay} type="button"><span>{children}</span><SpeakerIcon /></button>;
-}
-
-function HighlightedSentence({ glyph, sentence }: { glyph: string; sentence: ApiSentence }) {
-  if (sentence.target_index === null) return <><span className="sentence-target">한자 {glyph}</span>{sentence.text}</>;
-  const points = Array.from(sentence.text);
-  return <>{points.slice(0, sentence.target_index).join("")}<mark>{points[sentence.target_index]}</mark>{points.slice(sentence.target_index + 1).join("")}</>;
 }
 
 function speechReading(entry: UnitStudyTrackDetail, hiragana: boolean): string {
@@ -138,7 +133,7 @@ export function UnitStudyScreen() {
                   <div className="unit-study__badges">{entry.level_badges.map((badge) => <span key={badge}>{badge}</span>)}</div>
                   <p className="unit-study__meaning">{entry.meaning}</p>
                   {entry.sentences.length > 0 ? <div className="unit-study__sentences">{entry.sentences.map((sentence) => <div className="unit-study__sentence" key={`${sentence.target_index}:${sentence.text}`}>
-                    <AudioControl label={`${labels[track]} 예문 듣기${sentence.target_index === null ? `, 한자 ${entry.glyph}` : ""}: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence glyph={entry.glyph} sentence={sentence} /></AudioControl>
+                    <AudioControl label={`${labels[track]} 예문 듣기${sentence.target_index === null ? `, 한자 ${entry.glyph}` : ""}: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence glyph={entry.glyph} targetIndex={sentence.target_index} text={sentence.text} /></AudioControl>
                     {sentence.reading && <small lang={theme.lang}>{sentence.reading}</small>}
                     {sentence.translation !== sentence.text && <small lang="ko">{sentence.translation}</small>}
                     <small className="unit-study__source" lang="ko">예문 · <SourceAttribution source={sentence.source} /></small>

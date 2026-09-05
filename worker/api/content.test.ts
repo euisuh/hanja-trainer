@@ -244,6 +244,8 @@ describe("content API", () => {
     expect(review.cards.map((card) => card.characterKey)).toEqual(keys);
     const placement = await (await post({ mode: "placement", tracks: ["kr"], limit: 5 })).json() as StartSessionResponse;
     expect(placement.cards).toHaveLength(5);
+    const japanese = await (await post({ mode: "lesson", tracks: ["jp"], limit: 6 })).json() as StartSessionResponse;
+    expect(japanese.cards.some((card) => typeof card.sentence?.reading === "string")).toBe(true);
   });
 
   it("starts exact unit tests and validates their mode, track, unit, and enabled settings", async () => {

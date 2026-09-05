@@ -1,5 +1,6 @@
 import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../shared/types";
 import type { OnyomiScript } from "../../shared/settings";
+import { HighlightedSentence } from "../source/HighlightedSentence";
 import { SourceAttribution } from "../source/SourceAttribution";
 import { trackThemes } from "../tracks/trackTheme";
 import { CompareCard } from "./CompareCard";
@@ -32,15 +33,12 @@ function levelLabel(entry: TrackEntry): string {
 }
 
 function SentencePanel({ glyph, sentence, revealed }: { glyph: string; sentence: ExampleSentence; revealed: boolean }) {
-  const points = Array.from(sentence.text);
   const theme = trackThemes[sentence.track];
   return (
     <div className="quiz-card__sentence" lang={theme.lang}>
       <div lang={trackThemes.kr.lang}>예문 · <SourceAttribution source={sentence.source} /></div>
-      {sentence.targetIndex === null && <span className="sentence-target">한자 {glyph}</span>}
-      <p>{sentence.targetIndex === null ? sentence.text : <>
-        {points.slice(0, sentence.targetIndex).join("")}<mark>{points[sentence.targetIndex]}</mark>{points.slice(sentence.targetIndex + 1).join("")}
-      </>}</p>
+      <p><HighlightedSentence glyph={glyph} targetIndex={sentence.targetIndex} text={sentence.text} /></p>
+      {revealed && sentence.reading && <small lang={theme.lang}>{sentence.reading}</small>}
       {sentence.translationKo !== sentence.text && (
         <small className={revealed ? "quiz-card__translation--revealed" : ""} lang={trackThemes.kr.lang}>
           {revealed ? sentence.translationKo : "정답 후 번역이 공개됩니다"}
