@@ -1,5 +1,5 @@
 .onboarding-screen {
-  padding: 36px var(--space-2) 0;
+  padding: var(--space-9) var(--space-2) 0;
   animation: om-rise .35s ease-out;
 }
 
@@ -13,6 +13,12 @@
   letter-spacing: .18em;
   text-transform: uppercase;
 }
+
+.onboarding-steps { margin-bottom: var(--space-5); }
+.onboarding-steps .onboarding-eyebrow { display: block; margin-bottom: var(--space-3); }
+.onboarding-steps__track { display: flex; max-width: 180px; gap: var(--space-2); }
+.onboarding-steps__seg { height: 4px; flex: 1; border-radius: var(--radius-pill); background: var(--progress-track); transition: background 200ms ease-out; }
+.onboarding-steps__seg--done { background: var(--gold); }
 
 .onboarding-screen h1 {
   max-width: 16ch;

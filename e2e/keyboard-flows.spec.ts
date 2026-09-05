@@ -235,6 +235,10 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/onboarding");
     await expect(page.getByRole("heading", { name: "한 글자, 세 개의 시험." })).toBeVisible();
+    await expect(page.locator(".app-header")).toHaveCount(0);
+    await expect(page.locator(".onboarding-steps__seg")).toHaveCount(2);
+    await expect(page.locator(".onboarding-steps__seg--done")).toHaveCount(1);
+    await expect(page.locator(".onboarding-steps__seg").first()).toHaveCSS("transition-property", "none");
     await checkLayout(page, "onboarding", testInfo);
     expect(await page.locator(".onboarding-cta").evaluate((node) => Number.parseFloat(getComputedStyle(node).animationDuration))).toBeLessThanOrEqual(0.01);
 
@@ -252,6 +256,8 @@ test.describe.serial("keyboard-only product flows", () => {
     await finishSession(page, placement.cards, /현재 콘텐츠의 끝/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, skipAnnouncement: true, skipFirst: true, verifyReducedMotion: true });
     expect(await page.evaluate(() => (window as unknown as { feedbackVibrations: Array<number | number[]> }).feedbackVibrations)).toEqual([]);
     await expect(page.getByRole("heading", { name: "현재 콘텐츠의 끝까지 도달했습니다." })).toBeVisible();
+    await expect(page.locator(".onboarding-steps__seg")).toHaveCount(2);
+    await expect(page.locator(".onboarding-steps__seg--done")).toHaveCount(2);
     await checkLayout(page, "placement-result", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();

@@ -137,8 +137,7 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/onboarding$/u);
   await expect(page.getByRole("heading", { name: "한 글자, 세 개의 시험." })).toBeVisible();
-  await expect(page.locator(".active-profile strong")).toHaveText("준");
-  await expect(page.getByRole("button", { name: "프로필 전환" })).toBeVisible();
+  await expect(page.locator(".app-header")).toHaveCount(0);
 
   await page.goBack();
   await expect(page).toHaveURL(/\/onboarding$/u);
@@ -155,7 +154,7 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   await page.goto("/home");
   await expect(page).toHaveURL(/\/onboarding$/u);
   await expect(page.getByRole("heading", { name: "한 글자, 세 개의 시험." })).toBeVisible();
-  await expect(page.locator(".active-profile strong")).toHaveText("준");
+  await expect(page.locator(".app-header")).toHaveCount(0);
 
   const secondProfile = (await browserRequest(page, "/api/profile")).body;
   expect(secondProfile).toMatchObject({ id: secondId, name: "준", xp: 0, todayXp: 0, streak: 0, longestStreak: 0 });
@@ -165,6 +164,7 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   expect(await page.evaluate((profileId) => ({ first: localStorage.getItem("hanja-trainer:track-imbalance-snoozes:1"), second: localStorage.getItem(`hanja-trainer:track-imbalance-snoozes:${profileId}`) }), secondId)).toEqual({ first: expect.any(String), second: null });
 
   executeSql(`UPDATE profile SET onboarded_at = 1, timezone = '${alternateTimezone}' WHERE id = ${secondId};`);
+  await page.goto("/stats");
   const timezonePatched = page.waitForResponse((response) => {
     if (!response.url().endsWith("/api/settings") || response.request().method() !== "PATCH" || !response.ok()) return false;
     return (response.request().postDataJSON() as { timezone?: string }).timezone === browserTimezone;

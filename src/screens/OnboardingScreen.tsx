@@ -67,7 +67,13 @@ export function OnboardingScreen() {
   if (ready && onboarded) return <Navigate replace to="/home" />;
   return (
     <section className="onboarding-screen">
-      <p className="onboarding-eyebrow">Step 1 / 2 · 트랙 선택</p>
+      <div className="onboarding-steps">
+        <span className="onboarding-eyebrow">Step 1 / 2 · 트랙 선택</span>
+        <div className="onboarding-steps__track" role="presentation">
+          <span className="onboarding-steps__seg onboarding-steps__seg--done" />
+          <span className="onboarding-steps__seg" />
+        </div>
+      </div>
       <h1>한 글자, 세 개의 시험.</h1>
       <p className="onboarding-copy">같은 글자를 급수·JLPT·HSK 세 기준으로 동시에 학습합니다. 학습할 트랙을 고르세요. 숫자키 <b>1</b>–<b>3</b>으로 토글, <b>Enter</b>로 계속.</p>
       {error && <div><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}

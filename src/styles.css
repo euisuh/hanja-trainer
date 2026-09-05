@@ -271,6 +271,7 @@ main {
     .pin-keys button,
     .pin-action
   ),
+  .onboarding-steps__seg,
   .path-node:not(.path-node--locked) .path-node__glyph { transition: none; }
 
   :is(
