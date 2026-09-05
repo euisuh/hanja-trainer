@@ -1,6 +1,8 @@
 export const PIN_ITERATIONS = 100_000;
 export const PIN_SESSION_MS = 2 * 60 * 60 * 1_000;
 export const PIN_COOKIE = "hanja_session";
+const RECOVERY_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const RECOVERED_SECRET_PREFIX = "recovered:";
 // Pre-multi-profile cookie name (single-part expiry.signature payload, no profile
 // id). Never parsed anymore -- anyone still holding one is treated as logged out
 // and re-prompted for their PIN. Cleared alongside every session cookie response
@@ -17,10 +19,14 @@ export type PinRecord = {
   pin_secret: string | null;
   pin_failures: number;
   pin_locked_until: number | null;
+  recovery_hash: string | null;
+  recovery_salt: string | null;
+  recovery_iterations: number | null;
 };
 
 export type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
 export type PinCredentials = { hash: string; salt: string; iterations: number; secret: string };
+export type UnlockResult = { cookie: string; recoveryCode?: string };
 
 export class PinError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string, public readonly retryAfter?: number) {
@@ -69,33 +75,42 @@ export async function derivePinHash(pin: string, salt: Uint8Array<ArrayBuffer>, 
   return new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt, iterations }, key, 256));
 }
 
-export async function createPinCredentials(pin: unknown, derive = derivePinHash): Promise<PinCredentials> {
-  if (!isPin(pin)) throw new PinError(400, "invalid_pin", "pin must be exactly 4 digits");
+async function createHashCredentials(value: string, derive = derivePinHash): Promise<Omit<PinCredentials, "secret">> {
   const salt = randomBytes(16);
-  return {
-    hash: base64(await derive(pin, salt, PIN_ITERATIONS)),
-    salt: base64(salt),
-    iterations: PIN_ITERATIONS,
-    secret: base64(randomBytes(32)),
-  };
+  return { hash: base64(await derive(value, salt, PIN_ITERATIONS)), salt: base64(salt), iterations: PIN_ITERATIONS };
 }
 
-async function matchesPin(record: PinRecord, pin: string, derive = derivePinHash): Promise<boolean> {
-  if (!record.pin_hash || !record.pin_salt || !record.pin_iterations) return false;
+export async function createPinCredentials(pin: unknown, derive = derivePinHash): Promise<PinCredentials> {
+  if (!isPin(pin)) throw new PinError(400, "invalid_pin", "pin must be exactly 4 digits");
+  return { ...await createHashCredentials(pin, derive), secret: base64(randomBytes(32)) };
+}
+
+async function matchesHash(value: string, hash: string | null, saltValue: string | null, iterations: number | null, derive = derivePinHash): Promise<boolean> {
+  if (!hash || !saltValue || !iterations) return false;
   let stored: Uint8Array<ArrayBuffer>;
   let salt: Uint8Array<ArrayBuffer>;
   try {
-    stored = decodeBase64(record.pin_hash);
-    salt = decodeBase64(record.pin_salt);
+    stored = decodeBase64(hash);
+    salt = decodeBase64(saltValue);
   } catch {
     return false;
   }
-  return constantTimeEqual(stored, await derive(pin, salt, record.pin_iterations));
+  return constantTimeEqual(stored, await derive(value, salt, iterations));
+}
+
+async function matchesPin(record: PinRecord, pin: string, derive = derivePinHash): Promise<boolean> {
+  return matchesHash(pin, record.pin_hash, record.pin_salt, record.pin_iterations, derive);
+}
+
+async function createRecoveryCredentials(derive = derivePinHash) {
+  const code = Array.from(randomBytes(10), (byte) => RECOVERY_ALPHABET[byte % RECOVERY_ALPHABET.length]).join("");
+  return { code, ...await createHashCredentials(code, derive) };
 }
 
 async function findPinRecord(db: D1Database, profileId: number): Promise<PinRecord | null> {
   return db.prepare(`
-    SELECT id, is_admin, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until
+    SELECT id, is_admin, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
+      recovery_hash, recovery_salt, recovery_iterations
     FROM profile WHERE id = ?1
   `).bind(profileId).first<PinRecord>();
 }
@@ -121,7 +136,8 @@ export async function listProfiles(db: D1Database): Promise<PublicProfile[]> {
 
 export async function readOnlyProfile(db: D1Database): Promise<PinRecord | null> {
   const result = await db.prepare(`
-    SELECT id, is_admin, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until
+    SELECT id, is_admin, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
+      recovery_hash, recovery_salt, recovery_iterations
     FROM profile ORDER BY id LIMIT 2
   `).all<PinRecord>();
   return result.results.length === 1 ? result.results[0] : null;
@@ -135,7 +151,10 @@ function sameCredentials(left: PinRecord, right: PinRecord): boolean {
   return left.pin_hash === right.pin_hash
     && left.pin_salt === right.pin_salt
     && left.pin_iterations === right.pin_iterations
-    && left.pin_secret === right.pin_secret;
+    && left.pin_secret === right.pin_secret
+    && left.recovery_hash === right.recovery_hash
+    && left.recovery_salt === right.recovery_salt
+    && left.recovery_iterations === right.recovery_iterations;
 }
 
 export async function setDevicePin(
@@ -145,7 +164,7 @@ export async function setDevicePin(
   currentPin: unknown,
   now = Date.now(),
   derive = derivePinHash,
-): Promise<void> {
+): Promise<string | null> {
   if (!isPin(pin)) throw new PinError(400, "invalid_pin", "pin must be exactly 4 digits");
   const record = await readPinRecord(db, profileId);
   const hasPin = record.pin_hash !== null && record.pin_salt !== null && record.pin_iterations !== null;
@@ -155,16 +174,22 @@ export async function setDevicePin(
     throw new PinError(401, "invalid_current_pin", "current PIN is incorrect");
   }
   const credentials = await createPinCredentials(pin, derive);
+  const recovery = record.is_admin && !hasPin ? await createRecoveryCredentials(derive) : null;
   const result = await db.prepare(`
     UPDATE profile SET pin_hash = ?1, pin_salt = ?2, pin_iterations = ?3, pin_secret = ?4,
-      pin_failures = 0, pin_locked_until = NULL, updated_at = ?5
-    WHERE id = ?6 AND pin_hash IS ?7 AND pin_salt IS ?8
-      AND pin_iterations IS ?9 AND pin_secret IS ?10
+      recovery_hash = ?5, recovery_salt = ?6, recovery_iterations = ?7,
+      pin_failures = 0, pin_locked_until = NULL, updated_at = ?8
+    WHERE id = ?9 AND pin_hash IS ?10 AND pin_salt IS ?11
+      AND pin_iterations IS ?12 AND pin_secret IS ?13
+      AND recovery_hash IS ?14 AND recovery_salt IS ?15 AND recovery_iterations IS ?16
   `).bind(
-    credentials.hash, credentials.salt, credentials.iterations, credentials.secret, now,
-    profileId, record.pin_hash, record.pin_salt, record.pin_iterations, record.pin_secret,
+    credentials.hash, credentials.salt, credentials.iterations, credentials.secret,
+    recovery?.hash ?? record.recovery_hash, recovery?.salt ?? record.recovery_salt, recovery?.iterations ?? record.recovery_iterations,
+    now, profileId, record.pin_hash, record.pin_salt, record.pin_iterations, record.pin_secret,
+    record.recovery_hash, record.recovery_salt, record.recovery_iterations,
   ).run();
   if (result.meta.changes !== 1) throw pinConflict();
+  return recovery?.code ?? null;
 }
 
 export async function removeDevicePin(
@@ -181,13 +206,16 @@ export async function removeDevicePin(
   }
   const result = await db.prepare(`
     UPDATE profile SET pin_hash = NULL, pin_salt = NULL, pin_iterations = NULL, pin_secret = ?1,
+      recovery_hash = NULL, recovery_salt = NULL, recovery_iterations = NULL,
       pin_failures = 0, pin_locked_until = NULL, updated_at = ?2
     WHERE id = ?3 AND pin_hash IS ?4 AND pin_salt IS ?5
       AND pin_iterations IS ?6 AND pin_secret IS ?7
+      AND recovery_hash IS ?8 AND recovery_salt IS ?9 AND recovery_iterations IS ?10
       AND (is_admin = 0 OR (SELECT COUNT(*) FROM profile) = 1)
   `).bind(
     base64(randomBytes(32)), now, profileId,
     record.pin_hash, record.pin_salt, record.pin_iterations, record.pin_secret,
+    record.recovery_hash, record.recovery_salt, record.recovery_iterations,
   ).run();
   if (result.meta.changes === 1) return;
   if (!sameCredentials(record, await readPinRecord(db, profileId))) throw pinConflict();
@@ -214,7 +242,8 @@ function cookiePayload(value: string | null): { profileId: number; expiry: strin
 }
 
 async function sign(payload: string, secret: string): Promise<Uint8Array<ArrayBuffer>> {
-  const key = await crypto.subtle.importKey("raw", decodeBase64(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const encoded = secret.startsWith(RECOVERED_SECRET_PREFIX) ? secret.slice(RECOVERED_SECRET_PREFIX.length) : secret;
+  const key = await crypto.subtle.importKey("raw", decodeBase64(encoded), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
   return new Uint8Array(await crypto.subtle.sign("HMAC", key, encoder.encode(payload)));
 }
 
@@ -232,6 +261,7 @@ export async function verifyPinSession(record: PinRecord, cookieHeader: string |
 
 async function adminCanAuthenticate(db: D1Database, record: PinRecord): Promise<boolean> {
   if (!record.is_admin || record.pin_hash) return true;
+  if (record.pin_secret?.startsWith(RECOVERED_SECRET_PREFIX)) return true;
   const count = await db.prepare("SELECT COUNT(*) AS count FROM profile").first<{ count: number }>();
   return count?.count === 1;
 }
@@ -291,13 +321,29 @@ async function updateFailures(db: D1Database, record: PinRecord, failures: numbe
   return result.meta.changes === 1;
 }
 
-export async function unlockDevice(
+type CredentialKind = "pin" | "recovery";
+
+function credentialFingerprint(record: PinRecord, kind: CredentialKind): string {
+  return kind === "pin"
+    ? `${record.pin_hash}:${record.pin_salt}:${record.pin_iterations}:${record.pin_secret}`
+    : `${record.recovery_hash}:${record.recovery_salt}:${record.recovery_iterations}:${record.pin_secret}`;
+}
+
+async function credentialMatches(record: PinRecord, kind: CredentialKind, value: unknown, derive = derivePinHash): Promise<boolean> {
+  if (kind === "pin") return isPin(value) && await matchesPin(record, value, derive);
+  return Boolean(record.is_admin) && typeof value === "string"
+    && await matchesHash(value, record.recovery_hash, record.recovery_salt, record.recovery_iterations, derive);
+}
+
+async function authenticate<T>(
   db: D1Database,
   profileId: number,
-  pin: unknown,
+  kind: CredentialKind,
+  value: unknown,
   now: number,
+  success: (record: PinRecord) => Promise<T | null>,
   derive = derivePinHash,
-): Promise<string> {
+): Promise<T> {
   let record = await readPinRecord(db, profileId);
   let credentials = "";
   let correct = false;
@@ -306,14 +352,15 @@ export async function unlockDevice(
     const locked = lockError(record, now);
     if (locked) throw locked;
 
-    const currentCredentials = `${record.pin_hash}:${record.pin_salt}:${record.pin_iterations}:${record.pin_secret}`;
+    const currentCredentials = credentialFingerprint(record, kind);
     if (credentials !== currentCredentials) {
       credentials = currentCredentials;
-      correct = isPin(pin) && await matchesPin(record, pin, derive);
+      correct = await credentialMatches(record, kind, value, derive);
     }
 
     if (correct) {
-      if (await updateFailures(db, record, 0, null)) return createSessionCookie(profileId, record.pin_secret, now);
+      const result = await success(record);
+      if (result !== null) return result;
     } else {
       const failures = record.pin_failures + 1;
       const delay = failures < 5 ? 0 : Math.min(900_000, 60_000 * 2 ** Math.min(failures - 5, 4));
@@ -325,4 +372,61 @@ export async function unlockDevice(
     }
     record = await readPinRecord(db, profileId);
   }
+}
+
+export async function unlockDevice(
+  db: D1Database,
+  profileId: number,
+  pin: unknown,
+  now: number,
+  derive = derivePinHash,
+): Promise<UnlockResult> {
+  let recovery: Awaited<ReturnType<typeof createRecoveryCredentials>> | null = null;
+  return authenticate(db, profileId, "pin", pin, now, async (record) => {
+    if (record.is_admin && record.recovery_hash === null) {
+      recovery ??= await createRecoveryCredentials(derive);
+      const result = await db.prepare(`
+        UPDATE profile SET recovery_hash = ?1, recovery_salt = ?2, recovery_iterations = ?3,
+          pin_failures = 0, pin_locked_until = NULL
+        WHERE id = ?4 AND is_admin = 1 AND pin_hash = ?5 AND pin_secret = ?6
+          AND recovery_hash IS NULL AND pin_failures = ?7 AND pin_locked_until IS ?8
+      `).bind(
+        recovery.hash, recovery.salt, recovery.iterations, record.id, record.pin_hash,
+        record.pin_secret, record.pin_failures, record.pin_locked_until,
+      ).run();
+      if (result.meta.changes === 1) {
+        return { cookie: await createSessionCookie(profileId, record.pin_secret!, now), recoveryCode: recovery.code };
+      }
+      return null;
+    }
+    return await updateFailures(db, record, 0, null)
+      ? { cookie: await createSessionCookie(profileId, record.pin_secret!, now) }
+      : null;
+  }, derive);
+}
+
+export async function recoverAdminPin(
+  db: D1Database,
+  profileId: number,
+  code: unknown,
+  now: number,
+  derive = derivePinHash,
+): Promise<string> {
+  let secret = "";
+  return authenticate(db, profileId, "recovery", code, now, async (record) => {
+    secret ||= `${RECOVERED_SECRET_PREFIX}${base64(randomBytes(32))}`;
+    const result = await db.prepare(`
+      UPDATE profile SET pin_hash = NULL, pin_salt = NULL, pin_iterations = NULL,
+        pin_secret = ?1, recovery_hash = NULL, recovery_salt = NULL, recovery_iterations = NULL,
+        pin_failures = 0, pin_locked_until = NULL, updated_at = ?2
+      WHERE id = ?3 AND is_admin = 1 AND pin_hash = ?4 AND pin_secret = ?5
+        AND recovery_hash = ?6 AND recovery_salt = ?7 AND recovery_iterations = ?8
+        AND pin_failures = ?9 AND pin_locked_until IS ?10
+    `).bind(
+      secret, now, record.id, record.pin_hash, record.pin_secret,
+      record.recovery_hash, record.recovery_salt, record.recovery_iterations,
+      record.pin_failures, record.pin_locked_until,
+    ).run();
+    return result.meta.changes === 1 ? createSessionCookie(profileId, secret, now) : null;
+  }, derive);
 }

@@ -5,6 +5,7 @@
 .unlock-card__avatar { display: inline-grid; width: 58px; height: 58px; margin-bottom: var(--space-4); place-items: center; border-radius: 50%; background: var(--avatar-background, var(--gold)); color: var(--card); font-size: var(--text-xl); font-weight: var(--weight-strong); }
 .unlock-card h1 { font-size: var(--text-2xl); }
 .unlock-card__back { display: block; padding: var(--space-3) 0; margin-bottom: var(--space-5); border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.unlock-card__recovery { padding: var(--space-3); margin-top: var(--space-4); border: 0; background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-weight: var(--weight-strong); text-decoration: underline; }
 .profile-picker__card { width: min(100%, 680px); padding: var(--space-8); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
 .profile-picker__card h1 { font-size: var(--text-2xl); }
 .profile-picker__options { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
@@ -30,5 +31,11 @@
 .pin-setting__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-5); }
 .pin-action { padding: var(--space-3) var(--space-5); font-size: var(--text-base); }
 .pin-action--secondary { background: var(--card); color: var(--ink); }
+.pin-recovery { display: grid; gap: var(--space-4); margin-top: var(--space-5); justify-items: center; }
+.pin-recovery code { padding: var(--space-3) var(--space-5); border: 3px solid var(--ink); border-radius: var(--radius-small); background: var(--paper); color: var(--ink); font-size: var(--text-xl); font-weight: var(--weight-strong); letter-spacing: .12em; }
+.pin-recovery p { margin: 0; }
+.pin-recovery-form { display: grid; gap: var(--space-4); margin-top: var(--space-5); }
+.pin-recovery-form label { font-weight: var(--weight-strong); }
+.pin-recovery-form input { width: 100%; padding: var(--space-4); border: 3px solid var(--ink); border-radius: var(--radius-small); background: var(--paper); color: var(--ink); font-size: var(--text-lg); font-weight: var(--weight-strong); letter-spacing: .12em; text-align: center; text-transform: uppercase; }
 
 @media (prefers-reduced-motion: reduce) { .pin-keypad--shake { animation: none; } }

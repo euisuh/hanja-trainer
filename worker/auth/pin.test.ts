@@ -54,11 +54,16 @@ describe("device PIN", () => {
 
     const response = await routeApiRequest(request("/api/pin", "POST", { pin: "1234" }), fixture.env);
     expect(response.status).toBe(200);
+    const recoveryCode = (await response.json() as { recoveryCode: string }).recoveryCode;
+    expect(recoveryCode).toMatch(/^[A-HJ-NP-Z2-9]{10}$/u);
     const stored = await readPinRecord(fixture.env.DB, 1);
     expect(stored.pin_hash).not.toContain("1234");
+    expect(stored.recovery_hash).not.toContain(recoveryCode);
     expect(stored.pin_iterations).toBe(PIN_ITERATIONS);
+    expect(stored.recovery_iterations).toBe(PIN_ITERATIONS);
     expect(PIN_ITERATIONS).toBeLessThanOrEqual(100_000);
     expect(atob(stored.pin_salt!)).toHaveLength(16);
+    expect(atob(stored.recovery_salt!)).toHaveLength(16);
     expect(atob(stored.pin_secret!)).toHaveLength(32);
 
     for (const protectedRequest of [request("/api/stats"), request("/api/session/start", "POST", { mode: "lesson", tracks: ["kr"] })]) {
@@ -144,7 +149,7 @@ describe("device PIN", () => {
     await setDevicePin(fixture.env.DB, 1, "9012", undefined);
     release();
     await rejected;
-    await expect(unlockDevice(fixture.env.DB, 1, "9012", Date.now())).resolves.toContain("hanja_session=");
+    await expect(unlockDevice(fixture.env.DB, 1, "9012", Date.now())).resolves.toMatchObject({ cookie: expect.stringContaining("hanja_session=") });
   });
 
   it("rejects a stale PIN removal after a concurrent PIN change wins", async () => {
@@ -166,7 +171,7 @@ describe("device PIN", () => {
     await setDevicePin(fixture.env.DB, 1, "5678", "1234");
     release();
     await rejected;
-    await expect(unlockDevice(fixture.env.DB, 1, "5678", Date.now())).resolves.toContain("hanja_session=");
+    await expect(unlockDevice(fixture.env.DB, 1, "5678", Date.now())).resolves.toMatchObject({ cookie: expect.stringContaining("hanja_session=") });
   });
 
   it("lists only public fields and requires a signed selection when profiles multiply", async () => {
@@ -220,6 +225,86 @@ describe("device PIN", () => {
     expect(removal.status).toBe(409);
     expect(await removal.json()).toMatchObject({ error: { code: "admin_pin_required" } });
     expect((await readPinRecord(fixture.env.DB, 1)).pin_hash).not.toBeNull();
+  });
+
+  it("recovers the admin with multiple profiles and invalidates the stored code", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = 2_300_000_000_000;
+    const setResponse = await routeApiRequest(request("/api/pin", "POST", { pin: "1234" }), fixture.env, now);
+    const recoveryCode = (await setResponse.json() as { recoveryCode: string }).recoveryCode;
+    const profileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+
+    const wrongPin = await routeApiRequest(request("/api/pin/unlock", "POST", { profileId: 1, pin: "9999" }), fixture.env, now);
+    const wrongCode = await routeApiRequest(request("/api/pin/recover", "POST", { profileId: 1, code: "AAAAAAAAAA" }), fixture.env, now);
+    expect(wrongCode.status).toBe(wrongPin.status);
+    expect(await wrongCode.json()).toEqual(await wrongPin.json());
+    expect(await readPinRecord(fixture.env.DB, 1)).toMatchObject({ pin_failures: 2, pin_locked_until: null });
+
+    const before = await readPinRecord(fixture.env.DB, 1);
+    const recovered = await routeApiRequest(request("/api/pin/recover", "POST", { profileId: 1, code: recoveryCode }), fixture.env, now);
+    expect(recovered.status).toBe(200);
+    expect(await recovered.json()).toEqual({ recovered: true });
+    const recoveredCookie = cookie(recovered);
+    const stored = await readPinRecord(fixture.env.DB, 1);
+    expect(stored).toMatchObject({
+      pin_hash: null,
+      pin_salt: null,
+      pin_iterations: null,
+      recovery_hash: null,
+      recovery_salt: null,
+      recovery_iterations: null,
+      pin_failures: 0,
+      pin_locked_until: null,
+    });
+    expect(stored.pin_secret).not.toBe(before.pin_secret);
+    expect((await routeApiRequest(request("/api/health", "GET", undefined, recoveredCookie), fixture.env, now)).status).toBe(200);
+    expect((await routeApiRequest(request("/api/session/end", "POST", undefined, recoveredCookie), fixture.env, now)).status).toBe(200);
+    const selected = await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), fixture.env, now);
+    expect(selected.status).toBe(200);
+    const selectedCookie = cookie(selected);
+    expect((await routeApiRequest(request("/api/health", "GET", undefined, selectedCookie), fixture.env, now)).status).toBe(200);
+    expect((await routeApiRequest(request(`/api/profiles/${profileId}`, "DELETE", undefined, selectedCookie), fixture.env, now)).status).toBe(200);
+
+    const reused = await routeApiRequest(request("/api/pin/recover", "POST", { profileId: 1, code: recoveryCode }), fixture.env, now);
+    expect(reused.status).toBe(400);
+    expect(await reused.json()).toMatchObject({ error: { code: "pin_not_set" } });
+  });
+
+  it("shares failures and lockout between PIN and recovery attempts", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = 2_400_000_000_000;
+    const setResponse = await routeApiRequest(request("/api/pin", "POST", { pin: "1234" }), fixture.env, now);
+    const recoveryCode = (await setResponse.json() as { recoveryCode: string }).recoveryCode;
+
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      const path = attempt % 2 ? "/api/pin/recover" : "/api/pin/unlock";
+      const body = attempt % 2 ? { profileId: 1, code: "AAAAAAAAAA" } : { profileId: 1, pin: "9999" };
+      expect((await routeApiRequest(request(path, "POST", body), fixture.env, now)).status).toBe(401);
+    }
+    const locked = await routeApiRequest(request("/api/pin/recover", "POST", { profileId: 1, code: "AAAAAAAAAA" }), fixture.env, now);
+    expect(locked.status).toBe(429);
+    expect(await locked.json()).toEqual({ error: { code: "pin_locked", message: "Try again in 60 seconds" }, retryAfter: 60 });
+    expect(await readPinRecord(fixture.env.DB, 1)).toMatchObject({ pin_failures: 5, pin_locked_until: now + 60_000 });
+
+    const blockedCorrect = await routeApiRequest(request("/api/pin/recover", "POST", { profileId: 1, code: recoveryCode }), fixture.env, now + 1);
+    expect(blockedCorrect.status).toBe(429);
+    expect((await routeApiRequest(request("/api/pin/recover", "POST", { profileId: 1, code: recoveryCode }), fixture.env, now + 60_000)).status).toBe(200);
+  });
+
+  it("backfills a recovery code on the next successful legacy admin unlock", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    await setDevicePin(fixture.env.DB, 1, "1234", undefined);
+    fixture.sqlite.exec("UPDATE profile SET recovery_hash = NULL, recovery_salt = NULL, recovery_iterations = NULL WHERE id = 1");
+
+    const unlocked = await routeApiRequest(request("/api/pin/unlock", "POST", { profileId: 1, pin: "1234" }), fixture.env);
+    const body = await unlocked.json() as { unlocked: true; recoveryCode?: string };
+    expect(body.recoveryCode).toMatch(/^[A-HJ-NP-Z2-9]{10}$/u);
+    const stored = await readPinRecord(fixture.env.DB, 1);
+    expect(stored.recovery_hash).not.toContain(body.recoveryCode!);
+    expect(stored.recovery_iterations).toBe(PIN_ITERATIONS);
+
+    const next = await routeApiRequest(request("/api/pin/unlock", "POST", { profileId: 1, pin: "1234" }), fixture.env);
+    expect(await next.json()).toEqual({ unlocked: true });
   });
 
   it("locks after five failures, doubles to the cap, skips KDF while locked, then resets", async () => {

@@ -7,7 +7,7 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
-import { clearLegacyPinCookie, clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
+import { clearLegacyPinCookie, clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 
@@ -231,7 +231,12 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
     }
     if (request.method === "POST" && pathname === "/api/pin/unlock") {
       const body = await jsonBody(request);
-      return withCookie(Response.json({ unlocked: true }), await unlockDevice(env.DB, profileId(body.profileId), body.pin, now));
+      const result = await unlockDevice(env.DB, profileId(body.profileId), body.pin, now);
+      return withCookie(Response.json({ unlocked: true, ...(result.recoveryCode ? { recoveryCode: result.recoveryCode } : {}) }), result.cookie);
+    }
+    if (request.method === "POST" && pathname === "/api/pin/recover") {
+      const body = await jsonBody(request);
+      return withCookie(Response.json({ recovered: true }), await recoverAdminPin(env.DB, profileId(body.profileId), body.code, now));
     }
     if (request.method === "POST" && pathname === "/api/profiles/select") {
       const body = await jsonBody(request);
@@ -246,8 +251,8 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
 
     if (request.method === "POST" && pathname === "/api/pin") {
       const body = await jsonBody(request);
-      await setDevicePin(env.DB, record.id, body.pin, body.currentPin, now);
-      return withCookie(Response.json({ enabled: true }), clearSessionCookie);
+      const recoveryCode = await setDevicePin(env.DB, record.id, body.pin, body.currentPin, now);
+      return withCookie(Response.json({ enabled: true, ...(recoveryCode ? { recoveryCode } : {}) }), clearSessionCookie);
     }
     if (request.method === "DELETE" && pathname === "/api/pin") {
       const body = await jsonBody(request);

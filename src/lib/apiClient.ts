@@ -117,7 +117,8 @@ export const apiClient = {
   selectProfile: (profileId: number) => requestJson<{ selected: true }>("/api/profiles/select", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }) }, true, false),
   endSession: () => requestJson<{ ended: true }>("/api/session/end", { method: "POST" }, true, false),
   pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }, true, false),
-  unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }, true, false),
-  setPin: (pin: string, currentPin?: string) => requestJson<{ enabled: true }>("/api/pin", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin, ...(currentPin ? { currentPin } : {}) }) }),
+  unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true; recoveryCode?: string }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }, true, false),
+  recoverPin: (profileId: number, code: string) => requestJson<{ recovered: true }>("/api/pin/recover", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, code }) }, true, false),
+  setPin: (pin: string, currentPin?: string) => requestJson<{ enabled: true; recoveryCode?: string }>("/api/pin", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin, ...(currentPin ? { currentPin } : {}) }) }),
   removePin: (currentPin: string) => requestJson<{ enabled: false }>("/api/pin", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ currentPin }) }),
 };

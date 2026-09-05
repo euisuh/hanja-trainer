@@ -1,4 +1,14 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+async function browserRequest(page: Page, path: string, method: string, body?: unknown) {
+  return page.evaluate(async ({ requestPath, requestMethod, requestBody }) => {
+    const response = await fetch(requestPath, {
+      method: requestMethod,
+      ...(requestBody === undefined ? {} : { headers: { "content-type": "application/json" }, body: JSON.stringify(requestBody) }),
+    });
+    return { status: response.status, body: await response.json() as unknown };
+  }, { requestPath: path, requestMethod: method, requestBody: body });
+}
 
 test("device PIN gates direct API calls and unlocks by keyboard and mouse", async ({ page }) => {
   await page.route("**/api/pin/state", async (route) => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: { code: "unavailable", message: "temporary" } }) }));
@@ -13,6 +23,8 @@ test("device PIN gates direct API calls and unlocks by keyboard and mouse", asyn
   await page.keyboard.type("1234");
   await expect(page.getByText("새 PIN 확인")).toBeVisible();
   await page.keyboard.type("1234");
+  await expect(page.locator(".pin-recovery code")).toHaveText(/^[A-HJ-NP-Z2-9]{10}$/u);
+  await page.getByRole("button", { name: "확인했습니다" }).click();
   await expect(page.getByRole("heading", { name: "기기 잠금" })).toBeVisible();
 
   for (const direct of [
@@ -51,4 +63,44 @@ test("device PIN gates direct API calls and unlocks by keyboard and mouse", asyn
   await page.getByRole("button", { name: "PIN 해제" }).click();
   await page.keyboard.type("5678");
   await expect(page.getByRole("button", { name: "PIN 설정" })).toBeVisible();
+});
+
+test("admin recovery is one-time and unavailable to non-admin profiles", async ({ page }) => {
+  await page.goto("/settings");
+  await page.getByRole("button", { name: "PIN 설정" }).click();
+  await page.keyboard.type("1234");
+  await page.keyboard.type("1234");
+  const recoveryCode = await page.locator(".pin-recovery code").innerText();
+  expect(recoveryCode).toMatch(/^[A-HJ-NP-Z2-9]{10}$/u);
+  await page.getByRole("button", { name: "확인했습니다" }).click();
+  await expect(page.getByRole("group", { name: /PIN 키패드/u })).toBeFocused();
+  await page.keyboard.type("1234");
+  await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
+
+  const created = await browserRequest(page, "/api/profiles", "POST", { name: "아이", pin: "4321" });
+  expect(created.status).toBe(201);
+  const childId = (created.body as { id: number }).id;
+  expect((await browserRequest(page, "/api/session/end", "POST")).status).toBe(200);
+  await page.reload();
+
+  await page.getByRole("button", { name: "아이, PIN 필요" }).click();
+  await expect(page.getByRole("heading", { name: "아이" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "PIN을 잊으셨나요?" })).toHaveCount(0);
+  await page.getByRole("button", { name: "프로필 선택" }).click();
+  await page.getByRole("button", { name: "나, PIN 필요" }).click();
+  await page.getByRole("button", { name: "PIN을 잊으셨나요?" }).click();
+  await page.getByRole("textbox", { name: "복구 코드를 입력하세요." }).fill(recoveryCode);
+  await page.getByRole("button", { name: "PIN 해제" }).click();
+  await expect.poll(async () => (await browserRequest(page, "/api/profile", "GET")).status).toBe(200);
+  await expect(page.locator(".unlock-screen, .profile-picker")).toHaveCount(0);
+  expect((await browserRequest(page, "/api/session/end", "POST")).status).toBe(200);
+  await page.reload();
+  await page.getByRole("button", { name: "나", exact: true }).click();
+  await expect.poll(async () => (await browserRequest(page, "/api/profile", "GET")).status).toBe(200);
+  await expect(page.locator(".unlock-screen, .profile-picker")).toHaveCount(0);
+  expect((await browserRequest(page, `/api/profiles/${childId}`, "DELETE")).status).toBe(200);
+
+  const reused = await browserRequest(page, "/api/pin/recover", "POST", { profileId: 1, code: recoveryCode });
+  expect(reused.status).toBe(400);
+  expect(reused.body).toMatchObject({ error: { code: "pin_not_set" } });
 });

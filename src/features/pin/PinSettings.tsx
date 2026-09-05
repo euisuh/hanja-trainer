@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiClientError, PIN_REQUIRED_EVENT, apiClient } from "../../lib/apiClient";
 import { Keypad } from "./Keypad";
+import { RecoveryCodeNotice } from "./RecoveryCodeNotice";
 
 type Action = "set" | "change" | "remove";
 type Stage = "current" | "next" | "confirm";
@@ -15,6 +16,7 @@ export function PinSettings() {
   const [message, setMessage] = useState("");
   const [pending, setPending] = useState(false);
   const [shakeKey, setShakeKey] = useState(0);
+  const [recoveryCode, setRecoveryCode] = useState("");
 
   useEffect(() => { void apiClient.pinState().then((state) => setEnabled(state.enabled)).catch(() => setEnabled(false)); }, []);
 
@@ -36,9 +38,11 @@ export function PinSettings() {
   async function save(pin: string, oldPin?: string) {
     setPending(true);
     try {
-      await apiClient.setPin(pin, oldPin);
+      const result = await apiClient.setPin(pin, oldPin);
       setEnabled(true);
-      window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+      setAction(null);
+      if (result.recoveryCode) setRecoveryCode(result.recoveryCode);
+      else window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
     } catch (caught) {
       fail(caught instanceof ApiClientError && caught.code === "invalid_current_pin" ? "현재 PIN이 올바르지 않습니다." : "PIN을 저장하지 못했습니다.");
       setStage(oldPin ? "current" : "next");
@@ -76,7 +80,12 @@ export function PinSettings() {
   return (
     <section className="settings-card pin-setting">
       <header>기기 잠금</header>
-      {enabled === null ? <p>잠금 상태 확인 중…</p> : action ? (
+      {enabled === null ? <p>잠금 상태 확인 중…</p> : recoveryCode ? (
+        <RecoveryCodeNotice code={recoveryCode} onDismiss={() => {
+          setRecoveryCode("");
+          window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+        }} />
+      ) : action ? (
         <div>
           <strong>{prompt}</strong>
           <Keypad disabled={pending} key={shakeKey} onChange={setValue} onComplete={complete} shakeKey={shakeKey} value={value} />
