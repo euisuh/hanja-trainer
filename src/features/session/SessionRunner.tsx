@@ -36,6 +36,10 @@ export function autoAdvanceDelay(mode: SessionMode, correct: boolean, reducedMot
     : AUTO_ADVANCE_DELAY_MS;
 }
 
+export function correctAnswerXp(combo: number): number {
+  return 10 + Math.min(40, combo * 3);
+}
+
 export type SessionResult = {
   xp: number;
   accuracy: number;
@@ -97,6 +101,7 @@ export function SessionRunner({
   const [skipped, setSkipped] = useState(false);
   const [paused, setPaused] = useState(false);
   const [combo, setCombo] = useState(0);
+  const [lostCombo, setLostCombo] = useState(0);
   const [bestCombo, setBestCombo] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);
@@ -205,8 +210,9 @@ export function SessionRunner({
     if (mode !== "unit-test") submit({ cardIndex: index, characterKey: item.character.key, ...(item.kind === "word" ? { wordId: item.word.id } : {}), track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
       if (currentIndex.current === answeredIndex && mode !== "placement") setNextInterval(response.dueLabel);
     });
-    const gained = isCorrect ? 10 + Math.min(10, combo * 2) : 0;
+    const gained = isCorrect ? correctAnswerXp(combo) : 0;
     const nextCombo = isCorrect ? combo + 1 : 0;
+    if (!isCorrect && combo >= 3) setLostCombo(combo);
     setSelectedIndex(choice);
     setSkipped(isSkipped);
     setLastXp(gained);
@@ -279,6 +285,7 @@ export function SessionRunner({
     setSelectedIndex(null);
     setSkipped(false);
     setLastXp(0);
+    setLostCombo(0);
     startedAt.current = performance.now();
   }
 
@@ -387,9 +394,12 @@ export function SessionRunner({
           skipped={skipped}
           correctAnswer={item.kind !== "compare" ? displayOptions[item.answerIndex]?.label : undefined}
           correctIndex={item.kind !== "compare" ? item.answerIndex : 0}
+          cardIndex={index}
+          combo={combo}
           last={mode === "placement" && !externalQueue ? index + 1 === length : index + 1 === queue.length}
           note={feedbackNote}
           onNext={advance}
+          lostCombo={lostCombo}
           xp={lastXp}
           autoAdvance={autoAdvance}
         />

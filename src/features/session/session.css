@@ -69,8 +69,41 @@ button.session-sync {
   color: var(--gold);
   font-size: 14px;
   font-weight: 800;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  animation: om-pop .4s ease-out;
+  animation: om-pop 400ms cubic-bezier(.22, 1.2, .36, 1);
+}
+
+.combo-badge[data-tier="2"] {
+  background: var(--gold);
+  color: var(--gold-text);
+  font-size: 15px;
+}
+
+.combo-badge[data-tier="3"] {
+  background: var(--flame);
+  color: var(--ink);
+  font-size: 16px;
+  animation: om-pop 400ms cubic-bezier(.22, 1.2, .36, 1),
+             om-combo-glow 1.6s ease-in-out 400ms infinite;
+}
+
+.combo-badge[data-tier="4"] {
+  background: linear-gradient(96deg, var(--flame) 0%, var(--gold) 55%, var(--flame) 100%);
+  background-size: 220% 100%;
+  color: var(--ink);
+  font-size: 17px;
+  animation: om-pop 400ms cubic-bezier(.22, 1.2, .36, 1),
+             om-combo-sheen 2.2s linear 400ms infinite;
+}
+
+.app[data-theme="quiet-technical"] .combo-badge[data-tier="1"] {
+  color: var(--card);
+}
+
+.app[data-theme="quiet-technical"] .combo-badge[data-tier="4"] {
+  background-image: linear-gradient(96deg, var(--gold-hover) 0%, var(--gold) 55%, var(--gold-hover) 100%);
+  color: var(--card);
 }
 
 .unit-test-hearts {
@@ -426,6 +459,16 @@ button.session-sync {
   font-variant-numeric: tabular-nums;
   animation: om-count-up 380ms cubic-bezier(.22, 1.2, .36, 1) 90ms both;
 }
+.feedback-bar__lost {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--wrong-bg);
+  color: var(--wrong-fg);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  animation: om-rise 250ms ease-out;
+}
 .feedback-bar--wrong { border-color: var(--wrong); background: var(--wrong-bg); }
 .feedback-bar--wrong > strong { color: var(--wrong-fg); }
 .feedback-bar--skipped { border-color: var(--border-tan); background: var(--panel); }
@@ -664,9 +707,12 @@ button.session-sync {
   .quiz-card__glyph--correct,
   .answer-option--correct,
   .combo-badge,
+  .combo-badge[data-tier="3"],
+  .combo-badge[data-tier="4"],
   .feedback-bar--correct,
   .feedback-bar--wrong,
   .feedback-bar--compare,
+  .feedback-bar__lost,
   .feedback-bar__xp {
     animation: none;
   }

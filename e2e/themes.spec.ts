@@ -10,6 +10,7 @@ async function startLesson(page: Page): Promise<SessionResponse> {
 }
 
 async function captureCorrectFeedback(page: Page, answerIndex: number) {
+  await page.evaluate(async () => { await document.fonts.ready; });
   await page.evaluate((correctIndex) => {
     const progress = document.querySelector('[role="progressbar"]')!;
     const runner = document.querySelector<HTMLElement>(".session-runner")!;
@@ -177,6 +178,57 @@ test("Quiet Technical state colors and radii remain readable", async ({ page }) 
   await expect(page.locator(".skip-answer kbd")).toHaveCSS("border-radius", "6px");
   await page.keyboard.press("Escape");
   await expect(page.locator(".pause-modal__panel")).toHaveCSS("border-radius", "10px");
+
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
+});
+
+test("combo tiers stay readable and respect reduced motion", async ({ page }) => {
+  for (const theme of ["default", "quiet-technical"] as const) {
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme } })).ok()).toBe(true);
+    await page.goto("/settings");
+    const contrasts = await page.locator(".app").evaluate((app) => {
+      const channel = (value: number) => {
+        const normalized = value / 255;
+        return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+      };
+      const luminance = (value: string) => {
+        const [red, green, blue] = value.match(/[\d.]+/gu)!.slice(0, 3).map(Number);
+        return 0.2126 * channel(red) + 0.7152 * channel(green) + 0.0722 * channel(blue);
+      };
+      return [1, 2, 3, 4].map((tier) => {
+        const badge = document.createElement("span");
+        badge.className = "combo-badge";
+        badge.dataset.tier = String(tier);
+        app.append(badge);
+        const style = getComputedStyle(badge);
+        const foreground = luminance(style.color);
+        const backgrounds = tier === 4
+          ? style.backgroundImage.match(/rgb\([^)]*\)/gu)!
+          : [style.backgroundColor];
+        badge.remove();
+        return Math.min(...backgrounds.map((background) => {
+          const value = luminance(background);
+          return (Math.max(foreground, value) + 0.05) / (Math.min(foreground, value) + 0.05);
+        }));
+      });
+    });
+    for (const contrast of contrasts) expect(contrast).toBeGreaterThanOrEqual(4.5);
+  }
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/settings");
+  expect(await page.locator(".app").evaluate((app) => {
+    const selectors = ["combo-badge", "combo-badge", "feedback-bar__lost"];
+    return selectors.map((className, index) => {
+      const element = document.createElement("span");
+      element.className = className;
+      if (className === "combo-badge") element.dataset.tier = String(index + 3);
+      app.append(element);
+      const animationName = getComputedStyle(element).animationName;
+      element.remove();
+      return animationName;
+    });
+  })).toEqual(["none", "none", "none"]);
 
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
 });

@@ -10,3 +10,5 @@
 @keyframes om-win-card { 0% { transform: scale(1); } 22% { transform: scale(1.035); } 55% { transform: scale(.994); } 100% { transform: scale(1); } }
 @keyframes om-win-flash { 0% { box-shadow: var(--shadow-7), 0 0 0 0 var(--win-flash); } 18% { box-shadow: var(--shadow-7), 0 0 0 10px var(--win-flash); } 100% { box-shadow: var(--shadow-7), 0 0 0 26px var(--win-flash-clear); } }
 @keyframes om-count-up { 0% { transform: translateY(6px) scale(.86); opacity: 0; } 40% { transform: translateY(0) scale(1.18); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+@keyframes om-combo-glow { 0%, 100% { box-shadow: 0 0 0 0 var(--pulse-gold-clear) } 50% { box-shadow: 0 0 0 7px var(--pulse-gold) } }
+@keyframes om-combo-sheen { 0% { background-position: 0% 50% } 100% { background-position: 220% 50% } }

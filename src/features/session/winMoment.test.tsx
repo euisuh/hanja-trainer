@@ -1,8 +1,10 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { FeedbackBar } from "./FeedbackBar";
+import { ComboBadge } from "./ComboBadge";
+import { correctHeadline, wrongHeadline } from "./feedbackCopy";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
-import { autoAdvanceDelay, type SessionMode } from "./SessionRunner";
+import { autoAdvanceDelay, correctAnswerXp, type SessionMode } from "./SessionRunner";
 
 describe("correct-answer win moment", () => {
   it("keeps assessments and reduced motion fast", () => {
@@ -30,11 +32,49 @@ describe("correct-answer win moment", () => {
 
   it("renders gained XP as a distinct pop pill", () => {
     const html = renderToStaticMarkup(
-      <FeedbackBar answered compare={false} correct correctIndex={0} last={false} note="다음 복습" onNext={vi.fn()} skipped={false} xp={14} />,
+      <FeedbackBar answered cardIndex={0} combo={1} compare={false} correct correctIndex={0} last={false} lostCombo={0} note="다음 복습" onNext={vi.fn()} skipped={false} xp={14} />,
     );
 
     expect(html).toContain("정확해요");
     expect(html).toContain('class="feedback-bar__xp"');
     expect(html).toContain("+14 XP");
+  });
+
+  it.each([
+    [2, 1, "2× 콤보"],
+    [3, 2, "3× 좋아요"],
+    [6, 3, "6× 불붙었어요"],
+    [10, 4, "10× 무결점"],
+  ])("renders combo %i at tier %i", (combo, tier, label) => {
+    const html = renderToStaticMarkup(<ComboBadge combo={combo} />);
+
+    expect(html).toContain(`data-tier="${tier}"`);
+    expect(html).toContain(label);
+  });
+
+  it("keeps low combos hidden and grows XP through combo 14", () => {
+    expect(renderToStaticMarkup(<ComboBadge combo={1} />)).toBe("");
+    expect(correctAnswerXp(5)).toBe(25);
+    expect(correctAnswerXp(14)).toBe(50);
+    expect(correctAnswerXp(20)).toBe(50);
+  });
+
+  it("uses deterministic, varied feedback copy", () => {
+    expect(correctHeadline(0, 1)).toBe("정확해요");
+    expect(correctHeadline(1, 1)).not.toBe(correctHeadline(0, 1));
+    const streakHeadline = correctHeadline(2, 4);
+    expect(correctHeadline(2, 4)).toBe(streakHeadline);
+    expect(correctHeadline(3, 5)).not.toBe(streakHeadline);
+    expect(wrongHeadline(0)).toBe("아쉬워요");
+    expect(wrongHeadline(1)).not.toBe(wrongHeadline(0));
+  });
+
+  it("shows a lost beat only for combos of three or more", () => {
+    const render = (lostCombo: number) => renderToStaticMarkup(
+      <FeedbackBar answered cardIndex={3} combo={0} compare={false} correct={false} correctIndex={0} last={false} lostCombo={lostCombo} note="다시 해봐요" onNext={vi.fn()} skipped={false} xp={0} />,
+    );
+
+    expect(render(2)).not.toContain("콤보가 끊겼어요");
+    expect(render(5)).toContain("5× 콤보가 끊겼어요");
   });
 });
