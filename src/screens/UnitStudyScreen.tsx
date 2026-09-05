@@ -131,7 +131,7 @@ export function UnitStudyScreen() {
                     <span className="unit-study__reading"><span><strong>{displayedReading}</strong>{entry.subreading && <small>{entry.subreading}</small>}</span></span>
                   </AudioControl>
                   <div className="unit-study__badges">{entry.level_badges.map((badge) => <span key={badge}>{badge}</span>)}</div>
-                  <p className="unit-study__meaning">{entry.meaning}</p>
+                  <p className="unit-study__meaning">{character.meaning_ko}</p>
                   {entry.sentences.length > 0 ? <div className="unit-study__sentences">{entry.sentences.map((sentence) => <div className="unit-study__sentence" key={`${sentence.target_index}:${sentence.text}`}>
                     <AudioControl label={`${labels[track]} 예문 듣기${sentence.target_index === null ? `, 한자 ${entry.glyph}` : ""}: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence glyph={entry.glyph} targetIndex={sentence.target_index} text={sentence.text} /></AudioControl>
                     {sentence.reading && <small lang={theme.lang}>{sentence.reading}</small>}

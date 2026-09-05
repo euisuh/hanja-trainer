@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { parseSeed } from "../../scripts/seed";
 import { initialState } from "./fsrs";
 import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry, WordEntry } from "./types";
-import { buildKunItem, buildMeaningItem, buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, reviewKey } from "./buildQueue";
+import { buildKunItem, buildMeaningItem, buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, meaningFor, reviewKey } from "./buildQueue";
 
 function character(id: number): CharacterEntry {
   const glyph = String.fromCodePoint(0x4e00 + id);
@@ -273,6 +273,12 @@ describe("buildQueue", () => {
     if (entry.track === "jp") expect(item.options.some((option) => option.label.includes(entry.kun))).toBe(false);
   });
 
+  it("uses the Korean meaning for Japanese and Chinese tracks", () => {
+    const item = character(1);
+    expect(meaningFor(item, "jp")).toEqual({ label: item.meaningKo });
+    expect(meaningFor(item, "cn")).toEqual({ label: item.meaningKo });
+  });
+
   it.each(["lesson", "review"] as const)("mixes track-correct meaning recall into %s queues", (mode) => {
     const now = new Date("2026-01-02T00:00:00Z");
     for (const track of ["kr", "jp", "cn"] as const) {
@@ -281,9 +287,8 @@ describe("buildQueue", () => {
       const meanings = queue.filter((item) => item.kind === "meaning");
       expect(meanings.length, track).toBeGreaterThan(0);
       for (const item of meanings) {
-        const entry = item.character.tracks.find((candidate) => candidate.track === track)!;
-        const expected = entry.track === "kr" ? item.character.meaningKo : entry.track === "jp" ? item.character.meaningEn : entry.meaning;
-        expect(item.options[item.answerIndex].label).toBe(expected);
+        expect(item.options[item.answerIndex].label).toBe(item.character.meaningKo);
+        expect(item.options.every((option) => option.label.startsWith("뜻-"))).toBe(true);
       }
     }
   });

@@ -81,9 +81,7 @@ export function readingFor(entry: TrackEntry): AnswerOption {
 export function meaningFor(character: CharacterEntry, track: Track): AnswerOption {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) throw new Error(`Character ${character.key} has no ${track} track`);
-  if (entry.track === "kr") return { label: character.meaningKo };
-  if (entry.track === "jp") return { label: character.meaningEn };
-  return { label: entry.meaning };
+  return { label: character.meaningKo };
 }
 
 function tonelessPinyin(value: string): string {
