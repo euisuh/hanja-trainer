@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { reviewableLevels, reviewableUnits, reviewLevelOptions } from "../features/path-map/homeModel";
+import { useActiveProfile } from "../features/profile/ProfileContext";
 import { useSettings } from "../features/settings/useSettings";
 import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
@@ -7,22 +9,48 @@ import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
 import type { SessionQueueItem } from "../features/session/buildQueue";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
-import type { DueReviewsResponse } from "../shared/api";
+import type { CurriculumResponse, DueReviewsResponse } from "../shared/api";
 import { toHiragana } from "../shared/kana";
+import type { Track } from "../shared/types";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };
 
 export const REVIEW_SESSION_LENGTH = 20;
+const WHOLE_LEVEL_REVIEW_LIMIT = 20;
+const ACTIVE_TRACK_KEY = "hanja-trainer:active-track";
 
 export function ReviewScreen() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id: profileId } = useActiveProfile();
   const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [due, setDue] = useState<DueReviewsResponse | null>(null);
+  const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
+  const [chosenReviewLevelOrd, setChosenReviewLevelOrd] = useState<number | null>(null);
+  const [chosenReviewUnitId, setChosenReviewUnitId] = useState<number | null>(null);
+  const [reviewWholeLevel, setReviewWholeLevel] = useState(false);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
   const inSession = location.pathname === "/review/session";
+  const requestedTrack = (location.state as { track?: Track } | null)?.track;
+  let rememberedTrack: Track | undefined;
+  try {
+    const stored = localStorage.getItem(`${ACTIVE_TRACK_KEY}:${profileId}`);
+    rememberedTrack = enabledTracks.find((candidate) => candidate === stored);
+  } catch { /* Fall back to route state and enabled tracks when storage is unavailable. */ }
+  const selectedTrack = requestedTrack && enabledTracks.includes(requestedTrack) ? requestedTrack : rememberedTrack ?? enabledTracks[0] ?? "kr";
+  const theme = trackThemes[selectedTrack];
+  const previousUnits = useMemo(() => reviewableUnits(curriculum?.units ?? []), [curriculum]);
+  const reviewLevels = useMemo(() => {
+    const levelOrds = new Set(previousUnits.map((item) => item.levelOrd));
+    return reviewLevelOptions(curriculum?.units ?? []).filter((item) => levelOrds.has(item.levelOrd));
+  }, [curriculum, previousUnits]);
+  const fullyReviewableLevelOrds = useMemo(() => new Set(reviewableLevels(curriculum?.units ?? []).map((item) => item.levelOrd)), [curriculum]);
+  const reviewLevelOrd = reviewLevels.some((item) => item.levelOrd === chosenReviewLevelOrd) ? chosenReviewLevelOrd : previousUnits.at(-1)?.levelOrd ?? null;
+  const reviewUnits = previousUnits.filter((item) => item.levelOrd === reviewLevelOrd);
+  const reviewUnit = reviewUnits.find((item) => item.id === chosenReviewUnitId) ?? reviewUnits.at(-1);
+  const wholeLevelReview = reviewWholeLevel && reviewLevelOrd !== null && fullyReviewableLevelOrds.has(reviewLevelOrd);
   const startedAt = useRef(new Date());
   const dueRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -32,33 +60,40 @@ export function ReviewScreen() {
 
   useEffect(() => {
     if (!ready) return;
+    try { localStorage.setItem(`${ACTIVE_TRACK_KEY}:${profileId}`, selectedTrack); } catch { /* Route state still preserves the active track for in-flow navigation. */ }
+  }, [profileId, ready, selectedTrack]);
+
+  useEffect(() => {
+    if (!ready) return;
     const controller = new AbortController();
     Promise.all([
       apiClient.startSession({ mode: "review", tracks: enabledTracks, limit: REVIEW_SESSION_LENGTH }, controller.signal),
       apiClient.dueReviews(enabledTracks, REVIEW_SESSION_LENGTH, controller.signal),
-    ]).then(([result, dueReviews]) => {
+      apiClient.curriculum(selectedTrack, controller.signal),
+    ]).then(([result, dueReviews, content]) => {
       setSession({ id: result.sessionId, queue: apiCardsToQueue(result.cards) });
       setDue(dueReviews);
+      setCurriculum(content);
     })
       .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "복습 큐를 불러오지 못했습니다."); });
     return () => controller.abort();
-  }, [enabledTracks, ready, retryKey]);
+  }, [enabledTracks, ready, retryKey, selectedTrack]);
 
   useEffect(() => {
     if (inSession || !session || session.queue.length === 0) return;
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Enter") return;
-      if (event.target instanceof HTMLElement && event.target.matches("button, a")) return;
+      if (event.target instanceof HTMLElement && event.target.matches("button, a, select")) return;
       event.preventDefault();
-      navigate("/review/session");
+      navigate("/review/session", { state: { track: selectedTrack } });
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [inSession, navigate, session]);
+  }, [inSession, navigate, selectedTrack, session]);
 
   if (settingsError) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></section>;
   if (error) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></section>;
-  if (!ready || !session || !due) return <p>복습 큐를 불러오는 중…</p>;
+  if (!ready || !session || !due || !curriculum) return <p>복습 큐를 불러오는 중…</p>;
 
   if (inSession) {
     return (
@@ -75,7 +110,7 @@ export function ReviewScreen() {
             navigate("/session-complete", { state: result });
           }
         }}
-        onQuit={() => navigate("/review")}
+        onQuit={() => navigate("/review", { state: { track: selectedTrack } })}
         queueOverride={session.queue}
         sessionId={session.id}
       />
@@ -83,7 +118,7 @@ export function ReviewScreen() {
   }
 
   return (
-    <section className="review-screen">
+    <section className="review-screen" style={{ "--home-accent": theme.accent, "--home-accent-text": theme.accentText, "--home-soft": theme.soft } as CSSProperties}>
       <h1>복습 큐</h1>
       <p>FSRS 만기 카드만 뽑습니다. 신규 학습과 분리된 세션입니다.</p>
       {due.total === 0 ? (
@@ -94,7 +129,7 @@ export function ReviewScreen() {
         </div>
       ) : (
         <>
-          <button className="review-start" onClick={() => navigate("/review/session")} type="button">{due.total}장 복습 시작 <kbd>ENTER</kbd></button>
+          <button className="review-start" onClick={() => navigate("/review/session", { state: { track: selectedTrack } })} type="button">{due.total}장 복습 시작 <kbd>ENTER</kbd></button>
           <div className="due-list">{due.cards.map((item, index) => <button className="due-row" key={`${item.characterKey}:${item.track}`} onClick={() => navigate(`/detail/${encodeURIComponent(item.characterKey)}`, { state: { from: "/review" } })} onKeyDown={(event) => {
             if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
             event.preventDefault();
@@ -103,6 +138,20 @@ export function ReviewScreen() {
           }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
+      {previousUnits.length > 0 && <section className="level-review-picker">
+        <label htmlFor="level-review-level">이전 레벨 복습</label>
+        <div className="level-review-picker__controls">
+          <select id="level-review-level" onChange={(event) => { setChosenReviewLevelOrd(Number(event.target.value)); setChosenReviewUnitId(null); setReviewWholeLevel(false); }} value={reviewLevelOrd ?? ""}>
+            {reviewLevels.map(({ label, levelOrd }) => <option key={levelOrd} value={levelOrd}>{label}</option>)}
+          </select>
+          <select aria-label="복습 범위" onChange={(event) => { setReviewWholeLevel(event.target.value === "level"); if (event.target.value !== "level") setChosenReviewUnitId(Number(event.target.value)); }} value={wholeLevelReview ? "level" : reviewUnit?.id ?? ""}>
+            {reviewLevelOrd !== null && fullyReviewableLevelOrds.has(reviewLevelOrd) && <option value="level">레벨 전체 · {WHOLE_LEVEL_REVIEW_LIMIT}자</option>}
+            {reviewUnits.map((item) => <option key={item.id} value={item.id}>UNIT {item.ord} · {item.progress.total}자</option>)}
+          </select>
+          <button disabled={!wholeLevelReview && !reviewUnit} onClick={() => navigate("/lesson", { state: { mode: "level-review", tracks: [selectedTrack], ...(wholeLevelReview ? { levelOrd: reviewLevelOrd, limit: WHOLE_LEVEL_REVIEW_LIMIT } : { unitId: reviewUnit?.id, limit: reviewUnit?.progress.total }) } })} type="button">복습하기</button>
+        </div>
+        <small>완료한 레벨 전체 또는 유닛별로 다시 연습할 수 있어요.</small>
+      </section>}
     </section>
   );
 }

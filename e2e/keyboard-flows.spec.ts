@@ -249,7 +249,38 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "placement-result", testInfo);
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
-    await checkLayout(page, "home", testInfo);
+    await expect(page.locator(".lesson-cta")).toBeVisible();
+    await page.setViewportSize({ width: 1080, height: 900 });
+    await checkLayout(page, "home-desktop", testInfo);
+    await expect(page.locator(".home-screen select")).toHaveCount(0);
+    await expect(page.locator(".lesson-cta")).toHaveCount(1);
+    await expect(page.locator(".home-shelf__item")).toHaveCount(2);
+    await expect(page.locator(".path-node--next")).toHaveCount(1);
+    expect(await page.locator(".path-node--next").evaluate((node) => getComputedStyle(node, "::before").content)).toContain("여기부터");
+    await expect(page.locator(".path-node--next .path-node__glyph")).toHaveCSS("animation-name", "none");
+    expect(await page.locator(".path-node-wrap:not(:last-child)").evaluateAll((wraps) => wraps.every((wrap) => {
+      const box = wrap.getBoundingClientRect();
+      const glyph = wrap.querySelector(".path-node__glyph")?.getBoundingClientRect();
+      return glyph && Math.abs(box.left + Number.parseFloat(getComputedStyle(wrap, "::after").left) - glyph.left - glyph.width / 2) < 1;
+    }))).toBe(true);
+    await page.keyboard.press("ArrowRight");
+    await expect(page.locator(".home-shelf__item")).toHaveCount(3);
+    await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:active-track:1"))).toBe("cn");
+    let cnCurriculum = page.waitForRequest((request) => request.url().endsWith("/api/curriculum?track=cn"));
+    await page.keyboard.press("R");
+    await cnCurriculum;
+    await expect(page.locator(".level-review-picker")).toBeVisible();
+    await page.keyboard.press("H");
+    await expect(page.locator(".lesson-cta")).toBeVisible();
+    cnCurriculum = page.waitForRequest((request) => request.url().endsWith("/api/curriculum?track=cn"));
+    await page.locator('.bottom-nav a[href="/review"]').click();
+    await cnCurriculum;
+    await expect(page.locator(".level-review-picker")).toBeVisible();
+    await page.keyboard.press("H");
+    await expect(page.locator(".lesson-cta")).toBeVisible();
+    await page.keyboard.press("ArrowLeft");
+    await page.setViewportSize({ width: 430, height: 900 });
+    await checkLayout(page, "home-mobile", testInfo);
 
     await page.keyboard.press("T");
     await expect(page.getByRole("heading", { name: "통계" })).toBeVisible();
@@ -569,6 +600,8 @@ test.describe.serial("keyboard-only product flows", () => {
     const beforeTotal = (await before.json() as { total: number }).total;
     expect(beforeTotal).toBeGreaterThan(0);
     await expect(page.getByRole("button", { name: /복습 시작/u })).toBeVisible();
+    await expect(page.locator(".level-review-picker")).toBeVisible();
+    await expect(page.locator(".review-screen select")).toHaveCount(2);
     const dueGlyphs = page.locator(".due-row__glyph");
     for (let index = 0; index < await dueGlyphs.count(); index += 1) {
       const glyph = dueGlyphs.nth(index);
@@ -604,6 +637,9 @@ test.describe.serial("keyboard-only product flows", () => {
     }).toBe(0);
     await page.keyboard.press("R");
     await expect(page.getByText("오늘 복습할 카드가 없습니다")).toBeVisible();
+    const levelReviewRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start") && (request.postDataJSON() as { mode?: string }).mode === "level-review");
+    await page.getByRole("button", { name: "복습하기" }).press("Enter");
+    expect((await levelReviewRequest).postDataJSON()).toMatchObject({ mode: "level-review", tracks: ["kr"], unitId: expect.any(Number) });
   });
 
   test("known Korean constituents unlock a keyboard-graded word card", async ({ page }) => {

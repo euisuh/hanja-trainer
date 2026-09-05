@@ -100,6 +100,23 @@
   font-size: 13px;
 }
 
+.level-review-picker {
+  margin-top: var(--space-7);
+  padding: var(--space-6);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-large);
+  background: var(--home-soft);
+}
+
+.level-review-picker label { display: block; margin-bottom: var(--space-4); color: var(--home-accent-text); font-size: 13px; font-weight: 800; }
+.level-review-picker__controls { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) auto; gap: var(--space-3); }
+.level-review-picker select,
+.level-review-picker button { min-height: 42px; border: 2px solid var(--ink); border-radius: var(--radius-small); font: inherit; font-weight: 800; }
+.level-review-picker select { min-width: 0; flex: 1; padding: 0 var(--space-4); background: var(--card); color: var(--ink); }
+.level-review-picker button { padding: 0 var(--space-5); background: var(--home-accent); color: var(--card); cursor: pointer; }
+.level-review-picker button:disabled { cursor: default; opacity: .55; }
+.level-review-picker small { display: block; margin-top: var(--space-3); color: var(--muted); font-size: 12px; font-weight: 700; }
+
 .review-empty {
   display: grid;
   justify-items: start;
@@ -127,4 +144,5 @@
 
 @media (max-width: 430px) {
   .due-list { grid-template-columns: 1fr; }
+  .level-review-picker__controls { grid-template-columns: 1fr; }
 }

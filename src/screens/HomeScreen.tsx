@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { useActiveProfile } from "../features/profile/ProfileContext";
-import { reviewableLevels, reviewableUnits, reviewLevelOptions, trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
+import { trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
@@ -12,9 +12,8 @@ import { apiClient } from "../lib/apiClient";
 import "../features/path-map/pathMap.css";
 
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes";
+const ACTIVE_TRACK_KEY = "hanja-trainer:active-track";
 const DAY_MS = 86_400_000;
-const WHOLE_LEVEL_REVIEW_LIMIT = 20;
-
 function readSnoozes(storageKey: string): TrackSnoozes {
   try {
     const parsed: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "{}");
@@ -29,15 +28,20 @@ export function HomeScreen() {
   const navigate = useNavigate();
   const { id: profileId } = useActiveProfile();
   const snoozesKey = `${NUDGE_SNOOZES_KEY}:${profileId}`;
+  const activeTrackKey = `${ACTIVE_TRACK_KEY}:${profileId}`;
   const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
-  const [track, setTrack] = useState<Track>(enabledTracks[0] ?? "kr");
+  const [track, setTrack] = useState<Track>(() => {
+    try {
+      const stored = localStorage.getItem(activeTrackKey);
+      return TRACKS.find((candidate) => candidate === stored) ?? enabledTracks[0] ?? "kr";
+    } catch {
+      return enabledTracks[0] ?? "kr";
+    }
+  });
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
   const [stats, setStats] = useState<StatsResponse | null>(null);
   const [dueCount, setDueCount] = useState(0);
-  const [chosenReviewLevelOrd, setChosenReviewLevelOrd] = useState<number | null>(null);
-  const [chosenReviewUnitId, setChosenReviewUnitId] = useState<number | null>(null);
-  const [reviewWholeLevel, setReviewWholeLevel] = useState(false);
   const [snoozes, setSnoozes] = useState<TrackSnoozes>(() => readSnoozes(snoozesKey));
   const [now] = useState(Date.now);
   const [error, setError] = useState("");
@@ -46,16 +50,6 @@ export function HomeScreen() {
   const selectedTrack = enabledTracks.includes(track) ? track : enabledTracks[0] ?? "kr";
   const theme = trackThemes[selectedTrack];
   const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
-  const previousUnits = useMemo(() => reviewableUnits(curriculum?.units ?? []), [curriculum]);
-  const reviewLevels = useMemo(() => {
-    const levelOrds = new Set(previousUnits.map((item) => item.levelOrd));
-    return reviewLevelOptions(curriculum?.units ?? []).filter((item) => levelOrds.has(item.levelOrd));
-  }, [curriculum, previousUnits]);
-  const fullyReviewableLevelOrds = useMemo(() => new Set(reviewableLevels(curriculum?.units ?? []).map((item) => item.levelOrd)), [curriculum]);
-  const reviewLevelOrd = reviewLevels.some((item) => item.levelOrd === chosenReviewLevelOrd) ? chosenReviewLevelOrd : previousUnits.at(-1)?.levelOrd ?? null;
-  const reviewUnits = previousUnits.filter((item) => item.levelOrd === reviewLevelOrd);
-  const reviewUnit = reviewUnits.find((item) => item.id === chosenReviewUnitId) ?? reviewUnits.at(-1);
-  const wholeLevelReview = reviewWholeLevel && reviewLevelOrd !== null && fullyReviewableLevelOrds.has(reviewLevelOrd);
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
   const progress = stats?.tracks.find((item) => item.track === selectedTrack);
   const scalePercent = progress?.pct ?? 0;
@@ -99,6 +93,11 @@ export function HomeScreen() {
     });
     return () => controller.abort();
   }, [enabledTracks, ready, retryKey, selectedTrack]);
+
+  useEffect(() => {
+    if (!ready) return;
+    try { localStorage.setItem(activeTrackKey, selectedTrack); } catch { /* Navigation still carries the active track when storage is unavailable. */ }
+  }, [activeTrackKey, ready, selectedTrack]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -163,30 +162,18 @@ export function HomeScreen() {
           <button className="lesson-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } })} type="button">
             <small>오늘의 학습</small><strong>레슨 시작</strong><span>신규 4자 + 복습 {dueCount}장 <kbd>ENTER</kbd></span>
           </button>
-          <button className="study-cta" onClick={() => navigate(`/study/${unit.id}`)} type="button">
-            <small>퀴즈 전 미리보기</small><strong>학습 목록</strong><span>읽기 · 뜻 · 예문 · 발음</span>
-          </button>
-          {selectedTrack !== "kr" && <button className="speaking-cta" onClick={() => navigate(`/speaking/${unit.id}`)} type="button">
-            <small>저장·채점 없는 연습</small><strong>말하기 연습</strong><span>참고 음성 · 녹음 · 다시 듣기</span>
-          </button>}
-          {unit.nodes.some((node) => node.state !== "done") && <button className="unit-test-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack], testOut: true } })} type="button">
-            <small>실력으로 잠금 해제</small><strong>이 유닛 건너뛰기</strong><span>전 글자 2회 · 전부 정답</span>
-          </button>}
-          {previousUnits.length > 0 && <section className="level-review-picker">
-            <label htmlFor="level-review-level">이전 레벨 복습</label>
-            <div className="level-review-picker__controls">
-              <select id="level-review-level" onChange={(event) => { setChosenReviewLevelOrd(Number(event.target.value)); setChosenReviewUnitId(null); setReviewWholeLevel(false); }} value={reviewLevelOrd ?? ""}>
-                {reviewLevels.map(({ label, levelOrd }) => <option key={levelOrd} value={levelOrd}>{label}</option>)}
-              </select>
-              <select aria-label="복습 범위" onChange={(event) => { setReviewWholeLevel(event.target.value === "level"); if (event.target.value !== "level") setChosenReviewUnitId(Number(event.target.value)); }} value={wholeLevelReview ? "level" : reviewUnit?.id ?? ""}>
-                {reviewLevelOrd !== null && fullyReviewableLevelOrds.has(reviewLevelOrd) && <option value="level">레벨 전체 · {WHOLE_LEVEL_REVIEW_LIMIT}자</option>}
-                {reviewUnits.map((item) => <option key={item.id} value={item.id}>UNIT {item.ord} · {item.progress.total}자</option>)}
-              </select>
-              <button disabled={!wholeLevelReview && !reviewUnit} onClick={() => navigate("/lesson", { state: { mode: "level-review", tracks: [selectedTrack], ...(wholeLevelReview ? { levelOrd: reviewLevelOrd, limit: WHOLE_LEVEL_REVIEW_LIMIT } : { unitId: reviewUnit?.id, limit: reviewUnit?.progress.total }) } })} type="button">복습하기</button>
-            </div>
-            <small>완료한 레벨 전체 또는 유닛별로 다시 연습할 수 있어요.</small>
-          </section>}
-          <button className="review-cta" onClick={() => navigate("/review")} type="button">
+          <div className="home-shelf">
+            <button className="home-shelf__item" onClick={() => navigate(`/study/${unit.id}`)} type="button">
+              <span aria-hidden="true" className="home-shelf__glyph">目</span><strong>학습 목록</strong>
+            </button>
+            {selectedTrack !== "kr" && <button aria-label="말하기 연습" className="home-shelf__item" onClick={() => navigate(`/speaking/${unit.id}`)} type="button">
+              <span aria-hidden="true" className="home-shelf__glyph">音</span><strong>말하기</strong>
+            </button>}
+            {unit.nodes.some((node) => node.state !== "done") && <button aria-label="이 유닛 건너뛰기" className="home-shelf__item" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack], testOut: true } })} type="button">
+              <span aria-hidden="true" className="home-shelf__glyph">跳</span><strong>건너뛰기</strong>
+            </button>}
+          </div>
+          <button className="review-cta" onClick={() => navigate("/review", { state: { track: selectedTrack } })} type="button">
             <small>FSRS 복습 큐</small><strong>{dueCount}장 만기</strong><span>가장 급한 카드부터 <kbd>R</kbd></span>
           </button>
           <section className="exam-progress">
