@@ -24,12 +24,15 @@ export function FeedbackBar({ answered, compare, correct, skipped, correctIndex,
         : skipped
           ? `모름 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`
           : correct
-          ? `정확합니다 · +${xp} XP`
+          ? "정확해요"
           : `오답 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`;
+  const body = correct && !error && !compare && !skipped
+    ? <>정확해요 <span className="feedback-bar__xp" key={xp}>+{xp} XP</span></>
+    : text;
   const canAdvance = compare || answered;
   return (
     <div className={`feedback-bar feedback-bar--${state}`} aria-live={autoAdvance ? "off" : "polite"}>
-      <strong>{text}</strong>
+      <strong>{body}</strong>
       <span>{error ?? note}</span>
       {!autoAdvance && (
         <button disabled={!canAdvance} onClick={onNext} type="button">

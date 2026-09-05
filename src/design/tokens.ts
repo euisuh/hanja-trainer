@@ -8,6 +8,7 @@ const defaultColors = {
   overdue: "#C2410C", progressTrack: "#DFD7C6", sessionOverlay: "rgba(22, 19, 15, .72)",
   pulseGold: "rgba(232, 179, 61, .55)", pulseGoldClear: "rgba(232, 179, 61, 0)",
   correctGlow: "rgba(47, 125, 90, .35)", correctGlowClear: "rgba(47, 125, 90, 0)",
+  winFlash: "rgba(88, 204, 2, .45)", winFlashClear: "rgba(88, 204, 2, 0)",
   feedbackBg: "#F6F2E9", feedbackText: "#4A443B",
 } as const;
 
@@ -43,6 +44,7 @@ const quietColors = {
   progressTrack: "#DEDCDA", sessionOverlay: "rgba(32, 31, 29, .72)",
   pulseGold: "rgba(180, 83, 9, .35)", pulseGoldClear: "rgba(180, 83, 9, 0)",
   correctGlow: "rgba(47, 125, 90, .5)", correctGlowClear: "rgba(47, 125, 90, 0)",
+  winFlash: "rgba(47, 125, 90, .40)", winFlashClear: "rgba(47, 125, 90, 0)",
   feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
 } as const;
 const quietFonts = { ui: "'Space Grotesk', system-ui, sans-serif", answer: "'Space Grotesk', system-ui, sans-serif", ...glyphFonts } as const;
@@ -84,6 +86,7 @@ function variables({ colors, fonts, tracks, radii, shadows, borderWidth }: Theme
     "--progress-track": colors.progressTrack, "--session-overlay": colors.sessionOverlay,
     "--pulse-gold": colors.pulseGold, "--pulse-gold-clear": colors.pulseGoldClear,
     "--correct-glow": colors.correctGlow, "--correct-glow-clear": colors.correctGlowClear,
+    "--win-flash": colors.winFlash, "--win-flash-clear": colors.winFlashClear,
     "--feedback-bg": colors.feedbackBg, "--feedback-text": colors.feedbackText,
     "--kr-accent": tracks.kr.accent, "--kr-accent-text": tracks.kr.accentText, "--kr-soft": tracks.kr.soft,
     "--jp-accent": tracks.jp.accent, "--jp-accent-text": tracks.jp.accentText, "--jp-soft": tracks.jp.soft,

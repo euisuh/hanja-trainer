@@ -24,8 +24,15 @@ import "./session.css";
 
 export type SessionMode = "lesson" | "review" | "level-review" | "placement" | "unit-test";
 
-const AUTO_ADVANCE_DELAY_MS = 250;
+const AUTO_ADVANCE_DELAY_MS = 900;
+const AUTO_ADVANCE_DELAY_MS_FAST = 400;
 type Burst = { anchor: BurstAnchor; id: number; tier: 1 | 2 | 3; track: Track };
+
+export function autoAdvanceDelay(mode: SessionMode, correct: boolean, reducedMotion: boolean): number {
+  return reducedMotion || mode === "placement" || mode === "unit-test" || !correct
+    ? AUTO_ADVANCE_DELAY_MS_FAST
+    : AUTO_ADVANCE_DELAY_MS;
+}
 
 export type SessionResult = {
   xp: number;
@@ -119,6 +126,7 @@ export function SessionRunner({
   const answered = selectedIndex !== null || skipped;
   const correct = item !== undefined && item.kind !== "compare" && selectedIndex === item.answerIndex;
   const autoAdvance = !skipped && (mode === "placement" || mode === "unit-test" || correct);
+  const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
 
   useEffect(() => {
     advancing.current = false;
@@ -270,9 +278,9 @@ export function SessionRunner({
 
   useEffect(() => {
     if (!answered || !autoAdvance || paused) return;
-    const timer = window.setTimeout(() => advanceRef.current(), AUTO_ADVANCE_DELAY_MS);
+    const timer = window.setTimeout(() => advanceRef.current(), autoAdvanceDelay(mode, correct, reducedMotion));
     return () => window.clearTimeout(timer);
-  }, [answered, autoAdvance, index, paused]);
+  }, [answered, autoAdvance, correct, index, mode, paused, reducedMotion]);
 
   useSessionKeys({
     active: Boolean(item) && !paused,

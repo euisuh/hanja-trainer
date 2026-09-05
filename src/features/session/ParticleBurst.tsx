@@ -10,11 +10,9 @@ export function ParticleBurst({ anchor, onDone, tier, track }: Props) {
   const palette = tier === 3
     ? [colors.gold, colors.gold, colors.flame, tracks[track].accent, colors.correct]
     : [colors.gold, colors.correct, tracks[track].accent, colors.ink];
-  const glow = { "--glow-height": `${anchor.height}px`, "--glow-width": `${anchor.width}px`, "--glow-x": `${anchor.x}px`, "--glow-y": `${anchor.y}px` } as CSSProperties;
+  const origin = { "--burst-x": `${anchor.x}px`, "--burst-y": `${anchor.y}px` } as CSSProperties;
   return (
-    <div className="particle-burst" data-tier={tier} onAnimationEnd={(event) => { if (event.target === event.currentTarget) onDone(); }}>
-      <i className="quiet-glow-ring--outer" style={glow} />
-      <i className="quiet-glow-ring" style={glow} />
+    <div className="particle-burst" data-tier={tier} onAnimationEnd={(event) => { if (event.target === event.currentTarget) onDone(); }} style={origin}>
       {tier >= 2 && <i className="particle-burst__ring" />}
       {tier === 3 && <i className="particle-burst__flare" />}
       {Array.from({ length: count }, (_, index) => {

@@ -23,7 +23,10 @@ describe("visual themes", () => {
       calendarLow: "#FBE7C6", calendarMedium: "#F0B95E", calendarHigh: "#E8873D",
       correct: "#12855A", correctBg: "#E4F6EC", correctFg: "#0E6B48",
       wrong: "#D93A16", wrongBg: "#FCE9E4", wrongFg: "#A42D10",
+      correctGlow: "rgba(47, 125, 90, .35)", correctGlowClear: "rgba(47, 125, 90, 0)",
+      winFlash: "rgba(88, 204, 2, .45)", winFlashClear: "rgba(88, 204, 2, 0)",
     });
+    expect(current.cssVariables).toMatchObject({ "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
     expect(current.fonts).toEqual({
       ui: "'Plus Jakarta Sans', 'Noto Sans KR', sans-serif",
       answer: "'Noto Sans KR', sans-serif",
@@ -46,7 +49,10 @@ describe("visual themes", () => {
       calendarLow: "#EEF0F6", calendarMedium: "#4C5F8A", calendarHigh: "#201F1D",
       correct: "#2F7D5A", correctBg: "#EDF6F1", correctFg: "#2F7D5A",
       wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
+      correctGlow: "rgba(47, 125, 90, .5)", correctGlowClear: "rgba(47, 125, 90, 0)",
+      winFlash: "rgba(47, 125, 90, .40)", winFlashClear: "rgba(47, 125, 90, 0)",
     });
+    expect(quiet.cssVariables).toMatchObject({ "--win-flash": quiet.colors.winFlash, "--win-flash-clear": quiet.colors.winFlashClear });
     expect(quiet.tracks).toMatchObject({
       kr: { accent: "#4C5F8A", soft: "#EEF0F6" }, jp: { accent: "#A85A3D", soft: "#F7EEEA" }, cn: { accent: "#4C7A63", soft: "#EEF5F0" },
     });

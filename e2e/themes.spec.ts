@@ -10,22 +10,40 @@ async function startLesson(page: Page): Promise<SessionResponse> {
 }
 
 async function captureCorrectFeedback(page: Page, answerIndex: number) {
-  await page.evaluate(() => {
+  await page.evaluate((correctIndex) => {
     const progress = document.querySelector('[role="progressbar"]')!;
+    const runner = document.querySelector<HTMLElement>(".session-runner")!;
+    const expectedAnswer = document.querySelectorAll<HTMLElement>(".answer-option")[correctIndex];
+    const answerRect = expectedAnswer.getBoundingClientRect();
+    const runnerRect = runner.getBoundingClientRect();
+    const answerX = answerRect.left - runnerRect.left + answerRect.width / 2;
+    const answerY = answerRect.top - runnerRect.top + answerRect.height / 2;
     const initialProgress = progress.getAttribute("aria-valuenow");
     let started = 0;
     window.addEventListener("keydown", () => { started = performance.now(); }, { capture: true, once: true });
     new MutationObserver((_, observer) => {
-      const answer = document.querySelector(".answer-option--correct");
-      const ring = document.querySelector(".quiet-glow-ring");
-      const particle = document.querySelector(".particle-burst__particle");
-      if (answer && !document.documentElement.dataset.feedbackStyle) {
-        const style = getComputedStyle(ring && getComputedStyle(ring).display !== "none" ? ring : answer);
+      const answer = document.querySelector<HTMLElement>(".answer-option--correct");
+      const burst = document.querySelector<HTMLElement>(".particle-burst");
+      const card = document.querySelector<HTMLElement>(".quiz-card--correct");
+      const glyph = document.querySelector<HTMLElement>(".quiz-card__glyph--correct");
+      const particle = document.querySelector<HTMLElement>(".particle-burst__particle");
+      const xp = document.querySelector<HTMLElement>(".feedback-bar__xp");
+      if (answer && burst && card && glyph && particle && xp && !document.documentElement.dataset.feedbackStyle) {
+        const burstStyle = getComputedStyle(burst);
         document.documentElement.dataset.feedbackStyle = JSON.stringify({
           answerFont: getComputedStyle(answer.querySelector(".answer-option__copy strong")!).fontFamily,
-          animationDuration: style.animationDuration,
-          animationName: style.animationName,
-          particleDisplay: particle ? getComputedStyle(particle).display : "missing",
+          answerX,
+          answerY,
+          burstX: Number.parseFloat(burstStyle.getPropertyValue("--burst-x")),
+          burstY: Number.parseFloat(burstStyle.getPropertyValue("--burst-y")),
+          cardAnimationDuration: getComputedStyle(card).animationDuration,
+          cardAnimationName: getComputedStyle(card).animationName,
+          cardFlashFrames: card.getAnimations().find(({ animationName }) => animationName === "om-win-flash")?.effect?.getKeyframes().map(({ boxShadow }) => boxShadow) ?? [],
+          glyphAnimationName: getComputedStyle(glyph).animationName,
+          particleAnimationName: getComputedStyle(particle).animationName,
+          particleDisplay: getComputedStyle(particle).display,
+          xpAnimationName: getComputedStyle(xp).animationName,
+          xpText: xp.textContent,
         });
       }
       if (started && progress.getAttribute("aria-valuenow") !== initialProgress) {
@@ -33,12 +51,26 @@ async function captureCorrectFeedback(page: Page, answerIndex: number) {
         observer.disconnect();
       }
     }).observe(document.body, { attributes: true, childList: true, subtree: true });
-  });
+  }, answerIndex);
   await page.keyboard.press(String(answerIndex + 1));
   await page.waitForFunction(() => Boolean(document.documentElement.dataset.feedbackStyle && document.documentElement.dataset.advanceMs));
   return await page.evaluate(() => ({
     advanceMs: Number(document.documentElement.dataset.advanceMs),
-    style: JSON.parse(document.documentElement.dataset.feedbackStyle!) as { answerFont: string; animationDuration: string; animationName: string; particleDisplay: string },
+    style: JSON.parse(document.documentElement.dataset.feedbackStyle!) as {
+      answerFont: string;
+      answerX: number;
+      answerY: number;
+      burstX: number;
+      burstY: number;
+      cardAnimationDuration: string;
+      cardAnimationName: string;
+      cardFlashFrames: string[];
+      glyphAnimationName: string;
+      particleAnimationName: string;
+      particleDisplay: string;
+      xpAnimationName: string;
+      xpText: string;
+    },
   }));
 }
 
@@ -89,28 +121,41 @@ test("theme selection applies live and persists", async ({ page }) => {
   await restored;
 });
 
-test("Quiet Technical swaps particles for a non-blocking glow", async ({ page }) => {
+test("both themes share the anchored correct-answer celebration", async ({ page }) => {
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
   const quietSession = await startLesson(page);
   const quiet = await captureCorrectFeedback(page, quietSession.cards[0].answerIndex);
-  expect(quiet.style.animationName).toContain("om-quiet-glow");
-  expect(quiet.style.animationDuration).toBe("0.8s");
+  expect(quiet.style.cardAnimationName).toContain("om-win-card");
+  expect(quiet.style.cardAnimationName).toContain("om-win-flash");
+  expect(quiet.style.cardAnimationDuration).toBe("0.42s, 0.62s");
+  expect(quiet.style.cardFlashFrames.some((shadow) => shadow.includes("47, 125, 90"))).toBe(true);
+  expect(quiet.style.glyphAnimationName).toBe("om-glyph");
+  expect(quiet.style.xpAnimationName).toBe("om-count-up");
+  expect(quiet.style.xpText).toBe("+10 XP");
   expect(quiet.style.answerFont).toContain("Space Grotesk");
-  expect(quiet.style.particleDisplay).toBe("none");
-  expect(quiet.advanceMs).toBeLessThan(400);
-  const persistentRing = page.locator(".quiet-glow-ring").last();
-  await page.waitForTimeout(300);
-  await expect(persistentRing).toBeVisible();
-  await expect(persistentRing).toHaveCount(0, { timeout: 2_000 });
+  expect(quiet.style.particleAnimationName).toBe("om-burst");
+  expect(quiet.style.particleDisplay).not.toBe("none");
+  expect(Math.abs(quiet.style.burstX - quiet.style.answerX)).toBeLessThan(1);
+  expect(Math.abs(quiet.style.burstY - quiet.style.answerY)).toBeLessThan(1);
+  expect(quiet.advanceMs).toBeGreaterThanOrEqual(800);
+  expect(quiet.advanceMs).toBeLessThan(1_200);
+  await expect(page.locator(".particle-burst")).toHaveCount(0, { timeout: 2_000 });
 
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
   const defaultSession = await startLesson(page);
   const defaultFeedback = await captureCorrectFeedback(page, defaultSession.cards[0].answerIndex);
-  expect(defaultFeedback.style.animationName).toContain("om-pop");
-  expect(defaultFeedback.style.animationName).not.toContain("om-quiet-glow");
+  expect(defaultFeedback.style.cardAnimationName).toContain("om-win-card");
+  expect(defaultFeedback.style.cardAnimationName).toContain("om-win-flash");
+  expect(defaultFeedback.style.cardFlashFrames.some((shadow) => shadow.includes("88, 204, 2"))).toBe(true);
+  expect(defaultFeedback.style.glyphAnimationName).toBe("om-glyph");
+  expect(defaultFeedback.style.xpAnimationName).toBe("om-count-up");
   expect(defaultFeedback.style.answerFont).toContain("Noto Sans KR");
+  expect(defaultFeedback.style.particleAnimationName).toBe("om-burst");
   expect(defaultFeedback.style.particleDisplay).not.toBe("none");
-  expect(defaultFeedback.advanceMs).toBeLessThan(400);
+  expect(Math.abs(defaultFeedback.style.burstX - defaultFeedback.style.answerX)).toBeLessThan(1);
+  expect(Math.abs(defaultFeedback.style.burstY - defaultFeedback.style.answerY)).toBeLessThan(1);
+  expect(defaultFeedback.advanceMs).toBeGreaterThanOrEqual(800);
+  expect(defaultFeedback.advanceMs).toBeLessThan(1_200);
 });
 
 test("Quiet Technical state colors and radii remain readable", async ({ page }) => {
@@ -146,9 +191,13 @@ test("reduced motion cleans hidden celebration state", async ({ page }) => {
       if (document.documentElement.dataset.reducedBurstCreated && layer.childElementCount === 0) document.documentElement.dataset.reducedBurstCleaned = "true";
     }).observe(layer, { childList: true });
   });
-  await page.keyboard.press(String(session.cards[0].answerIndex + 1));
+  const reduced = await captureCorrectFeedback(page, session.cards[0].answerIndex);
+  expect(reduced.advanceMs).toBeLessThan(650);
+  expect(reduced.style.cardAnimationName).toBe("none");
+  expect(reduced.style.glyphAnimationName).toBe("none");
+  expect(reduced.style.xpAnimationName).toBe("none");
   await page.waitForFunction(() => document.documentElement.dataset.reducedBurstCreated === "true" && document.documentElement.dataset.reducedBurstCleaned === "true");
   await expect(page.locator(".celebration-layer")).toBeHidden();
-  await expect(page.locator(".particle-burst, .quiet-glow-ring")).toHaveCount(0);
+  await expect(page.locator(".particle-burst")).toHaveCount(0);
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
 });

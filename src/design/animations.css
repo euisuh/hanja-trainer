@@ -2,10 +2,11 @@
 @keyframes om-burst { 0% { transform: translate(0,0) scale(1); opacity: 1 } 100% { transform: translate(var(--tx), var(--ty)) scale(.2); opacity: 0 } }
 @keyframes om-shake { 0%,100% { transform: translateX(0) } 15% { transform: translateX(-10px) } 30% { transform: translateX(9px) } 45% { transform: translateX(-6px) } 60% { transform: translateX(4px) } 80% { transform: translateX(-2px) } }
 @keyframes om-rise { 0% { transform: translateY(14px); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
-@keyframes om-glyph { 0% { transform: scale(1) } 40% { transform: scale(1.09) } 100% { transform: scale(1) } }
+@keyframes om-glyph { 0% { transform: scale(1) } 38% { transform: scale(1.16) } 68% { transform: scale(.98) } 100% { transform: scale(1) } }
 @keyframes om-pulse { 0%,100% { box-shadow: 0 0 0 0 var(--pulse-gold) } 50% { box-shadow: 0 0 0 12px var(--pulse-gold-clear) } }
 @keyframes om-celebration { from { opacity: .999 } to { opacity: 1 } }
 @keyframes om-celebration-ring { from { opacity: 1; transform: translate(-50%, -50%) scale(.3) } to { opacity: 0; transform: translate(-50%, -50%) scale(3.4) } }
 @keyframes om-celebration-flare { 0% { opacity: 0; transform: scale(.94) } 30% { opacity: .92 } 100% { opacity: 0; transform: scale(1.08) } }
-@keyframes om-quiet-glow { 0% { box-shadow: 0 0 0 0 var(--correct-glow) } 45% { box-shadow: 0 0 0 20px var(--correct-glow) } 100% { box-shadow: 0 0 0 26px var(--correct-glow-clear) } }
-@keyframes om-quiet-glow-outer { 0% { box-shadow: 0 0 0 0 var(--correct-glow-clear); opacity: 0 } 25% { opacity: 1 } 100% { box-shadow: 0 0 0 34px var(--correct-glow-clear); opacity: 0 } }
+@keyframes om-win-card { 0% { transform: scale(1); } 22% { transform: scale(1.035); } 55% { transform: scale(.994); } 100% { transform: scale(1); } }
+@keyframes om-win-flash { 0% { box-shadow: var(--shadow-7), 0 0 0 0 var(--win-flash); } 18% { box-shadow: var(--shadow-7), 0 0 0 10px var(--win-flash); } 100% { box-shadow: var(--shadow-7), 0 0 0 26px var(--win-flash-clear); } }
+@keyframes om-count-up { 0% { transform: translateY(6px) scale(.86); opacity: 0; } 40% { transform: translateY(0) scale(1.18); opacity: 1; } 100% { transform: translateY(0) scale(1); opacity: 1; } }

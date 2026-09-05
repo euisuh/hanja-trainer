@@ -112,6 +112,15 @@ button.session-sync {
   animation: om-shake .45s;
 }
 
+.quiz-card--correct {
+  animation: om-win-card 420ms cubic-bezier(.22, 1.2, .36, 1),
+    om-win-flash 620ms ease-out;
+}
+
+.app[data-theme="quiet-technical"] .quiz-card--correct {
+  --shadow-7: 0 0 0 transparent;
+}
+
 .quiz-card__badges {
   display: flex;
   flex-wrap: wrap;
@@ -163,7 +172,7 @@ button.session-sync {
 }
 
 .quiz-card__glyph--correct {
-  animation: om-glyph .45s;
+  animation: om-glyph 520ms cubic-bezier(.22, 1.2, .36, 1);
 }
 
 .quiz-card__sentence {
@@ -406,6 +415,16 @@ button.session-sync {
 
 .feedback-bar--correct { border-color: var(--correct); background: var(--correct-bg); }
 .feedback-bar--correct > strong { color: var(--correct-fg); }
+.feedback-bar__xp {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--correct);
+  color: var(--card);
+  font-variant-numeric: tabular-nums;
+  animation: om-count-up 380ms cubic-bezier(.22, 1.2, .36, 1) 90ms both;
+}
 .feedback-bar--wrong { border-color: var(--wrong); background: var(--wrong-bg); }
 .feedback-bar--wrong > strong { color: var(--wrong-fg); }
 .feedback-bar--skipped { border-color: var(--border-tan); background: var(--panel); }
@@ -430,8 +449,8 @@ button.session-sync {
 
 .particle-burst__particle {
   position: absolute;
-  top: 42%;
-  left: 50%;
+  top: var(--burst-y);
+  left: var(--burst-x);
   width: var(--size);
   height: var(--size);
   border-radius: 3px;
@@ -443,12 +462,13 @@ button.session-sync {
 
 .particle-burst__ring {
   position: absolute;
-  top: 42%;
-  left: 50%;
+  top: var(--burst-y);
+  left: var(--burst-x);
   width: 88px;
   height: 88px;
   border: 5px solid var(--gold);
   border-radius: 50%;
+  transform: translate(-50%, -50%);
   animation: om-celebration-ring .72s ease-out forwards, om-pulse .72s ease-out;
 }
 
@@ -464,27 +484,6 @@ button.session-sync {
   border: 6px solid var(--gold);
   border-radius: var(--radius-extra-large);
   animation: om-celebration-flare .8s ease-out forwards;
-}
-
-.quiet-glow-ring, .quiet-glow-ring--outer { display: none; }
-.app[data-theme="quiet-technical"] .particle-burst { animation-duration: .85s; }
-.app[data-theme="quiet-technical"] .particle-burst > * { display: none; }
-.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring,
-.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring--outer {
-  position: absolute;
-  top: var(--glow-y);
-  left: var(--glow-x);
-  display: block;
-  width: var(--glow-width);
-  height: var(--glow-height);
-  border-radius: var(--radius-answer);
-  transform: translate(-50%, -50%);
-}
-.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring {
-  animation: om-quiet-glow .8s ease-out forwards;
-}
-.app[data-theme="quiet-technical"] .particle-burst > .quiet-glow-ring--outer {
-  animation: om-quiet-glow-outer .85s ease-out .08s forwards;
 }
 
 .pause-modal {
@@ -625,12 +624,14 @@ button.session-sync {
 
 @media (prefers-reduced-motion: reduce) {
   .quiz-card--wrong,
+  .quiz-card--correct,
   .quiz-card__glyph--correct,
   .answer-option--correct,
   .combo-badge,
   .feedback-bar--correct,
   .feedback-bar--wrong,
-  .feedback-bar--compare {
+  .feedback-bar--compare,
+  .feedback-bar__xp {
     animation: none;
   }
 

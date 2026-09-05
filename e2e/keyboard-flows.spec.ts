@@ -5,7 +5,7 @@ const meaningPrompts = { kr: "뜻을 고르세요", jp: "意味を選べ", cn: "
 type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "compare" | "kun" | "meaning" | "reading" | "word"; levelOrd: number; options: Array<{ label: string }>; prompt: string; reading: string; sentence: { reading: string | null; source: string; targetIndex: number | null; text: string; translation: string } | null; track: keyof typeof languages; trackBadge: string; wordId?: number; wordSourceUrl?: string };
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes:1";
-const MAIN_CORRECT_ADVANCE_BASELINE_MS = 270;
+const FAST_CORRECT_ADVANCE_BASELINE_MS = 400;
 
 async function expectClosestLang(locator: Locator, lang: string) {
   expect(await locator.evaluate((node) => node.closest("[lang]")?.getAttribute("lang"))).toBe(lang);
@@ -119,7 +119,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
       testedKeyboardAdvance = true;
       if (index + 1 < cards.length) {
         await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-no-double-advance", "true"));
-        await page.clock.runFor(500);
+        await page.clock.runFor(1_000);
         await expect(page.locator('[data-tested-no-double-advance="true"]')).toBeVisible();
       }
       await page.clock.resume();
@@ -678,7 +678,7 @@ test.describe.serial("keyboard-only product flows", () => {
     const celebration = page.locator(".celebration-layer");
     await expect(celebration).toHaveAttribute("aria-hidden", "true");
     await expect(celebration.locator(".particle-burst").last()).toBeAttached();
-    await page.clock.runFor(249);
+    await page.clock.runFor(899);
     await expect(page.locator(".quiz-card__glyph")).toHaveText("學校");
     await page.clock.runFor(1);
     await expect(page.locator(".quiz-card__glyph")).not.toHaveText("學校");
@@ -829,7 +829,7 @@ test.describe.serial("keyboard-only product flows", () => {
     const scoreRequest = page.waitForRequest((request) => request.url().endsWith("/api/placement/score"));
     const timing = await finishSession(page, second.cards, /현재 콘텐츠의 끝/u, { autoAdvance: true, measureCorrectLatency: true, verifyCelebration: true });
     expect(timing.correctTransitions).toBe(second.cards.length - 1);
-    expect(timing.correctAdvanceMs).toBeLessThanOrEqual(timing.correctTransitions * MAIN_CORRECT_ADVANCE_BASELINE_MS * 1.1);
+    expect(timing.correctAdvanceMs).toBeLessThanOrEqual(timing.correctTransitions * FAST_CORRECT_ADVANCE_BASELINE_MS * 1.1);
     expect(((await scoreRequest).postDataJSON() as { answers: Array<{ track: string }> }).answers.every((answer) => answer.track === "jp")).toBe(true);
     await expect(page.locator(".placement-result__card")).toHaveCount(1);
     await page.keyboard.press("Enter");
