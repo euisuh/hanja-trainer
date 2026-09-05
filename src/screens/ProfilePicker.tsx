@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { avatarBackground } from "../design/tokens";
+import { avatarHue } from "../features/profile/avatarHue";
 import type { PublicProfile } from "../shared/api";
 import "../features/pin/pin.css";
 
@@ -52,7 +54,7 @@ export function ProfilePicker({ profiles, onSelect }: Props) {
               ref={(button) => { buttons.current[index] = button; }}
               type="button"
             >
-              <span className="profile-picker__avatar" aria-hidden="true">{[...profile.name][0]}</span>
+              <span className="profile-picker__avatar" style={{ "--avatar-hue": avatarHue(profile.id), "--avatar-background": avatarBackground } as CSSProperties} aria-hidden="true">{[...profile.name][0]}</span>
               <strong>{profile.name}</strong>
               {profile.hasPin && <span className="profile-picker__lock" aria-hidden="true">PIN</span>}
             </button>

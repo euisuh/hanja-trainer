@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { avatarBackground } from "../design/tokens";
 import { Keypad } from "../features/pin/Keypad";
+import { avatarHue } from "../features/profile/avatarHue";
 import { ApiClientError, apiClient } from "../lib/apiClient";
 import type { PublicProfile } from "../shared/api";
 import "../features/pin/pin.css";
@@ -80,7 +82,9 @@ export function UnlockScreen({ lockedUntil: initialLockedUntil, onBack, onUnlock
     <main className="unlock-screen">
       <section className="unlock-card">
         {onBack && <button className="unlock-card__back" disabled={pending} onClick={() => { if (!pendingRef.current) onBack(); }} type="button">← 프로필 선택</button>}
-        <span className="unlock-card__mark" aria-hidden="true">字</span>
+        {onBack
+          ? <span className="unlock-card__avatar" style={{ "--avatar-hue": avatarHue(profile.id), "--avatar-background": avatarBackground } as CSSProperties} aria-hidden="true">{[...profile.name][0]}</span>
+          : <span className="unlock-card__mark" aria-hidden="true">字</span>}
         <h1>{onBack ? profile.name : "기기 잠금"}</h1>
         <p>4자리 PIN을 입력하세요.</p>
         <Keypad disabled={pending || Boolean(remaining)} key={shakeKey} onChange={setPin} onComplete={submit} shakeKey={shakeKey} value={pin} />

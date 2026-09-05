@@ -116,6 +116,7 @@ export const fonts = themes.default.fonts;
 export const radii = themes.default.radii;
 export const shadows = themes.default.shadows;
 export const cssVariables = themes.default.cssVariables;
+export const avatarBackground = "hsl(var(--avatar-hue, 32deg) 58% 42%)";
 
 // Inline component variables resolve through the active root theme.
 export const tracks = {

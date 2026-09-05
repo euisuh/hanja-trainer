@@ -1,15 +1,16 @@
-.unlock-screen { display: grid; min-height: calc(100vh - 88px); place-items: center; }
+.unlock-screen,
+.profile-picker { display: grid; min-height: 100vh; margin-bottom: -104px; /* cancels .app's padding-bottom on these navless gates */ place-items: center; }
 .unlock-card { width: min(100%, 380px); padding: var(--space-8); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
 .unlock-card__mark { display: inline-grid; width: 58px; height: 58px; margin-bottom: var(--space-4); place-items: center; border: 3px solid var(--ink); border-radius: var(--radius-answer); background: var(--gold); color: var(--gold-text); font-family: var(--font-kr); font-size: var(--text-2xl); font-weight: var(--weight-strong); box-shadow: var(--shadow-4); }
+.unlock-card__avatar { display: inline-grid; width: 58px; height: 58px; margin-bottom: var(--space-4); place-items: center; border-radius: 50%; background: var(--avatar-background, var(--gold)); color: var(--card); font-size: var(--text-xl); font-weight: var(--weight-strong); }
 .unlock-card h1 { font-size: var(--text-2xl); }
 .unlock-card__back { display: block; padding: var(--space-3) 0; margin-bottom: var(--space-5); border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: var(--text-sm); font-weight: var(--weight-strong); }
-.profile-picker { display: grid; min-height: calc(100vh - 88px); place-items: center; }
 .profile-picker__card { width: min(100%, 680px); padding: var(--space-8); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
 .profile-picker__card h1 { font-size: var(--text-2xl); }
 .profile-picker__options { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
 .profile-picker__option { display: grid; min-height: 150px; padding: var(--space-6) var(--space-4); place-items: center; border: 3px solid var(--ink); border-radius: var(--radius-medium); background: var(--paper); color: var(--ink); box-shadow: var(--shadow-4); cursor: pointer; }
 .profile-picker__option:disabled { cursor: wait; opacity: .65; }
-.profile-picker__avatar { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 50%; background: var(--gold); color: var(--gold-text); font-size: var(--text-xl); font-weight: var(--weight-strong); }
+.profile-picker__avatar { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 50%; background: var(--avatar-background, var(--gold)); color: var(--card); font-size: var(--text-xl); font-weight: var(--weight-strong); }
 .profile-picker__option strong { font-size: var(--text-md); }
 .profile-picker__lock { padding: var(--space-2) var(--space-3); border-radius: var(--radius-pill); background: var(--ink); color: var(--paper); font-size: var(--text-3xs); font-weight: var(--weight-medium); }
 .pin-keypad { margin-top: var(--space-7); border-radius: var(--radius-medium); }
