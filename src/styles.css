@@ -236,6 +236,11 @@ main {
     transition-duration: .01ms !important;
   }
 
+  .placement-result h1,
+  .placement-result__card,
+  .placement-result__cta,
+  .placement-result__card span em { animation: none; }
+
   :is(
     .answer-option,
     .skip-answer,
