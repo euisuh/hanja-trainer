@@ -1,4 +1,4 @@
-.stats-screen h1 { margin: var(--space-3) 0 var(--space-5); font-size: 30px; }
+.stats-screen h1 { margin: var(--space-3) 0 var(--space-5); font-size: var(--text-2xl); }
 
 .streak-hero {
   display: flex;
@@ -16,21 +16,21 @@
 .streak-hero__copy { display: grid; gap: var(--space-1); }
 
 .streak-hero__copy strong {
-  font-size: 56px;
-  font-weight: 800;
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-display);
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-.streak-hero__copy span { font-size: var(--text-md, 17px); font-weight: 700; }
-.streak-hero__copy small { color: var(--muted); font-size: var(--text-xs, 12px); font-weight: 500; }
+.streak-hero__copy span { font-size: var(--text-md); font-weight: var(--weight-strong); }
+.streak-hero__copy small { color: var(--muted); font-size: var(--text-xs); font-weight: var(--weight-medium); }
 .streak-hero--at-risk { background: linear-gradient(135deg, var(--wrong-bg) 0%, var(--card) 62%); }
 .streak-hero--at-risk .streak-hero__flame svg { fill: var(--locked-text); }
 
 .streak-hero--at-risk .streak-hero__copy span::after {
   color: var(--wrong-fg);
   content: " · 오늘 아직 안 했어요";
-  font-weight: 800;
+  font-weight: var(--weight-strong);
 }
 
 .streak-calendar {
@@ -49,8 +49,8 @@
   margin-bottom: var(--space-4);
 }
 
-.streak-calendar > header strong { font-size: 13px; font-weight: 800; }
-.streak-calendar > header span { color: var(--muted); font-size: 12px; font-weight: 700; }
+.streak-calendar > header strong { font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.streak-calendar > header span { color: var(--muted); font-size: var(--text-xs); font-weight: var(--weight-body); }
 .streak-calendar__scroll { overflow-x: auto; padding: var(--space-2); }
 .streak-calendar__grid {
   display: grid;
@@ -81,14 +81,14 @@
   box-shadow: 0 5px 0 var(--stats-accent);
 }
 
-.track-mastery-card > small { display: block; color: var(--stats-accent-text); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
-.track-mastery-card > strong { display: block; margin-top: var(--space-3); font-size: 30px; font-weight: 800; }
-.track-mastery-card > p { margin-top: 3px; color: var(--muted); font-size: 13px; font-weight: 700; }
+.track-mastery-card > small { display: block; color: var(--stats-accent-text); font-size: var(--text-2xs); font-weight: var(--weight-medium); letter-spacing: .12em; }
+.track-mastery-card > strong { display: block; margin-top: var(--space-3); font-size: var(--text-2xl); font-weight: var(--weight-display); }
+.track-mastery-card > p { margin-top: 3px; color: var(--muted); font-size: var(--text-sm); font-weight: var(--weight-body); }
 .track-mastery-card__bar { height: 12px; margin-top: var(--space-4); overflow: hidden; border: 1px solid var(--border-tan); border-radius: var(--radius-pill); background: var(--paper); }
 .track-mastery-card__bar span { display: block; height: 100%; background: var(--stats-accent); }
-.track-mastery-card footer { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-3); color: var(--body); font-size: 12px; font-weight: 700; }
+.track-mastery-card footer { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-3); color: var(--body); font-size: var(--text-xs); font-weight: var(--weight-medium); }
 .track-mastery-card__secondary { padding-top: var(--space-3); border-top: 1px dashed var(--border-tan); }
-.stats-skip { margin-top: var(--space-6); color: var(--muted); font-size: var(--text-sm, 13px); font-weight: 500; }
+.stats-skip { margin-top: var(--space-6); color: var(--muted); font-size: var(--text-sm); font-weight: var(--weight-body); }
 
 @media (max-width: 560px) {
   .track-mastery-grid { grid-template-columns: 1fr; }

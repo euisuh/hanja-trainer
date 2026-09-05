@@ -9,6 +9,25 @@
   --space-7: 24px;
   --space-8: 32px;
   --space-9: 40px;
+
+  /* Type ramp — 1.2 minor-third-ish, snapped to whole px. */
+  --text-3xs: 10px;
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-md: 17px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+  --text-3xl: 38px;
+  --text-4xl: 48px;
+
+  /* Weight ramp — reserve 800 for genuine headline emphasis. */
+  --weight-body: 400;
+  --weight-medium: 500;
+  --weight-strong: 700;
+  --weight-display: 800;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -182,7 +201,7 @@ main,
 }
 
 .active-profile > strong {
-  font-size: 16px;
+  font-size: var(--text-md);
 }
 
 .active-profile > button {
@@ -192,8 +211,8 @@ main,
   background: var(--card);
   color: var(--ink);
   cursor: pointer;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-strong);
 }
 
 main {
@@ -275,14 +294,14 @@ main {
 h1 {
   margin: 0 0 var(--space-4);
   font-size: clamp(2rem, 7vw, 3rem);
-  font-weight: 800;
+  font-weight: var(--weight-display);
   letter-spacing: -.03em;
 }
 
 p {
   margin: 0;
   color: var(--muted);
-  font-weight: 700;
+  font-weight: var(--weight-body);
 }
 
 .app-header {
@@ -305,14 +324,14 @@ p {
 }
 
 .metric strong {
-  font-size: 15px;
-  font-weight: 800;
+  font-size: var(--text-base);
+  font-weight: var(--weight-display);
 }
 
 .metric span:last-child {
   color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
 }
 
 .metric svg { flex: 0 0 auto; }
@@ -338,7 +357,7 @@ p {
   border-radius: var(--radius-pill);
   background: var(--ink);
   color: var(--paper);
-  font-size: 12px;
+  font-size: var(--text-xs);
 }
 
 @property --goal-degrees {
@@ -393,8 +412,8 @@ p {
   padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-nav-item);
   color: var(--nav-muted);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
   text-decoration: none;
 }
 
@@ -409,8 +428,8 @@ kbd {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 800;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-strong);
 }
 
 .bottom-nav a:not(.active) kbd {
@@ -436,7 +455,7 @@ kbd {
   border-radius: var(--radius-keycap);
   color: var(--muted);
   font-family: var(--font-kr);
-  font-size: 10px;
-  font-weight: 800;
+  font-size: var(--text-3xs);
+  font-weight: var(--weight-medium);
   white-space: nowrap;
 }

@@ -8,8 +8,8 @@ type Props = { anchor: BurstAnchor; onDone: () => void; tier: 1 | 2 | 3; track: 
 export function ParticleBurst({ anchor, onDone, tier, track }: Props) {
   const count = tier === 3 ? 44 : tier === 2 ? 34 : 28;
   const palette = tier === 3
-    ? [colors.gold, colors.gold, colors.flame, tracks[track].accent, colors.correct]
-    : [colors.gold, colors.correct, tracks[track].accent, colors.ink];
+    ? [colors.gold, colors.gold, colors.flame, tracks[track].accent, "var(--correct-vivid)"]
+    : [colors.gold, "var(--correct-vivid)", tracks[track].accent, colors.ink];
   const origin = { "--burst-x": `${anchor.x}px`, "--burst-y": `${anchor.y}px` } as CSSProperties;
   return (
     <div className="particle-burst" data-tier={tier} onAnimationEnd={(event) => { if (event.target === event.currentTarget) onDone(); }} style={origin}>

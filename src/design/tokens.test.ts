@@ -19,14 +19,15 @@ describe("visual themes", () => {
     const current = themes.default;
     expect(current.colors).toMatchObject({
       paper: "#EFEAE0", ink: "#16130F", body: "#4A443B", muted: "#6E675C", faint: "#6F685F",
-      card: "#FFFFFF", panel: "#F6F2E9", chipBg: "#F1ECE1", borderTan: "#E2DAC9", gold: "#E8B33D",
+      card: "#FFFFFF", panel: "#F6F2E9", chipBg: "#F1ECE1", borderTan: "#E2DAC9", gold: "#E8B33D", goldHover: "#D19A22",
       calendarLow: "#FBE7C6", calendarMedium: "#F0B95E", calendarHigh: "#E8873D",
-      correct: "#12855A", correctBg: "#E4F6EC", correctFg: "#0E6B48",
-      wrong: "#D93A16", wrongBg: "#FCE9E4", wrongFg: "#A42D10",
+      correct: "#3DAE28", correctBg: "#E9F8E2", correctFg: "#2A7A1B", correctVivid: "#58CC02",
+      wrong: "#E33B3B", wrongBg: "#FDEAEA", wrongFg: "#B32020", wrongVivid: "#FF4B4B",
       correctGlow: "rgba(47, 125, 90, .35)", correctGlowClear: "rgba(47, 125, 90, 0)",
       winFlash: "rgba(88, 204, 2, .45)", winFlashClear: "rgba(88, 204, 2, 0)",
     });
-    expect(current.cssVariables).toMatchObject({ "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
+    expect(current.colors.goldHover).not.toBe(current.colors.gold);
+    expect(current.cssVariables).toMatchObject({ "--correct-vivid": current.colors.correctVivid, "--wrong-vivid": current.colors.wrongVivid, "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
     expect(current.fonts).toEqual({
       ui: "'Plus Jakarta Sans', 'Noto Sans KR', sans-serif",
       answer: "'Noto Sans KR', sans-serif",
@@ -34,8 +35,8 @@ describe("visual themes", () => {
     });
     expect(current.tracks).toEqual({
       kr: { accent: "#3B5BDB", accentText: "#3B5BDB", soft: "#EEF1FD", font: current.fonts.kr },
-      jp: { accent: "#E14B32", accentText: "#C23F29", soft: "#FDEEEB", font: current.fonts.jp },
-      cn: { accent: "#0E9F6E", accentText: "#0B7D56", soft: "#E7F6F0", font: current.fonts.cn },
+      jp: { accent: "#C23F29", accentText: "#C23F29", soft: "#FDEEEB", font: current.fonts.jp },
+      cn: { accent: "#0B7D56", accentText: "#0B7D56", soft: "#E7F6F0", font: current.fonts.cn },
     });
     expect(current.radii).toEqual({ keycap: "7px", small: "12px", navItem: "15px", medium: "20px", large: "22px", extraLarge: "28px", answer: "18px", answerKey: "9px", panel: "16px", badge: "8px", control: "14px", cta: "24px", modal: "26px", calendar: "4px", chart: "7px 7px 3px 3px", pill: "999px" });
     expect(current.shadows).toEqual({ hard3: "0 3px 0 #16130F", hard4: "0 4px 0 #16130F", hard5: "0 5px 0 #16130F", hard6: "0 6px 0 #16130F", hard7: "0 7px 0 #16130F", nav: "0 6px 24px rgba(22, 19, 15, .32)" });
@@ -45,14 +46,14 @@ describe("visual themes", () => {
     const quiet = themes["quiet-technical"];
     expect(quiet.colors).toMatchObject({
       paper: "#F7F6F4", ink: "#201F1D", card: "#FFFFFF", panel: "#F5F4F2", chipBg: "#F0EFED",
-      borderTan: "#DEDCDA", muted: "#5A5854", faint: "#8A877F", gold: "#B45309", goldHover: "#92400E", goldText: "#FFFFFF",
+      borderTan: "#DEDCDA", muted: "#5A5854", faint: "#8A877F", gold: "#B45309", goldHover: "#92400E", goldText: "#FFFFFF", flame: "#B45309",
       calendarLow: "#EEF0F6", calendarMedium: "#4C5F8A", calendarHigh: "#201F1D",
-      correct: "#2F7D5A", correctBg: "#EDF6F1", correctFg: "#2F7D5A",
-      wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
+      correct: "#2F7D5A", correctBg: "#EDF6F1", correctFg: "#2F7D5A", correctVivid: "#3DAE28",
+      wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", wrongVivid: "#D14A4A", feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
       correctGlow: "rgba(47, 125, 90, .5)", correctGlowClear: "rgba(47, 125, 90, 0)",
       winFlash: "rgba(47, 125, 90, .40)", winFlashClear: "rgba(47, 125, 90, 0)",
     });
-    expect(quiet.cssVariables).toMatchObject({ "--win-flash": quiet.colors.winFlash, "--win-flash-clear": quiet.colors.winFlashClear });
+    expect(quiet.cssVariables).toMatchObject({ "--correct-vivid": quiet.colors.correctVivid, "--wrong-vivid": quiet.colors.wrongVivid, "--win-flash": quiet.colors.winFlash, "--win-flash-clear": quiet.colors.winFlashClear });
     expect(quiet.tracks).toMatchObject({
       kr: { accent: "#4C5F8A", soft: "#EEF0F6" }, jp: { accent: "#A85A3D", soft: "#F7EEEA" }, cn: { accent: "#4C7A63", soft: "#EEF5F0" },
     });
@@ -68,6 +69,16 @@ describe("visual themes", () => {
       [colors.ink, colors.paper], [colors.muted, colors.paper], [colors.faint, colors.ink],
       [colors.goldText, colors.gold], [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
       [colors.feedbackText, colors.feedbackBg],
+      ...Object.values(tracks).flatMap((track) => [[track.accent, colors.card], [track.accentText, track.soft]]),
+    ];
+    for (const [foreground, background] of pairs) expect(contrast(foreground, background)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("meets AA for every default text role", () => {
+    const { colors, tracks } = themes.default;
+    const pairs = [
+      [colors.ink, colors.paper], [colors.muted, colors.paper],
+      [colors.goldText, colors.gold], [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
       ...Object.values(tracks).flatMap((track) => [[track.accent, colors.card], [track.accentText, track.soft]]),
     ];
     for (const [foreground, background] of pairs) expect(contrast(foreground, background)).toBeGreaterThanOrEqual(4.5);

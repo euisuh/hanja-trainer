@@ -172,10 +172,12 @@ test("Quiet Technical state colors and radii remain readable", async ({ page }) 
   await page.getByRole("button", { name: "PIN 설정" }).click();
   expect(await contrastOf(page, ".pin-action--secondary")).toBeGreaterThanOrEqual(4.5);
 
-  await startLesson(page);
+  const session = await startLesson(page);
   expect(await contrastOf(page, ".feedback-bar > button:disabled")).toBeGreaterThanOrEqual(4.5);
   await expect(page.locator(".answer-option__key").first()).toHaveCSS("border-radius", "6px");
   await expect(page.locator(".skip-answer kbd")).toHaveCSS("border-radius", "6px");
+  await page.keyboard.press(String(session.cards[0].answerIndex + 1));
+  expect(await contrastOf(page, ".answer-option--correct .answer-option__key")).toBeGreaterThanOrEqual(4.5);
   await page.keyboard.press("Escape");
   await expect(page.locator(".pause-modal__panel")).toHaveCSS("border-radius", "10px");
 
