@@ -11,6 +11,16 @@ import { clearLegacyPinCookie, clearSessionCookie, createSessionCookie, listProf
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 
+// A browser sets exactly one of these on every request it makes. `curl`, the
+// audio generator, and future native clients set neither, so they are allowed:
+// this blocks browser-driven cross-site writes, not non-browser callers.
+function crossSite(request: Request, url: URL): boolean {
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if (fetchSite !== null) return fetchSite === "cross-site";
+  const origin = request.headers.get("origin");
+  return origin !== null && origin !== url.origin;
+}
+
 function error(status: number, code: string, message: string, retryAfter?: number): Response {
   return Response.json(
     { error: { code, message }, ...(retryAfter === undefined ? {} : { retryAfter }) } satisfies ApiErrorBody & { retryAfter?: number },
@@ -204,8 +214,12 @@ function profileId(value: unknown): number {
 }
 
 export async function routeApiRequest(request: Request, env: Env, now = Date.now()): Promise<Response> {
-  const { pathname } = new URL(request.url);
   try {
+    const url = new URL(request.url);
+    if (request.method !== "GET" && request.method !== "HEAD" && crossSite(request, url)) {
+      return error(403, "cross_site_request", "cross-site requests are not allowed");
+    }
+    const { pathname } = url;
     if (request.method === "GET" && pathname === "/api/profiles") {
       return Response.json({ profiles: await listProfiles(env.DB) });
     }
