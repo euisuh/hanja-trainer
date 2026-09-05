@@ -21,7 +21,7 @@ export function lessonLimit(requested: number | undefined): number {
 export function LessonScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
+  const { enabledTracks, onyomiScript, soundMode, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
@@ -82,6 +82,7 @@ export function LessonScreen() {
       onQuit={() => navigate("/home")}
       queueOverride={session.queue}
       sessionId={session.id}
+      soundMode={soundMode}
     />
   );
 }

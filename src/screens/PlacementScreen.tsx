@@ -12,7 +12,7 @@ type LoadedSession = { id: string; queue: SessionQueueItem[] };
 export function PlacementScreen() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
+  const { enabledTracks, onyomiScript, soundMode, error: settingsError, ready, retry: retrySettings } = useSettings();
   const retestRequested = location.state !== null;
   const requestedTrack = (location.state as { track?: unknown } | null)?.track;
   const requestedRetestTrack = TRACKS.find((track) => track === requestedTrack);
@@ -53,6 +53,7 @@ export function PlacementScreen() {
       onQuit={() => navigate(returnTo, { replace: Boolean(retestTrack) })}
       queueOverride={session.queue}
       sessionId={session.id}
+      soundMode={soundMode}
     />
   );
 }

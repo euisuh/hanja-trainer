@@ -8,9 +8,10 @@
 .settings-controls { display: flex; flex: 1 1 280px; min-width: 260px; flex-direction: column; gap: var(--space-5); }
 .settings-card { padding: var(--space-6); border: 3px solid var(--ink); border-radius: var(--radius-large); background: var(--card); box-shadow: var(--shadow-5); }
 .settings-card > header { margin-bottom: var(--space-4); font-size: 13px; font-weight: 800; }
-.theme-picker > div { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
-.theme-picker button { padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-weight: 800; }
-.theme-picker button[aria-pressed="true"] { border-color: var(--gold); background: var(--chip-bg); color: var(--gold-hover); }
+.theme-picker > div, .sound-setting > div { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.theme-picker button, .sound-setting button { padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-weight: 800; }
+.theme-picker button[aria-pressed="true"], .sound-setting button[aria-pressed="true"] { border-color: var(--gold); background: var(--chip-bg); color: var(--gold-hover); }
+.sound-setting > small { display: block; margin-top: var(--space-3); color: var(--muted); font-size: 11px; }
 .track-toggles > div, .placement-retest > div { display: flex; flex-direction: column; gap: var(--space-4); }
 .track-toggles > p, .placement-retest > p { margin: var(--space-4) 0 0; color: var(--muted); font-size: 12px; }
 .track-toggles button, .placement-retest button { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border: 2px solid var(--settings-accent); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-size: 14px; font-weight: 800; }

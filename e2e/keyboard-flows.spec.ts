@@ -227,6 +227,11 @@ async function checkAnswerGrid(page: Page) {
 
 test.describe.serial("keyboard-only product flows", () => {
   test("cold start, onboarding and placement", async ({ page }, testInfo) => {
+    await page.addInitScript(() => {
+      const state = window as unknown as { feedbackVibrations: Array<number | number[]> };
+      state.feedbackVibrations = [];
+      Object.defineProperty(navigator, "vibrate", { configurable: true, value: (pattern: number | number[]) => { state.feedbackVibrations.push(pattern); return true; } });
+    });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/onboarding");
     await expect(page.getByRole("heading", { name: "한 글자, 세 개의 시험." })).toBeVisible();
@@ -245,6 +250,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkAnswerGrid(page);
     await checkLayout(page, "placement", testInfo);
     await finishSession(page, placement.cards, /현재 콘텐츠의 끝/u, { announcement: "응답을 기록했습니다. 다음 문항으로 이동합니다.", autoAdvance: true, skipAnnouncement: true, skipFirst: true, verifyReducedMotion: true });
+    expect(await page.evaluate(() => (window as unknown as { feedbackVibrations: Array<number | number[]> }).feedbackVibrations)).toEqual([]);
     await expect(page.getByRole("heading", { name: "현재 콘텐츠의 끝까지 도달했습니다." })).toBeVisible();
     await checkLayout(page, "placement-result", testInfo);
     await page.keyboard.press("Enter");
@@ -759,6 +765,11 @@ test.describe.serial("keyboard-only product flows", () => {
   });
 
   test("stats and settings persist keyboard changes", async ({ page }, testInfo) => {
+    await page.addInitScript(() => {
+      const state = window as unknown as { feedbackAudioContexts: number };
+      state.feedbackAudioContexts = 0;
+      Object.defineProperty(window, "AudioContext", { configurable: true, value: class { constructor() { state.feedbackAudioContexts += 1; } } });
+    });
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     await page.keyboard.press("T");
@@ -793,6 +804,18 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect(page.locator(".track-toggles").getByRole("button", { name: /한자 · 급수/u })).toHaveAttribute("aria-pressed", "false");
     await expect(page.getByRole("button", { name: /히라가나.*いち・いつ/u })).toHaveAttribute("aria-pressed", "true");
     await expect(page.getByRole("slider", { name: "일일 XP 목표" })).toHaveValue(String(previous + 10));
+    const sound = page.getByRole("group", { name: "소리 피드백" });
+    await expect(sound.getByRole("button", { name: "켜기" })).toHaveAttribute("aria-pressed", "true");
+    const soundPersisted = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
+    await sound.getByRole("button", { name: "끄기" }).click();
+    await soundPersisted;
+    await page.reload();
+    await expect(page.getByRole("group", { name: "소리 피드백" }).getByRole("button", { name: "끄기" })).toHaveAttribute("aria-pressed", "true");
+    const mutedLesson = await sessionStarted(page, () => page.goto("/lesson"));
+    expect(await page.evaluate(() => (window as unknown as { feedbackAudioContexts: number }).feedbackAudioContexts)).toBe(0);
+    if (mutedLesson.cards[0].kind === "compare") await page.keyboard.press("Enter");
+    await answerUnitCard(page, mutedLesson.cards, true);
+    expect(await page.evaluate(() => (window as unknown as { feedbackAudioContexts: number }).feedbackAudioContexts)).toBe(0);
   });
 
   test("retakes placement for one curriculum and returns to settings", async ({ page }) => {

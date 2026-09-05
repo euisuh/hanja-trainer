@@ -8,7 +8,7 @@ DELETE FROM sessions;
 DELETE FROM placement_results;
 DELETE FROM profile WHERE id <> 1;
 UPDATE profile
-SET name = '나', enabled_tracks = '["kr","jp","cn"]', daily_goal = 40, timezone = 'Asia/Seoul', onyomi_script = 'katakana', theme = 'quiet-technical', xp = 0,
+SET name = '나', enabled_tracks = '["kr","jp","cn"]', daily_goal = 40, timezone = 'Asia/Seoul', onyomi_script = 'katakana', sound_mode = 'on', theme = 'quiet-technical', xp = 0,
     onboarded_at = NULL, pin_hash = NULL, pin_salt = NULL, pin_iterations = NULL,
     pin_secret = NULL, pin_failures = 0, pin_locked_until = NULL, updated_at = unixepoch() * 1000
 WHERE id = 1;

@@ -23,7 +23,7 @@ export function ReviewScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const { id: profileId } = useActiveProfile();
-  const { enabledTracks, onyomiScript, error: settingsError, ready, retry: retrySettings } = useSettings();
+  const { enabledTracks, onyomiScript, soundMode, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [due, setDue] = useState<DueReviewsResponse | null>(null);
   const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
@@ -113,6 +113,7 @@ export function ReviewScreen() {
         onQuit={() => navigate("/review", { state: { track: selectedTrack } })}
         queueOverride={session.queue}
         sessionId={session.id}
+        soundMode={soundMode}
       />
     );
   }

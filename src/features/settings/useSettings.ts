@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { SETTINGS_UPDATED_EVENT, apiClient } from "../../lib/apiClient";
-import { DAILY_GOAL, DEFAULT_DAILY_GOAL, normalizeDailyGoal, type OnyomiScript, type ThemeId } from "../../shared/settings";
+import { DAILY_GOAL, DEFAULT_DAILY_GOAL, DEFAULT_SOUND_MODE, normalizeDailyGoal, type OnyomiScript, type SoundMode, type ThemeId } from "../../shared/settings";
 import { TRACKS, type Track } from "../../shared/types";
 
 export { DAILY_GOAL, normalizeDailyGoal };
@@ -20,6 +20,7 @@ export function useSettings() {
   const [enabledTracks, setEnabledTracks] = useState<Track[]>([...TRACKS]);
   const [dailyGoal, setDailyGoal] = useState(DEFAULT_DAILY_GOAL);
   const [onyomiScript, setOnyomiScript] = useState<OnyomiScript>("katakana");
+  const [soundMode, setSoundMode] = useState<SoundMode>(DEFAULT_SOUND_MODE);
   const [theme, setTheme] = useState<ThemeId>("quiet-technical");
   const [isAdmin, setIsAdmin] = useState(false);
   const [ready, setReady] = useState(false);
@@ -33,6 +34,7 @@ export function useSettings() {
       setEnabledTracks(settings.enabledTracks);
       setDailyGoal(settings.dailyGoal);
       setOnyomiScript(settings.onyomiScript);
+      setSoundMode(settings.soundMode);
       setTheme(settings.theme);
       setIsAdmin(settings.isAdmin);
       setError("");
@@ -54,24 +56,27 @@ export function useSettings() {
     };
   }, [retryKey]);
 
-  function persist(tracks: Track[], goal: number, script: OnyomiScript, visualTheme: ThemeId) {
+  function persist(tracks: Track[], goal: number, script: OnyomiScript, sound: SoundMode, visualTheme: ThemeId) {
     setEnabledTracks(tracks);
     setDailyGoal(goal);
     setOnyomiScript(script);
+    setSoundMode(sound);
     setTheme(visualTheme);
     window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { theme: visualTheme } }));
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
-      void apiClient.patchSettings({ enabledTracks: tracks, dailyGoal: goal, onyomiScript: script, theme: visualTheme }).then((settings) => {
+      void apiClient.patchSettings({ enabledTracks: tracks, dailyGoal: goal, onyomiScript: script, soundMode: sound, theme: visualTheme }).then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
         setOnyomiScript(settings.onyomiScript);
+        setSoundMode(settings.soundMode);
         setTheme(settings.theme);
         setIsAdmin(settings.isAdmin);
       }).catch(() => apiClient.settings().then((settings) => {
         setEnabledTracks(settings.enabledTracks);
         setDailyGoal(settings.dailyGoal);
         setOnyomiScript(settings.onyomiScript);
+        setSoundMode(settings.soundMode);
         setTheme(settings.theme);
         setIsAdmin(settings.isAdmin);
         window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { theme: settings.theme } }));
@@ -83,6 +88,7 @@ export function useSettings() {
     enabledTracks,
     dailyGoal,
     onyomiScript,
+    soundMode,
     theme,
     isAdmin,
     error,
@@ -90,16 +96,18 @@ export function useSettings() {
     retry: () => setRetryKey((value) => value + 1),
     flush: async () => {
       window.clearTimeout(timer.current);
-      const settings = await apiClient.patchSettings({ enabledTracks, dailyGoal, onyomiScript, theme });
+      const settings = await apiClient.patchSettings({ enabledTracks, dailyGoal, onyomiScript, soundMode, theme });
       setEnabledTracks(settings.enabledTracks);
       setDailyGoal(settings.dailyGoal);
       setOnyomiScript(settings.onyomiScript);
+      setSoundMode(settings.soundMode);
       setTheme(settings.theme);
       setIsAdmin(settings.isAdmin);
     },
-    toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript, theme),
-    setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript, theme),
-    setOnyomiScript: (script: OnyomiScript) => persist(enabledTracks, dailyGoal, script, theme),
-    setTheme: (next: ThemeId) => persist(enabledTracks, dailyGoal, onyomiScript, next),
+    toggle: (track: Track) => persist(toggleTrack(enabledTracks, track), dailyGoal, onyomiScript, soundMode, theme),
+    setGoal: (goal: number) => persist(enabledTracks, normalizeDailyGoal(goal), onyomiScript, soundMode, theme),
+    setOnyomiScript: (script: OnyomiScript) => persist(enabledTracks, dailyGoal, script, soundMode, theme),
+    setSoundMode: (sound: SoundMode) => persist(enabledTracks, dailyGoal, onyomiScript, sound, theme),
+    setTheme: (next: ThemeId) => persist(enabledTracks, dailyGoal, onyomiScript, soundMode, next),
   };
 }

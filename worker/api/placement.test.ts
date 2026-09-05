@@ -70,18 +70,21 @@ describe("profile, placement, and stats API", () => {
 
   it("persists validated settings without deleting review state", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", theme: "quiet-technical" });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", soundMode: "on", theme: "quiet-technical" });
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
-    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical" }), fixture.env);
-    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical", isAdmin: true });
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", theme: "quiet-technical", isAdmin: true });
+    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical" }), fixture.env);
+    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", isAdmin: true });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", isAdmin: true });
+    expect(fixture.sqlite.prepare("SELECT sound_mode FROM profile WHERE id = 1").get()).toEqual({ sound_mode: "off" });
+    expect(() => fixture.sqlite.exec("UPDATE profile SET sound_mode = 'loud' WHERE id = 1")).toThrow();
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 1 });
     expect((await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: [] }), fixture.env)).status).toBe(400);
     const invalid = await routeApiRequest(request("/api/settings", "PATCH", { onyomiScript: "romaji" }), fixture.env);
     expect(invalid.status).toBe(400);
     expect(await invalid.json()).toMatchObject({ error: { code: "invalid_settings" } });
     expect((await routeApiRequest(request("/api/settings", "PATCH", { theme: "ink-paper" }), fixture.env)).status).toBe(400);
+    expect((await routeApiRequest(request("/api/settings", "PATCH", { soundMode: "loud" }), fixture.env)).status).toBe(400);
   });
 
   it("persists placement results, marks onboarding complete, and selects a curriculum unit", async () => {

@@ -5,7 +5,7 @@ import { createPlacementState, isPlacementComplete, nextPlacementItem, placement
 import { gradeFromReview, initialState, schedule, type ReviewState } from "../../shared/fsrs";
 import { toHiragana } from "../../shared/kana";
 import { wordAttribution } from "../../shared/sentenceAttribution";
-import type { OnyomiScript } from "../../shared/settings";
+import type { OnyomiScript, SoundMode } from "../../shared/settings";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { trackThemes } from "../tracks/trackTheme";
 import type { PlacementAnswer, ProfileResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
@@ -14,6 +14,8 @@ import { AnswerOptions } from "./AnswerOptions";
 import { buildQueue, buildReadingItem, meaningFor, readingFor, reviewKey, type SessionQueueItem } from "./buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
+import { playCorrect, playSkip, playWrong } from "./feedbackSound";
+import { buzz } from "./haptics";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
 import { PauseModal } from "./PauseModal";
 import { QuizCard, wordLabels } from "./QuizCard";
@@ -60,6 +62,7 @@ type Props = {
   queueOverride?: SessionQueueItem[];
   sessionId: string;
   onyomiScript: OnyomiScript;
+  soundMode: SoundMode;
 };
 
 function intervalLabel(days: number): string {
@@ -77,6 +80,7 @@ export function SessionRunner({
   queueOverride,
   sessionId,
   onyomiScript,
+  soundMode,
 }: Props) {
   const [states] = useState(() => new Map(initialReviewStates));
   const externalQueue = queueOverride !== undefined;
@@ -127,6 +131,7 @@ export function SessionRunner({
   const correct = item !== undefined && item.kind !== "compare" && selectedIndex === item.answerIndex;
   const autoAdvance = !skipped && (mode === "placement" || mode === "unit-test" || correct);
   const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
+  const feedbackSoundEnabled = soundMode === "on";
 
   useEffect(() => {
     advancing.current = false;
@@ -213,6 +218,8 @@ export function SessionRunner({
     setSkippedCount((value) => value + Number(isSkipped));
     setNextInterval(interval);
     if (isCorrect) {
+      if (feedbackSoundEnabled) playCorrect(nextCombo);
+      if (!reducedMotion) buzz(nextCombo >= 6 ? [18, 40, 26] : 18);
       const tier = nextCombo >= 6 ? 3 : nextCombo >= 3 ? 2 : 1;
       const option = choice === null ? undefined : runnerRef.current?.querySelectorAll<HTMLElement>(".answer-option")[choice];
       const optionRect = option?.getBoundingClientRect();
@@ -221,6 +228,9 @@ export function SessionRunner({
         anchor: { x: optionRect.left - runnerRect.left + optionRect.width / 2, y: optionRect.top - runnerRect.top + optionRect.height / 2, width: optionRect.width, height: optionRect.height },
         id: nextBurstId.current += 1, tier, track: item.track,
       }]);
+    } else {
+      if (feedbackSoundEnabled) (isSkipped ? playSkip : playWrong)();
+      if (!reducedMotion) buzz(isSkipped ? 10 : [30, 50, 30]);
     }
   }
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { DailyGoal } from "../features/settings/DailyGoal";
 import { OnyomiScript } from "../features/settings/OnyomiScript";
 import { ShortcutSheet } from "../features/settings/ShortcutSheet";
+import { SoundSetting } from "../features/settings/SoundSetting";
 import { TrackToggles } from "../features/settings/TrackToggles";
 import { ThemePicker } from "../features/settings/ThemePicker";
 import { ProfileSettings } from "../features/settings/ProfileSettings";
@@ -37,6 +38,7 @@ export function SettingsScreen() {
           <OnyomiScript onChange={settings.setOnyomiScript} value={settings.onyomiScript} />
           <DailyGoal goal={settings.dailyGoal} onChange={settings.setGoal} />
           <ThemePicker onChange={settings.setTheme} value={settings.theme} />
+          <SoundSetting onChange={settings.setSoundMode} value={settings.soundMode} />
           <section className="settings-card placement-retest">
             <header>레벨 다시 측정</header>
             <div>
