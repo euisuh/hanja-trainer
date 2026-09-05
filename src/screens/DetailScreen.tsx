@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { IntervalChart } from "../features/detail/IntervalChart";
 import { PersonalRecord } from "../features/detail/PersonalRecord";
@@ -82,7 +82,7 @@ export function DetailScreen() {
     <section className="detail-screen">
       <button className="detail-back" onClick={back} type="button">← 뒤로 (Esc)</button>
       <div className="detail-overview">
-        <article className="detail-hero">
+        <article className="detail-hero" style={{ "--detail-font": trackThemes[character.tracks[0]?.track ?? "kr"].font } as CSSProperties}>
           <strong>{character.key}</strong>
           <span>{character.meaning_ko} · {character.meaning_en}</span>
           <small>{variantLine(character)}</small>

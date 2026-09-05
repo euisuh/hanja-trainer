@@ -1,6 +1,9 @@
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { initialState, type ReviewLogEntry } from "../../shared/fsrs";
 import type { CharacterEntry } from "../../shared/types";
+import { IntervalChart } from "./IntervalChart";
 import { buildIntervalBars, recordValues, variantsLabel } from "./detailModel";
 
 const character: CharacterEntry = {
@@ -28,5 +31,14 @@ describe("detail model", () => {
   it("formats due review state without dividing by zero", () => {
     const now = new Date("2026-01-02T00:00:00Z");
     expect(recordValues({ ...initialState(now), difficulty: 4.25, due: now }, now)).toEqual({ accuracy: "0%", reps: "0회", due: "지금", difficulty: "4.3 / 10" });
+  });
+
+  it("uses text for zero or one interval and bars for interval history", () => {
+    const render = (intervals: number[]) => renderToStaticMarkup(createElement(IntervalChart, { accent: "#000", intervals }));
+
+    expect(render([])).toContain("아직 복습 간격 기록이 없습니다.");
+    expect(render([3])).toContain("첫 복습 완료 · 다음 간격 <strong>+3일</strong>");
+    expect(render([3])).not.toContain('class="interval-chart__bars"');
+    expect(render([3, 5]).match(/class="interval-chart__bar"/gu)).toHaveLength(2);
   });
 });
