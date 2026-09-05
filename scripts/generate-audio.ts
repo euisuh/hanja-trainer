@@ -8,6 +8,13 @@ import { parseSeed } from "./seed.ts";
 
 type AudioEntry = { key: string; objectKey: string; text: string; track: Track };
 
+export function cloudflareAccessHeaders(env: NodeJS.ProcessEnv = process.env): Record<string, string> {
+  const clientId = env.CF_ACCESS_CLIENT_ID?.trim();
+  const clientSecret = env.CF_ACCESS_CLIENT_SECRET?.trim();
+  if (Boolean(clientId) !== Boolean(clientSecret)) throw new Error("Set both CF_ACCESS_CLIENT_ID and CF_ACCESS_CLIENT_SECRET");
+  return clientId ? { "CF-Access-Client-Id": clientId, "CF-Access-Client-Secret": clientSecret! } : {};
+}
+
 const voices: Record<Track, { languageCode: string; name: string }> = {
   kr: { languageCode: "ko-KR", name: "ko-KR-Neural2-A" },
   jp: { languageCode: "ja-JP", name: "ja-JP-Neural2-B" },
@@ -98,8 +105,9 @@ async function forEachConcurrent<T>(values: readonly T[], concurrency: number, f
 
 async function missingRemote(entries: readonly AudioEntry[], baseUrl: string, concurrency: number): Promise<AudioEntry[]> {
   const missing: AudioEntry[] = [];
+  const headers = cloudflareAccessHeaders();
   await forEachConcurrent(entries, concurrency, async (entry) => {
-    const response = await fetch(`${baseUrl}/${entry.track}/${encodeURIComponent(entry.key)}.mp3`, { method: "HEAD" });
+    const response = await fetch(`${baseUrl}/${entry.track}/${encodeURIComponent(entry.key)}.mp3`, { method: "HEAD", headers });
     if (response.status === 404) missing.push(entry);
     else if (!response.ok) throw new Error(`${entry.objectKey}: cache check returned ${response.status}`);
   });
@@ -109,7 +117,7 @@ async function missingRemote(entries: readonly AudioEntry[], baseUrl: string, co
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   if (args.includes("--help")) {
-    console.log("Usage: npm run audio:generate -- [--dry-run] [--force] [--local|--remote]\nAuth: GOOGLE_CLOUD_ACCESS_TOKEN or gcloud ADC; optional GOOGLE_CLOUD_PROJECT");
+    console.log("Usage: npm run audio:generate -- [--dry-run] [--force] [--local|--remote]\nAuth: GOOGLE_CLOUD_ACCESS_TOKEN or gcloud ADC; optional GOOGLE_CLOUD_PROJECT and CF_ACCESS_CLIENT_ID/CF_ACCESS_CLIENT_SECRET");
     return;
   }
   const known = new Set(["--dry-run", "--force", "--local", "--remote"]);

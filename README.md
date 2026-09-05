@@ -67,9 +67,18 @@ curl -i https://hanja.uiseoya.com/detail/%E4%B8%80
 
 Run remote migrations and the seed before deploying Worker code that depends
 on them. Verify the root SPA, one deep link, and `/api/health` after deploy.
-Cloudflare Access is the access-control layer in front of the Worker; the app
-does not implement authentication. An unauthenticated `curl` may therefore
-return the Access login response even while the deployment is healthy.
+The `Hanja Trainer` Cloudflare Access application protects the entire
+`hanja.uiseoya.com` hostname for 24 hours and allows only the operator email.
+The app does not implement account authentication. Verify the boundary from a
+shell with no Access session; each command must return a redirect or Access
+HTML, never application JSON:
+
+```sh
+curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/
+curl -s https://hanja.uiseoya.com/api/profiles
+curl -s -X POST https://hanja.uiseoya.com/api/profiles/select \
+  -H 'content-type: application/json' -d '{"profileId":2}'
+```
 
 ### Cached reading audio
 
@@ -85,11 +94,15 @@ router does not expose that route.
 3. Deploy the Worker and empty audio route: `npm run deploy`.
 4. Configure Google ADC with a quota project, or set
    `GOOGLE_CLOUD_ACCESS_TOKEN` and `GOOGLE_CLOUD_PROJECT`.
-5. Generate and upload missing clips: `npm run audio:generate`.
+5. For cached-clip checks through Access, set `CF_ACCESS_CLIENT_ID` and
+   `CF_ACCESS_CLIENT_SECRET` from a service token authorized for
+   `hanja.uiseoya.com/api/audio/*`. Never bypass the whole `/api/*` path.
+6. Generate and upload missing clips: `npm run audio:generate`.
 
 Future runs of `npm run audio:generate` issue `HEAD` checks through the audio
 route, which runs before profile-session middleware, and synthesize only missing
-character keys. Use `--force` only when every clip must be regenerated.
+character keys. `--force` skips those checks and therefore does not need the
+Access service token; use it only when every selected clip must be regenerated.
 
 ## Optional profile PIN
 
