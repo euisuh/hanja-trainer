@@ -10,6 +10,8 @@ type PendingReview = {
 };
 
 const pending = new Map<string, PendingReview>();
+const STORAGE_KEY = "hanja-trainer:pending-reviews";
+const MAX_PENDING = 500;
 const listeners = new Set<() => void>();
 const flushing = new Set<number>();
 const retryTimers = new Map<number, number>();
@@ -20,7 +22,32 @@ function keyOf(profileId: number, input: SubmitReviewRequest): string {
   return `${profileId}:${input.sessionId}:${input.cardIndex}`;
 }
 
+// `onSynced` belongs to a mounted SessionRunner, so rehydrated reviews flush silently.
+type StoredReview = Pick<PendingReview, "profileId" | "input">;
+
+function persist() {
+  try {
+    const rows: StoredReview[] = [...pending.values()].map(({ profileId, input }) => ({ profileId, input }));
+    if (rows.length === 0) localStorage.removeItem(STORAGE_KEY);
+    else localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+  } catch { /* Private mode or a full quota must not break answering. */ }
+}
+
+function rehydrate() {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
+    if (!Array.isArray(parsed)) return;
+    for (const row of parsed as StoredReview[]) {
+      if (!Number.isSafeInteger(row?.profileId) || typeof row?.input?.sessionId !== "string") continue;
+      pending.set(keyOf(row.profileId, row.input), { profileId: row.profileId, input: row.input });
+    }
+  } catch { /* Corrupt storage is discarded, not fatal. */ }
+}
+
+rehydrate();
+
 function notify() {
+  persist();
   for (const listener of listeners) listener();
 }
 
@@ -76,6 +103,11 @@ export function setAnswerSubmitProfile(profileId: number | null) {
 }
 
 export function enqueuePendingReview(profileId: number, input: SubmitReviewRequest, onSynced?: (response: SubmitReviewResponse) => void) {
+  // ponytail: hard cap, oldest-first eviction. Raise it if real sessions approach 500 unsynced answers.
+  if (pending.size >= MAX_PENDING) {
+    const oldest = pending.keys().next();
+    if (!oldest.done) pending.delete(oldest.value);
+  }
   pending.set(keyOf(profileId, input), { profileId, input, onSynced });
   notify();
   if (profileId === activeProfileId) void flushPendingReviews(profileId);
@@ -88,6 +120,7 @@ export function pendingReviewCount(profileId: number, sessionId?: string): numbe
 export function resetAnswerSubmitForTests() {
   for (const profileId of retryTimers.keys()) clearRetry(profileId);
   pending.clear();
+  persist();
   flushing.clear();
   failedProfiles.clear();
   activeProfileId = null;
