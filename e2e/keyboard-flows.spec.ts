@@ -99,7 +99,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         await expect(page.locator(".feedback-bar")).toContainText(/모름 · 정답 \S/u);
         if (!options.skipAnnouncement) await expect(page.locator(".feedback-bar")).toContainText(/= \S/u);
         await expect(page.locator(".feedback-bar")).toHaveAttribute("aria-live", "polite");
-        await expect(page.getByRole("button", { name: /다음 카드/u })).toBeEnabled();
+        await expect(page.getByRole("button", { name: index + 1 < cards.length ? /다음 카드/u : /세션 마치기/u })).toBeEnabled();
         if (options.skipAnnouncement) await expect(page.locator(".session-announcement")).toContainText(`정답은 ${displayedAnswer}입니다.`);
         await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-skip-hold", "true"));
         await page.waitForTimeout(500);
