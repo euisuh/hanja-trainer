@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { themes } from "./tokens";
+import { avatarHue } from "../features/profile/avatarHue";
+import { avatarBackground, themes } from "./tokens";
+
+function relativeLuminance([red, green, blue]: number[]): number {
+  const [r, g, b] = [red, green, blue].map((channel) => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
 
 function luminance(hex: string): number {
-  const [red, green, blue] = hex.match(/[\da-f]{2}/giu)!.map((part) => {
-    const channel = Number.parseInt(part, 16) / 255;
-    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+  return relativeLuminance(hex.match(/[\da-f]{2}/giu)!.map((part) => Number.parseInt(part, 16) / 255));
 }
 
 function contrast(foreground: string, background: string): number {
@@ -14,7 +16,28 @@ function contrast(foreground: string, background: string): number {
   return (values[0] + 0.05) / (values[1] + 0.05);
 }
 
+function avatarContrast(hue: number): number {
+  const [, saturationValue, lightnessValue] = avatarBackground.match(/ (\d+)% (\d+)%\)$/u)!;
+  const saturation = Number(saturationValue) / 100;
+  const lightness = Number(lightnessValue) / 100;
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const section = hue / 60;
+  const middle = chroma * (1 - Math.abs(section % 2 - 1));
+  const channels = section < 1 ? [chroma, middle, 0] : section < 2 ? [middle, chroma, 0] : section < 3 ? [0, chroma, middle]
+    : section < 4 ? [0, middle, chroma] : section < 5 ? [middle, 0, chroma] : [chroma, 0, middle];
+  const offset = lightness - chroma / 2;
+  return 1.05 / (relativeLuminance(channels.map((channel) => channel + offset)) + 0.05);
+}
+
 describe("visual themes", () => {
+  it("keeps white avatar initials legible for every generated hue", () => {
+    for (let hue = 0; hue < 360; hue += 1) expect(avatarContrast(hue), `hue ${hue}`).toBeGreaterThanOrEqual(3);
+    for (const profileId of [1, 2, 3, 4, 5, 137, 360, 361]) {
+      const hue = Number.parseInt(avatarHue(profileId), 10);
+      expect(avatarContrast(hue), `profile ${profileId}, hue ${hue}`).toBeGreaterThanOrEqual(3);
+    }
+  });
+
   it("keeps every existing default token unchanged", () => {
     const current = themes.default;
     expect(current.colors).toMatchObject({
