@@ -9,6 +9,9 @@ type DailyRow = { day: string };
 type OffsetPeriod = { until?: number; offset: number };
 
 const dayFormatters = new Map<string, Intl.DateTimeFormat>();
+// A zone changes offset at most twice a year, so cache each small yearly answer for the isolate's lifetime.
+// The cache is bounded by the profile timezones and years of history this isolate sees.
+const yearTransitions = new Map<string, OffsetPeriod[]>();
 
 function record(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null && !Array.isArray(value) ? value as Record<string, unknown> : null;
@@ -84,14 +87,15 @@ function timezoneOffset(timestamp: number, timezone: string): number {
   return local - Math.floor(timestamp / 1_000) * 1_000;
 }
 
-function offsetPeriods(timezone: string, minAt: number | null, maxAt: number | null): OffsetPeriod[] {
-  if (minAt === null || maxAt === null) return [{ offset: 0 }];
-  const start = Math.floor(minAt / DAY_MS) * DAY_MS - DAY_MS;
-  const end = Math.ceil(maxAt / DAY_MS) * DAY_MS + DAY_MS;
+function transitionsForYear(timezone: string, year: number): OffsetPeriod[] {
+  const key = `${timezone}:${year}`;
+  const cached = yearTransitions.get(key);
+  if (cached) return cached;
   const periods: OffsetPeriod[] = [];
-  let previousAt = start;
-  let previousOffset = timezoneOffset(start, timezone);
-  for (let sample = start + DAY_MS; sample <= end; sample += DAY_MS) {
+  let previousAt = Date.UTC(year, 0, 1);
+  let previousOffset = timezoneOffset(previousAt, timezone);
+  for (let month = 1; month <= 12; month += 1) {
+    const sample = Date.UTC(year, month, 1);
     const nextOffset = timezoneOffset(sample, timezone);
     if (nextOffset === previousOffset) {
       previousAt = sample;
@@ -107,6 +111,31 @@ function offsetPeriods(timezone: string, minAt: number | null, maxAt: number | n
     periods.push({ until: high, offset: previousOffset });
     previousOffset = timezoneOffset(high, timezone);
     previousAt = sample;
+  }
+  periods.push({ offset: previousOffset });
+  yearTransitions.set(key, periods);
+  return periods;
+}
+
+export function offsetPeriods(timezone: string, minAt: number | null, maxAt: number | null): OffsetPeriod[] {
+  if (minAt === null || maxAt === null) return [{ offset: 0 }];
+  const start = Math.floor(minAt / DAY_MS) * DAY_MS - DAY_MS;
+  const end = Math.ceil(maxAt / DAY_MS) * DAY_MS + DAY_MS;
+  const periods: OffsetPeriod[] = [];
+  const firstYear = new Date(start).getUTCFullYear();
+  const lastYear = new Date(end).getUTCFullYear();
+  const initial = transitionsForYear(timezone, firstYear);
+  let previousOffset = initial.find((period) => period.until === undefined || start < period.until)!.offset;
+  for (let year = firstYear; year <= lastYear; year += 1) {
+    const yearly = transitionsForYear(timezone, year);
+    for (let index = 0; index < yearly.length - 1; index += 1) {
+      const until = yearly[index].until!;
+      if (until <= start || until > end) continue;
+      const nextOffset = yearly[index + 1].offset;
+      if (nextOffset === previousOffset) continue;
+      periods.push({ until, offset: previousOffset });
+      previousOffset = nextOffset;
+    }
   }
   periods.push({ offset: previousOffset });
   return periods;
