@@ -71,7 +71,7 @@ main,
 .active-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
   margin-right: var(--space-2);
 }
 
@@ -123,14 +123,14 @@ p {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-4);
   padding: var(--space-5) var(--space-2) var(--space-4);
 }
 
 .metric {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   border: 2px solid var(--ink);
   border-radius: var(--radius-pill);
@@ -156,7 +156,7 @@ p {
 .daily-goal {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-4);
   margin-left: auto;
   padding: var(--space-3) var(--space-4) var(--space-3) var(--space-3);
   border-radius: var(--radius-pill);
@@ -188,7 +188,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 6px;
+  gap: var(--space-3);
   padding: var(--space-3);
   border-radius: var(--radius-large);
   background: var(--ink);
@@ -199,7 +199,7 @@ p {
 .bottom-nav a {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-nav-item);
   color: var(--nav-muted);

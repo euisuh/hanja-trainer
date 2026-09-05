@@ -8,7 +8,7 @@
 .track-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-3);
   padding: var(--space-1) var(--space-1) var(--space-5);
 }
 
@@ -36,7 +36,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: var(--space-5);
   margin-bottom: var(--space-5);
   padding: var(--space-5);
   border: 2px solid var(--nudge-accent);
@@ -46,7 +46,7 @@
 
 .track-imbalance p { color: var(--body); font-size: 14px; }
 .track-imbalance p strong { color: var(--ink); }
-.track-imbalance__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.track-imbalance__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 .track-imbalance__actions button { padding: var(--space-3) var(--space-4); border: 2px solid var(--nudge-accent); border-radius: var(--radius-small); cursor: pointer; font-size: 12px; font-weight: 800; }
 .track-imbalance__start { background: var(--nudge-accent); color: var(--card); }
 .track-imbalance__start kbd { margin-left: var(--space-2); background: var(--key-overlay); }
@@ -56,7 +56,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 16px;
+  gap: var(--space-5);
 }
 
 .path-map {
@@ -99,7 +99,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-3);
   padding: 0;
   border: 0;
   background: transparent;
@@ -134,7 +134,7 @@
   flex: 1 1 260px;
   min-width: 250px;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--space-5);
 }
 
 .lesson-cta,
@@ -211,20 +211,20 @@
 .review-cta kbd { margin-left: var(--space-2); }
 
 .level-review-picker {
-  padding: 20px;
+  padding: var(--space-6);
   border: 3px solid var(--ink);
   border-radius: var(--radius-large);
   background: var(--home-soft);
 }
 
-.level-review-picker label { display: block; margin-bottom: 10px; color: var(--home-accent-text); font-size: 13px; font-weight: 800; }
-.level-review-picker__controls { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) auto; gap: 8px; }
+.level-review-picker label { display: block; margin-bottom: var(--space-4); color: var(--home-accent-text); font-size: 13px; font-weight: 800; }
+.level-review-picker__controls { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) auto; gap: var(--space-3); }
 .level-review-picker select,
 .level-review-picker button { min-height: 42px; border: 2px solid var(--ink); border-radius: var(--radius-small); font: inherit; font-weight: 800; }
-.level-review-picker select { min-width: 0; flex: 1; padding: 0 10px; background: var(--card); color: var(--ink); }
-.level-review-picker button { padding: 0 14px; background: var(--home-accent); color: var(--card); cursor: pointer; }
+.level-review-picker select { min-width: 0; flex: 1; padding: 0 var(--space-4); background: var(--card); color: var(--ink); }
+.level-review-picker button { padding: 0 var(--space-5); background: var(--home-accent); color: var(--card); cursor: pointer; }
 .level-review-picker button:disabled { cursor: default; opacity: .55; }
-.level-review-picker small { display: block; margin-top: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.level-review-picker small { display: block; margin-top: var(--space-3); color: var(--muted); font-size: 12px; font-weight: 700; }
 
 .exam-progress {
   padding: var(--space-6);

@@ -12,7 +12,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--space-3);
   margin-bottom: var(--space-4);
 }
 
@@ -25,7 +25,7 @@
   grid-auto-flow: column;
   grid-template-columns: repeat(18, 1fr);
   grid-template-rows: repeat(7, 1fr);
-  gap: 4px;
+  gap: var(--space-2);
 }
 
 .streak-calendar__day { display: block; aspect-ratio: 1; border-radius: var(--radius-calendar); background: var(--paper); }
@@ -36,7 +36,7 @@
 .track-mastery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
+  gap: var(--space-5);
   margin-top: var(--space-5);
 }
 
@@ -53,7 +53,7 @@
 .track-mastery-card > p { margin-top: 3px; color: var(--muted); font-size: 13px; font-weight: 700; }
 .track-mastery-card__bar { height: 12px; margin-top: var(--space-4); overflow: hidden; border: 1px solid var(--border-tan); border-radius: var(--radius-pill); background: var(--paper); }
 .track-mastery-card__bar span { display: block; height: 100%; background: var(--stats-accent); }
-.track-mastery-card footer { display: flex; justify-content: space-between; gap: 12px; margin-top: var(--space-3); color: var(--body); font-size: 12px; font-weight: 700; }
+.track-mastery-card footer { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-3); color: var(--body); font-size: 12px; font-weight: 700; }
 .track-mastery-card__secondary { padding-top: var(--space-3); border-top: 1px dashed var(--border-tan); }
 
 @media (max-width: 560px) {

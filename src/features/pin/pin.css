@@ -6,7 +6,7 @@
 .profile-picker { display: grid; min-height: calc(100vh - 88px); place-items: center; }
 .profile-picker__card { width: min(100%, 680px); padding: var(--space-8); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
 .profile-picker__card h1 { font-size: 32px; }
-.profile-picker__options { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-top: var(--space-7); }
+.profile-picker__options { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--space-5); margin-top: var(--space-7); }
 .profile-picker__option { display: grid; min-height: 150px; padding: var(--space-6) var(--space-4); place-items: center; border: 3px solid var(--ink); border-radius: var(--radius-medium); background: var(--paper); color: var(--ink); box-shadow: var(--shadow-4); cursor: pointer; }
 .profile-picker__option:disabled { cursor: wait; opacity: .65; }
 .profile-picker__avatar { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 50%; background: var(--gold); color: var(--gold-text); font-size: 25px; font-weight: 800; }
@@ -14,10 +14,10 @@
 .profile-picker__lock { padding: var(--space-2) var(--space-3); border-radius: var(--radius-pill); background: var(--ink); color: var(--paper); font-size: 10px; font-weight: 800; }
 .pin-keypad { margin-top: var(--space-7); border-radius: var(--radius-medium); }
 .pin-keypad--shake { animation: om-shake .45s; }
-.pin-dots { display: flex; justify-content: center; gap: 14px; margin-bottom: var(--space-6); }
+.pin-dots { display: flex; justify-content: center; gap: var(--space-5); margin-bottom: var(--space-6); }
 .pin-dot { width: 17px; height: 17px; border: 3px solid var(--ink); border-radius: 50%; background: var(--card); }
 .pin-dot--filled { background: var(--ink); }
-.pin-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pin-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
 .pin-keys button, .pin-action { min-height: 48px; border: 3px solid var(--ink); border-radius: var(--radius-small); background: var(--gold); color: var(--gold-text); box-shadow: var(--shadow-4); cursor: pointer; font-size: 18px; font-weight: 800; }
 .pin-keys button:active, .pin-action:active { transform: translateY(3px); box-shadow: none; }
 .pin-keys button:disabled, .pin-action:disabled { cursor: not-allowed; opacity: .55; }
@@ -27,7 +27,7 @@
 .pin-setting .pin-keypad { max-width: 280px; }
 .pin-setting > header { margin-bottom: var(--space-3); }
 .pin-setting strong { display: block; margin-top: var(--space-4); }
-.pin-setting__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--space-5); }
+.pin-setting__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-5); }
 .pin-action { padding: var(--space-3) var(--space-5); font-size: 14px; }
 .pin-action--secondary { background: var(--card); color: var(--ink); }
 

@@ -44,13 +44,13 @@
 .unit-study__glyph small { display: block; margin-top: var(--space-3); color: var(--muted); font-size: 11px; }
 
 .unit-study__track { min-width: 220px; background: var(--study-soft); }
-.unit-study__reading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.unit-study__reading { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
 .unit-study__reading strong { font-size: 18px; }
 .unit-study__reading small { display: block; margin-top: 3px; color: var(--body); font-size: 12px; }
-.unit-study__badges { display: flex; flex-wrap: wrap; gap: 5px; margin: var(--space-3) 0; }
+.unit-study__badges { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0; }
 .unit-study__badges span { padding: var(--space-2) var(--space-3); border-radius: var(--radius-keycap); background: var(--study-accent); color: var(--card); font-size: 10px; font-weight: 800; }
 .unit-study__meaning { color: var(--ink); font-size: 13px; font-weight: 700; }
-.unit-study__sentences { display: grid; gap: 8px; margin-top: var(--space-4); }
+.unit-study__sentences { display: grid; gap: var(--space-3); margin-top: var(--space-4); }
 .unit-study__sentence { padding-top: var(--space-3); border-top: 1px solid var(--study-accent); }
 .unit-study__sentence small { display: block; margin-top: var(--space-2); color: var(--body); font-size: 11px; }
 .unit-study__source { color: var(--muted) !important; }
@@ -62,7 +62,7 @@
   width: 100%;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--space-3);
   padding: 0;
   border: 0;
   background: transparent;
@@ -81,7 +81,7 @@
 }
 
 .speaking-session { width: min(100%, 760px); margin-inline: auto; }
-.speaking-session__chrome { display: flex; align-items: center; gap: 12px; margin-bottom: var(--space-5); }
+.speaking-session__chrome { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-5); }
 .speaking-session__chrome button,
 .speaking-session__navigation button,
 .speaking-card button {
@@ -104,14 +104,14 @@
 .speaking-card__translation { margin-top: var(--space-3); color: var(--body); font-size: 14px; }
 .speaking-card__source { display: block; margin-top: var(--space-4); color: var(--muted); }
 .speaking-card__source a { color: inherit; }
-.speaking-card__compare { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: var(--space-7); padding: var(--space-5); border-radius: var(--radius-panel); background: var(--speaking-soft); }
+.speaking-card__compare { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-7); padding: var(--space-5); border-radius: var(--radius-panel); background: var(--speaking-soft); }
 .speaking-card__compare span { color: var(--muted); font-size: 12px; font-weight: 700; }
 .speaking-card__compare audio { max-width: 100%; }
-.speaking-card__recording { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; min-height: 48px; margin-top: var(--space-5); }
+.speaking-card__recording { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-4); min-height: 48px; margin-top: var(--space-5); }
 .speaking-card__recording p { flex-basis: 100%; }
 .speaking-card__recording button:first-of-type { background: var(--speaking-accent); color: var(--card); }
 .speaking-card__privacy { margin-top: var(--space-4); font-size: 12px; }
-.speaking-session__navigation { display: flex; justify-content: space-between; gap: 12px; margin-top: var(--space-5); }
+.speaking-session__navigation { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-5); }
 .speaking-session__navigation button:last-child { margin-left: auto; background: var(--ink); color: var(--paper); }
-.speaking-empty { display: grid; max-width: 620px; gap: 14px; margin-inline: auto; }
+.speaking-empty { display: grid; max-width: 620px; gap: var(--space-5); margin-inline: auto; }
 .speaking-empty button { width: fit-content; padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); cursor: pointer; font-weight: 800; }

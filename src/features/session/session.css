@@ -8,7 +8,7 @@
 .session-chrome {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-4);
   margin-bottom: var(--space-5);
 }
 
@@ -75,7 +75,7 @@ button.session-sync {
 
 .unit-test-hearts {
   display: flex;
-  gap: 3px;
+  gap: var(--space-2);
   color: var(--wrong-fg);
   font-size: 22px;
   line-height: 1;
@@ -116,7 +116,7 @@ button.session-sync {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
   margin-bottom: var(--space-5);
 }
 
@@ -149,7 +149,7 @@ button.session-sync {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 26px;
+  gap: 26px; /* Optical balance between the 150px glyph and sentence panel. */
 }
 
 .quiz-card__glyph {
@@ -214,7 +214,7 @@ button.session-sync {
 .compare-card {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  gap: var(--space-4);
   margin-top: var(--space-6);
 }
 
@@ -258,7 +258,7 @@ button.session-sync {
 .answer-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: var(--space-4);
   margin-top: var(--space-5);
 }
 
@@ -267,7 +267,7 @@ button.session-sync {
 .answer-option {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: var(--space-4);
   padding: var(--space-5);
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
@@ -335,7 +335,7 @@ button.session-sync {
   display: flex;
   width: 100%;
   align-items: center;
-  gap: 13px;
+  gap: var(--space-4);
   margin-top: var(--space-4);
   padding: var(--space-4) var(--space-5);
   border: 2px solid var(--border-tan);
@@ -353,7 +353,7 @@ button.session-sync {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-4);
   margin-top: var(--space-5);
   padding: var(--space-5);
   border: 3px solid var(--border-tan);
@@ -379,7 +379,7 @@ button.session-sync {
 .session-empty button {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   border: 3px solid var(--ink);
   border-radius: var(--radius-control);
@@ -539,7 +539,7 @@ button.session-sync {
 .session-empty {
   display: grid;
   justify-items: start;
-  gap: 18px;
+  gap: var(--space-6);
 }
 
 .session-complete {
@@ -565,7 +565,7 @@ button.session-sync {
 .session-complete__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
+  gap: var(--space-4);
   max-width: 620px;
   margin-bottom: var(--space-7);
 }
@@ -598,7 +598,7 @@ button.session-sync {
 .session-complete > button {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-4);
   padding: var(--space-5) var(--space-7);
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
@@ -614,7 +614,7 @@ button.session-sync {
   .session-runner { padding-top: 0; }
   .session-runner--unit-test { margin-top: -24px; }
   .session-runner--unit-test .session-chrome { margin-bottom: var(--space-3); }
-  .session-chrome { gap: 8px; }
+  .session-chrome { gap: var(--space-3); }
   .combo-badge { padding-inline: var(--space-3); font-size: 12px; }
   .quiz-card { padding: var(--space-7) var(--space-5); }
   .quiz-card__glyph { font-size: 108px; }

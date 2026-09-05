@@ -31,7 +31,7 @@
 .track-picker {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
+  gap: var(--space-5);
   margin-bottom: var(--space-8);
 }
 
@@ -94,7 +94,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: var(--space-4);
   border: 3px solid var(--ink);
   background: var(--gold);
   box-shadow: var(--shadow-6);
@@ -116,7 +116,7 @@
 
 .placement-result { padding-top: var(--space-9); }
 .placement-result h1 { margin-bottom: var(--space-7); font-size: 34px; }
-.placement-result__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: var(--space-7); }
+.placement-result__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-5); margin-bottom: var(--space-7); }
 .placement-result__card { --result-accent: var(--ink); --result-accent-text: var(--ink); padding: var(--space-6); border: 3px solid var(--result-accent); border-radius: var(--radius-medium); background: var(--card); box-shadow: 0 5px 0 var(--result-accent); }
 .placement-result__card--kr { --result-accent: var(--kr-accent); --result-accent-text: var(--kr-accent-text); }
 .placement-result__card--jp { --result-accent: var(--jp-accent); --result-accent-text: var(--jp-accent-text); }
