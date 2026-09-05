@@ -1,11 +1,66 @@
 {
   "sentences": [
     {
+      "character_key": "念",
+      "track": "kr",
+      "text": "부장님께서 저에게 기념품을 주셨어요.",
+      "translation_ko": "부장님께서 저에게 기념품을 주셨어요.",
+      "source": "Tatoeba #8437708",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "典",
+      "track": "kr",
+      "text": "사전이 있나요?",
+      "translation_ko": "사전이 있나요?",
+      "source": "Tatoeba #13194812",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "任",
+      "track": "kr",
+      "text": "그건 우리 책임이 아닙니다.",
+      "translation_ko": "그건 우리 책임이 아닙니다.",
+      "source": "Tatoeba #10603101",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "結",
       "track": "kr",
       "text": "저는 결혼했습니다.",
       "translation_ko": "저는 결혼했습니다.",
       "source": "Tatoeba #13114035",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "責",
+      "track": "kr",
+      "text": "그건 우리 책임이 아닙니다.",
+      "translation_ko": "그건 우리 책임이 아닙니다.",
+      "source": "Tatoeba #10603101",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "福",
+      "track": "kr",
+      "text": "저희 행복해요.",
+      "translation_ko": "저희 행복해요.",
+      "source": "Tatoeba #330716",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,

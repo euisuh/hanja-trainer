@@ -220,968 +220,974 @@ Issue #156 adopts the issue #150 decision to relax the literal-glyph rule only
 for Korean. The official per-language
 [Korean Tatoeba export](https://downloads.tatoeba.org/exports/per_language/kor/kor_sentences.tsv.bz2)
 was retrieved 2026-09-02. It contains 15,897 rows and has SHA-256
-`6ddb636c5e598ca65c29e27c0a57e547d4854264fc594aaa1adc6af527eee095`.
-The export is covered by the Tatoeba license and attribution terms above.
+`6ddb636c5e598ca65c29e27c0a57e547d4854264fc594aaa1adc6af527eee095`. The export is covered by the Tatoeba license and
+attribution terms above.
 
-The 64 existing Korean character-to-sentence mappings were replaced with
-unmodified rows from that frozen export. Each selection contains Hangul, no Han
-code point, at most 24 code points, and ends in a polite `-요` or `-습니다`
-family form. Selection favors a word or native-Korean meaning that illustrates
-the target character; a source sentence may serve more than one related
-character. Every row records its `Tatoeba #{id}` attribution and uses
-`source_kind: corpus`. `translation_ko` equals the Korean source text.
+`scripts/refresh-kr-polite-sentences.mjs` verifies that frozen-export hash,
+then searches all 3,654 rows containing Hangul, no Han code point, at most
+24 Unicode code points, and a polite `-요` or `-습니다`-family ending. A
+normal mapping must contain, at the start of a Hangul word, the complete
+reading of a two-character compound in `data/words/kr-wiktionary.json`, and
+that sourced compound must list the target character as a member. Shortest
+sentence and then lowest Tatoeba id break ties. Matching a bare 음 syllable is intentionally
+insufficient because native words and homophones do not identify a Hanja.
 
-`scripts/refresh-kr-polite-sentences.mjs` verifies the frozen export hash and
-reproduces the 64 reviewed selections. Korean rows store `target_index: null`,
-and the study, quiz, and detail views display the target Hanja separately.
-Japanese and Chinese retain the literal-glyph offset contract unchanged.
-Across all tracks, 775 of 3,866 pairs have rank-0 sentences; one extra rank
-makes 776 unique seeded sentence identities.
+71 mappings use the sourced-compound rule. 48 further mappings use the
+reviewed exceptions below: an exact frozen Tatoeba id and token plus an
+explicit 한자어 spelling, 훈 meaning, 음 context, or numeric value. The script
+validates every exception before writing. Duplicate Tatoeba ids are allowed
+only when every character independently passes one of these rules; a session
+may consequently repeat a sentence.
+
+Every row records its `Tatoeba #{id}` attribution and uses
+`source_kind: corpus`, `target_index: null`, and `reading: null`.
+`translation_ko` equals the unmodified Korean source text. Korean coverage
+is 119 of 1000 characters. Japanese and Chinese retain the literal-glyph
+offset contract unchanged. Across all tracks, 830 of 3,866 pairs have rank-0
+sentences; one extra rank makes 831 unique seeded sentence identities.
+
+### Reviewed Korean exceptions
+
+| Character | Rule | Token | Source | Justification |
+| --- | --- | --- | --- | --- |
+| 從 | 훈 | `따라오세요` | Tatoeba #11106971 | 좇다와 같은 따라가다의 뜻 |
+| 稱 | 훈 | `부르세요` | Tatoeba #1587076 | 일컫다와 같은 부르다의 뜻 |
+| 滿 | 훈 | `가득` | Tatoeba #2478242 | 차서 가득한 상태 |
+| 精 | 한자어 | `정신` | Tatoeba #8861378 | 정신 (精神) |
+| 宗 | 한자어 | `종교` | Tatoeba #978656 | 종교 (宗教) |
+| 結 | 한자어 | `결혼` | Tatoeba #13114035 | 결혼 (結婚) |
+| 的 | 한자어 | `목적` | Tatoeba #6289889 | 목적 (目的) |
+| 族 | 한자어 | `가족` | Tatoeba #13187810 | 가족 (家族) |
+| 本 | 한자어 | `일본` | Tatoeba #13661161 | 일본 (日本) |
+| 現 | 한자어 | `현재` | Tatoeba #13170403 | 현재 (現在) |
+| 部 | 한자어 | `부서` | Tatoeba #10585906 | 부서 (部署) |
+| 江 | 음 | `강물` | Tatoeba #1218636 | 강물의 강 |
+| 內 | 훈 | `안에` | Tatoeba #4952515 | 안쪽의 뜻 |
+| 立 | 훈 | `서 있어요` | Tatoeba #12146765 | 서다의 활용 |
+| 每 | 한자어 | `매일` | Tatoeba #1533099 | 매일 (每日) |
+| 事 | 훈 | `일이에요` | Tatoeba #13174332 | 일 또는 사건의 뜻 |
+| 上 | 훈 | `위에` | Tatoeba #5099448 | 위쪽의 뜻 |
+| 前 | 훈 | `앞은` | Tatoeba #13143784 | 앞쪽의 뜻 |
+| 左 | 훈 | `왼쪽` | Tatoeba #13152276 | 왼쪽의 뜻 |
+| 下 | 훈 | `내려가세요` | Tatoeba #10587917 | 아래로 가다의 뜻 |
+| 同 | 한자어 | `동감` | Tatoeba #1587220 | 동감 (同感) |
+| 面 | 훈 | `얼굴` | Tatoeba #11114979 | 낯 또는 얼굴의 뜻 |
+| 命 | 훈 | `삶` | Tatoeba #2990082 | 목숨 또는 생명의 뜻 |
+| 算 | 한자어 | `계산` | Tatoeba #1587141 | 계산 (計算) |
+| 色 | 음 | `색은` | Tatoeba #8406161 | 빛깔을 뜻하는 색 |
+| 少 | 훈 | `조금` | Tatoeba #3947816 | 적은 양의 뜻 |
+| 數 | 한자어 | `수학` | Tatoeba #3191523 | 수학 (數學) |
+| 有 | 훈 | `있어요` | Tatoeba #330713 | 존재하다의 뜻 |
+| 入 | 한자어 | `입장` | Tatoeba #1015633 | 입장 (入場) |
+| 住 | 훈 | `살고` | Tatoeba #8119523 | 거주하며 살다의 뜻 |
+| 紙 | 훈 | `종이` | Tatoeba #3947786 | 종이의 뜻 |
+| 千 | 수 | `1000` | Tatoeba #11106713 | 일천의 수값 |
+| 春 | 훈 | `봄` | Tatoeba #13105958 | 봄의 뜻 |
+| 年 | 한자어 | `내년` | Tatoeba #8119471 | 내년 (來年) |
+| 大 | 한자어 | `대학생` | Tatoeba #7098211 | 대학생 (大學生) |
+| 萬 | 수 | `만 엔` | Tatoeba #11106224 | 일만의 수값 |
+| 民 | 한자어 | `주민` | Tatoeba #952518 | 주민 (住民) |
+| 山 | 음 | `산이` | Tatoeba #963697 | 산의 뜻 |
+| 三 | 수 | `셋` | Tatoeba #11105879 | 석 삼의 수값 |
+| 室 | 훈 | `방은` | Tatoeba #1587175 | 방 또는 집의 뜻 |
+| 十 | 한자어 | `오십` | Tatoeba #13216699 | 오십 (五十) |
+| 二 | 수 | `두 개` | Tatoeba #13137948 | 두 이의 수값 |
+| 一 | 수 | `하나` | Tatoeba #11106062 | 한 일의 수값 |
+| 日 | 한자어 | `매일` | Tatoeba #1533099 | 매일 (每日) |
+| 長 | 훈 | `긴 연설` | Tatoeba #11114977 | 길다의 활용이며 길 도로와 구별 |
+| 弟 | 훈 | `동생` | Tatoeba #10605298 | 아우 또는 어린 형제의 뜻 |
+| 八 | 수 | `8년` | Tatoeba #13206022 | 여덟의 수값 |
+| 兄 | 한자어 | `형제` | Tatoeba #13131854 | 형제 (兄弟) |
 
 ### Remaining Korean gaps
 
-Coverage remains at the previously reviewed 64 Korean mappings; expanding it
-was not part of the register migration. Each character below has no modern
-polite sentence curated in this pass.
+881 characters have no qualifying row under the frozen corpus and
+mapping rule.
 
 | Character | Reason |
 | --- | --- |
-| 丁 | No qualifying licensed sentence retained. |
-| 七 | No qualifying licensed sentence retained. |
-| 不 | No qualifying licensed sentence retained. |
-| 世 | No qualifying licensed sentence retained. |
-| 中 | No qualifying licensed sentence retained. |
-| 主 | No qualifying licensed sentence retained. |
-| 九 | No qualifying licensed sentence retained. |
-| 乳 | No qualifying licensed sentence retained. |
-| 亂 | No qualifying licensed sentence retained. |
-| 五 | No qualifying licensed sentence retained. |
-| 亡 | No qualifying licensed sentence retained. |
-| 交 | No qualifying licensed sentence retained. |
-| 京 | No qualifying licensed sentence retained. |
-| 人 | No qualifying licensed sentence retained. |
-| 仁 | No qualifying licensed sentence retained. |
-| 今 | No qualifying licensed sentence retained. |
-| 仕 | No qualifying licensed sentence retained. |
-| 他 | No qualifying licensed sentence retained. |
-| 仙 | No qualifying licensed sentence retained. |
-| 代 | No qualifying licensed sentence retained. |
-| 令 | No qualifying licensed sentence retained. |
-| 以 | No qualifying licensed sentence retained. |
-| 件 | No qualifying licensed sentence retained. |
-| 任 | No qualifying licensed sentence retained. |
-| 伏 | No qualifying licensed sentence retained. |
-| 伐 | No qualifying licensed sentence retained. |
-| 休 | No qualifying licensed sentence retained. |
-| 位 | No qualifying licensed sentence retained. |
-| 低 | No qualifying licensed sentence retained. |
-| 佛 | No qualifying licensed sentence retained. |
-| 作 | No qualifying licensed sentence retained. |
-| 使 | No qualifying licensed sentence retained. |
-| 來 | No qualifying licensed sentence retained. |
-| 例 | No qualifying licensed sentence retained. |
-| 依 | No qualifying licensed sentence retained. |
-| 侵 | No qualifying licensed sentence retained. |
-| 便 | No qualifying licensed sentence retained. |
-| 係 | No qualifying licensed sentence retained. |
-| 俗 | No qualifying licensed sentence retained. |
-| 保 | No qualifying licensed sentence retained. |
-| 信 | No qualifying licensed sentence retained. |
-| 修 | No qualifying licensed sentence retained. |
-| 個 | No qualifying licensed sentence retained. |
-| 倍 | No qualifying licensed sentence retained. |
-| 候 | No qualifying licensed sentence retained. |
-| 假 | No qualifying licensed sentence retained. |
-| 偉 | No qualifying licensed sentence retained. |
-| 停 | No qualifying licensed sentence retained. |
-| 健 | No qualifying licensed sentence retained. |
-| 傑 | No qualifying licensed sentence retained. |
-| 備 | No qualifying licensed sentence retained. |
-| 傳 | No qualifying licensed sentence retained. |
-| 傷 | No qualifying licensed sentence retained. |
-| 傾 | No qualifying licensed sentence retained. |
-| 價 | No qualifying licensed sentence retained. |
-| 儀 | No qualifying licensed sentence retained. |
-| 億 | No qualifying licensed sentence retained. |
-| 儉 | No qualifying licensed sentence retained. |
-| 儒 | No qualifying licensed sentence retained. |
-| 優 | No qualifying licensed sentence retained. |
-| 元 | No qualifying licensed sentence retained. |
-| 充 | No qualifying licensed sentence retained. |
-| 先 | No qualifying licensed sentence retained. |
-| 光 | No qualifying licensed sentence retained. |
-| 兒 | No qualifying licensed sentence retained. |
-| 全 | No qualifying licensed sentence retained. |
-| 兩 | No qualifying licensed sentence retained. |
-| 公 | No qualifying licensed sentence retained. |
-| 六 | No qualifying licensed sentence retained. |
-| 共 | No qualifying licensed sentence retained. |
-| 兵 | No qualifying licensed sentence retained. |
-| 具 | No qualifying licensed sentence retained. |
-| 典 | No qualifying licensed sentence retained. |
-| 冊 | No qualifying licensed sentence retained. |
-| 再 | No qualifying licensed sentence retained. |
-| 冬 | No qualifying licensed sentence retained. |
-| 冷 | No qualifying licensed sentence retained. |
-| 凶 | No qualifying licensed sentence retained. |
-| 出 | No qualifying licensed sentence retained. |
-| 分 | No qualifying licensed sentence retained. |
-| 切 | No qualifying licensed sentence retained. |
-| 刑 | No qualifying licensed sentence retained. |
-| 列 | No qualifying licensed sentence retained. |
-| 初 | No qualifying licensed sentence retained. |
-| 判 | No qualifying licensed sentence retained. |
-| 別 | No qualifying licensed sentence retained. |
-| 利 | No qualifying licensed sentence retained. |
-| 到 | No qualifying licensed sentence retained. |
-| 制 | No qualifying licensed sentence retained. |
-| 券 | No qualifying licensed sentence retained. |
-| 刻 | No qualifying licensed sentence retained. |
-| 則 | No qualifying licensed sentence retained. |
-| 副 | No qualifying licensed sentence retained. |
-| 創 | No qualifying licensed sentence retained. |
-| 劇 | No qualifying licensed sentence retained. |
-| 力 | No qualifying licensed sentence retained. |
-| 功 | No qualifying licensed sentence retained. |
-| 加 | No qualifying licensed sentence retained. |
-| 助 | No qualifying licensed sentence retained. |
-| 努 | No qualifying licensed sentence retained. |
-| 勇 | No qualifying licensed sentence retained. |
-| 動 | No qualifying licensed sentence retained. |
-| 務 | No qualifying licensed sentence retained. |
-| 勝 | No qualifying licensed sentence retained. |
-| 勞 | No qualifying licensed sentence retained. |
-| 勢 | No qualifying licensed sentence retained. |
-| 勤 | No qualifying licensed sentence retained. |
-| 勸 | No qualifying licensed sentence retained. |
-| 包 | No qualifying licensed sentence retained. |
-| 化 | No qualifying licensed sentence retained. |
-| 北 | No qualifying licensed sentence retained. |
-| 區 | No qualifying licensed sentence retained. |
-| 午 | No qualifying licensed sentence retained. |
-| 半 | No qualifying licensed sentence retained. |
-| 卒 | No qualifying licensed sentence retained. |
-| 卓 | No qualifying licensed sentence retained. |
-| 協 | No qualifying licensed sentence retained. |
-| 南 | No qualifying licensed sentence retained. |
-| 博 | No qualifying licensed sentence retained. |
-| 占 | No qualifying licensed sentence retained. |
-| 印 | No qualifying licensed sentence retained. |
-| 危 | No qualifying licensed sentence retained. |
-| 卵 | No qualifying licensed sentence retained. |
-| 卷 | No qualifying licensed sentence retained. |
-| 厚 | No qualifying licensed sentence retained. |
-| 原 | No qualifying licensed sentence retained. |
-| 去 | No qualifying licensed sentence retained. |
-| 參 | No qualifying licensed sentence retained. |
-| 友 | No qualifying licensed sentence retained. |
-| 反 | No qualifying licensed sentence retained. |
-| 叔 | No qualifying licensed sentence retained. |
-| 取 | No qualifying licensed sentence retained. |
-| 受 | No qualifying licensed sentence retained. |
-| 口 | No qualifying licensed sentence retained. |
-| 古 | No qualifying licensed sentence retained. |
-| 句 | No qualifying licensed sentence retained. |
-| 可 | No qualifying licensed sentence retained. |
-| 史 | No qualifying licensed sentence retained. |
-| 右 | No qualifying licensed sentence retained. |
-| 各 | No qualifying licensed sentence retained. |
-| 合 | No qualifying licensed sentence retained. |
-| 吉 | No qualifying licensed sentence retained. |
-| 名 | No qualifying licensed sentence retained. |
-| 向 | No qualifying licensed sentence retained. |
-| 君 | No qualifying licensed sentence retained. |
-| 否 | No qualifying licensed sentence retained. |
-| 吸 | No qualifying licensed sentence retained. |
-| 告 | No qualifying licensed sentence retained. |
-| 周 | No qualifying licensed sentence retained. |
-| 味 | No qualifying licensed sentence retained. |
-| 呼 | No qualifying licensed sentence retained. |
-| 和 | No qualifying licensed sentence retained. |
-| 品 | No qualifying licensed sentence retained. |
-| 員 | No qualifying licensed sentence retained. |
-| 唱 | No qualifying licensed sentence retained. |
-| 商 | No qualifying licensed sentence retained. |
-| 問 | No qualifying licensed sentence retained. |
-| 善 | No qualifying licensed sentence retained. |
-| 喜 | No qualifying licensed sentence retained. |
-| 單 | No qualifying licensed sentence retained. |
-| 器 | No qualifying licensed sentence retained. |
-| 嚴 | No qualifying licensed sentence retained. |
-| 四 | No qualifying licensed sentence retained. |
-| 回 | No qualifying licensed sentence retained. |
-| 因 | No qualifying licensed sentence retained. |
-| 困 | No qualifying licensed sentence retained. |
-| 固 | No qualifying licensed sentence retained. |
-| 圍 | No qualifying licensed sentence retained. |
-| 園 | No qualifying licensed sentence retained. |
-| 圓 | No qualifying licensed sentence retained. |
-| 圖 | No qualifying licensed sentence retained. |
-| 團 | No qualifying licensed sentence retained. |
-| 土 | No qualifying licensed sentence retained. |
-| 在 | No qualifying licensed sentence retained. |
-| 地 | No qualifying licensed sentence retained. |
-| 均 | No qualifying licensed sentence retained. |
-| 城 | No qualifying licensed sentence retained. |
-| 域 | No qualifying licensed sentence retained. |
-| 基 | No qualifying licensed sentence retained. |
-| 堂 | No qualifying licensed sentence retained. |
-| 堅 | No qualifying licensed sentence retained. |
-| 報 | No qualifying licensed sentence retained. |
-| 場 | No qualifying licensed sentence retained. |
-| 境 | No qualifying licensed sentence retained. |
-| 墓 | No qualifying licensed sentence retained. |
-| 增 | No qualifying licensed sentence retained. |
-| 壁 | No qualifying licensed sentence retained. |
-| 壇 | No qualifying licensed sentence retained. |
-| 壓 | No qualifying licensed sentence retained. |
-| 士 | No qualifying licensed sentence retained. |
-| 壯 | No qualifying licensed sentence retained. |
-| 夏 | No qualifying licensed sentence retained. |
-| 夕 | No qualifying licensed sentence retained. |
-| 外 | No qualifying licensed sentence retained. |
-| 多 | No qualifying licensed sentence retained. |
-| 夜 | No qualifying licensed sentence retained. |
-| 天 | No qualifying licensed sentence retained. |
-| 太 | No qualifying licensed sentence retained. |
-| 夫 | No qualifying licensed sentence retained. |
-| 失 | No qualifying licensed sentence retained. |
-| 奇 | No qualifying licensed sentence retained. |
-| 奉 | No qualifying licensed sentence retained. |
-| 好 | No qualifying licensed sentence retained. |
-| 如 | No qualifying licensed sentence retained. |
-| 妙 | No qualifying licensed sentence retained. |
-| 妨 | No qualifying licensed sentence retained. |
-| 妹 | No qualifying licensed sentence retained. |
-| 姉 | No qualifying licensed sentence retained. |
-| 始 | No qualifying licensed sentence retained. |
-| 姓 | No qualifying licensed sentence retained. |
-| 委 | No qualifying licensed sentence retained. |
-| 姿 | No qualifying licensed sentence retained. |
-| 威 | No qualifying licensed sentence retained. |
-| 婚 | No qualifying licensed sentence retained. |
-| 婦 | No qualifying licensed sentence retained. |
-| 孔 | No qualifying licensed sentence retained. |
-| 字 | No qualifying licensed sentence retained. |
-| 存 | No qualifying licensed sentence retained. |
-| 孝 | No qualifying licensed sentence retained. |
-| 季 | No qualifying licensed sentence retained. |
-| 孤 | No qualifying licensed sentence retained. |
-| 孫 | No qualifying licensed sentence retained. |
-| 宅 | No qualifying licensed sentence retained. |
-| 守 | No qualifying licensed sentence retained. |
-| 安 | No qualifying licensed sentence retained. |
-| 完 | No qualifying licensed sentence retained. |
-| 官 | No qualifying licensed sentence retained. |
-| 定 | No qualifying licensed sentence retained. |
-| 客 | No qualifying licensed sentence retained. |
-| 宣 | No qualifying licensed sentence retained. |
-| 宮 | No qualifying licensed sentence retained. |
-| 害 | No qualifying licensed sentence retained. |
-| 容 | No qualifying licensed sentence retained. |
-| 宿 | No qualifying licensed sentence retained. |
-| 寄 | No qualifying licensed sentence retained. |
-| 密 | No qualifying licensed sentence retained. |
-| 富 | No qualifying licensed sentence retained. |
-| 寒 | No qualifying licensed sentence retained. |
-| 察 | No qualifying licensed sentence retained. |
-| 寢 | No qualifying licensed sentence retained. |
-| 實 | No qualifying licensed sentence retained. |
-| 寫 | No qualifying licensed sentence retained. |
-| 寶 | No qualifying licensed sentence retained. |
-| 寸 | No qualifying licensed sentence retained. |
-| 寺 | No qualifying licensed sentence retained. |
-| 射 | No qualifying licensed sentence retained. |
-| 將 | No qualifying licensed sentence retained. |
-| 專 | No qualifying licensed sentence retained. |
-| 尊 | No qualifying licensed sentence retained. |
-| 對 | No qualifying licensed sentence retained. |
-| 導 | No qualifying licensed sentence retained. |
-| 小 | No qualifying licensed sentence retained. |
-| 就 | No qualifying licensed sentence retained. |
-| 局 | No qualifying licensed sentence retained. |
-| 居 | No qualifying licensed sentence retained. |
-| 屈 | No qualifying licensed sentence retained. |
-| 屋 | No qualifying licensed sentence retained. |
-| 展 | No qualifying licensed sentence retained. |
-| 層 | No qualifying licensed sentence retained. |
-| 屬 | No qualifying licensed sentence retained. |
-| 島 | No qualifying licensed sentence retained. |
-| 崇 | No qualifying licensed sentence retained. |
-| 川 | No qualifying licensed sentence retained. |
-| 州 | No qualifying licensed sentence retained. |
-| 工 | No qualifying licensed sentence retained. |
-| 巨 | No qualifying licensed sentence retained. |
-| 差 | No qualifying licensed sentence retained. |
-| 己 | No qualifying licensed sentence retained. |
-| 布 | No qualifying licensed sentence retained. |
-| 希 | No qualifying licensed sentence retained. |
-| 帝 | No qualifying licensed sentence retained. |
-| 師 | No qualifying licensed sentence retained. |
-| 席 | No qualifying licensed sentence retained. |
-| 帳 | No qualifying licensed sentence retained. |
-| 帶 | No qualifying licensed sentence retained. |
-| 常 | No qualifying licensed sentence retained. |
-| 干 | No qualifying licensed sentence retained. |
-| 平 | No qualifying licensed sentence retained. |
-| 幸 | No qualifying licensed sentence retained. |
-| 床 | No qualifying licensed sentence retained. |
-| 序 | No qualifying licensed sentence retained. |
-| 底 | No qualifying licensed sentence retained. |
-| 店 | No qualifying licensed sentence retained. |
-| 府 | No qualifying licensed sentence retained. |
-| 度 | No qualifying licensed sentence retained. |
-| 座 | No qualifying licensed sentence retained. |
-| 庫 | No qualifying licensed sentence retained. |
-| 庭 | No qualifying licensed sentence retained. |
-| 康 | No qualifying licensed sentence retained. |
-| 廣 | No qualifying licensed sentence retained. |
-| 廳 | No qualifying licensed sentence retained. |
-| 延 | No qualifying licensed sentence retained. |
-| 建 | No qualifying licensed sentence retained. |
-| 式 | No qualifying licensed sentence retained. |
-| 引 | No qualifying licensed sentence retained. |
-| 弱 | No qualifying licensed sentence retained. |
-| 張 | No qualifying licensed sentence retained. |
-| 強 | No qualifying licensed sentence retained. |
-| 彈 | No qualifying licensed sentence retained. |
-| 形 | No qualifying licensed sentence retained. |
-| 往 | No qualifying licensed sentence retained. |
-| 待 | No qualifying licensed sentence retained. |
-| 律 | No qualifying licensed sentence retained. |
-| 後 | No qualifying licensed sentence retained. |
-| 徒 | No qualifying licensed sentence retained. |
-| 得 | No qualifying licensed sentence retained. |
-| 復 | No qualifying licensed sentence retained. |
-| 德 | No qualifying licensed sentence retained. |
-| 心 | No qualifying licensed sentence retained. |
-| 必 | No qualifying licensed sentence retained. |
-| 志 | No qualifying licensed sentence retained. |
-| 忠 | No qualifying licensed sentence retained. |
-| 快 | No qualifying licensed sentence retained. |
-| 念 | No qualifying licensed sentence retained. |
-| 怒 | No qualifying licensed sentence retained. |
-| 思 | No qualifying licensed sentence retained. |
-| 急 | No qualifying licensed sentence retained. |
-| 性 | No qualifying licensed sentence retained. |
-| 怨 | No qualifying licensed sentence retained. |
-| 恨 | No qualifying licensed sentence retained. |
-| 恩 | No qualifying licensed sentence retained. |
-| 息 | No qualifying licensed sentence retained. |
-| 患 | No qualifying licensed sentence retained. |
-| 悲 | No qualifying licensed sentence retained. |
-| 情 | No qualifying licensed sentence retained. |
-| 惠 | No qualifying licensed sentence retained. |
-| 惡 | No qualifying licensed sentence retained. |
-| 想 | No qualifying licensed sentence retained. |
-| 意 | No qualifying licensed sentence retained. |
-| 愛 | No qualifying licensed sentence retained. |
-| 感 | No qualifying licensed sentence retained. |
-| 態 | No qualifying licensed sentence retained. |
-| 慮 | No qualifying licensed sentence retained. |
-| 慰 | No qualifying licensed sentence retained. |
-| 慶 | No qualifying licensed sentence retained. |
-| 憤 | No qualifying licensed sentence retained. |
-| 憲 | No qualifying licensed sentence retained. |
-| 應 | No qualifying licensed sentence retained. |
-| 成 | No qualifying licensed sentence retained. |
-| 戒 | No qualifying licensed sentence retained. |
-| 或 | No qualifying licensed sentence retained. |
-| 戰 | No qualifying licensed sentence retained. |
-| 戶 | No qualifying licensed sentence retained. |
-| 房 | No qualifying licensed sentence retained. |
-| 所 | No qualifying licensed sentence retained. |
-| 手 | No qualifying licensed sentence retained. |
-| 才 | No qualifying licensed sentence retained. |
-| 打 | No qualifying licensed sentence retained. |
-| 批 | No qualifying licensed sentence retained. |
-| 承 | No qualifying licensed sentence retained. |
-| 技 | No qualifying licensed sentence retained. |
-| 投 | No qualifying licensed sentence retained. |
-| 抗 | No qualifying licensed sentence retained. |
-| 折 | No qualifying licensed sentence retained. |
-| 拍 | No qualifying licensed sentence retained. |
-| 拒 | No qualifying licensed sentence retained. |
-| 招 | No qualifying licensed sentence retained. |
-| 拜 | No qualifying licensed sentence retained. |
-| 持 | No qualifying licensed sentence retained. |
-| 指 | No qualifying licensed sentence retained. |
-| 掃 | No qualifying licensed sentence retained. |
-| 授 | No qualifying licensed sentence retained. |
-| 採 | No qualifying licensed sentence retained. |
-| 探 | No qualifying licensed sentence retained. |
-| 接 | No qualifying licensed sentence retained. |
-| 推 | No qualifying licensed sentence retained. |
-| 提 | No qualifying licensed sentence retained. |
-| 揮 | No qualifying licensed sentence retained. |
-| 援 | No qualifying licensed sentence retained. |
-| 損 | No qualifying licensed sentence retained. |
-| 擇 | No qualifying licensed sentence retained. |
-| 擊 | No qualifying licensed sentence retained. |
-| 操 | No qualifying licensed sentence retained. |
-| 擔 | No qualifying licensed sentence retained. |
-| 據 | No qualifying licensed sentence retained. |
-| 擧 | No qualifying licensed sentence retained. |
-| 支 | No qualifying licensed sentence retained. |
-| 收 | No qualifying licensed sentence retained. |
-| 改 | No qualifying licensed sentence retained. |
-| 攻 | No qualifying licensed sentence retained. |
-| 放 | No qualifying licensed sentence retained. |
-| 政 | No qualifying licensed sentence retained. |
-| 故 | No qualifying licensed sentence retained. |
-| 效 | No qualifying licensed sentence retained. |
-| 救 | No qualifying licensed sentence retained. |
-| 敗 | No qualifying licensed sentence retained. |
-| 敢 | No qualifying licensed sentence retained. |
-| 散 | No qualifying licensed sentence retained. |
-| 敬 | No qualifying licensed sentence retained. |
-| 整 | No qualifying licensed sentence retained. |
-| 敵 | No qualifying licensed sentence retained. |
-| 斗 | No qualifying licensed sentence retained. |
-| 料 | No qualifying licensed sentence retained. |
-| 新 | No qualifying licensed sentence retained. |
-| 斷 | No qualifying licensed sentence retained. |
-| 方 | No qualifying licensed sentence retained. |
-| 施 | No qualifying licensed sentence retained. |
-| 旅 | No qualifying licensed sentence retained. |
-| 旗 | No qualifying licensed sentence retained. |
-| 早 | No qualifying licensed sentence retained. |
-| 明 | No qualifying licensed sentence retained. |
-| 易 | No qualifying licensed sentence retained. |
-| 星 | No qualifying licensed sentence retained. |
-| 映 | No qualifying licensed sentence retained. |
-| 昨 | No qualifying licensed sentence retained. |
-| 是 | No qualifying licensed sentence retained. |
-| 晝 | No qualifying licensed sentence retained. |
-| 普 | No qualifying licensed sentence retained. |
-| 景 | No qualifying licensed sentence retained. |
-| 智 | No qualifying licensed sentence retained. |
-| 暇 | No qualifying licensed sentence retained. |
-| 暖 | No qualifying licensed sentence retained. |
-| 暗 | No qualifying licensed sentence retained. |
-| 暴 | No qualifying licensed sentence retained. |
-| 曜 | No qualifying licensed sentence retained. |
-| 曲 | No qualifying licensed sentence retained. |
-| 更 | No qualifying licensed sentence retained. |
-| 書 | No qualifying licensed sentence retained. |
-| 最 | No qualifying licensed sentence retained. |
-| 會 | No qualifying licensed sentence retained. |
-| 月 | No qualifying licensed sentence retained. |
-| 服 | No qualifying licensed sentence retained. |
-| 朗 | No qualifying licensed sentence retained. |
-| 望 | No qualifying licensed sentence retained. |
-| 朝 | No qualifying licensed sentence retained. |
-| 期 | No qualifying licensed sentence retained. |
-| 木 | No qualifying licensed sentence retained. |
-| 未 | No qualifying licensed sentence retained. |
-| 末 | No qualifying licensed sentence retained. |
-| 朱 | No qualifying licensed sentence retained. |
-| 朴 | No qualifying licensed sentence retained. |
-| 李 | No qualifying licensed sentence retained. |
-| 材 | No qualifying licensed sentence retained. |
-| 村 | No qualifying licensed sentence retained. |
-| 束 | No qualifying licensed sentence retained. |
-| 東 | No qualifying licensed sentence retained. |
-| 松 | No qualifying licensed sentence retained. |
-| 板 | No qualifying licensed sentence retained. |
-| 林 | No qualifying licensed sentence retained. |
-| 果 | No qualifying licensed sentence retained. |
-| 柳 | No qualifying licensed sentence retained. |
-| 査 | No qualifying licensed sentence retained. |
-| 核 | No qualifying licensed sentence retained. |
-| 根 | No qualifying licensed sentence retained. |
-| 格 | No qualifying licensed sentence retained. |
-| 案 | No qualifying licensed sentence retained. |
-| 條 | No qualifying licensed sentence retained. |
-| 植 | No qualifying licensed sentence retained. |
-| 業 | No qualifying licensed sentence retained. |
-| 極 | No qualifying licensed sentence retained. |
-| 榮 | No qualifying licensed sentence retained. |
-| 構 | No qualifying licensed sentence retained. |
-| 樂 | No qualifying licensed sentence retained. |
-| 標 | No qualifying licensed sentence retained. |
-| 模 | No qualifying licensed sentence retained. |
-| 樣 | No qualifying licensed sentence retained. |
-| 樹 | No qualifying licensed sentence retained. |
-| 橋 | No qualifying licensed sentence retained. |
-| 機 | No qualifying licensed sentence retained. |
-| 檀 | No qualifying licensed sentence retained. |
-| 檢 | No qualifying licensed sentence retained. |
-| 權 | No qualifying licensed sentence retained. |
-| 次 | No qualifying licensed sentence retained. |
-| 歌 | No qualifying licensed sentence retained. |
-| 歎 | No qualifying licensed sentence retained. |
-| 歡 | No qualifying licensed sentence retained. |
-| 止 | No qualifying licensed sentence retained. |
-| 正 | No qualifying licensed sentence retained. |
-| 步 | No qualifying licensed sentence retained. |
-| 武 | No qualifying licensed sentence retained. |
-| 歲 | No qualifying licensed sentence retained. |
-| 歷 | No qualifying licensed sentence retained. |
-| 歸 | No qualifying licensed sentence retained. |
-| 死 | No qualifying licensed sentence retained. |
-| 殘 | No qualifying licensed sentence retained. |
-| 段 | No qualifying licensed sentence retained. |
-| 殺 | No qualifying licensed sentence retained. |
-| 母 | No qualifying licensed sentence retained. |
-| 毒 | No qualifying licensed sentence retained. |
-| 比 | No qualifying licensed sentence retained. |
-| 毛 | No qualifying licensed sentence retained. |
-| 氏 | No qualifying licensed sentence retained. |
-| 氣 | No qualifying licensed sentence retained. |
-| 水 | No qualifying licensed sentence retained. |
-| 氷 | No qualifying licensed sentence retained. |
-| 永 | No qualifying licensed sentence retained. |
-| 求 | No qualifying licensed sentence retained. |
-| 決 | No qualifying licensed sentence retained. |
-| 汽 | No qualifying licensed sentence retained. |
-| 河 | No qualifying licensed sentence retained. |
-| 油 | No qualifying licensed sentence retained. |
-| 治 | No qualifying licensed sentence retained. |
-| 況 | No qualifying licensed sentence retained. |
-| 泉 | No qualifying licensed sentence retained. |
-| 法 | No qualifying licensed sentence retained. |
-| 波 | No qualifying licensed sentence retained. |
-| 注 | No qualifying licensed sentence retained. |
-| 洋 | No qualifying licensed sentence retained. |
-| 洗 | No qualifying licensed sentence retained. |
-| 洞 | No qualifying licensed sentence retained. |
-| 活 | No qualifying licensed sentence retained. |
-| 派 | No qualifying licensed sentence retained. |
-| 流 | No qualifying licensed sentence retained. |
-| 浴 | No qualifying licensed sentence retained. |
-| 海 | No qualifying licensed sentence retained. |
-| 消 | No qualifying licensed sentence retained. |
-| 液 | No qualifying licensed sentence retained. |
-| 深 | No qualifying licensed sentence retained. |
-| 混 | No qualifying licensed sentence retained. |
-| 淸 | No qualifying licensed sentence retained. |
-| 減 | No qualifying licensed sentence retained. |
-| 測 | No qualifying licensed sentence retained. |
-| 港 | No qualifying licensed sentence retained. |
-| 湖 | No qualifying licensed sentence retained. |
-| 源 | No qualifying licensed sentence retained. |
-| 準 | No qualifying licensed sentence retained. |
-| 溫 | No qualifying licensed sentence retained. |
-| 漁 | No qualifying licensed sentence retained. |
-| 演 | No qualifying licensed sentence retained. |
-| 漢 | No qualifying licensed sentence retained. |
-| 潔 | No qualifying licensed sentence retained. |
-| 潮 | No qualifying licensed sentence retained. |
-| 激 | No qualifying licensed sentence retained. |
-| 濟 | No qualifying licensed sentence retained. |
-| 火 | No qualifying licensed sentence retained. |
-| 灰 | No qualifying licensed sentence retained. |
-| 災 | No qualifying licensed sentence retained. |
-| 炭 | No qualifying licensed sentence retained. |
-| 烈 | No qualifying licensed sentence retained. |
-| 無 | No qualifying licensed sentence retained. |
-| 然 | No qualifying licensed sentence retained. |
-| 煙 | No qualifying licensed sentence retained. |
-| 熱 | No qualifying licensed sentence retained. |
-| 燃 | No qualifying licensed sentence retained. |
-| 燈 | No qualifying licensed sentence retained. |
-| 營 | No qualifying licensed sentence retained. |
-| 爆 | No qualifying licensed sentence retained. |
-| 爭 | No qualifying licensed sentence retained. |
-| 爲 | No qualifying licensed sentence retained. |
-| 父 | No qualifying licensed sentence retained. |
-| 牛 | No qualifying licensed sentence retained. |
-| 牧 | No qualifying licensed sentence retained. |
-| 物 | No qualifying licensed sentence retained. |
-| 特 | No qualifying licensed sentence retained. |
-| 犬 | No qualifying licensed sentence retained. |
-| 犯 | No qualifying licensed sentence retained. |
-| 狀 | No qualifying licensed sentence retained. |
-| 獎 | No qualifying licensed sentence retained. |
-| 獨 | No qualifying licensed sentence retained. |
-| 玉 | No qualifying licensed sentence retained. |
-| 王 | No qualifying licensed sentence retained. |
-| 珍 | No qualifying licensed sentence retained. |
-| 班 | No qualifying licensed sentence retained. |
-| 球 | No qualifying licensed sentence retained. |
-| 理 | No qualifying licensed sentence retained. |
-| 環 | No qualifying licensed sentence retained. |
-| 甘 | No qualifying licensed sentence retained. |
-| 生 | No qualifying licensed sentence retained. |
-| 産 | No qualifying licensed sentence retained. |
-| 用 | No qualifying licensed sentence retained. |
-| 田 | No qualifying licensed sentence retained. |
-| 由 | No qualifying licensed sentence retained. |
-| 甲 | No qualifying licensed sentence retained. |
-| 申 | No qualifying licensed sentence retained. |
-| 男 | No qualifying licensed sentence retained. |
-| 留 | No qualifying licensed sentence retained. |
-| 略 | No qualifying licensed sentence retained. |
-| 番 | No qualifying licensed sentence retained. |
-| 畫 | No qualifying licensed sentence retained. |
-| 異 | No qualifying licensed sentence retained. |
-| 當 | No qualifying licensed sentence retained. |
-| 疑 | No qualifying licensed sentence retained. |
-| 疲 | No qualifying licensed sentence retained. |
-| 病 | No qualifying licensed sentence retained. |
-| 痛 | No qualifying licensed sentence retained. |
-| 登 | No qualifying licensed sentence retained. |
-| 發 | No qualifying licensed sentence retained. |
-| 白 | No qualifying licensed sentence retained. |
-| 百 | No qualifying licensed sentence retained. |
-| 益 | No qualifying licensed sentence retained. |
-| 盛 | No qualifying licensed sentence retained. |
-| 盜 | No qualifying licensed sentence retained. |
-| 盡 | No qualifying licensed sentence retained. |
-| 監 | No qualifying licensed sentence retained. |
-| 目 | No qualifying licensed sentence retained. |
-| 直 | No qualifying licensed sentence retained. |
-| 相 | No qualifying licensed sentence retained. |
-| 省 | No qualifying licensed sentence retained. |
-| 看 | No qualifying licensed sentence retained. |
-| 眞 | No qualifying licensed sentence retained. |
-| 眼 | No qualifying licensed sentence retained. |
-| 着 | No qualifying licensed sentence retained. |
-| 督 | No qualifying licensed sentence retained. |
-| 知 | No qualifying licensed sentence retained. |
-| 短 | No qualifying licensed sentence retained. |
-| 石 | No qualifying licensed sentence retained. |
-| 砲 | No qualifying licensed sentence retained. |
-| 破 | No qualifying licensed sentence retained. |
-| 硏 | No qualifying licensed sentence retained. |
-| 碑 | No qualifying licensed sentence retained. |
-| 確 | No qualifying licensed sentence retained. |
-| 示 | No qualifying licensed sentence retained. |
-| 社 | No qualifying licensed sentence retained. |
-| 祕 | No qualifying licensed sentence retained. |
-| 祖 | No qualifying licensed sentence retained. |
-| 祝 | No qualifying licensed sentence retained. |
-| 神 | No qualifying licensed sentence retained. |
-| 票 | No qualifying licensed sentence retained. |
-| 祭 | No qualifying licensed sentence retained. |
-| 禁 | No qualifying licensed sentence retained. |
-| 福 | No qualifying licensed sentence retained. |
-| 禮 | No qualifying licensed sentence retained. |
-| 秀 | No qualifying licensed sentence retained. |
-| 私 | No qualifying licensed sentence retained. |
-| 秋 | No qualifying licensed sentence retained. |
-| 科 | No qualifying licensed sentence retained. |
-| 移 | No qualifying licensed sentence retained. |
-| 稅 | No qualifying licensed sentence retained. |
-| 程 | No qualifying licensed sentence retained. |
-| 種 | No qualifying licensed sentence retained. |
-| 穀 | No qualifying licensed sentence retained. |
-| 積 | No qualifying licensed sentence retained. |
-| 究 | No qualifying licensed sentence retained. |
-| 空 | No qualifying licensed sentence retained. |
-| 窓 | No qualifying licensed sentence retained. |
-| 窮 | No qualifying licensed sentence retained. |
-| 章 | No qualifying licensed sentence retained. |
-| 童 | No qualifying licensed sentence retained. |
-| 端 | No qualifying licensed sentence retained. |
-| 競 | No qualifying licensed sentence retained. |
-| 竹 | No qualifying licensed sentence retained. |
-| 笑 | No qualifying licensed sentence retained. |
-| 第 | No qualifying licensed sentence retained. |
-| 筆 | No qualifying licensed sentence retained. |
-| 等 | No qualifying licensed sentence retained. |
-| 筋 | No qualifying licensed sentence retained. |
-| 答 | No qualifying licensed sentence retained. |
-| 管 | No qualifying licensed sentence retained. |
-| 節 | No qualifying licensed sentence retained. |
-| 範 | No qualifying licensed sentence retained. |
-| 篇 | No qualifying licensed sentence retained. |
-| 築 | No qualifying licensed sentence retained. |
-| 簡 | No qualifying licensed sentence retained. |
-| 籍 | No qualifying licensed sentence retained. |
-| 米 | No qualifying licensed sentence retained. |
-| 粉 | No qualifying licensed sentence retained. |
-| 糧 | No qualifying licensed sentence retained. |
-| 系 | No qualifying licensed sentence retained. |
-| 紀 | No qualifying licensed sentence retained. |
-| 約 | No qualifying licensed sentence retained. |
-| 紅 | No qualifying licensed sentence retained. |
-| 納 | No qualifying licensed sentence retained. |
-| 純 | No qualifying licensed sentence retained. |
-| 級 | No qualifying licensed sentence retained. |
-| 素 | No qualifying licensed sentence retained. |
-| 細 | No qualifying licensed sentence retained. |
-| 終 | No qualifying licensed sentence retained. |
-| 組 | No qualifying licensed sentence retained. |
-| 給 | No qualifying licensed sentence retained. |
-| 統 | No qualifying licensed sentence retained. |
-| 絲 | No qualifying licensed sentence retained. |
-| 絶 | No qualifying licensed sentence retained. |
-| 經 | No qualifying licensed sentence retained. |
-| 綠 | No qualifying licensed sentence retained. |
-| 線 | No qualifying licensed sentence retained. |
-| 緣 | No qualifying licensed sentence retained. |
-| 練 | No qualifying licensed sentence retained. |
-| 縮 | No qualifying licensed sentence retained. |
-| 總 | No qualifying licensed sentence retained. |
-| 績 | No qualifying licensed sentence retained. |
-| 織 | No qualifying licensed sentence retained. |
-| 繼 | No qualifying licensed sentence retained. |
-| 續 | No qualifying licensed sentence retained. |
-| 缺 | No qualifying licensed sentence retained. |
-| 罪 | No qualifying licensed sentence retained. |
-| 置 | No qualifying licensed sentence retained. |
-| 罰 | No qualifying licensed sentence retained. |
-| 羅 | No qualifying licensed sentence retained. |
-| 羊 | No qualifying licensed sentence retained. |
-| 美 | No qualifying licensed sentence retained. |
-| 群 | No qualifying licensed sentence retained. |
-| 義 | No qualifying licensed sentence retained. |
-| 習 | No qualifying licensed sentence retained. |
-| 老 | No qualifying licensed sentence retained. |
-| 考 | No qualifying licensed sentence retained. |
-| 者 | No qualifying licensed sentence retained. |
-| 耳 | No qualifying licensed sentence retained. |
-| 聖 | No qualifying licensed sentence retained. |
-| 聞 | No qualifying licensed sentence retained. |
-| 聲 | No qualifying licensed sentence retained. |
-| 職 | No qualifying licensed sentence retained. |
-| 聽 | No qualifying licensed sentence retained. |
-| 肅 | No qualifying licensed sentence retained. |
-| 肉 | No qualifying licensed sentence retained. |
-| 育 | No qualifying licensed sentence retained. |
-| 背 | No qualifying licensed sentence retained. |
-| 胞 | No qualifying licensed sentence retained. |
-| 能 | No qualifying licensed sentence retained. |
-| 脈 | No qualifying licensed sentence retained. |
-| 脫 | No qualifying licensed sentence retained. |
-| 腸 | No qualifying licensed sentence retained. |
-| 臣 | No qualifying licensed sentence retained. |
-| 自 | No qualifying licensed sentence retained. |
-| 至 | No qualifying licensed sentence retained. |
-| 致 | No qualifying licensed sentence retained. |
-| 與 | No qualifying licensed sentence retained. |
-| 興 | No qualifying licensed sentence retained. |
-| 舊 | No qualifying licensed sentence retained. |
-| 舌 | No qualifying licensed sentence retained. |
-| 舍 | No qualifying licensed sentence retained. |
-| 舞 | No qualifying licensed sentence retained. |
-| 航 | No qualifying licensed sentence retained. |
-| 船 | No qualifying licensed sentence retained. |
-| 良 | No qualifying licensed sentence retained. |
-| 花 | No qualifying licensed sentence retained. |
-| 苦 | No qualifying licensed sentence retained. |
-| 英 | No qualifying licensed sentence retained. |
-| 草 | No qualifying licensed sentence retained. |
-| 落 | No qualifying licensed sentence retained. |
-| 葉 | No qualifying licensed sentence retained. |
-| 蓄 | No qualifying licensed sentence retained. |
-| 藝 | No qualifying licensed sentence retained. |
-| 藥 | No qualifying licensed sentence retained. |
-| 處 | No qualifying licensed sentence retained. |
-| 虛 | No qualifying licensed sentence retained. |
-| 號 | No qualifying licensed sentence retained. |
-| 蟲 | No qualifying licensed sentence retained. |
-| 血 | No qualifying licensed sentence retained. |
-| 衆 | No qualifying licensed sentence retained. |
-| 行 | No qualifying licensed sentence retained. |
-| 術 | No qualifying licensed sentence retained. |
-| 街 | No qualifying licensed sentence retained. |
-| 衛 | No qualifying licensed sentence retained. |
-| 衣 | No qualifying licensed sentence retained. |
-| 表 | No qualifying licensed sentence retained. |
-| 裝 | No qualifying licensed sentence retained. |
-| 製 | No qualifying licensed sentence retained. |
-| 複 | No qualifying licensed sentence retained. |
-| 西 | No qualifying licensed sentence retained. |
-| 要 | No qualifying licensed sentence retained. |
-| 見 | No qualifying licensed sentence retained. |
-| 規 | No qualifying licensed sentence retained. |
-| 視 | No qualifying licensed sentence retained. |
-| 親 | No qualifying licensed sentence retained. |
-| 覺 | No qualifying licensed sentence retained. |
-| 覽 | No qualifying licensed sentence retained. |
-| 觀 | No qualifying licensed sentence retained. |
-| 角 | No qualifying licensed sentence retained. |
-| 解 | No qualifying licensed sentence retained. |
-| 言 | No qualifying licensed sentence retained. |
-| 計 | No qualifying licensed sentence retained. |
-| 討 | No qualifying licensed sentence retained. |
-| 訓 | No qualifying licensed sentence retained. |
-| 訪 | No qualifying licensed sentence retained. |
-| 設 | No qualifying licensed sentence retained. |
-| 許 | No qualifying licensed sentence retained. |
-| 評 | No qualifying licensed sentence retained. |
-| 試 | No qualifying licensed sentence retained. |
-| 詩 | No qualifying licensed sentence retained. |
-| 話 | No qualifying licensed sentence retained. |
-| 誌 | No qualifying licensed sentence retained. |
-| 認 | No qualifying licensed sentence retained. |
-| 語 | No qualifying licensed sentence retained. |
-| 誠 | No qualifying licensed sentence retained. |
-| 誤 | No qualifying licensed sentence retained. |
-| 說 | No qualifying licensed sentence retained. |
-| 課 | No qualifying licensed sentence retained. |
-| 調 | No qualifying licensed sentence retained. |
-| 談 | No qualifying licensed sentence retained. |
-| 請 | No qualifying licensed sentence retained. |
-| 論 | No qualifying licensed sentence retained. |
-| 講 | No qualifying licensed sentence retained. |
-| 謝 | No qualifying licensed sentence retained. |
-| 謠 | No qualifying licensed sentence retained. |
-| 證 | No qualifying licensed sentence retained. |
-| 識 | No qualifying licensed sentence retained. |
-| 警 | No qualifying licensed sentence retained. |
-| 議 | No qualifying licensed sentence retained. |
-| 護 | No qualifying licensed sentence retained. |
-| 讀 | No qualifying licensed sentence retained. |
-| 變 | No qualifying licensed sentence retained. |
-| 讚 | No qualifying licensed sentence retained. |
-| 豆 | No qualifying licensed sentence retained. |
-| 豊 | No qualifying licensed sentence retained. |
-| 象 | No qualifying licensed sentence retained. |
-| 豫 | No qualifying licensed sentence retained. |
-| 負 | No qualifying licensed sentence retained. |
-| 財 | No qualifying licensed sentence retained. |
-| 貧 | No qualifying licensed sentence retained. |
-| 貨 | No qualifying licensed sentence retained. |
-| 責 | No qualifying licensed sentence retained. |
-| 貯 | No qualifying licensed sentence retained. |
-| 貴 | No qualifying licensed sentence retained. |
-| 買 | No qualifying licensed sentence retained. |
-| 費 | No qualifying licensed sentence retained. |
-| 資 | No qualifying licensed sentence retained. |
-| 賊 | No qualifying licensed sentence retained. |
-| 賞 | No qualifying licensed sentence retained. |
-| 賢 | No qualifying licensed sentence retained. |
-| 賣 | No qualifying licensed sentence retained. |
-| 質 | No qualifying licensed sentence retained. |
-| 赤 | No qualifying licensed sentence retained. |
-| 走 | No qualifying licensed sentence retained. |
-| 起 | No qualifying licensed sentence retained. |
-| 趣 | No qualifying licensed sentence retained. |
-| 足 | No qualifying licensed sentence retained. |
-| 路 | No qualifying licensed sentence retained. |
-| 身 | No qualifying licensed sentence retained. |
-| 車 | No qualifying licensed sentence retained. |
-| 軍 | No qualifying licensed sentence retained. |
-| 輕 | No qualifying licensed sentence retained. |
-| 輪 | No qualifying licensed sentence retained. |
-| 轉 | No qualifying licensed sentence retained. |
-| 辭 | No qualifying licensed sentence retained. |
-| 辯 | No qualifying licensed sentence retained. |
-| 農 | No qualifying licensed sentence retained. |
-| 迎 | No qualifying licensed sentence retained. |
-| 近 | No qualifying licensed sentence retained. |
-| 退 | No qualifying licensed sentence retained. |
-| 送 | No qualifying licensed sentence retained. |
-| 逃 | No qualifying licensed sentence retained. |
-| 逆 | No qualifying licensed sentence retained. |
-| 通 | No qualifying licensed sentence retained. |
-| 速 | No qualifying licensed sentence retained. |
-| 造 | No qualifying licensed sentence retained. |
-| 連 | No qualifying licensed sentence retained. |
-| 週 | No qualifying licensed sentence retained. |
-| 進 | No qualifying licensed sentence retained. |
-| 遇 | No qualifying licensed sentence retained. |
-| 遊 | No qualifying licensed sentence retained. |
-| 運 | No qualifying licensed sentence retained. |
-| 過 | No qualifying licensed sentence retained. |
-| 道 | No qualifying licensed sentence retained. |
-| 達 | No qualifying licensed sentence retained. |
-| 遠 | No qualifying licensed sentence retained. |
-| 適 | No qualifying licensed sentence retained. |
-| 選 | No qualifying licensed sentence retained. |
-| 遺 | No qualifying licensed sentence retained. |
-| 避 | No qualifying licensed sentence retained. |
-| 邊 | No qualifying licensed sentence retained. |
-| 邑 | No qualifying licensed sentence retained. |
-| 郡 | No qualifying licensed sentence retained. |
-| 郵 | No qualifying licensed sentence retained. |
-| 都 | No qualifying licensed sentence retained. |
-| 鄕 | No qualifying licensed sentence retained. |
-| 配 | No qualifying licensed sentence retained. |
-| 酒 | No qualifying licensed sentence retained. |
-| 醫 | No qualifying licensed sentence retained. |
-| 里 | No qualifying licensed sentence retained. |
-| 重 | No qualifying licensed sentence retained. |
-| 野 | No qualifying licensed sentence retained. |
-| 量 | No qualifying licensed sentence retained. |
-| 金 | No qualifying licensed sentence retained. |
-| 針 | No qualifying licensed sentence retained. |
-| 鉛 | No qualifying licensed sentence retained. |
-| 銀 | No qualifying licensed sentence retained. |
-| 銃 | No qualifying licensed sentence retained. |
-| 銅 | No qualifying licensed sentence retained. |
-| 錄 | No qualifying licensed sentence retained. |
-| 錢 | No qualifying licensed sentence retained. |
-| 鍾 | No qualifying licensed sentence retained. |
-| 鏡 | No qualifying licensed sentence retained. |
-| 鐵 | No qualifying licensed sentence retained. |
-| 鑛 | No qualifying licensed sentence retained. |
-| 門 | No qualifying licensed sentence retained. |
-| 閉 | No qualifying licensed sentence retained. |
-| 開 | No qualifying licensed sentence retained. |
-| 閑 | No qualifying licensed sentence retained. |
-| 關 | No qualifying licensed sentence retained. |
-| 防 | No qualifying licensed sentence retained. |
-| 降 | No qualifying licensed sentence retained. |
-| 限 | No qualifying licensed sentence retained. |
-| 院 | No qualifying licensed sentence retained. |
-| 陣 | No qualifying licensed sentence retained. |
-| 除 | No qualifying licensed sentence retained. |
-| 陰 | No qualifying licensed sentence retained. |
-| 陸 | No qualifying licensed sentence retained. |
-| 陽 | No qualifying licensed sentence retained. |
-| 隊 | No qualifying licensed sentence retained. |
-| 階 | No qualifying licensed sentence retained. |
-| 際 | No qualifying licensed sentence retained. |
-| 障 | No qualifying licensed sentence retained. |
-| 險 | No qualifying licensed sentence retained. |
-| 隱 | No qualifying licensed sentence retained. |
-| 雄 | No qualifying licensed sentence retained. |
-| 集 | No qualifying licensed sentence retained. |
-| 雜 | No qualifying licensed sentence retained. |
-| 離 | No qualifying licensed sentence retained. |
-| 難 | No qualifying licensed sentence retained. |
-| 雨 | No qualifying licensed sentence retained. |
-| 雪 | No qualifying licensed sentence retained. |
-| 雲 | No qualifying licensed sentence retained. |
-| 電 | No qualifying licensed sentence retained. |
-| 靑 | No qualifying licensed sentence retained. |
-| 靜 | No qualifying licensed sentence retained. |
-| 非 | No qualifying licensed sentence retained. |
-| 革 | No qualifying licensed sentence retained. |
-| 音 | No qualifying licensed sentence retained. |
-| 順 | No qualifying licensed sentence retained. |
-| 頌 | No qualifying licensed sentence retained. |
-| 領 | No qualifying licensed sentence retained. |
-| 頭 | No qualifying licensed sentence retained. |
-| 題 | No qualifying licensed sentence retained. |
-| 額 | No qualifying licensed sentence retained. |
-| 願 | No qualifying licensed sentence retained. |
-| 類 | No qualifying licensed sentence retained. |
-| 顯 | No qualifying licensed sentence retained. |
-| 風 | No qualifying licensed sentence retained. |
-| 飛 | No qualifying licensed sentence retained. |
-| 食 | No qualifying licensed sentence retained. |
-| 飮 | No qualifying licensed sentence retained. |
-| 養 | No qualifying licensed sentence retained. |
-| 餘 | No qualifying licensed sentence retained. |
-| 首 | No qualifying licensed sentence retained. |
-| 香 | No qualifying licensed sentence retained. |
-| 馬 | No qualifying licensed sentence retained. |
-| 驗 | No qualifying licensed sentence retained. |
-| 驚 | No qualifying licensed sentence retained. |
-| 骨 | No qualifying licensed sentence retained. |
-| 體 | No qualifying licensed sentence retained. |
-| 高 | No qualifying licensed sentence retained. |
-| 髮 | No qualifying licensed sentence retained. |
-| 鬪 | No qualifying licensed sentence retained. |
-| 魚 | No qualifying licensed sentence retained. |
-| 鮮 | No qualifying licensed sentence retained. |
-| 鳥 | No qualifying licensed sentence retained. |
-| 鳴 | No qualifying licensed sentence retained. |
-| 鷄 | No qualifying licensed sentence retained. |
-| 麗 | No qualifying licensed sentence retained. |
-| 黃 | No qualifying licensed sentence retained. |
-| 黑 | No qualifying licensed sentence retained. |
-| 點 | No qualifying licensed sentence retained. |
-| 黨 | No qualifying licensed sentence retained. |
-| 鼻 | No qualifying licensed sentence retained. |
-| 齒 | No qualifying licensed sentence retained. |
-| 龍 | No qualifying licensed sentence retained. |
+| 丁 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 七 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 不 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 中 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 九 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 乳 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 亂 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 五 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 亡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 交 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 京 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 仁 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 今 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 仕 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 他 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 仙 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 代 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 令 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 以 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 件 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 伏 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 伐 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 休 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 位 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 低 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 佛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 使 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 來 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 例 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 依 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 侵 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 便 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 係 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 俗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 保 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 信 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 修 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 個 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 倍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 候 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 假 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 偉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 健 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 傑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 傳 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 傷 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 傾 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 價 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 儀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 億 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 儉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 儒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 優 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 元 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 充 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 先 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 光 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 兒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 全 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 兩 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 公 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 六 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 共 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 兵 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 具 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 冊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 再 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 冬 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 冷 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 凶 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 出 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 分 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 切 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 刑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 列 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 初 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 判 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 別 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 利 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 到 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 制 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 券 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 刻 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 則 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 副 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 創 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 劇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 力 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 功 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 加 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 助 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 努 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 務 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勤 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 勸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 包 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 化 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 北 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 區 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 午 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 半 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 卒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 卓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 協 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 南 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 博 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 占 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 印 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 危 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 卵 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 卷 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 厚 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 原 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 去 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 參 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 友 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 反 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 叔 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 取 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 受 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 口 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 古 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 句 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 可 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 史 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 右 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 各 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 合 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 吉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 名 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 向 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 君 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 吸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 告 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 周 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 味 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 呼 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 品 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 員 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 唱 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 商 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 善 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 喜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 單 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 器 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 嚴 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 四 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 回 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 因 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 困 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 固 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 圍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 園 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 圓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 圖 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 團 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 土 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 在 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 地 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 均 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 城 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 域 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 基 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 堂 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 堅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 報 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 場 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 境 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 墓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 增 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 壁 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 壇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 壓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 士 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 壯 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 夏 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 夕 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 外 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 多 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 夜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 天 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 太 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 失 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 奇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 奉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 好 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 如 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 妙 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 妨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 妹 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 姉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 始 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 姓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 委 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 姿 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 威 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 婚 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 婦 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 孔 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 存 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 孝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 季 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 孤 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 孫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 宅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 守 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 安 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 完 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 官 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 定 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 客 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 宣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 宮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 害 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 容 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 宿 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寄 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 密 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 富 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 察 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 實 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寶 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 寺 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 射 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 將 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 專 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 尊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 對 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 導 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 小 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 就 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 局 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 居 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 屈 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 屋 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 展 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 層 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 屬 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 島 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 崇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 川 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 州 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 巨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 差 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 己 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 布 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 希 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 帝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 席 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 帳 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 帶 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 常 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 干 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 床 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 序 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 底 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 店 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 府 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 度 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 座 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 庫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 庭 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 康 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 廣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 廳 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 延 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 建 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 式 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 引 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 弱 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 張 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 強 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 彈 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 形 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 往 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 待 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 律 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 後 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 徒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 得 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 復 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 德 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 心 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 必 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 志 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 忠 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 快 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 怒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 思 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 急 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 性 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 怨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 恨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 恩 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 息 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 患 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 悲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 情 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 惠 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 惡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 想 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 意 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 愛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 感 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 態 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 慮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 慰 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 慶 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 憤 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 憲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 應 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 成 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 戒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 或 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 戰 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 戶 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 房 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 所 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 才 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 打 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 批 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 承 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 技 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 投 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 抗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 折 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 拍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 招 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 拜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 持 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 指 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 掃 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 授 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 採 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 探 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 接 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 推 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 提 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 揮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 援 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 損 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 擇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 擊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 操 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 擔 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 據 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 擧 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 支 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 收 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 改 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 攻 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 放 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 政 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 故 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 效 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 救 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 敗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 敢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 散 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 敬 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 整 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 敵 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 斗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 料 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 新 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 斷 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 方 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 施 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 旅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 旗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 早 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 明 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 易 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 星 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 映 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 昨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 是 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 晝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 普 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 景 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 智 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 暇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 暖 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 暗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 暴 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 曜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 曲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 更 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 最 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 月 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 服 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 朗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 望 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 朝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 期 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 木 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 未 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 末 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 朱 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 朴 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 李 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 材 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 村 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 束 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 東 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 松 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 板 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 林 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 果 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 柳 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 査 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 核 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 根 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 格 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 案 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 條 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 植 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 業 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 極 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 榮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 構 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 樂 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 標 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 模 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 樣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 樹 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 橋 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 機 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 檀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 檢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 權 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 次 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 歎 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 歡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 步 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 武 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 歲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 歷 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 歸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 死 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 殘 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 段 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 殺 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 毒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 比 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 毛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 氏 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 氣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 水 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 氷 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 永 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 求 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 決 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 河 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 油 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 治 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 況 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 泉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 法 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 波 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 注 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 洋 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 洗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 洞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 活 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 派 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 流 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 浴 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 海 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 消 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 液 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 深 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 混 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 淸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 減 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 測 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 港 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 湖 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 源 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 溫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 漁 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 演 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 漢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 潔 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 潮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 激 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 濟 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 火 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 灰 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 災 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 炭 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 烈 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 無 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 煙 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 熱 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 燃 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 燈 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 營 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 爆 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 爭 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 爲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 牛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 牧 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 特 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 犬 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 狀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 獎 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 獨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 玉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 王 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 珍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 班 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 球 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 理 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 環 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 甘 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 産 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 用 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 田 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 由 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 甲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 申 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 留 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 略 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 番 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 畫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 異 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 當 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 疑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 疲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 痛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 登 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 發 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 白 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 百 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 益 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 盛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 盜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 盡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 監 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 目 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 直 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 相 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 省 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 看 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 眞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 眼 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 着 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 督 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 知 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 短 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 石 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 砲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 破 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 硏 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 碑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 確 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 示 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 祕 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 祖 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 祝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 神 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 票 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 祭 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 禁 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 禮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 秀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 私 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 秋 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 移 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 稅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 程 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 種 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 穀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 積 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 究 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 空 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 窓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 窮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 章 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 童 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 端 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 競 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 竹 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 笑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 第 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 筆 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 等 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 筋 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 管 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 節 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 範 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 篇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 築 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 簡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 籍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 米 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 粉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 糧 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 系 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 紀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 約 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 紅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 納 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 純 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 級 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 素 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 細 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 終 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 組 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 給 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 統 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 絲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 絶 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 經 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 綠 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 線 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 緣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 練 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 縮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 總 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 績 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 織 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 繼 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 續 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 缺 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 置 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 罰 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 羅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 羊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 美 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 群 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 義 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 習 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 考 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 者 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 耳 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 聖 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 聞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 聲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 職 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 聽 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 肅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 肉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 育 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 背 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 胞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 能 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 脈 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 脫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 腸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 臣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 至 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 致 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 與 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 興 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 舊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 舌 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 舍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 舞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 航 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 船 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 良 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 花 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 苦 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 草 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 華 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 落 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 葉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 蓄 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 藝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 藥 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 處 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 虛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 號 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 蟲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 血 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 衆 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 術 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 街 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 衛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 衣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 表 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 裝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 製 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 複 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 西 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 要 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 見 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 規 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 視 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 親 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 覺 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 覽 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 觀 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 角 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 解 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 言 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 計 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 討 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 訓 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 訪 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 設 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 許 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 評 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 試 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 詩 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 話 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 誌 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 認 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 誠 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 誤 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 說 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 課 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 調 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 談 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 請 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 論 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 講 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 謝 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 謠 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 證 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 識 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 警 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 議 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 護 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 變 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 讚 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 豆 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 豊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 象 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 豫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 負 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 財 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 貧 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 貨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 貯 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 貴 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 買 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 費 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 資 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 賊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 賞 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 賢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 賣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 質 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 赤 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 走 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 起 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 趣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 足 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 身 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 軍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 輕 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 輪 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 轉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 辯 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 農 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 迎 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 近 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 退 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 送 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 逃 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 逆 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 通 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 速 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 造 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 連 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 週 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 進 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 遇 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 遊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 過 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 達 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 遠 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 適 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 選 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 遺 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 避 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 邊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 邑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 郡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 郵 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鄕 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 配 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 酒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 醫 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 里 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 重 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 野 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 量 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 金 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 針 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鉛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 銃 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 銅 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 錄 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 錢 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鍾 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鏡 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鐵 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鑛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 門 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 閉 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 開 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 閑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 關 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 防 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 降 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 限 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 陣 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 除 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 陰 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 陸 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 陽 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 隊 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 階 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 際 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 障 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 險 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 隱 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 雄 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 集 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 雜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 離 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 難 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 雨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 雪 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 雲 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 電 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 靑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 靜 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 非 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 革 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 音 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 順 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 頌 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 領 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 頭 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 額 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 願 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 類 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 顯 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 風 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 飛 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 食 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 飮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 養 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 餘 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 首 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 香 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 馬 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 驗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 驚 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 骨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 體 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 高 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 髮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鬪 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 魚 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鮮 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鳥 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鳴 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鷄 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 麗 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 黃 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 黑 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 點 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 黨 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 鼻 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 齒 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+| 龍 | No qualifying row contains an attested compound, and no reviewed exception applies. |
+
 ## Past-paper sourcing position
 
 Past-paper sentences from 한국어문회 기출 문제, 漢検 過去問, or another exam

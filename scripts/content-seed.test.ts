@@ -30,6 +30,19 @@ const files = {
   "data/characters/cn-hsk3.json": 284,
 };
 
+const isKoreanPolite = (text: string) => {
+  const ending = text.replace(/[.!?。！？…]+$/u, "");
+  if (ending.endsWith("요")) return true;
+  if (!/니(?:다|까)$/u.test(ending)) return false;
+  const previous = Array.from(ending.slice(0, -2)).at(-1)?.codePointAt(0) ?? 0;
+  return previous >= 0xac00 && previous <= 0xd7a3 && (previous - 0xac00) % 28 === 17;
+};
+
+test("Korean polite endings reject lexical plain forms", () => {
+  assert.equal(isKoreanPolite("그녀의 책임은 아니다."), false);
+  assert.equal(isKoreanPolite("그건 우리 책임이 아닙니다."), true);
+});
+
 test("curated character files validate and cross-link", async () => {
   const linked = new Map<string, Set<Track>>();
   for (const [path, expectedCount] of Object.entries(files)) {
@@ -249,8 +262,8 @@ test("Korean grade deltas, cumulative totals, ordinals, and curriculum coverage 
   for (const [path, expectedHash] of [
     ["data/characters/kr-4geup2.json", "f6a6e2c58d36aa03cb1ed8e615f9553f7a79cead2976e5dac823f51b35683ebb"],
     ["data/characters/kr-4geup.json", "114300f1063a099a014d70a8ab38122f430ca3f9a52e49871f2a565aa97eefe0"],
-    ["data/sentences/kr-4geup2.json", "202a29337e5b51fe51e1a71dd6fee368d923ca1c19b26ed93cf54ccf043b04a7"],
-    ["data/sentences/kr-4geup.json", "a041db323e43df44862ac0bb13cd9ebc66cbf6d17cbe62c8e4c81468891e5155"],
+    ["data/sentences/kr-4geup2.json", "6d57f2075575618af00dfed7a55e817996afdc42e25a806ec737f406fbad27d1"],
+    ["data/sentences/kr-4geup.json", "2e84149df1f7b67fff9f85cdd814003b6e2ed050372e0cfe7f797031f8bc72e6"],
   ] as const) {
     assert.equal(
       createHash("sha256").update(await readFile(path)).digest("hex"),
@@ -328,6 +341,16 @@ test("sourced sentence files follow each track's target contract", async () => {
   const glyphs = new Map<string, string>();
   const trackCounts = new Map<string, Set<Track>>();
   const legacyTrackCounts = new Map<string, Set<Track>>();
+  const krWordsByCharacter = new Map<string, string[]>();
+  for (const word of parseWordSeed(JSON.parse(await readFile("data/words/kr-wiktionary.json", "utf8")) as unknown).words) {
+    for (const key of word.members) krWordsByCharacter.set(key, [...(krWordsByCharacter.get(key) ?? []), word.reading]);
+  }
+  const sources = await readFile("data/SOURCES.md", "utf8");
+  const exceptionSection = sources.slice(sources.indexOf("### Reviewed Korean exceptions"), sources.indexOf("### Remaining Korean gaps"));
+  const exceptionRows = [...exceptionSection.matchAll(/^\| (\p{Script=Han}) \| (훈|음|수|한자어) \| `([^`]+)` \| (Tatoeba #\d+) \| [^|]+ \|$/gmu)];
+  const krMappingExceptions = new Map(exceptionRows.map((match) => [match[1], { rule: match[2], token: match[3], source: match[4] }]));
+  assert.equal(krMappingExceptions.size, exceptionRows.length, "duplicate Korean mapping exception");
+  const usedExceptions = new Set<string>();
   const legacyKrKeys = new Set((await Promise.all(["data/characters/kr-8geup.json", "data/characters/kr-7geup.json"].map(async (path) => (
     parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown).characters.map((character) => character.key)
   )))).flat());
@@ -368,10 +391,19 @@ test("sourced sentence files follow each track's target contract", async () => {
         assert.equal(entry.targetIndex, null, `${sentencePath}: ${entry.characterKey} separate target`);
         assert.match(entry.text, /\p{Script=Hangul}/u, `${sentencePath}: ${entry.characterKey} Hangul`);
         assert.doesNotMatch(entry.text, /\p{Script=Han}/u, `${sentencePath}: ${entry.characterKey} modern Hangul`);
-        assert.match(entry.text, /(?:요|니다|니까|세요|예요|이에요)[.!?。！？…]*$/u, `${sentencePath}: ${entry.characterKey} polite register`);
+        assert.ok(isKoreanPolite(entry.text), `${sentencePath}: ${entry.characterKey} polite register`);
         assert.equal(entry.translationKo, entry.text, `${sentencePath}: ${entry.characterKey} Korean text`);
         assert.match(entry.source, /^Tatoeba #\d+$/u, `${sentencePath}: ${entry.characterKey} Tatoeba source`);
         assert.equal(entry.sourceKind, "corpus", `${sentencePath}: ${entry.characterKey} source kind`);
+        const words = entry.text.match(/\p{Script=Hangul}+/gu) ?? [];
+        const sourcedWord = krWordsByCharacter.get(entry.characterKey)?.find((word) => words.some((token) => token.startsWith(word)));
+        if (!sourcedWord) {
+          const exception = krMappingExceptions.get(entry.characterKey);
+          assert.ok(exception, `${sentencePath}: ${entry.characterKey} missing attested compound or reviewed exception`);
+          assert.equal(entry.source, exception.source, `${sentencePath}: ${entry.characterKey} reviewed source`);
+          assert.ok(entry.text.includes(exception.token), `${sentencePath}: ${entry.characterKey} ${exception.rule} token`);
+          usedExceptions.add(entry.characterKey);
+        }
       } else {
         assert.ok(entry.reading, `${sentencePath}: ${entry.characterKey} reading`);
         if (entry.track === "jp") assert.doesNotMatch(entry.reading, /[\p{Script=Han}\p{Script=Katakana}\p{Number}]/u, `${sentencePath}: ${entry.characterKey} hiragana`);
@@ -388,16 +420,19 @@ test("sourced sentence files follow each track's target contract", async () => {
   }
 
   const krCovered = [...byIdentity.values()].filter((entry) => entry.track === "kr");
-  assert.equal(krCovered.length, 64);
-  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 64);
+  assert.equal(krCovered.length, 119);
+  assert.equal(new Set(krCovered.map((entry) => entry.characterKey)).size, 119);
+  assert.deepEqual([...usedExceptions].sort(), [...krMappingExceptions.keys()].sort(), "unused Korean mapping exception");
+  assert.ok(krCovered.every((entry) => !["잘가요", "수상해요"].includes(entry.text.replace(/[.!?。！？…]+$/u, ""))), "native or homophone collision retained");
+  assert.ok(!byIdentity.has("愛:kr:0"), "장애인 must not satisfy the sourced 애인 compound");
 
-  assert.equal(byIdentity.size, 776);
+  assert.equal(byIdentity.size, 831);
   assert.deepEqual(Object.fromEntries(["jp", "cn"].map((track) => [track, [...byIdentity.values()].filter((entry) => (
     entry.track === track && (track === "jp"
       ? /(?:です|でし(?:た|ょう)|ます|まし(?:た|ょう)|ません(?:でした)?)(?:[。！？!?]|よ|ね|か)*$/u.test(entry.text)
       : entry.text.includes("您"))
   )).length])), { jp: 252, cn: 104 });
-  assert.ok([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length > 1093);
+  assert.equal([...glyphs].filter(([identity]) => !byIdentity.has(`${identity}:0`)).length, 3036);
   for (const [key, tracks] of trackCounts) {
     if (tracks.size === 3 && legacyTrackCounts.get(key)?.size === 3) {
       const sentences = [...byIdentity.values()].filter((entry) => entry.characterKey === key);
@@ -478,7 +513,7 @@ test("full content seed loads cleanly and is idempotent", async () => {
     const counts = sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences, (SELECT COUNT(*) FROM words) AS words, (SELECT COUNT(*) FROM word_members) AS word_members").get();
     sqlite.exec(sql);
     assert.deepEqual(sqlite.prepare("SELECT (SELECT COUNT(*) FROM characters) AS characters, (SELECT COUNT(*) FROM character_tracks) AS tracks, (SELECT COUNT(*) FROM example_sentences) AS sentences, (SELECT COUNT(*) FROM words) AS words, (SELECT COUNT(*) FROM word_members) AS word_members").get(), counts);
-    assert.equal(counts?.sentences, 776);
+    assert.equal(counts?.sentences, 831);
     assert.equal(counts?.words, 122);
     assert.equal(counts?.word_members, 244);
   } finally {

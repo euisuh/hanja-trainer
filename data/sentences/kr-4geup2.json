@@ -1,6 +1,39 @@
 {
   "sentences": [
     {
+      "character_key": "備",
+      "track": "kr",
+      "text": "준비하세요!",
+      "translation_ko": "준비하세요!",
+      "source": "Tatoeba #10587916",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "師",
+      "track": "kr",
+      "text": "교사입니다.",
+      "translation_ko": "교사입니다.",
+      "source": "Tatoeba #8119527",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "準",
+      "track": "kr",
+      "text": "준비하세요!",
+      "translation_ko": "준비하세요!",
+      "source": "Tatoeba #10587916",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "滿",
       "track": "kr",
       "text": "가방이 가득합니다.",

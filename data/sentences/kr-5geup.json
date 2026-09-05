@@ -1,3 +1,70 @@
 {
-  "sentences": []
+  "sentences": [
+    {
+      "character_key": "院",
+      "track": "kr",
+      "text": "병원으로 데려다 주세요.",
+      "translation_ko": "병원으로 데려다 주세요.",
+      "source": "Tatoeba #4965198",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "都",
+      "track": "kr",
+      "text": "그는 도시에서 살고 싶어 해요.",
+      "translation_ko": "그는 도시에서 살고 싶어 해요.",
+      "source": "Tatoeba #13141839",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "罪",
+      "track": "kr",
+      "text": "아동학대는 범죄입니다.",
+      "translation_ko": "아동학대는 범죄입니다.",
+      "source": "Tatoeba #13250749",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "停",
+      "track": "kr",
+      "text": "빨간불에 정지하셨나요?",
+      "translation_ko": "빨간불에 정지하셨나요?",
+      "source": "Tatoeba #11105706",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "汽",
+      "track": "kr",
+      "text": "몇 시 기차예요?",
+      "translation_ko": "몇 시 기차예요?",
+      "source": "Tatoeba #11114971",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "止",
+      "track": "kr",
+      "text": "빨간불에 정지하셨나요?",
+      "translation_ko": "빨간불에 정지하셨나요?",
+      "source": "Tatoeba #11105706",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    }
+  ]
 }

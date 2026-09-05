@@ -3,9 +3,9 @@
     {
       "character_key": "家",
       "track": "kr",
-      "text": "우리는 가족같이 친해요.",
-      "translation_ko": "우리는 가족같이 친해요.",
-      "source": "Tatoeba #13187810",
+      "text": "제꿈은 작가가 되는 것입니다.",
+      "translation_ko": "제꿈은 작가가 되는 것입니다.",
+      "source": "Tatoeba #1865422",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -14,9 +14,9 @@
     {
       "character_key": "間",
       "track": "kr",
-      "text": "며칠 동안 있을 예정이에요?",
-      "translation_ko": "며칠 동안 있을 예정이에요?",
-      "source": "Tatoeba #11105972",
+      "text": "시간 많으세요?",
+      "translation_ko": "시간 많으세요?",
+      "source": "Tatoeba #10572142",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -34,11 +34,44 @@
       "reading": null
     },
     {
+      "character_key": "車",
+      "track": "kr",
+      "text": "몇 시 기차예요?",
+      "translation_ko": "몇 시 기차예요?",
+      "source": "Tatoeba #11114971",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "工",
+      "track": "kr",
+      "text": "공부해요.",
+      "translation_ko": "공부해요.",
+      "source": "Tatoeba #2499810",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "記",
       "track": "kr",
-      "text": "제 이름 기억하십니까?",
-      "translation_ko": "제 이름 기억하십니까?",
-      "source": "Tatoeba #11105604",
+      "text": "부장님께서 저에게 기념품을 주셨어요.",
+      "translation_ko": "부장님께서 저에게 기념품을 주셨어요.",
+      "source": "Tatoeba #8437708",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "男",
+      "track": "kr",
+      "text": "남자친구 있어요?",
+      "translation_ko": "남자친구 있어요?",
+      "source": "Tatoeba #13224638",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -50,6 +83,39 @@
       "text": "우린 안에 있어요.",
       "translation_ko": "우린 안에 있어요.",
       "source": "Tatoeba #4952515",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "答",
+      "track": "kr",
+      "text": "정답 알려주세요.",
+      "translation_ko": "정답 알려주세요.",
+      "source": "Tatoeba #13997424",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "道",
+      "track": "kr",
+      "text": "아이들이 도로에서 놀게 두지 마세요.",
+      "translation_ko": "아이들이 도로에서 놀게 두지 마세요.",
+      "source": "Tatoeba #11106291",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "動",
+      "track": "kr",
+      "text": "운동을 하시나요?",
+      "translation_ko": "운동을 하시나요?",
+      "source": "Tatoeba #10576115",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -78,6 +144,17 @@
       "reading": null
     },
     {
+      "character_key": "物",
+      "track": "kr",
+      "text": "홍합은 연체 동물입니까?",
+      "translation_ko": "홍합은 연체 동물입니까?",
+      "source": "Tatoeba #6960300",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "事",
       "track": "kr",
       "text": "무슨 일이에요?",
@@ -100,6 +177,28 @@
       "reading": null
     },
     {
+      "character_key": "世",
+      "track": "kr",
+      "text": "세계 여성의 날을 축하합니다.",
+      "translation_ko": "세계 여성의 날을 축하합니다.",
+      "source": "Tatoeba #4960669",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "手",
+      "track": "kr",
+      "text": "좋아하는 가수는 누구예요?",
+      "translation_ko": "좋아하는 가수는 누구예요?",
+      "source": "Tatoeba #4950379",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "時",
       "track": "kr",
       "text": "시간 많으세요?",
@@ -113,9 +212,9 @@
     {
       "character_key": "市",
       "track": "kr",
-      "text": "시장은 월요일마다 열립니다.",
-      "translation_ko": "시장은 월요일마다 열립니다.",
-      "source": "Tatoeba #13864722",
+      "text": "그는 도시에서 살고 싶어 해요.",
+      "translation_ko": "그는 도시에서 살고 싶어 해요.",
+      "source": "Tatoeba #13141839",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -124,9 +223,20 @@
     {
       "character_key": "子",
       "track": "kr",
-      "text": "내 아들이에요.",
-      "translation_ko": "내 아들이에요.",
-      "source": "Tatoeba #13259272",
+      "text": "남자친구 있어요?",
+      "translation_ko": "남자친구 있어요?",
+      "source": "Tatoeba #13224638",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "自",
+      "track": "kr",
+      "text": "인간은 자연의 일부입니다.",
+      "translation_ko": "인간은 자연의 일부입니다.",
+      "source": "Tatoeba #11260667",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -144,11 +254,33 @@
       "reading": null
     },
     {
+      "character_key": "正",
+      "track": "kr",
+      "text": "정답 알려주세요.",
+      "translation_ko": "정답 알려주세요.",
+      "source": "Tatoeba #13997424",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "左",
       "track": "kr",
       "text": "왼쪽으로 돌아주세요.",
       "translation_ko": "왼쪽으로 돌아주세요.",
       "source": "Tatoeba #13152276",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "平",
+      "track": "kr",
+      "text": "마음은 평화롭습니다.",
+      "translation_ko": "마음은 평화롭습니다.",
+      "source": "Tatoeba #7338441",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -166,11 +298,33 @@
       "reading": null
     },
     {
+      "character_key": "歌",
+      "track": "kr",
+      "text": "좋아하는 가수는 누구예요?",
+      "translation_ko": "좋아하는 가수는 누구예요?",
+      "source": "Tatoeba #4950379",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "同",
       "track": "kr",
       "text": "동감이에요.",
       "translation_ko": "동감이에요.",
       "source": "Tatoeba #1587220",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "老",
+      "track": "kr",
+      "text": "노인을 공경하세요.",
+      "translation_ko": "노인을 공경하세요.",
+      "source": "Tatoeba #10589815",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -201,9 +355,31 @@
     {
       "character_key": "文",
       "track": "kr",
-      "text": "이 문장은 완벽해요.",
-      "translation_ko": "이 문장은 완벽해요.",
-      "source": "Tatoeba #6305031",
+      "text": "제 문자 못 받았어요?",
+      "translation_ko": "제 문자 못 받았어요?",
+      "source": "Tatoeba #13115850",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "問",
+      "track": "kr",
+      "text": "문제 없어요!",
+      "translation_ko": "문제 없어요!",
+      "source": "Tatoeba #13189523",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "夫",
+      "track": "kr",
+      "text": "공부해요.",
+      "translation_ko": "공부해요.",
+      "source": "Tatoeba #2499810",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
@@ -254,6 +430,28 @@
       "reading": null
     },
     {
+      "character_key": "語",
+      "track": "kr",
+      "text": "영어 하세요?",
+      "translation_ko": "영어 하세요?",
+      "source": "Tatoeba #13948184",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "然",
+      "track": "kr",
+      "text": "인간은 자연의 일부입니다.",
+      "translation_ko": "인간은 자연의 일부입니다.",
+      "source": "Tatoeba #11260667",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "有",
       "track": "kr",
       "text": "자리 있어요?",
@@ -276,11 +474,33 @@
       "reading": null
     },
     {
+      "character_key": "字",
+      "track": "kr",
+      "text": "제 문자 못 받았어요?",
+      "translation_ko": "제 문자 못 받았어요?",
+      "source": "Tatoeba #13115850",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
       "character_key": "住",
       "track": "kr",
       "text": "서울에 살고 있습니다.",
       "translation_ko": "서울에 살고 있습니다.",
       "source": "Tatoeba #8119523",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "主",
+      "track": "kr",
+      "text": "이 집의 주인은 누구입니까?",
+      "translation_ko": "이 집의 주인은 누구입니까?",
+      "source": "Tatoeba #10602939",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,

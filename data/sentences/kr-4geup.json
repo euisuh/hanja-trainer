@@ -1,22 +1,44 @@
 {
   "sentences": [
     {
-      "character_key": "華",
+      "character_key": "辭",
       "track": "kr",
-      "text": "나뭇잎 색이 정말 아름다워요.",
-      "translation_ko": "나뭇잎 색이 정말 아름다워요.",
-      "source": "Tatoeba #13543050",
+      "text": "사전이 있나요?",
+      "translation_ko": "사전이 있나요?",
+      "source": "Tatoeba #13194812",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
       "reading": null
     },
     {
-      "character_key": "勉",
+      "character_key": "犯",
       "track": "kr",
-      "text": "한국어 공부를 열심히 했거든요.",
-      "translation_ko": "한국어 공부를 열심히 했거든요.",
-      "source": "Tatoeba #11934297",
+      "text": "아동학대는 범죄입니다.",
+      "translation_ko": "아동학대는 범죄입니다.",
+      "source": "Tatoeba #13250749",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "拒",
+      "track": "kr",
+      "text": "당신에게는 진술을 거부할 권리가 있습니다.",
+      "translation_ko": "당신에게는 진술을 거부할 권리가 있습니다.",
+      "source": "Tatoeba #952492",
+      "source_kind": "corpus",
+      "target_index": null,
+      "rank": 0,
+      "reading": null
+    },
+    {
+      "character_key": "否",
+      "track": "kr",
+      "text": "당신에게는 진술을 거부할 권리가 있습니다.",
+      "translation_ko": "당신에게는 진술을 거부할 권리가 있습니다.",
+      "source": "Tatoeba #952492",
       "source_kind": "corpus",
       "target_index": null,
       "rank": 0,
