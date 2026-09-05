@@ -339,16 +339,17 @@ p {
 .metric__bolt { fill: var(--gold); }
 
 .metric--streak {
-  border-color: var(--flame);
+  border-color: var(--flame-text);
   background: linear-gradient(180deg, color-mix(in srgb, var(--flame) 14%, var(--card)) 0%, var(--card) 100%);
 }
 
 .metric--streak strong {
-  color: var(--flame);
+  color: var(--flame-text);
   font-variant-numeric: tabular-nums;
 }
 
 .daily-goal {
+  --goal-ring-fill: var(--gold);
   display: flex;
   align-items: center;
   gap: var(--space-4);
@@ -370,12 +371,15 @@ p {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: conic-gradient(var(--gold) var(--goal-degrees), var(--goal-remainder) 0);
+  background: conic-gradient(var(--goal-ring-fill) var(--goal-degrees), var(--goal-remainder) 0);
   transition: --goal-degrees 700ms cubic-bezier(.3, .9, .3, 1);
 }
 
-.daily-goal--met { background: var(--gold); color: var(--gold-text); }
-.daily-goal--met .daily-goal__ring { background: var(--gold-text); }
+.daily-goal--met {
+  --goal-ring-fill: var(--gold-text);
+  background: var(--gold);
+  color: var(--gold-text);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .daily-goal__ring { transition: none; }

@@ -19,7 +19,7 @@ describe("visual themes", () => {
     const current = themes.default;
     expect(current.colors).toMatchObject({
       paper: "#EFEAE0", ink: "#16130F", body: "#4A443B", muted: "#6E675C", faint: "#6F685F",
-      card: "#FFFFFF", panel: "#F6F2E9", chipBg: "#F1ECE1", borderTan: "#E2DAC9", gold: "#E8B33D", goldHover: "#D19A22",
+      card: "#FFFFFF", panel: "#F6F2E9", chipBg: "#F1ECE1", borderTan: "#E2DAC9", gold: "#E8B33D", goldHover: "#D19A22", flameText: "#9A3E0B",
       calendarLow: "#FBE7C6", calendarMedium: "#F0B95E", calendarHigh: "#E8873D",
       correct: "#3DAE28", correctBg: "#E9F8E2", correctFg: "#2A7A1B", correctVivid: "#58CC02",
       wrong: "#E33B3B", wrongBg: "#FDEAEA", wrongFg: "#B32020", wrongVivid: "#FF4B4B",
@@ -27,7 +27,7 @@ describe("visual themes", () => {
       winFlash: "rgba(88, 204, 2, .45)", winFlashClear: "rgba(88, 204, 2, 0)",
     });
     expect(current.colors.goldHover).not.toBe(current.colors.gold);
-    expect(current.cssVariables).toMatchObject({ "--correct-vivid": current.colors.correctVivid, "--wrong-vivid": current.colors.wrongVivid, "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
+    expect(current.cssVariables).toMatchObject({ "--correct-vivid": current.colors.correctVivid, "--wrong-vivid": current.colors.wrongVivid, "--flame-text": current.colors.flameText, "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
     expect(current.fonts).toEqual({
       ui: "'Plus Jakarta Sans', 'Noto Sans KR', sans-serif",
       answer: "'Noto Sans KR', sans-serif",
@@ -46,14 +46,14 @@ describe("visual themes", () => {
     const quiet = themes["quiet-technical"];
     expect(quiet.colors).toMatchObject({
       paper: "#F7F6F4", ink: "#201F1D", card: "#FFFFFF", panel: "#F5F4F2", chipBg: "#F0EFED",
-      borderTan: "#DEDCDA", muted: "#5A5854", faint: "#8A877F", gold: "#B45309", goldHover: "#92400E", goldText: "#FFFFFF", flame: "#B45309",
+      borderTan: "#DEDCDA", muted: "#5A5854", faint: "#8A877F", gold: "#B45309", goldHover: "#92400E", goldText: "#FFFFFF", flame: "#B45309", flameText: "#92400E",
       calendarLow: "#EEF0F6", calendarMedium: "#4C5F8A", calendarHigh: "#201F1D",
       correct: "#2F7D5A", correctBg: "#EDF6F1", correctFg: "#2F7D5A", correctVivid: "#3DAE28",
       wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", wrongVivid: "#D14A4A", feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
       correctGlow: "rgba(47, 125, 90, .5)", correctGlowClear: "rgba(47, 125, 90, 0)",
       winFlash: "rgba(47, 125, 90, .40)", winFlashClear: "rgba(47, 125, 90, 0)",
     });
-    expect(quiet.cssVariables).toMatchObject({ "--correct-vivid": quiet.colors.correctVivid, "--wrong-vivid": quiet.colors.wrongVivid, "--win-flash": quiet.colors.winFlash, "--win-flash-clear": quiet.colors.winFlashClear });
+    expect(quiet.cssVariables).toMatchObject({ "--correct-vivid": quiet.colors.correctVivid, "--wrong-vivid": quiet.colors.wrongVivid, "--flame-text": quiet.colors.flameText, "--win-flash": quiet.colors.winFlash, "--win-flash-clear": quiet.colors.winFlashClear });
     expect(quiet.tracks).toMatchObject({
       kr: { accent: "#4C5F8A", soft: "#EEF0F6" }, jp: { accent: "#A85A3D", soft: "#F7EEEA" }, cn: { accent: "#4C7A63", soft: "#EEF5F0" },
     });
@@ -67,7 +67,8 @@ describe("visual themes", () => {
     const { colors, tracks } = themes["quiet-technical"];
     const pairs = [
       [colors.ink, colors.paper], [colors.muted, colors.paper], [colors.faint, colors.ink],
-      [colors.goldText, colors.gold], [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
+      [colors.goldText, colors.gold], [colors.flameText, colors.card], [colors.flameText, colors.paper],
+      [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
       [colors.feedbackText, colors.feedbackBg],
       ...Object.values(tracks).flatMap((track) => [[track.accent, colors.card], [track.accentText, track.soft]]),
     ];
@@ -78,7 +79,8 @@ describe("visual themes", () => {
     const { colors, tracks } = themes.default;
     const pairs = [
       [colors.ink, colors.paper], [colors.muted, colors.paper],
-      [colors.goldText, colors.gold], [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
+      [colors.goldText, colors.gold], [colors.flameText, colors.card], [colors.flameText, colors.paper],
+      [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
       ...Object.values(tracks).flatMap((track) => [[track.accent, colors.card], [track.accentText, track.soft]]),
     ];
     for (const [foreground, background] of pairs) expect(contrast(foreground, background)).toBeGreaterThanOrEqual(4.5);
