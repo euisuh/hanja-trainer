@@ -1,7 +1,7 @@
 import type { CSSProperties, KeyboardEvent, Ref } from "react";
 import { toHiragana } from "../../shared/kana";
 import type { OnyomiScript } from "../../shared/settings";
-import { readingFor } from "../session/buildQueue";
+import { readingFor } from "../../shared/buildQueue";
 import { trackThemes } from "../tracks/trackTheme";
 import type { DueItem } from "./DueList";
 

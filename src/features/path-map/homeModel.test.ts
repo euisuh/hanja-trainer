@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { lessonLimit, lessonTracks } from "../../screens/LessonScreen";
-import { reviewKey } from "../session/buildQueue";
+import { reviewKey } from "../../shared/buildQueue";
 import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, reviewableLevels, reviewableUnits, reviewLevelOptions, trackImbalance } from "./homeModel";
 
 function character(id: number): CharacterEntry {

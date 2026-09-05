@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { parseSeed } from "../../../scripts/seed";
-import { initialState } from "../../shared/fsrs";
-import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
+import { parseSeed } from "../../scripts/seed";
+import { initialState } from "./fsrs";
+import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry, WordEntry } from "./types";
 import { buildKunItem, buildMeaningItem, buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, reviewKey } from "./buildQueue";
 
 function character(id: number): CharacterEntry {

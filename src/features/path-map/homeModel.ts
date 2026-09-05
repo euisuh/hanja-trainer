@@ -1,7 +1,7 @@
 import type { ReviewState } from "../../shared/fsrs";
 import type { CurriculumUnitPayload } from "../../shared/api";
 import { TRACKS, type CharacterEntry, type Track } from "../../shared/types";
-import { readingFor, reviewKey } from "../session/buildQueue";
+import { readingFor, reviewKey } from "../../shared/buildQueue";
 import { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
 
 export { MASTERY_STABILITY_DAYS } from "../../shared/mastery";

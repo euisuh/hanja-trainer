@@ -4,7 +4,7 @@ import { useSettings } from "../features/settings/useSettings";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
 import { apiClient } from "../lib/apiClient";
-import type { SessionQueueItem } from "../features/session/buildQueue";
+import type { SessionQueueItem } from "../shared/buildQueue";
 import type { Track } from "../shared/types";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };

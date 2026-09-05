@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { PlacementAnswer } from "../../shared/api";
-import type { CharacterEntry, Track } from "../../shared/types";
+import type { PlacementAnswer } from "./api";
+import type { CharacterEntry, Track } from "./types";
 import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, scorePlacementAnswers } from "./adaptive";
 
 function characters(): CharacterEntry[] {

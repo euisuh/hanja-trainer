@@ -8,5 +8,6 @@
     "noEmit": true,
     "strict": true
   },
-  "include": ["vite.config.ts", "vitest.config.ts", "scripts", "src/shared", "src/features/session/buildQueue.ts", "src/features/placement/adaptive.ts", "worker", "worker-configuration.d.ts"]
+  "include": ["vite.config.ts", "vitest.config.ts", "scripts", "src/shared", "worker", "worker-configuration.d.ts"],
+  "exclude": ["src/shared/*.test.ts"]
 }

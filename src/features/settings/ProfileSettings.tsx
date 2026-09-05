@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ApiClientError, apiClient } from "../../lib/apiClient";
 import type { PublicProfile } from "../../shared/api";
-import { useFocusTrap } from "../../shared/useFocusTrap";
+import { useFocusTrap } from "../../lib/useFocusTrap";
 import { Keypad } from "../pin/Keypad";
 
 type PinStage = "first" | "confirm";

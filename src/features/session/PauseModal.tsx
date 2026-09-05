@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useFocusTrap } from "../../shared/useFocusTrap";
+import { useFocusTrap } from "../../lib/useFocusTrap";
 
 type Props = { onResume: () => void; onQuit: () => void };
 

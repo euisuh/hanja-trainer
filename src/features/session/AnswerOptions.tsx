@@ -1,4 +1,4 @@
-import type { AnswerOption } from "./buildQueue";
+import type { AnswerOption } from "../../shared/buildQueue";
 
 type Props = {
   options: AnswerOption[];

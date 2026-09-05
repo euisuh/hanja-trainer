@@ -1,5 +1,5 @@
-import type { PlacementAnswer } from "../../shared/api";
-import { TRACKS, type CharacterEntry, type Track } from "../../shared/types";
+import type { PlacementAnswer } from "./api";
+import { TRACKS, type CharacterEntry, type Track } from "./types";
 
 export const PLACEMENT_ITEM_BUDGET = 15;
 

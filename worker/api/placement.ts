@@ -1,4 +1,4 @@
-import { scorePlacementAnswers, type PlacementBounds } from "../../src/features/placement/adaptive";
+import { scorePlacementAnswers, type PlacementBounds } from "../../src/shared/adaptive";
 import type { PlacementAnswer, PlacementScoreResponse } from "../../src/shared/api";
 import { TRACKS, type Track } from "../../src/shared/types";
 

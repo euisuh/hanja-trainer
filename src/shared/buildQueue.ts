@@ -1,6 +1,6 @@
-import { isDue, type ReviewState } from "../../shared/fsrs";
-import { toHiragana } from "../../shared/kana";
-import type { CharacterEntry, Track, TrackEntry, WordEntry } from "../../shared/types";
+import { isDue, type ReviewState } from "./fsrs";
+import { toHiragana } from "./kana";
+import type { CharacterEntry, Track, TrackEntry, WordEntry } from "./types";
 
 // Compare cards are ungraded interstitials. After each cadence block in lesson
 // and review, prefer a character just answered; one known enabled track is enough

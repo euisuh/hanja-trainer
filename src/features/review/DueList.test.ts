@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry } from "../../shared/types";
-import { reviewKey } from "../session/buildQueue";
+import { reviewKey } from "../../shared/buildQueue";
 import { buildDueItems } from "./DueList";
 import { DueRow } from "./DueRow";
 

@@ -3,7 +3,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
-import type { SessionQueueItem } from "../features/session/buildQueue";
+import type { SessionQueueItem } from "../shared/buildQueue";
 import { apiClient } from "../lib/apiClient";
 import { TRACKS } from "../shared/types";
 

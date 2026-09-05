@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { tracks } from "../../design/tokens";
-import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../placement/adaptive";
+import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer, type PlacementResult } from "../../shared/adaptive";
 import { gradeFromReview, initialState, schedule, type ReviewState } from "../../shared/fsrs";
 import { toHiragana } from "../../shared/kana";
 import { wordAttribution } from "../../shared/sentenceAttribution";
@@ -11,7 +11,7 @@ import { trackThemes } from "../tracks/trackTheme";
 import type { PlacementAnswer, ProfileResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
 import { unitTestRetryOffset } from "../../shared/unitTestRetry";
 import { AnswerOptions } from "./AnswerOptions";
-import { buildQueue, buildReadingItem, meaningFor, readingFor, reviewKey, type SessionQueueItem } from "./buildQueue";
+import { buildQueue, buildReadingItem, meaningFor, readingFor, reviewKey, type SessionQueueItem } from "../../shared/buildQueue";
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { playCorrect, playSkip, playWrong } from "./feedbackSound";

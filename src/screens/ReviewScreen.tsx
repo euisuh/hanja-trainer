@@ -6,7 +6,7 @@ import { useSettings } from "../features/settings/useSettings";
 import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
-import type { SessionQueueItem } from "../features/session/buildQueue";
+import type { SessionQueueItem } from "../shared/buildQueue";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
 import type { CurriculumResponse, DueReviewsResponse } from "../shared/api";

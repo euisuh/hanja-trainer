@@ -1,6 +1,6 @@
 import type { SessionCard, SessionCompareEntry } from "../../shared/api";
 import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../shared/types";
-import type { SessionQueueItem } from "./buildQueue";
+import type { SessionQueueItem } from "../../shared/buildQueue";
 
 function trackEntry(track: Track, card: Pick<SessionCard, "glyph" | "kun" | "levelBadge" | "levelOrd" | "meaning" | "reading">, characterId: number): TrackEntry {
   if (track === "kr") return { characterId, track, glyph: card.glyph, reading: card.reading, level: card.levelBadge.replace(/^한자 /u, ""), levelOrd: card.levelOrd };
