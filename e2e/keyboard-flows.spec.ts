@@ -369,7 +369,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator('[data-tested-hold="true"]')).toHaveCount(0);
 
-    const finished = await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true, verifyMeaningFeedback: !meaningFeedbackChecked });
+    const finished = await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true, verifyMeaningFeedback: !meaningFeedbackChecked });
     expect(meaningKeyboardAnswers + finished.meaningKeyboardAnswers).toBeGreaterThan(0);
     expect(meaningFeedbackChecked || finished.meaningFeedbackChecked).toBe(true);
     await expect.poll(async () => (await (await page.request.get("/api/stats")).json() as { skipped: number }).skipped).toBeGreaterThan(0);
@@ -470,11 +470,11 @@ test.describe.serial("keyboard-only product flows", () => {
     expect(responses).toBe(second.cards.length + 1);
     expect([...cleared].includes(recoveredCard)).toBe(true);
     expect(correctOrder.indexOf(recoveredCard)).toBeGreaterThan(0);
-    await expect(page.getByRole("heading", { name: /유닛 건너뛰기 성공/u })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /유닛을 건너뛰었어요/u })).toBeVisible();
     expect((await secondCompletion).postDataJSON()).toMatchObject({
       answers: expect.arrayContaining([expect.objectContaining({ characterKey: second.cards[recoveredCard].characterKey, selectedIndex: null })]),
     });
-    await expect(page.getByRole("heading", { name: /유닛 건너뛰기 성공/u })).toBeFocused();
+    await expect(page.getByRole("heading", { name: /유닛을 건너뛰었어요/u })).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     const afterSuccess = await (await page.request.get("/api/curriculum?track=kr")).json() as typeof before;
@@ -628,7 +628,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
-    await finishSession(page, review.cards, /세션 완료/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Space", skipAdvance: "Space", skipFirst: true });
+    await finishSession(page, review.cards, /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Space", skipAdvance: "Space", skipFirst: true });
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     await expect.poll(async () => {
@@ -683,7 +683,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.clock.runFor(1);
     await expect(page.locator(".quiz-card__glyph")).not.toHaveText("學校");
     await page.clock.resume();
-    await finishSession(page, lesson.cards.slice(wordIndex + 1), /세션 완료/u, { autoAdvance: true, progressOffset: wordIndex + 1 });
+    await finishSession(page, lesson.cards.slice(wordIndex + 1), /했어요|좋아요/u, { autoAdvance: true, progressOffset: wordIndex + 1 });
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);

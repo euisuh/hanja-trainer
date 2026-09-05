@@ -542,8 +542,8 @@ button.session-sync {
 }
 
 .session-complete {
+  position: relative;
   padding: var(--space-8) var(--space-2);
-  animation: om-rise .35s ease-out;
 }
 
 .session-complete__glyph {
@@ -552,14 +552,17 @@ button.session-sync {
   font-size: 74px;
   font-weight: 700;
   line-height: 1;
-  animation: om-pop .5s ease-out;
+  animation: om-pop 500ms cubic-bezier(.22, 1.2, .36, 1) both;
 }
 
 .session-complete h1 {
   margin: var(--space-4) 0 var(--space-6);
   font-size: 32px;
   font-weight: 800;
+  animation: om-rise 320ms ease-out 260ms both;
 }
+
+.session-complete__xp { color: var(--gold-hover); font-variant-numeric: tabular-nums; }
 
 .session-complete__stats {
   display: grid;
@@ -575,12 +578,43 @@ button.session-sync {
   border-radius: var(--radius-answer);
   background: var(--card);
   box-shadow: var(--shadow-5);
+  animation: om-rise 300ms ease-out both;
 }
+
+.session-complete__stats > div:nth-child(1) { animation-delay: 700ms; }
+.session-complete__stats > div:nth-child(2) { animation-delay: 760ms; }
+.session-complete__stats > div:nth-child(3) { animation-delay: 820ms; }
+.session-complete__stats > div:nth-child(4) { animation-delay: 880ms; }
+.session-complete__stats > div:nth-child(5) { animation-delay: 940ms; }
+
+.session-complete__stats > div.session-complete__stat--quiet {
+  border-color: var(--border-tan);
+  box-shadow: 0 5px 0 var(--border-tan);
+}
+
+.session-complete__stat--quiet strong { color: var(--muted); }
 
 .session-complete__stats small,
 .session-complete__stats strong {
   display: block;
 }
+
+.session-complete__profile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  max-width: 620px;
+  margin-bottom: var(--space-7);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-large);
+  background: var(--ink);
+  color: var(--paper);
+  animation: om-rise 300ms ease-out 960ms both;
+}
+
+.session-complete__profile span { display: grid; gap: var(--space-1); }
+.session-complete__profile small { color: var(--nav-muted); font-size: var(--text-2xs, 11px); font-weight: 500; }
+.session-complete__profile strong { font-size: var(--text-lg, 20px); font-weight: 800; font-variant-numeric: tabular-nums; }
 
 .session-complete__stats small {
   color: var(--muted);
@@ -607,6 +641,7 @@ button.session-sync {
   font-size: 16px;
   font-weight: 800;
   color: var(--gold-text);
+  animation: om-rise 320ms ease-out 1100ms both;
 }
 
 @media (max-width: 560px) {
@@ -638,5 +673,9 @@ button.session-sync {
   .celebration-layer { visibility: hidden; }
   .session-progress span { transition: none; }
   .session-complete,
-  .session-complete__glyph { animation: none; }
+  .session-complete__glyph,
+  .session-complete h1,
+  .session-complete__stats > div,
+  .session-complete__profile,
+  .session-complete > button { animation: none; }
 }
