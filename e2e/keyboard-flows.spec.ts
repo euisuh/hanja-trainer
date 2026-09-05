@@ -620,6 +620,8 @@ test.describe.serial("keyboard-only product flows", () => {
     }
     const dueRows = page.locator(".due-row");
     expect(await dueRows.count()).toBeGreaterThan(1);
+    await expect(page.locator(".due-row__when--overdue").first()).toContainText(/일 지남/u);
+    await expect(page.locator(".due-row__when--overdue").first()).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     await dueRows.first().focus();
     await page.keyboard.press("ArrowDown");
     await expect(dueRows.nth(1)).toBeFocused();

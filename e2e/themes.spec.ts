@@ -181,6 +181,79 @@ test("Quiet Technical state colors and radii remain readable", async ({ page }) 
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
 });
 
+test("raised actions hover, press, and respect reduced motion", async ({ page }) => {
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "default" } })).ok()).toBe(true);
+  const session = await startLesson(page);
+  const answer = page.locator(".answer-option").first();
+  await answer.hover();
+  expect(await answer.evaluate((node) => {
+    const style = getComputedStyle(node);
+    const probe = document.createElement("span");
+    probe.style.background = style.getPropertyValue("--session-soft");
+    document.body.append(probe);
+    const expected = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    return style.backgroundColor === expected;
+  })).toBe(true);
+
+  const answerBox = await answer.boundingBox();
+  await page.mouse.move(answerBox!.x + answerBox!.width / 2, answerBox!.y + answerBox!.height / 2);
+  await page.mouse.down();
+  await expect(answer).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 4)");
+  await expect(answer).toHaveCSS("box-shadow", "none");
+  await page.mouse.move(0, 0);
+  await page.mouse.up();
+  await expect(answer).toHaveCSS("transform", "none");
+
+  await page.keyboard.press(String(session.cards[0].answerIndex + 1));
+  await expect(answer).toHaveAttribute("aria-disabled", "true");
+  await expect(answer).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 4)");
+
+  await page.goto("/home");
+  const lesson = page.locator(".lesson-cta");
+  await expect(lesson).toHaveCSS("animation-duration", "3.2s");
+  await expect(lesson).toHaveCSS("animation-delay", "1.2s");
+  const lessonBox = await lesson.boundingBox();
+  await page.mouse.move(lessonBox!.x + lessonBox!.width / 2, lessonBox!.y + lessonBox!.height / 2);
+  await page.mouse.down();
+  await expect(lesson).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 7)");
+  await expect(lesson).toHaveCSS("box-shadow", "none");
+  await page.mouse.move(0, 0);
+  await page.mouse.up();
+
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
+  await page.setViewportSize({ width: 430, height: 900 });
+  await page.reload();
+  await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
+  const shelfAction = page.locator(".home-shelf__item").first();
+  await shelfAction.scrollIntoViewIfNeeded();
+  const shelfBox = await shelfAction.boundingBox();
+  await page.mouse.move(shelfBox!.x + shelfBox!.width / 2, shelfBox!.y + shelfBox!.height / 2);
+  await page.mouse.down();
+  await expect(shelfAction).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 4)");
+  await page.mouse.move(0, 0);
+  await page.mouse.up();
+  await expect(shelfAction).toHaveCSS("transform", "none");
+
+  await startLesson(page);
+  const pause = page.getByRole("button", { name: "세션 일시정지" });
+  const pauseBox = await pause.boundingBox();
+  await page.mouse.move(pauseBox!.x + pauseBox!.width / 2, pauseBox!.y + pauseBox!.height / 2);
+  await page.mouse.down();
+  await expect(pause).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 3)");
+  await page.mouse.move(0, 0);
+  await page.mouse.up();
+  await expect(pause).toHaveCSS("transform", "none");
+
+  await page.goto("/home");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect(lesson).toHaveCSS("animation-name", "none");
+  await expect(lesson).toHaveCSS("transition-property", "none");
+  await lesson.hover();
+  await expect(lesson).toHaveCSS("transform", "none");
+});
+
 test("reduced motion cleans hidden celebration state", async ({ page }) => {
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce" });

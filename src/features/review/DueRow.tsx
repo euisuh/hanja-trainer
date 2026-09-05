@@ -23,9 +23,9 @@ export function DueRow({ item, buttonRef, onKeyDown, onOpen, onyomiScript }: Pro
       <span className="due-row__glyph" lang={theme.lang}>{item.trackEntry.glyph}</span>
       <span className="due-row__copy">
         <strong lang={theme.lang}>{reading}</strong>
-        <small className={item.due.overdue ? "due-row__overdue" : ""}>{item.due.label}</small>
+        <small className={`due-row__due${item.due.overdue ? " due-row__due--overdue" : ""}`}>{item.due.label}</small>
       </span>
-      <span className="due-row__stability">S {item.state.stability.toFixed(1)}</span>
+      <span className="due-row__memory">S {item.state.stability.toFixed(1)}</span>
     </button>
   );
 }

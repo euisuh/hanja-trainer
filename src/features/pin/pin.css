@@ -19,7 +19,6 @@
 .pin-dot--filled { background: var(--ink); }
 .pin-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
 .pin-keys button, .pin-action { min-height: 48px; border: 3px solid var(--ink); border-radius: var(--radius-small); background: var(--gold); color: var(--gold-text); box-shadow: var(--shadow-4); cursor: pointer; font-size: 18px; font-weight: 800; }
-.pin-keys button:active, .pin-action:active { transform: translateY(3px); box-shadow: none; }
 .pin-keys button:disabled, .pin-action:disabled { cursor: not-allowed; opacity: .55; }
 .pin-keys button:last-child { grid-column: span 2; font-size: 12px; }
 .pin-message { min-height: 22px; margin-top: var(--space-5); color: var(--wrong); font-size: 13px; }

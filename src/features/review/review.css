@@ -81,9 +81,10 @@
   font-weight: 700;
 }
 
-.due-row__copy .due-row__overdue { color: var(--overdue); }
+.due-row__due--overdue { color: var(--overdue); }
 
-.due-row__stability {
+.due-row__memory,
+.due-row__when {
   margin-left: auto;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-badge);
@@ -93,6 +94,8 @@
   font-weight: 800;
   white-space: nowrap;
 }
+
+.due-row__when--overdue { background: var(--wrong-bg); color: var(--overdue); }
 
 .due-list__more {
   margin-top: var(--space-4);

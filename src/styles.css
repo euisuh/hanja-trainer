@@ -42,6 +42,112 @@ select {
   outline-offset: 3px;
 }
 
+/* Raised surfaces depress by their shadow offset. One rule, applied by class. */
+:is(
+  .answer-option,
+  .skip-answer,
+  .feedback-bar > button,
+  .session-empty button,
+  .session-complete > button,
+  .lesson-cta,
+  .home-shelf__item,
+  .review-cta,
+  .review-start,
+  .track-card,
+  .profile-picker__option,
+  .settings-card button,
+  .theme-picker button,
+  .track-toggles button,
+  .detail-back,
+  .unit-study__back,
+  .pause-modal button,
+  .level-review-picker button,
+  .track-imbalance__actions button,
+  .session-chrome > button:first-child,
+  .track-tab,
+  .due-row,
+  .onboarding-cta,
+  .placement-result__cta,
+  .pin-keys button,
+  .pin-action
+),
+.path-node:not(.path-node--locked) .path-node__glyph {
+  transition: transform 90ms cubic-bezier(.2, .8, .3, 1), box-shadow 90ms cubic-bezier(.2, .8, .3, 1);
+}
+
+:is(
+  .answer-option,
+  .skip-answer,
+  .feedback-bar > button,
+  .session-empty button,
+  .session-complete > button,
+  .lesson-cta,
+  .home-shelf__item,
+  .review-cta,
+  .review-start,
+  .track-card,
+  .profile-picker__option,
+  .settings-card button,
+  .theme-picker button,
+  .track-toggles button,
+  .detail-back,
+  .unit-study__back,
+  .pause-modal button,
+  .level-review-picker button,
+  .track-imbalance__actions button,
+  .session-chrome > button:first-child,
+  .track-tab,
+  .due-row,
+  .onboarding-cta,
+  .placement-result__cta,
+  .pin-keys button,
+  .pin-action
+):hover:not(:disabled):not([aria-disabled="true"]),
+.path-node:not(.path-node--locked):hover .path-node__glyph {
+  transform: translateY(-1px);
+}
+
+:is(
+  .answer-option,
+  .skip-answer,
+  .feedback-bar > button,
+  .session-empty button,
+  .session-complete > button,
+  .lesson-cta,
+  .home-shelf__item,
+  .review-cta,
+  .review-start,
+  .track-card,
+  .profile-picker__option,
+  .settings-card button,
+  .theme-picker button,
+  .track-toggles button,
+  .detail-back,
+  .unit-study__back,
+  .pause-modal button,
+  .level-review-picker button,
+  .track-imbalance__actions button,
+  .session-chrome > button:first-child,
+  .track-tab,
+  .due-row,
+  .onboarding-cta,
+  .placement-result__cta,
+  .pin-keys button,
+  .pin-action
+):active:not(:disabled):not([aria-disabled="true"]),
+.path-node:not(.path-node--locked):active .path-node__glyph {
+  transform: translateY(var(--press-depth, 4px));
+  box-shadow: none;
+}
+
+:is(.session-chrome > button:first-child, .detail-back, .due-row) { --press-depth: 3px; }
+:is(.review-cta, .path-node__glyph, .track-card) { --press-depth: 5px; }
+:is(.review-start, .session-complete > button, .onboarding-cta, .placement-result__cta) { --press-depth: 6px; }
+.lesson-cta { --press-depth: 7px; }
+
+.lesson-cta:active,
+.path-node:not(.path-node--locked):active .path-node__glyph { animation: none; }
+
 .app {
   min-height: 100vh;
   padding: 0 var(--space-5) 104px;
@@ -104,6 +210,66 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+
+  :is(
+    .answer-option,
+    .skip-answer,
+    .feedback-bar > button,
+    .session-empty button,
+    .session-complete > button,
+    .lesson-cta,
+    .home-shelf__item,
+    .review-cta,
+    .review-start,
+    .track-card,
+    .profile-picker__option,
+    .settings-card button,
+    .theme-picker button,
+    .track-toggles button,
+    .detail-back,
+    .unit-study__back,
+    .pause-modal button,
+    .level-review-picker button,
+    .track-imbalance__actions button,
+    .session-chrome > button:first-child,
+    .track-tab,
+    .due-row,
+    .onboarding-cta,
+    .placement-result__cta,
+    .pin-keys button,
+    .pin-action
+  ),
+  .path-node:not(.path-node--locked) .path-node__glyph { transition: none; }
+
+  :is(
+    .answer-option,
+    .skip-answer,
+    .feedback-bar > button,
+    .session-empty button,
+    .session-complete > button,
+    .lesson-cta,
+    .home-shelf__item,
+    .review-cta,
+    .review-start,
+    .track-card,
+    .profile-picker__option,
+    .settings-card button,
+    .theme-picker button,
+    .track-toggles button,
+    .detail-back,
+    .unit-study__back,
+    .pause-modal button,
+    .level-review-picker button,
+    .track-imbalance__actions button,
+    .session-chrome > button:first-child,
+    .track-tab,
+    .due-row,
+    .onboarding-cta,
+    .placement-result__cta,
+    .pin-keys button,
+    .pin-action
+  ):hover:not(:disabled):not([aria-disabled="true"]),
+  .path-node:not(.path-node--locked):hover .path-node__glyph { transform: none; }
 }
 
 h1 {

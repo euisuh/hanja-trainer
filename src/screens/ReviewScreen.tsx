@@ -136,7 +136,7 @@ export function ReviewScreen() {
             event.preventDefault();
             const direction = event.key === "ArrowDown" ? 1 : -1;
             dueRefs.current[(index + direction + due.cards.length) % due.cards.length]?.focus();
-          }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className="due-row__when">{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
+          }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className={`due-row__when${item.overdueDays > 0 ? " due-row__when--overdue" : ""}`}>{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
       {previousUnits.length > 0 && <section className="level-review-picker">

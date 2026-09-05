@@ -109,7 +109,6 @@
   padding: var(--space-6);
   border-radius: var(--radius-medium);
   font-size: 17px;
-  animation: om-pulse 2.4s infinite;
 }
 
 .onboarding-footnote { margin-top: var(--space-4); color: var(--muted); font-size: 13px; font-weight: 600; }
@@ -132,8 +131,4 @@
 @media (max-width: 560px) {
   .track-picker,
   .placement-result__grid { grid-template-columns: 1fr; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .onboarding-cta { animation: none; }
 }

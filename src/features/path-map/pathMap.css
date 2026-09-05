@@ -199,10 +199,8 @@
   background: var(--home-accent);
   box-shadow: var(--shadow-7);
   color: var(--card);
-  transition: transform 90ms ease-out, box-shadow 90ms ease-out;
+  animation: om-pulse 3.2s ease-in-out 1.2s infinite;
 }
-.lesson-cta:hover { transform: translateY(-2px); box-shadow: 0 9px 0 var(--ink); }
-.lesson-cta:active { transform: translateY(4px); box-shadow: none; }
 
 .lesson-cta small,
 .lesson-cta strong,
@@ -265,6 +263,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .lesson-cta,
   .path-node--next .path-node__glyph,
   .path-node__check { animation: none; }
 }

@@ -285,14 +285,15 @@ button.session-sync {
   color: var(--ink);
   cursor: pointer;
   text-align: left;
-  transition: transform .1s, background .12s;
 }
+
+.answer-option:hover:not([aria-disabled="true"]) { background: var(--session-soft); }
 
 .answer-option[aria-disabled="true"] {
   box-shadow: none;
   cursor: default;
   opacity: 1;
-  transform: translateY(3px);
+  transform: translateY(4px);
 }
 
 .answer-option__key {
