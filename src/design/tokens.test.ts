@@ -20,6 +20,7 @@ describe("visual themes", () => {
     expect(current.colors).toMatchObject({
       paper: "#EFEAE0", ink: "#16130F", body: "#4A443B", muted: "#6E675C", faint: "#6F685F",
       card: "#FFFFFF", panel: "#F6F2E9", chipBg: "#F1ECE1", borderTan: "#E2DAC9", gold: "#E8B33D",
+      calendarLow: "#FBE7C6", calendarMedium: "#F0B95E", calendarHigh: "#E8873D",
       correct: "#12855A", correctBg: "#E4F6EC", correctFg: "#0E6B48",
       wrong: "#D93A16", wrongBg: "#FCE9E4", wrongFg: "#A42D10",
     });
@@ -42,6 +43,7 @@ describe("visual themes", () => {
     expect(quiet.colors).toMatchObject({
       paper: "#F7F6F4", ink: "#201F1D", card: "#FFFFFF", panel: "#F5F4F2", chipBg: "#F0EFED",
       borderTan: "#DEDCDA", muted: "#5A5854", faint: "#8A877F", gold: "#B45309", goldHover: "#92400E", goldText: "#FFFFFF",
+      calendarLow: "#EEF0F6", calendarMedium: "#4C5F8A", calendarHigh: "#201F1D",
       correct: "#2F7D5A", correctBg: "#EDF6F1", correctFg: "#2F7D5A",
       wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
     });

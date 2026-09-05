@@ -1,5 +1,38 @@
 .stats-screen h1 { margin: var(--space-3) 0 var(--space-5); font-size: 30px; }
 
+.streak-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+  padding: var(--space-7);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-large);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--flame) 18%, var(--card)) 0%, var(--card) 62%);
+  box-shadow: var(--shadow-6);
+}
+
+.streak-hero__flame svg { fill: var(--flame); }
+.streak-hero__copy { display: grid; gap: var(--space-1); }
+
+.streak-hero__copy strong {
+  font-size: 56px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.streak-hero__copy span { font-size: var(--text-md, 17px); font-weight: 700; }
+.streak-hero__copy small { color: var(--muted); font-size: var(--text-xs, 12px); font-weight: 500; }
+.streak-hero--at-risk { background: linear-gradient(135deg, var(--wrong-bg) 0%, var(--card) 62%); }
+.streak-hero--at-risk .streak-hero__flame svg { fill: var(--locked-text); }
+
+.streak-hero--at-risk .streak-hero__copy span::after {
+  color: var(--wrong-fg);
+  content: " · 오늘 아직 안 했어요";
+  font-weight: 800;
+}
+
 .streak-calendar {
   padding: var(--space-6);
   border: 3px solid var(--ink);
@@ -31,7 +64,7 @@
 .streak-calendar__day { display: block; aspect-ratio: 1; border-radius: var(--radius-calendar); background: var(--paper); }
 .streak-calendar__day--1 { background: var(--calendar-low); }
 .streak-calendar__day--2 { background: var(--calendar-medium); }
-.streak-calendar__day--3 { background: var(--kr-accent); }
+.streak-calendar__day--3 { background: var(--calendar-high); }
 
 .track-mastery-grid {
   display: grid;
@@ -55,6 +88,7 @@
 .track-mastery-card__bar span { display: block; height: 100%; background: var(--stats-accent); }
 .track-mastery-card footer { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-3); color: var(--body); font-size: 12px; font-weight: 700; }
 .track-mastery-card__secondary { padding-top: var(--space-3); border-top: 1px dashed var(--border-tan); }
+.stats-skip { margin-top: var(--space-6); color: var(--muted); font-size: var(--text-sm, 13px); font-weight: 500; }
 
 @media (max-width: 560px) {
   .track-mastery-grid { grid-template-columns: 1fr; }

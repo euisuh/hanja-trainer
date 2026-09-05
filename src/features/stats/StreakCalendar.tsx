@@ -1,10 +1,10 @@
 import type { StatsCalendarDay } from "../../shared/api";
 import { CALENDAR_BUCKET_THRESHOLDS } from "./calendar";
 
-export function StreakCalendar({ calendar, streak, longestStreak }: { calendar: StatsCalendarDay[]; streak: number; longestStreak: number }) {
+export function StreakCalendar({ calendar }: { calendar: StatsCalendarDay[] }) {
   return (
     <section className="streak-calendar">
-      <header><strong>최근 18주 학습 기록</strong><span>연속 {streak}일 · 최장 {longestStreak}일</span></header>
+      <header><strong>최근 18주 학습 기록</strong></header>
       <div className="streak-calendar__scroll">
         <div className="streak-calendar__grid">
           {calendar.map((day) => {

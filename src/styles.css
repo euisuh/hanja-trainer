@@ -153,6 +153,16 @@ p {
 .metric__flame { fill: var(--flame); }
 .metric__bolt { fill: var(--gold); }
 
+.metric--streak {
+  border-color: var(--flame);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--flame) 14%, var(--card)) 0%, var(--card) 100%);
+}
+
+.metric--streak strong {
+  color: var(--flame);
+  font-variant-numeric: tabular-nums;
+}
+
 .daily-goal {
   display: flex;
   align-items: center;
@@ -165,11 +175,25 @@ p {
   font-size: 12px;
 }
 
+@property --goal-degrees {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .daily-goal__ring {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   background: conic-gradient(var(--gold) var(--goal-degrees), var(--goal-remainder) 0);
+  transition: --goal-degrees 700ms cubic-bezier(.3, .9, .3, 1);
+}
+
+.daily-goal--met { background: var(--gold); color: var(--gold-text); }
+.daily-goal--met .daily-goal__ring { background: var(--gold-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  .daily-goal__ring { transition: none; }
 }
 
 .bottom-nav-shell {

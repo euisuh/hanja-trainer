@@ -35,7 +35,7 @@ export function AppHeader({ streak, xp, today, goal, onSwitch }: Props) {
         <strong>{profile?.name ?? activeProfile.name}</strong>
         {onSwitch && <button onClick={onSwitch} type="button">프로필 전환</button>}
       </div>
-      <div className="metric">
+      <div className="metric metric--streak">
         <svg aria-hidden="true" className="metric__flame" height="15" viewBox="0 0 24 24" width="15"><path d="M12 2c1 4-3 5-3 9a3 3 0 006 0c0-1-1-2-1-3 2 1 4 4 4 7a6 6 0 01-12 0C6 9 12 8 12 2z" /></svg>
         <strong>{currentStreak}</strong><span>연속</span>
       </div>
@@ -43,7 +43,7 @@ export function AppHeader({ streak, xp, today, goal, onSwitch }: Props) {
         <svg aria-hidden="true" className="metric__bolt" height="14" viewBox="0 0 24 24" width="14"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" /></svg>
         <strong>{totalXp.toLocaleString()}</strong><span>XP</span>
       </div>
-      <div className="daily-goal">
+      <div className={`daily-goal${todayXp >= dailyGoal ? " daily-goal--met" : ""}`}>
         <span className="daily-goal__ring" role="img" aria-label={`일일 목표 ${Math.round(degrees / 3.6)}% 달성`} style={{ "--goal-degrees": `${degrees}deg` } as React.CSSProperties} />
         <strong>오늘 {todayXp}/{dailyGoal} XP</strong>
       </div>
