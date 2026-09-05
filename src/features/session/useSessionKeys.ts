@@ -31,7 +31,17 @@ export function useSessionKeys({ active, answered, compare, onPick, onSkip, onAd
         onAdvance();
       }
     }
+    function onPointerUp(event: PointerEvent) {
+      if (!(answered || compare)) return;
+      const target = event.target;
+      if (target instanceof Element && target.closest("a, button, input, textarea, select, [contenteditable=true]")) return;
+      onAdvance();
+    }
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("pointerup", onPointerUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("pointerup", onPointerUp);
+    };
   }, [active, answered, compare, onAdvance, onPause, onPick, onSkip]);
 }

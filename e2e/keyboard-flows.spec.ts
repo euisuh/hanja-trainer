@@ -367,6 +367,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await sourceLink.press("Enter");
     await expect(sourceLink).toHaveAttribute("data-keyboard-activated", "true");
     await sourceLink.press("Space");
+    await sourceLink.dispatchEvent("pointerup", { bubbles: true, pointerType: "touch" });
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toHaveAttribute("aria-valuenow", String(sourceProgress));
     await clickedAnswer.focus();
     await clickedAnswer.press("Shift+Tab");
@@ -381,6 +382,41 @@ test.describe.serial("keyboard-only product flows", () => {
     await expect.poll(async () => (await (await page.request.get("/api/stats")).json() as { skipped: number }).skipped).toBeGreaterThan(0);
     await checkLayout(page, "session-complete", testInfo);
     await page.keyboard.press("Enter");
+    await expect(page.locator(".home-screen")).toBeVisible();
+  });
+
+  test("correct answers advance on a background tap without double advancing", async ({ page }) => {
+    await page.goto("/home");
+    const launch = page.getByRole("button", { name: /레슨 시작/u });
+    await expect(launch).toBeVisible();
+    const lesson = await sessionStarted(page, () => launch.click());
+    let cardIndex = 0;
+    while (lesson.cards[cardIndex]?.kind === "compare") {
+      await page.locator(".quiz-card__glyph").dispatchEvent("pointerup", { bubbles: true, pointerType: "touch" });
+      cardIndex += 1;
+    }
+    const card = lesson.cards[cardIndex]!;
+    expect(card.kind).not.toBe("compare");
+    expect(cardIndex + 1).toBeLessThan(lesson.cards.length);
+    const clockStart = Date.now();
+    await page.clock.install({ time: clockStart });
+    await page.clock.pauseAt(clockStart + 1_000);
+    await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-pointer-advance", "true"));
+
+    const answer = page.locator(".answer-option").nth(card.answerIndex);
+    await answer.click();
+    await expect(answer).toHaveAttribute("aria-disabled", "true");
+    await answer.locator("strong").dispatchEvent("pointerup", { bubbles: true, pointerType: "touch" });
+    await expect(page.locator('[data-tested-pointer-advance="true"]')).toBeVisible();
+    await page.locator(".quiz-card__glyph").dispatchEvent("pointerup", { bubbles: true, pointerType: "touch" });
+    await expect(page.locator('[data-tested-pointer-advance="true"]')).toHaveCount(0);
+
+    await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-no-double-pointer", "true"));
+    await page.clock.runFor(1_000);
+    await expect(page.locator('[data-tested-no-double-pointer="true"]')).toBeVisible();
+    await page.clock.resume();
+    await page.keyboard.press("Escape");
+    await page.keyboard.press("Q");
     await expect(page.locator(".home-screen")).toBeVisible();
   });
 
