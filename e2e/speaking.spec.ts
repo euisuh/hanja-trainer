@@ -148,7 +148,11 @@ test("repeats a card three times and moves between cards by keyboard", async ({ 
   await expect(page.getByText("반복 연습 · 3번째 / 3번")).toBeVisible();
 
   const firstCardText = await page.locator(".speaking-card__sentence").textContent();
-  await page.locator("body").click();
+  // Blur instead of clicking body: a real click can land on an overlapping
+  // button in this narrow, centered layout, focusing it and making the
+  // component's own "don't fire shortcuts while a control has focus" guard
+  // swallow the next key press.
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   await page.keyboard.press("ArrowRight");
   await expect(page.getByText("반복 연습 · 1번째 / 3번")).toBeVisible();
   await expect(page.locator(".speaking-card__sentence")).not.toHaveText(firstCardText ?? "");
