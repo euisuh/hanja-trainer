@@ -1,14 +1,19 @@
 import { expect, test } from "@playwright/test";
 
 test("about page is reachable by keyboard from settings, explains coverage, and makes no writes", async ({ page }) => {
+  await page.goto("/settings");
+  await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
+  // A brand-new profile's first settings load fires a one-time timezone
+  // PATCH (see useSettings.ts) unrelated to this page. Let that settle
+  // before recording writes, so this only asserts on writes the about
+  // page itself (or navigating to/from it) causes.
+  await page.waitForLoadState("networkidle");
+
   const unexpectedWrites: Array<{ method: string; url: string }> = [];
   page.on("request", (request) => {
     const method = request.method();
     if (method !== "GET") unexpectedWrites.push({ method, url: request.url() });
   });
-
-  await page.goto("/settings");
-  await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
 
   const aboutLink = page.getByRole("button", { name: "이 앱에 대해" });
   await aboutLink.focus();
