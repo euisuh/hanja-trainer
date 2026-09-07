@@ -20,6 +20,15 @@ describe("cached audio route", () => {
     expect(audioObjectKey("/api/audio/kr/a%2Fb.mp3")).toBeNull();
   });
 
+  it("maps a numbered sentence key to its track object", () => {
+    expect(audioObjectKey("/api/audio/jp/s380195.mp3")).toBe("jp/s380195.mp3");
+    expect(audioObjectKey("/api/audio/cn/s1.mp3")).toBe("cn/s1.mp3");
+    expect(audioObjectKey("/api/audio/kr/s1.mp3")).toBe("kr/s1.mp3");
+    expect(audioObjectKey("/api/audio/jp/s38%200195.mp3")).toBeNull();
+    expect(audioObjectKey("/api/audio/jp/sabc.mp3")).toBeNull();
+    expect(audioObjectKey("/api/audio/jp/s.mp3")).toBe("jp/s.mp3");
+  });
+
   it("streams cached audio metadata and returns misses", async () => {
     const bucket = bucketWith("audio");
     const response = await serveAudio(new Request("https://example.com/api/audio/jp/%E4%B8%80.mp3"), bucket);

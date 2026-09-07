@@ -83,7 +83,10 @@ curl -s -X POST https://hanja.uiseoya.com/api/profiles/select \
 ### Cached reading audio
 
 The committed curriculum produces 3,866 unique character clips: 1,000 Korean,
-2,211 Japanese, and 655 Chinese.
+2,211 Japanese, and 655 Chinese. `npm run audio:generate` also generates 503
+unique example-sentence clips for the speaking screen (236 Japanese, 267
+Chinese, keyed by Tatoeba sentence id) — Korean has no speaking screen and
+is skipped.
 
 First-time setup must deploy the audio route before generation. The generator
 uses `HEAD /api/audio/...` to skip clips already stored in R2; the old API

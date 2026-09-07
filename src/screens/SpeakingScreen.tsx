@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SourceAttribution } from "../features/source/SourceAttribution";
-import { LocalRecorder, localRecordingSupported, matchingVoice, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
+import { LocalRecorder, localRecordingSupported, matchingVoice, sentenceAudioUrl, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
 import type { ApiSentence, UnitStudyResponse } from "../shared/api";
@@ -31,10 +31,12 @@ export function SpeakingScreen() {
   const [index, setIndex] = useState(0);
   const [recording, setRecording] = useState<LocalRecordingState>(() => localRecordingSupported() ? { status: "idle" } : { status: "unsupported" });
   const recorderRef = useRef<LocalRecorder | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const voices = useSpeechVoices();
   const cards = useMemo(() => speakingCards(detail), [detail]);
   const card = cards[index];
   const voice = card ? matchingVoice(voices, card.track) : undefined;
+  const cachedUrl = card ? sentenceAudioUrl(card.track, card.sentence.source) : null;
 
   useEffect(() => {
     const recorder = new LocalRecorder(setRecording);
@@ -42,6 +44,8 @@ export function SpeakingScreen() {
     return () => {
       recorder.dispose();
       if (recorderRef.current === recorder) recorderRef.current = null;
+      audioRef.current?.pause();
+      audioRef.current = null;
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     };
   }, []);
@@ -61,6 +65,8 @@ export function SpeakingScreen() {
 
   const clearMedia = useCallback(() => {
     recorderRef.current?.discard();
+    audioRef.current?.pause();
+    audioRef.current = null;
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   }, []);
 
@@ -85,12 +91,27 @@ export function SpeakingScreen() {
   }
 
   function playReference() {
-    if (!card || !voice) return;
-    const utterance = new SpeechSynthesisUtterance(card.sentence.text);
-    utterance.lang = speechLanguages[card.track];
-    utterance.voice = voice;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    if (!card) return;
+    audioRef.current?.pause();
+    audioRef.current = null;
+    const fallback = () => {
+      if (!voice) return;
+      const utterance = new SpeechSynthesisUtterance(card.sentence.text);
+      utterance.lang = speechLanguages[card.track];
+      utterance.voice = voice;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    };
+    if (!cachedUrl || typeof Audio !== "function") { fallback(); return; }
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    const audio = new Audio(cachedUrl);
+    audioRef.current = audio;
+    let failed = false;
+    const release = () => { if (audioRef.current === audio) audioRef.current = null; };
+    const fallbackOnce = () => { if (!failed && audioRef.current === audio) { failed = true; release(); fallback(); } };
+    audio.addEventListener("error", fallbackOnce, { once: true });
+    audio.addEventListener("ended", release, { once: true });
+    void audio.play().catch(fallbackOnce);
   }
 
   const retry = () => {
@@ -121,8 +142,8 @@ export function SpeakingScreen() {
         {card.sentence.translation !== card.sentence.text && <p className="speaking-card__translation" lang="ko">{card.sentence.translation}</p>}
         <small className="speaking-card__source">예문 · <SourceAttribution source={card.sentence.source} /></small>
         <div className="speaking-card__compare">
-          <button disabled={!voice} onClick={playReference} type="button">참고 음성 듣기</button>
-          {!voice && <span>이 기기에는 {card.track === "jp" ? "일본어" : "중국어"} 음성이 없습니다.</span>}
+          <button disabled={!cachedUrl && !voice} onClick={playReference} type="button">참고 음성 듣기</button>
+          {!cachedUrl && !voice && <span>이 기기에는 {card.track === "jp" ? "일본어" : "중국어"} 음성이 없습니다.</span>}
           {recording.status === "ready" && <audio aria-label="내 녹음 재생" controls src={recording.url} />}
         </div>
         <div aria-live="polite" className="speaking-card__recording">

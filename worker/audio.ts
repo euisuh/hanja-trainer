@@ -3,7 +3,10 @@ export function audioObjectKey(pathname: string): string | null {
   if (!match) return null;
   try {
     const key = decodeURIComponent(match[2]);
-    return Array.from(key).length === 1 && !key.includes("/") ? `${match[1]}/${key}.mp3` : null;
+    if (key.includes("/")) return null;
+    const isCharacter = Array.from(key).length === 1;
+    const isSentence = /^s\d+$/u.test(key);
+    return isCharacter || isSentence ? `${match[1]}/${key}.mp3` : null;
   } catch {
     return null;
   }

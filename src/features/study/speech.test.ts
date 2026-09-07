@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { joinSpokenReadings } from "../../shared/spokenReading";
-import { cachedAudioUrl, LocalRecorder, MAX_RECORDING_MS, matchingVoice, speechLanguages, type LocalRecordingState } from "./speech";
+import { cachedAudioUrl, LocalRecorder, MAX_RECORDING_MS, matchingVoice, sentenceAudioUrl, speechLanguages, type LocalRecordingState } from "./speech";
 
 class FakeRecorder {
   state: RecordingState = "inactive";
@@ -42,6 +42,13 @@ describe("study speech voices", () => {
     ];
     expect(matchingVoice(voices, "kr")).toBe(voices[1]);
     expect(cachedAudioUrl("cn", "愛")).toBe("/api/audio/cn/%E6%84%9B.mp3");
+  });
+
+  it("derives sentence audio keys from Tatoeba sources only", () => {
+    expect(sentenceAudioUrl("jp", "Tatoeba #380195")).toBe("/api/audio/jp/s380195.mp3");
+    expect(sentenceAudioUrl("cn", "Tatoeba #1")).toBe("/api/audio/cn/s1.mp3");
+    expect(sentenceAudioUrl("jp", "한국어문회")).toBeNull();
+    expect(sentenceAudioUrl("jp", "Tatoeba #abc")).toBeNull();
   });
 
   it("records for at most 15 seconds and revokes replaced or discarded clips", async () => {

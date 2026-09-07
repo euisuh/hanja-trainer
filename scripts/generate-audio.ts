@@ -3,8 +3,8 @@ import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { joinSpokenReadings } from "../src/shared/spokenReading.ts";
-import type { SeedDocument, SeedTrackEntry, Track } from "../src/shared/types.ts";
-import { parseSeed } from "./seed.ts";
+import type { SeedDocument, SeedSentenceDocument, SeedTrackEntry, Track } from "../src/shared/types.ts";
+import { parseSeed, parseSentenceSeed } from "./seed.ts";
 
 type AudioEntry = { key: string; objectKey: string; text: string; track: Track };
 
@@ -38,6 +38,23 @@ export function buildAudioEntries(documents: readonly SeedDocument[]): AudioEntr
         if (existing && existing.text !== audio.text) throw new Error(`${objectKey}: conflicting readings`);
         entries.set(objectKey, audio);
       }
+    }
+  }
+  return [...entries.values()].sort((left, right) => left.objectKey < right.objectKey ? -1 : left.objectKey > right.objectKey ? 1 : 0);
+}
+
+export function buildSentenceAudioEntries(documents: readonly SeedSentenceDocument[]): AudioEntry[] {
+  const entries = new Map<string, AudioEntry>();
+  for (const document of documents) {
+    for (const sentence of document.sentences) {
+      if (sentence.track === "kr") continue;
+      const id = /^Tatoeba #(\d+)$/u.exec(sentence.source)?.[1];
+      if (!id) continue;
+      const objectKey = `${sentence.track}/s${id}.mp3`;
+      const audio = { key: sentence.text, objectKey, text: sentence.text, track: sentence.track };
+      const existing = entries.get(objectKey);
+      if (existing && existing.text !== audio.text) throw new Error(`${objectKey}: conflicting sentence text`);
+      entries.set(objectKey, audio);
     }
   }
   return [...entries.values()].sort((left, right) => left.objectKey < right.objectKey ? -1 : left.objectKey > right.objectKey ? 1 : 0);
@@ -128,7 +145,9 @@ async function main(): Promise<void> {
   const files = args.filter((arg) => !arg.startsWith("--"));
   const paths = files.length > 0 ? files : (await readdir("data/characters")).filter((file) => file.endsWith(".json")).map((file) => join("data/characters", file));
   const documents = await Promise.all(paths.map(async (path) => parseSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
-  const entries = buildAudioEntries(documents);
+  const sentencePaths = (await readdir("data/sentences")).filter((file) => file.endsWith(".json")).map((file) => join("data/sentences", file));
+  const sentenceDocuments = await Promise.all(sentencePaths.map(async (path) => parseSentenceSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
+  const entries = [...buildAudioEntries(documents), ...buildSentenceAudioEntries(sentenceDocuments)];
   if (args.includes("--dry-run")) { console.log(`${entries.length} unique clips from ${paths.length} files`); return; }
   const concurrency = Number(process.env.AUDIO_CONCURRENCY ?? 4);
   if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 20) throw new Error("AUDIO_CONCURRENCY must be an integer from 1 to 20");

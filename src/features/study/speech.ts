@@ -192,6 +192,11 @@ export function cachedAudioUrl(track: Track, key: string): string {
   return `/api/audio/${track}/${encodeURIComponent(key)}.mp3`;
 }
 
+export function sentenceAudioUrl(track: Track, source: string): string | null {
+  const id = /^Tatoeba #(\d+)$/u.exec(source)?.[1];
+  return id ? `/api/audio/${track}/s${id}.mp3` : null;
+}
+
 export function useSpeechVoices(): SpeechSynthesisVoice[] {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   useEffect(() => {
