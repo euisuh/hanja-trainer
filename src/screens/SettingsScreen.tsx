@@ -59,6 +59,7 @@ export function SettingsScreen() {
             </section>
             <PinSettings />
             {settings.isAdmin && <ProfileSettings />}
+            <button className="settings-about-link" onClick={() => navigate("/about")} type="button">이 앱에 대해</button>
           </section>
         </div>
         <ShortcutSheet />

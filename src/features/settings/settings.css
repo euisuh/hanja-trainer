@@ -38,6 +38,7 @@
 .profile-setting button { padding: var(--space-3) var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-badge); background: var(--card); color: var(--ink); cursor: pointer; font-weight: var(--weight-strong); }
 .profile-setting button:disabled { cursor: not-allowed; opacity: .5; }
 .profile-setting__delete { border-color: var(--wrong) !important; color: var(--wrong-fg) !important; }
+.settings-about-link { padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); color: var(--ink); cursor: pointer; font-weight: var(--weight-strong); }
 .profile-setting__delete:hover:not(:disabled) { background: var(--wrong-bg) !important; }
 .profile-setting__list { display: flex; margin: 0 0 var(--space-4); padding: 0; flex-direction: column; gap: var(--space-3); list-style: none; }
 .profile-setting__list li, .profile-setting__list form, .profile-setting__list li > span, .profile-setting__list li > div { display: flex; align-items: center; gap: var(--space-3); }

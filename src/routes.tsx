@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
+import { AboutScreen } from "./screens/AboutScreen";
 import { DetailScreen } from "./screens/DetailScreen";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LessonScreen } from "./screens/LessonScreen";
@@ -26,7 +27,8 @@ export type Screen =
   | "study"
   | "speaking"
   | "stats"
-  | "settings";
+  | "settings"
+  | "about";
 
 type ScreenRoute = {
   screen: Screen;
@@ -48,6 +50,7 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "speaking", path: "/speaking/:unitId", Component: SpeakingScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
   { screen: "settings", path: "/settings", Component: SettingsScreen },
+  { screen: "about", path: "/about", Component: AboutScreen },
 ];
 
 export function AppRoutes() {
