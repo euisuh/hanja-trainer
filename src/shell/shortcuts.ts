@@ -6,6 +6,7 @@ export const SHORTCUTS = [
   { id: "map", keys: "↑ ↓", description: "학습 지도 노드 이동" },
   { id: "tracks", keys: "← →", description: "트랙 전환 (KR / JP / CN)" },
   { id: "detail", keys: "D", description: "선택한 글자 상세 열기" },
+  { id: "speaking", keys: "Space · R · ← →", description: "말하기 연습: 음성 재생 · 녹음 · 카드 이동" },
   {
     id: "navigation", keys: "H R T ,", description: "지도 · 복습 · 통계 · 설정",
     destinations: { h: "/home", r: "/review", t: "/stats", ",": "/settings" },

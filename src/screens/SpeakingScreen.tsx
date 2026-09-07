@@ -11,6 +11,8 @@ import "../features/study/study.css";
 type SpeakingTrack = Exclude<Track, "kr">;
 type SpeakingCard = { sentence: ApiSentence; track: SpeakingTrack };
 
+const PASS_TARGET = 3;
+
 function speakingCards(detail: UnitStudyResponse | null): SpeakingCard[] {
   if (!detail || detail.unit.track === "kr") return [];
   const track = detail.unit.track;
@@ -29,6 +31,7 @@ export function SpeakingScreen() {
   const [error, setError] = useState("");
   const [retryKey, setRetryKey] = useState(0);
   const [index, setIndex] = useState(0);
+  const [pass, setPass] = useState(1);
   const [recording, setRecording] = useState<LocalRecordingState>(() => localRecordingSupported() ? { status: "idle" } : { status: "unsupported" });
   const recorderRef = useRef<LocalRecorder | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -75,22 +78,18 @@ export function SpeakingScreen() {
     navigate("/home");
   }, [clearMedia, navigate]);
 
-  useEffect(() => {
-    const escape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      event.preventDefault();
-      back();
-    };
-    window.addEventListener("keydown", escape);
-    return () => window.removeEventListener("keydown", escape);
-  }, [back]);
-
-  function move(next: number) {
+  const move = useCallback((next: number) => {
     clearMedia();
     setIndex(next);
-  }
+    setPass(1);
+  }, [clearMedia]);
 
-  function playReference() {
+  const repeat = useCallback(() => {
+    clearMedia();
+    setPass((value) => Math.min(value + 1, PASS_TARGET));
+  }, [clearMedia]);
+
+  const playReference = useCallback(() => {
     if (!card) return;
     audioRef.current?.pause();
     audioRef.current = null;
@@ -112,7 +111,26 @@ export function SpeakingScreen() {
     audio.addEventListener("error", fallbackOnce, { once: true });
     audio.addEventListener("ended", release, { once: true });
     void audio.play().catch(fallbackOnce);
-  }
+  }, [card, cachedUrl, voice]);
+
+  const toggleRecording = useCallback(() => {
+    if (recording.status === "recording") { recorderRef.current?.stop(); return; }
+    if (recording.status === "requesting" || recording.status === "unsupported") return;
+    void recorderRef.current?.record();
+  }, [recording.status]);
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") { event.preventDefault(); back(); return; }
+      if (event.target instanceof HTMLElement && event.target.matches("button, a, select, audio")) return;
+      if (event.key === " ") { event.preventDefault(); playReference(); return; }
+      if (event.key === "r" || event.key === "R") { event.preventDefault(); toggleRecording(); return; }
+      if (event.key === "ArrowRight") { event.preventDefault(); if (index + 1 < cards.length) move(index + 1); return; }
+      if (event.key === "ArrowLeft") { event.preventDefault(); if (index > 0) move(index - 1); }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [back, cards.length, index, move, playReference, toggleRecording]);
 
   const retry = () => {
     clearMedia();
@@ -136,13 +154,15 @@ export function SpeakingScreen() {
       </header>
       <article className="speaking-card">
         <div className="speaking-card__badge">{theme.badge} · {detail.unit.level}</div>
+        <p aria-label={`반복 연습 ${pass}번째, 총 ${PASS_TARGET}번`} className="speaking-card__pass">반복 연습 · {pass}번째 / {PASS_TARGET}번</p>
         <h1>듣고 말해 보세요</h1>
         <p className="speaking-card__sentence" lang={theme.lang}>{card.sentence.text}</p>
         <p className="speaking-card__reading" lang={theme.lang}>{card.sentence.reading}</p>
         {card.sentence.translation !== card.sentence.text && <p className="speaking-card__translation" lang="ko">{card.sentence.translation}</p>}
         <small className="speaking-card__source">예문 · <SourceAttribution source={card.sentence.source} /></small>
         <div className="speaking-card__compare">
-          <button disabled={!cachedUrl && !voice} onClick={playReference} type="button">참고 음성 듣기</button>
+          <button disabled={!cachedUrl && !voice} onClick={playReference} type="button">{pass > 1 ? "참고 음성 다시 듣기" : "참고 음성 듣기"}</button>
+          <button onClick={repeat} type="button">다시 말하기</button>
           {!cachedUrl && !voice && <span>이 기기에는 {card.track === "jp" ? "일본어" : "중국어"} 음성이 없습니다.</span>}
           {recording.status === "ready" && <audio aria-label="내 녹음 재생" controls src={recording.url} />}
         </div>
@@ -161,6 +181,7 @@ export function SpeakingScreen() {
       </article>
       <footer className="speaking-session__navigation">
         <button disabled={index === 0} onClick={() => move(index - 1)} type="button">이전</button>
+        {pass < PASS_TARGET && <span className="speaking-session__hint">{PASS_TARGET}번 반복하면 유창성 연습이 됩니다</span>}
         {index + 1 < cards.length ? <button onClick={() => move(index + 1)} type="button">다음</button> : <button onClick={back} type="button">연습 끝내기</button>}
       </footer>
     </section>

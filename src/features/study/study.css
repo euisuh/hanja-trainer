@@ -99,6 +99,7 @@
 .speaking-session__chrome strong { white-space: nowrap; }
 .speaking-card { padding: clamp(var(--space-6), 5vw, var(--space-9)); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
 .speaking-card__badge { margin-bottom: var(--space-4); color: var(--speaking-accent-text); font-size: var(--text-xs); font-weight: var(--weight-medium); letter-spacing: .12em; }
+.speaking-card__pass { margin-bottom: var(--space-4); color: var(--muted); font-size: var(--text-xs); font-weight: var(--weight-medium); }
 .speaking-card__sentence { color: var(--ink); font-family: var(--speaking-font); font-size: clamp(22px, 5vw, 34px); line-height: 1.55; }
 .speaking-card__reading { margin-top: var(--space-4); color: var(--speaking-accent-text); font-family: var(--speaking-font); font-size: var(--text-md); }
 .speaking-card__translation { margin-top: var(--space-3); color: var(--body); font-size: var(--text-base); }
@@ -111,7 +112,8 @@
 .speaking-card__recording p { flex-basis: 100%; }
 .speaking-card__recording button:first-of-type { background: var(--speaking-accent); color: var(--card); }
 .speaking-card__privacy { margin-top: var(--space-4); font-size: var(--text-xs); }
-.speaking-session__navigation { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-5); }
+.speaking-session__navigation { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-5); }
 .speaking-session__navigation button:last-child { margin-left: auto; background: var(--ink); color: var(--paper); }
+.speaking-session__hint { color: var(--muted); font-size: var(--text-xs); text-align: center; }
 .speaking-empty { display: grid; max-width: 620px; gap: var(--space-5); margin-inline: auto; }
 .speaking-empty button { width: fit-content; padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); cursor: pointer; font-weight: var(--weight-strong); }
