@@ -7,6 +7,21 @@ export class ApiClientError extends Error {
   }
 }
 
+const AUTH_ERROR_CODES = new Set(["pin_required", "profile_required", "profile_changed", "access_required"]);
+
+export function isAuthenticationError(error: unknown): boolean {
+  return error instanceof ApiClientError && AUTH_ERROR_CODES.has(error.code);
+}
+
+export function retryDelayMs(error: unknown, attempt: number, random: () => number = Math.random): number | null {
+  if (error instanceof DOMException && error.name === "AbortError") return null;
+  if (error instanceof ApiClientError && error.status !== 408 && error.status !== 429 && error.status < 500) return null;
+  if (!(error instanceof Error)) return null;
+  const exponential = Math.min(300_000, 2_000 * 2 ** Math.max(0, Math.min(attempt, 20)));
+  const jittered = Math.floor(exponential * (0.5 + Math.min(1, Math.max(0, random())) * 0.5));
+  return Math.max(jittered, (error instanceof ApiClientError ? error.retryAfter ?? 0 : 0) * 1_000);
+}
+
 export const PROFILE_UPDATED_EVENT = "hanja-trainer:profile-updated";
 export const SETTINGS_UPDATED_EVENT = "hanja-trainer:settings-updated";
 export const PIN_REQUIRED_EVENT = "hanja-trainer:pin-required";
@@ -15,6 +30,25 @@ export const ONBOARDING_COMPLETED_EVENT = "hanja-trainer:onboarding-completed";
 const profileRequests = new Map<AbortController, Promise<unknown>>();
 let profileRequestsPaused = false;
 let activeProfileId: number | null = null;
+
+function retryAfterSeconds(response: Response, body: unknown): number | undefined {
+  const header = response.headers.get("retry-after");
+  let headerSeconds: number | undefined;
+  if (header !== null) {
+    const numeric = Number(header);
+    if (Number.isFinite(numeric) && numeric >= 0) headerSeconds = numeric;
+    else {
+      const date = Date.parse(header);
+      if (Number.isFinite(date)) headerSeconds = Math.max(0, Math.ceil((date - Date.now()) / 1_000));
+    }
+  }
+  const bodySeconds = typeof body === "object" && body !== null && "retryAfter" in body
+    && typeof body.retryAfter === "number" && Number.isFinite(body.retryAfter) && body.retryAfter >= 0
+    ? body.retryAfter : undefined;
+  if (headerSeconds === undefined) return bodySeconds;
+  if (bodySeconds === undefined) return headerSeconds;
+  return Math.max(headerSeconds, bodySeconds);
+}
 
 function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, profileBound = true, expectedProfileId: number | null = profileBound ? activeProfileId : null): Promise<T> {
   if (profileBound && profileRequestsPaused) return Promise.reject(new Error("Profile request was cancelled"));
@@ -27,13 +61,34 @@ function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, pro
   else callerSignal?.addEventListener("abort", abort, { once: true });
   const tracked = (async () => {
     const response = await fetch(path, { ...init, headers, signal: controller.signal });
-    const body: unknown = await response.json();
+    const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
+    const jsonContent = contentType.includes("application/json") || contentType.includes("+json");
+    const text = await response.text();
+    let body: unknown;
+    if (jsonContent) {
+      try {
+        body = JSON.parse(text);
+      } catch {
+        if (response.ok) throw new ApiClientError(502, "invalid_response", "The server returned an invalid response.", retryAfterSeconds(response, null));
+      }
+    }
+    if (!jsonContent) {
+      const accessResponse = response.redirected || response.status === 401 || response.status === 403 || response.ok && contentType.includes("text/html");
+      const error = accessResponse
+        ? new ApiClientError(401, "access_required", "Sign in again to continue.", retryAfterSeconds(response, null))
+        : new ApiClientError(response.ok ? 502 : response.status, response.status >= 500 ? "service_unavailable" : "request_failed", `Request failed (${response.status})`, retryAfterSeconds(response, null));
+      if (notifyAuth && isAuthenticationError(error)) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+      throw error;
+    }
     if (!response.ok) {
-      const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { code?: string; message?: string }; retryAfter?: number } : null;
-      const code = errorBody?.error?.code ?? "request_failed";
-      const message = errorBody?.error?.message ?? `Request failed (${response.status})`;
-      if (notifyAuth && (code === "pin_required" || code === "profile_required" || code === "profile_changed")) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
-      throw new ApiClientError(response.status, code, message, errorBody?.retryAfter);
+      const errorBody = typeof body === "object" && body !== null && "error" in body && typeof body.error === "object" && body.error !== null
+        ? body.error as Record<string, unknown> : null;
+      const code = typeof errorBody?.code === "string" ? errorBody.code
+        : response.status === 401 || response.status === 403 ? "access_required" : "request_failed";
+      const message = typeof errorBody?.message === "string" ? errorBody.message : `Request failed (${response.status})`;
+      const error = new ApiClientError(response.status, code, message, retryAfterSeconds(response, body));
+      if (notifyAuth && isAuthenticationError(error)) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+      throw error;
     }
     return body as T;
   })().finally(() => {

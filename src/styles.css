@@ -194,9 +194,60 @@ select {
 .app[data-theme="quiet-technical"] :is(.pin-keys button, .pin-action):disabled { background: var(--chip-bg); color: var(--ink); opacity: 1; }
 
 main,
-.app-header {
+.app-header,
+.review-sync-status {
   width: min(100%, 1080px);
   margin-inline: auto;
+}
+
+.review-sync-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-small);
+  background: var(--card);
+  color: var(--muted);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-strong);
+}
+
+.review-sync-status span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.review-sync-status code {
+  margin-left: var(--space-2);
+}
+
+.review-sync-status details {
+  max-width: min(100%, 360px);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.review-sync-status summary {
+  cursor: pointer;
+}
+
+.review-sync-status pre {
+  max-height: 180px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.review-sync-status button {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
 }
 
 .active-profile {

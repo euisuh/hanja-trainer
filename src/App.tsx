@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { matchPath, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { themes } from "./design/tokens";
 import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
+import { ReviewSyncStatus } from "./features/session/ReviewSyncStatus";
 import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
 import { resetSettingsClientState } from "./features/settings/useSettings";
 import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
@@ -214,7 +215,11 @@ export function App() {
   if (gate === "checking") {
     content = <main><p>프로필 확인 중…</p></main>;
   } else if (gate === "error") {
-    content = <main className="session-empty"><p role="alert">잠금 상태를 확인하지 못했습니다.</p><button onClick={() => { setGate("checking"); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></main>;
+    content = <main className="session-empty">
+      <p role="alert">인증 또는 연결 상태를 확인하지 못했습니다.</p>
+      <button onClick={() => { setGate("checking"); setRetryKey((value) => value + 1); }} type="button">다시 시도</button>
+      <button onClick={() => window.location.assign(window.location.href)} type="button">로그인 페이지 다시 열기</button>
+    </main>;
   } else if (gate === "choosing") {
     content = <ProfilePicker onSelect={selectProfile} profiles={profiles} />;
   } else if (gate === "locked" && selectedProfile) {
@@ -229,6 +234,7 @@ export function App() {
     content = onboardingRequired && !navlessScreens.has(screen) ? <Navigate replace to="/onboarding" /> : (
       <ProfileProvider key={activeProfile.id} profile={activeProfile}>
         {headerScreens.has(screen) && <AppHeader onSwitch={() => void switchProfile()} />}
+        <ReviewSyncStatus />
         <main><AppRoutes /></main>
         {!navlessScreens.has(screen) && !sessionActive && <BottomNav />}
       </ProfileProvider>
