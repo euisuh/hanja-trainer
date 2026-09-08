@@ -54,6 +54,16 @@ npm run seed:local
 The seed is idempotent and loads all checked-in character, curriculum, and
 sentence datasets.
 
+Migration files are append-only once they reach a shared environment. Never
+edit, delete, or rename one; add the next numbered migration for every fix.
+For structural changes, test both a fresh database and an upgrade from the
+previous schema with representative learner rows.
+
+CI compares pull requests with `main`, so it cannot detect a migration applied
+remotely before it was merged. Do not apply production migrations before
+merge. If an emergency requires it, record the exact filename and contents,
+and put any correction in another new file even while the pull request is open.
+
 ## Deploy
 
 ```sh
@@ -66,7 +76,10 @@ curl -i https://hanja.uiseoya.com/detail/%E4%B8%80
 ```
 
 Run remote migrations and the seed before deploying Worker code that depends
-on them. Verify the root SPA, one deep link, and `/api/health` after deploy.
+on them. Only apply reviewed, merged migrations. Before deploying dependent
+Worker code, verify the expected remote schema with read-only checks such as
+`PRAGMA table_info(table_name)` or a query of `sqlite_schema`. Then verify the
+root SPA, one deep link, and `/api/health` after deploy.
 The `Hanja Trainer` Cloudflare Access application protects the entire
 `hanja.uiseoya.com` hostname for 24 hours and allows only the operator email.
 The app does not implement account authentication. Verify the boundary from a
