@@ -22,6 +22,7 @@ import { QuizCard, wordLabels } from "./QuizCard";
 import { SkipAnswer } from "./SkipAnswer";
 import { useSessionKeys } from "./useSessionKeys";
 import { useAnswerSubmit } from "./useAnswerSubmit";
+import { createActiveAnswerTimer } from "./activeAnswerTimer";
 import "./session.css";
 
 export type SessionMode = "lesson" | "review" | "level-review" | "placement" | "unit-test";
@@ -99,7 +100,7 @@ export function SessionRunner({
   const [index, setIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [skipped, setSkipped] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(() => document.visibilityState === "hidden");
   const [combo, setCombo] = useState(0);
   const [lostCombo, setLostCombo] = useState(0);
   const [bestCombo, setBestCombo] = useState(0);
@@ -116,7 +117,8 @@ export function SessionRunner({
   const [unitTestMistakes, setUnitTestMistakes] = useState(0);
   const [clearedUnitTestCards, setClearedUnitTestCards] = useState<Set<number>>(() => new Set());
   const [sessionAnnouncement, setSessionAnnouncement] = useState({ sequence: 0, text: "" });
-  const startedAt = useRef(0);
+  const [answerTimer] = useState(createActiveAnswerTimer);
+  const pausedRef = useRef(paused);
   const answerLocked = useRef(false);
   const advancing = useRef(false);
   const completing = useRef(false);
@@ -140,8 +142,8 @@ export function SessionRunner({
 
   useEffect(() => {
     advancing.current = false;
-    startedAt.current = performance.now();
-  }, [index]);
+    if (item?.kind !== "compare") answerTimer.reset(!pausedRef.current && document.visibilityState !== "hidden");
+  }, [answerTimer, index, item?.kind]);
 
   function pick(choice: number | null) {
     if (!item || item.kind === "compare" || selectedIndex !== null || answerLocked.current) return;
@@ -150,7 +152,7 @@ export function SessionRunner({
     const isCorrect = choice === item.answerIndex;
     const answer = item.options[item.answerIndex]?.label ?? "";
     const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
-    const elapsedMs = Math.max(0, Math.round(performance.now() - startedAt.current));
+    const elapsedMs = answerTimer.snapshot();
     let interval = "—";
     if (mode === "placement" || mode === "unit-test") {
       const entry = item.character.tracks.find((candidate) => candidate.track === item.track);
@@ -286,8 +288,27 @@ export function SessionRunner({
     setSkipped(false);
     setLastXp(0);
     setLostCombo(0);
-    startedAt.current = performance.now();
   }
+
+  function pauseSession() {
+    answerTimer.pause();
+    pausedRef.current = true;
+    setPaused(true);
+  }
+
+  function resumeSession() {
+    pausedRef.current = false;
+    if (!answered && !compare && !answerLocked.current) answerTimer.resume();
+    setPaused(false);
+  }
+
+  useEffect(() => {
+    function pauseWhenHidden() {
+      if (document.visibilityState === "hidden") pauseSession();
+    }
+    document.addEventListener("visibilitychange", pauseWhenHidden);
+    return () => document.removeEventListener("visibilitychange", pauseWhenHidden);
+  });
 
   useEffect(() => {
     advanceRef.current = advance;
@@ -306,7 +327,7 @@ export function SessionRunner({
     onPick: pick,
     onSkip: () => pick(null),
     onAdvance: advance,
-    onPause: () => setPaused(true),
+    onPause: pauseSession,
   });
 
   if (!item) {
@@ -357,7 +378,7 @@ export function SessionRunner({
   return (
     <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} ref={runnerRef} style={style}>
       <div className="session-chrome">
-        <button aria-label="세션 일시정지" onClick={() => setPaused(true)} type="button">esc</button>
+        <button aria-label="세션 일시정지" onClick={pauseSession} type="button">esc</button>
         <div aria-label={`진행률 ${progress}/${queueLength}`} className="session-progress" role="progressbar" aria-valuemax={queueLength} aria-valuemin={0} aria-valuenow={progress}>
           <span style={{ width: `${progress / queueLength * 100}%` }} />
         </div>
@@ -404,7 +425,7 @@ export function SessionRunner({
           autoAdvance={autoAdvance}
         />
       </div>
-      {paused && <PauseModal onQuit={onQuit} onResume={() => setPaused(false)} />}
+      {paused && <PauseModal onQuit={onQuit} onResume={resumeSession} />}
     </section>
   );
 }
