@@ -17,6 +17,12 @@ export type PathNodeModel = {
 
 export type TrackSnoozes = Partial<Record<Track, number>>;
 
+export function homePrimaryAction(dueCount: number, unitId: number, track: Track) {
+  return dueCount > 0
+    ? { path: "/review/session", state: { track } }
+    : { path: "/lesson", state: { unitId, tracks: [track] } };
+}
+
 export function reviewableUnits(units: CurriculumUnitPayload[]): CurriculumUnitPayload[] {
   const current = units.findIndex((unit) => unit.current);
   return units.filter((unit, index) => index < current || unit.nodes.every((node) => node.state === "done"));

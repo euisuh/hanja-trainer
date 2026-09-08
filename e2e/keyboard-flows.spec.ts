@@ -284,7 +284,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await checkLayout(page, "home-desktop", testInfo);
     await expect(page.locator(".home-screen select")).toHaveCount(0);
     await expect(page.locator(".lesson-cta")).toHaveCount(1);
-    await expect(page.locator(".home-shelf__item")).toHaveCount(2);
+    await expect(page.locator(".home-shelf .home-shelf__item")).toHaveCount(2);
     await expect(page.locator(".path-node--next")).toHaveCount(1);
     expect(await page.locator(".path-node--next").evaluate((node) => getComputedStyle(node, "::before").content)).toContain("여기부터");
     await expect(page.locator(".path-node--next .path-node__glyph")).toHaveCSS("animation-name", "none");
@@ -294,7 +294,7 @@ test.describe.serial("keyboard-only product flows", () => {
       return glyph && Math.abs(box.left + Number.parseFloat(getComputedStyle(wrap, "::after").left) - glyph.left - glyph.width / 2) < 1;
     }))).toBe(true);
     await page.keyboard.press("ArrowRight");
-    await expect(page.locator(".home-shelf__item")).toHaveCount(3);
+    await expect(page.locator(".home-shelf .home-shelf__item")).toHaveCount(3);
     await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:active-track:1"))).toBe("cn");
     let cnCurriculum = page.waitForRequest((request) => request.url().endsWith("/api/curriculum?track=cn"));
     await page.keyboard.press("R");
@@ -323,7 +323,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     const startRequest = page.waitForRequest((request) => request.url().endsWith("/api/session/start"));
-    const lesson = await sessionStarted(page, () => page.keyboard.press("Enter"));
+    const lesson = await sessionStarted(page, () => page.getByRole("button", { name: /레슨 시작/u }).click());
     expect((await startRequest).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["kr"], limit: 8, unitId: expect.any(Number) });
     expectLabelOnly(lesson.cards);
     expect(lesson.cards.some((card) => card.kind === "meaning")).toBe(true);

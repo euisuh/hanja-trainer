@@ -107,17 +107,15 @@ on them. Only apply reviewed, merged migrations. Before deploying dependent
 Worker code, verify the expected remote schema with read-only checks such as
 `PRAGMA table_info(table_name)` or a query of `sqlite_schema`. Then verify the
 root SPA, one deep link, and `/api/health` after deploy.
-The `Hanja Trainer` Cloudflare Access application protects the entire
-`hanja.uiseoya.com` hostname for 24 hours and allows only the operator email.
-The app does not implement account authentication. Verify the boundary from a
-shell with no Access session; each command must return a redirect or Access
-HTML, never application JSON:
+`hanja.uiseoya.com` is deliberately public so it works on remote devices
+without a Cloudflare login. Cloudflare Access is off, and the app does not
+implement Internet account authentication. Use read-only checks from a shell
+with no existing app session:
 
 ```sh
-curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/
-curl -s https://hanja.uiseoya.com/api/profiles
-curl -s -X POST https://hanja.uiseoya.com/api/profiles/select \
-  -H 'content-type: application/json' -d '{"profileId":2}'
+curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/          # 200
+curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/api/profiles # 200
+curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/api/health   # 401 until a profile is selected
 ```
 
 ### Cached reading audio
@@ -137,23 +135,24 @@ router does not expose that route.
 3. Deploy the Worker and empty audio route: `npm run deploy`.
 4. Configure Google ADC with a quota project, or set
    `GOOGLE_CLOUD_ACCESS_TOKEN` and `GOOGLE_CLOUD_PROJECT`.
-5. For cached-clip checks through Access, set `CF_ACCESS_CLIENT_ID` and
-   `CF_ACCESS_CLIENT_SECRET` from a service token authorized for
-   `hanja.uiseoya.com/api/audio/*`. Never bypass the whole `/api/*` path.
+5. Only if an operator later enables Access for the audio path, set
+   `CF_ACCESS_CLIENT_ID` and `CF_ACCESS_CLIENT_SECRET` from a service token
+   authorized for `hanja.uiseoya.com/api/audio/*`. Never bypass all `/api/*`.
 6. Generate and upload missing clips: `npm run audio:generate`.
 
 Future runs of `npm run audio:generate` issue `HEAD` checks through the audio
 route, which runs before profile-session middleware, and synthesize only missing
-character keys. `--force` skips those checks and therefore does not need the
-Access service token; use it only when every selected clip must be regenerated.
+character keys. `--force` skips those checks; use it only when every selected
+clip must be regenerated.
 
 ## Optional profile PIN
 
 Each learner profile can use a four-digit PIN on unattended or shared screens.
 The signed session identifies the selected learner and keeps profile data
-separate; Cloudflare Access remains the deployment access-control boundary. A
-four-digit value has only 10,000 possibilities and does not protect copied D1
-contents, so Worker-side throttling applies independently to each profile.
+separate. Without a PIN, anyone who can open the public hostname can select that
+profile and view or change its learning data. A four-digit PIN has only 10,000
+possibilities and is not strong Internet account security or protection for
+copied D1 contents, so Worker-side throttling applies independently to each profile.
 Activity extends a two-hour session window, while closing the browser clears
 the session.
 

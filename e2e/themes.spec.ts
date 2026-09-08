@@ -301,7 +301,7 @@ test("raised actions hover, press, and respect reduced motion", async ({ page })
   await page.setViewportSize({ width: 430, height: 900 });
   await page.reload();
   await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
-  const shelfAction = page.locator(".home-shelf__item").first();
+  const shelfAction = page.locator(".home-shelf .home-shelf__item").first();
   await shelfAction.scrollIntoViewIfNeeded();
   const shelfBox = await shelfAction.boundingBox();
   await page.mouse.move(shelfBox!.x + shelfBox!.width / 2, shelfBox!.y + shelfBox!.height / 2);

@@ -3,7 +3,7 @@ import { initialState } from "../../shared/fsrs";
 import type { CharacterEntry, Track } from "../../shared/types";
 import { lessonLimit, lessonTracks } from "../../screens/LessonScreen";
 import { reviewKey } from "../../shared/buildQueue";
-import { buildPathNodes, MASTERY_STABILITY_DAYS, progressPercent, reviewableLevels, reviewableUnits, reviewLevelOptions, trackImbalance } from "./homeModel";
+import { buildPathNodes, homePrimaryAction, MASTERY_STABILITY_DAYS, progressPercent, reviewableLevels, reviewableUnits, reviewLevelOptions, trackImbalance } from "./homeModel";
 
 function character(id: number): CharacterEntry {
   return {
@@ -13,6 +13,11 @@ function character(id: number): CharacterEntry {
 }
 
 describe("home path model", () => {
+  it("prioritizes due review and otherwise starts the current lesson", () => {
+    expect(homePrimaryAction(21, 7, "jp")).toEqual({ path: "/review/session", state: { track: "jp" } });
+    expect(homePrimaryAction(0, 7, "jp")).toEqual({ path: "/lesson", state: { unitId: 7, tracks: ["jp"] } });
+  });
+
   it("derives done, current, and locked nodes from FSRS stability", () => {
     const mastered = { ...initialState(new Date()), stability: MASTERY_STABILITY_DAYS };
     const nodes = buildPathNodes([character(1), character(2), character(3)], "kr", new Map([[reviewKey(1, "kr"), mastered]]));

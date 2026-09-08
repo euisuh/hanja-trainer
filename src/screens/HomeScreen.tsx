@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { useActiveProfile } from "../features/profile/ProfileContext";
-import { trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
+import { homePrimaryAction, trackImbalance, type PathNodeModel, type TrackSnoozes } from "../features/path-map/homeModel";
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
@@ -44,16 +44,21 @@ export function HomeScreen() {
   const [dueCount, setDueCount] = useState(0);
   const [snoozes, setSnoozes] = useState<TrackSnoozes>(() => readSnoozes(snoozesKey));
   const [now] = useState(Date.now);
-  const [error, setError] = useState("");
+  const [loadedKey, setLoadedKey] = useState("");
+  const [loadError, setLoadError] = useState<{ key: string; message: string } | null>(null);
   const [retryKey, setRetryKey] = useState(0);
   const statsRequest = useRef<Promise<StatsResponse | null> | null>(null);
   const selectedTrack = enabledTracks.includes(track) ? track : enabledTracks[0] ?? "kr";
+  const requestKey = `${selectedTrack}:${enabledTracks.join(",")}:${retryKey}`;
+  const loaded = loadedKey === requestKey;
+  const error = loadError?.key === requestKey ? loadError.message : "";
   const theme = trackThemes[selectedTrack];
-  const unit = curriculum?.units.find((item) => item.current) ?? curriculum?.units[0];
+  const unit = loaded ? curriculum?.units.find((item) => item.current) ?? curriculum?.units[0] : undefined;
   const nodes: PathNodeModel[] = useMemo(() => unit?.nodes.map((node) => ({ characterKey: node.key, glyph: node.glyph, label: node.state === "locked" ? "잠김" : node.reading, state: node.state })) ?? [], [unit]);
   const progress = stats?.tracks.find((item) => item.track === selectedTrack);
   const scalePercent = progress?.pct ?? 0;
   const laggingTrack = !settingsError && stats ? trackImbalance(stats.tracks, snoozes, now) : undefined;
+  const primaryAction = ready && !settingsError && !error && unit ? homePrimaryAction(dueCount, unit.id, selectedTrack) : undefined;
 
   const snooze = useCallback((track: Track, days: number) => {
     setSnoozes((current) => {
@@ -83,16 +88,18 @@ export function HomeScreen() {
       apiClient.dueReviews(enabledTracks, 50, controller.signal),
       statsRequest.current,
     ]).then(([content, review, homeStats]) => {
+      if (controller.signal.aborted) return;
       setCurriculum(content);
       setDueCount(review.total);
       setStats(homeStats);
-      setError("");
+      setLoadedKey(requestKey);
+      setLoadError(null);
       setFocusedIndex(0);
     }).catch((caught: unknown) => {
-      if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "학습 지도를 불러오지 못했습니다.");
+      if (!controller.signal.aborted) setLoadError({ key: requestKey, message: caught instanceof Error ? caught.message : "학습 지도를 불러오지 못했습니다." });
     });
     return () => controller.abort();
-  }, [enabledTracks, ready, retryKey, selectedTrack]);
+  }, [enabledTracks, ready, requestKey, selectedTrack]);
 
   useEffect(() => {
     if (!ready) return;
@@ -123,12 +130,12 @@ export function HomeScreen() {
         startLaggingLesson();
       } else if (event.key === "Enter" && !(target instanceof HTMLElement && target.matches("button, a"))) {
         event.preventDefault();
-        if (unit) navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } });
+        if (primaryAction) navigate(primaryAction.path, { state: primaryAction.state });
       }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [enabledTracks, focusedIndex, laggingTrack, navigate, nodes, selectedTrack, startLaggingLesson, unit]);
+  }, [enabledTracks, focusedIndex, laggingTrack, navigate, nodes, primaryAction, selectedTrack, startLaggingLesson]);
 
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-accent-text": theme.accentText, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
@@ -143,9 +150,9 @@ export function HomeScreen() {
         </aside>
       )}
       {settingsError && <div><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></div>}
-      {error && <div><p role="alert">학습 지도를 불러오지 못했습니다. {error}</p><button onClick={() => { setCurriculum(null); setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
-      {!error && !curriculum && <p>학습 지도를 불러오는 중…</p>}
-      {!error && curriculum && !unit && <div><p>이 트랙에는 아직 학습 콘텐츠가 없습니다.</p><button onClick={() => setRetryKey((value) => value + 1)} type="button">다시 확인</button></div>}
+      {error && <div><p role="alert">학습 지도를 불러오지 못했습니다. {error}</p><button onClick={() => { setLoadError(null); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></div>}
+      {!error && !loaded && <p>학습 지도를 불러오는 중…</p>}
+      {!error && loaded && curriculum && !unit && <div><p>이 트랙에는 아직 학습 콘텐츠가 없습니다.</p><button onClick={() => setRetryKey((value) => value + 1)} type="button">다시 확인</button></div>}
       {!settingsError && !error && unit && (
       <div className="home-layout">
         <PathMap
@@ -159,9 +166,11 @@ export function HomeScreen() {
           unit={`${unit.level} · UNIT ${unit.ord}`}
         />
         <aside className="home-rail">
-          <button className="lesson-cta" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } })} type="button">
-            <small>오늘의 학습</small><strong>레슨 시작</strong><span>신규 4자 + 복습 {dueCount}장 <kbd>ENTER</kbd></span>
+          <button className="lesson-cta" onClick={() => primaryAction && navigate(primaryAction.path, { state: primaryAction.state })} type="button">
+            <small>오늘의 학습</small><strong>{dueCount > 0 ? "만기 복습 시작" : "레슨 시작"}</strong><span>{dueCount > 0 ? `만기 전체 ${dueCount}장 · 한자 문제 최대 20개 · 단어 문제 추가 가능` : "현재 유닛 새 글자 학습"} <kbd>ENTER</kbd></span>
           </button>
+          {dueCount > 0 && <button className="home-shelf__item" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack] } })} type="button"><small>새 학습</small><strong>레슨 시작</strong><span>복습 뒤에 권장</span></button>}
+          <p className="home-routine">복습에서는 먼저 소리 내거나 종이에 답을 떠올리고, 정답과 비교해 <strong>기억하지 못함</strong> 또는 <strong>정확히 기억함</strong>을 솔직히 표시하세요. 다음 복습일에 다시 회상합니다. <Link to="/about#learning-method">학습 방법과 근거</Link></p>
           <div className="home-shelf">
             <button className="home-shelf__item" onClick={() => navigate(`/study/${unit.id}`)} type="button">
               <span aria-hidden="true" className="home-shelf__glyph">目</span><strong>학습 목록</strong>

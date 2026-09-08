@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../features/settings/about.css";
 
 const sources = [
@@ -13,8 +14,22 @@ const sources = [
   { name: "Tatoeba (예문 말뭉치)", license: "CC BY 2.0 FR (일부 CC0)", href: "https://tatoeba.org/" },
 ] as const;
 
+const learningSources = [
+  { name: "Cepeda et al. (2006) · 분산 학습 메타분석", href: "https://doi.org/10.1037/0033-2909.132.3.354" },
+  { name: "Karpicke & Roediger (2008) · 외국어 어휘 회상", href: "https://doi.org/10.1126/science.1152408" },
+  { name: "Rawson & Dunlosky (2011) · 간격을 둔 재학습", href: "https://doi.org/10.1037/a0023956" },
+  { name: "Butler & Roediger (2008) · 선택형 검사와 피드백", href: "https://doi.org/10.3758/MC.36.3.604" },
+] as const;
+
 export function AboutScreen() {
   const navigate = useNavigate();
+  const { hash } = useLocation();
+  const learningMethod = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (hash !== "#learning-method") return;
+    learningMethod.current?.focus({ preventScroll: true });
+    learningMethod.current?.scrollIntoView();
+  }, [hash]);
   return (
     <section className="about-screen">
       <h1>이 앱에 대해</h1>
@@ -76,14 +91,28 @@ export function AboutScreen() {
         <h2>복습이 잡히는 방식 (FSRS)</h2>
         <p>
           복습 간격은 FSRS(Free Spaced Repetition Scheduler) 알고리즘이
-          정합니다. 정답을 맞힐 때마다 그 글자의 <strong>안정도</strong>가
-          오르고 다음 복습일이 멀어지며, 틀리면 <strong>난이도</strong>가
-          오르고 복습일이 가까워집니다. 그래서 쉬운 글자는 며칠~몇 주
-          간격으로, 자주 틀리는 글자는 하루 이틀 간격으로 돌아옵니다. 글자별
-          정답 이력과 간격 변화는{" "}
+          정합니다. 글자별 이전 응답과 경과 시간을 바탕으로 다음 시점을
+          추정하며, 기억하지 못한 글자는 곧 다시 나올 수 있습니다. 한 번의
+          성공이나 표시된 간격은 숙달 또는 실제 기억 지속 시간을 보장하지
+          않습니다. 글자별 정답 이력과 간격 변화는{" "}
           <button onClick={() => navigate("/stats")} type="button">통계</button>
           {" "}화면과 각 글자의 상세 페이지에서 그래프로 볼 수 있습니다.
         </p>
+      </section>
+
+      <section className="about-section" id="learning-method" ref={learningMethod} tabIndex={-1}>
+        <h2>효과적으로 연습하는 법</h2>
+        <ol>
+          <li>만기 복습을 먼저 하고, 답을 보기 전에 소리 내거나 종이에 회상합니다.</li>
+          <li>정답을 확인해 비교한 뒤 <strong>기억하지 못함</strong> 또는 <strong>정확히 기억함</strong>으로 솔직히 표시합니다. 선택지는 정답 공개 전에 사용할 수 있습니다.</li>
+          <li>한 번 맞힌 것으로 숙달을 판단하지 않고, 이후 날짜에 다시 회상합니다.</li>
+          <li>예문과 한자어·熟語·词语를 읽고, 일본어·중국어는 선택적으로 말하기 연습을 해 실제 맥락에 적용합니다.</li>
+        </ol>
+        <p>회상 여부는 본인이 표시하는 값이며 발음이나 필기를 검증한 결과가 아닙니다. 개선 여부는 XP·연속 학습·속도보다 며칠 뒤 첫 시도에서 답을 떠올렸는지로 살펴보세요.</p>
+        <ul className="about-sources">
+          {learningSources.map((source) => <li key={source.name}><a href={source.href} rel="noopener noreferrer" target="_blank">{source.name}</a></li>)}
+        </ul>
+        <p>연구는 주로 대학생의 단어쌍·외국어 어휘·산문 학습을 다뤘으며 이 앱이나 한자 학습법을 직접 시험한 결과가 아닙니다. 따라서 하루 분량, FSRS 매개변수, 세 문항 뒤 재시도는 제품상 휴리스틱이며 최적 간격이나 시험·말하기 성과를 보장하지 않습니다.</p>
       </section>
 
       <section className="about-section">
