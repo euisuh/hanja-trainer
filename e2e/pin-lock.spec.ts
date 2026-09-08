@@ -4,7 +4,8 @@ async function browserRequest(page: Page, path: string, method: string, body?: u
   return page.evaluate(async ({ requestPath, requestMethod, requestBody }) => {
     const response = await fetch(requestPath, {
       method: requestMethod,
-      ...(requestBody === undefined ? {} : { headers: { "content-type": "application/json" }, body: JSON.stringify(requestBody) }),
+      headers: { "x-hanja-profile-id": "1", ...(requestBody === undefined ? {} : { "content-type": "application/json" }) },
+      body: requestBody === undefined ? undefined : JSON.stringify(requestBody),
     });
     return { status: response.status, body: await response.json() as unknown };
   }, { requestPath: path, requestMethod: method, requestBody: body });
@@ -29,7 +30,7 @@ test("device PIN gates direct API calls and unlocks by keyboard and mouse", asyn
 
   for (const direct of [
     await page.request.get("/api/stats"),
-    await page.request.post("/api/session/start", { data: { mode: "lesson", tracks: ["kr"] } }),
+    await page.request.post("/api/session/start", { data: { mode: "lesson", tracks: ["kr"] }, headers: { "x-hanja-profile-id": "1" } }),
   ]) {
     expect(direct.status()).toBe(401);
     expect(await direct.json()).toMatchObject({ error: { code: "profile_required" } });

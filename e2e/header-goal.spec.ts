@@ -27,7 +27,7 @@ async function refreshProfile(page: Page) {
 test("daily goal stays conic and sweeps through completion", async ({ page }) => {
   const state = { todayXp: 20 };
   await mockProfile(page, state);
-  expect((await page.request.patch("/api/settings", { data: { theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   await page.goto("/settings");
 
   const goal = page.locator(".daily-goal");
@@ -92,7 +92,7 @@ test("streak text and boundary meet contrast in both themes", async ({ page }) =
   await mockProfile(page, state);
 
   for (const theme of ["default", "quiet-technical"] as const) {
-    expect((await page.request.patch("/api/settings", { data: { theme } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { theme }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     await page.goto("/settings");
     const app = page.locator(".app");
     await expect(app).toHaveAttribute("data-theme", theme);

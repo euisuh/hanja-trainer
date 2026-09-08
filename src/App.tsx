@@ -4,7 +4,7 @@ import { themes } from "./design/tokens";
 import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
 import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
 import { resetSettingsClientState } from "./features/settings/useSettings";
-import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests } from "./lib/apiClient";
+import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
 import { AppRoutes, routes, type Screen } from "./routes";
 import { ProfilePicker } from "./screens/ProfilePicker";
 import { UnlockScreen } from "./screens/UnlockScreen";
@@ -21,7 +21,7 @@ const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session",
 type Gate = "checking" | "error" | "choosing" | "locked" | "unlocked";
 
 function isProfileRequired(caught: unknown): boolean {
-  return caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required");
+  return caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required" || caught.code === "profile_changed");
 }
 
 function identity(profile: ProfileResponse): ActiveProfile {
@@ -56,6 +56,7 @@ export function App() {
   }, [navigate, screen]);
 
   const teardownActiveProfile = useCallback(() => {
+    setApiProfileId(null);
     setAnswerSubmitProfile(null);
     resetSettingsClientState();
     setActiveProfile(null);
@@ -64,10 +65,15 @@ export function App() {
   }, []);
 
   const activateCurrentProfile = useCallback(async (mode: "preserve" | "select" | "guard", signal?: AbortSignal) => {
-    const [profile, onboarding] = await Promise.all([
-      apiClient.profile(signal, false),
-      apiClient.onboardingState(signal, false),
-    ]);
+    const profile = await apiClient.profile(signal, false, null);
+    setApiProfileId(profile.id);
+    let onboarding;
+    try {
+      onboarding = await apiClient.onboardingState(signal, false);
+    } catch (caught) {
+      setApiProfileId(null);
+      throw caught;
+    }
     setActiveProfile(identity(profile));
     const needsOnboarding = mode !== "preserve" && !onboarding.onboarded;
     setOnboardingRequired(needsOnboarding);

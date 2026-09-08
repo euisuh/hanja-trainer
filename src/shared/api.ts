@@ -3,6 +3,7 @@ import type { OnyomiScript, SoundMode, ThemeId } from "./settings";
 
 // Four two-character word reviews use 37 SQL statements including profile resolution.
 export const MAX_REVIEW_BATCH_SIZE = 4;
+export const PROFILE_EXPECTATION_HEADER = "x-hanja-profile-id";
 
 export type ApiErrorBody = { error: { code: string; message: string } };
 export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };

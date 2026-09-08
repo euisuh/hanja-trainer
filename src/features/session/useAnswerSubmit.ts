@@ -75,7 +75,7 @@ export async function flushPendingReviews(profileId = activeProfileId): Promise<
   clearRetry(profileId);
   try {
     while (entries.length > 0) {
-      const response = await apiClient.submitReviews(entries.map(([, item]) => item.input));
+      const response = await apiClient.submitReviews(profileId, entries.map(([, item]) => item.input));
       failedProfiles.delete(profileId);
       entries.forEach(([key, item], index) => {
         if (pending.get(key) !== item) return;
@@ -88,7 +88,7 @@ export async function flushPendingReviews(profileId = activeProfileId): Promise<
     }
   } catch (caught) {
     failedProfiles.add(profileId);
-    if (activeProfileId === profileId && caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required")) {
+    if (activeProfileId === profileId && caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required" || caught.code === "profile_changed")) {
       window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
     }
   } finally {

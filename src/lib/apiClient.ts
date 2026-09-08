@@ -1,4 +1,4 @@
-import type { CharacterDetailResponse, CreateProfileRequest, CreateSessionRequest, CurriculumResponse, DueReviewsResponse, ManagedProfile, OnboardingStateResponse, PatchSettingsRequest, PinStateResponse, PlacementAnswer, PlacementScoreResponse, ProfileResponse, ProfilesResponse, RenameProfileRequest, SettingsResponse, StartSessionRequest, StartSessionResponse, StatsResponse, SubmitReviewRequest, SubmitReviewResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../shared/api";
+import { PROFILE_EXPECTATION_HEADER, type CharacterDetailResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../shared/api";
 import type { Track } from "../shared/types";
 
 export class ApiClientError extends Error {
@@ -14,22 +14,25 @@ export const ONBOARDING_COMPLETED_EVENT = "hanja-trainer:onboarding-completed";
 
 const profileRequests = new Map<AbortController, Promise<unknown>>();
 let profileRequestsPaused = false;
+let activeProfileId: number | null = null;
 
-function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, profileBound = true): Promise<T> {
+function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, profileBound = true, expectedProfileId: number | null = profileBound ? activeProfileId : null): Promise<T> {
   if (profileBound && profileRequestsPaused) return Promise.reject(new Error("Profile request was cancelled"));
   const controller = new AbortController();
+  const headers = new Headers(init?.headers);
+  if (expectedProfileId !== null) headers.set(PROFILE_EXPECTATION_HEADER, String(expectedProfileId));
   const callerSignal = init?.signal;
   const abort = () => controller.abort();
   if (callerSignal?.aborted) abort();
   else callerSignal?.addEventListener("abort", abort, { once: true });
   const tracked = (async () => {
-    const response = await fetch(path, { ...init, signal: controller.signal });
+    const response = await fetch(path, { ...init, headers, signal: controller.signal });
     const body: unknown = await response.json();
     if (!response.ok) {
       const errorBody = typeof body === "object" && body !== null && "error" in body ? body as { error?: { code?: string; message?: string }; retryAfter?: number } : null;
       const code = errorBody?.error?.code ?? "request_failed";
       const message = errorBody?.error?.message ?? `Request failed (${response.status})`;
-      if (notifyAuth && (code === "pin_required" || code === "profile_required")) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+      if (notifyAuth && (code === "pin_required" || code === "profile_required" || code === "profile_changed")) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
       throw new ApiClientError(response.status, code, message, errorBody?.retryAfter);
     }
     return body as T;
@@ -55,6 +58,10 @@ export function resumeProfileRequests() {
   profileRequestsPaused = false;
 }
 
+export function setApiProfileId(profileId: number | null) {
+  activeProfileId = profileId;
+}
+
 export const apiClient = {
   curriculum: (track: Track, signal?: AbortSignal) => requestJson<CurriculumResponse>(`/api/curriculum?track=${track}`, { signal }),
   unitStudy: (unitId: number, signal?: AbortSignal) => requestJson<UnitStudyResponse>(`/api/curriculum/units/${unitId}`, { signal }),
@@ -74,14 +81,14 @@ export const apiClient = {
     window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
     return result;
   },
-  submitReviews: (body: SubmitReviewRequest[], signal?: AbortSignal) => requestJson<{ results: SubmitReviewResponse[] }>("/api/reviews/batch", {
+  submitReviews: (profileId: number, body: SubmitReviewRequest[], signal?: AbortSignal) => requestJson<{ results: SubmitReviewResponse[] }>("/api/reviews/batch", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body),
     signal,
-  }, false),
+  }, false, true, profileId),
   dueReviews: (tracks: Track[], limit = 50, signal?: AbortSignal) => requestJson<DueReviewsResponse>(`/api/reviews/due?tracks=${tracks.join(",")}&limit=${limit}`, { signal }),
-  profile: (signal?: AbortSignal, notifyAuth = true) => requestJson<ProfileResponse>("/api/profile", { signal }, notifyAuth),
+  profile: (signal?: AbortSignal, notifyAuth = true, expectedProfileId: number | null = activeProfileId) => requestJson<ProfileResponse>("/api/profile", { signal }, notifyAuth, true, expectedProfileId),
   createSession: async (body: CreateSessionRequest): Promise<ProfileResponse> => {
     const profile = await requestJson<ProfileResponse>("/api/sessions", {
       method: "POST",

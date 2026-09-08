@@ -123,7 +123,7 @@ test("theme selection applies live and persists", async ({ page }) => {
 });
 
 test("both themes share the anchored correct-answer celebration", async ({ page }) => {
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   const quietSession = await startLesson(page);
   const quiet = await captureCorrectFeedback(page, quietSession.cards[0].answerIndex);
   expect(quiet.style.cardAnimationName).toContain("om-win-card");
@@ -142,7 +142,7 @@ test("both themes share the anchored correct-answer celebration", async ({ page 
   expect(quiet.advanceMs).toBeLessThan(1_200);
   await expect(page.locator(".particle-burst")).toHaveCount(0, { timeout: 2_000 });
 
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   const defaultSession = await startLesson(page);
   const defaultFeedback = await captureCorrectFeedback(page, defaultSession.cards[0].answerIndex);
   expect(defaultFeedback.style.cardAnimationName).toContain("om-win-card");
@@ -160,7 +160,7 @@ test("both themes share the anchored correct-answer celebration", async ({ page 
 });
 
 test("Quiet Technical state colors and radii remain readable", async ({ page }) => {
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   await page.goto("/home");
   await expect(page.locator(".review-cta strong")).toBeVisible();
   await expect(page.locator(".path-node--locked .path-node__glyph").first()).toBeVisible();
@@ -181,12 +181,12 @@ test("Quiet Technical state colors and radii remain readable", async ({ page }) 
   await page.keyboard.press("Escape");
   await expect(page.locator(".pause-modal__panel")).toHaveCSS("border-radius", "10px");
 
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
 });
 
 test("combo tiers stay readable and respect reduced motion", async ({ page }) => {
   for (const theme of ["default", "quiet-technical"] as const) {
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     await page.goto("/settings");
     const contrasts = await page.locator(".app").evaluate((app) => {
       const channel = (value: number) => {
@@ -232,11 +232,11 @@ test("combo tiers stay readable and respect reduced motion", async ({ page }) =>
     });
   })).toEqual(["none", "none", "none"]);
 
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
 });
 
 test("raised actions hover, press, and respect reduced motion", async ({ page }) => {
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   const session = await startLesson(page);
   const answer = page.locator(".answer-option").first();
   await answer.hover();
@@ -275,7 +275,7 @@ test("raised actions hover, press, and respect reduced motion", async ({ page })
   await page.mouse.move(0, 0);
   await page.mouse.up();
 
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   await page.setViewportSize({ width: 430, height: 900 });
   await page.reload();
   await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
@@ -309,7 +309,7 @@ test("raised actions hover, press, and respect reduced motion", async ({ page })
 });
 
 test("reduced motion cleans hidden celebration state", async ({ page }) => {
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme: "quiet-technical" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce" });
   const session = await startLesson(page);
   await page.locator(".celebration-layer").evaluate((layer) => {
@@ -326,5 +326,5 @@ test("reduced motion cleans hidden celebration state", async ({ page }) => {
   await page.waitForFunction(() => document.documentElement.dataset.reducedBurstCreated === "true" && document.documentElement.dataset.reducedBurstCleaned === "true");
   await expect(page.locator(".celebration-layer")).toBeHidden();
   await expect(page.locator(".particle-burst")).toHaveCount(0);
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
 });

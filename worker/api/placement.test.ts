@@ -44,7 +44,7 @@ function setup(observations: QueryObservation[] = []) {
 }
 
 function request(path: string, method = "GET", body?: unknown) {
-  return new Request(`https://test${path}`, { method, headers: body === undefined ? undefined : { "content-type": "application/json" }, body: body === undefined ? undefined : JSON.stringify(body) });
+  return new Request(`https://test${path}`, { method, headers: body === undefined ? undefined : { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: body === undefined ? undefined : JSON.stringify(body) });
 }
 
 describe("profile, placement, and stats API", () => {

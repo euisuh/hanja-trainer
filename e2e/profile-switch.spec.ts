@@ -15,7 +15,7 @@ async function browserRequest(page: Page, path: string, method = "GET", body?: u
   return page.evaluate(async ({ path: requestPath, method: requestMethod, body: requestBody }) => {
     const response = await fetch(requestPath, {
       method: requestMethod,
-      headers: requestBody === undefined ? undefined : { "content-type": "application/json" },
+      headers: requestMethod === "GET" ? undefined : { "content-type": "application/json", "x-hanja-profile-id": "1" },
       body: requestBody === undefined ? undefined : JSON.stringify(requestBody),
     });
     return { status: response.status, body: await response.json() as unknown };
@@ -24,11 +24,48 @@ async function browserRequest(page: Page, path: string, method = "GET", body?: u
 
 test.afterEach(() => resetProfiles());
 
+test("keeps a stale tab's answer with its original profile", async ({ page, context }) => {
+  resetProfiles();
+  expect((await page.request.post("/api/pin", { data: { pin: "1234" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
+  executeSql("UPDATE profile SET onboarded_at = 1 WHERE id = 1; INSERT INTO profile (name) VALUES ('둘');");
+
+  await page.goto("/home");
+  await page.getByRole("button", { name: "나, PIN 필요" }).click();
+  await page.getByRole("group", { name: /PIN 키패드/u }).pressSequentially("1234");
+  await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
+  const started = page.waitForResponse((response) => response.url().endsWith("/api/session/start") && response.ok());
+  await page.getByRole("button", { name: /레슨 시작/u }).click();
+  const session = await (await started).json() as { cards: Array<{ answerIndex: number }> };
+
+  const other = await context.newPage();
+  await other.goto("/home");
+  await other.getByRole("button", { name: "프로필 전환" }).click();
+  await other.getByRole("button", { name: "둘" }).click();
+  await expect(other.getByRole("heading", { name: "한 글자, 세 개의 시험." })).toBeVisible();
+  const settingsBefore = (await browserRequest(other, "/api/settings")).body;
+
+  const rejected = page.waitForResponse((response) => response.url().endsWith("/api/reviews/batch") && response.status() === 409);
+  await page.locator(".answer-option").nth(session.cards[0].answerIndex).click();
+  expect(await (await rejected).json()).toEqual({ error: { code: "profile_changed", message: "The active profile changed" } });
+  await expect(page.getByRole("heading", { name: "누가 학습하나요?" })).toBeVisible();
+  expect((await browserRequest(other, "/api/stats")).body).toMatchObject({ answered: 0 });
+  expect((await browserRequest(other, "/api/profile")).body).toMatchObject({ xp: 0 });
+  expect((await browserRequest(other, "/api/onboarding-state")).body).toEqual({ onboarded: false });
+  expect((await browserRequest(other, "/api/settings")).body).toEqual(settingsBefore);
+
+  const synced = page.waitForResponse((response) => response.url().endsWith("/api/reviews/batch") && response.ok());
+  await page.getByRole("button", { name: "나, PIN 필요" }).click();
+  await page.getByRole("group", { name: /PIN 키패드/u }).pressSequentially("1234");
+  await synced;
+  await expect.poll(async () => ((await browserRequest(page, "/api/stats")).body as { answered: number }).answered).toBe(1);
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:pending-reviews"))).toBeNull();
+});
+
 test("switches profiles without leaking progress or browser state", async ({ page }) => {
   resetProfiles();
   const browserTimezone = await page.evaluate(() => Intl.DateTimeFormat().resolvedOptions().timeZone);
   const alternateTimezone = browserTimezone === "UTC" ? "Asia/Seoul" : "UTC";
-  const pin = await page.request.post("/api/pin", { data: { pin: "1234" } });
+  const pin = await page.request.post("/api/pin", { data: { pin: "1234" }, headers: { "x-hanja-profile-id": "1" } });
   expect(pin.ok()).toBe(true);
   executeSql(`
     UPDATE profile SET name = '민지', theme = 'default', timezone = '${alternateTimezone}', onboarded_at = 1 WHERE id = 1;

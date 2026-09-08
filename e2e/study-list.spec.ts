@@ -29,7 +29,7 @@ test("previews one unit with cross-track keyboard controls", async ({ page }) =>
       speak: (utterance: { lang: string; text: string }) => { document.documentElement.dataset.lastSpeech = JSON.stringify({ lang: utterance.lang, text: utterance.text }); },
     } });
   });
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"] } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   await page.goto("/home");
 
   const requests: string[] = [];

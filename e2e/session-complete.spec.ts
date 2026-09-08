@@ -78,7 +78,7 @@ test("session completion stages celebration, XP, stats, and profile payoff", asy
 
 test("completion XP stays readable in both themes", async ({ page }) => {
   for (const theme of ["default", "quiet-technical"] as const) {
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     await openCompletion(page, completion);
     await expect(page.locator(".app")).toHaveAttribute("data-theme", theme);
 
@@ -89,7 +89,7 @@ test("completion XP stays readable in both themes", async ({ page }) => {
     ).toBeGreaterThanOrEqual(3);
   }
 
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" } })).ok()).toBe(true);
+  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
 });
 
 test("failed unit test does not celebrate", async ({ page }) => {

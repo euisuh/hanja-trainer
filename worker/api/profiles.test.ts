@@ -33,10 +33,11 @@ function setup() {
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
 
-function request(path: string, method = "GET", body?: unknown, session?: string) {
+function request(path: string, method = "GET", body?: unknown, session?: string, expectedProfileId = 1) {
   const headers = new Headers();
   if (body !== undefined) headers.set("content-type", "application/json");
   if (session) headers.set("cookie", session);
+  headers.set("x-hanja-profile-id", String(expectedProfileId));
   return new Request(`https://test${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
 }
 
@@ -112,16 +113,16 @@ describe("profile management API", () => {
     const childSession = cookie(await routeApiRequest(request("/api/pin/unlock", "POST", { profileId: created.id, pin: "4321" }), fixture.env));
 
     const attempts = [
-      request("/api/profiles", "POST", { name: "셋", is_admin: 1 }, childSession),
-      request(`/api/profiles/${created.id}`, "PATCH", { name: "내 이름", is_admin: 1 }, childSession),
-      request(`/api/profiles/${created.id}`, "DELETE", undefined, childSession),
+      request("/api/profiles", "POST", { name: "셋", is_admin: 1 }, childSession, created.id),
+      request(`/api/profiles/${created.id}`, "PATCH", { name: "내 이름", is_admin: 1 }, childSession, created.id),
+      request(`/api/profiles/${created.id}`, "DELETE", undefined, childSession, created.id),
     ];
     for (const attempt of attempts) {
       const response = await routeApiRequest(attempt, fixture.env);
       expect(response.status).toBe(403);
       expect(await response.json()).toMatchObject({ error: { code: "admin_required" } });
     }
-    expect(await (await routeApiRequest(request("/api/settings", "GET", undefined, childSession), fixture.env)).json()).toMatchObject({ isAdmin: false });
+    expect(await (await routeApiRequest(request("/api/settings", "GET", undefined, childSession, created.id), fixture.env)).json()).toMatchObject({ isAdmin: false });
     const selfDelete = await routeApiRequest(request("/api/profiles/1", "DELETE", undefined, session), fixture.env);
     expect(selfDelete.status).toBe(409);
     expect(await selfDelete.json()).toMatchObject({ error: { code: "profile_self_delete" } });

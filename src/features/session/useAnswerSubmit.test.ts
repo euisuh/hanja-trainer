@@ -48,12 +48,12 @@ describe("profile-scoped pending reviews", () => {
     connection.onLine = true;
     enqueuePendingReview(2, review("profile-b", 0));
     await vi.waitFor(() => expect(pendingReviewCount(2)).toBe(0));
-    expect(submit).toHaveBeenCalledWith([expect.objectContaining({ sessionId: "profile-b" })]);
+    expect(submit).toHaveBeenCalledWith(2, [expect.objectContaining({ sessionId: "profile-b" })]);
     expect(pendingReviewCount(1)).toBe(1);
 
     setAnswerSubmitProfile(1);
     await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
-    expect(submit).toHaveBeenLastCalledWith([expect.objectContaining({ sessionId: "profile-a" })]);
+    expect(submit).toHaveBeenLastCalledWith(1, [expect.objectContaining({ sessionId: "profile-a" })]);
   });
 
   it("does not let a stale authentication failure interrupt the next profile", async () => {
@@ -126,7 +126,7 @@ describe("durable pending reviews", () => {
 
     fresh.setAnswerSubmitProfile(1);
 
-    await vi.waitFor(() => expect(submit).toHaveBeenCalledWith([review("restored", 0), review("restored", 1)]));
+    await vi.waitFor(() => expect(submit).toHaveBeenCalledWith(1, [review("restored", 0), review("restored", 1)]));
     await vi.waitFor(() => expect(storage.getItem(storageKey)).toBeNull());
     fresh.resetAnswerSubmitForTests();
   });
@@ -160,7 +160,7 @@ describe("durable pending reviews", () => {
   it("drains a large backlog immediately in ordered, bounded batches", async () => {
     const connection = { onLine: false };
     vi.stubGlobal("navigator", connection);
-    const submit = vi.spyOn(apiClient, "submitReviews").mockImplementation(async (inputs) => ({ results: inputs.map(() => response) }));
+    const submit = vi.spyOn(apiClient, "submitReviews").mockImplementation(async (_profileId, inputs) => ({ results: inputs.map(() => response) }));
 
     setAnswerSubmitProfile(1);
     for (let cardIndex = 0; cardIndex < 100; cardIndex += 1) enqueuePendingReview(1, review("backlog", cardIndex));
@@ -169,8 +169,8 @@ describe("durable pending reviews", () => {
 
     await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
     expect(submit).toHaveBeenCalledTimes(25);
-    expect(submit.mock.calls.every(([inputs]) => inputs.length <= 4)).toBe(true);
-    expect(submit.mock.calls.flatMap(([inputs]) => inputs.map((input) => input.cardIndex))).toEqual(Array.from({ length: 100 }, (_, index) => index));
+    expect(submit.mock.calls.every(([, inputs]) => inputs.length <= 4)).toBe(true);
+    expect(submit.mock.calls.flatMap(([, inputs]) => inputs.map((input) => input.cardIndex))).toEqual(Array.from({ length: 100 }, (_, index) => index));
   });
 
   it("stops draining the old profile after a profile switch", async () => {
@@ -178,7 +178,7 @@ describe("durable pending reviews", () => {
     vi.stubGlobal("navigator", connection);
     let releaseFirst!: (value: { results: SubmitReviewResponse[] }) => void;
     const first = new Promise<{ results: SubmitReviewResponse[] }>((resolve) => { releaseFirst = resolve; });
-    const submit = vi.spyOn(apiClient, "submitReviews").mockReturnValueOnce(first).mockImplementation(async (inputs) => ({ results: inputs.map(() => response) }));
+    const submit = vi.spyOn(apiClient, "submitReviews").mockReturnValueOnce(first).mockImplementation(async (_profileId, inputs) => ({ results: inputs.map(() => response) }));
 
     setAnswerSubmitProfile(1);
     for (let cardIndex = 0; cardIndex < 8; cardIndex += 1) enqueuePendingReview(1, review("profile-a", cardIndex));
@@ -190,7 +190,7 @@ describe("durable pending reviews", () => {
     releaseFirst({ results: Array.from({ length: 4 }, () => response) });
 
     await vi.waitFor(() => expect(pendingReviewCount(2)).toBe(0));
-    expect(submit.mock.calls.filter(([inputs]) => inputs[0].sessionId === "profile-a")).toHaveLength(1);
+    expect(submit.mock.calls.filter(([, inputs]) => inputs[0].sessionId === "profile-a")).toHaveLength(1);
     expect(pendingReviewCount(1)).toBe(4);
   });
 

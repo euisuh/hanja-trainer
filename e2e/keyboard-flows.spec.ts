@@ -693,7 +693,7 @@ test.describe.serial("keyboard-only product flows", () => {
   });
 
   test("known Korean constituents unlock a keyboard-graded word card", async ({ page }) => {
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"] } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     const seeded = ["學", "校", "金", "大"].map((characterKey, cardIndex) => ({
       sessionId: "e2e-word-eligibility",
       cardIndex,
@@ -704,7 +704,7 @@ test.describe.serial("keyboard-only product flows", () => {
       elapsedMs: 1,
       mode: "lesson",
     }));
-    expect((await page.request.post("/api/reviews/batch", { data: seeded })).ok()).toBe(true);
+    expect((await page.request.post("/api/reviews/batch", { data: seeded, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
 
     const lesson = await sessionStarted(page, () => page.goto("/lesson"));
     expect(lesson.cards.filter((card) => card.kind !== "compare" && card.kind !== "word")).toHaveLength(8);
@@ -736,14 +736,14 @@ test.describe.serial("keyboard-only product flows", () => {
     await finishSession(page, lesson.cards.slice(wordIndex + 1), /했어요|좋아요/u, { autoAdvance: true, progressOffset: wordIndex + 1 });
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   });
 
   for (const { track, prompt, badge, feedback, sourceHost } of [
     { track: "jp" as const, prompt: "熟語の読みを選べ", badge: "日本 · 熟語", feedback: "日本語ウィクショナリーの熟語です。", sourceHost: "ja.wiktionary.org" },
     { track: "cn" as const, prompt: "选择正确的词语读音", badge: "中国 · 词语", feedback: "这是中文维基词典收录的词语。", sourceHost: "zh.wiktionary.org" },
   ]) test(`known ${track} compounds render and submit by keyboard`, async ({ page }) => {
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: [track] } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: [track] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     const seeded = ["學", "校", "生", "國"].map((characterKey, cardIndex) => ({
       sessionId: `e2e-${track}-word-eligibility`,
       cardIndex,
@@ -754,7 +754,7 @@ test.describe.serial("keyboard-only product flows", () => {
       elapsedMs: 1,
       mode: "lesson",
     }));
-    expect((await page.request.post("/api/reviews/batch", { data: seeded })).ok()).toBe(true);
+    expect((await page.request.post("/api/reviews/batch", { data: seeded, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
 
     const lesson = await sessionStarted(page, () => page.goto("/lesson"));
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
@@ -777,7 +777,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Escape");
     await page.keyboard.press("Q");
     await expect(page.locator(".home-screen")).toBeVisible();
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   });
 
   test("path detail opens and exits by keyboard", async ({ page }, testInfo) => {
@@ -790,7 +790,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("D");
     await expect(page.locator(".detail-screen")).toBeVisible();
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"] } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     await page.goto("/detail/%E4%B9%9D");
     await expect(page.locator('.track-panel[lang="ko"]')).toHaveCount(1);
     await expect(page.locator('.track-panel[lang="ja"]')).toHaveCount(1);
@@ -803,7 +803,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await expectClosestLang(reading, languages.cn);
     await expectClosestLang(translation, languages.kr);
     await checkLayout(page, "detail", testInfo);
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] } })).ok()).toBe(true);
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "cn"] }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     await page.keyboard.press("Escape");
     await expect(page.locator(".home-screen")).toBeVisible();
   });

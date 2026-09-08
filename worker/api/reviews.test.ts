@@ -62,7 +62,7 @@ function setup() {
 }
 
 function post(path: string, body: unknown, env: Env) {
-  return routeApiRequest(new Request(`https://test${path}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), env);
+  return routeApiRequest(new Request(`https://test${path}`, { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), env);
 }
 
 describe("review and session API", () => {

@@ -32,10 +32,11 @@ function setup() {
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
 
-function request(path: string, method = "GET", body?: unknown, cookie?: string) {
+function request(path: string, method = "GET", body?: unknown, cookie?: string, expectedProfileId = 1) {
   const headers = new Headers();
   if (body !== undefined) headers.set("content-type", "application/json");
   if (cookie) headers.set("cookie", cookie);
+  headers.set("x-hanja-profile-id", String(expectedProfileId));
   return new Request(`https://test${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
 }
 
@@ -190,7 +191,7 @@ describe("device PIN", () => {
     const selected = await routeApiRequest(request("/api/profiles/select", "POST", { profileId }), fixture.env);
     expect(selected.status).toBe(200);
     const selectedCookie = cookie(selected);
-    expect((await routeApiRequest(request("/api/health", "GET", undefined, selectedCookie), fixture.env)).status).toBe(200);
+    expect((await routeApiRequest(request("/api/health", "GET", undefined, selectedCookie, profileId), fixture.env)).status).toBe(200);
     await setDevicePin(fixture.env.DB, 1, "1234", undefined);
     const parts = selectedCookie.split("=")[1].split(".");
     expect((await routeApiRequest(request("/api/health", "GET", undefined, `hanja_session=1.${parts[1]}.${parts[2]}`), fixture.env)).status).toBe(401);

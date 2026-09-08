@@ -161,7 +161,7 @@ describe("content API", () => {
     expect(firstCurriculum.units.find((unit) => unit.id === firstUnit.id)?.nodes.every((node) => node.state === "done")).toBe(true);
     const profileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
     const selected = await routeApiRequest(new Request("https://test/api/profiles/select", {
-      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }),
+      method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify({ profileId }),
     }), fixture.env, now);
     const sessionCookie = selected.headers.get("set-cookie")!.split(";", 1)[0];
     const load = (path: string) => routeApiRequest(new Request(`https://test${path}`, { headers: { cookie: sessionCookie } }), fixture.env, now);
@@ -220,7 +220,7 @@ describe("content API", () => {
 
   it("builds exact, distinct session cards and orders review by due time", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), fixture.env);
     const lesson = await (await post({ mode: "lesson", tracks: ["kr"], limit: 6 })).json() as StartSessionResponse;
     expect(lesson.cards).toHaveLength(6);
     expect(lesson.cards.every((card) => card.meaningKo.length > 0)).toBe(true);
@@ -250,7 +250,7 @@ describe("content API", () => {
 
   it("starts exact unit tests and validates their mode, track, unit, and enabled settings", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), fixture.env);
     const unit = fixture.sqlite.prepare("SELECT id FROM curriculum_units WHERE track = 'kr' ORDER BY ord LIMIT 1").get() as { id: number };
     const keys = (fixture.sqlite.prepare("SELECT c.key FROM curriculum_unit_members cum JOIN characters c ON c.id = cum.character_id WHERE cum.unit_id = ? ORDER BY cum.ord").all(unit.id) as Array<{ key: string }>).map((row) => row.key);
 
@@ -301,7 +301,7 @@ describe("content API", () => {
 
   it("lets learners revisit placement-skipped units but not the current unfinished unit", async () => {
     const fixture = setupSeeds(KR_THROUGH_4_FILES); databases.push(fixture.sqlite);
-    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), fixture.env);
     const [previous, current] = fixture.sqlite.prepare("SELECT id, level_ord FROM curriculum_units WHERE track = 'kr' GROUP BY level_ord ORDER BY level_ord LIMIT 2").all() as Array<{ id: number; level_ord: number }>;
     fixture.sqlite.prepare("INSERT INTO placement_results (profile_id, track, level_ord, level_badge, accuracy, detail, taken_at) VALUES (1, 'kr', ?1, '7급II', 100, '', 1)").run(current.level_ord);
 
@@ -335,7 +335,7 @@ describe("content API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const post = (unitId: number, sessionId: string, answers: UnitTestAnswer[]) => routeApiRequest(new Request(`https://test/api/curriculum/units/${unitId}/test-out`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", "x-hanja-profile-id": "1" },
       body: JSON.stringify({ sessionId, answers }),
     }), fixture.env);
     const start = async (unitId: number, sessionId: string) => startSession(fixture.env.DB, 1, { mode: "lesson", tracks: ["kr"], limit: 8, unitId, testOut: true }, sessionId);
@@ -473,7 +473,7 @@ describe("content API", () => {
     const answers = recoveredUnitTestAnswers(session, mistakes);
     const response = await routeApiRequest(new Request(`https://test/api/curriculum/units/${unit.id}/test-out`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", "x-hanja-profile-id": "1" },
       body: JSON.stringify({ sessionId: session.sessionId, answers }),
     }), fixture.env);
 
@@ -488,6 +488,7 @@ describe("content API", () => {
     fixture.sqlite.prepare(`DELETE FROM character_tracks WHERE track = 'kr' AND character_id NOT IN (SELECT character_id FROM character_tracks WHERE track = 'kr' ORDER BY character_id LIMIT ?)` ).run(count);
     const response = await routeApiRequest(new Request("https://test/api/session/start", {
       method: "POST",
+      headers: { "x-hanja-profile-id": "1" },
       body: JSON.stringify({ mode: "lesson", tracks: ["kr"], limit: 8 }),
     }), fixture.env);
     const session = await response.json() as StartSessionResponse;
@@ -574,11 +575,11 @@ describe("content API", () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect((await routeApiRequest(new Request("https://test/api/curriculum?track=xx"), fixture.env)).status).toBe(400);
     for (const body of [{ mode: "lesson", tracks: ["xx"] }, { mode: "lesson", tracks: ["kr"], limit: -1 }, { mode: "lesson", tracks: ["kr"], limit: 51 }, { mode: "lesson", tracks: ["kr"], unitId: 1, levelOrd: 1 }, { mode: "level-review", tracks: ["kr"] }, { mode: "level-review", tracks: ["kr", "jp"], levelOrd: 1 }]) {
-      const response = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", body: JSON.stringify(body) }), fixture.env);
+      const response = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), fixture.env);
       expect(response.status).toBe(400);
       expect(response.headers.get("content-type")).toContain("application/json");
     }
-    const malformed = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", body: "{" }), fixture.env);
+    const malformed = await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "x-hanja-profile-id": "1" }, body: "{" }), fixture.env);
     expect(malformed.status).toBe(400);
   });
 
@@ -639,7 +640,7 @@ describe("content API", () => {
 
   it("starts fresh lessons at placement levels and requested units", async () => {
     const fixture = setupSeeds(CHARACTER_FILES); databases.push(fixture.sqlite);
-    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }), fixture.env);
+    const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), fixture.env);
     const placement = await (await post({ mode: "placement", tracks: ["kr", "jp", "cn"], limit: 15 })).json() as StartSessionResponse;
     expect(placement.cards.map((card) => card.track)).toEqual(Array.from({ length: 15 }, (_, index) => (["kr", "jp", "cn"] as const)[index % 3]));
     expect([...new Set(placement.cards.filter((card) => card.track === "kr").map((card) => card.levelOrd))].sort()).toEqual([1, 2, 3]);
@@ -702,7 +703,7 @@ describe("content API", () => {
     const detail = await (await routeApiRequest(new Request(`https://test/api/characters/${encodeURIComponent(key)}`), fixture.env)).json() as CharacterDetailResponse;
     expect(detail.tracks.find((track) => track.track === "jp")?.reading).toBe(`音 ${stored.jp_on}`);
 
-    const lesson = await (await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ mode: "lesson", tracks: ["jp"], limit: 4 }) }), fixture.env)).json() as StartSessionResponse;
+    const lesson = await (await routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify({ mode: "lesson", tracks: ["jp"], limit: 4 }) }), fixture.env)).json() as StartSessionResponse;
     expect(lesson.cards.filter((card) => card.kind === "reading").flatMap((card) => card.options).every((option) => canonical.has(option.label))).toBe(true);
     expect(lesson.cards.filter((card) => card.kind === "kun").flatMap((card) => card.options).every((option) => option.label !== "なし")).toBe(true);
 

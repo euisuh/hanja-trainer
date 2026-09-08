@@ -18,7 +18,8 @@ async function browserDelete(page: Page, path: string, body?: unknown) {
   return page.evaluate(async ({ requestPath, requestBody }) => {
     const response = await fetch(requestPath, {
       method: "DELETE",
-      ...(requestBody === undefined ? {} : { headers: { "content-type": "application/json" }, body: JSON.stringify(requestBody) }),
+      headers: { "x-hanja-profile-id": "1", ...(requestBody === undefined ? {} : { "content-type": "application/json" }) },
+      body: requestBody === undefined ? undefined : JSON.stringify(requestBody),
     });
     return { ok: response.ok, status: response.status, body: await response.text() };
   }, { requestPath: path, requestBody: body });
@@ -41,7 +42,7 @@ async function cleanUp(page: Page) {
 test("admin creates, renames, and permanently deletes a profile by keyboard", async ({ page }) => {
   try {
     await page.goto("/settings");
-    expect((await page.request.post("/api/pin", { data: { pin: "1234" } })).ok()).toBe(true);
+    expect((await page.request.post("/api/pin", { data: { pin: "1234" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
     expect((await page.request.post("/api/pin/unlock", { data: { profileId: 1, pin: "1234" } })).ok()).toBe(true);
     await page.reload();
 

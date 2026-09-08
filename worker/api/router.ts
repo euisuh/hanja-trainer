@@ -1,5 +1,5 @@
 import { TRACKS, type Track } from "../../src/shared/types";
-import { MAX_REVIEW_BATCH_SIZE, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../src/shared/api";
+import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../src/shared/api";
 import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
@@ -248,6 +248,12 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
 
     const record = await resolveSession(env.DB, request.headers.get("cookie"), now);
     if (!record) return error(401, "profile_required", "Select a profile");
+    const rawExpectedProfileId = request.headers.get(PROFILE_EXPECTATION_HEADER);
+    const expectedProfileId = rawExpectedProfileId !== null && /^[1-9]\d*$/u.test(rawExpectedProfileId) ? Number(rawExpectedProfileId) : null;
+    if (rawExpectedProfileId !== null && (!Number.isSafeInteger(expectedProfileId) || expectedProfileId !== record.id)
+      || rawExpectedProfileId === null && request.method !== "GET" && request.method !== "HEAD") {
+      return error(409, "profile_changed", "The active profile changed");
+    }
 
     if (request.method === "POST" && pathname === "/api/pin") {
       const body = await jsonBody(request);
