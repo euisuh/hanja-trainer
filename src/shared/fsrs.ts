@@ -32,9 +32,6 @@ export interface ReviewLogEntry {
   scheduledDaysAfter: number;
 }
 
-// Answer-speed tuning knobs; adjust after real session timing data exists.
-export const ANSWER_SPEED_MS = { fast: 3_000, slow: 12_000 } as const;
-
 const DAY_MS = 86_400_000;
 const ratings: Record<Grade, FsrsGrade> = {
   again: Rating.Again,
@@ -101,10 +98,8 @@ export function schedule(
 }
 
 export function gradeFromAnswer(correct: boolean, elapsedMs: number): Grade {
-  if (!correct) return "again";
-  if (elapsedMs <= ANSWER_SPEED_MS.fast) return "easy";
-  if (elapsedMs >= ANSWER_SPEED_MS.slow) return "hard";
-  return "good";
+  void elapsedMs;
+  return correct ? "good" : "again";
 }
 
 export function gradeFromReview(correct: boolean, skipped: boolean, elapsedMs: number): Grade {

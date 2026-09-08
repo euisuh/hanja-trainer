@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  ANSWER_SPEED_MS,
   dueSort,
   formatDueLabel,
   gradeFromAnswer,
@@ -55,20 +54,21 @@ describe("FSRS scheduling", () => {
     ]);
   });
 
-  it("maps correctness and answer speed to all grades", () => {
-    expect(gradeFromAnswer(false, 1)).toBe("again");
-    expect(gradeFromAnswer(true, ANSWER_SPEED_MS.fast)).toBe("easy");
-    expect(gradeFromAnswer(true, ANSWER_SPEED_MS.fast + 1)).toBe("good");
-    expect(gradeFromAnswer(true, ANSWER_SPEED_MS.slow)).toBe("hard");
+  it.each([0, 2_999, 3_000, 3_001, 11_999, 12_000, 3_600_000])("maps correct answers at %d ms to good", (elapsedMs) => {
+    expect(gradeFromAnswer(true, elapsedMs)).toBe("good");
+    expect(gradeFromReview(true, false, elapsedMs)).toBe("good");
   });
 
-  it("schedules skips as again regardless of timing", () => {
-    const wrong = schedule(initialState(start), gradeFromReview(false, false, 1), start).next;
-    const fastSkip = schedule(initialState(start), gradeFromReview(false, true, 1), start).next;
-    const slowSkip = schedule(initialState(start), gradeFromReview(false, true, 999_999), start).next;
+  it.each([0, 2_999, 3_000, 3_001, 11_999, 12_000, 3_600_000])("maps wrong answers at %d ms to again", (elapsedMs) => {
+    expect(gradeFromAnswer(false, elapsedMs)).toBe("again");
+    expect(gradeFromReview(false, false, elapsedMs)).toBe("again");
+  });
 
-    expect(fastSkip).toEqual(wrong);
-    expect(slowSkip).toEqual(wrong);
+  it.each([0, 2_999, 3_000, 3_001, 11_999, 12_000, 3_600_000])("schedules skips at %d ms as again", (elapsedMs) => {
+    const wrong = schedule(initialState(start), gradeFromReview(false, false, 1), start).next;
+    const skip = schedule(initialState(start), gradeFromReview(false, true, elapsedMs), start).next;
+
+    expect(skip).toEqual(wrong);
   });
 
   it("formats overdue, current, and future due labels", () => {

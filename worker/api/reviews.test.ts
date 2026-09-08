@@ -88,6 +88,25 @@ describe("review and session API", () => {
     expect(payload.tracks.find((track) => track.track === "kr")?.review_state).toMatchObject({ total_count: 1, correct_count: 1 });
   });
 
+  it("persists identical Good schedules regardless of answer speed across batch replay", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = new Date("2026-09-08T00:00:00.000Z");
+    const inputs: SubmitReviewRequest[] = [
+      { sessionId: "speed", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 0, mode: "review" },
+      { sessionId: "speed", cardIndex: 1, characterKey: "大", track: "kr", correct: true, skipped: false, elapsedMs: 3_600_000, mode: "review" },
+    ];
+
+    const responses = await submitReviewBatch(fixture.env.DB, 1, inputs, now);
+    expect(responses[1]).toEqual(responses[0]);
+    expect(fixture.sqlite.prepare("SELECT rating, elapsed_ms FROM review_log WHERE session_id = 'speed' ORDER BY card_index").all()).toEqual([
+      { rating: 3, elapsed_ms: 0 },
+      { rating: 3, elapsed_ms: 3_600_000 },
+    ]);
+
+    expect(await submitReviewBatch(fixture.env.DB, 1, inputs, now)).toEqual(responses);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log WHERE session_id = 'speed'").get()).toEqual({ count: 2 });
+  });
+
   it("keeps delayed batch answers on their Asia/Seoul calendar days", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const receivedAt = new Date("2026-09-08T01:00:00.000Z");
