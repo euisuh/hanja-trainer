@@ -75,6 +75,16 @@ and after the change under equivalent inputs. Test adapters return constant-zero
 metadata, and local SQLite plans show structure rather than billed production
 rows; neither is a production cost measurement.
 
+## Offline review times
+
+Queued reviews retain the instant the learner answered, so delayed sync keeps
+the original history day and schedules from that event. A late event older than
+the current FSRS state is applied to that current state without moving
+`last_review` backward; history still records the original answer time rather
+than rebuilding later events. Legacy queued reviews without an answer time use
+receipt time. The server rejects timestamps over five minutes in the future and
+clamps smaller clock skew to receipt time.
+
 ## Deploy
 
 ```sh

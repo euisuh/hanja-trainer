@@ -130,6 +130,7 @@ export type UnitTestResult = { passed: boolean; correct: number; total: number; 
 export type SubmitReviewRequest = {
   sessionId: string;
   cardIndex: number;
+  answeredAt?: string;
   characterKey: string;
   wordId?: number;
   track: Track;

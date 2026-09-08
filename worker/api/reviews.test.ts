@@ -4,7 +4,9 @@ import { afterEach, describe, expect, it } from "vitest";
 import type { CharacterDetailResponse, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import { applyMigrations } from "../test/schema";
+import { getStats } from "./stats";
 import { createSession } from "./sessions";
+import { parseReviewRequest, submitReview, submitReviewBatch } from "./reviews";
 import { routeApiRequest } from "./router";
 
 function d1Result<T>(results: T[]): D1Result<T> {
@@ -84,6 +86,97 @@ describe("review and session API", () => {
     const detail = await routeApiRequest(new Request("https://test/api/characters/%E9%87%91"), fixture.env);
     const payload = await detail.json() as CharacterDetailResponse;
     expect(payload.tracks.find((track) => track.track === "kr")?.review_state).toMatchObject({ total_count: 1, correct_count: 1 });
+  });
+
+  it("keeps delayed batch answers on their Asia/Seoul calendar days", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const receivedAt = new Date("2026-09-08T01:00:00.000Z");
+    const inputs: SubmitReviewRequest[] = [
+      { sessionId: "midnight", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 1_000, mode: "lesson", answeredAt: "2026-09-07T14:59:00.000Z" },
+      { sessionId: "midnight", cardIndex: 1, characterKey: "大", track: "kr", correct: true, skipped: false, elapsedMs: 1_000, mode: "lesson", answeredAt: "2026-09-07T15:01:00.000Z" },
+    ];
+
+    await submitReviewBatch(fixture.env.DB, 1, inputs, receivedAt);
+
+    expect(fixture.sqlite.prepare("SELECT answered_at FROM review_log ORDER BY card_index").all()).toEqual(inputs.map(({ answeredAt }) => ({ answered_at: Date.parse(answeredAt!) })));
+    const stats = await getStats(fixture.env.DB, 1, receivedAt);
+    expect(stats.calendar.filter(({ date }) => date === "2026-09-07" || date === "2026-09-08")).toEqual([
+      { date: "2026-09-07", count: 1 },
+      { date: "2026-09-08", count: 1 },
+    ]);
+  });
+
+  it("schedules from event time without moving state backward on late replay", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const receivedAt = new Date("2026-09-08T12:00:00.000Z");
+    const base = { characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 1_000, mode: "review" } as const;
+    const delayed: SubmitReviewRequest = { ...base, sessionId: "timing", cardIndex: 0, answeredAt: "2026-08-01T00:00:00.000Z" };
+    const delayedResponse = await submitReview(fixture.env.DB, 1, delayed, receivedAt);
+    expect(Date.parse(delayedResponse.due)).toBeLessThan(receivedAt.getTime());
+    expect(fixture.sqlite.prepare("SELECT last_review FROM review_states").get()).toEqual({ last_review: Date.parse(delayed.answeredAt!) });
+
+    const newer: SubmitReviewRequest = { ...base, sessionId: "timing", cardIndex: 1, answeredAt: "2026-09-07T00:00:00.000Z" };
+    await submitReview(fixture.env.DB, 1, newer, receivedAt);
+    const older: SubmitReviewRequest = { ...base, sessionId: "timing", cardIndex: 2, answeredAt: "2026-08-15T00:00:00.000Z" };
+    const olderResponse = await submitReview(fixture.env.DB, 1, older, receivedAt);
+    const state = fixture.sqlite.prepare("SELECT * FROM review_states").get();
+    const logs = fixture.sqlite.prepare("SELECT answered_at FROM review_log ORDER BY card_index").all();
+    expect(state).toMatchObject({ last_review: Date.parse(newer.answeredAt!), total_count: 3 });
+    expect(logs).toEqual([delayed, newer, older].map(({ answeredAt }) => ({ answered_at: Date.parse(answeredAt!) })));
+
+    expect(await submitReview(fixture.env.DB, 1, older, new Date("2026-09-09T12:00:00.000Z"))).toEqual(olderResponse);
+    expect(fixture.sqlite.prepare("SELECT * FROM review_states").get()).toEqual(state);
+    expect(fixture.sqlite.prepare("SELECT answered_at FROM review_log ORDER BY card_index").all()).toEqual(logs);
+  });
+
+  it("accepts legacy and old timestamps, clamps small skew, and rejects bad future time", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const receivedAt = new Date("2026-09-08T12:00:00.000Z");
+    const base = { sessionId: "validation", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 1_000, mode: "lesson" } as const;
+    expect(parseReviewRequest(base, receivedAt)).toEqual(base);
+    expect(parseReviewRequest({ ...base, answeredAt: "2020-01-01T00:00:00.000Z" }, receivedAt)).not.toBeNull();
+    expect(parseReviewRequest({ ...base, answeredAt: "2026-09-08T21:00:00+09:00" }, receivedAt)).not.toBeNull();
+    expect(parseReviewRequest({ ...base, answeredAt: "not-a-date" }, receivedAt)).toBeNull();
+    expect(parseReviewRequest({ ...base, answeredAt: "2026-09-08" }, receivedAt)).toBeNull();
+    expect(parseReviewRequest({ ...base, answeredAt: "2026-02-30T00:00:00.000Z" }, receivedAt)).toBeNull();
+    expect(parseReviewRequest({ ...base, answeredAt: new Date(receivedAt.getTime() + 5 * 60_000 + 1).toISOString() }, receivedAt)).toBeNull();
+
+    await submitReview(fixture.env.DB, 1, base, receivedAt);
+    const skewed = parseReviewRequest({ ...base, sessionId: "validation-skew", characterKey: "大", answeredAt: new Date(receivedAt.getTime() + 4 * 60_000).toISOString() }, receivedAt)!;
+    await submitReview(fixture.env.DB, 1, skewed, receivedAt);
+    expect(fixture.sqlite.prepare("SELECT answered_at FROM review_log ORDER BY id").all()).toEqual([
+      { answered_at: receivedAt.getTime() },
+      { answered_at: receivedAt.getTime() },
+    ]);
+  });
+
+  it("uses each compound member's nondecreasing schedule time but logs one event time", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const inserted = fixture.sqlite.prepare("INSERT INTO words (track, glyph, reading, level, level_ord, source_url) VALUES ('kr', '學校', '학교', '8급', 1, 'https://example.test/word')").run();
+    const wordId = Number(inserted.lastInsertRowid);
+    for (const [position, key] of ["學", "校"].entries()) {
+      fixture.sqlite.prepare("INSERT INTO word_members (word_id, character_id, position) SELECT ?, id, ? FROM characters WHERE key = ?").run(wordId, position, key);
+    }
+    const members = fixture.sqlite.prepare("SELECT character_id FROM word_members WHERE word_id = ? ORDER BY position").all(wordId) as Array<{ character_id: number }>;
+    const eventTime = Date.parse("2026-09-07T00:00:00.000Z");
+    const laterTime = Date.parse("2026-09-08T00:00:00.000Z");
+    const insertState = fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, ?, ?, 1, 1)");
+    insertState.run(members[0].character_id, eventTime - DAY, eventTime - DAY);
+    insertState.run(members[1].character_id, laterTime, laterTime);
+
+    await submitReview(fixture.env.DB, 1, {
+      sessionId: "timed-word", cardIndex: 0, characterKey: "學", wordId, track: "kr",
+      correct: true, skipped: false, elapsedMs: 1_000, mode: "review", answeredAt: new Date(eventTime).toISOString(),
+    }, new Date("2026-09-09T00:00:00.000Z"));
+
+    expect(fixture.sqlite.prepare("SELECT answered_at FROM review_log WHERE session_id = 'timed-word' ORDER BY character_id").all()).toEqual([
+      { answered_at: eventTime },
+      { answered_at: eventTime },
+    ]);
+    expect(fixture.sqlite.prepare("SELECT character_id, last_review FROM review_states WHERE track = 'kr' AND character_id IN (?, ?) ORDER BY character_id").all(members[0].character_id, members[1].character_id)).toEqual([
+      { character_id: members[0].character_id, last_review: eventTime },
+      { character_id: members[1].character_id, last_review: laterTime },
+    ].sort((a, b) => a.character_id - b.character_id));
   });
 
   it("starts a level review outside the due queue and updates real FSRS state", async () => {

@@ -141,3 +141,39 @@ test("an initially hidden card stays paused until explicit resume", async ({ pag
     expect.objectContaining({ correct: true, elapsedMs: 1_000 }),
   ]));
 });
+
+test("offline reload preserves the original answer timestamp", async ({ page }) => {
+  const answeredAt = new Date("2026-09-07T14:59:00.000Z");
+  const reconnectedAt = new Date("2026-09-08T01:00:00.000Z");
+  await page.addInitScript(() => {
+    let online = false;
+    Object.defineProperty(navigator, "onLine", { configurable: true, get: () => online });
+    window.addEventListener("e2e-reconnect", () => {
+      online = true;
+      window.dispatchEvent(new Event("online"));
+    });
+  });
+  await page.clock.install({ time: answeredAt });
+  await page.clock.pauseAt(answeredAt);
+  const card = await startAnswerableCard(page);
+
+  await page.keyboard.press(String(card.answerIndex + 1));
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("hanja-trainer:pending-reviews") ?? "{}") as {
+    pending?: Array<{ input: { answeredAt?: string } }>;
+  });
+  expect(stored.pending).toHaveLength(1);
+  expect(stored.pending?.[0].input.answeredAt).toBe(answeredAt.toISOString());
+
+  await page.clock.setSystemTime(reconnectedAt);
+  await page.reload();
+  await expect(page.locator(".answer-option").first()).toBeVisible();
+  const submitted = page.waitForRequest((request) => request.url().endsWith("/api/reviews/batch") && request.method() === "POST");
+  await page.evaluate(() => window.dispatchEvent(new Event("e2e-reconnect")));
+
+  const request = await submitted;
+  expect(request.postDataJSON()).toEqual([
+    expect.objectContaining({ answeredAt: answeredAt.toISOString() }),
+  ]);
+  expect((await request.response())?.ok()).toBe(true);
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:pending-reviews"))).toBeNull();
+});

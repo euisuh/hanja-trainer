@@ -129,7 +129,7 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
       }
       if (pathname.endsWith("/batch")) {
         if (!Array.isArray(value) || value.length < 1 || value.length > MAX_REVIEW_BATCH_SIZE) return error(400, "invalid_review_batch", `body must be an array of 1 to ${MAX_REVIEW_BATCH_SIZE} reviews`);
-        const inputs = value.map(parseReviewRequest);
+        const inputs = value.map((item) => parseReviewRequest(item));
         if (inputs.some((input) => input === null)) return error(400, "invalid_review", "review fields are invalid");
         return Response.json({ results: await submitReviewBatch(env.DB, profileId, inputs as NonNullable<(typeof inputs)[number]>[]) });
       }

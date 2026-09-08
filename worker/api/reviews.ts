@@ -1,9 +1,11 @@
 import { gradeFromReview, initialState, schedule } from "../../src/shared/fsrs";
 import type { DueReviewsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
+import { parseReviewRequest as parseReviewShape } from "../../src/shared/review";
 import { TRACKS, type Track } from "../../src/shared/types";
 import { getState, prepareAppendLog, prepareUpsertState } from "../db/reviews";
 
 const DAY_MS = 86_400_000;
+const MAX_FUTURE_ANSWER_MS = 5 * 60_000;
 
 type CharacterRow = { id: number; key: string; position?: number };
 type SubmissionRow = { response_json: string };
@@ -19,7 +21,12 @@ type DueRow = {
 
 export class ReviewTargetNotFound extends Error {}
 
-export { parseReviewRequest } from "../../src/shared/review";
+export function parseReviewRequest(value: unknown, now = new Date()): SubmitReviewRequest | null {
+  const body = parseReviewShape(value);
+  if (!body) return null;
+  if (body.answeredAt !== undefined && Date.parse(body.answeredAt) > now.getTime() + MAX_FUTURE_ANSWER_MS) return null;
+  return body as SubmitReviewRequest;
+}
 
 export function parseDueRequest(search: URLSearchParams): { tracks: Track[]; limit: number } | null {
   const tracks = [...new Set((search.get("tracks") ?? "").split(",").filter(Boolean))];
@@ -49,6 +56,7 @@ function responseFor(due: Date, scheduledDays: number, stability: number, diffic
 export async function submitReview(db: D1Database, profileId: number, input: SubmitReviewRequest, now = new Date()): Promise<SubmitReviewResponse> {
   const existing = await existingSubmission(db, profileId, input);
   if (existing) return existing;
+  const eventTime = new Date(Math.min(input.answeredAt === undefined ? now.getTime() : Date.parse(input.answeredAt), now.getTime()));
   const result = input.wordId === undefined
     ? await db.prepare(`
         SELECT c.id, c.key
@@ -74,11 +82,11 @@ export async function submitReview(db: D1Database, profileId: number, input: Sub
   }
 
   const grade = gradeFromReview(input.correct, input.skipped, input.elapsedMs);
-  const scheduled = await Promise.all(characters.map(async (character) => schedule(
-    input.mode === "placement" ? initialState(now) : await getState(db, profileId, character.id, input.track) ?? initialState(now),
-    grade,
-    now,
-  )));
+  const scheduled = await Promise.all(characters.map(async (character) => {
+    const state = input.mode === "placement" ? initialState(eventTime) : await getState(db, profileId, character.id, input.track) ?? initialState(eventTime);
+    const scheduleTime = new Date(Math.max(eventTime.getTime(), state.lastReview?.getTime() ?? eventTime.getTime()));
+    return schedule(state, grade, scheduleTime);
+  }));
   const primary = scheduled[0];
   const response = input.mode === "placement"
     ? responseFor(now, 0, 0, 0)
@@ -88,6 +96,7 @@ export async function submitReview(db: D1Database, profileId: number, input: Sub
       ...(input.mode === "placement" ? [] : [prepareUpsertState(db, profileId, character.id, input.track, scheduled[index].next)]),
       prepareAppendLog(db, profileId, {
         ...scheduled[index].log,
+        answeredAt: eventTime,
         characterId: character.id,
         track: input.track,
         correct: input.correct,

@@ -153,6 +153,7 @@ export function SessionRunner({
     const answer = item.options[item.answerIndex]?.label ?? "";
     const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
     const elapsedMs = answerTimer.snapshot();
+    const answeredAt = new Date();
     let interval = "—";
     if (mode === "placement" || mode === "unit-test") {
       const entry = item.character.tracks.find((candidate) => candidate.track === item.track);
@@ -201,7 +202,9 @@ export function SessionRunner({
       const ids = item.kind === "word" ? item.word.members.map((member) => member.characterId) : [item.character.id];
       const results = ids.map((id) => {
         const key = reviewKey(id, item.track);
-        const result = schedule(states.get(key) ?? initialState(new Date()), gradeFromReview(isCorrect, isSkipped, elapsedMs), new Date());
+        const state = states.get(key) ?? initialState(answeredAt);
+        const scheduleTime = new Date(Math.max(answeredAt.getTime(), state.lastReview?.getTime() ?? answeredAt.getTime()));
+        const result = schedule(state, gradeFromReview(isCorrect, isSkipped, elapsedMs), scheduleTime);
         states.set(key, result.next);
         return result;
       });
@@ -209,7 +212,7 @@ export function SessionRunner({
       if (isCorrect) setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "정답입니다. 다음 문항으로 이동합니다." }));
     }
     const answeredIndex = index;
-    if (mode !== "unit-test") submit({ cardIndex: index, characterKey: item.character.key, ...(item.kind === "word" ? { wordId: item.word.id } : {}), track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
+    if (mode !== "unit-test") submit({ cardIndex: index, answeredAt: answeredAt.toISOString(), characterKey: item.character.key, ...(item.kind === "word" ? { wordId: item.word.id } : {}), track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
       if (currentIndex.current === answeredIndex && mode !== "placement") setNextInterval(response.dueLabel);
     });
     const gained = isCorrect ? correctAnswerXp(combo) : 0;
