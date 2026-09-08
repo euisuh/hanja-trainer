@@ -157,6 +157,43 @@ describe("durable pending reviews", () => {
     await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
   });
 
+  it("drains a large backlog immediately in ordered, bounded batches", async () => {
+    const connection = { onLine: false };
+    vi.stubGlobal("navigator", connection);
+    const submit = vi.spyOn(apiClient, "submitReviews").mockImplementation(async (inputs) => ({ results: inputs.map(() => response) }));
+
+    setAnswerSubmitProfile(1);
+    for (let cardIndex = 0; cardIndex < 100; cardIndex += 1) enqueuePendingReview(1, review("backlog", cardIndex));
+    connection.onLine = true;
+    setAnswerSubmitProfile(1);
+
+    await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
+    expect(submit).toHaveBeenCalledTimes(25);
+    expect(submit.mock.calls.every(([inputs]) => inputs.length <= 4)).toBe(true);
+    expect(submit.mock.calls.flatMap(([inputs]) => inputs.map((input) => input.cardIndex))).toEqual(Array.from({ length: 100 }, (_, index) => index));
+  });
+
+  it("stops draining the old profile after a profile switch", async () => {
+    const connection = { onLine: false };
+    vi.stubGlobal("navigator", connection);
+    let releaseFirst!: (value: { results: SubmitReviewResponse[] }) => void;
+    const first = new Promise<{ results: SubmitReviewResponse[] }>((resolve) => { releaseFirst = resolve; });
+    const submit = vi.spyOn(apiClient, "submitReviews").mockReturnValueOnce(first).mockImplementation(async (inputs) => ({ results: inputs.map(() => response) }));
+
+    setAnswerSubmitProfile(1);
+    for (let cardIndex = 0; cardIndex < 8; cardIndex += 1) enqueuePendingReview(1, review("profile-a", cardIndex));
+    enqueuePendingReview(2, review("profile-b", 0));
+    connection.onLine = true;
+    setAnswerSubmitProfile(1);
+    await vi.waitFor(() => expect(submit).toHaveBeenCalledTimes(1));
+    setAnswerSubmitProfile(2);
+    releaseFirst({ results: Array.from({ length: 4 }, () => response) });
+
+    await vi.waitFor(() => expect(pendingReviewCount(2)).toBe(0));
+    expect(submit.mock.calls.filter(([inputs]) => inputs[0].sessionId === "profile-a")).toHaveLength(1);
+    expect(pendingReviewCount(1)).toBe(4);
+  });
+
   it("evicts the oldest review when the queue reaches its cap", () => {
     const storage = localStorageStub();
     vi.stubGlobal("localStorage", storage);

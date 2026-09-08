@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useActiveProfile } from "../profile/ProfileContext";
 import { ApiClientError, PIN_REQUIRED_EVENT, apiClient } from "../../lib/apiClient";
-import type { SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
+import { MAX_REVIEW_BATCH_SIZE, type SubmitReviewRequest, type SubmitReviewResponse } from "../../shared/api";
 
 type PendingReview = {
   profileId: number;
@@ -69,18 +69,23 @@ function scheduleRetry(profileId: number) {
 
 export async function flushPendingReviews(profileId = activeProfileId): Promise<void> {
   if (profileId === null || activeProfileId !== profileId || flushing.has(profileId) || !online()) return;
-  const entries = [...pending.entries()].filter(([, item]) => item.profileId === profileId).slice(0, 100);
+  let entries = [...pending.entries()].filter(([, item]) => item.profileId === profileId).slice(0, MAX_REVIEW_BATCH_SIZE);
   if (entries.length === 0) return;
   flushing.add(profileId);
   clearRetry(profileId);
   try {
-    const response = await apiClient.submitReviews(entries.map(([, item]) => item.input));
-    failedProfiles.delete(profileId);
-    entries.forEach(([key, item], index) => {
-      if (pending.get(key) !== item) return;
-      pending.delete(key);
-      item.onSynced?.(response.results[index]);
-    });
+    while (entries.length > 0) {
+      const response = await apiClient.submitReviews(entries.map(([, item]) => item.input));
+      failedProfiles.delete(profileId);
+      entries.forEach(([key, item], index) => {
+        if (pending.get(key) !== item) return;
+        pending.delete(key);
+        item.onSynced?.(response.results[index]);
+      });
+      notify();
+      if (activeProfileId !== profileId || !online()) break;
+      entries = [...pending.entries()].filter(([, item]) => item.profileId === profileId).slice(0, MAX_REVIEW_BATCH_SIZE);
+    }
   } catch (caught) {
     failedProfiles.add(profileId);
     if (activeProfileId === profileId && caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required")) {

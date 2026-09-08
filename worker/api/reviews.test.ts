@@ -11,8 +11,11 @@ function d1Result<T>(results: T[]): D1Result<T> {
   return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: 0, last_row_id: 0, changed_db: false, changes: 0 } };
 }
 
-function d1(sqlite: DatabaseSync): D1Database {
+type QueryBudget = { bindingCalls: number; statements: number };
+
+function d1(sqlite: DatabaseSync, budget: QueryBudget): D1Database {
   const adapter = Object.create(null) as D1Database;
+  let batching = false;
   adapter.prepare = (query: string) => {
     let values: SQLInputValue[] = [];
     const prepared = Object.create(null) as D1PreparedStatement;
@@ -23,22 +26,39 @@ function d1(sqlite: DatabaseSync): D1Database {
       });
       return prepared;
     };
-    prepared.first = async <T>() => (sqlite.prepare(query).get(...values) as T | undefined) ?? null;
-    prepared.all = async <T>() => d1Result(sqlite.prepare(query).all(...values) as T[]);
-    prepared.run = async <T>() => { sqlite.prepare(query).run(...values); return d1Result<T>([]); };
+    prepared.first = async <T>() => {
+      if (!batching) { budget.bindingCalls += 1; budget.statements += 1; }
+      return (sqlite.prepare(query).get(...values) as T | undefined) ?? null;
+    };
+    prepared.all = async <T>() => {
+      if (!batching) { budget.bindingCalls += 1; budget.statements += 1; }
+      return d1Result(sqlite.prepare(query).all(...values) as T[]);
+    };
+    prepared.run = async <T>() => {
+      if (!batching) { budget.bindingCalls += 1; budget.statements += 1; }
+      sqlite.prepare(query).run(...values);
+      return d1Result<T>([]);
+    };
     return prepared;
   };
-  adapter.batch = async <T>(statements: D1PreparedStatement[]) => Promise.all(statements.map((statement) => statement.all<T>()));
+  adapter.batch = async <T>(statements: D1PreparedStatement[]) => {
+    budget.bindingCalls += 1;
+    budget.statements += statements.length;
+    batching = true;
+    try { return await Promise.all(statements.map((statement) => statement.all<T>())); }
+    finally { batching = false; }
+  };
   return adapter;
 }
 
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
+  const budget = { bindingCalls: 0, statements: 0 };
   applyMigrations(sqlite);
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/kr-8geup.json", "utf8")) as unknown)));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/jp-jlpt-n5.json", "utf8")) as unknown)));
   sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync("data/characters/cn-hsk1.json", "utf8")) as unknown)));
-  return { sqlite, env: { DB: d1(sqlite) } as Env };
+  return { sqlite, budget, env: { DB: d1(sqlite, budget) } as Env };
 }
 
 function post(path: string, body: unknown, env: Env) {
@@ -233,6 +253,51 @@ describe("review and session API", () => {
     expect((await post("/api/sessions", { mode: "lesson", startedAt: "nope" }, fixture.env)).status).toBe(400);
     expect((await post("/api/sessions", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 0, skipped: 2, bestCombo: 0, xp: 0 }, fixture.env)).status).toBe(400);
     expect((await post("/api/sessions", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 1, skipped: 1, bestCombo: 0, xp: 0 }, fixture.env)).status).toBe(400);
+  });
+
+  it("keeps four compound reviews within one D1 request budget and idempotent", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const inserted = fixture.sqlite.prepare("INSERT INTO words (track, glyph, reading, level, level_ord, source_url) VALUES ('kr', '學校', '학교', '8급', 1, 'https://example.test/word')").run();
+    const wordId = Number(inserted.lastInsertRowid);
+    for (const [position, key] of ["學", "校"].entries()) {
+      fixture.sqlite.prepare("INSERT INTO word_members (word_id, character_id, position) SELECT ?, id, ? FROM characters WHERE key = ?").run(wordId, position, key);
+    }
+    fixture.sqlite.prepare(`
+      INSERT INTO review_states
+        (character_id, track, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count)
+      SELECT character_id, 'kr', 2, 5, 1, 2, 0, 2, 0, 2, 1, 0, 1, 1 FROM word_members WHERE word_id = ?
+    `).run(wordId);
+    const inputs = Array.from({ length: 4 }, (_, cardIndex): SubmitReviewRequest => ({
+      sessionId: "word-batch", cardIndex, characterKey: "學", wordId, track: "kr",
+      correct: cardIndex % 2 === 0, skipped: false, elapsedMs: cardIndex + 1, mode: "review",
+    }));
+
+    fixture.budget.bindingCalls = 0;
+    fixture.budget.statements = 0;
+    const accepted = await post("/api/reviews/batch", inputs, fixture.env);
+    expect(accepted.status).toBe(200);
+    expect(fixture.budget).toEqual({ bindingCalls: 21, statements: 37 });
+    expect(fixture.sqlite.prepare("SELECT DISTINCT card_index FROM review_log WHERE session_id = 'word-batch' ORDER BY card_index").all()).toEqual(inputs.map(({ cardIndex }) => ({ card_index: cardIndex })));
+    const states = fixture.sqlite.prepare("SELECT * FROM review_states ORDER BY character_id").all();
+
+    fixture.budget.bindingCalls = 0;
+    fixture.budget.statements = 0;
+    expect((await post("/api/reviews/batch", inputs, fixture.env)).status).toBe(200);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log WHERE session_id = 'word-batch'").get()).toEqual({ count: 8 });
+    expect(fixture.sqlite.prepare("SELECT * FROM review_states ORDER BY character_id").all()).toEqual(states);
+    expect(fixture.budget).toEqual({ bindingCalls: 5, statements: 5 });
+  });
+
+  it("rejects an oversized review batch before writing anything", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const input: SubmitReviewRequest = { sessionId: "oversized", cardIndex: 0, characterKey: "金", track: "kr", correct: true, skipped: false, elapsedMs: 1, mode: "review" };
+    const rejected = await post("/api/reviews/batch", Array.from({ length: 5 }, (_, cardIndex) => ({ ...input, cardIndex })), fixture.env);
+
+    expect(rejected.status).toBe(400);
+    expect(await rejected.json()).toEqual({ error: { code: "invalid_review_batch", message: "body must be an array of 1 to 4 reviews" } });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log").get()).toEqual({ count: 0 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 0 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_submissions").get()).toEqual({ count: 0 });
   });
 });
 

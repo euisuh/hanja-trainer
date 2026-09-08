@@ -1,5 +1,5 @@
 import { TRACKS, type Track } from "../../src/shared/types";
-import type { ApiErrorBody, SessionMode, StartSessionRequest } from "../../src/shared/api";
+import { MAX_REVIEW_BATCH_SIZE, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../src/shared/api";
 import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
@@ -128,7 +128,7 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
         return error(400, "invalid_json", "request body must be valid JSON");
       }
       if (pathname.endsWith("/batch")) {
-        if (!Array.isArray(value) || value.length < 1 || value.length > 100) return error(400, "invalid_review_batch", "body must be an array of 1 to 100 reviews");
+        if (!Array.isArray(value) || value.length < 1 || value.length > MAX_REVIEW_BATCH_SIZE) return error(400, "invalid_review_batch", `body must be an array of 1 to ${MAX_REVIEW_BATCH_SIZE} reviews`);
         const inputs = value.map(parseReviewRequest);
         if (inputs.some((input) => input === null)) return error(400, "invalid_review", "review fields are invalid");
         return Response.json({ results: await submitReviewBatch(env.DB, profileId, inputs as NonNullable<(typeof inputs)[number]>[]) });

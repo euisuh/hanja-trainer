@@ -1,6 +1,9 @@
 import type { Track } from "./types";
 import type { OnyomiScript, SoundMode, ThemeId } from "./settings";
 
+// Four two-character word reviews use 37 SQL statements including profile resolution.
+export const MAX_REVIEW_BATCH_SIZE = 4;
+
 export type ApiErrorBody = { error: { code: string; message: string } };
 export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };
 export type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
