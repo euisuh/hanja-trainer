@@ -144,6 +144,7 @@ button.session-sync {
 .recall-check { flex-direction: column; align-items: center; margin-top: var(--space-5); }
 .recall-check p { margin: 0; font-size: var(--text-lg); }
 .recall-check small { color: var(--muted); }
+.session-correction-label { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin: 0 0 var(--space-3); color: var(--muted); font-weight: var(--weight-strong); text-align: center; }
 
 .quiz-card {
   padding: var(--space-7);

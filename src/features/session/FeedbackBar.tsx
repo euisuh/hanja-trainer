@@ -7,7 +7,7 @@ type Props = {
   skipped: boolean;
   correctIndex: number;
   correctAnswer?: string;
-  xp: number;
+  xp?: number;
   cardIndex: number;
   combo: number;
   lostCombo: number;
@@ -17,9 +17,10 @@ type Props = {
   onNext: () => void;
   autoAdvance?: boolean;
   idleText?: string;
+  answeredText?: string;
 };
 
-export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, cardIndex, combo, lostCombo, note, last, error, onNext, autoAdvance = false, idleText = "1–4 중에 골라보세요" }: Props) {
+export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, cardIndex, combo, lostCombo, note, last, error, onNext, autoAdvance = false, idleText = "1–4 중에 골라보세요", answeredText }: Props) {
   const state = error ? "wrong" : compare ? "compare" : !answered ? "idle" : skipped ? "skipped" : correct ? "correct" : "wrong";
   const text = error
     ? "저장하지 못했습니다"
@@ -27,12 +28,14 @@ export function FeedbackBar({ answered, compare, correct, skipped, correctIndex,
       ? "한 글자, 세 소리."
       : !answered
         ? idleText
-        : skipped
-          ? `모름 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`
-          : correct
-          ? correctHeadline(cardIndex, combo)
-          : `${wrongHeadline(cardIndex)} · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`;
-  const body = correct && !error && !compare && !skipped
+        : answeredText ?? (
+          skipped
+            ? `모름 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`
+            : correct
+              ? correctHeadline(cardIndex, combo)
+              : `${wrongHeadline(cardIndex)} · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`
+        );
+  const body = correct && !error && !compare && !skipped && xp !== undefined
     ? <>{text} <span className="feedback-bar__xp" key={xp}>+{xp} XP</span></>
     : text;
   const canAdvance = compare || answered;

@@ -23,6 +23,7 @@ import { SkipAnswer } from "./SkipAnswer";
 import { useSessionKeys } from "./useSessionKeys";
 import { useAnswerSubmit } from "./useAnswerSubmit";
 import { createActiveAnswerTimer } from "./activeAnswerTimer";
+import { insertCorrection, issuedQueue } from "./correctionQueue";
 import "./session.css";
 
 export type SessionMode = "lesson" | "review" | "level-review" | "placement" | "unit-test";
@@ -124,6 +125,7 @@ export function SessionRunner({
   const [assessmentAnswers, setAssessmentAnswers] = useState<PlacementAnswer[]>([]);
   const [unitTestAnswers, setUnitTestAnswers] = useState<UnitTestAnswer[]>([]);
   const [unitTestQueue, setUnitTestQueue] = useState(() => mode === "unit-test" ? queue.map((entry, cardIndex) => ({ entry, cardIndex })) : []);
+  const [normalQueue, setNormalQueue] = useState(() => issuedQueue(queue));
   const [unitTestMistakes, setUnitTestMistakes] = useState(0);
   const [clearedUnitTestCards, setClearedUnitTestCards] = useState<Set<number>>(() => new Set());
   const [sessionAnnouncement, setSessionAnnouncement] = useState({ sequence: 0, text: "" });
@@ -138,19 +140,23 @@ export function SessionRunner({
   const recallResultRef = useRef<HTMLParagraphElement>(null);
   const advanceRef = useRef<() => void>(() => undefined);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
+  const normalMode = mode === "lesson" || mode === "review" || mode === "level-review";
+  const issuedNormalCard = normalMode ? normalQueue[index] : undefined;
   const issuedUnitTestCard = mode === "unit-test" ? unitTestQueue[index] : undefined;
-  const item = mode === "placement" && !externalQueue ? placementItem : issuedUnitTestCard?.entry ?? queue[index];
+  const item = mode === "placement" && !externalQueue ? placementItem : issuedUnitTestCard?.entry ?? issuedNormalCard?.entry ?? queue[index];
+  const correction = issuedNormalCard?.correction === true;
+  const remainingCorrections = normalQueue.slice(index).filter((candidate) => candidate.correction).length;
   const requiredUnitTestCards = queue.filter((entry) => entry.kind === "reading").length;
   const queueLength = mode === "placement" && !externalQueue ? length : mode === "unit-test" ? requiredUnitTestCards : queue.filter((entry) => entry.kind !== "compare").length;
-  const completedBefore = mode === "placement" && !externalQueue ? index : queue.slice(0, index).filter((entry) => entry.kind !== "compare").length;
+  const completedBefore = mode === "placement" && !externalQueue ? index : normalMode ? normalQueue.slice(0, index).filter(({ correction, entry }) => !correction && entry.kind !== "compare").length : queue.slice(0, index).filter((entry) => entry.kind !== "compare").length;
   const compare = item?.kind === "compare";
-  const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(item?.kind !== "compare");
+  const progress = mode === "unit-test" ? clearedUnitTestCards.size : completedBefore + Number(!correction && item?.kind !== "compare");
   const answered = selectedIndex !== null || skipped;
   const correct = item !== undefined && item.kind !== "compare" && selectedIndex === item.answerIndex;
   const autoAdvance = !skipped && (mode === "placement" || mode === "unit-test" || correct);
   const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
   const feedbackSoundEnabled = soundMode === "on";
-  const recall = (mode === "review" || mode === "level-review") && item?.kind !== "compare";
+  const recall = (correction || mode === "review" || mode === "level-review") && item?.kind !== "compare";
 
   useEffect(() => {
     advancing.current = false;
@@ -164,6 +170,12 @@ export function SessionRunner({
     const isCorrect = choice === item.answerIndex;
     const answer = item.options[item.answerIndex]?.label ?? "";
     const displayedAnswer = item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(answer) : answer;
+    if (correction) {
+      setSelectedIndex(choice);
+      setSkipped(isSkipped);
+      setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: isCorrect ? "다시 떠올렸습니다. 추가 점수 없이 연습을 마쳤습니다." : `아직 기억하지 못했습니다. 정답은 ${displayedAnswer}입니다.` }));
+      return;
+    }
     const elapsedMs = answerTimer.snapshot();
     const answeredAt = new Date();
     let interval = "—";
@@ -224,7 +236,7 @@ export function SessionRunner({
       if (isCorrect) setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "정답입니다. 다음 문항으로 이동합니다." }));
     }
     const answeredIndex = index;
-    if (mode !== "unit-test") submit({ cardIndex: index, answeredAt: answeredAt.toISOString(), characterKey: item.character.key, ...(item.kind === "word" ? { wordId: item.word.id } : {}), track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
+    if (mode !== "unit-test") submit({ cardIndex: issuedNormalCard?.originalCardIndex ?? index, answeredAt: answeredAt.toISOString(), characterKey: item.character.key, ...(item.kind === "word" ? { wordId: item.word.id } : {}), track: item.track, correct: isCorrect, skipped: isSkipped, elapsedMs, mode }, (response) => {
       if (currentIndex.current === answeredIndex && mode !== "placement") setNextInterval(response.dueLabel);
     });
     const gained = isCorrect ? correctAnswerXp(combo) : 0;
@@ -240,6 +252,7 @@ export function SessionRunner({
     setAnsweredCount((value) => value + 1);
     setSkippedCount((value) => value + Number(isSkipped));
     setNextInterval(interval);
+    if (normalMode && !isCorrect) setNormalQueue((current) => insertCorrection(current, index));
     if (isCorrect) {
       if (feedbackSoundEnabled) playCorrect(nextCombo);
       if (!reducedMotion) buzz(nextCombo >= 6 ? [18, 40, 26] : 18);
@@ -296,7 +309,7 @@ export function SessionRunner({
         return;
       }
       setPlacementItem(buildReadingItem(next.character, next.track, characters, index + next.character.id + 1));
-    } else if (mode === "unit-test" ? unitTestMistakes >= 3 || index + 1 >= unitTestQueue.length : index + 1 >= queue.length) {
+    } else if (mode === "unit-test" ? unitTestMistakes >= 3 || index + 1 >= unitTestQueue.length : index + 1 >= (normalMode ? normalQueue.length : queue.length)) {
       if (completing.current) return;
       completing.current = true;
       onComplete({
@@ -415,6 +428,9 @@ export function SessionRunner({
     : item.kind !== "compare" ? item.options : [];
   const answerLang = item.kind === "meaning" ? "ko" : trackThemes[item.track].lang;
   const recallPrompt = recallPromptFor(item.kind, item.track);
+  const correctionText = correction && answered && item.kind !== "compare"
+    ? correct ? "다시 떠올렸어요" : `아직 기억하지 못함 · 정답 ${displayOptions[item.answerIndex]?.label}`
+    : undefined;
 
   return (
     <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} ref={runnerRef} style={style}>
@@ -442,6 +458,7 @@ export function SessionRunner({
         ))}
       </div>
       <div className="session-card-wrap" key={index}>
+        {correction && <p className="session-correction-label"><span>오답 다시 떠올리기 · 추가 점수 없음</span><small>남은 오답 연습 {remainingCorrections}개</small></p>}
         <QuizCard answerRevealed={recall ? recallState === "revealed" || answered : undefined} answered={answered} character={item.character} compare={compare} correct={correct} kind={item.kind} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : recall ? recallPrompt : undefined} track={item.track} word={word} />
         {item.kind !== "compare" && (
           <>
@@ -457,13 +474,14 @@ export function SessionRunner({
           correctIndex={item.kind !== "compare" ? item.answerIndex : 0}
           cardIndex={index}
           combo={combo}
-          last={mode === "placement" && !externalQueue ? index + 1 === length : index + 1 === queue.length}
-          note={feedbackNote}
+          last={mode === "placement" && !externalQueue ? index + 1 === length : index + 1 === (normalMode ? normalQueue.length : queue.length)}
+          note={correction ? "이 연습은 점수와 복습 일정에 반영되지 않습니다." : feedbackNote}
           onNext={advance}
           lostCombo={lostCombo}
-          xp={lastXp}
+          xp={correction ? undefined : lastXp}
           autoAdvance={autoAdvance}
           idleText={recall ? recallState === "revealed" ? "정답을 비교하고 직접 평가하세요" : recallState === "choices" ? "1–4 중에 골라보세요" : "먼저 답을 떠올려 보세요" : undefined}
+          answeredText={correctionText}
         />
       </div>
       {paused && <PauseModal onQuit={onQuit} onResume={resumeSession} />}
