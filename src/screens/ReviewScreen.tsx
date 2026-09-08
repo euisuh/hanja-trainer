@@ -14,24 +14,31 @@ import { toHiragana } from "../shared/kana";
 import type { Track } from "../shared/types";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };
+type LoadState<T> = { key: string; value?: T; error?: string };
 
 export const REVIEW_SESSION_LENGTH = 20;
 const WHOLE_LEVEL_REVIEW_LIMIT = 20;
 const ACTIVE_TRACK_KEY = "hanja-trainer:active-track";
 
 export function ReviewScreen() {
+  const { key } = useLocation();
+  return <ReviewScreenContent key={key} />;
+}
+
+function ReviewScreenContent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { id: profileId } = useActiveProfile();
   const { enabledTracks, onyomiScript, soundMode, error: settingsError, ready, retry: retrySettings } = useSettings();
-  const [session, setSession] = useState<LoadedSession | null>(null);
-  const [due, setDue] = useState<DueReviewsResponse | null>(null);
-  const [curriculum, setCurriculum] = useState<CurriculumResponse | null>(null);
+  const [sessionLoad, setSessionLoad] = useState<LoadState<LoadedSession> | null>(null);
+  const [dueLoad, setDueLoad] = useState<LoadState<DueReviewsResponse> | null>(null);
+  const [curriculumLoad, setCurriculumLoad] = useState<LoadState<CurriculumResponse> | null>(null);
   const [chosenReviewLevelOrd, setChosenReviewLevelOrd] = useState<number | null>(null);
   const [chosenReviewUnitId, setChosenReviewUnitId] = useState<number | null>(null);
   const [reviewWholeLevel, setReviewWholeLevel] = useState(false);
-  const [error, setError] = useState("");
-  const [retryKey, setRetryKey] = useState(0);
+  const [sessionRetryKey, setSessionRetryKey] = useState(0);
+  const [dueRetryKey, setDueRetryKey] = useState(0);
+  const [curriculumRetryKey, setCurriculumRetryKey] = useState(0);
   const inSession = location.pathname === "/review/session";
   const requestedTrack = (location.state as { track?: Track } | null)?.track;
   let rememberedTrack: Track | undefined;
@@ -40,6 +47,16 @@ export function ReviewScreen() {
     rememberedTrack = enabledTracks.find((candidate) => candidate === stored);
   } catch { /* Fall back to route state and enabled tracks when storage is unavailable. */ }
   const selectedTrack = requestedTrack && enabledTracks.includes(requestedTrack) ? requestedTrack : rememberedTrack ?? enabledTracks[0] ?? "kr";
+  const enabledTrackKey = enabledTracks.join(",");
+  const sessionLoadKey = `${location.key}:${enabledTrackKey}:${sessionRetryKey}`;
+  const dueLoadKey = `${location.key}:${enabledTrackKey}:${dueRetryKey}`;
+  const curriculumLoadKey = `${location.key}:${selectedTrack}:${curriculumRetryKey}`;
+  const sessionState = sessionLoad?.key === sessionLoadKey ? sessionLoad : null;
+  const dueState = dueLoad?.key === dueLoadKey ? dueLoad : null;
+  const curriculumState = curriculumLoad?.key === curriculumLoadKey ? curriculumLoad : null;
+  const session = sessionState?.value ?? null;
+  const due = dueState?.value ?? null;
+  const curriculum = curriculumState?.value ?? null;
   const theme = trackThemes[selectedTrack];
   const previousUnits = useMemo(() => reviewableUnits(curriculum?.units ?? []), [curriculum]);
   const reviewLevels = useMemo(() => {
@@ -55,32 +72,40 @@ export function ReviewScreen() {
   const dueRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   useEffect(() => {
-    if (inSession) startedAt.current = new Date();
-  }, [inSession]);
-
-  useEffect(() => {
     if (!ready) return;
     try { localStorage.setItem(`${ACTIVE_TRACK_KEY}:${profileId}`, selectedTrack); } catch { /* Route state still preserves the active track for in-flow navigation. */ }
   }, [profileId, ready, selectedTrack]);
 
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || !inSession) return;
     const controller = new AbortController();
-    Promise.all([
-      apiClient.startSession({ mode: "review", tracks: enabledTracks, limit: REVIEW_SESSION_LENGTH }, controller.signal),
-      apiClient.dueReviews(enabledTracks, REVIEW_SESSION_LENGTH, controller.signal),
-      apiClient.curriculum(selectedTrack, controller.signal),
-    ]).then(([result, dueReviews, content]) => {
-      setSession({ id: result.sessionId, queue: apiCardsToQueue(result.cards) });
-      setDue(dueReviews);
-      setCurriculum(content);
-    })
-      .catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "복습 큐를 불러오지 못했습니다."); });
+    startedAt.current = new Date();
+    apiClient.startSession({ mode: "review", tracks: enabledTracks, limit: REVIEW_SESSION_LENGTH }, controller.signal)
+      .then((result) => { if (!controller.signal.aborted) setSessionLoad({ key: sessionLoadKey, value: { id: result.sessionId, queue: apiCardsToQueue(result.cards) } }); })
+      .catch((caught: unknown) => { if (!controller.signal.aborted) setSessionLoad({ key: sessionLoadKey, error: caught instanceof Error ? caught.message : "복습 세션을 불러오지 못했습니다." }); });
     return () => controller.abort();
-  }, [enabledTracks, ready, retryKey, selectedTrack]);
+  }, [enabledTracks, inSession, ready, sessionLoadKey]);
 
   useEffect(() => {
-    if (inSession || !session || session.queue.length === 0) return;
+    if (!ready || inSession) return;
+    const controller = new AbortController();
+    apiClient.dueReviews(enabledTracks, REVIEW_SESSION_LENGTH, controller.signal)
+      .then((value) => { if (!controller.signal.aborted) setDueLoad({ key: dueLoadKey, value }); })
+      .catch((caught: unknown) => { if (!controller.signal.aborted) setDueLoad({ key: dueLoadKey, error: caught instanceof Error ? caught.message : "복습 큐를 불러오지 못했습니다." }); });
+    return () => controller.abort();
+  }, [dueLoadKey, enabledTracks, inSession, ready]);
+
+  useEffect(() => {
+    if (!ready || inSession) return;
+    const controller = new AbortController();
+    apiClient.curriculum(selectedTrack, controller.signal)
+      .then((value) => { if (!controller.signal.aborted) setCurriculumLoad({ key: curriculumLoadKey, value }); })
+      .catch((caught: unknown) => { if (!controller.signal.aborted) setCurriculumLoad({ key: curriculumLoadKey, error: caught instanceof Error ? caught.message : "이전 레벨 복습을 불러오지 못했습니다." }); });
+    return () => controller.abort();
+  }, [curriculumLoadKey, inSession, ready, selectedTrack]);
+
+  useEffect(() => {
+    if (inSession || !due || due.total === 0) return;
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Enter") return;
       if (event.target instanceof HTMLElement && event.target.matches("button, a, select")) return;
@@ -89,13 +114,13 @@ export function ReviewScreen() {
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [inSession, navigate, selectedTrack, session]);
+  }, [due, inSession, navigate, selectedTrack]);
 
   if (settingsError) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">설정을 불러오지 못했습니다. {settingsError}</p><button onClick={retrySettings} type="button">다시 시도</button></section>;
-  if (error) return <section className="review-screen"><h1>복습 큐</h1><p role="alert">{error}</p><button onClick={() => { setError(""); setRetryKey((value) => value + 1); }} type="button">다시 시도</button></section>;
-  if (!ready || !session || !due || !curriculum) return <p>복습 큐를 불러오는 중…</p>;
 
   if (inSession) {
+    if (sessionState?.error) return <section className="review-screen"><h1>복습 세션</h1><p role="alert">{sessionState.error}</p><button onClick={() => setSessionRetryKey((value) => value + 1)} type="button">다시 시도</button><button onClick={() => navigate("/review", { state: { track: selectedTrack } })} type="button">복습 큐로 돌아가기</button></section>;
+    if (!ready || !session) return <p>복습 세션을 불러오는 중…</p>;
     return (
       <SessionRunner
         characters={queueCharacters(session.queue)}
@@ -118,11 +143,13 @@ export function ReviewScreen() {
     );
   }
 
+  if (!ready) return <p>복습 큐를 불러오는 중…</p>;
+
   return (
     <section className="review-screen" style={{ "--home-accent": theme.accent, "--home-accent-text": theme.accentText, "--home-soft": theme.soft } as CSSProperties}>
       <h1>복습 큐</h1>
       <p>FSRS 만기 카드만 뽑습니다. 신규 학습과 분리된 세션입니다.</p>
-      {due.total === 0 ? (
+      {dueState?.error ? <div className="review-empty"><p role="alert">{dueState.error}</p><button onClick={() => setDueRetryKey((value) => value + 1)} type="button">복습 큐 다시 시도</button></div> : !due ? <p>복습 큐를 불러오는 중…</p> : due.total === 0 ? (
         <div className="review-empty">
           <span aria-hidden="true" className="review-empty__glyph">完</span>
           <strong>오늘 복습할 카드가 없습니다</strong>
@@ -139,7 +166,7 @@ export function ReviewScreen() {
           }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className={`due-row__when${item.overdueDays > 0 ? " due-row__when--overdue" : ""}`}>{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
-      {previousUnits.length > 0 && <section className="level-review-picker">
+      {curriculumState?.error ? <section className="level-review-picker"><label>이전 레벨 복습</label><p role="alert">{curriculumState.error}</p><button onClick={() => setCurriculumRetryKey((value) => value + 1)} type="button">이전 레벨 다시 시도</button></section> : previousUnits.length > 0 && <section className="level-review-picker">
         <label htmlFor="level-review-level">이전 레벨 복습</label>
         <div className="level-review-picker__controls">
           <select id="level-review-level" onChange={(event) => { setChosenReviewLevelOrd(Number(event.target.value)); setChosenReviewUnitId(null); setReviewWholeLevel(false); }} value={reviewLevelOrd ?? ""}>

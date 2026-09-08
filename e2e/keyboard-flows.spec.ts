@@ -642,8 +642,7 @@ test.describe.serial("keyboard-only product flows", () => {
   test("review queue decreases and reaches its empty state", async ({ page }, testInfo) => {
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
-    const review = await sessionStarted(page, () => page.keyboard.press("R"));
-    expectLabelOnly(review.cards);
+    await page.keyboard.press("R");
     const before = await page.request.get("/api/reviews/due?tracks=kr,cn&limit=100");
     const beforeTotal = (await before.json() as { total: number }).total;
     expect(beforeTotal).toBeGreaterThan(0);
@@ -674,8 +673,11 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("ArrowDown");
     await expect(dueRows.first()).toBeFocused();
     await checkLayout(page, "review", testInfo);
-    await page.getByRole("button", { name: /복습 시작/u }).focus();
-    await page.keyboard.press("Enter");
+    const review = await sessionStarted(page, async () => {
+      await page.getByRole("button", { name: /복습 시작/u }).focus();
+      await page.keyboard.press("Enter");
+    });
+    expectLabelOnly(review.cards);
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
     await checkAnswerGrid(page);
     await finishSession(page, review.cards, /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Space", skipAdvance: "Space", skipFirst: true });
