@@ -64,6 +64,17 @@ remotely before it was merged. Do not apply production migrations before
 merge. If an emergency requires it, record the exact filename and contents,
 and put any correction in another new file even while the pull request is open.
 
+## D1 query diagnostics
+
+When Cloudflare D1 analytics reports an expensive query, identify the exact SQL
+and bindings, then inspect that statement with `EXPLAIN QUERY PLAN` in a local,
+throwaway database. The curriculum lookup's `cum` step should use the
+character-first covering index `idx_curriculum_unit_members_character`.
+Compare `meta.rows_read` and `meta.rows_written` from real D1 responses before
+and after the change under equivalent inputs. Test adapters return constant-zero
+metadata, and local SQLite plans show structure rather than billed production
+rows; neither is a production cost measurement.
+
 ## Deploy
 
 ```sh
