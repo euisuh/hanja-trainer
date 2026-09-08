@@ -16,16 +16,17 @@ type Props = {
   error?: string;
   onNext: () => void;
   autoAdvance?: boolean;
+  idleText?: string;
 };
 
-export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, cardIndex, combo, lostCombo, note, last, error, onNext, autoAdvance = false }: Props) {
+export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, cardIndex, combo, lostCombo, note, last, error, onNext, autoAdvance = false, idleText = "1–4 중에 골라보세요" }: Props) {
   const state = error ? "wrong" : compare ? "compare" : !answered ? "idle" : skipped ? "skipped" : correct ? "correct" : "wrong";
   const text = error
     ? "저장하지 못했습니다"
     : compare
       ? "한 글자, 세 소리."
       : !answered
-        ? "1–4 중에 골라보세요"
+        ? idleText
         : skipped
           ? `모름 · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`
           : correct

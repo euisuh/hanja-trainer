@@ -1,12 +1,24 @@
 import { expect, test, type Page } from "@playwright/test";
 
-type Card = { answerIndex: number };
+type Card = { answerIndex: number; kind?: string };
 type SessionResponse = { cards: Card[] };
 
 async function startLesson(page: Page): Promise<SessionResponse> {
   const started = page.waitForResponse((response) => response.url().endsWith("/api/session/start") && response.ok());
   await page.goto("/lesson");
   return await (await started).json() as SessionResponse;
+}
+
+async function startRecall(page: Page) {
+  const started = page.waitForResponse((response) => response.url().endsWith("/api/session/start") && response.ok());
+  await page.goto("/review/session");
+  const session = await (await started).json() as SessionResponse;
+  let index = 0;
+  while (session.cards[index]?.kind === "compare") {
+    await page.keyboard.press("Enter");
+    index += 1;
+  }
+  await expect(page.locator(".recall-reveal")).toBeVisible();
 }
 
 async function captureCorrectFeedback(page: Page, answerIndex: number) {
@@ -182,6 +194,16 @@ test("Quiet Technical state colors and radii remain readable", async ({ page }) 
   await expect(page.locator(".pause-modal__panel")).toHaveCSS("border-radius", "10px");
 
   expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
+});
+
+test("recall action buttons meet contrast in both themes", async ({ page }) => {
+  for (const theme of ["default", "quiet-technical"] as const) {
+    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
+    await startRecall(page);
+    expect(await contrastOf(page, ".recall-reveal")).toBeGreaterThanOrEqual(4.5);
+    await page.locator(".recall-reveal").click();
+    expect(await contrastOf(page, ".recall-check button:last-child")).toBeGreaterThanOrEqual(4.5);
+  }
 });
 
 test("combo tiers stay readable and respect reduced motion", async ({ page }) => {

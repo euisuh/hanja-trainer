@@ -133,6 +133,18 @@ button.session-sync {
   position: relative;
 }
 
+.recall-actions,
+.recall-check,
+.recall-check > div { display: flex; gap: var(--space-3); }
+.recall-actions { justify-content: center; margin-top: var(--space-5); }
+.recall-actions button,
+.recall-check button { padding: var(--space-4) var(--space-5); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); box-shadow: var(--shadow-3); cursor: pointer; font-weight: var(--weight-strong); }
+.recall-reveal,
+.recall-check button:last-child { background: var(--session-accent) !important; color: var(--card); }
+.recall-check { flex-direction: column; align-items: center; margin-top: var(--space-5); }
+.recall-check p { margin: 0; font-size: var(--text-lg); }
+.recall-check small { color: var(--muted); }
+
 .quiz-card {
   padding: var(--space-7);
   border: 3px solid var(--ink);

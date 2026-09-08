@@ -11,7 +11,6 @@ import type { SessionQueueItem } from "../shared/buildQueue";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
 import type { CurriculumResponse, DueReviewsResponse } from "../shared/api";
-import { toHiragana } from "../shared/kana";
 import type { Track } from "../shared/types";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };
@@ -161,7 +160,7 @@ function ReviewScreenContent() {
             event.preventDefault();
             const direction = event.key === "ArrowDown" ? 1 : -1;
             dueRefs.current[(index + direction + due.cards.length) % due.cards.length]?.focus();
-          }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong lang={trackThemes[item.track].lang}>{item.characterKey}</strong><small lang={trackThemes[item.track].lang}>{item.track === "jp" && onyomiScript === "hiragana" ? toHiragana(item.reading) : item.reading}</small></span><span className={`due-row__when${item.overdueDays > 0 ? " due-row__when--overdue" : ""}`}>{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
+          }} ref={(node) => { dueRefs.current[index] = node; }} type="button"><span className={`due-row__glyph due-row__glyph--${item.track}`} lang={trackThemes[item.track].lang}>{item.glyph}</span><span className="due-row__copy"><strong>{trackThemes[item.track].badge}</strong><small>복습 카드</small></span><span className={`due-row__when${item.overdueDays > 0 ? " due-row__when--overdue" : ""}`}>{item.overdueDays > 0 ? `${item.overdueDays}일 지남` : "오늘 만기"}</span></button>)}</div>
         </>
       )}
       {curriculumState?.error ? <section className="level-review-picker"><label>이전 레벨 복습</label><p role="alert">{curriculumState.error}</p><button onClick={() => setCurriculumRetryKey((value) => value + 1)} type="button">이전 레벨 다시 시도</button></section> : previousUnits.length > 0 && <section className="level-review-picker">

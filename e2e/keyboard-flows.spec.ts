@@ -17,7 +17,7 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
   return await (await response).json() as SessionResponse;
 }
 
-type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; skipAdvance?: "Enter" | "Space"; skipAnnouncement?: boolean; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyMeaningFeedback?: boolean; verifyReducedMotion?: boolean };
+type FinishOptions = { announcement?: string; autoAdvance?: boolean; keyboardAdvance?: "Enter" | "Space"; measureCorrectLatency?: boolean; progressOffset?: number; recall?: boolean; recallFallback?: boolean; skipAdvance?: "Enter" | "Space"; skipAnnouncement?: boolean; skipFirst?: boolean; verifyCelebration?: boolean; verifyLanguages?: boolean; verifyMeaningFeedback?: boolean; verifyReducedMotion?: boolean };
 
 async function finishSession(page: Page, cards: Card[], completion = /세션 완료/u, options: FinishOptions = {}) {
   let skipped = false;
@@ -31,6 +31,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
   let checkedSurvival = false;
   let meaningKeyboardAnswers = 0;
   let meaningFeedbackChecked = false;
+  let recallFallbackUsed = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
     const shouldSkip = card.kind === "reading" && Boolean(options.skipFirst) && !skipped;
@@ -81,8 +82,25 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         });
       }
       const choice = testMeaningFeedback ? (card.answerIndex + 1) % card.options.length : card.answerIndex;
-      if (testMeaningFeedback) await expect(page.getByText(meaningPrompts[card.track], { exact: true })).toBeVisible();
-      await page.keyboard.press(shouldSkip ? "5" : String(choice + 1));
+      if (options.recall && options.recallFallback && !shouldSkip && !recallFallbackUsed) {
+        await expect(page.locator(".answer-option")).toHaveCount(0);
+        await page.getByRole("button", { name: "보기로 풀기" }).click();
+        await expect(page.locator(".answer-option")).toHaveCount(4);
+        await expect(page.locator(".recall-check")).toHaveCount(0);
+        await page.keyboard.press(String(card.answerIndex + 1));
+        recallFallbackUsed = true;
+      } else if (options.recall) {
+        await expect(page.locator(".answer-option, .quiz-card__sentence")).toHaveCount(0);
+        await page.keyboard.press("3");
+        await expect(page.locator(".answer-option, .recall-check")).toHaveCount(0);
+        await page.keyboard.press("Enter");
+        await expect(page.locator(".recall-check p")).toBeFocused();
+        await expect(page.locator(".recall-check strong")).toHaveText(card.options[card.answerIndex].label);
+        await page.keyboard.press(shouldSkip ? "1" : "2");
+      } else {
+        if (testMeaningFeedback) await expect(page.getByText(meaningPrompts[card.track], { exact: true })).toBeVisible();
+        await page.keyboard.press(shouldSkip ? "5" : String(choice + 1));
+      }
       if (card.kind === "meaning") meaningKeyboardAnswers += 1;
       if (testMeaningFeedback) {
         await expect(page.locator(".feedback-bar")).toContainText(`${card.glyph} = ${card.options[card.answerIndex].label}`);
@@ -656,7 +674,7 @@ test.describe.serial("keyboard-only product flows", () => {
       expect(track).toBeTruthy();
       if (track) {
         await expectClosestLang(glyph, languages[track]);
-        await expectClosestLang(page.locator(".due-row__copy small").nth(index), languages[track]);
+        await expect(page.locator(".due-row__copy small").nth(index)).toHaveText("복습 카드");
       }
     }
     const dueRows = page.locator(".due-row");
@@ -679,8 +697,8 @@ test.describe.serial("keyboard-only product flows", () => {
     });
     expectLabelOnly(review.cards);
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
-    await checkAnswerGrid(page);
-    await finishSession(page, review.cards, /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, keyboardAdvance: "Space", skipAdvance: "Space", skipFirst: true });
+    await expect(page.locator(".answer-option, .quiz-card__sentence")).toHaveCount(0);
+    await finishSession(page, review.cards, /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, recall: true, recallFallback: true, skipAdvance: "Space", skipFirst: true });
     await page.keyboard.press("Enter");
     await expect(page.locator(".home-screen")).toBeVisible();
     await expect.poll(async () => {

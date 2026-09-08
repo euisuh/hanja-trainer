@@ -22,6 +22,19 @@ async function startAnswerableCard(page: Page): Promise<Card> {
   return cards[index];
 }
 
+async function startRecallCard(page: Page): Promise<Card> {
+  const started = page.waitForResponse((response) => response.url().endsWith("/api/session/start") && response.ok());
+  await page.goto("/review/session");
+  const { cards } = await (await started).json() as { cards: Card[] };
+  let index = 0;
+  while (cards[index]?.kind === "compare") {
+    await page.keyboard.press("Enter");
+    index += 1;
+  }
+  await expect(page.getByRole("button", { name: /정답 확인/u })).toBeVisible();
+  return cards[index];
+}
+
 async function setVisibility(page: Page, state: "hidden" | "visible") {
   await page.evaluate((visibilityState) => {
     Object.defineProperties(document, {
@@ -101,6 +114,33 @@ test("hidden tabs pause timing and pending auto-advance", async ({ page }) => {
   await expect(page.locator('[data-paused-card="true"]')).toBeVisible();
   await page.clock.runFor(1);
   await expect(page.locator('[data-paused-card="true"]')).toHaveCount(0);
+});
+
+test("recall reveal stops timing and does not submit until self-check", async ({ page }) => {
+  const start = new Date("2026-01-01T00:00:00.000Z");
+  await page.clock.install({ time: start });
+  await page.clock.pauseAt(start);
+  await startRecallCard(page);
+  let submissions = 0;
+  page.on("request", (request) => {
+    if (request.url().endsWith("/api/reviews/batch") && request.method() === "POST") submissions += 1;
+  });
+
+  await page.clock.runFor(1_000);
+  await page.keyboard.press("Enter");
+  await page.clock.runFor(30_000);
+  expect(submissions).toBe(0);
+  await page.getByRole("button", { name: "세션 일시정지" }).click();
+  await page.clock.runFor(30_000);
+  await page.getByRole("button", { name: /계속하기/u }).click();
+  await page.clock.runFor(30_000);
+
+  const submitted = page.waitForRequest((request) => request.url().endsWith("/api/reviews/batch") && request.method() === "POST");
+  await page.keyboard.press("2");
+  expect((await submitted).postDataJSON()).toEqual(expect.arrayContaining([
+    expect.objectContaining({ correct: true, skipped: false, elapsedMs: 1_000 }),
+  ]));
+  expect(submissions).toBe(1);
 });
 
 test("caps submitted active time at the API limit", async ({ page }) => {

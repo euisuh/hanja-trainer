@@ -58,9 +58,10 @@ type Props = {
   promptOverride?: string;
   onyomiScript: OnyomiScript;
   word?: WordEntry;
+  answerRevealed?: boolean;
 };
 
-export function QuizCard({ character, track, compare, answered, correct, kind, promptOverride, onyomiScript, word }: Props) {
+export function QuizCard({ character, track, compare, answered, correct, kind, promptOverride, onyomiScript, word, answerRevealed }: Props) {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) return null;
   const theme = trackThemes[track];
@@ -75,8 +76,8 @@ export function QuizCard({ character, track, compare, answered, correct, kind, p
       </div>
       <div className="quiz-card__body">
         <div className={`quiz-card__glyph${answered && correct ? " quiz-card__glyph--correct" : ""}`} lang={theme.lang}>{word?.glyph ?? entry.glyph}</div>
-        {sentence && <SentencePanel glyph={entry.glyph} revealed={answered || compare} sentence={sentence} />}
-        {word && <div className="quiz-card__sentence" lang={theme.lang}><div>{wordLabels[track].name} · <SourceAttribution sourceUrl={word.sourceUrl} /></div></div>}
+        {sentence && answerRevealed !== false && <SentencePanel glyph={entry.glyph} revealed={answerRevealed === true || answered || compare} sentence={sentence} />}
+        {word && answerRevealed !== false && <div className="quiz-card__sentence" lang={theme.lang}><div>{wordLabels[track].name} · <SourceAttribution sourceUrl={word.sourceUrl} /></div></div>}
       </div>
       {compare && <CompareCard character={character} onyomiScript={onyomiScript} />}
     </article>

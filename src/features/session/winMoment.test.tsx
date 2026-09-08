@@ -4,9 +4,17 @@ import { FeedbackBar } from "./FeedbackBar";
 import { ComboBadge } from "./ComboBadge";
 import { correctHeadline, wrongHeadline } from "./feedbackCopy";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
-import { autoAdvanceDelay, correctAnswerXp, type SessionMode } from "./SessionRunner";
+import { autoAdvanceDelay, correctAnswerXp, recallPromptFor, type SessionMode } from "./SessionRunner";
 
 describe("correct-answer win moment", () => {
+  it("names each recall task without accepting a sibling reading", () => {
+    expect(recallPromptFor("reading", "kr")).toContain("훈음");
+    expect(recallPromptFor("reading", "jp")).toContain("音読み");
+    expect(recallPromptFor("reading", "cn")).toContain("병음");
+    expect(recallPromptFor("kun", "jp")).toContain("훈독");
+    expect(recallPromptFor("meaning", "jp")).toContain("뜻");
+    expect(recallPromptFor("word", "cn")).toContain("단어의 읽기");
+  });
   it("keeps assessments and reduced motion fast", () => {
     const delay = (mode: SessionMode, reducedMotion = false) => autoAdvanceDelay(mode, true, reducedMotion);
 

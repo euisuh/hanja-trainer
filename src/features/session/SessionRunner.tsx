@@ -41,6 +41,15 @@ export function correctAnswerXp(combo: number): number {
   return 10 + Math.min(40, combo * 3);
 }
 
+export function recallPromptFor(kind: SessionQueueItem["kind"], track: Track): string {
+  if (kind === "word") return "이 단어의 읽기를 말하거나 써 보세요";
+  if (kind === "meaning") return "이 글자의 뜻을 말하거나 써 보세요";
+  if (kind === "kun") return "이 글자의 훈독을 말하거나 써 보세요";
+  if (track === "jp") return "이 글자의 음독(音読み)을 말하거나 써 보세요";
+  if (track === "cn") return "이 글자의 병음과 발음을 말하거나 써 보세요";
+  return "이 글자의 훈음(뜻과 소리)을 말하거나 써 보세요";
+}
+
 export type SessionResult = {
   xp: number;
   accuracy: number;
@@ -100,6 +109,7 @@ export function SessionRunner({
   const [index, setIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [skipped, setSkipped] = useState(false);
+  const [recallState, setRecallState] = useState<"concealed" | "revealed" | "choices">("concealed");
   const [paused, setPaused] = useState(() => document.visibilityState === "hidden");
   const [combo, setCombo] = useState(0);
   const [lostCombo, setLostCombo] = useState(0);
@@ -125,6 +135,7 @@ export function SessionRunner({
   const currentIndex = useRef(0);
   const nextBurstId = useRef(0);
   const runnerRef = useRef<HTMLElement>(null);
+  const recallResultRef = useRef<HTMLParagraphElement>(null);
   const advanceRef = useRef<() => void>(() => undefined);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
   const issuedUnitTestCard = mode === "unit-test" ? unitTestQueue[index] : undefined;
@@ -139,6 +150,7 @@ export function SessionRunner({
   const autoAdvance = !skipped && (mode === "placement" || mode === "unit-test" || correct);
   const reducedMotion = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
   const feedbackSoundEnabled = soundMode === "on";
+  const recall = (mode === "review" || mode === "level-review") && item?.kind !== "compare";
 
   useEffect(() => {
     advancing.current = false;
@@ -146,7 +158,7 @@ export function SessionRunner({
   }, [answerTimer, index, item?.kind]);
 
   function pick(choice: number | null) {
-    if (!item || item.kind === "compare" || selectedIndex !== null || answerLocked.current) return;
+    if (!item || item.kind === "compare" || pausedRef.current || selectedIndex !== null || answerLocked.current) return;
     answerLocked.current = true;
     const isSkipped = choice === null;
     const isCorrect = choice === item.answerIndex;
@@ -245,8 +257,25 @@ export function SessionRunner({
     }
   }
 
+  function revealAnswer() {
+    if (!recall || pausedRef.current || recallState !== "concealed" || answerLocked.current) return;
+    answerTimer.pause();
+    setRecallState("revealed");
+    setSessionAnnouncement((current) => ({ sequence: current.sequence + 1, text: "정답을 공개했습니다. 떠올린 답과 비교한 뒤 직접 평가하세요." }));
+  }
+
+  function showChoices() {
+    if (!recall || pausedRef.current || recallState !== "concealed" || answerLocked.current) return;
+    setRecallState("choices");
+  }
+
+  function gradeRecall(remembered: boolean) {
+    if (!item || item.kind === "compare") return;
+    pick(remembered ? item.answerIndex : null);
+  }
+
   function advance() {
-    if (advancing.current || !item || (item.kind !== "compare" && !answered)) return;
+    if (pausedRef.current || advancing.current || !item || (item.kind !== "compare" && !answered)) return;
     advancing.current = true;
     if (mode === "placement" && !externalQueue) {
       const next = nextPlacementItem(adaptiveState, characters);
@@ -291,6 +320,7 @@ export function SessionRunner({
     setSkipped(false);
     setLastXp(0);
     setLostCombo(0);
+    setRecallState("concealed");
   }
 
   function pauseSession() {
@@ -301,7 +331,7 @@ export function SessionRunner({
 
   function resumeSession() {
     pausedRef.current = false;
-    if (!answered && !compare && !answerLocked.current) answerTimer.resume();
+    if (!answered && !compare && !answerLocked.current && (!recall || recallState !== "revealed")) answerTimer.resume();
     setPaused(false);
   }
 
@@ -318,6 +348,10 @@ export function SessionRunner({
   });
 
   useEffect(() => {
+    if (recallState === "revealed") recallResultRef.current?.focus();
+  }, [recallState]);
+
+  useEffect(() => {
     if (!answered || !autoAdvance || paused) return;
     const timer = window.setTimeout(() => advanceRef.current(), autoAdvanceDelay(mode, correct, reducedMotion));
     return () => window.clearTimeout(timer);
@@ -331,6 +365,9 @@ export function SessionRunner({
     onSkip: () => pick(null),
     onAdvance: advance,
     onPause: pauseSession,
+    recall: recall ? recallState : undefined,
+    onReveal: revealAnswer,
+    onRecall: gradeRecall,
   });
 
   if (!item) {
@@ -376,7 +413,8 @@ export function SessionRunner({
   const displayOptions = item.kind !== "compare" && item.kind !== "meaning" && item.track === "jp" && onyomiScript === "hiragana"
     ? item.options.map((option) => ({ ...option, label: toHiragana(option.label) }))
     : item.kind !== "compare" ? item.options : [];
-  const answerLang = item.kind === "meaning" && item.track !== "kr" ? "en" : trackThemes[item.track].lang;
+  const answerLang = item.kind === "meaning" ? "ko" : trackThemes[item.track].lang;
+  const recallPrompt = recallPromptFor(item.kind, item.track);
 
   return (
     <section className={`session-runner${mode === "unit-test" ? " session-runner--unit-test" : ""}`} ref={runnerRef} style={style}>
@@ -404,11 +442,10 @@ export function SessionRunner({
         ))}
       </div>
       <div className="session-card-wrap" key={index}>
-        <QuizCard answered={answered} character={item.character} compare={compare} correct={correct} kind={item.kind} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : undefined} track={item.track} word={word} />
+        <QuizCard answerRevealed={recall ? recallState === "revealed" || answered : undefined} answered={answered} character={item.character} compare={compare} correct={correct} kind={item.kind} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : recall ? recallPrompt : undefined} track={item.track} word={word} />
         {item.kind !== "compare" && (
           <>
-            <AnswerOptions answerIndex={item.answerIndex} lang={answerLang} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} />
-            <SkipAnswer disabled={answered} onSkip={() => pick(null)} />
+            {recall && recallState === "concealed" ? <div className="recall-actions"><button className="recall-reveal" onClick={revealAnswer} type="button">정답 확인 <kbd>ENTER</kbd></button><button onClick={showChoices} type="button">보기로 풀기</button></div> : recall && recallState === "revealed" && !answered ? <div className="recall-check" aria-label="회상 결과"><p ref={recallResultRef} tabIndex={-1}>정답 <strong lang={answerLang}>{displayOptions[item.answerIndex]?.label}</strong></p><small>공개된 답을 알아본 것은 회상 성공으로 세지 마세요.</small><div><button onClick={() => pick(null)} type="button">기억하지 못함 <kbd>1</kbd></button><button onClick={() => pick(item.answerIndex)} type="button">정확히 기억함 <kbd>2</kbd></button></div></div> : <><AnswerOptions answerIndex={item.answerIndex} lang={answerLang} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} /><SkipAnswer disabled={answered} onSkip={() => pick(null)} /></>}
           </>
         )}
         <FeedbackBar
@@ -426,6 +463,7 @@ export function SessionRunner({
           lostCombo={lostCombo}
           xp={lastXp}
           autoAdvance={autoAdvance}
+          idleText={recall ? recallState === "revealed" ? "정답을 비교하고 직접 평가하세요" : recallState === "choices" ? "1–4 중에 골라보세요" : "먼저 답을 떠올려 보세요" : undefined}
         />
       </div>
       {paused && <PauseModal onQuit={onQuit} onResume={resumeSession} />}
