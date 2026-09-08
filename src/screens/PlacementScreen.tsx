@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { SessionRunner } from "../features/session/SessionRunner";
+import { useActiveProfile } from "../features/profile/ProfileContext";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
+import { enqueuePendingSummary } from "../features/session/useSessionSummary";
 import type { SessionQueueItem } from "../shared/buildQueue";
 import { apiClient } from "../lib/apiClient";
 import { TRACKS } from "../shared/types";
@@ -12,6 +14,7 @@ type LoadedSession = { id: string; queue: SessionQueueItem[] };
 export function PlacementScreen() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id: profileId } = useActiveProfile();
   const { enabledTracks, onyomiScript, soundMode, error: settingsError, ready, retry: retrySettings } = useSettings();
   const retestRequested = location.state !== null;
   const requestedTrack = (location.state as { track?: unknown } | null)?.track;
@@ -42,9 +45,10 @@ export function PlacementScreen() {
       mode="placement"
       onyomiScript={onyomiScript}
       onComplete={async (result) => {
+        const endedAt = new Date().toISOString();
         try {
           const placement = await apiClient.scorePlacement(result.answers ?? []);
-          await apiClient.createSession({ mode: "placement", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
+          enqueuePendingSummary(profileId, { sessionId: session.id, mode: "placement", startedAt: startedAt.current.toISOString(), endedAt, answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
           navigate("/placement-result", { replace: true, state: { ...placement, returnTo: retestTrack ? "/settings" : "/home" } });
         } catch {
           setError("배치 결과를 저장하지 못했습니다. 다시 시도해 주세요.");

@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSettings } from "../features/settings/useSettings";
 import { SessionRunner } from "../features/session/SessionRunner";
+import { useActiveProfile } from "../features/profile/ProfileContext";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
+import { enqueuePendingSummary } from "../features/session/useSessionSummary";
 import { apiClient } from "../lib/apiClient";
 import type { SessionQueueItem } from "../shared/buildQueue";
 import type { Track } from "../shared/types";
@@ -21,6 +23,7 @@ export function lessonLimit(requested: number | undefined): number {
 export function LessonScreen() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id: profileId } = useActiveProfile();
   const { enabledTracks, onyomiScript, soundMode, error: settingsError, ready, retry: retrySettings } = useSettings();
   const [session, setSession] = useState<LoadedSession | null>(null);
   const [error, setError] = useState("");
@@ -56,28 +59,22 @@ export function LessonScreen() {
       mode={testOut ? "unit-test" : mode}
       onyomiScript={onyomiScript}
       onComplete={async (result) => {
+        const endedAt = new Date().toISOString();
         if (testOut && unitId) {
           try {
             const unitTest = await apiClient.completeUnitTest(unitId, session.id, result.unitTestAnswers ?? []);
-            let profile;
             if (unitTest.passed) {
-              try {
-                profile = await apiClient.createSession({ mode: "lesson", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
-              } catch { /* Unit completion is already safely persisted. */ }
+              enqueuePendingSummary(profileId, { sessionId: session.id, mode: "lesson", startedAt: startedAt.current.toISOString(), endedAt, answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
             }
-            navigate("/session-complete", { state: { ...result, profile, unitTest } });
+            navigate("/session-complete", { state: { ...result, unitTest } });
           } catch {
             setSession(null);
             setError("유닛 테스트 결과를 저장하지 못했습니다. 다시 시도해 주세요.");
           }
           return;
         }
-        try {
-          const profile = await apiClient.createSession({ mode, startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
-          navigate("/session-complete", { state: { ...result, profile } });
-        } catch {
-          navigate("/session-complete", { state: result });
-        }
+        enqueuePendingSummary(profileId, { sessionId: session.id, mode, startedAt: startedAt.current.toISOString(), endedAt, answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
+        navigate("/session-complete", { state: result });
       }}
       onQuit={() => navigate("/home")}
       queueOverride={session.queue}

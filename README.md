@@ -64,6 +64,12 @@ remotely before it was merged. Do not apply production migrations before
 merge. If an emergency requires it, record the exact filename and contents,
 and put any correction in another new file even while the pull request is open.
 
+For `0024_idempotent_session_summaries.sql`, merge first, then apply the
+migration before deploying the dependent Worker. Its XP trigger ignores legacy
+rows whose `client_session_id` is NULL, so the previous Worker's unkeyed credit
+path remains compatible during rollout. Only keyed summary requests are safe
+to replay.
+
 ## D1 query diagnostics
 
 When Cloudflare D1 analytics reports an expensive query, identify the exact SQL

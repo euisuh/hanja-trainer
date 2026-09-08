@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import { applyMigrations } from "../test/schema";
 import { getStats } from "./stats";
@@ -338,12 +338,51 @@ describe("review and session API", () => {
     expect(fixture.sqlite.prepare("SELECT skipped FROM sessions ORDER BY id DESC LIMIT 1").get()).toEqual({ skipped: 1 });
   });
 
+  it("credits keyed summaries once across sequential, concurrent, and profile-scoped retries", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = new Date("2026-09-08T00:00:00.000Z");
+    const summary = {
+      sessionId: "lost-response",
+      mode: "lesson",
+      startedAt: now.toISOString(),
+      endedAt: now.toISOString(),
+      answered: 2,
+      correct: 2,
+      skipped: 0,
+      bestCombo: 2,
+      xp: 25,
+    } as CreateSessionRequest & { sessionId: string };
+
+    await createSession(fixture.env.DB, 1, summary, now);
+    const replayed = await createSession(fixture.env.DB, 1, summary, now);
+    expect(replayed.xp).toBe(25);
+
+    const concurrent = { ...summary, sessionId: "concurrent" };
+    await Promise.all([
+      createSession(fixture.env.DB, 1, concurrent, now),
+      createSession(fixture.env.DB, 1, concurrent, now),
+    ]);
+    expect(fixture.sqlite.prepare("SELECT xp FROM profile WHERE id = 1").get()).toEqual({ xp: 50 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM sessions WHERE profile_id = 1").get()).toEqual({ count: 2 });
+
+    const secondProfileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    const second = await createSession(fixture.env.DB, secondProfileId, concurrent, now);
+    expect(second.xp).toBe(25);
+    expect(fixture.sqlite.prepare("SELECT profile_id, client_session_id FROM sessions WHERE client_session_id = 'concurrent' ORDER BY profile_id").all()).toEqual([
+      { profile_id: 1, client_session_id: "concurrent" },
+      { profile_id: secondProfileId, client_session_id: "concurrent" },
+    ]);
+  });
+
   it("rejects malformed review, batch, due, and session inputs", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     expect((await post("/api/reviews", { sessionId: "x" }, fixture.env)).status).toBe(400);
     expect((await post("/api/reviews/batch", [], fixture.env)).status).toBe(400);
     expect((await routeApiRequest(new Request("https://test/api/reviews/due?tracks=xx&limit=-1"), fixture.env)).status).toBe(400);
     expect((await post("/api/sessions", { mode: "lesson", startedAt: "nope" }, fixture.env)).status).toBe(400);
+    const validSession = { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 0 };
+    expect((await post("/api/sessions", { ...validSession, sessionId: "" }, fixture.env)).status).toBe(400);
+    expect((await post("/api/sessions", { ...validSession, sessionId: "x".repeat(129) }, fixture.env)).status).toBe(400);
     expect((await post("/api/sessions", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 0, skipped: 2, bestCombo: 0, xp: 0 }, fixture.env)).status).toBe(400);
     expect((await post("/api/sessions", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 1, skipped: 1, bestCombo: 0, xp: 0 }, fixture.env)).status).toBe(400);
   });

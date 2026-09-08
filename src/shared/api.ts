@@ -161,6 +161,7 @@ export type DueReviewCard = {
 export type DueReviewsResponse = { total: number; cards: DueReviewCard[] };
 
 export type CreateSessionRequest = {
+  sessionId?: string;
   mode: SessionMode;
   startedAt: string;
   endedAt: string;

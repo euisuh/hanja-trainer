@@ -1,6 +1,8 @@
 import type { CreateSessionRequest, ProfileResponse } from "../../src/shared/api";
 import { TRACKS } from "../../src/shared/types";
 
+export { parseSessionRequest } from "../../src/shared/session";
+
 const DAY_MS = 86_400_000;
 type ProfileRow = { id: number; name: string; is_admin: number; enabled_tracks: string; daily_goal: number; timezone: string; xp: number };
 type ActivityRangeRow = { min_at: number | null; max_at: number | null };
@@ -12,24 +14,6 @@ const dayFormatters = new Map<string, Intl.DateTimeFormat>();
 // A zone changes offset at most twice a year, so cache each small yearly answer for the isolate's lifetime.
 // The cache is bounded by the profile timezones and years of history this isolate sees.
 const yearTransitions = new Map<string, OffsetPeriod[]>();
-
-function record(value: unknown): Record<string, unknown> | null {
-  return typeof value === "object" && value !== null && !Array.isArray(value) ? value as Record<string, unknown> : null;
-}
-
-export function parseSessionRequest(value: unknown): CreateSessionRequest | null {
-  const body = record(value);
-  if (!body || (body.mode !== "lesson" && body.mode !== "review" && body.mode !== "level-review" && body.mode !== "placement")) return null;
-  if (typeof body.startedAt !== "string" || typeof body.endedAt !== "string") return null;
-  const started = Date.parse(body.startedAt);
-  const ended = Date.parse(body.endedAt);
-  if (!Number.isFinite(started) || !Number.isFinite(ended) || ended < started) return null;
-  for (const field of ["answered", "correct", "skipped", "bestCombo", "xp"] as const) {
-    if (!Number.isInteger(body[field]) || (body[field] as number) < 0) return null;
-  }
-  if ((body.answered as number) > 10_000 || (body.correct as number) + (body.skipped as number) > (body.answered as number) || (body.bestCombo as number) > (body.answered as number) || (body.xp as number) > 1_000_000) return null;
-  return body as CreateSessionRequest;
-}
 
 function utcDay(date: Date): number {
   return Math.floor(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / DAY_MS);
@@ -195,12 +179,21 @@ export async function getProfile(db: D1Database, profileId: number, now = new Da
 }
 
 export async function createSession(db: D1Database, profileId: number, input: CreateSessionRequest, now = new Date()): Promise<ProfileResponse> {
-  await db.batch([
-    db.prepare(`
+  const values = [profileId, input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.skipped, input.bestCombo, input.xp] as const;
+  if (input.sessionId !== undefined) {
+    await db.prepare(`
+      INSERT INTO sessions (profile_id, client_session_id, mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
+      VALUES (?1, ?10, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+      ON CONFLICT(profile_id, client_session_id) DO NOTHING
+    `).bind(...values, input.sessionId).run();
+  } else {
+    await db.batch([
+      db.prepare(`
       INSERT INTO sessions (profile_id, mode, started_at, ended_at, answered, correct, skipped, best_combo, xp)
       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
-    `).bind(profileId, input.mode, Date.parse(input.startedAt), Date.parse(input.endedAt), input.answered, input.correct, input.skipped, input.bestCombo, input.xp),
-    db.prepare("UPDATE profile SET xp = xp + ?1, updated_at = ?2 WHERE id = ?3").bind(input.xp, now.getTime(), profileId),
-  ]);
+      `).bind(...values),
+      db.prepare("UPDATE profile SET xp = xp + ?1, updated_at = ?2 WHERE id = ?3").bind(input.xp, now.getTime(), profileId),
+    ]);
+  }
   return getProfile(db, profileId, now);
 }

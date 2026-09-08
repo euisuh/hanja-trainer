@@ -3,7 +3,9 @@ import { matchPath, Navigate, useLocation, useNavigate } from "react-router-dom"
 import { themes } from "./design/tokens";
 import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
 import { ReviewSyncStatus } from "./features/session/ReviewSyncStatus";
+import { SessionSummaryStatus } from "./features/session/SessionSummaryStatus";
 import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
+import { setSessionSummaryProfile } from "./features/session/useSessionSummary";
 import { resetSettingsClientState } from "./features/settings/useSettings";
 import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
 import { AppRoutes, routes, type Screen } from "./routes";
@@ -59,6 +61,7 @@ export function App() {
   const teardownActiveProfile = useCallback(() => {
     setApiProfileId(null);
     setAnswerSubmitProfile(null);
+    setSessionSummaryProfile(null);
     resetSettingsClientState();
     setActiveProfile(null);
     setTheme("quiet-technical");
@@ -166,6 +169,7 @@ export function App() {
 
   useEffect(() => {
     setAnswerSubmitProfile(activeProfile?.id ?? null);
+    setSessionSummaryProfile(activeProfile?.id ?? null);
     if (!activeProfile) resetSettingsClientState();
   }, [activeProfile]);
 
@@ -235,6 +239,7 @@ export function App() {
       <ProfileProvider key={activeProfile.id} profile={activeProfile}>
         {headerScreens.has(screen) && <AppHeader onSwitch={() => void switchProfile()} />}
         <ReviewSyncStatus />
+        <SessionSummaryStatus />
         <main><AppRoutes /></main>
         {!navlessScreens.has(screen) && !sessionActive && <BottomNav />}
       </ProfileProvider>

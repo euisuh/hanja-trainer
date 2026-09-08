@@ -6,6 +6,7 @@ import { useSettings } from "../features/settings/useSettings";
 import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
+import { enqueuePendingSummary } from "../features/session/useSessionSummary";
 import type { SessionQueueItem } from "../shared/buildQueue";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
@@ -127,13 +128,10 @@ function ReviewScreenContent() {
         enabledTracks={enabledTracks}
         mode="review"
         onyomiScript={onyomiScript}
-        onComplete={async (result) => {
-          try {
-            const profile = await apiClient.createSession({ mode: "review", startedAt: startedAt.current.toISOString(), endedAt: new Date().toISOString(), answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
-            navigate("/session-complete", { state: { ...result, profile } });
-          } catch {
-            navigate("/session-complete", { state: result });
-          }
+        onComplete={(result) => {
+          const endedAt = new Date().toISOString();
+          enqueuePendingSummary(profileId, { sessionId: session.id, mode: "review", startedAt: startedAt.current.toISOString(), endedAt, answered: result.answered, correct: result.correct, skipped: result.skipped, bestCombo: result.bestCombo, xp: result.xp });
+          navigate("/session-complete", { state: result });
         }}
         onQuit={() => navigate("/review", { state: { track: selectedTrack } })}
         queueOverride={session.queue}

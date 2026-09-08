@@ -1,5 +1,5 @@
 import { PROFILE_EXPECTATION_HEADER, type CharacterDetailResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../shared/api";
-import type { Track } from "../shared/types";
+import { TRACKS, type Track } from "../shared/types";
 
 export class ApiClientError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string, public readonly retryAfter?: number) {
@@ -48,6 +48,17 @@ function retryAfterSeconds(response: Response, body: unknown): number | undefine
   if (headerSeconds === undefined) return bodySeconds;
   if (bodySeconds === undefined) return headerSeconds;
   return Math.max(headerSeconds, bodySeconds);
+}
+
+function validProfileResponse(value: unknown, expectedProfileId: number): value is ProfileResponse {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
+  const profile = value as Record<string, unknown>;
+  return profile.id === expectedProfileId
+    && typeof profile.name === "string"
+    && typeof profile.isAdmin === "boolean"
+    && ["xp", "todayXp", "goal", "streak", "longestStreak"].every((field) => Number.isSafeInteger(profile[field]) && (profile[field] as number) >= 0)
+    && Array.isArray(profile.enabledTracks)
+    && profile.enabledTracks.every((track) => TRACKS.some((candidate) => candidate === track));
 }
 
 function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, profileBound = true, expectedProfileId: number | null = profileBound ? activeProfileId : null): Promise<T> {
@@ -144,12 +155,13 @@ export const apiClient = {
   }, false, true, profileId),
   dueReviews: (tracks: Track[], limit = 50, signal?: AbortSignal) => requestJson<DueReviewsResponse>(`/api/reviews/due?tracks=${tracks.join(",")}&limit=${limit}`, { signal }),
   profile: (signal?: AbortSignal, notifyAuth = true, expectedProfileId: number | null = activeProfileId) => requestJson<ProfileResponse>("/api/profile", { signal }, notifyAuth, true, expectedProfileId),
-  createSession: async (body: CreateSessionRequest): Promise<ProfileResponse> => {
-    const profile = await requestJson<ProfileResponse>("/api/sessions", {
+  createSession: async (profileId: number, body: CreateSessionRequest): Promise<ProfileResponse> => {
+    const profile = await requestJson<unknown>("/api/sessions", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
-    });
+    }, false, true, profileId);
+    if (!validProfileResponse(profile, profileId)) throw new ApiClientError(502, "invalid_response", "The server returned an invalid profile response.");
     window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
     return profile;
   },
