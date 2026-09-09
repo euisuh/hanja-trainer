@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { shortcutRows } from "./ShortcutSheet";
-import { DAILY_GOAL, normalizeDailyGoal, toggleTrack } from "./useSettings";
+import { createSettingsSaver, DAILY_GOAL, normalizeDailyGoal, toggleTrack } from "./useSettings";
 import { DEFAULT_SOUND_MODE, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS } from "../../shared/settings";
 import { GLOBAL_DESTINATIONS, SHORTCUTS } from "../../shell/shortcuts";
 
@@ -34,5 +34,61 @@ describe("settings", () => {
 
   it("offers only persisted visual themes", () => {
     expect(THEME_IDS).toEqual(["default", "quiet-technical"]);
+  });
+
+  it("serializes and coalesces all writes for one profile", async () => {
+    const releases: Array<() => void> = [];
+    const calls: Array<{ profileId: number; patch: unknown }> = [];
+    const saver = createSettingsSaver((profileId, patch) => {
+      calls.push({ profileId, patch });
+      return new Promise<void>((resolve) => releases.push(resolve));
+    });
+
+    saver.update(7, "dailyGoal", 50);
+    saver.update(7, "dailyGoal", 60);
+    saver.update(7, "soundMode", "off");
+    expect(calls).toEqual([{ profileId: 7, patch: { dailyGoal: 50 } }]);
+
+    releases[0]();
+    await vi.waitFor(() => expect(calls).toContainEqual({ profileId: 7, patch: { dailyGoal: 60, soundMode: "off" } }));
+    releases[1]();
+    await saver.flush(7);
+    expect(saver.snapshot(7).optimistic).toEqual({});
+  });
+
+  it("keeps a failed profile-bound value for explicit retry and flush", async () => {
+    let fail = true;
+    const calls: Array<{ profileId: number; patch: unknown }> = [];
+    const saver = createSettingsSaver(async (profileId, patch) => {
+      calls.push({ profileId, patch });
+      if (fail) throw new Error("offline");
+    });
+
+    saver.update(3, "theme", "default");
+    await vi.waitFor(() => expect(saver.status(3).error).toBe("offline"));
+    const snapshot = saver.snapshot(3);
+    expect(snapshot.optimistic).toEqual({ theme: "default" });
+    fail = false;
+    await saver.flush(3);
+    expect(calls).toEqual([
+      { profileId: 3, patch: { theme: "default" } },
+      { profileId: 3, patch: { theme: "default" } },
+    ]);
+    expect(saver.status(3)).toEqual({ saving: false, error: "" });
+  });
+
+  it("overlays an in-flight save on an old GET but trusts later fresh GETs", async () => {
+    let release!: () => void;
+    const saver = createSettingsSaver(() => new Promise<void>((resolve) => { release = resolve; }));
+    const beforeEdit = saver.snapshot(1);
+    saver.update(1, "dailyGoal", 80);
+    const duringSave = saver.snapshot(1);
+    expect(duringSave.optimistic).toEqual({ dailyGoal: 80 });
+    release();
+    await saver.flush(1);
+    expect(saver.snapshot(1).optimistic).toEqual({});
+    expect({ dailyGoal: 40, ...duringSave.optimistic, ...saver.optimisticSince(1, duringSave.revision) }).toEqual({ dailyGoal: 80 });
+    expect({ dailyGoal: 40, ...beforeEdit.optimistic, ...saver.optimisticSince(1, beforeEdit.revision) }).toEqual({ dailyGoal: 80 });
+    expect({ dailyGoal: 90, ...saver.snapshot(1).optimistic }).toEqual({ dailyGoal: 90 });
   });
 });

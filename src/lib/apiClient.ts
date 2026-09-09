@@ -133,6 +133,10 @@ export function setApiProfileId(profileId: number | null) {
   activeProfileId = profileId;
 }
 
+export function isApiProfileId(profileId: number): boolean {
+  return activeProfileId === profileId;
+}
+
 export const apiClient = {
   curriculum: (track: Track, signal?: AbortSignal) => requestJson<CurriculumResponse>(`/api/curriculum?track=${track}`, { signal }),
   unitStudy: (unitId: number, signal?: AbortSignal) => requestJson<UnitStudyResponse>(`/api/curriculum/units/${unitId}`, { signal }),
@@ -179,10 +183,18 @@ export const apiClient = {
     return profile;
   },
   settings: (signal?: AbortSignal) => requestJson<SettingsResponse>("/api/settings", { signal }),
-  patchSettings: async (body: PatchSettingsRequest): Promise<SettingsResponse> => {
-    const settings = await requestJson<SettingsResponse>("/api/settings", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
-    window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: settings }));
-    window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+  patchSettings: async (body: PatchSettingsRequest, expectedProfileId: number | null = activeProfileId, notify = true): Promise<SettingsResponse> => {
+    let settings: SettingsResponse;
+    try {
+      settings = await requestJson<SettingsResponse>("/api/settings", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }, false, true, expectedProfileId);
+    } catch (error) {
+      if (expectedProfileId === activeProfileId && isAuthenticationError(error)) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
+      throw error;
+    }
+    if (notify) {
+      window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: settings }));
+      window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    }
     return settings;
   },
   scorePlacement: async (answers: PlacementAnswer[]): Promise<PlacementScoreResponse> => {

@@ -129,5 +129,13 @@ describe("profile expectations", () => {
     const response = await routeApiRequest(jsonRequest("/api/settings", "PATCH", { dailyGoal: 60 }, { cookie: session, "x-hanja-profile-id": String(secondId) }), fixture.env);
     expect(response.status).toBe(200);
     expect(fixture.sqlite.prepare("SELECT id, daily_goal FROM profile ORDER BY id").all()).toEqual([{ id: 1, daily_goal: 40 }, { id: secondId, daily_goal: 60 }]);
+
+    const headers = { cookie: session, "x-hanja-profile-id": String(secondId) };
+    const [tracks, sound] = await Promise.all([
+      routeApiRequest(jsonRequest("/api/settings", "PATCH", { enabledTracks: ["jp"] }, headers), fixture.env),
+      routeApiRequest(jsonRequest("/api/settings", "PATCH", { soundMode: "off" }, headers), fixture.env),
+    ]);
+    expect([tracks.status, sound.status]).toEqual([200, 200]);
+    expect(fixture.sqlite.prepare("SELECT enabled_tracks, sound_mode FROM profile WHERE id = ?").get(secondId)).toEqual({ enabled_tracks: '["jp"]', sound_mode: "off" });
   });
 });

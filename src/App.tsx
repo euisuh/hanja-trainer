@@ -182,12 +182,16 @@ export function App() {
   useEffect(() => {
     if (!activeProfile) return;
     const controller = new AbortController();
+    let superseded = false;
     const updateTheme = (event: Event) => {
       const next = (event as CustomEvent<Partial<SettingsResponse>>).detail?.theme;
-      if (next) setTheme(next);
+      if (next) {
+        superseded = true;
+        setTheme(next);
+      }
     };
     window.addEventListener(SETTINGS_UPDATED_EVENT, updateTheme);
-    void apiClient.settings(controller.signal).then((settings) => setTheme(settings.theme)).catch(() => undefined);
+    void apiClient.settings(controller.signal).then((settings) => { if (!controller.signal.aborted && !superseded) setTheme(settings.theme); }).catch(() => undefined);
     return () => { controller.abort(); window.removeEventListener(SETTINGS_UPDATED_EVENT, updateTheme); };
   }, [activeProfile]);
 

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { PROFILE_EXPECTATION_HEADER, type SubmitReviewRequest } from "../shared/api";
-import { ApiClientError, PROFILE_UPDATED_EVENT, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
+import { ApiClientError, PIN_REQUIRED_EVENT, PROFILE_UPDATED_EVENT, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
 
 const profile = { id: 1, name: "나", isAdmin: true, xp: 20, todayXp: 10, goal: 40, streak: 2, longestStreak: 3, enabledTracks: ["kr"] } as const;
 
@@ -93,9 +93,24 @@ describe("review retry classification", () => {
   setApiProfileId(2);
   await settings;
   await apiClient.submitReviews(1, [review]);
+  await apiClient.patchSettings({ dailyGoal: 50 }, 1, false);
   await apiClient.profile(undefined, false, null);
 
-  expect(headers).toEqual(["1", "1", null]);
+  expect(headers).toEqual(["1", "1", "1", null]);
+  });
+
+  it("requests authentication only for the currently active settings owner", async () => {
+    const events = new EventTarget();
+    const required = vi.fn();
+    events.addEventListener(PIN_REQUIRED_EVENT, required);
+    vi.stubGlobal("window", events);
+    vi.spyOn(globalThis, "fetch").mockImplementation(async () => Response.json({ error: { code: "profile_changed", message: "changed" } }, { status: 409 }));
+    setApiProfileId(2);
+
+    await expect(apiClient.patchSettings({ dailyGoal: 50 }, 1, false)).rejects.toMatchObject({ code: "profile_changed" });
+    expect(required).not.toHaveBeenCalled();
+    await expect(apiClient.patchSettings({ dailyGoal: 50 }, 2, false)).rejects.toMatchObject({ code: "profile_changed" });
+    expect(required).toHaveBeenCalledOnce();
   });
 });
 

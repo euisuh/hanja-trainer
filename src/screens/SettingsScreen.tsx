@@ -31,6 +31,7 @@ export function SettingsScreen() {
   return (
     <section className="settings-screen">
       <h1>설정</h1>
+      {settings.saveError && <div className="settings-save-error" role="alert"><span>설정을 저장하지 못했습니다. {settings.saveError}</span><button onClick={settings.retrySave} type="button">저장 다시 시도</button></div>}
       <div className="settings-layout">
         <div className="settings-controls">
           <section className="settings-group">

@@ -47,12 +47,11 @@ export async function getSettings(db: D1Database, profileId: number): Promise<Se
 }
 
 export async function patchSettings(db: D1Database, profileId: number, patch: PatchSettingsRequest, now = new Date()): Promise<SettingsResponse> {
-  const current = await getSettings(db, profileId);
   await db.prepare(`
-    UPDATE profile SET enabled_tracks = ?1, daily_goal = ?2,
-      timezone = COALESCE(?3, timezone), onyomi_script = ?4, sound_mode = ?5,
-      theme = ?6, updated_at = ?7 WHERE id = ?8
-  `).bind(JSON.stringify(patch.enabledTracks ?? current.enabledTracks), patch.dailyGoal ?? current.dailyGoal, patch.timezone ?? null, patch.onyomiScript ?? current.onyomiScript, patch.soundMode ?? current.soundMode, patch.theme ?? current.theme, now.getTime(), profileId).run();
+    UPDATE profile SET enabled_tracks = COALESCE(?1, enabled_tracks), daily_goal = COALESCE(?2, daily_goal),
+      timezone = COALESCE(?3, timezone), onyomi_script = COALESCE(?4, onyomi_script), sound_mode = COALESCE(?5, sound_mode),
+      theme = COALESCE(?6, theme), updated_at = ?7 WHERE id = ?8
+  `).bind(patch.enabledTracks ? JSON.stringify(patch.enabledTracks) : null, patch.dailyGoal ?? null, patch.timezone ?? null, patch.onyomiScript ?? null, patch.soundMode ?? null, patch.theme ?? null, now.getTime(), profileId).run();
   return getSettings(db, profileId);
 }
 
