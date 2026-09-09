@@ -209,12 +209,16 @@ describe("durable session summaries", () => {
     const storage = localStorageStub();
     vi.stubGlobal("localStorage", storage);
     vi.stubGlobal("navigator", { onLine: true });
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json(response)));
+    vi.stubGlobal("window", new EventTarget());
+    const fetch = vi.fn().mockResolvedValue(Response.json(response));
+    vi.stubGlobal("fetch", fetch);
 
     setSessionSummaryProfile(1);
     enqueuePendingSummary(1, summary("bad-ack"));
 
     await vi.waitFor(() => expect(sessionSummaryStatus(1).failed).toBe(true));
+    expect(sessionSummaryStatus(1).errorCode).toBe("invalid_response");
+    expect(fetch).toHaveBeenCalledTimes(1);
     expect(pendingSummaryCount(1)).toBe(1);
     expect(JSON.parse(storage.getItem(storageKey) ?? "{}")).toMatchObject({ pending: [{ profileId: 1, input: { sessionId: "bad-ack" } }] });
   });

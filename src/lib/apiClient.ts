@@ -55,7 +55,7 @@ function retryAfterSeconds(response: Response, body: unknown): number | undefine
   return Math.max(headerSeconds, bodySeconds);
 }
 
-function validProfileResponse(value: unknown, expectedProfileId: number): value is ProfileResponse {
+export function validProfileResponse(value: unknown, expectedProfileId: number): value is ProfileResponse {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
   const profile = value as Record<string, unknown>;
   return profile.id === expectedProfileId
@@ -161,13 +161,21 @@ export const apiClient = {
   dueReviews: (tracks: Track[], limit = 50, signal?: AbortSignal) => requestJson<DueReviewsResponse>(`/api/reviews/due?tracks=${tracks.join(",")}&limit=${limit}`, { signal }),
   profile: (signal?: AbortSignal, notifyAuth = true, expectedProfileId: number | null = activeProfileId) => requestJson<ProfileResponse>("/api/profile", { signal }, notifyAuth, true, expectedProfileId),
   createSession: async (profileId: number, body: CreateSessionRequest): Promise<ProfileResponse> => {
-    const profile = await requestJson<unknown>("/api/sessions", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-    }, false, true, profileId);
+    let superseded = false;
+    const markSuperseded = () => { superseded = true; };
+    window.addEventListener(PROFILE_UPDATED_EVENT, markSuperseded);
+    let profile: unknown;
+    try {
+      profile = await requestJson<unknown>("/api/sessions", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      }, false, true, profileId);
+    } finally {
+      window.removeEventListener(PROFILE_UPDATED_EVENT, markSuperseded);
+    }
     if (!validProfileResponse(profile, profileId)) throw new ApiClientError(502, "invalid_response", "The server returned an invalid profile response.");
-    window.dispatchEvent(new Event(PROFILE_UPDATED_EVENT));
+    window.dispatchEvent(superseded ? new Event(PROFILE_UPDATED_EVENT) : new CustomEvent(PROFILE_UPDATED_EVENT, { detail: profile }));
     return profile;
   },
   settings: (signal?: AbortSignal) => requestJson<SettingsResponse>("/api/settings", { signal }),

@@ -87,6 +87,46 @@ test("reduced motion keeps the completed ring visible without sweeping", async (
   expect(await ring.evaluate((node) => node.getAnimations().some((animation) => animation instanceof CSSTransition && animation.transitionProperty === "--goal-degrees"))).toBe(false);
 });
 
+test("profile updates avoid duplicate reads and reject stale or mismatched detail", async ({ page }) => {
+  let profileReads = 0;
+  let releaseDelayed: (() => void) | undefined;
+  let delayNext = false;
+  await page.route("**/api/profile", async (route) => {
+    profileReads += 1;
+    if (delayNext) {
+      delayNext = false;
+      await new Promise<void>((resolve) => { releaseDelayed = resolve; });
+    }
+    await route.fulfill({ json: profile });
+  });
+  await page.goto("/settings");
+  await expect(page.locator(".app-header")).toContainText("120XP");
+  profileReads = 0;
+
+  const patched = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
+  await page.getByRole("slider", { name: "일일 XP 목표" }).fill("50");
+  await patched;
+  await expect.poll(() => profileReads).toBe(1);
+
+  profileReads = 0;
+  await page.evaluate((updated) => window.dispatchEvent(new CustomEvent("hanja-trainer:profile-updated", { detail: updated })), { ...profile, xp: 150, todayXp: 50, goal: 50 });
+  await expect(page.locator(".app-header")).toContainText("150XP");
+  expect(profileReads).toBe(0);
+
+  delayNext = true;
+  const staleResponse = page.waitForResponse((response) => response.url().endsWith("/api/profile") && response.ok());
+  await page.evaluate(() => window.dispatchEvent(new Event("hanja-trainer:profile-updated")));
+  await expect.poll(() => profileReads).toBe(1);
+  await page.evaluate((updated) => window.dispatchEvent(new CustomEvent("hanja-trainer:profile-updated", { detail: updated })), { ...profile, xp: 175, todayXp: 50, goal: 50 });
+  releaseDelayed?.();
+  await staleResponse;
+  await expect(page.locator(".app-header")).toContainText("175XP");
+
+  await page.evaluate((updated) => window.dispatchEvent(new CustomEvent("hanja-trainer:profile-updated", { detail: updated })), { ...profile, id: 2, xp: 999 });
+  expect(profileReads).toBe(1);
+  await expect(page.locator(".app-header")).not.toContainText("999XP");
+});
+
 test("streak text and boundary meet contrast in both themes", async ({ page }) => {
   const state = { todayXp: 20 };
   await mockProfile(page, state);

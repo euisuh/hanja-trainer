@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useActiveProfile } from "../features/profile/ProfileContext";
-import { apiClient, PROFILE_UPDATED_EVENT, SETTINGS_UPDATED_EVENT } from "../lib/apiClient";
+import { apiClient, PROFILE_UPDATED_EVENT, validProfileResponse } from "../lib/apiClient";
 import type { ProfileResponse } from "../shared/api";
 
 type Props = { streak?: number; xp?: number; today?: number; goal?: number; onSwitch?: () => void };
@@ -14,16 +14,29 @@ export function AppHeader({ streak, xp, today, goal, onSwitch }: Props) {
   const [profile, setProfile] = useState<ProfileResponse | null>(null);
   useEffect(() => {
     let active = true;
-    const refresh = () => void apiClient.profile().then((value) => { if (active) setProfile(value); }).catch(() => undefined);
+    let version = 0;
+    const refresh = () => {
+      const requested = ++version;
+      void apiClient.profile().then((value) => {
+        if (active && requested === version && value.id === activeProfile.id) setProfile(value);
+      }).catch(() => undefined);
+    };
+    const update = (event: Event) => {
+      if (!(event instanceof CustomEvent)) {
+        refresh();
+        return;
+      }
+      if (!validProfileResponse(event.detail, activeProfile.id)) return;
+      version += 1;
+      setProfile(event.detail);
+    };
     refresh();
-    window.addEventListener(SETTINGS_UPDATED_EVENT, refresh);
-    window.addEventListener(PROFILE_UPDATED_EVENT, refresh);
+    window.addEventListener(PROFILE_UPDATED_EVENT, update);
     return () => {
       active = false;
-      window.removeEventListener(SETTINGS_UPDATED_EVENT, refresh);
-      window.removeEventListener(PROFILE_UPDATED_EVENT, refresh);
+      window.removeEventListener(PROFILE_UPDATED_EVENT, update);
     };
-  }, []);
+  }, [activeProfile.id]);
   const dailyGoal = goal ?? profile?.goal ?? 40;
   const todayXp = today ?? profile?.todayXp ?? 0;
   const totalXp = xp ?? profile?.xp ?? 0;

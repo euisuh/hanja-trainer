@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { PROFILE_EXPECTATION_HEADER, type SubmitReviewRequest } from "../shared/api";
-import { ApiClientError, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
+import { ApiClientError, PROFILE_UPDATED_EVENT, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
+
+const profile = { id: 1, name: "나", isAdmin: true, xp: 20, todayXp: 10, goal: 40, streak: 2, longestStreak: 3, enabledTracks: ["kr"] } as const;
 
 describe("API response errors", () => {
   afterEach(() => {
@@ -94,5 +96,54 @@ describe("review retry classification", () => {
   await apiClient.profile(undefined, false, null);
 
   expect(headers).toEqual(["1", "1", null]);
+  });
+});
+
+describe("profile update notifications", () => {
+  afterEach(() => {
+    setApiProfileId(null);
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it("publishes the validated session profile as event detail", async () => {
+    const events: Event[] = [];
+    const eventTarget = new EventTarget();
+    eventTarget.addEventListener(PROFILE_UPDATED_EVENT, (event) => events.push(event));
+    vi.stubGlobal("window", eventTarget);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json(profile)));
+
+    await expect(apiClient.createSession(1, { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(1).toISOString(), answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10, sessionId: "session" })).resolves.toEqual(profile);
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toBeInstanceOf(CustomEvent);
+    expect((events[0] as CustomEvent).detail).toEqual(profile);
+  });
+
+  it("does not notify when a session profile fails owner validation", async () => {
+    const eventTarget = new EventTarget();
+    const dispatchEvent = vi.spyOn(eventTarget, "dispatchEvent");
+    vi.stubGlobal("window", eventTarget);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({ ...profile, id: 2 })));
+
+    await expect(apiClient.createSession(1, { mode: "review", startedAt: new Date(0).toISOString(), endedAt: new Date(1).toISOString(), answered: 0, correct: 0, skipped: 0, bestCombo: 0, xp: 0, sessionId: "session" })).rejects.toMatchObject({ code: "invalid_response" });
+    expect(dispatchEvent).not.toHaveBeenCalled();
+  });
+
+  it("falls back to a refresh when a newer profile mutation wins the race", async () => {
+    const eventTarget = new EventTarget();
+    const events: Event[] = [];
+    eventTarget.addEventListener(PROFILE_UPDATED_EVENT, (event) => events.push(event));
+    vi.stubGlobal("window", eventTarget);
+    let resolveResponse!: (response: Response) => void;
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>((resolve) => { resolveResponse = resolve; })));
+
+    const session = apiClient.createSession(1, { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(1).toISOString(), answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10, sessionId: "delayed" });
+    eventTarget.dispatchEvent(new CustomEvent(PROFILE_UPDATED_EVENT, { detail: { ...profile, goal: 50 } }));
+    resolveResponse(Response.json(profile));
+    await session;
+
+    expect(events).toHaveLength(2);
+    expect(events[1]).not.toBeInstanceOf(CustomEvent);
   });
 });
