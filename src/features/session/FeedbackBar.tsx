@@ -1,4 +1,5 @@
 import { correctHeadline, wrongHeadline } from "./feedbackCopy";
+import type { ReactNode } from "react";
 
 type Props = {
   answered: boolean;
@@ -7,6 +8,7 @@ type Props = {
   skipped: boolean;
   correctIndex: number;
   correctAnswer?: string;
+  correctAnswerLang?: string;
   xp?: number;
   cardIndex: number;
   combo: number;
@@ -17,10 +19,10 @@ type Props = {
   onNext: () => void;
   autoAdvance?: boolean;
   idleText?: string;
-  answeredText?: string;
+  answeredText?: ReactNode;
 };
 
-export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, xp, cardIndex, combo, lostCombo, note, last, error, onNext, autoAdvance = false, idleText = "1–4 중에 골라보세요", answeredText }: Props) {
+export function FeedbackBar({ answered, compare, correct, skipped, correctIndex, correctAnswer, correctAnswerLang, xp, cardIndex, combo, lostCombo, note, last, error, onNext, autoAdvance = false, idleText = "1–4 중에 골라보세요", answeredText }: Props) {
   const state = error ? "wrong" : compare ? "compare" : !answered ? "idle" : skipped ? "skipped" : correct ? "correct" : "wrong";
   const text = error
     ? "저장하지 못했습니다"
@@ -35,9 +37,12 @@ export function FeedbackBar({ answered, compare, correct, skipped, correctIndex,
               ? correctHeadline(cardIndex, combo)
               : `${wrongHeadline(cardIndex)} · 정답 ${correctAnswer ?? `${correctIndex + 1}번`}`
         );
+  const feedbackText = !error && !compare && answered && !correct && !answeredText && correctAnswer
+    ? <>{skipped ? "모름" : wrongHeadline(cardIndex)} · 정답 <span lang={correctAnswerLang}>{correctAnswer}</span></>
+    : text;
   const body = correct && !error && !compare && !skipped && xp !== undefined
     ? <>{text} <span className="feedback-bar__xp" key={xp}>+{xp} XP</span></>
-    : text;
+    : feedbackText;
   const canAdvance = compare || answered;
   return (
     <div className={`feedback-bar feedback-bar--${state}`} aria-live={autoAdvance ? "off" : "polite"}>

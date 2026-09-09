@@ -65,6 +65,7 @@ test("previews one unit with cross-track keyboard controls", async ({ page }) =>
   const krReading = page.getByRole("button", { name: /한국 · 훈음 읽기 듣기/u }).first();
   const krSentence = page.getByRole("button", { name: /한국 · 훈음 예문 듣기/u }).first();
   const jpReading = page.getByRole("button", { name: /日本 · 音\/訓 읽기 듣기/u }).first();
+  await expect(krSentence).toBeVisible();
   await krReading.press("Enter");
   await expect.poll(() => page.locator("html").getAttribute("data-last-speech")).toContain('"lang":"ko-KR"');
   await krSentence.press("Space");

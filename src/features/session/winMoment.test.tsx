@@ -85,4 +85,14 @@ describe("correct-answer win moment", () => {
     expect(render(2)).not.toContain("콤보가 끊겼어요");
     expect(render(5)).toContain("5× 콤보가 끊겼어요");
   });
+
+  it("keeps sync errors ahead of structured answer feedback", () => {
+    const html = renderToStaticMarkup(
+      <FeedbackBar answered cardIndex={0} combo={0} compare={false} correct={false} correctAnswer="eat" correctAnswerLang="en" correctIndex={2} error="네트워크 오류" last={false} lostCombo={0} note="다시 해봐요" onNext={vi.fn()} skipped={false} />,
+    );
+
+    expect(html).toContain("저장하지 못했습니다");
+    expect(html).toContain("네트워크 오류");
+    expect(html).not.toContain("eat");
+  });
 });

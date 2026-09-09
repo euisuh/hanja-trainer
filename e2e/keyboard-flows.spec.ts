@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 const languages = { kr: "ko", jp: "ja", cn: "zh-Hans" } as const;
@@ -6,6 +7,11 @@ type Card = { answerIndex: number; characterKey: string; glyph: string; kind: "c
 type SessionResponse = { cards: Card[]; sessionId: string };
 const NUDGE_SNOOZES_KEY = "hanja-trainer:track-imbalance-snoozes:1";
 const FAST_CORRECT_ADVANCE_BASELINE_MS = 400;
+const npx = process.platform === "win32" ? "npx.cmd" : "npx";
+
+function executeSql(sql: string) {
+  execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--command", sql], { cwd: process.cwd(), stdio: "pipe" });
+}
 
 async function expectClosestLang(locator: Locator, lang: string) {
   expect(await locator.evaluate((node) => node.closest("[lang]")?.getAttribute("lang"))).toBe(lang);
@@ -686,6 +692,8 @@ test.describe.serial("keyboard-only product flows", () => {
   });
 
   test("review queue decreases and reaches its empty state", async ({ page }, testInfo) => {
+    // due=0 rows are this test's overdue fixture; timed rows from prior serial flows must not mature mid-test.
+    executeSql("UPDATE review_states SET due = due + 86400000 WHERE profile_id = 1 AND due > 0");
     await page.goto("/home");
     await expect(page.getByRole("button", { name: /레슨 시작/u })).toBeVisible();
     await page.keyboard.press("R");

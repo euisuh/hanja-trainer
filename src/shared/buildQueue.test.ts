@@ -273,10 +273,24 @@ describe("buildQueue", () => {
     if (entry.track === "jp") expect(item.options.some((option) => option.label.includes(entry.kun))).toBe(false);
   });
 
-  it("uses the Korean meaning for Japanese and Chinese tracks", () => {
+  it("keeps Korean glosses for Korean and Japanese tracks", () => {
     const item = character(1);
+    expect(meaningFor(item, "kr")).toEqual({ label: item.meaningKo });
     expect(meaningFor(item, "jp")).toEqual({ label: item.meaningKo });
-    expect(meaningFor(item, "cn")).toEqual({ label: item.meaningKo });
+  });
+
+  it("uses modern Chinese definitions for Chinese answers and distractors", () => {
+    const corpus = seededCharacters();
+    const chineseMeanings = new Set(corpus.flatMap((item) => item.tracks.flatMap((entry) => entry.track === "cn" ? [entry.meaning] : [])));
+    for (const [key, expected, wrongGloss] of [["吃", "eat", "말 더듬을"], ["的", "possessive, adjectival suffix", "과녁"]] as const) {
+      const item = corpus.find((candidate) => candidate.key === key);
+      expect(item, key).toBeDefined();
+      if (!item) continue;
+      const card = buildMeaningItem(item, "cn", corpus, 0, random(item.id));
+      expect(card?.options[card.answerIndex]).toEqual({ label: expected });
+      expect(card?.options.every(({ label }) => chineseMeanings.has(label))).toBe(true);
+      expect(card?.options.some(({ label }) => label === wrongGloss)).toBe(false);
+    }
   });
 
   it.each(["lesson", "review"] as const)("mixes track-correct meaning recall into %s queues", (mode) => {
@@ -287,8 +301,9 @@ describe("buildQueue", () => {
       const meanings = queue.filter((item) => item.kind === "meaning");
       expect(meanings.length, track).toBeGreaterThan(0);
       for (const item of meanings) {
-        expect(item.options[item.answerIndex].label).toBe(item.character.meaningKo);
-        expect(item.options.every((option) => option.label.startsWith("뜻-"))).toBe(true);
+        const entry = item.character.tracks.find((candidate) => candidate.track === track);
+        expect(item.options[item.answerIndex].label).toBe(entry?.track === "cn" ? entry.meaning : item.character.meaningKo);
+        expect(item.options.every((option) => option.label.startsWith(track === "cn" ? "meaning-" : "뜻-"))).toBe(true);
       }
     }
   });

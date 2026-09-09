@@ -81,8 +81,8 @@ test("admin recovery is one-time and unavailable to non-admin profiles", async (
   const created = await browserRequest(page, "/api/profiles", "POST", { name: "아이", pin: "4321" });
   expect(created.status).toBe(201);
   const childId = (created.body as { id: number }).id;
-  expect((await browserRequest(page, "/api/session/end", "POST")).status).toBe(200);
-  await page.reload();
+  await page.getByRole("button", { name: "프로필 전환" }).click();
+  await expect(page.getByRole("heading", { name: "누가 학습하나요?" })).toBeVisible();
 
   await page.getByRole("button", { name: "아이, PIN 필요" }).click();
   await expect(page.getByRole("heading", { name: "아이" })).toBeVisible();
@@ -94,8 +94,8 @@ test("admin recovery is one-time and unavailable to non-admin profiles", async (
   await page.getByRole("button", { name: "PIN 해제" }).click();
   await expect.poll(async () => (await browserRequest(page, "/api/profile", "GET")).status).toBe(200);
   await expect(page.locator(".unlock-screen, .profile-picker")).toHaveCount(0);
-  expect((await browserRequest(page, "/api/session/end", "POST")).status).toBe(200);
-  await page.reload();
+  await page.getByRole("button", { name: "프로필 전환" }).click();
+  await expect(page.getByRole("heading", { name: "누가 학습하나요?" })).toBeVisible();
   await page.getByRole("button", { name: "나", exact: true }).click();
   await expect.poll(async () => (await browserRequest(page, "/api/profile", "GET")).status).toBe(200);
   await expect(page.locator(".unlock-screen, .profile-picker")).toHaveCount(0);

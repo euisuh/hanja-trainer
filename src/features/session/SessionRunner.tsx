@@ -434,10 +434,10 @@ export function SessionRunner({
   const displayOptions = item.kind !== "compare" && item.kind !== "meaning" && item.track === "jp" && onyomiScript === "hiragana"
     ? item.options.map((option) => ({ ...option, label: toHiragana(option.label) }))
     : item.kind !== "compare" ? item.options : [];
-  const answerLang = item.kind === "meaning" ? "ko" : trackThemes[item.track].lang;
+  const answerLang = item.kind === "meaning" ? item.track === "cn" ? "en" : "ko" : trackThemes[item.track].lang;
   const recallPrompt = recallPromptFor(item.kind, item.track);
   const correctionText = correction && answered && item.kind !== "compare"
-    ? correct ? "다시 떠올렸어요" : `아직 기억하지 못함 · 정답 ${displayOptions[item.answerIndex]?.label}`
+    ? correct ? "다시 떠올렸어요" : <>아직 기억하지 못함 · 정답 <span lang={answerLang}>{displayOptions[item.answerIndex]?.label}</span></>
     : undefined;
 
   return (
@@ -479,6 +479,7 @@ export function SessionRunner({
           correct={correct}
           skipped={skipped}
           correctAnswer={item.kind !== "compare" ? displayOptions[item.answerIndex]?.label : undefined}
+          correctAnswerLang={answerLang}
           correctIndex={item.kind !== "compare" ? item.answerIndex : 0}
           cardIndex={index}
           combo={combo}
