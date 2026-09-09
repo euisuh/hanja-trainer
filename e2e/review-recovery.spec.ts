@@ -3,6 +3,12 @@ import { expect, test } from "@playwright/test";
 
 const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 const storageKey = "hanja-trainer:pending-reviews";
+const entryPrefix = `${storageKey}:entry:`;
+const rejectedPrefix = `${storageKey}:rejected:`;
+
+async function storedValues(page: import("@playwright/test").Page, prefix: string) {
+  return page.evaluate((value) => Object.keys(localStorage).filter((key) => key.startsWith(value)).map((key) => JSON.parse(localStorage.getItem(key)!)), prefix);
+}
 
 test.afterEach(() => {
   execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--file", "e2e/reset.sql"], { cwd: process.cwd(), stdio: "pipe" });
@@ -21,8 +27,7 @@ test("shows, exports, and explicitly discards a rejected review on Home", async 
   await page.getByText("보관 기록 살펴보기").click();
   await expect(status.locator("pre")).toContainText('"sessionId": "malformed"');
   expect(await status.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
-  const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "null") as unknown, storageKey);
-  expect(stored).toMatchObject({ version: 1, pending: [], rejected: [{ profileId: 1, raw: malformed, errorCode: "invalid_stored_review" }] });
+  expect(await storedValues(page, rejectedPrefix)).toMatchObject([{ profileId: 1, raw: malformed, errorCode: "invalid_stored_review" }]);
 
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "기록 내보내기" }).click();
@@ -31,7 +36,7 @@ test("shows, exports, and explicitly discards a rejected review on Home", async 
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "보관 기록 삭제" }).click();
   await expect(status).toHaveCount(0);
-  await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeNull();
+  await expect.poll(() => storedValues(page, rejectedPrefix)).toEqual([]);
 });
 
 test("recovers a pending review from Home when the browser comes online", async ({ page }) => {
@@ -57,7 +62,7 @@ test("recovers a pending review from Home when the browser comes online", async 
     window.dispatchEvent(new Event("online"));
   });
 
-  await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeNull();
+  await expect.poll(() => storedValues(page, entryPrefix)).toEqual([]);
   expect(batches).toHaveLength(1);
   await expect(page.locator(".session-runner")).toHaveCount(0);
 });
@@ -81,6 +86,5 @@ test("offers top-level re-authentication without losing pending records", async 
   await navigation;
 
   await expect(page.getByRole("button", { name: "로그인 페이지 다시 열기" })).toBeVisible();
-  const stored = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "null") as { pending: unknown[] }, storageKey);
-  expect(stored.pending).toEqual(pending);
+  expect(await storedValues(page, entryPrefix)).toEqual(pending);
 });

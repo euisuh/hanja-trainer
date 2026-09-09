@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ApiClientError, PIN_REQUIRED_EVENT, apiClient } from "../../lib/apiClient";
 import type { SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
-import { enqueuePendingReview, exportRejectedReviews, flushPendingReviews, pendingReviewCount, resetAnswerSubmitForTests, reviewSyncStatus, setAnswerSubmitProfile } from "./useAnswerSubmit";
+import { discardRejectedReviews, enqueuePendingReview, exportRejectedReviews, flushPendingReviews, pendingReviewCount, resetAnswerSubmitForTests, reviewSyncStatus, setAnswerSubmitProfile, syncReviewStorageEvent } from "./useAnswerSubmit";
 
 const response: SubmitReviewResponse = {
   due: "2026-09-03T00:00:00.000Z",
@@ -21,10 +21,18 @@ function localStorageStub(initial?: string) {
   const values = new Map<string, string>();
   if (initial !== undefined) values.set(storageKey, initial);
   return {
+    get length() { return values.size; },
+    key: vi.fn((index: number) => [...values.keys()][index] ?? null),
     getItem: vi.fn((key: string) => values.get(key) ?? null),
     setItem: vi.fn((key: string, value: string) => { values.set(key, value); }),
     removeItem: vi.fn((key: string) => { values.delete(key); }),
   };
+}
+
+function storedValues(storage: ReturnType<typeof localStorageStub>, prefix: string) {
+  return Array.from({ length: storage.length }, (_, index) => storage.key(index))
+    .filter((key): key is string => key?.startsWith(prefix) ?? false)
+    .map((key) => JSON.parse(storage.getItem(key)!));
 }
 
 describe("profile-scoped pending reviews", () => {
@@ -93,14 +101,10 @@ describe("durable pending reviews", () => {
     enqueuePendingReview(1, review("offline", 0), vi.fn());
     enqueuePendingReview(1, review("offline", 1), vi.fn());
 
-    expect(JSON.parse(storage.getItem(storageKey) ?? "{}")).toEqual({
-      version: 1,
-      pending: [
+    expect(storedValues(storage, `${storageKey}:entry:`)).toEqual([
         { profileId: 1, input: review("offline", 0) },
         { profileId: 1, input: review("offline", 1) },
-      ],
-      rejected: [],
-    });
+    ]);
   });
 
   it("removes persisted reviews after a successful flush", async () => {
@@ -114,6 +118,22 @@ describe("durable pending reviews", () => {
 
     await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
     expect(storage.getItem(storageKey)).toBeNull();
+  });
+
+  it("does not replace entries queued by another loaded tab", async () => {
+    const storage = localStorageStub();
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("navigator", { onLine: false });
+    vi.resetModules();
+    const tabA = await import("./useAnswerSubmit");
+    tabA.enqueuePendingReview(1, review("tab-a", 0));
+    vi.resetModules();
+    const tabB = await import("./useAnswerSubmit");
+    tabB.enqueuePendingReview(1, review("tab-b", 0));
+
+    expect(storedValues(storage, `${storageKey}:entry:`).map((item: { input: SubmitReviewRequest }) => item.input.sessionId).sort()).toEqual(["tab-a", "tab-b"]);
+    tabA.resetAnswerSubmitForTests();
+    tabB.resetAnswerSubmitForTests();
   });
 
   it("rehydrates and flushes stored reviews for the active profile", async () => {
@@ -175,6 +195,19 @@ describe("durable pending reviews", () => {
     fresh.resetAnswerSubmitForTests();
   });
 
+  it("discards a malformed per-entry rejection", async () => {
+    const storage = localStorageStub();
+    const key = `${storageKey}:rejected:malformed`;
+    storage.setItem(key, "null");
+    vi.stubGlobal("localStorage", storage);
+    vi.resetModules();
+    const fresh = await import("./useAnswerSubmit");
+
+    expect(() => fresh.discardRejectedReviews(1)).not.toThrow();
+    expect(storage.getItem(key)).toBeNull();
+    fresh.resetAnswerSubmitForTests();
+  });
+
   it("does not crash when privacy settings block storage access", async () => {
     vi.stubGlobal("localStorage", {
       getItem: vi.fn(() => { throw new DOMException("blocked", "SecurityError"); }),
@@ -205,6 +238,119 @@ describe("durable pending reviews", () => {
     setAnswerSubmitProfile(1);
 
     await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
+  });
+
+  it("retains a permanently rejected source when quarantine storage is full", async () => {
+    const storage = localStorageStub();
+    const connection = { onLine: false };
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("navigator", connection);
+    const submit = vi.spyOn(apiClient, "submitReviews").mockRejectedValue(new ApiClientError(400, "invalid_review", "bad"));
+    setAnswerSubmitProfile(1);
+    enqueuePendingReview(1, review("quota-rejection", 0));
+    storage.setItem.mockImplementation((key: string) => {
+      if (key.includes(":rejected:")) throw new Error("quota exceeded");
+    });
+    connection.onLine = true;
+
+    await flushPendingReviews(1);
+
+    expect(submit).toHaveBeenCalledTimes(1);
+    expect(reviewSyncStatus(1)).toMatchObject({ pendingCount: 0, rejectedCount: 1 });
+    expect(storedValues(storage, `${storageKey}:entry:`)).toHaveLength(1);
+    discardRejectedReviews(1);
+    expect(storedValues(storage, `${storageKey}:entry:`)).toEqual([]);
+  });
+
+  it("keeps the legacy queue when migration storage is full", async () => {
+    const legacy = JSON.stringify([ { profileId: 1, input: review("legacy-quota", 0) } ]);
+    const storage = localStorageStub(legacy);
+    storage.setItem.mockImplementation(() => { throw new Error("quota exceeded"); });
+    vi.stubGlobal("localStorage", storage);
+    vi.resetModules();
+    const fresh = await import("./useAnswerSubmit");
+
+    expect(storage.getItem(storageKey)).toBe(legacy);
+    expect(fresh.pendingReviewCount(1)).toBe(1);
+    fresh.resetAnswerSubmitForTests();
+  });
+
+  it("restores every legacy row even when the first migration write fails", async () => {
+    const legacy = JSON.stringify([
+      { profileId: 1, input: review("first", 0) },
+      { profileId: 1, input: review("second", 0) },
+    ]);
+    const storage = localStorageStub(legacy);
+    const write = storage.setItem.getMockImplementation()!;
+    storage.setItem.mockImplementationOnce(() => { throw new Error("quota exceeded"); }).mockImplementation(write);
+    vi.stubGlobal("localStorage", storage);
+    vi.resetModules();
+    const fresh = await import("./useAnswerSubmit");
+
+    expect(fresh.pendingReviewCount(1)).toBe(2);
+    expect(storedValues(storage, `${storageKey}:entry:`)).toHaveLength(1);
+    expect(storage.getItem(storageKey)).toBe(legacy);
+    fresh.resetAnswerSubmitForTests();
+  });
+
+  it("does not let legacy migration overwrite a newer entry", async () => {
+    const legacyInput = review("collision", 0);
+    const newerInput = { ...legacyInput, elapsedMs: 999 };
+    const storage = localStorageStub(JSON.stringify([{ profileId: 1, input: legacyInput }]));
+    const entryKey = `${storageKey}:entry:${encodeURIComponent("1:collision:0")}`;
+    storage.setItem(entryKey, JSON.stringify({ profileId: 1, input: newerInput }));
+    vi.stubGlobal("localStorage", storage);
+    vi.resetModules();
+    const fresh = await import("./useAnswerSubmit");
+
+    expect(JSON.parse(storage.getItem(entryKey)!)).toEqual({ profileId: 1, input: newerInput });
+    fresh.resetAnswerSubmitForTests();
+  });
+
+  it("preserves callbacks when a peer acknowledges an in-flight entry", async () => {
+    const storage = localStorageStub();
+    const connection = { onLine: false };
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("navigator", connection);
+    let resolve!: (value: { results: SubmitReviewResponse[] }) => void;
+    const submit = vi.spyOn(apiClient, "submitReviews").mockImplementation(() => new Promise((done) => { resolve = done; }));
+    const synced = vi.fn();
+    setAnswerSubmitProfile(1);
+    enqueuePendingReview(1, review("peer-ack", 0), synced);
+    connection.onLine = true;
+    const flushing = flushPendingReviews(1);
+    await vi.waitFor(() => expect(submit).toHaveBeenCalledTimes(1));
+    const entryKey = `${storageKey}:entry:${encodeURIComponent("1:peer-ack:0")}`;
+    const oldValue = storage.getItem(entryKey);
+    storage.removeItem(entryKey);
+    syncReviewStorageEvent({ key: entryKey, newValue: null, oldValue });
+    resolve({ results: [response] });
+    await flushing;
+
+    expect(synced).toHaveBeenCalledOnce();
+    expect(pendingReviewCount(1)).toBe(0);
+  });
+
+  it("does not report failure when a peer acknowledges a lost response", async () => {
+    const storage = localStorageStub();
+    const connection = { onLine: false };
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("navigator", connection);
+    let reject!: (error: unknown) => void;
+    vi.spyOn(apiClient, "submitReviews").mockImplementation(() => new Promise((_resolve, fail) => { reject = fail; }));
+    setAnswerSubmitProfile(1);
+    enqueuePendingReview(1, review("peer-lost", 0));
+    connection.onLine = true;
+    const flushing = flushPendingReviews(1);
+    await vi.waitFor(() => expect(reject).toBeTypeOf("function"));
+    const entryKey = `${storageKey}:entry:${encodeURIComponent("1:peer-lost:0")}`;
+    const oldValue = storage.getItem(entryKey);
+    storage.removeItem(entryKey);
+    syncReviewStorageEvent({ key: entryKey, newValue: null, oldValue });
+    reject(new Error("response lost"));
+    await flushing;
+
+    expect(reviewSyncStatus(1)).toMatchObject({ pendingCount: 0, failed: false });
   });
 
   it("drains a large backlog immediately in ordered, bounded batches", async () => {
@@ -252,11 +398,11 @@ describe("durable pending reviews", () => {
       enqueuePendingReview(1, review("long-offline", cardIndex));
     }
 
-    const stored = JSON.parse(storage.getItem(storageKey) ?? "{}") as { pending: Array<{ input: SubmitReviewRequest }>; rejected: unknown[] };
+    const stored = storedValues(storage, `${storageKey}:entry:`) as Array<{ input: SubmitReviewRequest }>;
     expect(pendingReviewCount(1)).toBe(500);
-    expect(stored.pending).toHaveLength(500);
-    expect(stored.pending[0].input.cardIndex).toBe(1);
-    expect(stored.rejected).toHaveLength(1);
+    expect(stored).toHaveLength(500);
+    expect(stored[0].input.cardIndex).toBe(1);
+    expect(storedValues(storage, `${storageKey}:rejected:`)).toHaveLength(1);
   });
 });
 

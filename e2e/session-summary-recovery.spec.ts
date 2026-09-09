@@ -7,6 +7,11 @@ const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 type Card = { answerIndex: number; kind: string };
 type SessionResponse = { cards: Card[]; sessionId: string };
 type Summary = { sessionId: string; endedAt: string; mode: string; xp: number };
+const summaryEntryPrefix = "hanja-trainer:pending-session-summaries:entry:";
+
+async function storedSummaries(page: Page): Promise<Array<{ input: Summary }>> {
+  return page.evaluate((prefix) => Object.keys(localStorage).filter((key) => key.startsWith(prefix)).map((key) => JSON.parse(localStorage.getItem(key)!)), summaryEntryPrefix);
+}
 
 function executeSql(sql: string) {
   execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--command", sql], { cwd: process.cwd(), stdio: "pipe" });
@@ -48,8 +53,10 @@ test("a rejected summary remains exportable without blocking later valid results
   const bad = { profileId: 1, input: { ...input, sessionId: "server-rejected" } };
   const good = { profileId: 1, input: { ...input, sessionId: "valid-after-rejected" } };
   await page.addInitScript(({ bad, good }) => {
+    if (sessionStorage.getItem("summary-recovery-seeded")) return;
     const key = "hanja-trainer:pending-session-summaries";
-    if (localStorage.getItem(key) === null) localStorage.setItem(key, JSON.stringify({ version: 1, pending: [bad, good], rejected: [] }));
+    localStorage.setItem(key, JSON.stringify({ version: 1, pending: [bad, good], rejected: [] }));
+    sessionStorage.setItem("summary-recovery-seeded", "true");
   }, { bad, good });
   const sent: string[] = [];
   await page.route("**/api/sessions", async (route) => {
@@ -114,9 +121,9 @@ test("offline completion reloads and saves once when its owner reconnects", asyn
   await expect(page.locator(".answer-option")).toHaveCount(4);
   await completeOneCard(page, session.cards[0], /완벽했어요/u);
   await expect(page.locator(".session-summary-status")).toContainText("학습 결과 저장 중");
-  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("hanja-trainer:pending-session-summaries") ?? "{}") as { pending: Array<{ input: Summary }> });
-  expect(stored.pending).toHaveLength(1);
-  expect(stored.pending[0].input.sessionId).toBe(session.sessionId);
+  const stored = await storedSummaries(page);
+  expect(stored).toHaveLength(1);
+  expect(stored[0].input.sessionId).toBe(session.sessionId);
   expect(summaries).toHaveLength(0);
 
   await page.evaluate(() => fetch("/api/session/end", { method: "POST" }).then((response) => response.json()));
@@ -126,7 +133,7 @@ test("offline completion reloads and saves once when its owner reconnects", asyn
   const attemptsBeforeOwnerReturns = summaries.length;
   await page.waitForTimeout(2_100);
   expect(summaries).toHaveLength(attemptsBeforeOwnerReturns);
-  expect(await page.evaluate(() => localStorage.getItem("hanja-trainer:pending-session-summaries"))).not.toBeNull();
+  expect(await storedSummaries(page)).toHaveLength(1);
 
   await page.evaluate(() => {
     localStorage.removeItem("e2e-offline");
@@ -141,14 +148,14 @@ test("offline completion reloads and saves once when its owner reconnects", asyn
   await page.getByRole("group", { name: /PIN 키패드/u }).pressSequentially("1234");
   await saved;
 
-  await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:pending-session-summaries"))).toBeNull();
+  await expect.poll(() => storedSummaries(page)).toEqual([]);
   const ownerProfile = await page.evaluate(() => fetch("/api/profile").then((response) => response.json())) as { xp: number };
-  expect(ownerProfile.xp).toBe(stored.pending[0].input.xp);
+  expect(ownerProfile.xp).toBe(stored[0].input.xp);
   expect(committedResponseLost).toBe(true);
   expect(successfulRequests).toBe(1);
   expect(summaries).toHaveLength(2);
   expect(summaries[1]).toEqual(summaries[0]);
-  expect(summaries[0]).toMatchObject({ sessionId: session.sessionId, endedAt: stored.pending[0].input.endedAt });
+  expect(summaries[0]).toMatchObject({ sessionId: session.sessionId, endedAt: stored[0].input.endedAt });
   expect(querySql<{ count: number }>("SELECT COUNT(*) AS count FROM sessions WHERE profile_id = 1")).toEqual([{ count: 1 }]);
 });
 

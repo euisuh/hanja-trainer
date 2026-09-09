@@ -58,7 +58,7 @@ test("keeps a stale tab's answer with its original profile", async ({ page, cont
   await page.getByRole("group", { name: /PIN 키패드/u }).pressSequentially("1234");
   await synced;
   await expect.poll(async () => ((await browserRequest(page, "/api/stats")).body as { answered: number }).answered).toBe(1);
-  await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:pending-reviews"))).toBeNull();
+  await expect.poll(() => page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith("hanja-trainer:pending-reviews:entry:")).length)).toBe(0);
 });
 
 test("switches profiles without leaking progress or browser state", async ({ page }) => {

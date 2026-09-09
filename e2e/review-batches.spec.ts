@@ -20,7 +20,7 @@ test("drains a stored review backlog in ordered four-item requests", async ({ pa
   });
 
   await page.goto("/home");
-  await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), storageKey), { timeout: 30_000 }).toBeNull();
+  await expect.poll(() => page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith("hanja-trainer:pending-reviews:entry:")).length), { timeout: 30_000 }).toBe(0);
 
   expect(batches).toHaveLength(25);
   expect(batches.every((batch) => batch.length <= 4)).toBe(true);

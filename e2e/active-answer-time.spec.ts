@@ -198,11 +198,11 @@ test("offline reload preserves the original answer timestamp", async ({ page }) 
   const card = await startAnswerableCard(page);
 
   await page.keyboard.press(String(card.answerIndex + 1));
-  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("hanja-trainer:pending-reviews") ?? "{}") as {
-    pending?: Array<{ input: { answeredAt?: string } }>;
-  });
-  expect(stored.pending).toHaveLength(1);
-  expect(stored.pending?.[0].input.answeredAt).toBe(answeredAt.toISOString());
+  const stored = await page.evaluate(() => Object.keys(localStorage)
+    .filter((key) => key.startsWith("hanja-trainer:pending-reviews:entry:"))
+    .map((key) => JSON.parse(localStorage.getItem(key)!) as { input: { answeredAt?: string } }));
+  expect(stored).toHaveLength(1);
+  expect(stored[0].input.answeredAt).toBe(answeredAt.toISOString());
 
   await page.clock.setSystemTime(reconnectedAt);
   await page.reload();
@@ -215,5 +215,5 @@ test("offline reload preserves the original answer timestamp", async ({ page }) 
     expect.objectContaining({ answeredAt: answeredAt.toISOString() }),
   ]);
   expect((await request.response())?.ok()).toBe(true);
-  await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:pending-reviews"))).toBeNull();
+  await expect.poll(() => page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith("hanja-trainer:pending-reviews:entry:")).length)).toBe(0);
 });
