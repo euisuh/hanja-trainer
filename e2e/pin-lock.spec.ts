@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { expect, test, type Page } from "@playwright/test";
 
 async function browserRequest(page: Page, path: string, method: string, body?: unknown) {
@@ -67,6 +68,8 @@ test("device PIN gates direct API calls and unlocks by keyboard and mouse", asyn
 });
 
 test("admin recovery is one-time and unavailable to non-admin profiles", async ({ page }) => {
+  const npx = process.platform === "win32" ? "npx.cmd" : "npx";
+  execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--command", "UPDATE profile SET onboarded_at = 1 WHERE id = 1"], { cwd: process.cwd(), stdio: "pipe" });
   await page.goto("/settings");
   await page.getByRole("button", { name: "PIN 설정" }).click();
   await page.keyboard.type("1234");
@@ -81,6 +84,19 @@ test("admin recovery is one-time and unavailable to non-admin profiles", async (
   const created = await browserRequest(page, "/api/profiles", "POST", { name: "아이", pin: "4321" });
   expect(created.status).toBe(201);
   const childId = (created.body as { id: number }).id;
+
+  await test.step("Settings does not treat a failed PIN lookup as PIN disabled", async () => {
+    await page.route("**/api/pin/state", (route) => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: { code: "unavailable", message: "temporary" } }) }));
+    await page.reload();
+    const pinSettings = page.locator(".pin-setting");
+    await expect(pinSettings.getByRole("alert")).toHaveText("잠금 상태를 확인하지 못했습니다.");
+    await expect(pinSettings.getByRole("button", { name: /^PIN (설정|변경|해제)$/u })).toHaveCount(0);
+    await page.unroute("**/api/pin/state");
+    await pinSettings.getByRole("button", { name: "다시 시도" }).click();
+    await expect(pinSettings.getByRole("button", { name: "PIN 변경" })).toBeVisible();
+    await expect(pinSettings.getByRole("alert")).toHaveCount(0);
+  });
+
   await page.getByRole("button", { name: "프로필 전환" }).click();
   await expect(page.getByRole("heading", { name: "누가 학습하나요?" })).toBeVisible();
 

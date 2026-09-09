@@ -17,8 +17,18 @@ export function PinSettings() {
   const [pending, setPending] = useState(false);
   const [shakeKey, setShakeKey] = useState(0);
   const [recoveryCode, setRecoveryCode] = useState("");
+  const [loadError, setLoadError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
-  useEffect(() => { void apiClient.pinState().then((state) => setEnabled(state.enabled)).catch(() => setEnabled(false)); }, []);
+  useEffect(() => {
+    const controller = new AbortController();
+    void apiClient.pinState(controller.signal).then((state) => {
+      if (!controller.signal.aborted) setEnabled(state.enabled);
+    }).catch(() => {
+      if (!controller.signal.aborted) setLoadError(true);
+    });
+    return () => controller.abort();
+  }, [retryKey]);
 
   function begin(nextAction: Action) {
     setAction(nextAction);
@@ -80,7 +90,10 @@ export function PinSettings() {
   return (
     <section className="settings-card pin-setting">
       <header>기기 잠금</header>
-      {enabled === null ? <p>잠금 상태 확인 중…</p> : recoveryCode ? (
+      {loadError ? <div>
+        <p role="alert">잠금 상태를 확인하지 못했습니다.</p>
+        <button className="pin-action" onClick={() => { setLoadError(false); setRetryKey((key) => key + 1); }} type="button">다시 시도</button>
+      </div> : enabled === null ? <p>잠금 상태 확인 중…</p> : recoveryCode ? (
         <RecoveryCodeNotice code={recoveryCode} onDismiss={() => {
           setRecoveryCode("");
           window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
