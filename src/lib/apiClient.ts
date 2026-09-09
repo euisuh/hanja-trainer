@@ -13,6 +13,11 @@ export function isAuthenticationError(error: unknown): boolean {
   return error instanceof ApiClientError && AUTH_ERROR_CODES.has(error.code);
 }
 
+export function isPermanentApiError(error: unknown): error is ApiClientError {
+  return error instanceof ApiClientError && error.status >= 400 && error.status < 500
+    && error.status !== 408 && error.status !== 429 && !isAuthenticationError(error);
+}
+
 export function retryDelayMs(error: unknown, attempt: number, random: () => number = Math.random): number | null {
   if (error instanceof DOMException && error.name === "AbortError") return null;
   if (error instanceof ApiClientError && error.status !== 408 && error.status !== 429 && error.status < 500) return null;

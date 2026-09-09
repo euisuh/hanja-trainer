@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useActiveProfile } from "../profile/ProfileContext";
-import { ApiClientError, PIN_REQUIRED_EVENT, apiClient, isAuthenticationError, retryDelayMs } from "../../lib/apiClient";
+import { ApiClientError, PIN_REQUIRED_EVENT, apiClient, isAuthenticationError, isPermanentApiError, retryDelayMs } from "../../lib/apiClient";
 import type { CreateSessionRequest } from "../../shared/api";
 import { parseSessionRequest } from "../../shared/session";
 
@@ -116,8 +116,16 @@ export async function flushPendingSummaries(profileId = activeProfileId): Promis
     let entry = nextFor(profileId);
     while (entry && activeProfileId === profileId && online()) {
       const [key, item] = entry;
-      await apiClient.createSession(profileId, item.input);
-      if (pending.get(key) === item) pending.delete(key);
+      try {
+        await apiClient.createSession(profileId, item.input);
+        if (pending.get(key) === item) pending.delete(key);
+      } catch (error) {
+        if (!isPermanentApiError(error)) throw error;
+        if (pending.get(key) === item) {
+          pending.delete(key);
+          rejected.push({ profileId, raw: item, errorCode: error.code });
+        }
+      }
       retryAttempts.delete(profileId);
       failedProfiles.delete(profileId);
       lastErrors.delete(profileId);
@@ -176,9 +184,10 @@ export function discardRejectedSummaries(profileId: number) {
 }
 
 export function sessionSummaryStatus(profileId: number): SessionSummaryStatus {
-  const rejectedCount = rejected.filter((item) => item.profileId === null || item.profileId === profileId).length;
+  const visibleRejected = rejected.filter((item) => item.profileId === null || item.profileId === profileId);
+  const rejectedCount = visibleRejected.length;
   const pendingFailed = failedProfiles.has(profileId);
-  return { pendingCount: pendingSummaryCount(profileId), rejectedCount, failed: pendingFailed || rejectedCount > 0, pendingFailed, errorCode: lastErrors.get(profileId) ?? (rejectedCount > 0 ? "invalid_stored_summary" : null) };
+  return { pendingCount: pendingSummaryCount(profileId), rejectedCount, failed: pendingFailed || rejectedCount > 0, pendingFailed, errorCode: lastErrors.get(profileId) ?? visibleRejected[0]?.errorCode ?? null };
 }
 
 export function resetSessionSummaryForTests() {

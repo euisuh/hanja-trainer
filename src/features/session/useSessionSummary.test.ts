@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ApiClientError, apiClient } from "../../lib/apiClient";
 import type { CreateSessionRequest, ProfileResponse } from "../../shared/api";
-import { enqueuePendingSummary, flushPendingSummaries, pendingSummaryCount, resetSessionSummaryForTests, retryPendingSummaries, sessionSummaryStatus, setSessionSummaryProfile } from "./useSessionSummary";
+import { enqueuePendingSummary, exportRejectedSummaries, flushPendingSummaries, pendingSummaryCount, resetSessionSummaryForTests, retryPendingSummaries, sessionSummaryStatus, setSessionSummaryProfile } from "./useSessionSummary";
 
 const storageKey = "hanja-trainer:pending-session-summaries";
 const profile = { id: 1, name: "나", isAdmin: true, xp: 25, streak: 1, longestStreak: 1, todayXp: 25, goal: 40, enabledTracks: ["kr"] } satisfies ProfileResponse;
@@ -27,6 +27,65 @@ describe("durable session summaries", () => {
     vi.unstubAllGlobals();
     vi.useRealTimers();
     vi.resetModules();
+  });
+
+  it("quarantines a permanent rejection, saves later results and preserves the original across reload", async () => {
+    const storage = localStorageStub();
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("navigator", { onLine: true });
+    const create = vi.spyOn(apiClient, "createSession")
+      .mockRejectedValueOnce(new ApiClientError(400, "invalid_session_summary", "invalid"))
+      .mockResolvedValue(profile);
+    enqueuePendingSummary(1, summary("rejected"));
+    enqueuePendingSummary(1, summary("valid"));
+    enqueuePendingSummary(2, summary("other-owner"));
+
+    setSessionSummaryProfile(1);
+
+    await vi.waitFor(() => expect(pendingSummaryCount(1)).toBe(0));
+    expect(create.mock.calls.map(([owner, input]) => [owner, input.sessionId])).toEqual([[1, "rejected"], [1, "valid"]]);
+    expect(sessionSummaryStatus(1)).toMatchObject({ pendingCount: 0, rejectedCount: 1, pendingFailed: false, errorCode: "invalid_session_summary" });
+    expect(sessionSummaryStatus(2)).toMatchObject({ pendingCount: 1, rejectedCount: 0, failed: false });
+    const quarantined = [{ profileId: 1, raw: { profileId: 1, input: summary("rejected") }, errorCode: "invalid_session_summary" }];
+    expect(JSON.parse(exportRejectedSummaries(1))).toEqual(quarantined);
+    expect(JSON.parse(exportRejectedSummaries(2))).toEqual([]);
+
+    vi.resetModules();
+    const fresh = await import("./useSessionSummary");
+    expect(fresh.pendingSummaryCount(1)).toBe(0);
+    expect(fresh.pendingSummaryCount(2)).toBe(1);
+    expect(JSON.parse(fresh.exportRejectedSummaries(1))).toEqual(quarantined);
+    expect(fresh.sessionSummaryStatus(1).errorCode).toBe("invalid_session_summary");
+    fresh.discardRejectedSummaries(2);
+    expect(fresh.sessionSummaryStatus(1).rejectedCount).toBe(1);
+    fresh.discardRejectedSummaries(1);
+    expect(fresh.sessionSummaryStatus(1).rejectedCount).toBe(0);
+    expect(fresh.pendingSummaryCount(2)).toBe(1);
+    fresh.resetSessionSummaryForTests();
+  });
+
+  it.each([
+    new ApiClientError(401, "pin_required", "locked"),
+    new ApiClientError(403, "access_required", "locked"),
+    new ApiClientError(409, "profile_changed", "changed"),
+    new ApiClientError(408, "timeout", "timeout"),
+    new ApiClientError(429, "rate_limited", "slow"),
+    new ApiClientError(503, "unavailable", "unavailable"),
+    new Error("network failure"),
+    new DOMException("cancelled", "AbortError"),
+  ])("keeps recoverable failures pending: %s", async (error) => {
+    vi.useFakeTimers();
+    vi.stubGlobal("localStorage", localStorageStub());
+    vi.stubGlobal("navigator", { onLine: true });
+    vi.stubGlobal("window", { dispatchEvent: vi.fn() });
+    const create = vi.spyOn(apiClient, "createSession").mockRejectedValue(error);
+    enqueuePendingSummary(1, summary("retryable"));
+    enqueuePendingSummary(1, summary("later"));
+    setSessionSummaryProfile(1);
+
+    await vi.waitFor(() => expect(sessionSummaryStatus(1).pendingFailed).toBe(true));
+    expect(sessionSummaryStatus(1)).toMatchObject({ pendingCount: 2, rejectedCount: 0 });
+    expect(create).toHaveBeenCalledTimes(1);
   });
 
   it("persists before sending and removes only after acknowledgement", async () => {

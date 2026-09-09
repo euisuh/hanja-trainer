@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useActiveProfile } from "../profile/ProfileContext";
-import { ApiClientError, PIN_REQUIRED_EVENT, apiClient, isAuthenticationError, retryDelayMs } from "../../lib/apiClient";
+import { ApiClientError, PIN_REQUIRED_EVENT, apiClient, isAuthenticationError, isPermanentApiError, retryDelayMs } from "../../lib/apiClient";
 import { MAX_REVIEW_BATCH_SIZE, type SubmitReviewRequest, type SubmitReviewResponse } from "../../shared/api";
 import { parseReviewRequest } from "../../shared/review";
 
@@ -163,11 +163,6 @@ async function submitEntries(profileId: number, entries: QueueEntry[]) {
   notify();
 }
 
-function permanentError(error: unknown): error is ApiClientError {
-  return error instanceof ApiClientError && error.status >= 400 && error.status < 500
-    && error.status !== 408 && error.status !== 429 && !isAuthenticationError(error);
-}
-
 function rejectEntry(entry: QueueEntry, error: ApiClientError) {
   const [key, item] = entry;
   if (pending.get(key) !== item) return;
@@ -181,7 +176,7 @@ async function submitOrIsolate(profileId: number, entries: QueueEntry[]) {
   try {
     await submitEntries(profileId, entries);
   } catch (error) {
-    if (!permanentError(error)) throw error;
+    if (!isPermanentApiError(error)) throw error;
     if (entries.length === 1) {
       rejectEntry(entries[0], error);
       notify();
@@ -193,7 +188,7 @@ async function submitOrIsolate(profileId: number, entries: QueueEntry[]) {
       try {
         await submitEntries(profileId, [entry]);
       } catch (individualError) {
-        if (permanentError(individualError)) {
+        if (isPermanentApiError(individualError)) {
           rejectEntry(entry, individualError);
           notify();
         } else {
