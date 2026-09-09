@@ -218,6 +218,18 @@ describe("content API", () => {
     expect((await routeApiRequest(new Request("https://test/api/characters/%E0%A4%A"), fixture.env)).status).toBe(400);
   });
 
+  it("returns track-specific meanings for Chinese study and detail content", async () => {
+    const fixture = setupSeeds(["data/characters/cn-hsk1.json"]); databases.push(fixture.sqlite);
+    const unitId = (fixture.sqlite.prepare("SELECT cu.id FROM curriculum_units cu JOIN curriculum_unit_members cum ON cum.unit_id = cu.id JOIN characters c ON c.id = cum.character_id WHERE c.key = '吃' AND cu.track = 'cn'").get() as { id: number }).id;
+    const study = await (await routeApiRequest(new Request(`https://test/api/curriculum/units/${unitId}`), fixture.env)).json() as UnitStudyResponse;
+
+    for (const [key, meaning] of [["吃", "eat"], ["的", "possessive, adjectival suffix"]] as const) {
+      const detail = await (await routeApiRequest(new Request(`https://test/api/characters/${encodeURIComponent(key)}`), fixture.env)).json() as CharacterDetailResponse;
+      expect(detail.tracks.find((entry) => entry.track === "cn")?.meaning).toBe(meaning);
+    }
+    expect(study.characters.find((character) => character.key === "吃")?.tracks.find((entry) => entry.track === "cn")?.meaning).toBe("eat");
+  });
+
   it("builds exact, distinct session cards and orders review by due time", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
     const post = (body: unknown) => routeApiRequest(new Request("https://test/api/session/start", { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), fixture.env);

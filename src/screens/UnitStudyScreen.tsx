@@ -118,7 +118,7 @@ export function UnitStudyScreen() {
           <tbody>{detail.characters.map((character) => {
             const unitEntry = character.tracks.find((entry) => entry.track === detail.unit.track) ?? character.tracks[0];
             return <tr key={character.key}>
-              <th className="unit-study__glyph" scope="row" style={{ "--study-font": trackThemes[detail.unit.track].font } as CSSProperties}><strong lang={trackThemes[detail.unit.track].lang}>{unitEntry?.glyph ?? character.key}</strong><small>{character.meaning_ko}</small></th>
+              <th className="unit-study__glyph" scope="row" style={{ "--study-font": trackThemes[detail.unit.track].font } as CSSProperties}><strong lang={trackThemes[detail.unit.track].lang}>{unitEntry?.glyph ?? character.key}</strong>{unitEntry && <small lang={unitEntry.track === "kr" ? "ko" : "en"}>{unitEntry.meaning}</small>}</th>
               {tracks.map((track) => {
                 const entry = character.tracks.find((candidate) => candidate.track === track);
                 const theme = trackThemes[track];
@@ -131,7 +131,7 @@ export function UnitStudyScreen() {
                     <span className="unit-study__reading"><span><strong>{displayedReading}</strong>{entry.subreading && <small>{entry.subreading}</small>}</span></span>
                   </AudioControl>
                   <div className="unit-study__badges">{entry.level_badges.map((badge) => <span key={badge}>{badge}</span>)}</div>
-                  <p className="unit-study__meaning">{character.meaning_ko}</p>
+                  <p className="unit-study__meaning" lang={entry.track === "kr" ? "ko" : "en"}>{entry.meaning}</p>
                   {entry.sentences.length > 0 ? <div className="unit-study__sentences">{entry.sentences.map((sentence) => <div className="unit-study__sentence" key={`${sentence.target_index}:${sentence.text}`}>
                     <AudioControl label={`${labels[track]} 예문 듣기${sentence.target_index === null ? `, 한자 ${entry.glyph}` : ""}: ${sentence.text}`} onPlay={() => speak(sentence.text, track)} supported={supported}><HighlightedSentence glyph={entry.glyph} targetIndex={sentence.target_index} text={sentence.text} /></AudioControl>
                     {sentence.reading && <small lang={theme.lang}>{sentence.reading}</small>}

@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { initialState, type ReviewLogEntry } from "../../shared/fsrs";
 import type { CharacterEntry } from "../../shared/types";
 import { IntervalChart } from "./IntervalChart";
+import { TrackPanel } from "./TrackPanel";
 import { buildIntervalBars, recordValues, variantsLabel } from "./detailModel";
 
 const character: CharacterEntry = {
@@ -40,5 +41,14 @@ describe("detail model", () => {
     expect(render([3])).toContain("첫 복습 완료 · 다음 간격 <strong>+3일</strong>");
     expect(render([3])).not.toContain('class="interval-chart__bars"');
     expect(render([3, 5]).match(/class="interval-chart__bar"/gu)).toHaveLength(2);
+  });
+
+  it("labels a Chinese panel's existing definition as English", () => {
+    const html = renderToStaticMarkup(createElement(TrackPanel, { entry: {
+      track: "cn", glyph: "吃", reading: "chī", meaning: "eat", level_badges: ["HSK 1"], sentences: [], review_state: null,
+    }, onyomiScript: "katakana" }));
+
+    expect(html).toContain('class="track-panel__meaning" lang="en">eat</p>');
+    expect(html).not.toContain("말 더듬을");
   });
 });

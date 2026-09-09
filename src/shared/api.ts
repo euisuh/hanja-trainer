@@ -57,6 +57,7 @@ export type ApiTrackDetail = {
   track: Track;
   glyph: string;
   reading: string;
+  meaning: string;
   subreading?: string;
   level_badges: string[];
   sentences: ApiSentence[];

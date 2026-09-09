@@ -84,7 +84,6 @@ export function DetailScreen() {
       <div className="detail-overview">
         <article className="detail-hero" style={{ "--detail-font": trackThemes[character.tracks[0]?.track ?? "kr"].font } as CSSProperties}>
           <strong>{character.key}</strong>
-          <span>{character.meaning_ko} · {character.meaning_en}</span>
           <small>{variantLine(character)}</small>
         </article>
         <div className="detail-tracks">
