@@ -137,6 +137,8 @@ export function SessionRunner({
   const currentIndex = useRef(0);
   const nextBurstId = useRef(0);
   const runnerRef = useRef<HTMLElement>(null);
+  const quizCardRef = useRef<HTMLElement>(null);
+  const focusedCardIndex = useRef(-1);
   const recallResultRef = useRef<HTMLParagraphElement>(null);
   const advanceRef = useRef<() => void>(() => undefined);
   const { failed: syncFailed, submit, pendingCount, retry } = useAnswerSubmit(sessionId);
@@ -365,6 +367,12 @@ export function SessionRunner({
   }, [recallState]);
 
   useEffect(() => {
+    if (paused || focusedCardIndex.current === index) return;
+    quizCardRef.current?.focus();
+    focusedCardIndex.current = index;
+  }, [index, paused]);
+
+  useEffect(() => {
     if (!answered || !autoAdvance || paused) return;
     const timer = window.setTimeout(() => advanceRef.current(), autoAdvanceDelay(mode, correct, reducedMotion));
     return () => window.clearTimeout(timer);
@@ -459,7 +467,7 @@ export function SessionRunner({
       </div>
       <div className="session-card-wrap" key={index}>
         {correction && <p className="session-correction-label"><span>오답 다시 떠올리기 · 추가 점수 없음</span><small>남은 오답 연습 {remainingCorrections}개</small></p>}
-        <QuizCard answerRevealed={recall ? recallState === "revealed" || answered : undefined} answered={answered} character={item.character} compare={compare} correct={correct} kind={item.kind} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : recall ? recallPrompt : undefined} track={item.track} word={word} />
+        <QuizCard answerRevealed={recall ? recallState === "revealed" || answered : undefined} answered={answered} character={item.character} compare={compare} correct={correct} kind={item.kind} onyomiScript={onyomiScript} promptOverride={mode === "placement" ? `배치 문항 ${progress}/${queueLength}` : mode === "unit-test" ? `유닛 테스트 ${progress}/${queueLength}` : recall ? recallPrompt : undefined} ref={quizCardRef} track={item.track} word={word} />
         {item.kind !== "compare" && (
           <>
             {recall && recallState === "concealed" ? <div className="recall-actions"><button className="recall-reveal" onClick={revealAnswer} type="button">정답 확인 <kbd>ENTER</kbd></button><button onClick={showChoices} type="button">보기로 풀기</button></div> : recall && recallState === "revealed" && !answered ? <div className="recall-check" aria-label="회상 결과"><p ref={recallResultRef} tabIndex={-1}>정답 <strong lang={answerLang}>{displayOptions[item.answerIndex]?.label}</strong></p><small>공개된 답을 알아본 것은 회상 성공으로 세지 마세요.</small><div><button onClick={() => pick(null)} type="button">기억하지 못함 <kbd>1</kbd></button><button onClick={() => pick(item.answerIndex)} type="button">정확히 기억함 <kbd>2</kbd></button></div></div> : <><AnswerOptions answerIndex={item.answerIndex} lang={answerLang} onPick={(choice) => void pick(choice)} options={displayOptions} selectedIndex={selectedIndex} spent={answered} /><SkipAnswer disabled={answered} onSkip={() => pick(null)} /></>}

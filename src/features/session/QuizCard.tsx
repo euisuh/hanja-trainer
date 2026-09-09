@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../shared/types";
 import type { OnyomiScript } from "../../shared/settings";
 import { HighlightedSentence } from "../source/HighlightedSentence";
@@ -61,14 +62,14 @@ type Props = {
   answerRevealed?: boolean;
 };
 
-export function QuizCard({ character, track, compare, answered, correct, kind, promptOverride, onyomiScript, word, answerRevealed }: Props) {
+export const QuizCard = forwardRef<HTMLElement, Props>(function QuizCard({ character, track, compare, answered, correct, kind, promptOverride, onyomiScript, word, answerRevealed }, ref) {
   const entry = character.tracks.find((candidate) => candidate.track === track);
   if (!entry) return null;
   const theme = trackThemes[track];
   const sentence = word ? undefined : character.sentences.find((candidate) => candidate.track === track);
   const prompt = promptOverride ?? promptFor(kind, track);
   return (
-    <article className={`quiz-card quiz-card--${track}${answered ? correct ? " quiz-card--correct" : " quiz-card--wrong" : ""}`}>
+    <article aria-label={`${prompt} · ${word?.glyph ?? entry.glyph}`} className={`quiz-card quiz-card--${track}${answered ? correct ? " quiz-card--correct" : " quiz-card--wrong" : ""}`} ref={ref} tabIndex={-1}>
       <div className="quiz-card__badges">
         <span lang={compare ? undefined : theme.lang}>{compare ? "교차 강화 · 한 글자 세 소리" : word ? wordLabels[track].badge : theme.badge}</span>
         <span lang={theme.lang}>{word ? `${wordLabels[track].name} ${word.level}` : levelLabel(entry)}</span>
@@ -82,4 +83,4 @@ export function QuizCard({ character, track, compare, answered, correct, kind, p
       {compare && <CompareCard character={character} onyomiScript={onyomiScript} />}
     </article>
   );
-}
+});

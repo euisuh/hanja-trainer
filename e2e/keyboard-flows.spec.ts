@@ -19,6 +19,7 @@ async function sessionStarted(page: Page, action: () => Promise<void>): Promise<
 
 async function finishCorrections(page: Page) {
   while (await page.getByText("오답 다시 떠올리기 · 추가 점수 없음", { exact: true }).count() > 0) {
+    await expect(page.locator(".quiz-card")).toBeFocused();
     const progress = page.getByRole("progressbar", { name: /진행률/u });
     const before = await progress.getAttribute("aria-valuenow");
     await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-correction-card", "true"));
@@ -47,6 +48,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
   let recallFallbackUsed = false;
   for (let index = 0; index < cards.length; index += 1) {
     const card = cards[index];
+    if (index > 0) await expect(page.locator(".quiz-card")).toBeFocused();
     await page.locator(".session-card-wrap").evaluate((node, cardIndex) => node.setAttribute("data-finish-card", String(cardIndex)), index);
     const shouldSkip = card.kind === "reading" && Boolean(options.skipFirst) && !skipped;
     const testMeaningFeedback = card.kind === "meaning" && Boolean(options.verifyMeaningFeedback) && !meaningFeedbackChecked;
@@ -348,6 +350,7 @@ test.describe.serial("keyboard-only product flows", () => {
     expect((await startRequest).postDataJSON()).toMatchObject({ mode: "lesson", tracks: ["kr"], limit: 8, unitId: expect.any(Number) });
     expectLabelOnly(lesson.cards);
     expect(lesson.cards.some((card) => card.kind === "meaning")).toBe(true);
+    await expect(page.locator(".quiz-card")).toBeFocused();
     await checkAnswerGrid(page);
     await page.setViewportSize({ width: 1080, height: 900 });
     await expect(page.locator(".quiz-card__glyph")).toHaveCSS("font-size", "150px");
@@ -369,7 +372,8 @@ test.describe.serial("keyboard-only product flows", () => {
     expect(sourceCardIndex).toBeGreaterThanOrEqual(0);
     let meaningKeyboardAnswers = 0;
     let meaningFeedbackChecked = false;
-    for (const card of lesson.cards.slice(0, sourceCardIndex)) {
+    for (const [index, card] of lesson.cards.slice(0, sourceCardIndex).entries()) {
+      await page.locator(".session-card-wrap").evaluate((node, cardIndex) => node.setAttribute("data-focus-setup-card", String(cardIndex)), index);
       if (card.kind !== "compare") {
         const testMeaningFeedback = card.kind === "meaning" && !meaningFeedbackChecked;
         if (testMeaningFeedback) await expect(page.getByText(meaningPrompts[card.track], { exact: true })).toBeVisible();
@@ -381,8 +385,10 @@ test.describe.serial("keyboard-only product flows", () => {
             meaningFeedbackChecked = true;
           }
         }
+        await expect(page.locator(".answer-option").first()).toHaveAttribute("aria-disabled", "true");
       }
-      await page.keyboard.press("Enter");
+      await page.getByRole("button", { name: /다음 카드|세션 마치기/u }).press("Enter");
+      await expect(page.locator(`[data-focus-setup-card="${index}"]`)).toHaveCount(0);
     }
     const sourceCard = lesson.cards[sourceCardIndex];
     const sourceProgress = lesson.cards.slice(0, sourceCardIndex + 1).filter((card) => card.kind !== "compare").length;
@@ -420,6 +426,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
     await page.keyboard.press("Enter");
     await expect(page.locator('[data-tested-hold="true"]')).toHaveCount(0);
+    await expect(page.locator(".quiz-card")).toBeFocused();
 
     const finished = await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, correctionPractice: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true, verifyMeaningFeedback: !meaningFeedbackChecked });
     expect(meaningKeyboardAnswers + finished.meaningKeyboardAnswers).toBeGreaterThan(0);
@@ -718,6 +725,8 @@ test.describe.serial("keyboard-only product flows", () => {
     });
     expectLabelOnly(review.cards);
     await expect(page.getByRole("progressbar", { name: /진행률/u })).toBeVisible();
+    await expect(page.locator(".quiz-card")).toBeFocused();
+    expect(await page.locator(".quiz-card").getAttribute("aria-label")).not.toContain(review.cards[0].options[review.cards[0].answerIndex]?.label);
     await expect(page.locator(".answer-option, .quiz-card__sentence")).toHaveCount(0);
     await finishSession(page, review.cards, /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, correctionPractice: true, recall: true, recallFallback: true, skipAdvance: "Space", skipFirst: true });
     await page.keyboard.press("Enter");

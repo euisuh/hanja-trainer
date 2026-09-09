@@ -21,4 +21,15 @@ describe("recall card context", () => {
     expect(render(true)).toContain("학교");
     expect(render()).toContain("quiz-card__sentence");
   });
+
+  it("names its focus target with only the visible task and stimulus", () => {
+    const html = renderToStaticMarkup(
+      <QuizCard answerRevealed={false} answered={false} character={character} compare={false} correct={false} kind="reading" onyomiScript="katakana" promptOverride="이 글자의 훈음을 말해 보세요" track="kr" />,
+    );
+
+    expect(html).toContain('tabindex="-1"');
+    expect(html).toContain('aria-label="이 글자의 훈음을 말해 보세요 · 學"');
+    expect(html).not.toContain("학교");
+    expect(html).not.toContain("배우다");
+  });
 });
