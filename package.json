@@ -47,6 +47,9 @@
     "unbzip2-stream": "^1.4.3",
     "vite": "^8.2.2",
     "vitest": "^4.1.11",
-    "wrangler": "^4.127.1"
+    "wrangler": "^4.130.0"
+  },
+  "overrides": {
+    "sharp": "0.35.4"
   }
 }
