@@ -1,3 +1,6 @@
+import type { PatchSettingsRequest } from "./api";
+import { TRACKS, type Track } from "./types";
+
 export const DEFAULT_DAILY_GOAL = 40;
 export const DAILY_GOAL = { min: 10, max: 120, step: 10 } as const;
 export const ONYOMI_SCRIPTS = ["katakana", "hiragana"] as const;
@@ -11,4 +14,27 @@ export type ThemeId = (typeof THEME_IDS)[number];
 export function normalizeDailyGoal(value: number): number {
   const stepped = Math.round(value / DAILY_GOAL.step) * DAILY_GOAL.step;
   return Math.max(DAILY_GOAL.min, Math.min(DAILY_GOAL.max, stepped));
+}
+
+export function normalizeSettingsPatch(value: unknown): PatchSettingsRequest | null {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
+  const body = value as Record<string, unknown>;
+  if (body.enabledTracks === undefined && body.dailyGoal === undefined && body.timezone === undefined && body.onyomiScript === undefined && body.soundMode === undefined && body.theme === undefined) return null;
+  if (body.enabledTracks !== undefined && (!Array.isArray(body.enabledTracks) || body.enabledTracks.length === 0 || !body.enabledTracks.every((track) => typeof track === "string" && TRACKS.includes(track as Track)))) return null;
+  if (body.dailyGoal !== undefined && (typeof body.dailyGoal !== "number" || !Number.isFinite(body.dailyGoal))) return null;
+  if (body.timezone !== undefined) {
+    if (typeof body.timezone !== "string") return null;
+    try { new Intl.DateTimeFormat("en", { timeZone: body.timezone }).format(); } catch { return null; }
+  }
+  if (body.onyomiScript !== undefined && (typeof body.onyomiScript !== "string" || !ONYOMI_SCRIPTS.includes(body.onyomiScript as OnyomiScript))) return null;
+  if (body.soundMode !== undefined && (typeof body.soundMode !== "string" || !SOUND_MODES.includes(body.soundMode as SoundMode))) return null;
+  if (body.theme !== undefined && (typeof body.theme !== "string" || !THEME_IDS.includes(body.theme as ThemeId))) return null;
+  return {
+    ...(body.enabledTracks === undefined ? {} : { enabledTracks: [...new Set(body.enabledTracks as Track[])] }),
+    ...(body.dailyGoal === undefined ? {} : { dailyGoal: normalizeDailyGoal(body.dailyGoal as number) }),
+    ...(body.timezone === undefined ? {} : { timezone: body.timezone }),
+    ...(body.onyomiScript === undefined ? {} : { onyomiScript: body.onyomiScript as OnyomiScript }),
+    ...(body.soundMode === undefined ? {} : { soundMode: body.soundMode as SoundMode }),
+    ...(body.theme === undefined ? {} : { theme: body.theme as ThemeId }),
+  };
 }

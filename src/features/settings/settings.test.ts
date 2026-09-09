@@ -5,6 +5,15 @@ import { DEFAULT_SOUND_MODE, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS } from "../.
 import { GLOBAL_DESTINATIONS, SHORTCUTS } from "../../shell/shortcuts";
 
 describe("settings", () => {
+  function memoryStorage() {
+    const values = new Map<string, string>();
+    return {
+      getItem: (key: string) => values.get(key) ?? null,
+      setItem: (key: string, value: string) => { values.set(key, value); },
+      removeItem: (key: string) => { values.delete(key); },
+    };
+  }
+
   it("renders the same shortcut registry consumed by global navigation", () => {
     expect(shortcutRows).toBe(SHORTCUTS);
     const navigation = SHORTCUTS.find((shortcut) => shortcut.id === "navigation");
@@ -90,5 +99,55 @@ describe("settings", () => {
     expect({ dailyGoal: 40, ...duringSave.optimistic, ...saver.optimisticSince(1, duringSave.revision) }).toEqual({ dailyGoal: 80 });
     expect({ dailyGoal: 40, ...beforeEdit.optimistic, ...saver.optimisticSince(1, beforeEdit.revision) }).toEqual({ dailyGoal: 80 });
     expect({ dailyGoal: 90, ...saver.snapshot(1).optimistic }).toEqual({ dailyGoal: 90 });
+  });
+
+  it("restores a validated pending patch for its owner and clears it after retry", async () => {
+    const storage = memoryStorage();
+    const first = createSettingsSaver(() => Promise.reject(new Error("offline")), undefined, storage);
+    first.update(1, "dailyGoal", 60);
+    await vi.waitFor(() => expect(first.status(1).error).toBe("offline"));
+
+    const calls: unknown[] = [];
+    const reloaded = createSettingsSaver(async (profileId, patch) => { calls.push({ profileId, patch }); }, undefined, storage);
+    expect(reloaded.snapshot(1).optimistic).toEqual({ dailyGoal: 60 });
+    expect(reloaded.status(1).error).toBe("저장되지 않은 설정이 있습니다.");
+    expect(reloaded.snapshot(2).optimistic).toEqual({});
+    await reloaded.flush(1);
+    expect(calls).toEqual([{ profileId: 1, patch: { dailyGoal: 60 } }]);
+    expect(storage.getItem("hanja-trainer:pending-settings:1")).toBeNull();
+  });
+
+  it("keeps a newer same-field edit when an older tab acknowledges", async () => {
+    const storage = memoryStorage();
+    let release!: () => void;
+    const older = createSettingsSaver(() => new Promise<void>((resolve) => { release = resolve; }), undefined, storage);
+    older.update(1, "theme", "default");
+    const newer = createSettingsSaver(() => new Promise<void>(() => undefined), undefined, storage);
+    newer.update(1, "theme", "quiet-technical");
+    release();
+    await older.flush(1);
+
+    const restored = createSettingsSaver(async () => undefined, undefined, storage);
+    expect(restored.snapshot(1).optimistic).toEqual({ theme: "quiet-technical" });
+  });
+
+  it("merges independent fields written by separate tabs", () => {
+    const storage = memoryStorage();
+    const first = createSettingsSaver(() => new Promise<void>(() => undefined), undefined, storage);
+    const second = createSettingsSaver(() => new Promise<void>(() => undefined), undefined, storage);
+    first.update(1, "dailyGoal", 70);
+    second.update(1, "soundMode", "off");
+
+    const restored = createSettingsSaver(async () => undefined, undefined, storage);
+    expect(restored.snapshot(1).optimistic).toEqual({ dailyGoal: 70, soundMode: "off" });
+  });
+
+  it("ignores corrupt and unsupported persisted settings", () => {
+    const storage = memoryStorage();
+    storage.setItem("hanja-trainer:pending-settings:1", JSON.stringify({ version: 1, fields: { dailyGoal: { revision: "bad", value: "lots" } } }));
+    storage.setItem("hanja-trainer:pending-settings:2", JSON.stringify({ version: 2, fields: { theme: { revision: "bad", value: "default" } } }));
+    const saver = createSettingsSaver(async () => undefined, undefined, storage);
+    expect(saver.snapshot(1).optimistic).toEqual({});
+    expect(saver.snapshot(2).optimistic).toEqual({});
   });
 });

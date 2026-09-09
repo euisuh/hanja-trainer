@@ -86,6 +86,33 @@ test("shows a failed save and retries the same edit", async ({ page }) => {
   await expect(page.getByRole("group", { name: "소리 피드백" }).getByRole("button", { name: "끄기" })).toHaveAttribute("aria-pressed", "true");
 });
 
+test("restores a failed edit after reload and clears it after retry", async ({ page }) => {
+  await page.goto("/settings");
+  await page.waitForLoadState("networkidle");
+  let attempts = 0;
+  await page.route("**/api/settings", async (route) => {
+    if (route.request().method() !== "PATCH") { await route.continue(); return; }
+    attempts += 1;
+    if (attempts === 1) {
+      await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: { code: "service_unavailable", message: "offline" } }) });
+      return;
+    }
+    await route.continue();
+  });
+
+  const goal = page.getByRole("slider", { name: "일일 XP 목표" });
+  const nextGoal = Number(await goal.inputValue()) + 10;
+  await goal.press("ArrowRight");
+  await expect(page.getByRole("alert")).toContainText("offline");
+  await page.reload();
+  await expect(goal).toHaveValue(String(nextGoal));
+  await expect(page.getByRole("alert")).toContainText("저장되지 않은 설정이 있습니다.");
+  await page.getByRole("button", { name: "저장 다시 시도" }).click();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("hanja-trainer:pending-settings:1"))).toBeNull();
+  expect(attempts).toBe(2);
+});
+
 test("does not let the app's older settings load revert a saved theme", async ({ page }) => {
   let settingsGets = 0;
   let release!: () => void;

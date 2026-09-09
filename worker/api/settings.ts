@@ -1,36 +1,11 @@
 import type { OnboardingStateResponse, PatchSettingsRequest, SettingsResponse } from "../../src/shared/api";
-import { normalizeDailyGoal, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS, type OnyomiScript, type SoundMode, type ThemeId } from "../../src/shared/settings";
-import { TRACKS, type Track } from "../../src/shared/types";
+import { normalizeSettingsPatch, type OnyomiScript, type SoundMode, type ThemeId } from "../../src/shared/settings";
+import { TRACKS } from "../../src/shared/types";
 
 type ProfileRow = { enabled_tracks: string; daily_goal: number; timezone: string; onyomi_script: OnyomiScript; sound_mode: SoundMode; theme: ThemeId; is_admin: number; onboarded_at?: number | null };
 
-function validTimezone(value: string): boolean {
-  try {
-    new Intl.DateTimeFormat("en", { timeZone: value }).format();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 export function parseSettingsPatch(value: unknown): PatchSettingsRequest | null {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) return null;
-  const body = value as Record<string, unknown>;
-  if (body.enabledTracks === undefined && body.dailyGoal === undefined && body.timezone === undefined && body.onyomiScript === undefined && body.soundMode === undefined && body.theme === undefined) return null;
-  if (body.enabledTracks !== undefined && (!Array.isArray(body.enabledTracks) || body.enabledTracks.length === 0 || !body.enabledTracks.every((track) => typeof track === "string" && TRACKS.includes(track as Track)))) return null;
-  if (body.dailyGoal !== undefined && (typeof body.dailyGoal !== "number" || !Number.isFinite(body.dailyGoal))) return null;
-  if (body.timezone !== undefined && (typeof body.timezone !== "string" || !validTimezone(body.timezone))) return null;
-  if (body.onyomiScript !== undefined && (typeof body.onyomiScript !== "string" || !ONYOMI_SCRIPTS.includes(body.onyomiScript as OnyomiScript))) return null;
-  if (body.soundMode !== undefined && (typeof body.soundMode !== "string" || !SOUND_MODES.includes(body.soundMode as SoundMode))) return null;
-  if (body.theme !== undefined && (typeof body.theme !== "string" || !THEME_IDS.includes(body.theme as ThemeId))) return null;
-  return {
-    ...(body.enabledTracks === undefined ? {} : { enabledTracks: [...new Set(body.enabledTracks as Track[])] }),
-    ...(body.dailyGoal === undefined ? {} : { dailyGoal: normalizeDailyGoal(body.dailyGoal as number) }),
-    ...(body.timezone === undefined ? {} : { timezone: body.timezone as string }),
-    ...(body.onyomiScript === undefined ? {} : { onyomiScript: body.onyomiScript as OnyomiScript }),
-    ...(body.soundMode === undefined ? {} : { soundMode: body.soundMode as SoundMode }),
-    ...(body.theme === undefined ? {} : { theme: body.theme as ThemeId }),
-  };
+  return normalizeSettingsPatch(value);
 }
 
 function decode(row: ProfileRow): SettingsResponse {
