@@ -27,6 +27,7 @@ export function main() {
   try { debugLog = readFileSync(`${results}/wrangler-debug.log`, "utf8"); } catch { /* A missing log is not retryable. */ }
   if (!retryableWranglerCrash(log, debugLog)) process.exitCode = status;
   else {
+    process.stderr.write("Known Wrangler proxy crash detected; retrying the full suite once. First-attempt artifacts retained in test-results-wrangler-crash-first.\n");
     renameSync(results, `${results}-wrangler-crash-first`);
     process.exitCode = runE2E();
   }
