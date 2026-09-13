@@ -1,5 +1,6 @@
-import { PROFILE_EXPECTATION_HEADER, type CharacterDetailResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../../shared/api";
+import { PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type CharacterDetailResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../../shared/api";
 import { apiUrl } from "../platform/apiUrl";
+import { getSessionToken, nativeShell, renewSessionToken, setSessionToken } from "../platform/sessionToken";
 import { TRACKS, type Track } from "../../shared/types";
 
 export class ApiClientError extends Error {
@@ -72,12 +73,16 @@ function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, pro
   const controller = new AbortController();
   const headers = new Headers(init?.headers);
   if (expectedProfileId !== null) headers.set(PROFILE_EXPECTATION_HEADER, String(expectedProfileId));
+  const native = nativeShell();
+  const sentToken = native ? getSessionToken() : null;
+  if (sentToken !== null) headers.set("authorization", `Bearer ${sentToken}`);
   const callerSignal = init?.signal;
   const abort = () => controller.abort();
   if (callerSignal?.aborted) abort();
   else callerSignal?.addEventListener("abort", abort, { once: true });
   const tracked = (async () => {
-    const response = await fetch(apiUrl(path), { ...init, headers, signal: controller.signal });
+    const response = await fetch(apiUrl(path), { ...init, headers, signal: controller.signal, ...(native ? { credentials: "omit" as const } : {}) });
+    if (sentToken !== null) renewSessionToken(sentToken, response.headers.get(SESSION_TOKEN_HEADER));
     const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
     const jsonContent = contentType.includes("application/json") || contentType.includes("+json");
     const text = await response.text();
@@ -136,6 +141,18 @@ export function setApiProfileId(profileId: number | null) {
 
 export function isApiProfileId(profileId: number): boolean {
   return activeProfileId === profileId;
+}
+
+function credentialHeaders(): HeadersInit {
+  return nativeShell()
+    ? { "content-type": "application/json", [SESSION_TRANSPORT_HEADER]: "bearer" }
+    : { "content-type": "application/json" };
+}
+
+// Sign-in responses carry `sessionToken` only for bearer transport; web keeps the cookie.
+function keepSessionToken<T extends object>(body: T): T {
+  if (nativeShell() && "sessionToken" in body && typeof body.sessionToken === "string") setSessionToken(body.sessionToken);
+  return body;
 }
 
 export const apiClient = {
@@ -214,11 +231,14 @@ export const apiClient = {
     return profile;
   },
   deleteProfile: (profileId: number) => requestJson<{ deleted: true }>(`/api/profiles/${profileId}`, { method: "DELETE" }),
-  selectProfile: (profileId: number) => requestJson<{ selected: true }>("/api/profiles/select", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId }) }, true, false),
-  endSession: () => requestJson<{ ended: true }>("/api/session/end", { method: "POST" }, true, false),
+  selectProfile: async (profileId: number) => keepSessionToken(await requestJson<{ selected: true; sessionToken?: string }>("/api/profiles/select", { method: "POST", headers: credentialHeaders(), body: JSON.stringify({ profileId }) }, true, false)),
+  endSession: async () => {
+    setSessionToken(null);
+    return requestJson<{ ended: true }>("/api/session/end", { method: "POST" }, true, false);
+  },
   pinState: (signal?: AbortSignal) => requestJson<PinStateResponse>("/api/pin/state", { signal }, true, false),
-  unlockPin: (profileId: number, pin: string) => requestJson<{ unlocked: true; recoveryCode?: string }>("/api/pin/unlock", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, pin }) }, true, false),
-  recoverPin: (profileId: number, code: string) => requestJson<{ recovered: true }>("/api/pin/recover", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ profileId, code }) }, true, false),
+  unlockPin: async (profileId: number, pin: string) => keepSessionToken(await requestJson<{ unlocked: true; recoveryCode?: string; sessionToken?: string }>("/api/pin/unlock", { method: "POST", headers: credentialHeaders(), body: JSON.stringify({ profileId, pin }) }, true, false)),
+  recoverPin: async (profileId: number, code: string) => keepSessionToken(await requestJson<{ recovered: true; sessionToken?: string }>("/api/pin/recover", { method: "POST", headers: credentialHeaders(), body: JSON.stringify({ profileId, code }) }, true, false)),
   setPin: (pin: string, currentPin?: string) => requestJson<{ enabled: true; recoveryCode?: string }>("/api/pin", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pin, ...(currentPin ? { currentPin } : {}) }) }),
   removePin: (currentPin: string) => requestJson<{ enabled: false }>("/api/pin", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ currentPin }) }),
 };

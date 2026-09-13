@@ -8,6 +8,7 @@ import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
 import { setSessionSummaryProfile } from "./features/session/useSessionSummary";
 import { resetSettingsClientState } from "./features/settings/useSettings";
 import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
+import { needsExplicitSelection, setSessionToken } from "./platform/sessionToken";
 import { AppRoutes, routes, type Screen } from "./routes";
 import { ProfilePicker } from "./screens/ProfilePicker";
 import { UnlockScreen } from "./screens/UnlockScreen";
@@ -60,6 +61,7 @@ export function App() {
 
   const teardownActiveProfile = useCallback(() => {
     setApiProfileId(null);
+    setSessionToken(null);
     setAnswerSubmitProfile(null);
     setSessionSummaryProfile(null);
     resetSettingsClientState();
@@ -106,6 +108,7 @@ export function App() {
         return;
       }
       resumeProfileRequests();
+      if (needsExplicitSelection(onlyProfile)) await apiClient.selectProfile(onlyProfile.id);
       await activateCurrentProfile("preserve");
       return;
     }
@@ -135,6 +138,7 @@ export function App() {
         const state = await apiClient.pinState(controller.signal);
         setLockedUntil(state.lockedUntil);
         try {
+          if (needsExplicitSelection(onlyProfile)) await apiClient.selectProfile(onlyProfile.id);
           await activateCurrentProfile("preserve", controller.signal);
         } catch (caught) {
           if (!controller.signal.aborted) setGate(isProfileRequired(caught) && state.enabled ? "locked" : "error");

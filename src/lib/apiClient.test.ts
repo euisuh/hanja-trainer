@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { PROFILE_EXPECTATION_HEADER, type SubmitReviewRequest } from "../../shared/api";
+import { getSessionToken, needsExplicitSelection, setSessionToken } from "../platform/sessionToken";
 import { ApiClientError, PIN_REQUIRED_EVENT, PROFILE_UPDATED_EVENT, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
 
 const profile = { id: 1, name: "나", isAdmin: true, xp: 20, todayXp: 10, goal: 40, streak: 2, longestStreak: 3, enabledTracks: ["kr"] } as const;
@@ -160,5 +161,102 @@ describe("profile update notifications", () => {
 
     expect(events).toHaveLength(2);
     expect(events[1]).not.toBeInstanceOf(CustomEvent);
+  });
+});
+
+describe("native session token", () => {
+  const origin = "https://hanja.uiseoya.com";
+  afterEach(() => {
+    setSessionToken(null);
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  function sent(fetchMock: ReturnType<typeof vi.fn>, call: number) {
+    const [url, init] = fetchMock.mock.calls[call] as [string, RequestInit];
+    return { url, init, headers: new Headers(init.headers) };
+  }
+
+  it("keeps the sign-in token and sends it as a bearer header without cookies", async () => {
+    vi.stubEnv("VITE_API_ORIGIN", origin);
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json({ selected: true, sessionToken: "2.100.sig" }))
+      .mockResolvedValueOnce(Response.json(profile));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await apiClient.selectProfile(2);
+    const select = sent(fetchMock, 0);
+    expect(select.url).toBe(`${origin}/api/profiles/select`);
+    expect(select.headers.get("x-hanja-session-transport")).toBe("bearer");
+    expect(select.headers.get("authorization")).toBeNull();
+    expect(getSessionToken()).toBe("2.100.sig");
+
+    await apiClient.profile(undefined, false, null);
+    const read = sent(fetchMock, 1);
+    expect(read.headers.get("authorization")).toBe("Bearer 2.100.sig");
+    expect(read.init.credentials).toBe("omit");
+  });
+
+  it("stores tokens from PIN unlock and recovery", async () => {
+    vi.stubEnv("VITE_API_ORIGIN", origin);
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce(Response.json({ unlocked: true, recoveryCode: "ABCDEFGHJK", sessionToken: "1.100.unlock" }))
+      .mockResolvedValueOnce(Response.json({ recovered: true, sessionToken: "1.100.recover" })));
+
+    await expect(apiClient.unlockPin(1, "1234")).resolves.toMatchObject({ recoveryCode: "ABCDEFGHJK" });
+    expect(getSessionToken()).toBe("1.100.unlock");
+    await apiClient.recoverPin(1, "ABCDEFGHJK");
+    expect(getSessionToken()).toBe("1.100.recover");
+  });
+
+  it("replaces the token with a renewal only while the sent token is current", async () => {
+    vi.stubEnv("VITE_API_ORIGIN", origin);
+    setSessionToken("1.100.old");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValueOnce(Response.json(profile, { headers: { "x-hanja-session": "1.200.new" } })));
+    await apiClient.profile(undefined, false, null);
+    expect(getSessionToken()).toBe("1.200.new");
+
+    let resolveResponse!: (response: Response) => void;
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>((resolve) => { resolveResponse = resolve; })));
+    const late = apiClient.profile(undefined, false, null);
+    setSessionToken(null);
+    resolveResponse(Response.json(profile, { headers: { "x-hanja-session": "1.300.late" } }));
+    await late;
+    expect(getSessionToken()).toBeNull();
+  });
+
+  it("clears the token when the session ends", async () => {
+    vi.stubEnv("VITE_API_ORIGIN", origin);
+    setSessionToken("1.100.sig");
+    const fetchMock = vi.fn().mockResolvedValueOnce(Response.json({ ended: true }));
+    vi.stubGlobal("fetch", fetchMock);
+    await apiClient.endSession();
+    expect(getSessionToken()).toBeNull();
+    expect(sent(fetchMock, 0).headers.get("authorization")).toBeNull();
+  });
+
+  it("leaves the web cookie flow untouched", async () => {
+    setSessionToken("1.100.stray");
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(Response.json({ selected: true, sessionToken: "2.100.ignored" }))
+      .mockResolvedValueOnce(Response.json(profile, { headers: { "x-hanja-session": "2.200.ignored" } }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await apiClient.selectProfile(2);
+    await apiClient.profile(undefined, false, null);
+    expect(sent(fetchMock, 0).url).toBe("/api/profiles/select");
+    expect(sent(fetchMock, 0).headers.get("x-hanja-session-transport")).toBeNull();
+    expect(sent(fetchMock, 1).headers.get("authorization")).toBeNull();
+    expect(sent(fetchMock, 1).init.credentials).toBeUndefined();
+    expect(getSessionToken()).toBe("1.100.stray");
+  });
+
+  it("selects the lone PIN-less profile explicitly only in a native shell without a token", () => {
+    expect(needsExplicitSelection({ hasPin: false })).toBe(false);
+    vi.stubEnv("VITE_API_ORIGIN", origin);
+    expect(needsExplicitSelection({ hasPin: false })).toBe(true);
+    expect(needsExplicitSelection({ hasPin: true })).toBe(false);
+    setSessionToken("1.100.sig");
+    expect(needsExplicitSelection({ hasPin: false })).toBe(false);
   });
 });
