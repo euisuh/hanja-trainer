@@ -1,5 +1,5 @@
 import { TRACKS, type Track } from "../../shared/types";
-import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../shared/api";
+import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../shared/api";
 import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
@@ -7,7 +7,7 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
-import { clearLegacyPinCookie, clearSessionCookie, createSessionCookie, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, setDevicePin, unlockDevice } from "../auth/pin";
+import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 
@@ -34,6 +34,23 @@ function withCookie(response: Response, cookie: string): Response {
   // Garbage-collect the pre-multi-profile cookie name on every cookie-bearing
   // response so a browser that still holds one doesn't keep sending it forever.
   headers.append("set-cookie", clearLegacyPinCookie);
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
+// Tokens reach JavaScript only when the client explicitly asks for bearer
+// transport while presenting a credential, or already authenticated with a
+// bearer token. A cookie session is never converted into a readable token.
+function issueSession(request: Request, body: Record<string, unknown>, token: string): Response {
+  return request.headers.get(SESSION_TRANSPORT_HEADER) === "bearer"
+    ? Response.json({ ...body, sessionToken: token }, { headers: { "cache-control": "no-store" } })
+    : withCookie(Response.json(body), sessionCookie(token));
+}
+
+function renewSession(response: Response, credentials: SessionCredentials, token: string): Response {
+  if (credentials.authorization === null) return withCookie(response, sessionCookie(token));
+  const headers = new Headers(response.headers);
+  headers.set(SESSION_TOKEN_HEADER, token);
+  headers.set("cache-control", "no-store");
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 
@@ -220,11 +237,12 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
       return error(403, "cross_site_request", "cross-site requests are not allowed");
     }
     const { pathname } = url;
+    const credentials: SessionCredentials = { cookie: request.headers.get("cookie"), authorization: request.headers.get("authorization") };
     if (request.method === "GET" && pathname === "/api/profiles") {
       return Response.json({ profiles: await listProfiles(env.DB) });
     }
     if (request.method === "GET" && pathname === "/api/pin/state") {
-      const record = await resolveSession(env.DB, request.headers.get("cookie"), now) ?? await readOnlyProfile(env.DB);
+      const record = await resolveSession(env.DB, credentials, now) ?? await readOnlyProfile(env.DB);
       if (!record) return error(401, "profile_required", "Select a profile");
       const locked = Boolean(record.pin_locked_until && record.pin_locked_until > now);
       return Response.json({ enabled: Boolean(record.pin_hash), locked, lockedUntil: locked ? record.pin_locked_until : null });
@@ -232,21 +250,21 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
     if (request.method === "POST" && pathname === "/api/pin/unlock") {
       const body = await jsonBody(request);
       const result = await unlockDevice(env.DB, profileId(body.profileId), body.pin, now);
-      return withCookie(Response.json({ unlocked: true, ...(result.recoveryCode ? { recoveryCode: result.recoveryCode } : {}) }), result.cookie);
+      return issueSession(request, { unlocked: true, ...(result.recoveryCode ? { recoveryCode: result.recoveryCode } : {}) }, result.token);
     }
     if (request.method === "POST" && pathname === "/api/pin/recover") {
       const body = await jsonBody(request);
-      return withCookie(Response.json({ recovered: true }), await recoverAdminPin(env.DB, profileId(body.profileId), body.code, now));
+      return issueSession(request, { recovered: true }, await recoverAdminPin(env.DB, profileId(body.profileId), body.code, now));
     }
     if (request.method === "POST" && pathname === "/api/profiles/select") {
       const body = await jsonBody(request);
-      return withCookie(Response.json({ selected: true }), await selectProfile(env.DB, profileId(body.profileId), now));
+      return issueSession(request, { selected: true }, await selectProfile(env.DB, profileId(body.profileId), now));
     }
     if (request.method === "POST" && pathname === "/api/session/end") {
       return withCookie(Response.json({ ended: true }), clearSessionCookie);
     }
 
-    const record = await resolveSession(env.DB, request.headers.get("cookie"), now);
+    const record = await resolveSession(env.DB, credentials, now);
     if (!record) return error(401, "profile_required", "Select a profile");
     const rawExpectedProfileId = request.headers.get(PROFILE_EXPECTATION_HEADER);
     const expectedProfileId = rawExpectedProfileId !== null && /^[1-9]\d*$/u.test(rawExpectedProfileId) ? Number(rawExpectedProfileId) : null;
@@ -267,7 +285,7 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
     }
 
     const response = await dispatchApiRequest(request, env, record.id);
-    return record.pin_secret ? withCookie(response, await createSessionCookie(record.id, record.pin_secret, now)) : response;
+    return record.pin_secret ? renewSession(response, credentials, await createSessionToken(record.id, record.pin_secret, now)) : response;
   } catch (caught) {
     if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
     if (caught instanceof ProfileError) return error(caught.status, caught.code, caught.message);

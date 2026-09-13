@@ -156,6 +156,16 @@ copied D1 contents, so Worker-side throttling applies independently to each prof
 Activity extends a two-hour session window, while closing the browser clears
 the session.
 
+Native clients cannot use the `SameSite=Strict` cookie. They send
+`x-hanja-session-transport: bearer` to `POST /api/profiles/select`,
+`/api/pin/unlock`, or `/api/pin/recover` and receive the same signed token as
+`sessionToken` in the JSON body, then authenticate with
+`Authorization: Bearer <token>`. Bearer-authenticated responses return the
+renewed token in `x-hanja-session`. Any `Authorization` header is treated as a
+bearer attempt: an invalid token is rejected and never falls back to the cookie
+or to the lone PIN-less profile. A cookie session is never exchanged for a
+readable token, and changing a PIN rotates the secret that signs both.
+
 There is no recovery flow inside the app. Recover a forgotten PIN through an
 audited operator credential reset for only the affected profile, preserving
 its learner tables. Rotate rather than clear `pin_secret` so existing sessions

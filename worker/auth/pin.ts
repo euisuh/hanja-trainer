@@ -26,7 +26,8 @@ export type PinRecord = {
 
 export type PublicProfile = { id: number; name: string; hasPin: boolean; isAdmin: boolean };
 export type PinCredentials = { hash: string; salt: string; iterations: number; secret: string };
-export type UnlockResult = { cookie: string; recoveryCode?: string };
+export type UnlockResult = { token: string; recoveryCode?: string };
+export type SessionCredentials = { cookie: string | null; authorization: string | null };
 
 export class PinError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string, public readonly retryAfter?: number) {
@@ -247,9 +248,15 @@ async function sign(payload: string, secret: string): Promise<Uint8Array<ArrayBu
   return new Uint8Array(await crypto.subtle.sign("HMAC", key, encoder.encode(payload)));
 }
 
-export async function verifyPinSession(record: PinRecord, cookieHeader: string | null, now: number): Promise<boolean> {
+// Native clients cannot use the SameSite=Strict cookie, so they present the same
+// signed token as `Authorization: Bearer <token>`.
+export function bearerToken(header: string | null): string | null {
+  return /^Bearer ([^\s]+)$/iu.exec(header ?? "")?.[1] ?? null;
+}
+
+async function verifyPinSession(record: PinRecord, token: string | null, now: number): Promise<boolean> {
   if (!record.pin_secret) return false;
-  const parsed = cookiePayload(cookieValue(cookieHeader));
+  const parsed = cookiePayload(token);
   if (!parsed || parsed.profileId !== record.id || Number(parsed.expiry) <= now) return false;
   const payload = `${parsed.profileId}.${parsed.expiry}`;
   try {
@@ -266,22 +273,31 @@ async function adminCanAuthenticate(db: D1Database, record: PinRecord): Promise<
   return count?.count === 1;
 }
 
-export async function resolveSession(db: D1Database, cookieHeader: string | null, now: number): Promise<PinRecord | null> {
-  const parsed = cookiePayload(cookieValue(cookieHeader));
+export async function resolveSession(db: D1Database, credentials: SessionCredentials, now: number): Promise<PinRecord | null> {
+  // Any Authorization header is a bearer attempt: it never falls back to the
+  // cookie or to the lone PIN-less profile, so a bad token is always rejected.
+  const bearer = credentials.authorization !== null;
+  const token = bearer ? bearerToken(credentials.authorization) : cookieValue(credentials.cookie);
+  const parsed = cookiePayload(token);
   if (parsed) {
     const record = await findPinRecord(db, parsed.profileId);
-    if (record && await verifyPinSession(record, cookieHeader, now) && await adminCanAuthenticate(db, record)) return record;
+    if (record && await verifyPinSession(record, token, now) && await adminCanAuthenticate(db, record)) return record;
   }
+  if (bearer) return null;
   // A lone PIN-less profile preserves the original single-profile experience.
   // Two or more profiles always require an explicit, signed selection.
   const only = await readOnlyProfile(db);
   return only && !only.pin_hash ? only : null;
 }
 
-export async function createSessionCookie(profileId: number, secret: string, now: number): Promise<string> {
+export async function createSessionToken(profileId: number, secret: string, now: number): Promise<string> {
   const expiry = String(now + PIN_SESSION_MS);
   const payload = `${profileId}.${expiry}`;
-  return `${PIN_COOKIE}=${payload}.${base64Url(await sign(payload, secret))}; HttpOnly; Secure; SameSite=Strict; Path=/`;
+  return `${payload}.${base64Url(await sign(payload, secret))}`;
+}
+
+export function sessionCookie(token: string): string {
+  return `${PIN_COOKIE}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/`;
 }
 
 export const clearSessionCookie = `${PIN_COOKIE}=; Max-Age=0; HttpOnly; Secure; SameSite=Strict; Path=/`;
@@ -303,7 +319,7 @@ export async function selectProfile(db: D1Database, profileId: number, now: numb
   if (record.pin_hash) throw new PinError(401, "pin_required", "Profile PIN is required");
   if (!await adminCanAuthenticate(db, record)) throw new PinError(409, "admin_pin_required", "Admin PIN is required while multiple profiles exist");
   record = await ensureSessionSecret(db, record, now);
-  return createSessionCookie(profileId, record.pin_secret!, now);
+  return createSessionToken(profileId, record.pin_secret!, now);
 }
 
 function lockError(record: PinRecord, now: number): PinError | null {
@@ -395,12 +411,12 @@ export async function unlockDevice(
         record.pin_secret, record.pin_failures, record.pin_locked_until,
       ).run();
       if (result.meta.changes === 1) {
-        return { cookie: await createSessionCookie(profileId, record.pin_secret!, now), recoveryCode: recovery.code };
+        return { token: await createSessionToken(profileId, record.pin_secret!, now), recoveryCode: recovery.code };
       }
       return null;
     }
     return await updateFailures(db, record, 0, null)
-      ? { cookie: await createSessionCookie(profileId, record.pin_secret!, now) }
+      ? { token: await createSessionToken(profileId, record.pin_secret!, now) }
       : null;
   }, derive);
 }
@@ -427,6 +443,6 @@ export async function recoverAdminPin(
       record.recovery_hash, record.recovery_salt, record.recovery_iterations,
       record.pin_failures, record.pin_locked_until,
     ).run();
-    return result.meta.changes === 1 ? createSessionCookie(profileId, secret, now) : null;
+    return result.meta.changes === 1 ? createSessionToken(profileId, secret, now) : null;
   }, derive);
 }

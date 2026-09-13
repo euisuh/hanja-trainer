@@ -150,7 +150,7 @@ describe("device PIN", () => {
     await setDevicePin(fixture.env.DB, 1, "9012", undefined);
     release();
     await rejected;
-    await expect(unlockDevice(fixture.env.DB, 1, "9012", Date.now())).resolves.toMatchObject({ cookie: expect.stringContaining("hanja_session=") });
+    await expect(unlockDevice(fixture.env.DB, 1, "9012", Date.now())).resolves.toMatchObject({ token: expect.stringMatching(/^1\.\d+\.[\w-]+$/u) });
   });
 
   it("rejects a stale PIN removal after a concurrent PIN change wins", async () => {
@@ -172,7 +172,7 @@ describe("device PIN", () => {
     await setDevicePin(fixture.env.DB, 1, "5678", "1234");
     release();
     await rejected;
-    await expect(unlockDevice(fixture.env.DB, 1, "5678", Date.now())).resolves.toMatchObject({ cookie: expect.stringContaining("hanja_session=") });
+    await expect(unlockDevice(fixture.env.DB, 1, "5678", Date.now())).resolves.toMatchObject({ token: expect.stringMatching(/^1\.\d+\.[\w-]+$/u) });
   });
 
   it("lists only public fields and requires a signed selection when profiles multiply", async () => {

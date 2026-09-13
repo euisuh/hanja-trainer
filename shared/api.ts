@@ -4,6 +4,12 @@ import type { OnyomiScript, SoundMode, ThemeId } from "./settings";
 // Four two-character word reviews use 37 SQL statements including profile resolution.
 export const MAX_REVIEW_BATCH_SIZE = 4;
 export const PROFILE_EXPECTATION_HEADER = "x-hanja-profile-id";
+// Native clients send SESSION_TRANSPORT_HEADER: "bearer" when selecting,
+// unlocking, or recovering to receive `sessionToken` in the JSON body instead of
+// a cookie, then authenticate with `Authorization: Bearer`. Bearer-authenticated
+// responses carry the renewed token in SESSION_TOKEN_HEADER.
+export const SESSION_TRANSPORT_HEADER = "x-hanja-session-transport";
+export const SESSION_TOKEN_HEADER = "x-hanja-session";
 
 export type ApiErrorBody = { error: { code: string; message: string } };
 export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };

@@ -1,6 +1,7 @@
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import { applyMigrations } from "../test/schema";
+import { PIN_SESSION_MS } from "../auth/pin";
 import { routeApiRequest } from "./router";
 
 function result<T>(results: T[], changes = 0): D1Result<T> {
@@ -137,5 +138,94 @@ describe("profile expectations", () => {
     ]);
     expect([tracks.status, sound.status]).toEqual([200, 200]);
     expect(fixture.sqlite.prepare("SELECT enabled_tracks, sound_mode FROM profile WHERE id = ?").get(secondId)).toEqual({ enabled_tracks: '["jp"]', sound_mode: "off" });
+  });
+});
+
+describe("bearer session tokens", () => {
+  const databases: DatabaseSync[] = [];
+  afterEach(() => { for (const database of databases.splice(0)) database.close(); });
+  const now = 1_800_000_000_000;
+
+  function twoProfiles() {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const secondId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    return { ...fixture, secondId };
+  }
+
+  async function bearerSelect(env: Env, profileId: number, at = now) {
+    const response = await routeApiRequest(jsonRequest("/api/profiles/select", "POST", { profileId }, { "x-hanja-session-transport": "bearer" }), env, at);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("set-cookie")).toBeNull();
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    const body = await response.json() as { selected: true; sessionToken: string };
+    expect(body).toEqual({ selected: true, sessionToken: expect.stringMatching(new RegExp(`^${profileId}\\.\\d+\\.[\\w-]+$`, "u")) });
+    return body.sessionToken;
+  }
+
+  it("issues a token on explicit bearer transport and authenticates with it", async () => {
+    const { env, secondId } = twoProfiles();
+    const token = await bearerSelect(env, secondId);
+
+    const response = await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: `Bearer ${token}` } }), env, now + 1_000);
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ id: secondId });
+    expect(response.headers.get("set-cookie")).toBeNull();
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    const renewed = response.headers.get("x-hanja-session");
+    expect(renewed).toMatch(new RegExp(`^${secondId}\\.${now + 1_000 + PIN_SESSION_MS}\\.`, "u"));
+    expect(renewed).not.toBe(token);
+    expect((await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: `Bearer ${renewed}` } }), env, now + 2_000)).status).toBe(200);
+  });
+
+  it("keeps the web cookie flow unchanged and never exposes a token to it", async () => {
+    const { env, secondId } = twoProfiles();
+    const selected = await routeApiRequest(jsonRequest("/api/profiles/select", "POST", { profileId: secondId }), env, now);
+    expect(await selected.json()).toEqual({ selected: true });
+    const session = cookie(selected);
+
+    const response = await routeApiRequest(new Request("https://test/api/profile", { headers: { cookie: session, "x-hanja-session-transport": "bearer" } }), env, now);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-hanja-session")).toBeNull();
+    expect(response.headers.get("set-cookie")).toContain("hanja_session=");
+  });
+
+  it("rejects tampered, expired, malformed, and non-bearer authorization without fallback", async () => {
+    const { env, secondId } = twoProfiles();
+    const token = await bearerSelect(env, secondId);
+    const session = cookie(await routeApiRequest(jsonRequest("/api/profiles/select", "POST", { profileId: secondId }), env, now));
+    const signatureStart = token.lastIndexOf(".") + 1;
+    // Flip a middle signature character; the final base64url character only carries padding bits.
+    const tampered = `${token.slice(0, signatureStart + 5)}${token[signatureStart + 5] === "A" ? "B" : "A"}${token.slice(signatureStart + 6)}`;
+    const attempts: Array<[string, number]> = [
+      [`Bearer ${tampered}`, now],
+      [`Bearer ${token}`, now + PIN_SESSION_MS],
+      [`Bearer ${secondId}.${now + PIN_SESSION_MS}`, now],
+      ["Bearer", now],
+      [`Basic ${token}`, now],
+    ];
+    for (const [authorization, at] of attempts) {
+      const response = await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization, cookie: session } }), env, at);
+      expect(response.status, authorization).toBe(401);
+      expect(await response.json()).toEqual({ error: { code: "profile_required", message: "Select a profile" } });
+    }
+  });
+
+  it("does not auto-select the lone PIN-less profile for a bearer attempt", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    expect((await routeApiRequest(new Request("https://test/api/profile"), fixture.env, now)).status).toBe(200);
+    expect((await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: "Bearer garbage" } }), fixture.env, now)).status).toBe(401);
+  });
+
+  it("revokes outstanding bearer tokens when the PIN changes", async () => {
+    const { env, secondId } = twoProfiles();
+    const token = await bearerSelect(env, secondId);
+    const setPin = await routeApiRequest(jsonRequest("/api/pin", "POST", { pin: "1234" }, { authorization: `Bearer ${token}`, "x-hanja-profile-id": String(secondId) }), env, now);
+    expect(setPin.status).toBe(200);
+    expect((await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: `Bearer ${token}` } }), env, now)).status).toBe(401);
+
+    const unlocked = await routeApiRequest(jsonRequest("/api/pin/unlock", "POST", { profileId: secondId, pin: "1234" }, { "x-hanja-session-transport": "bearer" }), env, now);
+    expect(unlocked.headers.get("set-cookie")).toBeNull();
+    const { sessionToken } = await unlocked.json() as { sessionToken: string };
+    expect((await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: `Bearer ${sessionToken}` } }), env, now)).status).toBe(200);
   });
 });
