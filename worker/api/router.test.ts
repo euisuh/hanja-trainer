@@ -229,3 +229,77 @@ describe("bearer session tokens", () => {
     expect((await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: `Bearer ${sessionToken}` } }), env, now)).status).toBe(200);
   });
 });
+
+describe("native app origins", () => {
+  const databases: DatabaseSync[] = [];
+  afterEach(() => { for (const database of databases.splice(0)) database.close(); });
+  const now = 1_800_000_000_000;
+  const nativeOrigins = ["capacitor://localhost", "https://localhost"];
+
+  function nativeHeaders(origin: string, extra: Record<string, string> = {}) {
+    return { origin, "sec-fetch-site": "cross-site", ...extra };
+  }
+
+  it("answers preflights only for Capacitor origins", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    for (const origin of nativeOrigins) {
+      const response = await routeApiRequest(new Request("https://test/api/reviews/batch", { method: "OPTIONS", headers: { origin, "access-control-request-method": "POST" } }), fixture.env);
+      expect(response.status).toBe(204);
+      expect(response.headers.get("access-control-allow-origin")).toBe(origin);
+      expect(response.headers.get("access-control-allow-headers")).toBe("authorization, content-type, x-hanja-profile-id, x-hanja-session-transport");
+      expect(response.headers.get("access-control-allow-credentials")).toBeNull();
+    }
+    for (const origin of ["https://evil.example", "http://localhost", "capacitor://evil", "null"]) {
+      const response = await routeApiRequest(new Request("https://test/api/reviews/batch", { method: "OPTIONS", headers: { origin, "sec-fetch-site": "cross-site" } }), fixture.env);
+      expect(response.headers.get("access-control-allow-origin"), origin).toBeNull();
+    }
+  });
+
+  it("signs in with a body token and never sets a cookie for native origins", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const secondId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    for (const origin of nativeOrigins) {
+      const selected = await routeApiRequest(jsonRequest("/api/profiles/select", "POST", { profileId: secondId }, nativeHeaders(origin)), fixture.env, now);
+      expect(selected.status).toBe(200);
+      expect(selected.headers.get("set-cookie")).toBeNull();
+      expect(selected.headers.get("access-control-allow-origin")).toBe(origin);
+      const { sessionToken } = await selected.json() as { sessionToken: string };
+
+      const patched = await routeApiRequest(jsonRequest("/api/settings", "PATCH", { dailyGoal: 60 }, nativeHeaders(origin, { authorization: `Bearer ${sessionToken}`, "x-hanja-profile-id": String(secondId) })), fixture.env, now + 1_000);
+      expect(patched.status).toBe(200);
+      expect(patched.headers.get("access-control-allow-origin")).toBe(origin);
+      expect(patched.headers.get("access-control-expose-headers")).toBe("x-hanja-session, retry-after");
+      expect(patched.headers.get("x-hanja-session")).toMatch(new RegExp(`^${secondId}\\.`, "u"));
+      expect(patched.headers.get("set-cookie")).toBeNull();
+
+      const ended = await routeApiRequest(new Request("https://test/api/session/end", { method: "POST", headers: nativeHeaders(origin) }), fixture.env, now);
+      expect(ended.status).toBe(200);
+      expect(ended.headers.get("set-cookie")).toBeNull();
+    }
+  });
+
+  it("ignores cookies and the lone PIN-less profile for native origins", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    for (const origin of nativeOrigins) {
+      const lone = await routeApiRequest(new Request("https://test/api/profile", { headers: nativeHeaders(origin) }), fixture.env, now);
+      expect(lone.status).toBe(401);
+      expect(lone.headers.get("access-control-allow-origin")).toBe(origin);
+    }
+    const secondId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    const session = cookie(await routeApiRequest(jsonRequest("/api/profiles/select", "POST", { profileId: secondId }), fixture.env, now));
+    for (const origin of nativeOrigins) {
+      const response = await routeApiRequest(jsonRequest("/api/sessions", "POST", { mode: "lesson", startedAt: new Date(0).toISOString(), endedAt: new Date(0).toISOString(), answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10 }, nativeHeaders(origin, { cookie: session, "x-hanja-profile-id": String(secondId) })), fixture.env, now);
+      expect(response.status).toBe(401);
+    }
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM sessions").get()).toEqual({ count: 0 });
+  });
+
+  it("adds no CORS headers for other origins", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const response = await routeApiRequest(request("/api/reviews", "POST", { origin: "https://evil.example", "sec-fetch-site": "cross-site" }), fixture.env);
+    expect(response.status).toBe(403);
+    expect(response.headers.get("access-control-allow-origin")).toBeNull();
+    const read = await routeApiRequest(request("/api/profiles", "GET", { origin: "https://evil.example", "sec-fetch-site": "cross-site" }), fixture.env);
+    expect(read.headers.get("access-control-allow-origin")).toBeNull();
+  });
+});

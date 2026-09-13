@@ -21,6 +21,25 @@ function crossSite(request: Request, url: URL): boolean {
   return origin !== null && origin !== url.origin;
 }
 
+// Capacitor WebView origins (iOS, Android). Requests from them are bearer-only:
+// the cookie is ignored, the lone PIN-less profile is never auto-selected, and
+// credentials come back in the body rather than Set-Cookie. A desktop page that
+// happens to run on https://localhost therefore gains nothing curl lacks.
+const NATIVE_ORIGINS = new Set(["capacitor://localhost", "https://localhost"]);
+
+function nativeOrigin(request: Request): string | null {
+  const origin = request.headers.get("origin");
+  return origin !== null && NATIVE_ORIGINS.has(origin) ? origin : null;
+}
+
+function withCors(response: Response, origin: string): Response {
+  const headers = new Headers(response.headers);
+  headers.set("access-control-allow-origin", origin);
+  headers.set("access-control-expose-headers", `${SESSION_TOKEN_HEADER}, retry-after`);
+  headers.append("vary", "origin");
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
 function error(status: number, code: string, message: string, retryAfter?: number): Response {
   return Response.json(
     { error: { code, message }, ...(retryAfter === undefined ? {} : { retryAfter }) } satisfies ApiErrorBody & { retryAfter?: number },
@@ -41,7 +60,7 @@ function withCookie(response: Response, cookie: string): Response {
 // transport while presenting a credential, or already authenticated with a
 // bearer token. A cookie session is never converted into a readable token.
 function issueSession(request: Request, body: Record<string, unknown>, token: string): Response {
-  return request.headers.get(SESSION_TRANSPORT_HEADER) === "bearer"
+  return request.headers.get(SESSION_TRANSPORT_HEADER) === "bearer" || nativeOrigin(request)
     ? Response.json({ ...body, sessionToken: token }, { headers: { "cache-control": "no-store" } })
     : withCookie(Response.json(body), sessionCookie(token));
 }
@@ -231,13 +250,33 @@ function profileId(value: unknown): number {
 }
 
 export async function routeApiRequest(request: Request, env: Env, now = Date.now()): Promise<Response> {
+  const origin = nativeOrigin(request);
+  if (!origin) return handleApiRequest(request, env, now, false);
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "access-control-allow-origin": origin,
+        "access-control-allow-methods": "GET, HEAD, POST, PATCH, DELETE",
+        "access-control-allow-headers": `authorization, content-type, ${PROFILE_EXPECTATION_HEADER}, ${SESSION_TRANSPORT_HEADER}`,
+        "access-control-max-age": "600",
+        vary: "origin",
+      },
+    });
+  }
+  return withCors(await handleApiRequest(request, env, now, true), origin);
+}
+
+async function handleApiRequest(request: Request, env: Env, now: number, native: boolean): Promise<Response> {
   try {
     const url = new URL(request.url);
-    if (request.method !== "GET" && request.method !== "HEAD" && crossSite(request, url)) {
+    if (!native && request.method !== "GET" && request.method !== "HEAD" && crossSite(request, url)) {
       return error(403, "cross_site_request", "cross-site requests are not allowed");
     }
     const { pathname } = url;
-    const credentials: SessionCredentials = { cookie: request.headers.get("cookie"), authorization: request.headers.get("authorization") };
+    const credentials: SessionCredentials = native
+      ? { cookie: null, authorization: request.headers.get("authorization") ?? "" }
+      : { cookie: request.headers.get("cookie"), authorization: request.headers.get("authorization") };
     if (request.method === "GET" && pathname === "/api/profiles") {
       return Response.json({ profiles: await listProfiles(env.DB) });
     }
@@ -261,7 +300,7 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
       return issueSession(request, { selected: true }, await selectProfile(env.DB, profileId(body.profileId), now));
     }
     if (request.method === "POST" && pathname === "/api/session/end") {
-      return withCookie(Response.json({ ended: true }), clearSessionCookie);
+      return native ? Response.json({ ended: true }) : withCookie(Response.json({ ended: true }), clearSessionCookie);
     }
 
     const record = await resolveSession(env.DB, credentials, now);

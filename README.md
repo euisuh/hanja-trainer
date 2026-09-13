@@ -166,6 +166,13 @@ bearer attempt: an invalid token is rejected and never falls back to the cookie
 or to the lone PIN-less profile. A cookie session is never exchanged for a
 readable token, and changing a PIN rotates the secret that signs both.
 
+The Capacitor origins `capacitor://localhost` and `https://localhost` are the
+only cross-origin callers the API allows (no credentials mode). Requests from
+them are bearer-only: cookies are ignored, the lone PIN-less profile is never
+auto-selected, and sign-in always returns `sessionToken` in the body. Every
+other origin gets no CORS headers, and cross-site browser writes stay rejected.
+Audio needs no CORS because the app plays it through media elements.
+
 There is no recovery flow inside the app. Recover a forgotten PIN through an
 audited operator credential reset for only the affected profile, preserving
 its learner tables. Rotate rather than clear `pin_secret` so existing sessions
