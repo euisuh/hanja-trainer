@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { SessionQueueItem } from "../../shared/buildQueue";
+import type { SessionQueueItem } from "../../../shared/buildQueue";
 import { insertCorrection, issuedQueue } from "./correctionQueue";
 
 const card = (id: number): SessionQueueItem => ({

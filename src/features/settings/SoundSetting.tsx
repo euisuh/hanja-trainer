@@ -1,4 +1,4 @@
-import { SOUND_MODES, type SoundMode } from "../../shared/settings";
+import { SOUND_MODES, type SoundMode } from "../../../shared/settings";
 
 const labels: Record<SoundMode, string> = { on: "켜기", off: "끄기" };
 

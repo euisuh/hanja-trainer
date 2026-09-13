@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, CreateSessionRequest, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import { applyMigrations } from "../test/schema";
 import { getStats } from "./stats";

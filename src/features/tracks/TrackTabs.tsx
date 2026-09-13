@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { Track } from "../../shared/types";
+import type { Track } from "../../../shared/types";
 import { trackThemes } from "./trackTheme";
 
 export function TrackTabs({ active, enabled, onChange }: { active: Track; enabled: Track[]; onChange: (track: Track) => void }) {

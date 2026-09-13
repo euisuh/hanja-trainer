@@ -7,11 +7,11 @@ import "../features/review/review.css";
 import { SessionRunner } from "../features/session/SessionRunner";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
 import { enqueuePendingSummary } from "../features/session/useSessionSummary";
-import type { SessionQueueItem } from "../shared/buildQueue";
+import type { SessionQueueItem } from "../../shared/buildQueue";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
-import type { CurriculumResponse, DueReviewsResponse } from "../shared/api";
-import type { Track } from "../shared/types";
+import type { CurriculumResponse, DueReviewsResponse } from "../../shared/api";
+import type { Track } from "../../shared/types";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };
 type LoadState<T> = { key: string; value?: T; error?: string };

@@ -2,8 +2,8 @@ import { spawn, spawnSync } from "node:child_process";
 import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { joinSpokenReadings } from "../src/shared/spokenReading.ts";
-import type { SeedDocument, SeedSentenceDocument, SeedTrackEntry, Track } from "../src/shared/types.ts";
+import { joinSpokenReadings } from "../shared/spokenReading.ts";
+import type { SeedDocument, SeedSentenceDocument, SeedTrackEntry, Track } from "../shared/types.ts";
 import { parseSeed, parseSentenceSeed } from "./seed.ts";
 
 type AudioEntry = { key: string; objectKey: string; text: string; track: Track };

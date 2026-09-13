@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { apiClient } from "../lib/apiClient";
-import { TRACKS, type Track } from "../shared/types";
+import { TRACKS, type Track } from "../../shared/types";
 import { trackThemes } from "../features/tracks/trackTheme";
 import "../features/onboarding/onboarding.css";
 

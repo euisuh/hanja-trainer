@@ -11,8 +11,8 @@ import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTING
 import { AppRoutes, routes, type Screen } from "./routes";
 import { ProfilePicker } from "./screens/ProfilePicker";
 import { UnlockScreen } from "./screens/UnlockScreen";
-import type { ProfileResponse, PublicProfile, SettingsResponse } from "./shared/api";
-import type { ThemeId } from "./shared/settings";
+import type { ProfileResponse, PublicProfile, SettingsResponse } from "../shared/api";
+import type { ThemeId } from "../shared/settings";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
 import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";

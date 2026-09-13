@@ -4,7 +4,7 @@ import { Keypad } from "../features/pin/Keypad";
 import { RecoveryCodeNotice } from "../features/pin/RecoveryCodeNotice";
 import { avatarHue } from "../features/profile/avatarHue";
 import { ApiClientError, apiClient } from "../lib/apiClient";
-import type { PublicProfile } from "../shared/api";
+import type { PublicProfile } from "../../shared/api";
 import "../features/pin/pin.css";
 
 type UnlockScreenProps = {

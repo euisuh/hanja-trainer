@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { PROFILE_UPDATED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, isApiProfileId } from "../../lib/apiClient";
-import type { PatchSettingsRequest, SettingsResponse } from "../../shared/api";
-import { DAILY_GOAL, DEFAULT_DAILY_GOAL, DEFAULT_SOUND_MODE, normalizeDailyGoal, normalizeSettingsPatch, type OnyomiScript, type SoundMode, type ThemeId } from "../../shared/settings";
-import { TRACKS, type Track } from "../../shared/types";
+import type { PatchSettingsRequest, SettingsResponse } from "../../../shared/api";
+import { DAILY_GOAL, DEFAULT_DAILY_GOAL, DEFAULT_SOUND_MODE, normalizeDailyGoal, normalizeSettingsPatch, type OnyomiScript, type SoundMode, type ThemeId } from "../../../shared/settings";
+import { TRACKS, type Track } from "../../../shared/types";
 import { useActiveProfile } from "../profile/ProfileContext";
 
 export { DAILY_GOAL, normalizeDailyGoal };

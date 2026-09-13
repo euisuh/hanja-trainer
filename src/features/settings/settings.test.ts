@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { shortcutRows } from "./ShortcutSheet";
 import { createSettingsSaver, DAILY_GOAL, normalizeDailyGoal, toggleTrack } from "./useSettings";
-import { DEFAULT_SOUND_MODE, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS } from "../../shared/settings";
+import { DEFAULT_SOUND_MODE, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS } from "../../../shared/settings";
 import { GLOBAL_DESTINATIONS, SHORTCUTS } from "../../shell/shortcuts";
 
 describe("settings", () => {

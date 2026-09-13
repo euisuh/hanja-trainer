@@ -1,10 +1,10 @@
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
+import type { CharacterDetailResponse, CurriculumResponse, StartSessionResponse, StatsResponse, UnitStudyResponse, UnitTestAnswer, UnitTestResult } from "../../shared/api";
 import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, levelOrdFor, parseSeed, parseSentenceSeed, parseWordSeed } from "../../scripts/seed";
-import type { Track } from "../../src/shared/types";
-import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
+import type { Track } from "../../shared/types";
+import { unitTestRetryOffset } from "../../shared/unitTestRetry";
 import { listForTracks } from "../db/characters";
 import { applyMigrations } from "../test/schema";
 import { startSession } from "./cards";

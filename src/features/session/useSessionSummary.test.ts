@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ApiClientError, apiClient } from "../../lib/apiClient";
-import type { CreateSessionRequest, ProfileResponse } from "../../shared/api";
+import type { CreateSessionRequest, ProfileResponse } from "../../../shared/api";
 import { discardRejectedSummaries, enqueuePendingSummary, exportRejectedSummaries, flushPendingSummaries, pendingSummaryCount, resetSessionSummaryForTests, retryPendingSummaries, sessionSummaryStatus, setSessionSummaryProfile, syncSummaryStorageEvent } from "./useSessionSummary";
 
 const storageKey = "hanja-trainer:pending-session-summaries";

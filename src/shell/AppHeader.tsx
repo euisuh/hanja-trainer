@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useActiveProfile } from "../features/profile/ProfileContext";
 import { apiClient, PROFILE_UPDATED_EVENT, validProfileResponse } from "../lib/apiClient";
-import type { ProfileResponse } from "../shared/api";
+import type { ProfileResponse } from "../../shared/api";
 
 type Props = { streak?: number; xp?: number; today?: number; goal?: number; onSwitch?: () => void };
 

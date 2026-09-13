@@ -6,8 +6,8 @@ import { TrackPanel } from "../features/detail/TrackPanel";
 import { useSettings } from "../features/settings/useSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient, ApiClientError } from "../lib/apiClient";
-import type { ApiReviewState, CharacterDetailResponse } from "../shared/api";
-import type { Track } from "../shared/types";
+import type { ApiReviewState, CharacterDetailResponse } from "../../shared/api";
+import type { Track } from "../../shared/types";
 import "../features/detail/detail.css";
 
 function variantLine(character: CharacterDetailResponse): string {

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useActiveProfile } from "../profile/ProfileContext";
 import { ApiClientError, PIN_REQUIRED_EVENT, apiClient, isAuthenticationError, isPermanentApiError, retryDelayMs } from "../../lib/apiClient";
-import { MAX_REVIEW_BATCH_SIZE, type SubmitReviewRequest, type SubmitReviewResponse } from "../../shared/api";
-import { parseReviewRequest } from "../../shared/review";
+import { MAX_REVIEW_BATCH_SIZE, type SubmitReviewRequest, type SubmitReviewResponse } from "../../../shared/api";
+import { parseReviewRequest } from "../../../shared/review";
 import { decodeEntryKey, removeEntries, removeEntry, storeEntry, storeEntryIfAbsent, storedEntries } from "./outboxStorage";
 
 type PendingReview = { profileId: number; input: SubmitReviewRequest; onSynced?: (response: SubmitReviewResponse) => void };

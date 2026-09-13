@@ -1,6 +1,6 @@
 import type { CSSProperties, Ref } from "react";
-import type { StatsTrack } from "../../shared/api";
-import type { Track } from "../../shared/types";
+import type { StatsTrack } from "../../../shared/api";
+import type { Track } from "../../../shared/types";
 import { trackThemes } from "../tracks/trackTheme";
 
 const copy = {

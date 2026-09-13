@@ -1,4 +1,4 @@
-import { sentenceAttribution, wordAttribution } from "../../shared/sentenceAttribution";
+import { sentenceAttribution, wordAttribution } from "../../../shared/sentenceAttribution";
 
 export function SourceAttribution({ source, sourceUrl }: { source?: string; sourceUrl?: string }) {
   const word = sourceUrl ? wordAttribution(sourceUrl) : null;

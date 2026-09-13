@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { avatarBackground } from "../design/tokens";
 import { avatarHue } from "../features/profile/avatarHue";
-import type { PublicProfile } from "../shared/api";
+import type { PublicProfile } from "../../shared/api";
 import "../features/pin/pin.css";
 
 type Props = { profiles: PublicProfile[]; onSelect: (profile: PublicProfile) => Promise<void> };

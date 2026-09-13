@@ -1,6 +1,6 @@
 import { Rating } from "ts-fsrs";
-import type { Track } from "../../src/shared/types";
-import type { Grade, ReviewLogEntry, ReviewState } from "../../src/shared/fsrs";
+import type { Track } from "../../shared/types";
+import type { Grade, ReviewLogEntry, ReviewState } from "../../shared/fsrs";
 
 export type ReviewMode = "lesson" | "review" | "level-review" | "placement";
 

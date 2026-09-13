@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
-import type { ApiReviewState } from "../../shared/api";
-import type { Track } from "../../shared/types";
+import type { ApiReviewState } from "../../../shared/api";
+import type { Track } from "../../../shared/types";
 import { trackThemes } from "../tracks/trackTheme";
 
 export function PersonalRecord({ active, states, tracks, onChange, now }: { active: Track; states: ReadonlyMap<Track, ApiReviewState>; tracks: Track[]; onChange: (track: Track) => void; now: number }) {

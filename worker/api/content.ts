@@ -1,6 +1,6 @@
-import { MASTERY_STABILITY_DAYS } from "../../src/shared/mastery";
-import type { ApiSentence, ApiTrackDetail, CharacterDetailResponse, CurriculumResponse, UnitStudyResponse, UnitStudyTrackDetail } from "../../src/shared/api";
-import type { CharacterEntry, Track, TrackEntry } from "../../src/shared/types";
+import { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
+import type { ApiSentence, ApiTrackDetail, CharacterDetailResponse, CurriculumResponse, UnitStudyResponse, UnitStudyTrackDetail } from "../../shared/api";
+import type { CharacterEntry, Track, TrackEntry } from "../../shared/types";
 import { getCharacter, getUnitDetail } from "../db/characters";
 import { getStatsForCharacter } from "../db/reviews";
 

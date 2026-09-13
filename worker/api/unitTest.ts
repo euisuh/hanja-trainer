@@ -1,6 +1,6 @@
-import type { UnitTestAnswer, UnitTestResult } from "../../src/shared/api";
-import { TRACKS, type Track } from "../../src/shared/types";
-import { unitTestRetryOffset } from "../../src/shared/unitTestRetry";
+import type { UnitTestAnswer, UnitTestResult } from "../../shared/api";
+import { TRACKS, type Track } from "../../shared/types";
+import { unitTestRetryOffset } from "../../shared/unitTestRetry";
 import { getCurriculumContent } from "./content";
 
 type UnitRow = { track: Track };

@@ -6,8 +6,8 @@ import { homePrimaryAction, trackImbalance, type PathNodeModel, type TrackSnooze
 import { PathMap } from "../features/path-map/PathMap";
 import { TrackTabs } from "../features/tracks/TrackTabs";
 import { trackThemes } from "../features/tracks/trackTheme";
-import { TRACKS, type Track } from "../shared/types";
-import type { CurriculumResponse, StatsResponse } from "../shared/api";
+import { TRACKS, type Track } from "../../shared/types";
+import type { CurriculumResponse, StatsResponse } from "../../shared/api";
 import { apiClient } from "../lib/apiClient";
 import "../features/path-map/pathMap.css";
 

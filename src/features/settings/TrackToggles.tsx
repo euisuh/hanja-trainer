@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { TRACKS, type Track } from "../../shared/types";
+import { TRACKS, type Track } from "../../../shared/types";
 import { trackThemes } from "../tracks/trackTheme";
 
 const states = {

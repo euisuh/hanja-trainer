@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { getCharacter, listByTrackLevel, listByUnit, searchDistractors } from "../worker/db/characters.ts";
-import type { SeedDocument, SeedTrackEntry } from "../src/shared/types.ts";
+import type { SeedDocument, SeedTrackEntry } from "../shared/types.ts";
 import { applyMigrations } from "../worker/test/schema.ts";
 import { emitSeedSql, emitSentenceSeedSql, levelOrdFor, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
 

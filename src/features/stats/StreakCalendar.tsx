@@ -1,4 +1,4 @@
-import type { StatsCalendarDay } from "../../shared/api";
+import type { StatsCalendarDay } from "../../../shared/api";
 import { CALENDAR_BUCKET_THRESHOLDS } from "./calendar";
 
 export function StreakCalendar({ calendar }: { calendar: StatsCalendarDay[] }) {

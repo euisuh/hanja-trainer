@@ -6,10 +6,10 @@ import { cachedAudioUrl, matchingVoice, speechLanguages, useSpeechVoices } from 
 import { useSettings } from "../features/settings/useSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
-import { toHiragana } from "../shared/kana";
-import { joinSpokenReadings } from "../shared/spokenReading";
-import type { UnitStudyResponse, UnitStudyTrackDetail } from "../shared/api";
-import type { Track } from "../shared/types";
+import { toHiragana } from "../../shared/kana";
+import { joinSpokenReadings } from "../../shared/spokenReading";
+import type { UnitStudyResponse, UnitStudyTrackDetail } from "../../shared/api";
+import type { Track } from "../../shared/types";
 import "../features/study/study.css";
 
 const labels = { kr: "한국 · 훈음", jp: "日本 · 音/訓", cn: "中国 · 拼音" } as const;

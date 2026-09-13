@@ -1,5 +1,5 @@
 import { tracks } from "../../design/tokens";
-import type { Track } from "../../shared/types";
+import type { Track } from "../../../shared/types";
 
 export type TrackTheme = {
   label: string;

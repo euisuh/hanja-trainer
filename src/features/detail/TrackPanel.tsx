@@ -1,7 +1,7 @@
 import { useState, type CSSProperties } from "react";
-import type { ApiTrackDetail } from "../../shared/api";
-import { toHiragana } from "../../shared/kana";
-import type { OnyomiScript } from "../../shared/settings";
+import type { ApiTrackDetail } from "../../../shared/api";
+import { toHiragana } from "../../../shared/kana";
+import type { OnyomiScript } from "../../../shared/settings";
 import { HighlightedSentence } from "../source/HighlightedSentence";
 import { SourceAttribution } from "../source/SourceAttribution";
 import { trackThemes } from "../tracks/trackTheme";

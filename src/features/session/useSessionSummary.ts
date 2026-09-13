@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useActiveProfile } from "../profile/ProfileContext";
 import { ApiClientError, PIN_REQUIRED_EVENT, apiClient, isAuthenticationError, isPermanentApiError, retryDelayMs } from "../../lib/apiClient";
-import type { CreateSessionRequest } from "../../shared/api";
-import { parseSessionRequest } from "../../shared/session";
+import type { CreateSessionRequest } from "../../../shared/api";
+import { parseSessionRequest } from "../../../shared/session";
 import { decodeEntryKey, removeEntries, removeEntry, storeEntry, storeEntryIfAbsent, storedEntries } from "./outboxStorage";
 
 export type KeyedSessionSummary = CreateSessionRequest & { sessionId: string };

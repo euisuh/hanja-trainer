@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
-import type { CurriculumResponse, PlacementAnswer, PlacementScoreResponse, StatsResponse } from "../../src/shared/api";
+import type { CurriculumResponse, PlacementAnswer, PlacementScoreResponse, StatsResponse } from "../../shared/api";
 import { applyMigrations } from "../test/schema";
 import { getProfile, zonedDayKey } from "./sessions";
 import { getStats, kankenProgress } from "./stats";

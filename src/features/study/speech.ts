@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Track } from "../../shared/types";
+import type { Track } from "../../../shared/types";
 
 export const MAX_RECORDING_MS = 15_000;
 

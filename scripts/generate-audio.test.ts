@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { SeedSentenceDocument, SeedSentenceEntry } from "../src/shared/types.ts";
+import type { SeedSentenceDocument, SeedSentenceEntry } from "../shared/types.ts";
 import { buildSentenceAudioEntries, cloudflareAccessHeaders } from "./generate-audio.ts";
 
 test("builds Cloudflare Access service-token headers", () => {

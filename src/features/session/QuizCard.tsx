@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
-import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../shared/types";
-import type { OnyomiScript } from "../../shared/settings";
+import type { CharacterEntry, ExampleSentence, Track, TrackEntry, WordEntry } from "../../../shared/types";
+import type { OnyomiScript } from "../../../shared/settings";
 import { HighlightedSentence } from "../source/HighlightedSentence";
 import { SourceAttribution } from "../source/SourceAttribution";
 import { trackThemes } from "../tracks/trackTheme";
 import { CompareCard } from "./CompareCard";
-import type { SessionQueueItem } from "../../shared/buildQueue";
+import type { SessionQueueItem } from "../../../shared/buildQueue";
 
 const trackLabels = {
   kr: { prompt: "훈음을 고르세요", meaningPrompt: "뜻을 고르세요" },

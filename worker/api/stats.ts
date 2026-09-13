@@ -1,6 +1,6 @@
-import type { StatsResponse, StatsSecondaryScale } from "../../src/shared/api";
-import { MASTERY_STABILITY_DAYS } from "../../src/shared/mastery";
-import { TRACKS, type Track } from "../../src/shared/types";
+import type { StatsResponse, StatsSecondaryScale } from "../../shared/api";
+import { MASTERY_STABILITY_DAYS } from "../../shared/mastery";
+import { TRACKS, type Track } from "../../shared/types";
 import { activityDaySql, streaks, zonedDayKey } from "./sessions";
 
 const CALENDAR_DAYS = 126;

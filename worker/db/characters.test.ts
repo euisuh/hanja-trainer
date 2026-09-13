@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { expect, test } from "vitest";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
-import type { Track } from "../../src/shared/types";
+import type { Track } from "../../shared/types";
 import { applyMigrations } from "../test/schema";
 import { listForTracks, listFreshForTracks } from "./characters";
 

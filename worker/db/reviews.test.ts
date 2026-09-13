@@ -1,6 +1,6 @@
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import { initialState, schedule } from "../../src/shared/fsrs";
+import { initialState, schedule } from "../../shared/fsrs";
 import { applyMigrations } from "../test/schema";
 import { appendLog, getDueQueue, getState, getStatsForCharacter, upsertState } from "./reviews";
 

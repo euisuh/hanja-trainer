@@ -1,6 +1,6 @@
-import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../src/shared/api";
-import type { CharacterEntry, TrackEntry } from "../../src/shared/types";
-import { buildQueue, buildUnitTestQueue, meaningFor, readingFor, reviewKey } from "../../src/shared/buildQueue";
+import type { SessionCard, StartSessionRequest, StartSessionResponse } from "../../shared/api";
+import type { CharacterEntry, TrackEntry } from "../../shared/types";
+import { buildQueue, buildUnitTestQueue, meaningFor, readingFor, reviewKey } from "../../shared/buildQueue";
 import { listByTrackLevel, listByUnit, listForTracks, listFreshForTracks, listPlacementMembersForTracks } from "../db/characters";
 import { listStatesForTracks } from "../db/reviews";
 import { listWordsForTracks } from "../db/words";

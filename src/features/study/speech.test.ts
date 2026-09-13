@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { joinSpokenReadings } from "../../shared/spokenReading";
+import { joinSpokenReadings } from "../../../shared/spokenReading";
 import { cachedAudioUrl, LocalRecorder, MAX_RECORDING_MS, matchingVoice, sentenceAudioUrl, speechLanguages, type LocalRecordingState } from "./speech";
 
 class FakeRecorder {

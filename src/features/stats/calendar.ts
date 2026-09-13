@@ -1,4 +1,4 @@
-import type { ReviewLogEntry } from "../../shared/fsrs";
+import type { ReviewLogEntry } from "../../../shared/fsrs";
 
 export const CALENDAR_DAYS = 18 * 7;
 export const CALENDAR_BUCKET_THRESHOLDS = [1, 3, 6] as const;

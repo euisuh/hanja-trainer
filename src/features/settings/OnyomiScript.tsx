@@ -1,4 +1,4 @@
-import { ONYOMI_SCRIPTS, type OnyomiScript as OnyomiScriptValue } from "../../shared/settings";
+import { ONYOMI_SCRIPTS, type OnyomiScript as OnyomiScriptValue } from "../../../shared/settings";
 
 const options = {
   katakana: { label: "가타카나", sample: "イチ・イツ" },

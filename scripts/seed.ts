@@ -16,7 +16,7 @@ import {
   type SeedWordEntry,
   type SourceKind,
   type Track,
-} from "../src/shared/types.ts";
+} from "../shared/types.ts";
 
 export const LEVEL_ORDS: Record<Track, Readonly<Record<string, number>>> = {
   kr: {

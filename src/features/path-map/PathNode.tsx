@@ -1,6 +1,6 @@
-import { toHiragana } from "../../shared/kana";
-import type { OnyomiScript } from "../../shared/settings";
-import type { Track } from "../../shared/types";
+import { toHiragana } from "../../../shared/kana";
+import type { OnyomiScript } from "../../../shared/settings";
+import type { Track } from "../../../shared/types";
 import type { PathNodeModel } from "./homeModel";
 import { trackThemes } from "../tracks/trackTheme";
 

@@ -1,6 +1,6 @@
-import { scorePlacementAnswers, type PlacementBounds } from "../../src/shared/adaptive";
-import type { PlacementAnswer, PlacementScoreResponse } from "../../src/shared/api";
-import { TRACKS, type Track } from "../../src/shared/types";
+import { scorePlacementAnswers, type PlacementBounds } from "../../shared/adaptive";
+import type { PlacementAnswer, PlacementScoreResponse } from "../../shared/api";
+import { TRACKS, type Track } from "../../shared/types";
 
 type BadgeRow = { level_badge: string };
 type BoundsRow = { track: Track; min_level_ord: number; max_level_ord: number };

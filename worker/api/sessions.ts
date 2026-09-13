@@ -1,7 +1,7 @@
-import type { CreateSessionRequest, ProfileResponse } from "../../src/shared/api";
-import { TRACKS } from "../../src/shared/types";
+import type { CreateSessionRequest, ProfileResponse } from "../../shared/api";
+import { TRACKS } from "../../shared/types";
 
-export { parseSessionRequest } from "../../src/shared/session";
+export { parseSessionRequest } from "../../shared/session";
 
 const DAY_MS = 86_400_000;
 type ProfileRow = { id: number; name: string; is_admin: number; enabled_tracks: string; daily_goal: number; timezone: string; xp: number };

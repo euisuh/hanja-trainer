@@ -1,5 +1,5 @@
-import { TRACKS, type Track } from "../../src/shared/types";
-import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../src/shared/api";
+import { TRACKS, type Track } from "../../shared/types";
+import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../shared/api";
 import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";

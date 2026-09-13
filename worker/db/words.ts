@@ -1,4 +1,4 @@
-import type { Track, WordEntry } from "../../src/shared/types";
+import type { Track, WordEntry } from "../../shared/types";
 
 type WordRow = {
   id: number;

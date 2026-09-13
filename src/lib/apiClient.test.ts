@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { PROFILE_EXPECTATION_HEADER, type SubmitReviewRequest } from "../shared/api";
+import { PROFILE_EXPECTATION_HEADER, type SubmitReviewRequest } from "../../shared/api";
 import { ApiClientError, PIN_REQUIRED_EVENT, PROFILE_UPDATED_EVENT, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
 
 const profile = { id: 1, name: "나", isAdmin: true, xp: 20, todayXp: 10, goal: 40, streak: 2, longestStreak: 3, enabledTracks: ["kr"] } as const;

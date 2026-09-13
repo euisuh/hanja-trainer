@@ -1,5 +1,5 @@
-import { intervalHistory, isDue, type ReviewLogEntry, type ReviewState } from "../../shared/fsrs";
-import type { CharacterEntry, Track } from "../../shared/types";
+import { intervalHistory, isDue, type ReviewLogEntry, type ReviewState } from "../../../shared/fsrs";
+import type { CharacterEntry, Track } from "../../../shared/types";
 
 export type IntervalBar = { days: number; height: number };
 

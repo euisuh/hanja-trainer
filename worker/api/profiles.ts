@@ -1,4 +1,4 @@
-import type { ManagedProfile } from "../../src/shared/api";
+import type { ManagedProfile } from "../../shared/api";
 import { createPinCredentials, derivePinHash, isPin, type PinCredentials } from "../auth/pin";
 
 // Kept in sync by hand with the `profile_limit` trigger's `>= 5` in

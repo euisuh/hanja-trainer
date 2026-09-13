@@ -1,7 +1,7 @@
 import { useEffect, type CSSProperties } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { trackThemes } from "../features/tracks/trackTheme";
-import type { PlacementScoreResponse } from "../shared/api";
+import type { PlacementScoreResponse } from "../../shared/api";
 import "../features/onboarding/onboarding.css";
 
 const labels = { kr: "한자 · 급수", jp: "JLPT · 漢検", cn: "HSK · 汉字" } as const;

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ApiClientError, PIN_REQUIRED_EVENT, apiClient } from "../../lib/apiClient";
-import type { SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
+import type { SubmitReviewRequest, SubmitReviewResponse } from "../../../shared/api";
 import { discardRejectedReviews, enqueuePendingReview, exportRejectedReviews, flushPendingReviews, pendingReviewCount, resetAnswerSubmitForTests, reviewSyncStatus, setAnswerSubmitProfile, syncReviewStorageEvent } from "./useAnswerSubmit";
 
 const response: SubmitReviewResponse = {

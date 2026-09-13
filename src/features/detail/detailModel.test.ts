@@ -1,8 +1,8 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { initialState, type ReviewLogEntry } from "../../shared/fsrs";
-import type { CharacterEntry } from "../../shared/types";
+import { initialState, type ReviewLogEntry } from "../../../shared/fsrs";
+import type { CharacterEntry } from "../../../shared/types";
 import { IntervalChart } from "./IntervalChart";
 import { TrackPanel } from "./TrackPanel";
 import { buildIntervalBars, recordValues, variantsLabel } from "./detailModel";

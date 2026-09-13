@@ -4,8 +4,8 @@ import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, matchingVoice, sentenceAudioUrl, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
-import type { ApiSentence, UnitStudyResponse } from "../shared/api";
-import type { Track } from "../shared/types";
+import type { ApiSentence, UnitStudyResponse } from "../../shared/api";
+import type { Track } from "../../shared/types";
 import "../features/study/study.css";
 
 type SpeakingTrack = Exclude<Track, "kr">;

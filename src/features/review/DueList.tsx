@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import { dueSort, formatDueLabel, isDue, type ReviewState } from "../../shared/fsrs";
-import type { CharacterEntry, Track, TrackEntry } from "../../shared/types";
-import type { OnyomiScript } from "../../shared/settings";
-import { reviewKey } from "../../shared/buildQueue";
+import { dueSort, formatDueLabel, isDue, type ReviewState } from "../../../shared/fsrs";
+import type { CharacterEntry, Track, TrackEntry } from "../../../shared/types";
+import type { OnyomiScript } from "../../../shared/settings";
+import { reviewKey } from "../../../shared/buildQueue";
 import { DueRow } from "./DueRow";
 
 export const DUE_LIST_LIMIT = 50;

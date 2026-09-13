@@ -1,4 +1,4 @@
-import type { SessionQueueItem } from "../../shared/buildQueue";
+import type { SessionQueueItem } from "../../../shared/buildQueue";
 
 export type IssuedQueueItem = {
   entry: SessionQueueItem;

@@ -1,4 +1,4 @@
-import { THEME_IDS, type ThemeId } from "../../shared/settings";
+import { THEME_IDS, type ThemeId } from "../../../shared/settings";
 
 const labels: Record<ThemeId, string> = { default: "기본", "quiet-technical": "Quiet Technical" };
 

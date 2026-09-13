@@ -6,8 +6,8 @@ import { useActiveProfile } from "../features/profile/ProfileContext";
 import { apiCardsToQueue, queueCharacters } from "../features/session/apiQueue";
 import { enqueuePendingSummary } from "../features/session/useSessionSummary";
 import { apiClient } from "../lib/apiClient";
-import type { SessionQueueItem } from "../shared/buildQueue";
-import type { Track } from "../shared/types";
+import type { SessionQueueItem } from "../../shared/buildQueue";
+import type { Track } from "../../shared/types";
 
 type LoadedSession = { id: string; queue: SessionQueueItem[] };
 

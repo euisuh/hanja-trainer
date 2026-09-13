@@ -1,6 +1,6 @@
-import { toHiragana } from "../../shared/kana";
-import type { OnyomiScript } from "../../shared/settings";
-import type { CharacterEntry, TrackEntry } from "../../shared/types";
+import { toHiragana } from "../../../shared/kana";
+import type { OnyomiScript } from "../../../shared/settings";
+import type { CharacterEntry, TrackEntry } from "../../../shared/types";
 import { trackThemes } from "../tracks/trackTheme";
 
 function reading(entry: TrackEntry, onyomiScript: OnyomiScript): string {

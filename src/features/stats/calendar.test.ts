@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { isStreakAtRisk } from "../../screens/StatsScreen";
-import type { StatsResponse } from "../../shared/api";
-import type { ReviewLogEntry } from "../../shared/fsrs";
+import type { StatsResponse } from "../../../shared/api";
+import type { ReviewLogEntry } from "../../../shared/fsrs";
 import { buildCalendar, CALENDAR_DAYS, localDayKey, streakSummary } from "./calendar";
 import { StreakCalendar } from "./StreakCalendar";
 

@@ -1,6 +1,6 @@
-import type { OnboardingStateResponse, PatchSettingsRequest, SettingsResponse } from "../../src/shared/api";
-import { normalizeSettingsPatch, type OnyomiScript, type SoundMode, type ThemeId } from "../../src/shared/settings";
-import { TRACKS } from "../../src/shared/types";
+import type { OnboardingStateResponse, PatchSettingsRequest, SettingsResponse } from "../../shared/api";
+import { normalizeSettingsPatch, type OnyomiScript, type SoundMode, type ThemeId } from "../../shared/settings";
+import { TRACKS } from "../../shared/types";
 
 type ProfileRow = { enabled_tracks: string; daily_goal: number; timezone: string; onyomi_script: OnyomiScript; sound_mode: SoundMode; theme: ThemeId; is_admin: number; onboarded_at?: number | null };
 

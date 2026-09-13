@@ -10,7 +10,7 @@ import { ProfileSettings } from "../features/settings/ProfileSettings";
 import { useSettings } from "../features/settings/useSettings";
 import { PinSettings } from "../features/pin/PinSettings";
 import { trackThemes } from "../features/tracks/trackTheme";
-import type { Track } from "../shared/types";
+import type { Track } from "../../shared/types";
 import "../features/pin/pin.css";
 import "../features/settings/settings.css";
 

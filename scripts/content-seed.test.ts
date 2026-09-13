@@ -3,12 +3,12 @@ import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
-import { sentenceAttribution, wordAttribution } from "../src/shared/sentenceAttribution.ts";
-import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../src/shared/adaptive.ts";
+import { sentenceAttribution, wordAttribution } from "../shared/sentenceAttribution.ts";
+import { createPlacementState, isPlacementComplete, nextPlacementItem, placementResults, recordPlacementAnswer } from "../shared/adaptive.ts";
 import { emitSeedSql, emitSentenceSeedSql, emitWordSeedSql, parseSeed, parseSentenceSeed, parseWordSeed } from "./seed.ts";
 import { tierForTgh } from "./tgh-tier.ts";
 import { buildAudioEntries } from "./generate-audio.ts";
-import type { CharacterEntry, SeedSentenceEntry, Track } from "../src/shared/types.ts";
+import type { CharacterEntry, SeedSentenceEntry, Track } from "../shared/types.ts";
 import { applyMigrations } from "../worker/test/schema.ts";
 
 const files = {

@@ -3,7 +3,7 @@ import { StreakCalendar } from "../features/stats/StreakCalendar";
 import { TrackMasteryCard } from "../features/stats/TrackMasteryCard";
 import "../features/stats/stats.css";
 import { apiClient } from "../lib/apiClient";
-import type { StatsResponse } from "../shared/api";
+import type { StatsResponse } from "../../shared/api";
 
 export function isStreakAtRisk(streak: number, calendar: StatsResponse["calendar"]): boolean {
   const today = calendar.at(-1);

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { parseSeed } from "../../scripts/seed";
+import { parseSeed } from "../scripts/seed";
 import { initialState } from "./fsrs";
 import type { CharacterEntry, SeedCharacterEntry, Track, TrackEntry, WordEntry } from "./types";
 import { buildKunItem, buildMeaningItem, buildQueue, buildReadingItem, buildUnitTestQueue, buildWordItem, meaningFor, reviewKey } from "./buildQueue";

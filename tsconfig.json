@@ -13,6 +13,6 @@
     "skipLibCheck": true,
     "types": ["vite/client"]
   },
-  "include": ["src", "worker", "worker-configuration.d.ts"],
+  "include": ["src", "shared", "worker", "worker-configuration.d.ts"],
   "exclude": ["**/*.test.ts"]
 }

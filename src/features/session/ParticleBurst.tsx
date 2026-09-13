@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { colors, tracks } from "../../design/tokens";
-import type { Track } from "../../shared/types";
+import type { Track } from "../../../shared/types";
 
 export type BurstAnchor = { x: number; y: number; width: number; height: number };
 type Props = { anchor: BurstAnchor; onDone: () => void; tier: 1 | 2 | 3; track: Track };

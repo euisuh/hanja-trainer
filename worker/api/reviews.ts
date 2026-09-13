@@ -1,7 +1,7 @@
-import { gradeFromReview, initialState, schedule } from "../../src/shared/fsrs";
-import type { DueReviewsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../src/shared/api";
-import { parseReviewRequest as parseReviewShape } from "../../src/shared/review";
-import { TRACKS, type Track } from "../../src/shared/types";
+import { gradeFromReview, initialState, schedule } from "../../shared/fsrs";
+import type { DueReviewsResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
+import { parseReviewRequest as parseReviewShape } from "../../shared/review";
+import { TRACKS, type Track } from "../../shared/types";
 import { getState, prepareAppendLog, prepareUpsertState } from "../db/reviews";
 
 const DAY_MS = 86_400_000;

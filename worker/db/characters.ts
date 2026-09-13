@@ -1,4 +1,4 @@
-import { TRACKS, type CharacterEntry, type ExampleSentence, type Track, type TrackEntry } from "../../src/shared/types";
+import { TRACKS, type CharacterEntry, type ExampleSentence, type Track, type TrackEntry } from "../../shared/types";
 
 interface CharacterRow {
   id: number;
@@ -48,7 +48,7 @@ interface DistractorRow {
   cn_tier: string | null;
 }
 
-type CurriculumAnchor = Pick<import("../../src/shared/api").StartSessionRequest, "unitId" | "levelOrd">;
+type CurriculumAnchor = Pick<import("../../shared/api").StartSessionRequest, "unitId" | "levelOrd">;
 type FreshRow = { character_id: number; track: Track };
 type UnitAnchorRow = { track: Track; level_ord: number; unit_ord: number };
 
