@@ -1,4 +1,5 @@
 import { PROFILE_EXPECTATION_HEADER, type CharacterDetailResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../../shared/api";
+import { apiUrl } from "../platform/apiUrl";
 import { TRACKS, type Track } from "../../shared/types";
 
 export class ApiClientError extends Error {
@@ -76,7 +77,7 @@ function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, pro
   if (callerSignal?.aborted) abort();
   else callerSignal?.addEventListener("abort", abort, { once: true });
   const tracked = (async () => {
-    const response = await fetch(path, { ...init, headers, signal: controller.signal });
+    const response = await fetch(apiUrl(path), { ...init, headers, signal: controller.signal });
     const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
     const jsonContent = contentType.includes("application/json") || contentType.includes("+json");
     const text = await response.text();

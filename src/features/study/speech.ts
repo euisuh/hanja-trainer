@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Track } from "../../../shared/types";
+import { apiUrl } from "../../platform/apiUrl";
 
 export const MAX_RECORDING_MS = 15_000;
 
@@ -189,12 +190,12 @@ export function matchingVoice<T extends { lang: string; localService?: boolean }
 }
 
 export function cachedAudioUrl(track: Track, key: string): string {
-  return `/api/audio/${track}/${encodeURIComponent(key)}.mp3`;
+  return apiUrl(`/api/audio/${track}/${encodeURIComponent(key)}.mp3`);
 }
 
 export function sentenceAudioUrl(track: Track, source: string): string | null {
   const id = /^Tatoeba #(\d+)$/u.exec(source)?.[1];
-  return id ? `/api/audio/${track}/s${id}.mp3` : null;
+  return id ? apiUrl(`/api/audio/${track}/s${id}.mp3`) : null;
 }
 
 export function useSpeechVoices(): SpeechSynthesisVoice[] {

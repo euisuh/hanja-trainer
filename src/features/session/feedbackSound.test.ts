@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { buzz } from "./haptics";
+import { buzz } from "../../platform/haptics";
 
 afterEach(() => {
   vi.resetModules();

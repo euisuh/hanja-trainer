@@ -16,3 +16,6 @@ credentials.json
 *.tsbuildinfo
 playwright-report/
 test-results/
+
+# Local agent tooling output
+.playwright-mcp/

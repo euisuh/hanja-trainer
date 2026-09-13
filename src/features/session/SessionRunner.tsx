@@ -15,7 +15,7 @@ import { buildQueue, buildReadingItem, meaningFor, readingFor, reviewKey, type S
 import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { playCorrect, playSkip, playWrong } from "./feedbackSound";
-import { buzz } from "./haptics";
+import { buzz } from "../../platform/haptics";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
 import { PauseModal } from "./PauseModal";
 import { QuizCard, wordLabels } from "./QuizCard";
