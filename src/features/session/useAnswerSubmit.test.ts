@@ -240,6 +240,21 @@ describe("durable pending reviews", () => {
     await vi.waitFor(() => expect(pendingReviewCount(1)).toBe(0));
   });
 
+  it("reports the latest permanent rejection code", async () => {
+    vi.stubGlobal("localStorage", localStorageStub());
+    vi.stubGlobal("navigator", { onLine: true });
+    vi.spyOn(apiClient, "submitReviews")
+      .mockRejectedValueOnce(new ApiClientError(400, "first_rejection", "bad"))
+      .mockRejectedValueOnce(new ApiClientError(400, "second_rejection", "bad"));
+    setAnswerSubmitProfile(1);
+    enqueuePendingReview(1, review("rejections", 0));
+    await vi.waitFor(() => expect(reviewSyncStatus(1).rejectedCount).toBe(1));
+    enqueuePendingReview(1, review("rejections", 1));
+    await vi.waitFor(() => expect(reviewSyncStatus(1).rejectedCount).toBe(2));
+
+    expect(reviewSyncStatus(1)).toMatchObject({ pendingCount: 0, failed: true, errorCode: "second_rejection" });
+  });
+
   it("retains a permanently rejected source when quarantine storage is full", async () => {
     const storage = localStorageStub();
     const connection = { onLine: false };

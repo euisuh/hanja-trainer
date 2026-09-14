@@ -199,6 +199,7 @@ describe("durable session summaries", () => {
     setSessionSummaryProfile(1);
     enqueuePendingSummary(1, summary("lost-response"));
     await vi.waitFor(() => expect(create).toHaveBeenCalledTimes(1));
+    await vi.waitFor(() => expect(sessionSummaryStatus(1).pendingFailed).toBe(true));
     await vi.runAllTicks();
     await flushPendingSummaries(1);
     expect(create).toHaveBeenCalledTimes(1);
@@ -219,11 +220,12 @@ describe("durable session summaries", () => {
     setSessionSummaryProfile(1);
     enqueuePendingSummary(1, summary("reselected"));
     await vi.waitFor(() => expect(create).toHaveBeenCalledTimes(1));
+    await vi.waitFor(() => expect(sessionSummaryStatus(1).pendingFailed).toBe(true));
     setSessionSummaryProfile(2);
     setSessionSummaryProfile(1);
 
     await vi.waitFor(() => expect(create).toHaveBeenCalledTimes(2));
-    expect(pendingSummaryCount(1)).toBe(0);
+    await vi.waitFor(() => expect(pendingSummaryCount(1)).toBe(0));
   });
 
   it.each([
@@ -267,6 +269,44 @@ describe("durable session summaries", () => {
     fresh.resetSessionSummaryForTests();
   });
 
+  it.each([
+    ["an empty error code", JSON.stringify({ profileId: 1, raw: {}, errorCode: "" })],
+    ["an empty stored value", ""],
+  ])("removes a normalized malformed rejection with %s when another tab discards it", async (_name, oldValue) => {
+    const storage = localStorageStub();
+    const key = `${storageKey}:rejected:peer-malformed`;
+    storage.setItem(key, oldValue);
+    vi.stubGlobal("localStorage", storage);
+    vi.resetModules();
+    const fresh = await import("./useSessionSummary");
+    expect(fresh.sessionSummaryStatus(1).rejectedCount).toBe(1);
+
+    storage.removeItem(key);
+    fresh.syncSummaryStorageEvent({ key, newValue: null, oldValue });
+    expect(fresh.sessionSummaryStatus(1)).toMatchObject({ rejectedCount: 0, errorCode: null });
+    fresh.resetSessionSummaryForTests();
+  });
+
+  it("does not quarantine a summary another tab acknowledged while its request failed permanently", async () => {
+    const storage = localStorageStub();
+    vi.stubGlobal("localStorage", storage);
+    vi.stubGlobal("navigator", { onLine: true });
+    let reject!: (error: unknown) => void;
+    const create = vi.spyOn(apiClient, "createSession").mockImplementation(() => new Promise((_, fail) => { reject = fail; }));
+    setSessionSummaryProfile(1);
+    enqueuePendingSummary(1, summary("peer-saved"));
+    await vi.waitFor(() => expect(create).toHaveBeenCalledTimes(1));
+    const entryKey = `${storageKey}:entry:${encodeURIComponent("1:peer-saved")}`;
+    const oldValue = storage.getItem(entryKey);
+    storage.removeItem(entryKey);
+    syncSummaryStorageEvent({ key: entryKey, newValue: null, oldValue });
+    reject(new ApiClientError(400, "invalid_session_summary", "invalid"));
+
+    await vi.waitFor(() => expect(pendingSummaryCount(1)).toBe(0));
+    expect(sessionSummaryStatus(1)).toMatchObject({ rejectedCount: 0, pendingFailed: false });
+    expect(storedValues(storage, `${storageKey}:rejected:`)).toEqual([]);
+  });
+
   it("discards a malformed per-entry rejection", async () => {
     const storage = localStorageStub();
     const key = `${storageKey}:rejected:malformed`;
@@ -278,6 +318,20 @@ describe("durable session summaries", () => {
     expect(() => fresh.discardRejectedSummaries(1)).not.toThrow();
     expect(storage.getItem(key)).toBeNull();
     fresh.resetSessionSummaryForTests();
+  });
+
+  it("keeps a rejection out of the pending failure state while other summaries still send", async () => {
+    vi.stubGlobal("localStorage", localStorageStub());
+    vi.stubGlobal("navigator", { onLine: true });
+    const create = vi.spyOn(apiClient, "createSession")
+      .mockRejectedValueOnce(new ApiClientError(400, "invalid_session_summary", "invalid"))
+      .mockImplementationOnce(() => new Promise<ProfileResponse>(() => undefined));
+    enqueuePendingSummary(1, summary("rejected"));
+    enqueuePendingSummary(1, summary("sending"));
+    setSessionSummaryProfile(1);
+
+    await vi.waitFor(() => expect(create).toHaveBeenCalledTimes(2));
+    expect(sessionSummaryStatus(1)).toMatchObject({ pendingCount: 1, rejectedCount: 1, pendingFailed: false, errorCode: "invalid_session_summary" });
   });
 
   it("retains a permanently rejected source when quarantine storage is full", async () => {
