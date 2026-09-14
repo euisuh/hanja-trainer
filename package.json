@@ -20,15 +20,22 @@
     "preseed:remote": "npm run sentences:readings",
     "seed:remote": "tsx scripts/seed.ts --remote data/characters/*.json data/sentences/*.json data/words/*.json",
     "audio:generate": "tsx scripts/generate-audio.ts --remote data/characters/*.json",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "build:mobile": "VITE_API_ORIGIN=https://hanja.uiseoya.com vite build && cap sync",
+    "android": "npm run build:mobile && cap open android",
+    "ios": "npm run build:mobile && cap open ios"
   },
   "dependencies": {
+    "@capacitor/core": "8.5.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
     "ts-fsrs": "^5.4.1"
   },
   "devDependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/cli": "8.5.2",
+    "@capacitor/ios": "8.5.2",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.4.0",
@@ -50,6 +57,7 @@
     "wrangler": "^4.130.0"
   },
   "overrides": {
-    "sharp": "0.35.4"
+    "sharp": "0.35.4",
+    "uuid": "11.1.1"
   }
 }

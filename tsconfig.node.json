@@ -8,6 +8,6 @@
     "noEmit": true,
     "strict": true
   },
-  "include": ["vite.config.ts", "vitest.config.ts", "scripts", "shared", "worker", "worker-configuration.d.ts"],
+  "include": ["capacitor.config.ts", "vite.config.ts", "vitest.config.ts", "scripts", "shared", "worker", "worker-configuration.d.ts"],
   "exclude": ["shared/*.test.ts"]
 }

@@ -27,6 +27,30 @@ npm run dev
 `npm run dev` builds the SPA, then starts `wrangler dev`. The SPA and API share
 one origin; verify the Worker with `curl http://localhost:8787/api/health`.
 
+## Mobile (Capacitor)
+
+`android/` and `ios/` wrap the same SPA; see `docs/mobile-roadmap.md`. The app
+talks to the deployed Worker at `https://hanja.uiseoya.com`, so native sign-in
+needs a Worker that includes bearer tokens and Capacitor CORS.
+
+Requirements: Node 22+, Xcode for iOS, Android Studio with JDK 21 for Android.
+
+```sh
+npm run ios       # builds with VITE_API_ORIGIN, syncs, opens Xcode
+npm run android   # builds with VITE_API_ORIGIN, syncs, opens Android Studio
+```
+
+`npm run build:mobile` only builds and runs `cap sync`. Rerun it after every web
+change; the native projects copy `dist/client` and do not watch it. Inspect the
+WebView with Safari → Develop (iOS) or `chrome://inspect` (Android). Compile
+check without signing:
+
+```sh
+xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator \
+  -configuration Debug CODE_SIGNING_ALLOWED=NO build
+cd android && ./gradlew assembleDebug
+```
+
 ## Checks and build
 
 ```sh
