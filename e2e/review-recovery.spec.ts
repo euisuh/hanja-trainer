@@ -67,7 +67,7 @@ test("recovers a pending review from Home when the browser comes online", async 
   await expect(page.locator(".session-runner")).toHaveCount(0);
 });
 
-test("offers top-level re-authentication without losing pending records", async ({ page }) => {
+test("keeps pending records through the connection error gate, retry, and reload", async ({ page }) => {
   const pending = [{
     profileId: 1,
     input: { sessionId: "preserved", cardIndex: 0, characterKey: "一", track: "kr", correct: true, skipped: false, elapsedMs: 500, mode: "placement" },
@@ -81,10 +81,11 @@ test("offers top-level re-authentication without losing pending records", async 
 
   await page.goto("/home");
   await expect(page.getByRole("button", { name: "다시 시도" })).toBeVisible();
-  const navigation = page.waitForNavigation();
-  await page.getByRole("button", { name: "로그인 페이지 다시 열기" }).click();
-  await navigation;
+  await page.getByRole("button", { name: "다시 시도" }).click();
+  await expect(page.getByRole("alert")).toHaveText("연결 상태를 확인하지 못했습니다.");
+  expect(await storedValues(page, entryPrefix)).toEqual(pending);
 
-  await expect(page.getByRole("button", { name: "로그인 페이지 다시 열기" })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("button", { name: "다시 시도" })).toBeVisible();
   expect(await storedValues(page, entryPrefix)).toEqual(pending);
 });

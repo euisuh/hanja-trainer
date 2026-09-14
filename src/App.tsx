@@ -228,9 +228,8 @@ export function App() {
     content = <main><p>프로필 확인 중…</p></main>;
   } else if (gate === "error") {
     content = <main className="session-empty">
-      <p role="alert">인증 또는 연결 상태를 확인하지 못했습니다.</p>
+      <p role="alert">연결 상태를 확인하지 못했습니다.</p>
       <button onClick={() => { setGate("checking"); setRetryKey((value) => value + 1); }} type="button">다시 시도</button>
-      <button onClick={() => window.location.assign(window.location.href)} type="button">로그인 페이지 다시 열기</button>
     </main>;
   } else if (gate === "choosing") {
     content = <ProfilePicker onSelect={selectProfile} profiles={profiles} />;

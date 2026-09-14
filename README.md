@@ -197,8 +197,15 @@ auto-selected, and sign-in always returns `sessionToken` in the body. Every
 other origin gets no CORS headers, and cross-site browser writes stay rejected.
 Audio needs no CORS because the app plays it through media elements.
 
-There is no recovery flow inside the app. Recover a forgotten PIN through an
-audited operator credential reset for only the affected profile, preserving
-its learner tables. Rotate rather than clear `pin_secret` so existing sessions
+The admin profile has a one-time recovery code. It is shown once, when the admin
+first sets a PIN or, for an admin PIN set before recovery codes existed, after
+the next successful unlock. On the admin unlock screen, "PIN을 잊으셨나요?"
+accepts that code (with the same lockout as PIN attempts), clears the admin PIN
+and its code, and signs in; the admin can then set a new PIN, which issues a new
+code. Recovery codes exist only for the admin, and the admin cannot reset
+another profile's PIN.
+
+For a non-admin profile, or an admin whose code is lost, use an audited operator
+credential reset for only the affected profile, preserving its learner tables. Rotate rather than clear `pin_secret` so existing sessions
 are invalidated without making the profile unusable. The admin PIN must remain
 set whenever multiple profiles exist.

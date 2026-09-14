@@ -97,7 +97,7 @@ function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, pro
     if (!jsonContent) {
       const accessResponse = response.redirected || response.status === 401 || response.status === 403 || response.ok && contentType.includes("text/html");
       const error = accessResponse
-        ? new ApiClientError(401, "access_required", "Sign in again to continue.", retryAfterSeconds(response, null))
+        ? new ApiClientError(401, "access_required", "세션을 다시 확인해 주세요.", retryAfterSeconds(response, null))
         : new ApiClientError(response.ok ? 502 : response.status, response.status >= 500 ? "service_unavailable" : "request_failed", `Request failed (${response.status})`, retryAfterSeconds(response, null));
       if (notifyAuth && isAuthenticationError(error)) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
       throw error;

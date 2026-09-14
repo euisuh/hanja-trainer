@@ -15,7 +15,7 @@ async function browserRequest(page: Page, path: string, method: string, body?: u
 test("device PIN gates direct API calls and unlocks by keyboard and mouse", async ({ page }) => {
   await page.route("**/api/pin/state", async (route) => route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: { code: "unavailable", message: "temporary" } }) }));
   await page.goto("/settings");
-  await expect(page.getByRole("alert")).toHaveText("인증 또는 연결 상태를 확인하지 못했습니다.");
+  await expect(page.getByRole("alert")).toHaveText("연결 상태를 확인하지 못했습니다.");
   await expect(page.getByRole("heading", { name: "설정" })).toHaveCount(0);
   await page.unroute("**/api/pin/state");
   await page.getByRole("button", { name: "다시 시도" }).focus();
