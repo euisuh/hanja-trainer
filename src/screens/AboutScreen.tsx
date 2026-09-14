@@ -149,6 +149,14 @@ export function AboutScreen() {
         </ul>
       </section>
 
+      <section className="about-section">
+        <h2>개인정보</h2>
+        <p>
+          저장하는 정보와 삭제 방법은{" "}
+          <a href="https://hanja.uiseoya.com/privacy" rel="noopener noreferrer" target="_blank">개인정보 처리방침</a>에서 볼 수 있습니다.
+        </p>
+      </section>
+
       <button className="about-back" onClick={() => navigate("/settings")} type="button">← 설정으로</button>
     </section>
   );

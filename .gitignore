@@ -19,3 +19,7 @@ test-results/
 
 # Local agent tooling output
 .playwright-mcp/
+
+# Release signing keys (Android upload keystore)
+*.jks
+*.keystore
