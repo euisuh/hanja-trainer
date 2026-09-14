@@ -153,6 +153,63 @@ describe("native outbox storage", () => {
     await expect(storage.restoreOutboxStorage()).resolves.toBeUndefined();
   });
 
+  it("reads native entries in parallel and backs up only values native lacks", async () => {
+    const storage = await import("./storage");
+    native.values.set(`${reviews}a`, "1");
+    native.values.set(`${reviews}b`, "2");
+    values.set(`${reviews}b`, "2");
+    values.set(`${summaries}changed`, "new");
+    native.values.set(`${summaries}changed`, "old");
+    values.set(`${summaries}local-only`, "3");
+    const pendingReads: Array<() => void> = [];
+    preferences.get.mockImplementation(({ key }) => new Promise((resolve) => {
+      pendingReads.push(() => resolve({ value: native.values.get(key) ?? null }));
+    }));
+
+    const restoring = storage.restoreOutboxStorage();
+    await vi.waitFor(() => expect(preferences.get).toHaveBeenCalledTimes(3));
+    pendingReads.forEach((finish) => finish());
+    await restoring;
+
+    expect(values.get(`${reviews}a`)).toBe("1");
+    expect(values.get(`${summaries}changed`)).toBe("new");
+    expect(preferences.set.mock.calls.map(([call]) => call.key).sort()).toEqual([`${summaries}changed`, `${summaries}local-only`]);
+  });
+
+  it("keeps a slow backup ahead of a removal made after the timeout", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const storage = await import("./storage");
+    values.set(`${reviews}acknowledged`, "1");
+    let finishBackup!: () => void;
+    preferences.set.mockImplementationOnce(({ key, value }) => new Promise<void>((resolve) => {
+      finishBackup = () => { native.values.set(key, value); resolve(); };
+    }));
+
+    await storage.restoreOutboxStorage(0);
+    await vi.waitFor(() => expect(preferences.set).toHaveBeenCalledOnce());
+    storage.remove(reviews, "acknowledged");
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    expect(preferences.remove).not.toHaveBeenCalled();
+    finishBackup();
+    await vi.waitFor(() => expect(preferences.remove).toHaveBeenCalledOnce());
+    expect(native.values.has(`${reviews}acknowledged`)).toBe(false);
+  });
+
+  it("keeps mirroring after a native write hangs", async () => {
+    vi.useFakeTimers();
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const storage = await import("./storage");
+    preferences.set.mockImplementationOnce(() => new Promise(() => undefined));
+    storage.set(reviews, "hung", 1);
+    storage.set(reviews, "later", 2);
+    await vi.advanceTimersByTimeAsync(4_999);
+    expect(native.values.has(`${reviews}later`)).toBe(false);
+    await vi.advanceTimersByTimeAsync(1);
+    await vi.waitFor(() => expect(native.values.get(`${reviews}later`)).toBe("2"));
+    expect(warning).toHaveBeenCalledWith("Could not mirror offline work to native storage. (timed out)");
+    vi.useRealTimers();
+  });
+
   it("restores before main imports App or renders", async () => {
     let finish!: (value: { keys: string[] }) => void;
     preferences.keys.mockImplementationOnce(() => new Promise((resolve) => { finish = resolve; }));

@@ -135,6 +135,35 @@ describe("native session token persistence", () => {
     expect(session.getSessionToken()).toBe("2.999.fresh");
   });
 
+  it("does not let a slow saved-session load undo a later sign-out", async () => {
+    native.platform = "ios";
+    native.values.set(TOKEN_KEY, valid);
+    let resolveGet!: (value: { value: string | null }) => void;
+    preferences.get.mockImplementationOnce(() => new Promise((resolve) => { resolveGet = resolve; }));
+    const session = await import("./sessionToken");
+    const loading = session.loadSessionToken(now);
+    session.setSessionToken("2.999.signed-in");
+    session.setSessionToken(null);
+    resolveGet({ value: valid });
+    await loading;
+    expect(session.getSessionToken()).toBeNull();
+  });
+
+  it("lets only the first of overlapping saved-session loads apply", async () => {
+    native.platform = "ios";
+    const reads: Array<(value: { value: string | null }) => void> = [];
+    preferences.get.mockImplementation(() => new Promise((resolve) => { reads.push(resolve); }));
+    const session = await import("./sessionToken");
+    const first = session.loadSessionToken(now);
+    const second = session.loadSessionToken(now);
+    await vi.waitFor(() => expect(reads).toHaveLength(2));
+    reads[0]({ value: valid });
+    reads[1]({ value: `2.${now}.expired` });
+    await Promise.all([first, second]);
+    expect(session.getSessionToken()).toBe(valid);
+    expect(preferences.remove).not.toHaveBeenCalled();
+  });
+
   it("writes renewals and sign-out in order", async () => {
     native.platform = "ios";
     let releaseFirst!: () => void;

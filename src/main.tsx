@@ -11,7 +11,8 @@ import { loadSessionToken } from "./platform/sessionToken";
 import { restoreOutboxStorage } from "./platform/storage";
 
 async function main() {
-  await Promise.all([restoreOutboxStorage(), loadSessionToken()]);
+  // Both are best-effort and bounded: a hung native bridge must never block first render.
+  await Promise.all([restoreOutboxStorage(), Promise.race([loadSessionToken(), new Promise((resolve) => setTimeout(resolve, 2_000))])]);
   const { App } = await import("./App");
   createRoot(document.getElementById("root")!).render(
     <StrictMode>

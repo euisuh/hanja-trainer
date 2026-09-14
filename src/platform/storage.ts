@@ -1,18 +1,18 @@
 import { Capacitor } from "@capacitor/core";
 import { Preferences } from "@capacitor/preferences";
+import { createWriteQueue } from "./writeQueue";
 
 const outboxPrefixes = [
   "hanja-trainer:pending-reviews:",
   "hanja-trainer:pending-session-summaries:",
 ];
-let writes = Promise.resolve();
+const writes = createWriteQueue();
 
 function mirror(key: string, value: string | null) {
   if (!Capacitor.isNativePlatform() || !outboxPrefixes.some((prefix) => key.startsWith(prefix))) return;
   // Keep a slow set from finishing after the acknowledgement removes the same key.
   // ponytail: one write queue for both small outboxes; use SQLite if volume grows.
-  writes = writes.then(() => value === null ? Preferences.remove({ key }) : Preferences.set({ key, value }))
-    .catch(() => { console.warn("Could not mirror offline work to native storage."); });
+  writes.enqueue(() => value === null ? Preferences.remove({ key }) : Preferences.set({ key, value }), "Could not mirror offline work to native storage.");
 }
 
 export function load(prefix: string): Array<[string, unknown]> {
@@ -46,29 +46,51 @@ export function remove(prefix: string, key: string) {
   try { localStorage.removeItem(`${prefix}${key}`); } catch { /* Storage failure must not block learning. */ }
 }
 
+const RESTORE_TIMEOUT_MS = 2_000;
+
 // Call before importing App: creating either outbox rehydrates it at module load.
-export async function restoreOutboxStorage(): Promise<void> {
+// Bounded so a slow or hung bridge never keeps the app from rendering; localStorage
+// stays the primary copy and anything not restored in time is retried next launch.
+export async function restoreOutboxStorage(timeoutMs = RESTORE_TIMEOUT_MS): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
-  await writes;
+  const restore = { cancelled: false };
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timedOut = new Promise<void>((resolve) => {
+    timer = setTimeout(() => {
+      restore.cancelled = true;
+      console.warn("Native offline storage restore timed out; continuing without it.");
+      resolve();
+    }, timeoutMs);
+  });
+  await Promise.race([restoreFromNative(restore), timedOut]);
+  clearTimeout(timer);
+}
+
+async function restoreFromNative(restore: { cancelled: boolean }): Promise<void> {
+  await writes.idle();
+  if (restore.cancelled) return;
+  const nativeValues = new Map<string, string>();
   try {
     const { keys } = await Preferences.keys();
-    for (const key of keys) {
-      if (!outboxPrefixes.some((prefix) => key.startsWith(prefix))) continue;
+    await Promise.all(keys.filter((key) => outboxPrefixes.some((prefix) => key.startsWith(prefix))).map(async (key) => {
       try {
         const { value } = await Preferences.get({ key });
-        if (value !== null && localStorage.getItem(key) === null) localStorage.setItem(key, value);
+        if (value === null) return;
+        nativeValues.set(key, value);
+        // After a timeout the app may already own localStorage; never write behind it.
+        if (!restore.cancelled && localStorage.getItem(key) === null) localStorage.setItem(key, value);
       } catch { console.warn("Could not restore an offline entry from native storage."); }
-    }
+    }));
   } catch { console.warn("Could not read native offline storage."); }
+  if (restore.cancelled) return;
 
-  // Back up entries from older app builds too, preserving local values on conflicts.
-  for (const prefix of outboxPrefixes) {
-    for (const [suffix] of load(prefix)) {
-      try {
-        const key = `${prefix}${suffix}`;
-        const value = localStorage.getItem(key);
-        if (value !== null) await Preferences.set({ key, value });
-      } catch { console.warn("Could not back up an offline entry to native storage."); }
-    }
-  }
+  // Back up entries from older app builds too, preserving local values on conflicts. Runs on
+  // the mirror queue so a later removal can never be overtaken by this backup.
+  const backups = outboxPrefixes.flatMap((prefix) => load(prefix).map(([suffix]) => `${prefix}${suffix}`))
+    .map((key) => [key, localStorage.getItem(key)] as const)
+    .filter((entry): entry is readonly [string, string] => entry[1] !== null && nativeValues.get(entry[0]) !== entry[1]);
+  if (backups.length === 0) return;
+  writes.enqueue(() => Promise.all(backups.map(([key, value]) => Preferences.set({ key, value })
+    .catch(() => { console.warn("Could not back up an offline entry to native storage."); }))), "Could not back up offline entries to native storage.");
+  await writes.idle();
 }
