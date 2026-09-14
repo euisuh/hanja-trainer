@@ -10,6 +10,18 @@ export const PROFILE_EXPECTATION_HEADER = "x-hanja-profile-id";
 // responses carry the renewed token in SESSION_TOKEN_HEADER.
 export const SESSION_TRANSPORT_HEADER = "x-hanja-session-transport";
 export const SESSION_TOKEN_HEADER = "x-hanja-session";
+// Store-installed apps outlive Worker deploys. Bump API_COMPAT_VERSION in the same
+// change as an API break that older clients cannot handle (removed or renamed routes,
+// fields, or meanings); additive fields and routes never bump it. Raise the Worker's
+// MIN_CLIENT_COMPAT_VERSION only once the store build carrying the bump is released.
+export const API_COMPAT_VERSION = 1;
+export type ClientConfigResponse = { minCompatVersion: number };
+
+// Unknown or malformed config never blocks: an offline or older Worker must not lock learners out.
+export function clientUpdateRequired(config: unknown, current = API_COMPAT_VERSION): boolean {
+  const minimum = typeof config === "object" && config !== null ? (config as Record<string, unknown>).minCompatVersion : undefined;
+  return Number.isSafeInteger(minimum) && (minimum as number) > current;
+}
 
 export type ApiErrorBody = { error: { code: string; message: string } };
 export type PinStateResponse = { enabled: boolean; locked: boolean; lockedUntil: number | null };

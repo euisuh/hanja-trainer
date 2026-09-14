@@ -303,3 +303,21 @@ describe("native app origins", () => {
     expect(read.headers.get("access-control-allow-origin")).toBeNull();
   });
 });
+
+describe("client compatibility config", () => {
+  const databases: DatabaseSync[] = [];
+  afterEach(() => { for (const database of databases.splice(0)) database.close(); });
+
+  it("is public, needs no profile, and carries CORS for native origins", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run();
+    const web = await routeApiRequest(new Request("https://test/api/client-config"), fixture.env);
+    expect(web.status).toBe(200);
+    expect(await web.json()).toEqual({ minCompatVersion: 1 });
+    expect(web.headers.get("set-cookie")).toBeNull();
+
+    const native = await routeApiRequest(new Request("https://test/api/client-config", { headers: { origin: "capacitor://localhost", "sec-fetch-site": "cross-site" } }), fixture.env);
+    expect(native.status).toBe(200);
+    expect(native.headers.get("access-control-allow-origin")).toBe("capacitor://localhost");
+  });
+});

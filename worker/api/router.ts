@@ -1,5 +1,5 @@
 import { TRACKS, type Track } from "../../shared/types";
-import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type ApiErrorBody, type SessionMode, type StartSessionRequest } from "../../shared/api";
+import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type ApiErrorBody, type ClientConfigResponse, type SessionMode, type StartSessionRequest } from "../../shared/api";
 import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
@@ -25,6 +25,9 @@ function crossSite(request: Request, url: URL): boolean {
 // the cookie is ignored, the lone PIN-less profile is never auto-selected, and
 // credentials come back in the body rather than Set-Cookie. A desktop page that
 // happens to run on https://localhost therefore gains nothing curl lacks.
+// Oldest API_COMPAT_VERSION an installed app may run; see shared/api.ts before raising.
+const MIN_CLIENT_COMPAT_VERSION = 1;
+
 const NATIVE_ORIGINS = new Set(["capacitor://localhost", "https://localhost"]);
 
 function nativeOrigin(request: Request): string | null {
@@ -277,6 +280,9 @@ async function handleApiRequest(request: Request, env: Env, now: number, native:
     const credentials: SessionCredentials = native
       ? { cookie: null, authorization: request.headers.get("authorization") ?? "" }
       : { cookie: request.headers.get("cookie"), authorization: request.headers.get("authorization") };
+    if (request.method === "GET" && pathname === "/api/client-config") {
+      return Response.json({ minCompatVersion: MIN_CLIENT_COMPAT_VERSION } satisfies ClientConfigResponse);
+    }
     if (request.method === "GET" && pathname === "/api/profiles") {
       return Response.json({ profiles: await listProfiles(env.DB) });
     }

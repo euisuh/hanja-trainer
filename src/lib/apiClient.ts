@@ -224,6 +224,7 @@ export const apiClient = {
   },
   stats: (signal?: AbortSignal) => requestJson<StatsResponse>("/api/stats", { signal }),
   onboardingState: (signal?: AbortSignal, notifyAuth = true) => requestJson<OnboardingStateResponse>("/api/onboarding-state", { signal }, notifyAuth),
+  clientConfig: (signal?: AbortSignal) => requestJson<unknown>("/api/client-config", { signal }, false, false),
   profiles: (signal?: AbortSignal) => requestJson<ProfilesResponse>("/api/profiles", { signal }, true, false),
   createProfile: (body: CreateProfileRequest) => requestJson<ManagedProfile>("/api/profiles", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }),
   renameProfile: async (profileId: number, body: RenameProfileRequest) => {

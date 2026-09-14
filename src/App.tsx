@@ -8,11 +8,11 @@ import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
 import { setSessionSummaryProfile } from "./features/session/useSessionSummary";
 import { resetSettingsClientState } from "./features/settings/useSettings";
 import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
-import { needsExplicitSelection, setSessionToken } from "./platform/sessionToken";
+import { nativeShell, needsExplicitSelection, setSessionToken } from "./platform/sessionToken";
 import { AppRoutes, routes, type Screen } from "./routes";
 import { ProfilePicker } from "./screens/ProfilePicker";
 import { UnlockScreen } from "./screens/UnlockScreen";
-import type { ProfileResponse, PublicProfile, SettingsResponse } from "../shared/api";
+import { clientUpdateRequired, type ProfileResponse, type PublicProfile, type SettingsResponse } from "../shared/api";
 import type { ThemeId } from "../shared/settings";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
@@ -25,7 +25,7 @@ const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "d
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
 const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking"]);
 
-type Gate = "checking" | "error" | "choosing" | "locked" | "unlocked";
+type Gate = "checking" | "error" | "update" | "choosing" | "locked" | "unlocked";
 
 function isProfileRequired(caught: unknown): boolean {
   return caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required" || caught.code === "profile_changed");
@@ -123,6 +123,14 @@ export function App() {
     const controller = new AbortController();
     async function boot() {
       resumeProfileRequests();
+      if (nativeShell()) {
+        const config = await apiClient.clientConfig(controller.signal).catch(() => null);
+        if (controller.signal.aborted) return;
+        if (clientUpdateRequired(config)) {
+          setGate("update");
+          return;
+        }
+      }
       try {
         const result = await apiClient.profiles(controller.signal);
         if (controller.signal.aborted) return;
@@ -229,6 +237,8 @@ export function App() {
   let content;
   if (gate === "checking") {
     content = <main><p>프로필 확인 중…</p></main>;
+  } else if (gate === "update") {
+    content = <main className="session-empty"><p role="alert">새 버전이 필요합니다. 스토어에서 앱을 업데이트해 주세요.</p></main>;
   } else if (gate === "error") {
     content = <main className="session-empty">
       <p role="alert">연결 상태를 확인하지 못했습니다.</p>

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { PROFILE_EXPECTATION_HEADER, type SubmitReviewRequest } from "../../shared/api";
+import { API_COMPAT_VERSION, PROFILE_EXPECTATION_HEADER, clientUpdateRequired, type SubmitReviewRequest } from "../../shared/api";
 import { getSessionToken, needsExplicitSelection, setSessionToken } from "../platform/sessionToken";
 import { ApiClientError, PIN_REQUIRED_EVENT, PROFILE_UPDATED_EVENT, apiClient, isAuthenticationError, retryDelayMs, setApiProfileId } from "./apiClient";
 
@@ -272,5 +272,33 @@ describe("native session token", () => {
     expect(needsExplicitSelection({ hasPin: true })).toBe(false);
     setSessionToken("1.100.sig");
     expect(needsExplicitSelection({ hasPin: false })).toBe(false);
+  });
+});
+
+describe("client compatibility", () => {
+  it("requires an update only for a newer well-formed minimum", () => {
+    expect(API_COMPAT_VERSION).toBe(1);
+    expect(clientUpdateRequired({ minCompatVersion: 1 })).toBe(false);
+    expect(clientUpdateRequired({ minCompatVersion: 2 })).toBe(true);
+    expect(clientUpdateRequired({ minCompatVersion: 3 }, 3)).toBe(false);
+    for (const malformed of [null, undefined, "2", {}, { minCompatVersion: "2" }, { minCompatVersion: 2.5 }, { minCompatVersion: Number.MAX_VALUE }]) {
+      expect(clientUpdateRequired(malformed), JSON.stringify(malformed)).toBe(false);
+    }
+  });
+
+  it("reads the public config without profile binding or auth events", async () => {
+    const events = new EventTarget();
+    const dispatch = vi.spyOn(events, "dispatchEvent");
+    vi.stubGlobal("window", events);
+    const fetchMock = vi.fn().mockResolvedValueOnce(Response.json({ error: { code: "profile_required", message: "x" } }, { status: 401 }));
+    vi.stubGlobal("fetch", fetchMock);
+    setApiProfileId(7);
+    await expect(apiClient.clientConfig()).rejects.toMatchObject({ code: "profile_required" });
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe("/api/client-config");
+    expect(new Headers(init.headers).get(PROFILE_EXPECTATION_HEADER)).toBeNull();
+    expect(dispatch).not.toHaveBeenCalled();
+    setApiProfileId(null);
+    vi.unstubAllGlobals();
   });
 });
