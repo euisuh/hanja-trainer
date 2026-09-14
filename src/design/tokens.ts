@@ -14,9 +14,9 @@ const defaultColors = {
 } as const;
 
 const glyphFonts = {
-  kr: "'Noto Serif KR', serif", jp: "'Noto Serif JP', serif", cn: "'Noto Serif SC', serif",
+  kr: "'Noto Serif KR Variable', 'Noto Serif KR', serif", jp: "'Noto Serif JP Variable', 'Noto Serif JP', serif", cn: "'Noto Serif SC Variable', 'Noto Serif SC', serif",
 } as const;
-const defaultFonts = { ui: "'Plus Jakarta Sans', 'Noto Sans KR', sans-serif", answer: "'Noto Sans KR', sans-serif", ...glyphFonts } as const;
+const defaultFonts = { ui: "'Plus Jakarta Sans Variable', 'Noto Sans KR Variable', sans-serif", answer: "'Noto Sans KR Variable', sans-serif", ...glyphFonts } as const;
 const defaultTracks = {
   kr: { accent: "#3B5BDB", accentText: "#3B5BDB", soft: "#EEF1FD", font: glyphFonts.kr },
   jp: { accent: "#C23F29", accentText: "#C23F29", soft: "#FDEEEB", font: glyphFonts.jp },
@@ -48,7 +48,7 @@ const quietColors = {
   winFlash: "rgba(47, 125, 90, .40)", winFlashClear: "rgba(47, 125, 90, 0)",
   feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
 } as const;
-const quietFonts = { ui: "'Space Grotesk', system-ui, sans-serif", answer: "'Space Grotesk', system-ui, sans-serif", ...glyphFonts } as const;
+const quietFonts = { ui: "'Space Grotesk Variable', system-ui, sans-serif", answer: "'Space Grotesk Variable', system-ui, sans-serif", ...glyphFonts } as const;
 const quietTracks = {
   kr: { accent: "#4C5F8A", accentText: quietColors.ink, soft: "#EEF0F6", font: glyphFonts.kr },
   jp: { accent: "#A85A3D", accentText: quietColors.ink, soft: "#F7EEEA", font: glyphFonts.jp },

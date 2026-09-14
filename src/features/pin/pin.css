@@ -1,5 +1,5 @@
 .unlock-screen,
-.profile-picker { display: grid; min-height: 100vh; margin-bottom: -104px; /* cancels .app's padding-bottom on these navless gates */ place-items: center; }
+.profile-picker { display: grid; min-height: 100vh; margin-bottom: calc(-104px - env(safe-area-inset-bottom)); /* cancels .app's padding-bottom on these navless gates */ place-items: center; }
 .unlock-card { width: min(100%, 380px); padding: var(--space-8); border: 3px solid var(--ink); border-radius: var(--radius-extra-large); background: var(--card); box-shadow: var(--shadow-7); text-align: center; }
 .unlock-card__mark { display: inline-grid; width: 58px; height: 58px; margin-bottom: var(--space-4); place-items: center; border: 3px solid var(--ink); border-radius: var(--radius-answer); background: var(--gold); color: var(--gold-text); font-family: var(--font-kr); font-size: var(--text-2xl); font-weight: var(--weight-strong); box-shadow: var(--shadow-4); }
 .unlock-card__avatar { display: inline-grid; width: 58px; height: 58px; margin-bottom: var(--space-4); place-items: center; border-radius: 50%; background: var(--avatar-background, var(--gold)); color: var(--card); font-size: var(--text-xl); font-weight: var(--weight-strong); }

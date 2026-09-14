@@ -52,9 +52,9 @@ describe("visual themes", () => {
     expect(current.colors.goldHover).not.toBe(current.colors.gold);
     expect(current.cssVariables).toMatchObject({ "--correct-vivid": current.colors.correctVivid, "--wrong-vivid": current.colors.wrongVivid, "--flame-text": current.colors.flameText, "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
     expect(current.fonts).toEqual({
-      ui: "'Plus Jakarta Sans', 'Noto Sans KR', sans-serif",
-      answer: "'Noto Sans KR', sans-serif",
-      kr: "'Noto Serif KR', serif", jp: "'Noto Serif JP', serif", cn: "'Noto Serif SC', serif",
+      ui: "'Plus Jakarta Sans Variable', 'Noto Sans KR Variable', sans-serif",
+      answer: "'Noto Sans KR Variable', sans-serif",
+      kr: "'Noto Serif KR Variable', 'Noto Serif KR', serif", jp: "'Noto Serif JP Variable', 'Noto Serif JP', serif", cn: "'Noto Serif SC Variable', 'Noto Serif SC', serif",
     });
     expect(current.tracks).toEqual({
       kr: { accent: "#3B5BDB", accentText: "#3B5BDB", soft: "#EEF1FD", font: current.fonts.kr },
@@ -80,7 +80,7 @@ describe("visual themes", () => {
     expect(quiet.tracks).toMatchObject({
       kr: { accent: "#4C5F8A", soft: "#EEF0F6" }, jp: { accent: "#A85A3D", soft: "#F7EEEA" }, cn: { accent: "#4C7A63", soft: "#EEF5F0" },
     });
-    expect(quiet.fonts).toEqual({ ...themes.default.fonts, ui: "'Space Grotesk', system-ui, sans-serif", answer: "'Space Grotesk', system-ui, sans-serif" });
+    expect(quiet.fonts).toEqual({ ...themes.default.fonts, ui: "'Space Grotesk Variable', system-ui, sans-serif", answer: "'Space Grotesk Variable', system-ui, sans-serif" });
     expect(quiet.radii).toMatchObject({ keycap: "6px", small: "7px", navItem: "8px", medium: "8px", large: "10px", extraLarge: "10px", answer: "8px", answerKey: "6px", panel: "8px", badge: "6px", control: "8px", cta: "10px", modal: "10px", calendar: "6px", pill: "999px" });
     expect(Object.entries(quiet.radii).filter(([name]) => name !== "pill").every(([, value]) => Number.parseInt(value) >= 6 && Number.parseInt(value) <= 10)).toBe(true);
     expect(Object.values(quiet.shadows).slice(0, 5)).toEqual(Array(5).fill("none"));
