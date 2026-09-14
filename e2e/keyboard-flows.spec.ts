@@ -139,7 +139,7 @@ async function finishSession(page: Page, cards: Card[], completion = /세션 완
         await expect(page.locator(".feedback-bar")).toContainText(/모름 · 정답 \S/u);
         if (!options.skipAnnouncement) await expect(page.locator(".feedback-bar")).toContainText(/= \S/u);
         await expect(page.locator(".feedback-bar")).toHaveAttribute("aria-live", "polite");
-        await expect(page.getByRole("button", { name: index + 1 < cards.length ? /다음 카드/u : /세션 마치기/u })).toBeEnabled();
+        await expect(page.getByRole("button", { name: index + 1 < cards.length || options.correctionPractice ? /다음 카드/u : /세션 마치기/u })).toBeEnabled();
         if (options.skipAnnouncement) await expect(page.locator(".session-announcement")).toContainText(`정답은 ${displayedAnswer}입니다.`);
         await page.locator(".session-card-wrap").evaluate((node) => node.setAttribute("data-tested-skip-hold", "true"));
         await page.waitForTimeout(500);
@@ -380,8 +380,8 @@ test.describe.serial("keyboard-only product flows", () => {
     let meaningFeedbackChecked = false;
     for (const [index, card] of lesson.cards.slice(0, sourceCardIndex).entries()) {
       await page.locator(".session-card-wrap").evaluate((node, cardIndex) => node.setAttribute("data-focus-setup-card", String(cardIndex)), index);
+      const testMeaningFeedback = card.kind === "meaning" && !meaningFeedbackChecked;
       if (card.kind !== "compare") {
-        const testMeaningFeedback = card.kind === "meaning" && !meaningFeedbackChecked;
         if (testMeaningFeedback) await expect(page.getByText(meaningPrompts[card.track], { exact: true })).toBeVisible();
         await page.keyboard.press(String((testMeaningFeedback ? (card.answerIndex + 1) % card.options.length : card.answerIndex) + 1));
         if (card.kind === "meaning") {
@@ -393,8 +393,12 @@ test.describe.serial("keyboard-only product flows", () => {
         }
         await expect(page.locator(".answer-option").first()).toHaveAttribute("aria-disabled", "true");
       }
-      await page.getByRole("button", { name: /다음 카드|세션 마치기/u }).press("Enter");
+      // Correct answers hide Next and advance automatically, as in finishSession.
+      if (card.kind === "compare" || testMeaningFeedback) {
+        await page.getByRole("button", { name: /다음 카드|세션 마치기/u }).press("Enter");
+      }
       await expect(page.locator(`[data-focus-setup-card="${index}"]`)).toHaveCount(0);
+      await finishCorrections(page);
     }
     const sourceCard = lesson.cards[sourceCardIndex];
     const sourceProgress = lesson.cards.slice(0, sourceCardIndex + 1).filter((card) => card.kind !== "compare").length;
@@ -433,6 +437,7 @@ test.describe.serial("keyboard-only product flows", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator('[data-tested-hold="true"]')).toHaveCount(0);
     await expect(page.locator(".quiz-card")).toBeFocused();
+    await finishCorrections(page);
 
     const finished = await finishSession(page, lesson.cards.slice(sourceCardIndex + 1), /했어요|좋아요/u, { announcement: "정답입니다. 다음 문항으로 이동합니다.", autoAdvance: true, correctionPractice: true, keyboardAdvance: "Enter", progressOffset: sourceProgress, skipFirst: true, verifyLanguages: true, verifyMeaningFeedback: !meaningFeedbackChecked });
     expect(meaningKeyboardAnswers + finished.meaningKeyboardAnswers).toBeGreaterThan(0);

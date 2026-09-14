@@ -17,6 +17,9 @@ import type { ThemeId } from "../shared/settings";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
 import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";
+// Global overrides must follow screen styles, including after native boot restore.
+import "./design/animations.css";
+import "./styles.css";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail", "study", "about"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);

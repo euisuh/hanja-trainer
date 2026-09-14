@@ -7,14 +7,18 @@ import "@fontsource-variable/noto-serif-kr";
 import "@fontsource-variable/noto-serif-sc";
 import "@fontsource-variable/plus-jakarta-sans";
 import "@fontsource-variable/space-grotesk";
-import { App } from "./App";
-import "./design/animations.css";
-import "./styles.css";
+import { restoreOutboxStorage } from "./platform/storage";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>,
-);
+async function main() {
+  await restoreOutboxStorage();
+  const { App } = await import("./App");
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StrictMode>,
+  );
+}
+
+void main();

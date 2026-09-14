@@ -51,6 +51,14 @@ xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator \
 cd android && ./gradlew assembleDebug
 ```
 
+Native builds mirror pending and rejected reviews/session summaries to
+Capacitor Preferences and restore missing localStorage entries before loading
+the app. Existing local values win, and entries from older builds are backed
+up at startup. Web builds keep localStorage only. The mirror is asynchronous:
+an abrupt process kill before a write finishes, or a native storage failure,
+can leave only the localStorage copy. This does not provide offline card
+downloads or persist the sign-in token (tracked separately in #288).
+
 ## Checks and build
 
 ```sh

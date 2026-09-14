@@ -1,38 +1,14 @@
-export function storedEntries(prefix: string): Array<[string, unknown]> {
-  try {
-    if (typeof localStorage === "undefined") return [];
-    const found: Array<[string, unknown]> = [];
-    for (let index = 0; index < localStorage.length; index += 1) {
-      const key = localStorage.key(index);
-      if (!key?.startsWith(prefix)) continue;
-      const raw = localStorage.getItem(key);
-      if (raw === null) continue;
-      try { found.push([key.slice(prefix.length), JSON.parse(raw)]); }
-      catch { found.push([key.slice(prefix.length), raw]); }
-    }
-    return found;
-  } catch { return []; }
-}
+import { load as storedEntries, set as storeEntry, remove as removeEntry } from "../../platform/storage";
 
-export function storeEntry(prefix: string, key: string, value: unknown): boolean {
-  try {
-    if (typeof localStorage === "undefined") return false;
-    localStorage.setItem(`${prefix}${key}`, JSON.stringify(value));
-    return true;
-  } catch { return false; }
-}
+export { storedEntries, storeEntry, removeEntry };
 
 export function storeEntryIfAbsent(prefix: string, key: string, value: unknown): boolean {
   try {
     if (typeof localStorage === "undefined") return false;
     const fullKey = `${prefix}${key}`;
-    if (localStorage.getItem(fullKey) === null) localStorage.setItem(fullKey, JSON.stringify(value));
+    if (localStorage.getItem(fullKey) === null) return storeEntry(prefix, key, value);
     return true;
   } catch { return false; }
-}
-
-export function removeEntry(prefix: string, key: string) {
-  try { localStorage.removeItem(`${prefix}${key}`); } catch { /* Storage failure must not block learning. */ }
 }
 
 export function removeEntries(prefix: string) {
