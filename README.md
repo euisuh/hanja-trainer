@@ -47,9 +47,13 @@ check without signing:
 
 ```sh
 xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator \
-  -configuration Debug CODE_SIGNING_ALLOWED=NO build
+  -configuration Debug -packageAuthorizationProvider netrc CODE_SIGNING_ALLOWED=NO build
 cd android && ./gradlew assembleDebug
 ```
+
+From a non-interactive shell (agents, CI), keep `-packageAuthorizationProvider netrc`:
+the default keychain lookup for github.com can wait forever on an invisible prompt
+while Swift Package Manager downloads the Capacitor binary frameworks.
 
 Native builds mirror pending and rejected reviews/session summaries to
 Capacitor Preferences and restore missing localStorage entries before loading

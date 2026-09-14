@@ -1,0 +1,74 @@
+name: Mobile builds
+
+# Native builds are slow (macOS minutes bill at a multiple of Linux), so they run only
+# when something that reaches the apps changes. Signing and store uploads are not here.
+on:
+  push:
+    branches: [main]
+    paths: &mobile-paths
+      - android/**
+      - ios/**
+      - src/**
+      - shared/**
+      - index.html
+      - package.json
+      - package-lock.json
+      - capacitor.config.ts
+      - vite.config.ts
+      - .github/workflows/mobile.yml
+  pull_request:
+    paths: *mobile-paths
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: npm ci
+      # Same bundle as `npm run build:mobile`, syncing only the platform this runner builds.
+      - run: npx vite build && npx cap sync android
+        env:
+          VITE_API_ORIGIN: https://hanja.uiseoya.com
+      - run: ./gradlew assembleDebug
+        working-directory: android
+      - uses: actions/upload-artifact@v7
+        with:
+          name: android-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+  ios:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx vite build && npx cap sync ios
+        env:
+          VITE_API_ORIGIN: https://hanja.uiseoya.com
+      - run: >-
+          xcodebuild -project ios/App/App.xcodeproj -scheme App
+          -sdk iphonesimulator -configuration Debug
+          -derivedDataPath build/ios -packageAuthorizationProvider netrc
+          CODE_SIGNING_ALLOWED=NO build
