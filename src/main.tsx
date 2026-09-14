@@ -7,10 +7,11 @@ import "@fontsource-variable/noto-serif-kr";
 import "@fontsource-variable/noto-serif-sc";
 import "@fontsource-variable/plus-jakarta-sans";
 import "@fontsource-variable/space-grotesk";
+import { loadSessionToken } from "./platform/sessionToken";
 import { restoreOutboxStorage } from "./platform/storage";
 
 async function main() {
-  await restoreOutboxStorage();
+  await Promise.all([restoreOutboxStorage(), loadSessionToken()]);
   const { App } = await import("./App");
   createRoot(document.getElementById("root")!).render(
     <StrictMode>

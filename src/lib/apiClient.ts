@@ -1,6 +1,6 @@
 import { PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type CharacterDetailResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../../shared/api";
 import { apiUrl } from "../platform/apiUrl";
-import { getSessionToken, nativeShell, renewSessionToken, setSessionToken } from "../platform/sessionToken";
+import { discardSessionToken, getSessionToken, nativeShell, renewSessionToken, setSessionToken } from "../platform/sessionToken";
 import { TRACKS, type Track } from "../../shared/types";
 
 export class ApiClientError extends Error {
@@ -109,6 +109,7 @@ function requestJson<T>(path: string, init?: RequestInit, notifyAuth = true, pro
         : response.status === 401 || response.status === 403 ? "access_required" : "request_failed";
       const message = typeof errorBody?.message === "string" ? errorBody.message : `Request failed (${response.status})`;
       const error = new ApiClientError(response.status, code, message, retryAfterSeconds(response, body));
+      if (sentToken !== null && response.status === 401 && (code === "profile_required" || code === "pin_required")) discardSessionToken(sentToken);
       if (notifyAuth && isAuthenticationError(error)) window.dispatchEvent(new Event(PIN_REQUIRED_EVENT));
       throw error;
     }

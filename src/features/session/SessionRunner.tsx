@@ -16,6 +16,7 @@ import { ComboBadge } from "./ComboBadge";
 import { FeedbackBar } from "./FeedbackBar";
 import { playCorrect, playSkip, playWrong } from "./feedbackSound";
 import { buzz } from "../../platform/haptics";
+import { onBackButton } from "../../platform/lifecycle";
 import { ParticleBurst, type BurstAnchor } from "./ParticleBurst";
 import { PauseModal } from "./PauseModal";
 import { QuizCard, wordLabels } from "./QuizCard";
@@ -257,7 +258,7 @@ export function SessionRunner({
     if (normalMode && !isCorrect) setNormalQueue((current) => insertCorrection(current, index));
     if (isCorrect) {
       if (feedbackSoundEnabled) playCorrect(nextCombo);
-      if (!reducedMotion) buzz(nextCombo >= 6 ? [18, 40, 26] : 18);
+      if (!reducedMotion) buzz(nextCombo >= 6 ? "combo" : "correct");
       const tier = nextCombo >= 6 ? 3 : nextCombo >= 3 ? 2 : 1;
       const option = choice === null ? undefined : runnerRef.current?.querySelectorAll<HTMLElement>(".answer-option")[choice];
       const optionRect = option?.getBoundingClientRect();
@@ -268,7 +269,7 @@ export function SessionRunner({
       }]);
     } else {
       if (feedbackSoundEnabled) (isSkipped ? playSkip : playWrong)();
-      if (!reducedMotion) buzz(isSkipped ? 10 : [30, 50, 30]);
+      if (!reducedMotion) buzz(isSkipped ? "skip" : "wrong");
     }
   }
 
@@ -349,6 +350,14 @@ export function SessionRunner({
     if (!answered && !compare && !answerLocked.current && (!recall || recallState !== "revealed")) answerTimer.resume();
     setPaused(false);
   }
+
+  // Android back pauses the session (or closes the pause dialog) instead of leaving it mid-card.
+  // The native listener is registered once; the ref always runs the latest render's handlers.
+  const backRef = useRef(() => undefined as void);
+  useEffect(() => {
+    backRef.current = () => { if (pausedRef.current) resumeSession(); else pauseSession(); };
+  });
+  useEffect(() => onBackButton(() => backRef.current()), []);
 
   useEffect(() => {
     function pauseWhenHidden() {

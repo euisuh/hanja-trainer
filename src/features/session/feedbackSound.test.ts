@@ -55,10 +55,10 @@ describe("answer feedback", () => {
   it("vibrates when supported and ignores browser rejection", () => {
     const vibrate = vi.fn(() => true);
     vi.stubGlobal("navigator", { vibrate });
-    buzz([18, 40, 26]);
+    buzz("combo");
     expect(vibrate).toHaveBeenCalledWith([18, 40, 26]);
     vibrate.mockImplementation(() => { throw new Error("unfocused"); });
-    expect(() => buzz(10)).not.toThrow();
+    expect(() => buzz("skip")).not.toThrow();
   });
 
   it("ignores AudioContext construction failures", async () => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ApiClientError, PIN_REQUIRED_EVENT, isAuthenticationError, isPermanentApiError, retryDelayMs } from "../../lib/apiClient";
+import { onAppResume } from "../../platform/lifecycle";
 import { decodeEntryKey, removeEntries, removeEntry, storeEntry, storeEntryIfAbsent, storedEntries } from "./outboxStorage";
 
 type Pending<Input, Result> = { profileId: number; input: Input; onSynced?: (result: Result) => void };
@@ -408,8 +409,10 @@ export function createOutbox<Input, Result>(config: OutboxConfig<Input, Result>)
       listeners.add(update);
       window.addEventListener("online", handleOnline);
       window.addEventListener("storage", handleStorage);
+      const stopResume = onAppResume(handleOnline);
       update();
       return () => {
+        stopResume();
         listeners.delete(update);
         window.removeEventListener("online", handleOnline);
         window.removeEventListener("storage", handleStorage);

@@ -225,6 +225,20 @@ describe("native session token", () => {
     expect(getSessionToken()).toBeNull();
   });
 
+  it("forgets a token the server no longer accepts", async () => {
+    vi.stubEnv("VITE_API_ORIGIN", origin);
+    setSessionToken("1.100.expired");
+    vi.stubGlobal("window", new EventTarget());
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce(Response.json({ error: { code: "profile_changed", message: "changed" } }, { status: 409 }))
+      .mockResolvedValueOnce(Response.json({ error: { code: "profile_required", message: "Select a profile" } }, { status: 401 })));
+
+    await expect(apiClient.profile(undefined, false, null)).rejects.toMatchObject({ code: "profile_changed" });
+    expect(getSessionToken()).toBe("1.100.expired");
+    await expect(apiClient.profile(undefined, false, null)).rejects.toMatchObject({ code: "profile_required" });
+    expect(getSessionToken()).toBeNull();
+  });
+
   it("clears the token when the session ends", async () => {
     vi.stubEnv("VITE_API_ORIGIN", origin);
     setSessionToken("1.100.sig");
