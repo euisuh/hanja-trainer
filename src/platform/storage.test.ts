@@ -195,6 +195,27 @@ describe("native outbox storage", () => {
     expect(native.values.has(`${reviews}acknowledged`)).toBe(false);
   });
 
+  it("restores a discarded rejection whose native removal was lost, and can discard it again", async () => {
+    let storage = await import("./storage");
+    storage.set(rejected, "discarded", { profileId: 1, raw: {}, errorCode: "invalid_review" });
+    await vi.waitFor(() => expect(native.values.has(`${rejected}discarded`)).toBe(true));
+
+    // Discarded locally, then the app was killed before the queued native removal ran,
+    // and iOS evicted WebView storage before the next launch (accepted limit, see storage.ts).
+    values.delete(`${rejected}discarded`);
+    values.clear();
+    vi.resetModules();
+    storage = await import("./storage");
+    await storage.restoreOutboxStorage();
+    expect(storage.load(rejected)).toEqual([["discarded", { profileId: 1, raw: {}, errorCode: "invalid_review" }]]);
+
+    storage.remove(rejected, "discarded");
+    await vi.waitFor(() => expect(native.values.has(`${rejected}discarded`)).toBe(false));
+    values.clear();
+    await storage.restoreOutboxStorage();
+    expect(storage.load(rejected)).toEqual([]);
+  });
+
   it("keeps mirroring after a native write hangs", async () => {
     vi.useFakeTimers();
     const warning = vi.spyOn(console, "warn").mockImplementation(() => {});

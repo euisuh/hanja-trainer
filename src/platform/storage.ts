@@ -51,6 +51,13 @@ const RESTORE_TIMEOUT_MS = 2_000;
 // Call before importing App: creating either outbox rehydrates it at module load.
 // Bounded so a slow or hung bridge never keeps the app from rendering; localStorage
 // stays the primary copy and anything not restored in time is retried next launch.
+//
+// Known limit (accepted in issue 307): removals reach native storage asynchronously. If the app is
+// killed after a local removal but before its native removal, and iOS later evicts WebView
+// storage, the restore brings the entry back. Pending entries are then re-sent and the server
+// deduplicates them; a discarded rejection reappears and must be discarded again. Deleting
+// native rows that look stale was rejected: without synchronous proof of the discard it can
+// delete the only copy of a real rejection (for example after localStorage quota failures).
 export async function restoreOutboxStorage(timeoutMs = RESTORE_TIMEOUT_MS): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
   const restore = { cancelled: false };
