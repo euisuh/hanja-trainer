@@ -1,7 +1,7 @@
 name: Mobile builds
 
-# Native builds are slow (macOS minutes bill at a multiple of Linux), so they run only
-# when something that reaches the apps changes. Signing and store uploads are not here.
+# Run native builds only when something that reaches the apps changes.
+# Signing and store uploads are not here.
 on:
   push:
     branches: [main]
@@ -26,43 +26,58 @@ concurrency:
   group: mobile-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NPM_CONFIG_CACHE: ${{ github.workspace }}/../.ci-cache/npm
+
 jobs:
   android:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, macOS, ARM64]
     timeout-minutes: 30
+    env:
+      ANDROID_SDK_ROOT: ${{ github.workspace }}/../.ci-cache/android-sdk
+      GRADLE_USER_HOME: ${{ github.workspace }}/../.ci-cache/gradle
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-          cache: npm
+          package-manager-cache: false
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
-          cache: gradle
+      - uses: android-actions/setup-android@40fd30fb8d7440372e1316f5d1809ec01dcd3699 # v4
+        with:
+          packages: platform-tools
       - run: npm ci
       # Same bundle as `npm run build:mobile`, syncing only the platform this runner builds.
       - run: npx vite build && npx cap sync android
         env:
           VITE_API_ORIGIN: https://hanja.uiseoya.com
-      - run: ./gradlew assembleDebug
+      - run: ./gradlew assembleDebug --no-daemon
         working-directory: android
       - uses: actions/upload-artifact@v7
         with:
           name: android-debug-apk
           path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+          retention-days: 7
 
   ios:
-    runs-on: macos-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, macOS, ARM64]
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-          cache: npm
+          package-manager-cache: false
       - run: npm ci
       - run: npx vite build && npx cap sync ios
         env:

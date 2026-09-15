@@ -80,6 +80,36 @@ The Playwright suite resets the local profile and learning history, reseeds the
 local D1 database, and drives all happy paths with keyboard events. Responsive
 screenshots are written under `test-results/`.
 
+### Automatic checks on the Mac
+
+GitHub schedules PR checks and main-branch checks; the repository-scoped
+`uiseos-Mac-mini-hanja` runner executes them on this Mac. The existing `CI`
+and `Mobile builds` workflows use `[self-hosted, macOS, ARM64]`. One runner
+executes jobs sequentially; newer commits cancel superseded runs. Mobile
+builds retain their path filters. No deployment or signing runs in CI.
+
+The runner lives in `/Users/uiseo/actions-runner/hanja`, with its own checkout
+under `_work/`; it never builds in the development checkout. Browser tests
+use port `18787` and reset only their checkout's local D1 database. Node 22,
+JDK 21, and Android build tools are installed by the workflows; npm/Gradle
+caches and the Android SDK stay in `.ci-cache/` beside that checkout. Xcode must
+remain installed. No Android emulator is needed.
+
+The macOS login service starts automatically when `uiseo` logs in. The Mac
+must remain awake and online; otherwise checks queue until it returns.
+
+```sh
+cd /Users/uiseo/actions-runner/hanja
+./svc.sh status
+./svc.sh stop   # pause accepting jobs
+./svc.sh start
+```
+
+Keep the repository private and restrict write access to trusted people.
+Fork PRs are skipped, but this runner runs as `uiseo`, not in a security
+sandbox. GitHub still stores check logs and seven-day screenshot/APK artifacts;
+only execution and dependency caches move to the Mac.
+
 ## D1 migrations
 
 ```sh

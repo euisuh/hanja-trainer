@@ -8,17 +8,27 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NPM_CONFIG_CACHE: ${{ github.workspace }}/../.ci-cache/npm
+
 jobs:
   check:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-          cache: npm
+          package-manager-cache: false
       - if: github.event_name == 'pull_request'
         env:
           MIGRATION_BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -31,13 +41,19 @@ jobs:
       - run: npm run build
 
   e2e:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, macOS, ARM64]
+    timeout-minutes: 30
+    env:
+      E2E_PORT: 18787
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-          cache: npm
+          package-manager-cache: false
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e:ci
@@ -46,3 +62,4 @@ jobs:
         with:
           name: responsive-screenshots
           path: test-results*/
+          retention-days: 7
