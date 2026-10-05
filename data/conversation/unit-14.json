@@ -1,0 +1,732 @@
+{
+  "units": [
+    {
+      "ord": 14,
+      "titleKo": "있었던 일 말하기",
+      "goalKo": "친구에게 있었던 일을 순서대로 이야기하고, 상대의 놀람과 맞장구에 자연스럽게 이어 간다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 14,
+      "ord": 1,
+      "text": "ねぇ、ちょっと聞いてよ。",
+      "kana": "ねぇ、ちょっときいてよ。",
+      "cueKo": "친구에게 '있잖아, 내 얘기 좀 들어봐' 하고 이야기를 꺼내기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9853946",
+      "audioKey": "c/dad8664ce5bb76ba",
+      "key": "tatoeba-9853946-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 2,
+      "text": "私に何が起こったか聞いてよ。",
+      "kana": "わたしになにがおこったかきいてよ。",
+      "cueKo": "'나한테 무슨 일이 있었는지 들어봐' 하고 이야기를 꺼내기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10070508",
+      "audioKey": "c/03096b58eb1e31ba",
+      "key": "tatoeba-10070508-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 3,
+      "text": "さっき、事故っちゃって。",
+      "kana": "さっき、じこっちゃって。",
+      "cueKo": "방금 사고가 났다고 친구에게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12455624",
+      "audioKey": "c/d6729802fba516fe",
+      "key": "tatoeba-12455624-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 4,
+      "text": "昨日、にわか雨に降られたんだ。",
+      "kana": "きのう、にわかあめにふられたんだ。",
+      "cueKo": "어제 소나기를 맞았다고 친구에게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10908859",
+      "audioKey": "c/6843eb78f4349df4",
+      "key": "tatoeba-10908859-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 5,
+      "text": "家に帰る途中で雨に降られたんだ。",
+      "kana": "いえにかえるとちゅうであめにふられたんだ。",
+      "cueKo": "집에 가는 길에 비를 맞았다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9457856",
+      "audioKey": "c/d8220b8a8bfa3e86",
+      "key": "tatoeba-9457856-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 6,
+      "text": "雨に降られてぬれちゃったよ。",
+      "kana": "あめにふられてぬれちゃったよ。",
+      "cueKo": "비를 맞아서 홀딱 젖었다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #189616",
+      "audioKey": "c/d23bbccef454c569",
+      "key": "tatoeba-189616-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 7,
+      "text": "寝坊しちゃって、始発に間に合わなかったんだ。",
+      "kana": "ねぼうしちゃって、しはつにまにあわなかったんだ。",
+      "cueKo": "늦잠 자서 첫차를 놓쳤다고 이유를 이어서 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10669763",
+      "audioKey": "c/65dce01c39256ae7",
+      "key": "tatoeba-10669763-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 8,
+      "text": "寝坊して、学校に遅刻しちゃったんだ。",
+      "kana": "ねぼうして、がっこうにちこくしちゃったんだ。",
+      "cueKo": "늦잠 자서 학교에 지각했다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10677269",
+      "audioKey": "c/902c2df083ddd3f3",
+      "key": "tatoeba-10677269-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 9,
+      "text": "目覚ましかけ忘れてて、仕事に遅刻しちゃった。",
+      "kana": "めざましかけわすれてて、しごとにちこくしちゃった。",
+      "cueKo": "알람을 안 맞춰서 회사에 지각했다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11674920",
+      "audioKey": "c/aae905771620cc55",
+      "key": "tatoeba-11674920-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 10,
+      "text": "頭痛がひどくてね。それで早く寝たんだよ。",
+      "kana": "ずつうがひどくてね。それではやくねたんだよ。",
+      "cueKo": "머리가 아파서 일찍 잤다고 '그래서'로 이어 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10631776",
+      "audioKey": "c/0fd5a3086a917f86",
+      "key": "tatoeba-10631776-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 11,
+      "text": "行こうかと考えたんだけど、結局行かないことにしたよ。",
+      "kana": "いこうかとかんがえたんだけど、けっきょくいかないことにしたよ。",
+      "cueKo": "갈까 고민했지만 결국 안 가기로 했다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10069965",
+      "audioKey": "c/b8e6bd806930ac06",
+      "key": "tatoeba-10069965-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 12,
+      "text": "結局、来なかったよ。",
+      "kana": "けっきょく、こなかったよ。",
+      "cueKo": "기다리던 사람이 결국 오지 않았다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11075451",
+      "audioKey": "c/d8d5e1cb67d4206e",
+      "key": "tatoeba-11075451-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 13,
+      "text": "昨日、友達が会いに来てくれたんだ。",
+      "kana": "きのう、ともだちがあいにきてくれたんだ。",
+      "cueKo": "어제 친구가 만나러 와 줬다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11682757",
+      "audioKey": "c/431507784b679d74",
+      "key": "tatoeba-11682757-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 14,
+      "text": "昨日、散髪に行ったんだけど、今回のは気に入ったよ。",
+      "kana": "きのう、さんぱつにいったんだけど、こんかいのはきにいったよ。",
+      "cueKo": "어제 머리를 자르러 갔는데 이번엔 마음에 들었다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12980599",
+      "audioKey": "c/076870bcbff40166",
+      "key": "tatoeba-12980599-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 15,
+      "text": "誰かが何か言ったんだけど、わかんなかった。",
+      "kana": "だれかがなにかいったんだけど、わかんなかった。",
+      "cueKo": "누가 뭐라고 했는데 알아듣지 못했다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1815853",
+      "audioKey": "c/1dcce4d11ee1d538",
+      "key": "tatoeba-1815853-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 16,
+      "text": "昔の友達をそこで見て驚いたよ。",
+      "kana": "むかしのともだちをそこでみておどろいたよ。",
+      "cueKo": "거기서 옛 친구를 보고 놀랐다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1139064",
+      "audioKey": "c/dd84730fd658d82f",
+      "key": "tatoeba-1139064-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 17,
+      "text": "驚いたよ！",
+      "kana": "おどろいたよ！",
+      "cueKo": "놀랐다고 감정을 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13428548",
+      "audioKey": "c/9a8bc75fa1fe610e",
+      "key": "tatoeba-13428548-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 18,
+      "text": "めっちゃびっくりした。",
+      "kana": "めっちゃびっくりした。",
+      "cueKo": "엄청 깜짝 놀랐다고 가볍게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10079743",
+      "audioKey": "c/32f9fb456a1c441b",
+      "key": "tatoeba-10079743-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 19,
+      "text": "ちょっとびっくりした。",
+      "kana": "ちょっとびっくりした。",
+      "cueKo": "조금 놀랐다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11138356",
+      "audioKey": "c/ceb4e9af41e81f9d",
+      "key": "tatoeba-11138356-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 20,
+      "text": "本当にびっくりした。",
+      "kana": "ほんとうにびっくりした。",
+      "cueKo": "정말 깜짝 놀랐다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #81536",
+      "audioKey": "c/badf980068d57017",
+      "key": "tatoeba-81536-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 21,
+      "text": "あっ、びっくりした。",
+      "kana": "あっ、びっくりした。",
+      "cueKo": "갑자기 놀란 순간에 '앗, 깜짝이야' 하고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12167707",
+      "audioKey": "c/9a8a5cbaaedbf7e0",
+      "key": "tatoeba-12167707-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 22,
+      "text": "やっと着いた。",
+      "kana": "やっとついた。",
+      "cueKo": "한참 걸려 겨우 도착했다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #193061",
+      "audioKey": "c/7cc350a7cbf7bf32",
+      "key": "tatoeba-193061-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 23,
+      "text": "次の日は、一歩も歩けなかった。",
+      "kana": "つぎのひは、いっぽもあるけなかった。",
+      "cueKo": "다음 날은 한 걸음도 못 걸었다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13201460",
+      "audioKey": "c/7a97d4606f5f27df",
+      "key": "tatoeba-13201460-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 24,
+      "text": "家に帰ったらすぐにシャワーを浴びた。",
+      "kana": "いえにかえったらすぐにシャワーをあびた。",
+      "cueKo": "집에 도착하자마자 샤워했다고 순서대로 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13059187",
+      "audioKey": "c/6c41875113d72d5f",
+      "key": "tatoeba-13059187-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 25,
+      "text": "友達におすすめされたラーメン屋に行ってみたら、行列ができていた。",
+      "kana": "ともだちにおすすめされたラーメンやにいってみたら、ぎょうれつができていた。",
+      "cueKo": "추천받은 라멘집에 가 보니 줄이 길었다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13059163",
+      "audioKey": "c/a06b247bb0f3f62b",
+      "key": "tatoeba-13059163-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 26,
+      "text": "先週、新しいレストランに行ってみたら、すごくおいしくて、また行きたくなりました。",
+      "kana": "せんしゅう、あたらしいレストランにいってみたら、すごくおいしくて、またいきたくなりました。",
+      "cueKo": "지난주 새 식당에 갔더니 맛있어서 또 가고 싶어졌다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13060586",
+      "audioKey": "c/7fda828f7d855e57",
+      "key": "tatoeba-13060586-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 27,
+      "text": "そういうわけで遅刻しちゃったのよ。",
+      "kana": "そういうわけでちこくしちゃったのよ。",
+      "cueKo": "'그래서 지각했어' 하고 이야기를 마무리하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9684513",
+      "audioKey": "c/d34ec10400ab80d8",
+      "key": "tatoeba-9684513-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 28,
+      "text": "笑っちゃった。",
+      "kana": "わらっちゃった。",
+      "cueKo": "웃음이 나와 버렸다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10066792",
+      "audioKey": "c/bc8721c0230dcbd7",
+      "key": "tatoeba-10066792-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 29,
+      "text": "家に帰る途中、道に迷ってしまった。",
+      "kana": "いえにかえるとちゅう、みちにまよってしまった。",
+      "cueKo": "집에 가는 길에 길을 잃었다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10218817",
+      "audioKey": "c/74e7e39bfd9877f5",
+      "key": "tatoeba-10218817-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 30,
+      "text": "財布を家に忘れてしまった。",
+      "kana": "さいふをいえにわすれてしまった。",
+      "cueKo": "지갑을 집에 두고 왔다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13056492",
+      "audioKey": "c/5ee8c5fc72c4ef85",
+      "key": "tatoeba-13056492-say"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 31,
+      "text": "何があったの？",
+      "kana": "なにがあったの？",
+      "cueKo": "친구가 '무슨 일 있었어?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #188169",
+      "audioKey": "c/a6c901853e923bb4",
+      "key": "tatoeba-188169-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 32,
+      "text": "どうしたの？大丈夫？",
+      "kana": "どうしたの？だいじょうぶ？",
+      "cueKo": "친구가 '무슨 일이야? 괜찮아?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10565813",
+      "audioKey": "c/8380b3bd7b6afa41",
+      "key": "tatoeba-10565813-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 33,
+      "text": "先週末は何をしたの？",
+      "kana": "せんしゅうまつはなにをしたの？",
+      "cueKo": "친구가 지난 주말에 뭐 했냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13222205",
+      "audioKey": "c/c8fbd1474ce6b301",
+      "key": "tatoeba-13222205-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 34,
+      "text": "結果はどうなったの？",
+      "kana": "けっかはどうなったの？",
+      "cueKo": "친구가 '결과는 어떻게 됐어?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11546070",
+      "audioKey": "c/be8ed0cba2886871",
+      "key": "tatoeba-11546070-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 35,
+      "text": "その後どうなるの？",
+      "kana": "そのあとどうなるの？",
+      "cueKo": "친구가 '그 뒤엔 어떻게 돼?' 하고 이야기의 다음을 재촉하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11561704",
+      "audioKey": "c/6330c6cb8f77a322",
+      "key": "tatoeba-11561704-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 36,
+      "text": "嘘！",
+      "kana": "うそ！",
+      "cueKo": "친구가 놀라서 '거짓말!' 하고 외치는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #536720",
+      "audioKey": "c/fc94467ee0223585",
+      "key": "tatoeba-536720-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 37,
+      "text": "嘘でしょ……",
+      "kana": "うそでしょ……",
+      "cueKo": "친구가 믿기지 않는다는 듯 '거짓말이지……' 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13543264",
+      "audioKey": "c/f56d1a94a0b6ecc7",
+      "key": "tatoeba-13543264-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 38,
+      "text": "えっ嘘でしょ。",
+      "kana": "えっうそでしょ。",
+      "cueKo": "친구가 '어, 설마' 하고 놀라는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227962",
+      "audioKey": "c/d87453cd41c078de",
+      "key": "tatoeba-227962-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 39,
+      "text": "うっそ〜！絶対うそだよ！",
+      "kana": "うっそ〜！ぜったいうそだよ！",
+      "cueKo": "친구가 '말도 안 돼! 절대 거짓말이야!' 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11632729",
+      "audioKey": "c/ef80e517c5755466",
+      "key": "tatoeba-11632729-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 40,
+      "text": "えー、信じらんなーい！",
+      "kana": "えー、しんじらんなーい！",
+      "cueKo": "친구가 '헐, 믿을 수 없어!' 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #228001",
+      "audioKey": "c/dff693d441d24667",
+      "key": "tatoeba-228001-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 41,
+      "text": "本当？",
+      "kana": "ほんとう？",
+      "cueKo": "친구가 '정말?' 하고 되묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4751",
+      "audioKey": "c/766c9fc75df84e34",
+      "key": "tatoeba-4751-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 42,
+      "text": "まじで？",
+      "kana": "まじで？",
+      "cueKo": "친구가 '진짜?' 하고 되묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #605858",
+      "audioKey": "c/2353578e3854bc4d",
+      "key": "tatoeba-605858-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 43,
+      "text": "そうなんだ。",
+      "kana": "そうなんだ。",
+      "cueKo": "친구가 '아, 그렇구나' 하고 맞장구치는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5955920",
+      "audioKey": "c/bfc342bafeb9ec85",
+      "key": "tatoeba-5955920-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 44,
+      "text": "びっくりした？",
+      "kana": "びっくりした？",
+      "cueKo": "친구가 '놀랐어?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8688962",
+      "audioKey": "c/fe2511e916917469",
+      "key": "tatoeba-8688962-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 45,
+      "text": "僕もびっくりしたよ。",
+      "kana": "ぼくもびっくりしたよ。",
+      "cueKo": "친구가 '나도 놀랐어' 하고 공감하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10906708",
+      "audioKey": "c/f97b34133ba818b1",
+      "key": "tatoeba-10906708-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 46,
+      "text": "それは困ったね。",
+      "kana": "それはこまったね。",
+      "cueKo": "친구가 '그거 곤란했겠네' 하고 공감하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #205194",
+      "audioKey": "c/3dca048af69c03c8",
+      "key": "tatoeba-205194-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 47,
+      "text": "それはひどいな。",
+      "kana": "それはひどいな。",
+      "cueKo": "친구가 '그거 너무했다' 하고 공감하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1270752",
+      "audioKey": "c/ac54f5eaa9cf0e45",
+      "key": "tatoeba-1270752-hear"
+    },
+    {
+      "unitOrd": 14,
+      "ord": 48,
+      "text": "よかったね。",
+      "kana": "よかったね。",
+      "cueKo": "친구가 '잘됐네' 하고 기뻐해 주는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12712281",
+      "audioKey": "c/e3932edd22810d08",
+      "key": "tatoeba-12712281-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 14,
+      "ord": 1,
+      "titleKo": "비 맞은 이야기",
+      "settingKo": "친구에게 오늘 있었던 일을 하나씩 이야기할 때",
+      "goalKo": "이야기를 꺼내고, 일어난 일을 순서대로 세 단계로 말한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            46
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            24
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            43
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 14,
+      "ord": 2,
+      "titleKo": "결국 못 간 이유",
+      "settingKo": "가려던 곳에 어떻게 됐는지 친구가 물을 때",
+      "goalKo": "고민한 끝에 결국 어떻게 했는지, 그 이유와 함께 말한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            34
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            11
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            31
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -27,6 +27,10 @@
     "text": "来週の日曜なら空いてます。",
     "sourceAuthor": "bunbuku"
   },
+  "81536": {
+    "text": "本当にびっくりした。",
+    "sourceAuthor": "small_snow"
+  },
   "122305": {
     "text": "日本食はお好きですか。",
     "sourceAuthor": "bunbuku"
@@ -147,12 +151,20 @@
     "text": "何時にしましょうか。",
     "sourceAuthor": "small_snow"
   },
+  "188169": {
+    "text": "何があったの？",
+    "sourceAuthor": "bunbuku"
+  },
   "189286": {
     "text": "映画見に行かない？",
     "sourceAuthor": "mookeee"
   },
   "189297": {
     "text": "映画を見に行きませんか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "189616": {
+    "text": "雨に降られてぬれちゃったよ。",
     "sourceAuthor": "bunbuku"
   },
   "190532": {
@@ -170,6 +182,10 @@
   "191499": {
     "text": "悪いけど行けないよ。",
     "sourceAuthor": "bunbuku"
+  },
+  "193061": {
+    "text": "やっと着いた。",
+    "sourceAuthor": "small_snow"
   },
   "194081": {
     "text": "もう少し待ってください。",
@@ -234,6 +250,10 @@
   "205018": {
     "text": "全部で三千円です。",
     "sourceAuthor": "KK_kaku_"
+  },
+  "205194": {
+    "text": "それは困ったね。",
+    "sourceAuthor": "tommy__san"
   },
   "213817": {
     "text": "そうは思いません。",
@@ -339,6 +359,14 @@
     "text": "おすすめは何ですか。",
     "sourceAuthor": "bunbuku"
   },
+  "227962": {
+    "text": "えっ嘘でしょ。",
+    "sourceAuthor": "ITA"
+  },
+  "228001": {
+    "text": "えー、信じらんなーい！",
+    "sourceAuthor": "tommy__san"
+  },
   "228005": {
     "text": "ええ、喜んで。",
     "sourceAuthor": "small_snow"
@@ -403,6 +431,10 @@
     "text": "はい。",
     "sourceAuthor": "e4zh1nmcz"
   },
+  "536720": {
+    "text": "嘘！",
+    "sourceAuthor": "tomkun01"
+  },
   "536751": {
     "text": "趣味は読書です。",
     "sourceAuthor": "tomkun01"
@@ -459,6 +491,10 @@
     "text": "旅行は好きですか？",
     "sourceAuthor": "mookeee"
   },
+  "1139064": {
+    "text": "昔の友達をそこで見て驚いたよ。",
+    "sourceAuthor": "bunbuku"
+  },
   "1166625": {
     "text": "うん。",
     "sourceAuthor": "bunbuku"
@@ -474,6 +510,10 @@
   "1189862": {
     "text": "私は日本語が少し話せますが、まだ上手じゃありません。",
     "sourceAuthor": "FiRez"
+  },
+  "1270752": {
+    "text": "それはひどいな。",
+    "sourceAuthor": "bunbuku"
   },
   "1483688": {
     "text": "こちらへどうぞ。",
@@ -498,6 +538,10 @@
   "1680694": {
     "text": "どうでしたか？",
     "sourceAuthor": "aka_aj"
+  },
+  "1815853": {
+    "text": "誰かが何か言ったんだけど、わかんなかった。",
+    "sourceAuthor": "bunbuku"
   },
   "1937825": {
     "text": "大丈夫ですか。",
@@ -727,6 +771,10 @@
     "text": "これください。",
     "sourceAuthor": "bunbuku"
   },
+  "8688962": {
+    "text": "びっくりした？",
+    "sourceAuthor": "small_snow"
+  },
   "8692850": {
     "text": "ソウルに住んでいます。",
     "sourceAuthor": "small_snow"
@@ -787,6 +835,10 @@
     "text": "夜ご飯、食べに行かない？",
     "sourceAuthor": "bunbuku"
   },
+  "9457856": {
+    "text": "家に帰る途中で雨に降られたんだ。",
+    "sourceAuthor": "bunbuku"
+  },
   "9499960": {
     "text": "いいよ。",
     "sourceAuthor": "small_snow"
@@ -807,6 +859,10 @@
     "text": "コーヒーのお代わりをお願いします。",
     "sourceAuthor": "bunbuku"
   },
+  "9684513": {
+    "text": "そういうわけで遅刻しちゃったのよ。",
+    "sourceAuthor": "bunbuku"
+  },
   "9699149": {
     "text": "はじめまして。",
     "sourceAuthor": "Sim5634"
@@ -817,6 +873,10 @@
   },
   "9776980": {
     "text": "月曜日はどうですか？",
+    "sourceAuthor": "small_snow"
+  },
+  "9853946": {
+    "text": "ねぇ、ちょっと聞いてよ。",
     "sourceAuthor": "small_snow"
   },
   "9961678": {
@@ -835,6 +895,18 @@
     "text": "笑っちゃった。",
     "sourceAuthor": "small_snow"
   },
+  "10069965": {
+    "text": "行こうかと考えたんだけど、結局行かないことにしたよ。",
+    "sourceAuthor": "bunbuku"
+  },
+  "10070508": {
+    "text": "私に何が起こったか聞いてよ。",
+    "sourceAuthor": "bunbuku"
+  },
+  "10079743": {
+    "text": "めっちゃびっくりした。",
+    "sourceAuthor": "small_snow"
+  },
   "10089482": {
     "text": "北海道には一度、行ったことがあります。",
     "sourceAuthor": "small_snow"
@@ -847,12 +919,20 @@
     "text": "濡れちゃった。",
     "sourceAuthor": "small_snow"
   },
+  "10218817": {
+    "text": "家に帰る途中、道に迷ってしまった。",
+    "sourceAuthor": "small_snow"
+  },
   "10455088": {
     "text": "駅で待ち合わせよう。",
     "sourceAuthor": "bunbuku"
   },
   "10455178": {
     "text": "駅で待ち合わせしようね。",
+    "sourceAuthor": "small_snow"
+  },
+  "10565813": {
+    "text": "どうしたの？大丈夫？",
     "sourceAuthor": "small_snow"
   },
   "10574111": {
@@ -879,6 +959,10 @@
     "text": "今夜は空いてるよ。",
     "sourceAuthor": "small_snow"
   },
+  "10631776": {
+    "text": "頭痛がひどくてね。それで早く寝たんだよ。",
+    "sourceAuthor": "bunbuku"
+  },
   "10647275": {
     "text": "レシートをください。",
     "sourceAuthor": "small_snow"
@@ -890,6 +974,14 @@
   "10668790": {
     "text": "香港には一度行ったことがありますよ。",
     "sourceAuthor": "small_snow"
+  },
+  "10669763": {
+    "text": "寝坊しちゃって、始発に間に合わなかったんだ。",
+    "sourceAuthor": "bunbuku"
+  },
+  "10677269": {
+    "text": "寝坊して、学校に遅刻しちゃったんだ。",
+    "sourceAuthor": "bunbuku"
   },
   "10756859": {
     "text": "学生です。",
@@ -910,6 +1002,14 @@
   "10906691": {
     "text": "今何してる？",
     "sourceAuthor": "small_snow"
+  },
+  "10906708": {
+    "text": "僕もびっくりしたよ。",
+    "sourceAuthor": "small_snow"
+  },
+  "10908859": {
+    "text": "昨日、にわか雨に降られたんだ。",
+    "sourceAuthor": "bunbuku"
   },
   "10914856": {
     "text": "ええ、いいですよ。",
@@ -943,6 +1043,14 @@
     "text": "お水のおかわりをお願いします。",
     "sourceAuthor": "bunbuku"
   },
+  "11075451": {
+    "text": "結局、来なかったよ。",
+    "sourceAuthor": "small_snow"
+  },
+  "11138356": {
+    "text": "ちょっとびっくりした。",
+    "sourceAuthor": "small_snow"
+  },
   "11327855": {
     "text": "意味が分かりませんでした。",
     "sourceAuthor": "small_snow"
@@ -959,12 +1067,32 @@
     "text": "知ってる？",
     "sourceAuthor": "megamanenm"
   },
+  "11546070": {
+    "text": "結果はどうなったの？",
+    "sourceAuthor": "small_snow"
+  },
   "11548105": {
     "text": "会計は別々でお願いします。",
     "sourceAuthor": "small_snow"
   },
   "11548108": {
     "text": "別々でお願いします。",
+    "sourceAuthor": "small_snow"
+  },
+  "11561704": {
+    "text": "その後どうなるの？",
+    "sourceAuthor": "small_snow"
+  },
+  "11632729": {
+    "text": "うっそ〜！絶対うそだよ！",
+    "sourceAuthor": "hidemat"
+  },
+  "11674920": {
+    "text": "目覚ましかけ忘れてて、仕事に遅刻しちゃった。",
+    "sourceAuthor": "small_snow"
+  },
+  "11682757": {
+    "text": "昨日、友達が会いに来てくれたんだ。",
     "sourceAuthor": "small_snow"
   },
   "11735233": {
@@ -979,6 +1107,10 @@
     "text": "レシートはいりません。",
     "sourceAuthor": "small_snow"
   },
+  "12167707": {
+    "text": "あっ、びっくりした。",
+    "sourceAuthor": "small_snow"
+  },
   "12221723": {
     "text": "海外旅行に行ったことはありますか？",
     "sourceAuthor": "small_snow"
@@ -987,12 +1119,20 @@
     "text": "何時がいい？",
     "sourceAuthor": "small_snow"
   },
+  "12455624": {
+    "text": "さっき、事故っちゃって。",
+    "sourceAuthor": "small_snow"
+  },
   "12593262": {
     "text": "韓国で生まれました。",
     "sourceAuthor": "small_snow"
   },
   "12593296": {
     "text": "去年、初めてパリに行きました。",
+    "sourceAuthor": "small_snow"
+  },
+  "12712281": {
+    "text": "よかったね。",
     "sourceAuthor": "small_snow"
   },
   "12754558": {
@@ -1007,12 +1147,40 @@
     "text": "メニューをください。",
     "sourceAuthor": "small_snow"
   },
+  "12980599": {
+    "text": "昨日、散髪に行ったんだけど、今回のは気に入ったよ。",
+    "sourceAuthor": "DJ_Saidez"
+  },
+  "13056492": {
+    "text": "財布を家に忘れてしまった。",
+    "sourceAuthor": "Gardenia"
+  },
+  "13059163": {
+    "text": "友達におすすめされたラーメン屋に行ってみたら、行列ができていた。",
+    "sourceAuthor": "Gardenia"
+  },
+  "13059187": {
+    "text": "家に帰ったらすぐにシャワーを浴びた。",
+    "sourceAuthor": "Gardenia"
+  },
+  "13060586": {
+    "text": "先週、新しいレストランに行ってみたら、すごくおいしくて、また行きたくなりました。",
+    "sourceAuthor": "Gardenia"
+  },
   "13117666": {
     "text": "申し訳ありません。",
     "sourceAuthor": "atitarev"
   },
+  "13201460": {
+    "text": "次の日は、一歩も歩けなかった。",
+    "sourceAuthor": "small_snow"
+  },
   "13211669": {
     "text": "ううん。",
+    "sourceAuthor": "atitarev"
+  },
+  "13222205": {
+    "text": "先週末は何をしたの？",
     "sourceAuthor": "atitarev"
   },
   "13254274": {
@@ -1023,8 +1191,16 @@
     "text": "音楽が好きです。",
     "sourceAuthor": "atitarev"
   },
+  "13428548": {
+    "text": "驚いたよ！",
+    "sourceAuthor": "demiurgastel"
+  },
   "13523728": {
     "text": "久しぶり！",
+    "sourceAuthor": "LeviHighway"
+  },
+  "13543264": {
+    "text": "嘘でしょ……",
     "sourceAuthor": "LeviHighway"
   },
   "13640835": {
