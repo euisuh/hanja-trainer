@@ -1,0 +1,711 @@
+{
+  "units": [
+    {
+      "ord": 7,
+      "titleKo": "자기소개·스몰토크 I",
+      "goalKo": "이름, 출신, 직업, 취미를 일본어로 소개하고, 출신·일·일본어 실력에 대한 흔한 질문에 대답한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 7,
+      "ord": 1,
+      "text": "はじめまして。",
+      "kana": "はじめまして。",
+      "cueKo": "처음 만난 사람에게 첫인사 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9699149",
+      "audioKey": "c/04d7dccfcab67df4",
+      "key": "tatoeba-9699149-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 2,
+      "text": "ナムと申します。",
+      "kana": "ナムともうします。",
+      "cueKo": "이름을 정중하게 밝혀 말하기 (이름 부분만 내 이름으로 바꿔서)",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #14048807",
+      "audioKey": "c/d4ef12c319a8d567",
+      "key": "tatoeba-14048807-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 3,
+      "text": "お会いできて嬉しいです。",
+      "kana": "おあいできてうれしいです。",
+      "cueKo": "만나서 반갑다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227376",
+      "audioKey": "c/8541bf0b56ce911e",
+      "key": "tatoeba-227376-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 4,
+      "text": "どうぞよろしくお願いします。",
+      "kana": "どうぞよろしくおねがいします。",
+      "cueKo": "앞으로 잘 부탁드린다고 인사말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10918370",
+      "audioKey": "c/73cf71c137a5312a",
+      "key": "tatoeba-10918370-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 5,
+      "text": "韓国人です。",
+      "kana": "かんこくじんです。",
+      "cueKo": "한국 사람이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8692860",
+      "audioKey": "c/ae5242feacaf93e1",
+      "key": "tatoeba-8692860-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 6,
+      "text": "韓国で生まれました。",
+      "kana": "かんこくでうまれました。",
+      "cueKo": "한국에서 태어났다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12593262",
+      "audioKey": "c/9903e027d1a0cd5c",
+      "key": "tatoeba-12593262-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 7,
+      "text": "ソウルに住んでいます。",
+      "kana": "ソウルにすんでいます。",
+      "cueKo": "서울에 산다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8692850",
+      "audioKey": "c/05074fe7228a224d",
+      "key": "tatoeba-8692850-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 8,
+      "text": "東京に住んでいます。",
+      "kana": "とうきょうにすんでいます。",
+      "cueKo": "도쿄에 산다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #124249",
+      "audioKey": "c/2f206dc539d74960",
+      "key": "tatoeba-124249-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 9,
+      "text": "日本に来てから十年になります。",
+      "kana": "にほんにきてからじゅうねんになります。",
+      "cueKo": "일본에 온 지 10년이 되었다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122693",
+      "audioKey": "c/08a4537ba6dbb54f",
+      "key": "tatoeba-122693-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 10,
+      "text": "観光で来てるんです。",
+      "kana": "かんこうできてるんです。",
+      "cueKo": "관광으로 왔다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9046236",
+      "audioKey": "c/392c21ad450be749",
+      "key": "tatoeba-9046236-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 11,
+      "text": "会社員です。",
+      "kana": "かいしゃいんです。",
+      "cueKo": "직업이 회사원이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3326577",
+      "audioKey": "c/04557cc949c774c3",
+      "key": "tatoeba-3326577-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 12,
+      "text": "私はエンジニアです。",
+      "kana": "わたしはエンジニアです。",
+      "cueKo": "직업이 엔지니어라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3580937",
+      "audioKey": "c/fe1fe15c42562e83",
+      "key": "tatoeba-3580937-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 13,
+      "text": "学生です。",
+      "kana": "がくせいです。",
+      "cueKo": "학생이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10756859",
+      "audioKey": "c/c426b060f6447bc5",
+      "key": "tatoeba-10756859-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 14,
+      "text": "銀行で働いています。",
+      "kana": "ぎんこうではたらいています。",
+      "cueKo": "은행에서 일한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #179594",
+      "audioKey": "c/3514a378943833c1",
+      "key": "tatoeba-179594-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 15,
+      "text": "私は商社で働いています。",
+      "kana": "わたしはしょうしゃではたらいています。",
+      "cueKo": "무역회사에서 일한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #155923",
+      "audioKey": "c/ce09be921f197bd7",
+      "key": "tatoeba-155923-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 16,
+      "text": "私は病院で働いています。",
+      "kana": "わたしはびょういんではたらいています。",
+      "cueKo": "병원에서 일한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #153093",
+      "audioKey": "c/8cc2e9174236c596",
+      "key": "tatoeba-153093-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 17,
+      "text": "ホテルで働いています。",
+      "kana": "ホテルではたらいています。",
+      "cueKo": "호텔에서 일한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13940407",
+      "audioKey": "c/df1301a43e9777d2",
+      "key": "tatoeba-13940407-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 18,
+      "text": "語学学校で働いています。",
+      "kana": "ごがくがっこうではたらいています。",
+      "cueKo": "어학원에서 일한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9041998",
+      "audioKey": "c/c501275ab8b6a909",
+      "key": "tatoeba-9041998-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 19,
+      "text": "日本語を勉強しています。",
+      "kana": "にほんごをべんきょうしています。",
+      "cueKo": "일본어를 공부하고 있다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #975671",
+      "audioKey": "c/e6a1ba15d1572785",
+      "key": "tatoeba-975671-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 20,
+      "text": "私は日本語が少し話せますが、まだ上手じゃありません。",
+      "kana": "わたしはにほんごがすこしはなせますが、まだじょうずじゃありません。",
+      "cueKo": "일본어를 조금 하지만 아직 서툴다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1189862",
+      "audioKey": "c/c488f325e88b24af",
+      "key": "tatoeba-1189862-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 21,
+      "text": "とんでもありません！",
+      "kana": "とんでもありません！",
+      "cueKo": "일본어 칭찬에 천만에요 하고 손사래 치며 답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5955970",
+      "audioKey": "c/efac82bb2704290c",
+      "key": "tatoeba-5955970-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 22,
+      "text": "趣味は読書です。",
+      "kana": "しゅみはどくしょです。",
+      "cueKo": "취미가 독서라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #536751",
+      "audioKey": "c/2d9392b9e034060c",
+      "key": "tatoeba-536751-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 23,
+      "text": "趣味は映画鑑賞です。",
+      "kana": "しゅみはえいがかんしょうです。",
+      "cueKo": "취미가 영화 감상이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9573232",
+      "audioKey": "c/c29f3aca715a5b55",
+      "key": "tatoeba-9573232-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 24,
+      "text": "趣味は音楽鑑賞です。",
+      "kana": "しゅみはおんがくかんしょうです。",
+      "cueKo": "취미가 음악 감상이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3400864",
+      "audioKey": "c/cba567ef6f60f9c5",
+      "key": "tatoeba-3400864-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 25,
+      "text": "私の趣味は写真です。",
+      "kana": "わたしのしゅみはしゃしんです。",
+      "cueKo": "취미가 사진이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2237943",
+      "audioKey": "c/2c00cd22ce65268b",
+      "key": "tatoeba-2237943-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 26,
+      "text": "で、あなたは？",
+      "kana": "で、あなたは？",
+      "cueKo": "격식 없이 상대에게 그쪽은 어떠냐고 되묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8802478",
+      "audioKey": "c/aa30729529d5c274",
+      "key": "tatoeba-8802478-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 27,
+      "text": "お名前は何ですか？",
+      "kana": "おなまえはなんですか？",
+      "cueKo": "상대의 이름을 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12889995",
+      "audioKey": "c/b36f396e9b1dab1f",
+      "key": "tatoeba-12889995-say"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 28,
+      "text": "こちらこそ、はじめまして。",
+      "kana": "こちらこそ、はじめまして。",
+      "cueKo": "상대가 저야말로 처음 뵙겠다고 답하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11021618",
+      "audioKey": "c/9e967ef355506d32",
+      "key": "tatoeba-11021618-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 29,
+      "text": "こちらこそ、よろしくお願いします。",
+      "kana": "こちらこそ、よろしくおねがいします。",
+      "cueKo": "상대가 저야말로 잘 부탁한다고 답하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11021619",
+      "audioKey": "c/d9464be7a5903746",
+      "key": "tatoeba-11021619-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 30,
+      "text": "お名前は？",
+      "kana": "おなまえは？",
+      "cueKo": "상대가 이름을 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226572",
+      "audioKey": "c/285de4d8872f57f1",
+      "key": "tatoeba-226572-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 31,
+      "text": "どちらからいらしたんですか？",
+      "kana": "どちらからいらしたんですか？",
+      "cueKo": "상대가 어디서 오셨냐고 정중히 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9043414",
+      "audioKey": "c/636fb1f20748e93a",
+      "key": "tatoeba-9043414-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 32,
+      "text": "どこから来ましたか？",
+      "kana": "どこからきましたか？",
+      "cueKo": "상대가 어디서 왔냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5323",
+      "audioKey": "c/66cae9003d55e8ce",
+      "key": "tatoeba-5323-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 33,
+      "text": "どちらのご出身ですか？",
+      "kana": "どちらのごしゅっしんですか？",
+      "cueKo": "상대가 출신이 어디냐고 정중히 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #200771",
+      "audioKey": "c/b1adcc0ff015c4ef",
+      "key": "tatoeba-200771-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 34,
+      "text": "どちらにお住まいですか。",
+      "kana": "どちらにおすまいですか。",
+      "cueKo": "상대가 어디에 사시냐고 정중히 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #200777",
+      "audioKey": "c/4effca83bac36b01",
+      "key": "tatoeba-200777-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 35,
+      "text": "こちらへはお仕事で？それとも観光ですか？",
+      "kana": "こちらへはおしごとで？それともかんこうですか？",
+      "cueKo": "상대가 일로 왔는지 관광인지 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11488333",
+      "audioKey": "c/0bdddb035a5b1d0c",
+      "key": "tatoeba-11488333-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 36,
+      "text": "日本は初めてですか。",
+      "kana": "にほんははじめてですか。",
+      "cueKo": "상대가 일본이 처음이냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122452",
+      "audioKey": "c/a998f775674a884f",
+      "key": "tatoeba-122452-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 37,
+      "text": "日本に来たのは初めてですか。",
+      "kana": "にほんにきたのははじめてですか。",
+      "cueKo": "상대가 일본에 온 게 처음이냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122731",
+      "audioKey": "c/f75ec7fd19652bb6",
+      "key": "tatoeba-122731-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 38,
+      "text": "日本に来てどれくらいになりますか？",
+      "kana": "にほんにきてどれくらいになりますか？",
+      "cueKo": "상대가 일본에 온 지 얼마나 됐냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122696",
+      "audioKey": "c/7bca4e3349334c36",
+      "key": "tatoeba-122696-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 39,
+      "text": "お仕事は何をされているんですか？",
+      "kana": "おしごとはなにをされているんですか？",
+      "cueKo": "상대가 무슨 일을 하시냐고 정중히 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3190698",
+      "audioKey": "c/5910a7f2feb52c9f",
+      "key": "tatoeba-3190698-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 40,
+      "text": "お仕事は何をなさってるんですか？",
+      "kana": "おしごとはなにをなさってるんですか？",
+      "cueKo": "상대가 무슨 일을 하시냐고 아주 정중히 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3190694",
+      "audioKey": "c/a30a89a8ba21628a",
+      "key": "tatoeba-3190694-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 41,
+      "text": "お仕事は何ですか。",
+      "kana": "おしごとはなんですか。",
+      "cueKo": "상대가 직업이 무엇이냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227125",
+      "audioKey": "c/d8a93e61409b1bd2",
+      "key": "tatoeba-227125-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 42,
+      "text": "日本語がお上手ですね。",
+      "kana": "にほんごがおじょうずですね。",
+      "cueKo": "상대가 일본어를 잘한다고 칭찬하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122364",
+      "audioKey": "c/e2bd90dd78f7271a",
+      "key": "tatoeba-122364-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 43,
+      "text": "趣味は何ですか。",
+      "kana": "しゅみはなんですか。",
+      "cueKo": "상대가 취미가 뭐냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #148465",
+      "audioKey": "c/f0a9d432e7c61226",
+      "key": "tatoeba-148465-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 44,
+      "text": "日本はどうですか。",
+      "kana": "にほんはどうですか。",
+      "cueKo": "상대가 일본은 어떠냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122503",
+      "audioKey": "c/51e0596739a4fb7d",
+      "key": "tatoeba-122503-hear"
+    },
+    {
+      "unitOrd": 7,
+      "ord": 45,
+      "text": "日本食はお好きですか。",
+      "kana": "にほんしょくはおすきですか。",
+      "cueKo": "상대가 일식을 좋아하냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #122305",
+      "audioKey": "c/7fcfa4f4155c8424",
+      "key": "tatoeba-122305-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 7,
+      "ord": 1,
+      "titleKo": "처음 뵙겠습니다",
+      "settingKo": "모임에서 처음 만난 일본인과 인사를 나눌 때",
+      "goalKo": "첫인사와 이름을 말하고, 어디서 왔고 왜 왔는지 묻는 말에 대답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            2
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            31
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            35
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 7,
+      "ord": 2,
+      "titleKo": "일과 취미 이야기",
+      "settingKo": "회식이나 환영회에서 옆자리 사람과 이야기할 때",
+      "goalKo": "무슨 일을 하는지 대답하고, 일본어 칭찬을 겸손하게 받고, 취미를 말한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            39
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            14,
+            15
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            42
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            21,
+            20
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            43
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            23,
+            22,
+            24
+          ]
+        }
+      ]
+    }
+  ]
+}
