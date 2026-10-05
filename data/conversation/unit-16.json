@@ -1,0 +1,570 @@
+{
+  "units": [
+    {
+      "ord": 16,
+      "titleKo": "맞장구·동의·반대",
+      "goalKo": "상대 의견에 맞장구치고 동의하며, 부드럽게 반대하거나 \"〜かもしれません\"으로 단정을 피해 정중하게 내 입장을 지킨다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 16,
+      "ord": 1,
+      "text": "確かに。",
+      "kana": "たしかに。",
+      "cueKo": "상대 말에 \"맞아요\" 하고 맞장구치기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13563728",
+      "audioKey": "c/7d28ab561262a22c",
+      "key": "tatoeba-13563728-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 2,
+      "text": "そうですね。",
+      "kana": "そうですね。",
+      "cueKo": "\"그렇네요\" 하고 가볍게 맞장구치기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10906687",
+      "audioKey": "c/5a55a5fc573731ce",
+      "key": "tatoeba-10906687-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 3,
+      "text": "私もそう思います。",
+      "kana": "わたしもそうおもいます。",
+      "cueKo": "상대 의견에 나도 그렇게 생각한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4002020",
+      "audioKey": "c/0f8c093d899adb58",
+      "key": "tatoeba-4002020-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 4,
+      "text": "おっしゃる通りです。",
+      "kana": "おっしゃるとおりです。",
+      "cueKo": "\"말씀하신 대로예요\" 하고 정중하게 동의하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4651964",
+      "audioKey": "c/32a64dc86e52596a",
+      "key": "tatoeba-4651964-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 5,
+      "text": "全くおっしゃる通りです。",
+      "kana": "まったくおっしゃるとおりです。",
+      "cueKo": "\"정말 말씀하신 그대로예요\" 하고 강하게 동의하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2912698",
+      "audioKey": "c/8e0f6f34bd7c899a",
+      "key": "tatoeba-2912698-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 6,
+      "text": "同感です。",
+      "kana": "どうかんです。",
+      "cueKo": "\"동감이에요\" 하고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123688",
+      "audioKey": "c/538ac01efca8598f",
+      "key": "tatoeba-123688-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 7,
+      "text": "全く同感です。",
+      "kana": "まったくどうかんです。",
+      "cueKo": "\"전적으로 동감이에요\" 하고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #140886",
+      "audioKey": "c/fd0979822ebde017",
+      "key": "tatoeba-140886-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 8,
+      "text": "私も賛成です。",
+      "kana": "わたしもさんせいです。",
+      "cueKo": "\"저도 찬성이에요\" 하고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8584140",
+      "audioKey": "c/77fe853c2e926864",
+      "key": "tatoeba-8584140-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 9,
+      "text": "基本的には賛成です。",
+      "kana": "きほんてきにはさんせいです。",
+      "cueKo": "\"기본적으로는 찬성이에요\" 하고 조건을 남기며 동의하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8720989",
+      "audioKey": "c/5982f15f3184101a",
+      "key": "tatoeba-8720989-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 10,
+      "text": "私はそうは思いません。",
+      "kana": "わたしはそうはおもいません。",
+      "cueKo": "\"저는 그렇게 생각하지 않아요\" 하고 정중하게 반대하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #160455",
+      "audioKey": "c/95da733f2a0dfb0e",
+      "key": "tatoeba-160455-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 11,
+      "text": "ですが、いつもそうだとは限りません。",
+      "kana": "ですが、いつもそうだとはかぎりません。",
+      "cueKo": "\"하지만 항상 그런 건 아니에요\" 하고 부드럽게 반론하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10946947",
+      "audioKey": "c/bc268a676d7ffe7c",
+      "key": "tatoeba-10946947-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 12,
+      "text": "それはちょっと極端じゃないですか。",
+      "kana": "それはちょっときょくたんじゃないですか。",
+      "cueKo": "\"그건 좀 극단적이지 않나요?\" 하고 완곡하게 이의 제기하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #205459",
+      "audioKey": "c/1a7074ca13b9054c",
+      "key": "tatoeba-205459-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 13,
+      "text": "本当なんじゃないですか？",
+      "kana": "ほんとうなんじゃないですか？",
+      "cueKo": "\"사실인 거 아닌가요?\" 하고 조심스럽게 추측하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3496720",
+      "audioKey": "c/c55de397af3391e7",
+      "key": "tatoeba-3496720-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 14,
+      "text": "なんの問題もないじゃないですか。",
+      "kana": "なんのもんだいもないじゃないですか。",
+      "cueKo": "\"아무 문제도 없지 않나요?\" 하고 되묻듯 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #518581",
+      "audioKey": "c/7dc0046197cbe70b",
+      "key": "tatoeba-518581-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 15,
+      "text": "雪が降るかもしれません。",
+      "kana": "ゆきがふるかもしれません。",
+      "cueKo": "\"눈이 올지도 몰라요\" 하고 추측하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #142022",
+      "audioKey": "c/f60c8c726feebc71",
+      "key": "tatoeba-142022-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 16,
+      "text": "数分遅れるかもしれません。",
+      "kana": "すうふんおくれるかもしれません。",
+      "cueKo": "\"몇 분 늦을지도 몰라요\" 하고 가능성 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1046244",
+      "audioKey": "c/a6df60c44f48e960",
+      "key": "tatoeba-1046244-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 17,
+      "text": "そう思いませんか。",
+      "kana": "そうおもいませんか。",
+      "cueKo": "\"그렇게 생각하지 않으세요?\" 하고 상대에게 동의 구하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #213776",
+      "audioKey": "c/4bc8aa39c395100c",
+      "key": "tatoeba-213776-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 18,
+      "text": "どう思いますか？",
+      "kana": "どうおもいますか？",
+      "cueKo": "\"어떻게 생각하세요?\" 하고 상대 의견 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10913715",
+      "audioKey": "c/55968cc5ac4cb5b5",
+      "key": "tatoeba-10913715-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 19,
+      "text": "言葉より行動が大切だと思います。",
+      "kana": "ことばよりこうどうがたいせつだとおもいます。",
+      "cueKo": "\"말보다 행동이 중요하다고 생각해요\" 하고 의견 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11391129",
+      "audioKey": "c/6726545dd5dbb3c9",
+      "key": "tatoeba-11391129-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 20,
+      "text": "日本はとても安全な国だと思います。",
+      "kana": "にほんはとてもあんぜんなくにだとおもいます。",
+      "cueKo": "\"일본은 아주 안전한 나라라고 생각해요\" 하고 의견 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #154725",
+      "audioKey": "c/678975ec508c7281",
+      "key": "tatoeba-154725-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 21,
+      "text": "違う違う。オリジナリティがあるっていうか。",
+      "kana": "ちがうちがう。オリジナリティがあるっていうか。",
+      "cueKo": "\"아니 아니, 독창성이 있다고 할까\" 하고 말을 바로잡으며 이어가기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #76355",
+      "audioKey": "c/d6ae330ef8c7fac6",
+      "key": "tatoeba-76355-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 22,
+      "text": "確かに今日は涼しいな。",
+      "kana": "たしかにきょうはすずしいな。",
+      "cueKo": "\"확실히 오늘은 선선하네\" 하고 반말로 맞장구치기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10987738",
+      "audioKey": "c/87a27f991f5d7642",
+      "key": "tatoeba-10987738-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 23,
+      "text": "そんなに感謝されると逆にこっちが恐縮しちゃうよ。",
+      "kana": "そんなにかんしゃされるとぎゃくにこっちがきょうしゅくしちゃうよ。",
+      "cueKo": "\"그렇게 고마워하면 오히려 내가 송구하네\" 하고 반말로 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2930030",
+      "audioKey": "c/38f9eb9a8227d34d",
+      "key": "tatoeba-2930030-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 24,
+      "text": "あたりが静かすぎて逆に落ち着かない。",
+      "kana": "あたりがしずかすぎてぎゃくにおちつかない。",
+      "cueKo": "\"너무 조용해서 오히려 불안하다\" 하고 반말로 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13055895",
+      "audioKey": "c/6ae73c48da5ae5f2",
+      "key": "tatoeba-13055895-say"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 25,
+      "text": "今朝は寒いじゃないですか。",
+      "kana": "けさはさむいじゃないですか。",
+      "cueKo": "상대가 \"오늘 아침 춥잖아요\" 하고 말을 거는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #14034470",
+      "audioKey": "c/891daec42266e2fe",
+      "key": "tatoeba-14034470-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 26,
+      "text": "雪が降るかもしれません。",
+      "kana": "ゆきがふるかもしれません。",
+      "cueKo": "상대가 \"눈이 올지도 몰라요\" 하고 추측하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #142022",
+      "audioKey": "c/f60c8c726feebc71",
+      "key": "tatoeba-142022-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 27,
+      "text": "言葉より行動が大切だと思います。",
+      "kana": "ことばよりこうどうがたいせつだとおもいます。",
+      "cueKo": "상대가 \"말보다 행동이 중요하다고 생각해요\" 하고 의견 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11391129",
+      "audioKey": "c/6726545dd5dbb3c9",
+      "key": "tatoeba-11391129-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 28,
+      "text": "そう思いませんか。",
+      "kana": "そうおもいませんか。",
+      "cueKo": "상대가 \"그렇게 생각하지 않으세요?\" 하고 동의를 구하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #213776",
+      "audioKey": "c/4bc8aa39c395100c",
+      "key": "tatoeba-213776-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 29,
+      "text": "日本はとても安全な国だと思います。",
+      "kana": "にほんはとてもあんぜんなくにだとおもいます。",
+      "cueKo": "상대가 \"일본은 아주 안전한 나라라고 생각해요\" 하고 의견 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #154725",
+      "audioKey": "c/678975ec508c7281",
+      "key": "tatoeba-154725-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 30,
+      "text": "敬語というのは日本語の一番難しいところだと思います。",
+      "kana": "けいごというのはにほんごのいちばんむずかしいところだとおもいます。",
+      "cueKo": "상대가 경어가 일본어에서 가장 어렵다는 의견 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2179015",
+      "audioKey": "c/d4d144f3d70ab7d1",
+      "key": "tatoeba-2179015-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 31,
+      "text": "フランス語は難しいと思います。",
+      "kana": "フランスごはむずかしいとおもいます。",
+      "cueKo": "상대가 \"프랑스어는 어렵다고 생각해요\" 하고 의견 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11129477",
+      "audioKey": "c/da3e99e11cbc6e12",
+      "key": "tatoeba-11129477-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 32,
+      "text": "どう思いますか？",
+      "kana": "どうおもいますか？",
+      "cueKo": "상대가 \"어떻게 생각하세요?\" 하고 의견 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10913715",
+      "audioKey": "c/55968cc5ac4cb5b5",
+      "key": "tatoeba-10913715-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 33,
+      "text": "少し熱が出るかもしれません。",
+      "kana": "すこしねつがでるかもしれません。",
+      "cueKo": "상대가 \"열이 조금 날지도 몰라요\" 하고 가능성 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #146785",
+      "audioKey": "c/b4d586c4faaf7530",
+      "key": "tatoeba-146785-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 34,
+      "text": "数分遅れるかもしれません。",
+      "kana": "すうふんおくれるかもしれません。",
+      "cueKo": "상대가 \"몇 분 늦을지도 몰라요\" 하고 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1046244",
+      "audioKey": "c/a6df60c44f48e960",
+      "key": "tatoeba-1046244-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 35,
+      "text": "去年より今年のほうが暑いです。",
+      "kana": "きょねんよりことしのほうがあついです。",
+      "cueKo": "상대가 \"작년보다 올해가 더워요\" 하고 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10901910",
+      "audioKey": "c/8b5a1bf39022223e",
+      "key": "tatoeba-10901910-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 36,
+      "text": "日本語は最も美しい言語の一つです。",
+      "kana": "にほんごはもっともうつくしいげんごのひとつです。",
+      "cueKo": "상대가 일본어는 가장 아름다운 언어 중 하나라고 의견 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13985927",
+      "audioKey": "c/7fcb414189aa7e1b",
+      "key": "tatoeba-13985927-hear"
+    },
+    {
+      "unitOrd": 16,
+      "ord": 37,
+      "text": "絶対に来た方がいいですよ。",
+      "kana": "ぜったいにきたほうがいいですよ。",
+      "cueKo": "상대가 \"꼭 오는 게 좋아요\" 하고 권하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11953092",
+      "audioKey": "c/faac7953fb106d28",
+      "key": "tatoeba-11953092-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 16,
+      "ord": 1,
+      "titleKo": "날씨 이야기에 맞장구치기",
+      "settingKo": "일본인 지인과 아침 날씨 이야기를 나눌 때",
+      "goalKo": "상대의 말에 \"そうですね\"로 맞장구치고, 상대의 추측에 \"私もそう思います\"로 동의한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            2,
+            1
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            26
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 16,
+      "ord": 2,
+      "titleKo": "의견에 부드럽게 반대하기",
+      "settingKo": "일본인 친구가 자기 의견을 말하고 동의를 구할 때",
+      "goalKo": "먼저 \"確かに\"로 받아들인 뒤 \"ですが、いつもそうだとは限りません\"로 부드럽게 반론하고, 동의를 재촉받으면 정중하게 입장을 지킨다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            27
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            1,
+            11
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            9
+          ]
+        }
+      ]
+    }
+  ]
+}
