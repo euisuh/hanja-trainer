@@ -3,10 +3,10 @@ import { readFile, readdir } from "node:fs/promises";
 import { extname, join, relative } from "node:path";
 
 const root = new URL("../src/", import.meta.url);
-const tokenFile = "design/tokens.ts";
+const tokenFiles = new Set(["design/talk.css", "design/tokens.ts"]);
 const color = /#[\da-f]{3,8}\b|\brgba?\(|\bhsla?\(/giu;
 const violations = [];
-const tokenSource = await readFile(new URL(`../src/${tokenFile}`, import.meta.url), "utf8");
+const tokenSource = await readFile(new URL("../src/design/tokens.ts", import.meta.url), "utf8");
 
 function namedColor(name) {
   const match = tokenSource.match(new RegExp(`\\b${name}:\\s*"(#[\\da-f]{6})"`, "iu"));
@@ -55,7 +55,7 @@ async function scan(directory) {
     if (entry.isDirectory()) await scan(path);
     else if ([".css", ".ts", ".tsx"].includes(extname(path))) {
       const name = relative(root.pathname, path);
-      if (name === tokenFile) continue;
+      if (tokenFiles.has(name)) continue;
       if (name.endsWith(".test.ts") || name.endsWith(".test.tsx")) continue;
       const lines = (await readFile(path, "utf8")).split("\n");
       lines.forEach((line, index) => {
