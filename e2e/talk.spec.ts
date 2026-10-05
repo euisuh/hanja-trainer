@@ -26,6 +26,7 @@ function installTalkMocks() {
     }
   }
   Object.defineProperty(window, "MediaRecorder", { configurable: true, value: TestRecorder });
+  HTMLMediaElement.prototype.play = () => Promise.resolve();
   Object.defineProperty(navigator, "mediaDevices", { configurable: true, value: {
     getUserMedia: async () => ({ getTracks: () => [{ stop: () => undefined }] }),
   } });
@@ -49,6 +50,8 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await expect(page.getByRole("link", { name: conversation.chunks[0].sourceRef })).toHaveAttribute("href", "https://tatoeba.org/sentences/show/1");
   await page.keyboard.press("r");
   await expect(page.getByRole("button", { name: /바로/u })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("내 목소리", { exact: false })).toBeVisible();
+  await page.keyboard.press("Shift+Space");
   await page.keyboard.press("3");
   await page.keyboard.press("Enter");
   await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say" })]);

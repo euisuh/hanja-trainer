@@ -27,7 +27,9 @@ type RecordingEnvironment = {
 };
 
 const recordingMimeTypes = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm"];
-const ONSET_RMS_THRESHOLD = 0.02;
+const ONSET_IGNORE_MS = 50;
+const ONSET_CALIBRATION_MS = 200;
+const MIN_ONSET_RMS = 0.01;
 
 export function recordingMimeType(isSupported: (type: string) => boolean): string | undefined {
   return recordingMimeTypes.find((type) => isSupported(type));
@@ -51,8 +53,10 @@ function audioContextConstructor(): typeof AudioContext | undefined {
   return window.AudioContext ?? legacyWindow.webkitAudioContext;
 }
 
+type OnsetOptions = { cueShownAt?: number; now?: () => number; signal?: AbortSignal };
+
 // undefined = onset could not be measured here (no AudioContext or a stream it cannot read); null = measured silence.
-export function measureOnset(stream: MediaStream, signal?: AbortSignal): Promise<number | null | undefined> {
+export function measureOnset(stream: MediaStream, { cueShownAt, now = () => performance.now(), signal }: OnsetOptions = {}): Promise<number | null | undefined> {
   const AudioContextConstructor = audioContextConstructor();
   if (!AudioContextConstructor) return Promise.resolve(undefined);
   let context: AudioContext;
@@ -73,9 +77,11 @@ export function measureOnset(stream: MediaStream, signal?: AbortSignal): Promise
   analyser.fftSize = 2048;
   source.connect(analyser);
   const samples = new Float32Array(analyser.fftSize);
-  const startedAt = performance.now();
+  const armedAt = now();
+  const cueAt = cueShownAt ?? armedAt;
   return new Promise((resolve) => {
     let cancelFrame: (() => void) | null = null;
+    let ambientRms = 0;
     const finish = (onset: number | null) => {
       cancelFrame?.();
       signal?.removeEventListener("abort", onAbort);
@@ -86,9 +92,13 @@ export function measureOnset(stream: MediaStream, signal?: AbortSignal): Promise
     };
     const onAbort = () => finish(null);
     const sample = () => {
+      const sampledAt = now();
       analyser.getFloatTimeDomainData(samples);
       const rms = Math.sqrt(samples.reduce((sum, value) => sum + value ** 2, 0) / samples.length);
-      if (rms >= ONSET_RMS_THRESHOLD) { finish(Math.max(0, performance.now() - startedAt)); return; }
+      const elapsed = sampledAt - armedAt;
+      if (elapsed >= ONSET_IGNORE_MS && elapsed < ONSET_CALIBRATION_MS) ambientRms = Math.max(ambientRms, rms);
+      const threshold = Math.max(MIN_ONSET_RMS, ambientRms * 2);
+      if (elapsed >= ONSET_CALIBRATION_MS && rms >= threshold) { finish(Math.max(0, sampledAt - cueAt)); return; }
       const requestFrame = globalThis.requestAnimationFrame;
       if (requestFrame !== undefined) {
         const frame = requestFrame(sample);
@@ -150,7 +160,7 @@ export class LocalRecorder {
     this.onChange(state);
   }
 
-  private clearCapture() {
+  private clearTake() {
     this.onsetAbort?.abort();
     this.onsetAbort = null;
     this.onset = null;
@@ -166,10 +176,14 @@ export class LocalRecorder {
         try { recorder.stop(); } catch { /* Capture is already unusable; tracks still stop below. */ }
       }
     }
-    stopTracks(this.stream);
-    this.stream = null;
     this.chunks = [];
     this.startedAt = null;
+  }
+
+  private endSession() {
+    this.clearTake();
+    stopTracks(this.stream);
+    this.stream = null;
   }
 
   private releaseClip() {
@@ -180,29 +194,32 @@ export class LocalRecorder {
   private fail(generation: number, status: "denied" | "error" | "no_audio" | "interrupted") {
     if (generation !== this.generation) return;
     this.generation += 1;
-    this.clearCapture();
+    if (status === "no_audio") this.clearTake(); else this.endSession();
     this.releaseClip();
     this.emit({ status });
   }
 
-  async record() {
+  async record(cueShownAt = performance.now()) {
     const generation = this.generation += 1;
-    this.clearCapture();
+    this.clearTake();
     this.releaseClip();
     if (!this.supported) { this.emit({ status: "unsupported" }); return; }
-    this.emit({ status: "requesting" });
-    let stream: MediaStream;
-    try {
-      stream = await this.getUserMedia!();
-    } catch (error) {
-      this.fail(generation, permissionDenied(error) ? "denied" : "error");
-      return;
+    if (!this.stream) {
+      this.emit({ status: "requesting" });
+      let stream: MediaStream;
+      try {
+        stream = await this.getUserMedia!();
+      } catch (error) {
+        this.fail(generation, permissionDenied(error) ? "denied" : "error");
+        return;
+      }
+      if (generation !== this.generation || this.disposed) { stopTracks(stream); return; }
+      this.stream = stream;
     }
-    if (generation !== this.generation || this.disposed) { stopTracks(stream); return; }
-    this.stream = stream;
+    const stream = this.stream;
     if (audioContextConstructor()) {
       this.onsetAbort = new AbortController();
-      this.onset = measureOnset(stream, this.onsetAbort.signal);
+      this.onset = measureOnset(stream, { cueShownAt, signal: this.onsetAbort.signal });
     }
     try {
       const Recorder = globalThis.MediaRecorder;
@@ -218,8 +235,6 @@ export class LocalRecorder {
         this.recorder = null;
         if (this.timer !== null) this.clearTimer(this.timer);
         this.timer = null;
-        stopTracks(this.stream);
-        this.stream = null;
         const blob = new Blob(this.chunks, { type: recorder.mimeType || mimeType || "audio/webm" });
         this.chunks = [];
         const durationMs = this.startedAt === null ? 0 : Math.max(0, this.now() - this.startedAt);
@@ -254,8 +269,6 @@ export class LocalRecorder {
     try {
       this.onsetAbort?.abort();
       recorder.stop();
-      stopTracks(this.stream);
-      this.stream = null;
     } catch {
       this.fail(this.generation, "error");
     }
@@ -263,7 +276,14 @@ export class LocalRecorder {
 
   discard() {
     this.generation += 1;
-    this.clearCapture();
+    this.endSession();
+    this.releaseClip();
+    this.emit(this.supported ? { status: "idle" } : { status: "unsupported" });
+  }
+
+  reset() {
+    this.generation += 1;
+    this.clearTake();
     this.releaseClip();
     this.emit(this.supported ? { status: "idle" } : { status: "unsupported" });
   }
@@ -276,7 +296,7 @@ export class LocalRecorder {
   dispose() {
     this.disposed = true;
     this.generation += 1;
-    this.clearCapture();
+    this.endSession();
     this.releaseClip();
   }
 }

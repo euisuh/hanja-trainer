@@ -64,8 +64,11 @@ describe("study speech voices", () => {
     expect(recordingMimeType(() => false)).toBeUndefined();
   });
 
-  it("measures onset from a synthetic silence-then-tone buffer", async () => {
-    const frames = [new Float32Array(2048), Float32Array.from({ length: 2048 }, () => 0.05)];
+  it("anchors onset to cue time and ignores an arming click", async () => {
+    const frames = [Float32Array.from({ length: 2048 }, () => 0.9)];
+    while (frames.length * 16 < 2_000) frames.push(new Float32Array(2048));
+    frames.push(Float32Array.from({ length: 2048 }, () => 0.05));
+    let now = 0;
     class FakeAnalyser {
       fftSize = 0;
       getFloatTimeDomainData(target: Float32Array) { target.set(frames.shift() ?? new Float32Array(target.length)); }
@@ -77,9 +80,9 @@ describe("study speech voices", () => {
       close() { return Promise.resolve(); }
     }
     vi.stubGlobal("window", { AudioContext: FakeAudioContext });
-    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { queueMicrotask(() => callback(0)); return 1; });
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { queueMicrotask(() => { now += 16; callback(now); }); return 1; });
     try {
-      expect(await measureOnset(stream({ count: 0 }))).toBeTypeOf("number");
+      expect(await measureOnset(stream({ count: 0 }), { cueShownAt: 0, now: () => now })).toBeCloseTo(2_000, -1);
     } finally {
       vi.unstubAllGlobals();
     }
@@ -91,8 +94,9 @@ describe("study speech voices", () => {
     const revoked: string[] = [];
     const timers: Array<{ callback: () => void; delay: number }> = [];
     let urls = 0;
+    let streamRequests = 0;
     const recorder = new LocalRecorder((state) => states.push(state), {
-      getUserMedia: async () => stream(stops),
+      getUserMedia: async () => { streamRequests += 1; return stream(stops); },
       createRecorder: () => asMediaRecorder(new FakeRecorder()),
       createObjectURL: () => `blob:clip-${urls += 1}`,
       revokeObjectURL: (url) => revoked.push(url),
@@ -109,15 +113,17 @@ describe("study speech voices", () => {
     expect(timers[0].delay).toBe(MAX_RECORDING_MS);
     timers[0].callback();
     expect(recorder.currentState).toMatchObject({ status: "ready", url: "blob:clip-1", mimeType: "audio/webm" });
-    expect(stops.count).toBe(1);
+    expect(stops.count).toBe(0);
 
     await recorder.record();
+    expect(streamRequests).toBe(1);
     expect(revoked).toEqual(["blob:clip-1"]);
     recorder.stop();
     expect(recorder.currentState).toMatchObject({ status: "ready", url: "blob:clip-2", mimeType: "audio/webm" });
     recorder.discard();
     expect(recorder.currentState).toEqual({ status: "idle" });
     expect(revoked).toEqual(["blob:clip-1", "blob:clip-2"]);
+    expect(stops.count).toBe(1);
     expect(states.map((state) => state.status)).toContain("requesting");
   });
 

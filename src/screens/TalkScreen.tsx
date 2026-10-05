@@ -34,6 +34,8 @@ export function TalkScreen() {
   const [replays, setReplays] = useState(0);
   const [selectedGrade, setSelectedGrade] = useState<"again" | "hard" | "good">("good");
   const recorderRef = useRef<LocalRecorder | null>(null);
+  const cueShownAtRef = useRef(0);
+  const selfAudioRef = useRef<HTMLAudioElement | null>(null);
   const card = content?.chunks[index];
   const preselectedGrade = recording.status === "ready" ? gradeFor(recording.onsetMs) : "good";
 
@@ -51,7 +53,9 @@ export function TalkScreen() {
     return () => { recorder.dispose(); if (recorderRef.current === recorder) recorderRef.current = null; };
   }, [onRecordingChange]);
 
-  useEffect(() => onAppInactive(() => recorderRef.current?.interrupt()), []);
+  useEffect(() => onAppInactive(() => recorderRef.current?.discard()), []);
+
+  useEffect(() => { cueShownAtRef.current = performance.now(); }, [card?.id]);
 
   useEffect(() => {
     if (!Number.isSafeInteger(unitId) || unitId < 1) return;
@@ -66,14 +70,14 @@ export function TalkScreen() {
   }, [unitId]);
 
   const reveal = useCallback(() => {
-    recorderRef.current?.discard();
+    recorderRef.current?.reset();
     setStage("reveal");
   }, []);
 
   const record = useCallback(() => {
     if (recording.status === "recording") { recorderRef.current?.stop(); return; }
     if (recording.status === "requesting" || recording.status === "unsupported") return;
-    void recorderRef.current?.record();
+    void recorderRef.current?.record(cueShownAtRef.current);
   }, [recording.status]);
 
   const rate = useCallback((grade: "again" | "hard" | "good") => {
@@ -83,7 +87,7 @@ export function TalkScreen() {
       clientAttemptId: attemptId(), chunkId: card.id, role: card.role, grade,
       answeredAt: Date.now(), latencyMs, replays,
     });
-    recorderRef.current?.discard();
+    recorderRef.current?.reset();
     if (content && index + 1 < content.chunks.length) {
       setIndex((value) => value + 1);
       setStage("cue");
@@ -100,6 +104,7 @@ export function TalkScreen() {
       if (target instanceof HTMLElement && (target.matches("button, input, textarea, select, audio") || target.isContentEditable)) return;
       if (event.key === "Escape") { event.preventDefault(); navigate("/home"); return; }
       if (event.key === "r" || event.key === "R") { event.preventDefault(); record(); return; }
+      if (event.shiftKey && event.key === " " && stage === "rate") { event.preventDefault(); void selfAudioRef.current?.play().catch(() => undefined); return; }
       if (event.key === " ") { event.preventDefault(); reveal(); return; }
       if (stage === "rate" && event.key === "1") { event.preventDefault(); setSelectedGrade("again"); return; }
       if (stage === "rate" && event.key === "2") { event.preventDefault(); setSelectedGrade("hard"); return; }
@@ -124,6 +129,7 @@ export function TalkScreen() {
         <strong lang="ja">{card.ja}</strong>
         <span lang="ja">{card.kana}</span>
         <button className="talk-screen__audio" onClick={() => { setReplays((value) => value + 1); new Audio(apiUrl(card.audioUrl)).play().catch(() => undefined); }} type="button">듣기 <kbd>Space</kbd></button>
+        {recording.status === "ready" && <label className="talk-screen__self-audio">내 목소리 <audio controls ref={selfAudioRef} src={recording.url} /> <kbd>Shift+Space</kbd></label>}
         <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} /></small>
       </div>}
       <div className="talk-screen__attempt">
