@@ -19,12 +19,20 @@
     "text": "カレーはまあまあでした。",
     "sourceAuthor": "mookeee"
   },
+  "78112": {
+    "text": "了解しました。",
+    "sourceAuthor": "mookeee"
+  },
   "78157": {
     "text": "旅行は楽しかったですか。",
     "sourceAuthor": "tommy_san"
   },
   "78645": {
     "text": "来週の日曜なら空いてます。",
+    "sourceAuthor": "bunbuku"
+  },
+  "78991": {
+    "text": "予約したいんですが。",
     "sourceAuthor": "bunbuku"
   },
   "81536": {
@@ -83,9 +91,17 @@
     "text": "途中で乗り換えが必要ですか。",
     "sourceAuthor": "small_snow"
   },
+  "124875": {
+    "text": "田中は今、席を外しております。",
+    "sourceAuthor": "bunbuku"
+  },
   "126710": {
     "text": "遅れてすみません。",
     "sourceAuthor": "small_snow"
+  },
+  "126714": {
+    "text": "遅れてごめん。",
+    "sourceAuthor": "tommy_san"
   },
   "126779": {
     "text": "池袋駅で乗り換えて下さい。",
@@ -143,6 +159,10 @@
     "text": "私は商社で働いています。",
     "sourceAuthor": "tommy__san"
   },
+  "158266": {
+    "text": "駅に着いたよ。",
+    "sourceAuthor": "small_snow"
+  },
   "158373": {
     "text": "私は映画が好きです。",
     "sourceAuthor": "tommy_san"
@@ -166,6 +186,10 @@
   "172144": {
     "text": "今度の土曜日はどうですか。",
     "sourceAuthor": "bunbuku"
+  },
+  "174351": {
+    "text": "後でまた電話します。",
+    "sourceAuthor": "small_snow"
   },
   "175045": {
     "text": "元気？",
@@ -254,6 +278,10 @@
   "193236": {
     "text": "もっと大きいサイズはありますか。",
     "sourceAuthor": "bunbuku"
+  },
+  "193799": {
+    "text": "もしもし、ジョンソンさんをお願いします。",
+    "sourceAuthor": "KK_kaku_"
   },
   "194081": {
     "text": "もう少し待ってください。",
@@ -431,6 +459,10 @@
     "text": "カードでお願いします。",
     "sourceAuthor": "small_snow"
   },
+  "226565": {
+    "text": "お名前をお願いします。",
+    "sourceAuthor": "mookeee"
+  },
   "226572": {
     "text": "お名前は？",
     "sourceAuthor": "bunbuku"
@@ -507,6 +539,10 @@
     "text": "ＪＲの駅まで歩いて何分くらいかかりますか。",
     "sourceAuthor": "mookeee"
   },
+  "235060": {
+    "text": "６時に４人予約したいのですが。",
+    "sourceAuthor": "bunbuku"
+  },
   "335372": {
     "text": "おはようございます。",
     "sourceAuthor": "Aurix"
@@ -526,6 +562,10 @@
   "373351": {
     "text": "こんにちは。",
     "sourceAuthor": "tommy_san"
+  },
+  "385517": {
+    "text": "もしもし。",
+    "sourceAuthor": "mookeee"
   },
   "400933": {
     "text": "お元気ですか。",
@@ -579,9 +619,25 @@
     "text": "お疲れ様でした。",
     "sourceAuthor": "arihato"
   },
+  "762125": {
+    "text": "了解。",
+    "sourceAuthor": "arihato"
+  },
+  "774500": {
+    "text": "後ほど私に電話をするよう彼女に伝えていただけますか？",
+    "sourceAuthor": "marloncori"
+  },
+  "774502": {
+    "text": "電話番号を伺えますか？",
+    "sourceAuthor": "marloncori"
+  },
   "778160": {
     "text": "日本語がとても好きです。",
     "sourceAuthor": "windra"
+  },
+  "889706": {
+    "text": "申し訳ありません。田中は今、席を外しております。",
+    "sourceAuthor": "bunbuku"
   },
   "921333": {
     "text": "外国に行ったことがあります。",
@@ -602,6 +658,10 @@
   "1022297": {
     "text": "すみません、注文お願いします。",
     "sourceAuthor": "mookeee"
+  },
+  "1031930": {
+    "text": "申し訳ありません。田中は今、手が離せないので、後でこちらから電話します。",
+    "sourceAuthor": "bunbuku"
   },
   "1035010": {
     "text": "どうやって海岸に行けばいいですか。",
@@ -626,6 +686,10 @@
   "1139064": {
     "text": "昔の友達をそこで見て驚いたよ。",
     "sourceAuthor": "bunbuku"
+  },
+  "1151905": {
+    "text": "３名で予約をお願いしたいんですが。",
+    "sourceAuthor": "mookeee"
   },
   "1166625": {
     "text": "うん。",
@@ -681,6 +745,10 @@
   },
   "2041004": {
     "text": "楽しみにしています。",
+    "sourceAuthor": "bunbuku"
+  },
+  "2063335": {
+    "text": "折り返し電話します。",
     "sourceAuthor": "bunbuku"
   },
   "2135770": {
@@ -747,6 +815,10 @@
     "text": "六時はどうですか。",
     "sourceAuthor": "fgreco"
   },
+  "2459210": {
+    "text": "ごめん、20分くらい遅れるかも。",
+    "sourceAuthor": "tommy_san"
+  },
   "2519008": {
     "text": "すみません、聞こえませんでした。",
     "sourceAuthor": "tommy_san"
@@ -781,6 +853,10 @@
   },
   "2869738": {
     "text": "これ試着してもいいですか？",
+    "sourceAuthor": "tommy_san"
+  },
+  "2904021": {
+    "text": "ごめんちょっと遅れる。3時10分には着くと思う。",
     "sourceAuthor": "tommy_san"
   },
   "2929527": {
@@ -830,6 +906,10 @@
   "3400864": {
     "text": "趣味は音楽鑑賞です。",
     "sourceAuthor": "tommy_san"
+  },
+  "3401024": {
+    "text": "お電話ありがとうございます。",
+    "sourceAuthor": "arnab"
   },
   "3452051": {
     "text": "お勘定お願いします。",
@@ -927,6 +1007,10 @@
     "text": "次の角を右に曲がってください。",
     "sourceAuthor": "tommy_san"
   },
+  "4865664": {
+    "text": "今どこにいるの？",
+    "sourceAuthor": "tommy_san"
+  },
   "5762757": {
     "text": "何時に出る？",
     "sourceAuthor": "daifons"
@@ -946,6 +1030,10 @@
   "6137181": {
     "text": "私は食べたことがありません。",
     "sourceAuthor": "Sethlang"
+  },
+  "8424881": {
+    "text": "折り返しご連絡いたします。",
+    "sourceAuthor": "small_snow"
   },
   "8504258": {
     "text": "いいね。",
@@ -1035,6 +1123,10 @@
     "text": "早いじゃん。",
     "sourceAuthor": "bunbuku"
   },
+  "9194721": {
+    "text": "今そっちに向かってるとこ。",
+    "sourceAuthor": "small_snow"
+  },
   "9203476": {
     "text": "こちらでお召し上がりですか？それともお持ち帰りですか？",
     "sourceAuthor": "bunbuku"
@@ -1063,6 +1155,10 @@
     "text": "趣味は映画鑑賞です。",
     "sourceAuthor": "Sim5634"
   },
+  "9594385": {
+    "text": "もしもし、どちら様ですか？",
+    "sourceAuthor": "small_snow"
+  },
   "9681828": {
     "text": "コーヒーのお代わりをお願いします。",
     "sourceAuthor": "bunbuku"
@@ -1086,6 +1182,10 @@
   "9795497": {
     "text": "サイズはおいくつでしょうか。",
     "sourceAuthor": "bunbuku"
+  },
+  "9846152": {
+    "text": "後で電話するね。",
+    "sourceAuthor": "Ninja"
   },
   "9853743": {
     "text": "このバスって動物園で止まりますか？",
@@ -1275,6 +1375,14 @@
     "text": "綺麗だと思います。",
     "sourceAuthor": "small_snow"
   },
+  "10982401": {
+    "text": "お待ちしております。",
+    "sourceAuthor": "small_snow"
+  },
+  "10983389": {
+    "text": "ご連絡お待ちしております。",
+    "sourceAuthor": "small_snow"
+  },
   "11001436": {
     "text": "えーとですね。",
     "sourceAuthor": "small_snow"
@@ -1285,6 +1393,10 @@
   },
   "11021619": {
     "text": "こちらこそ、よろしくお願いします。",
+    "sourceAuthor": "small_snow"
+  },
+  "11041830": {
+    "text": "かしこまりました。",
     "sourceAuthor": "small_snow"
   },
   "11054750": {
@@ -1379,6 +1491,10 @@
     "text": "現金でも大丈夫ですか？",
     "sourceAuthor": "small_snow"
   },
+  "11906621": {
+    "text": "6時半、4人席を予約したいんですが。",
+    "sourceAuthor": "small_snow"
+  },
   "11909845": {
     "text": "バス停は、ここから歩いて5分です。",
     "sourceAuthor": "small_snow"
@@ -1454,6 +1570,10 @@
   "13060586": {
     "text": "先週、新しいレストランに行ってみたら、すごくおいしくて、また行きたくなりました。",
     "sourceAuthor": "Gardenia"
+  },
+  "13117658": {
+    "text": "宜しくお願いします。",
+    "sourceAuthor": "atitarev"
   },
   "13117666": {
     "text": "申し訳ありません。",

@@ -1,0 +1,559 @@
+{
+  "units": [
+    {
+      "ord": 12,
+      "titleKo": "전화·LINE",
+      "goalKo": "전화를 걸고 받으며 예약하고, 전언을 남기고, 친구에게 짧은 메시지로 늦는다고 알린다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 12,
+      "ord": 1,
+      "text": "もしもし。",
+      "kana": "もしもし。",
+      "cueKo": "전화를 받거나 걸 때 첫마디 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #385517",
+      "audioKey": "c/ce5ccf833b3c7299",
+      "key": "tatoeba-385517-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 2,
+      "text": "もしもし、ジョンソンさんをお願いします。",
+      "kana": "もしもし、ジョンソンさんをおねがいします。",
+      "cueKo": "전화를 걸어 특정인을 바꿔 달라고 말하기 (이름만 바꿔서)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #193799",
+      "audioKey": "c/fb5720cf31fb2f4f",
+      "key": "tatoeba-193799-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 3,
+      "text": "予約したいんですが。",
+      "kana": "よやくしたいんですが。",
+      "cueKo": "예약하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #78991",
+      "audioKey": "c/d216d25bd445064c",
+      "key": "tatoeba-78991-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 4,
+      "text": "６時に４人予約したいのですが。",
+      "kana": "ろくじによにんよやくしたいのですが。",
+      "cueKo": "몇 시에 몇 명으로 예약하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #235060",
+      "audioKey": "c/584bad24f625c033",
+      "key": "tatoeba-235060-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 5,
+      "text": "6時半、4人席を予約したいんですが。",
+      "kana": "ろくじはん、よにんせきをよやくしたいんですが。",
+      "cueKo": "6시 반에 4인석을 예약하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11906621",
+      "audioKey": "c/cefd90e8ae15b269",
+      "key": "tatoeba-11906621-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 6,
+      "text": "３名で予約をお願いしたいんですが。",
+      "kana": "さんめいでよやくをおねがいしたいんですが。",
+      "cueKo": "3명으로 예약을 부탁한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1151905",
+      "audioKey": "c/ab0c309b18ac6011",
+      "key": "tatoeba-1151905-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 7,
+      "text": "ナムと申します。",
+      "kana": "ナムともうします。",
+      "cueKo": "이름을 정중하게 밝혀 말하기 (이름 부분만 내 이름으로 바꿔서)",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #14048807",
+      "audioKey": "c/d4ef12c319a8d567",
+      "key": "tatoeba-14048807-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 8,
+      "text": "宜しくお願いします。",
+      "kana": "よろしくおねがいします。",
+      "cueKo": "통화를 마무리하며 잘 부탁드린다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13117658",
+      "audioKey": "c/eb5856723b124f13",
+      "key": "tatoeba-13117658-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 9,
+      "text": "折り返し電話します。",
+      "kana": "おりかえしでんわします。",
+      "cueKo": "나중에 다시 전화하겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2063335",
+      "audioKey": "c/3a7b855cec89ddea",
+      "key": "tatoeba-2063335-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 10,
+      "text": "後でまた電話します。",
+      "kana": "あとでまたでんわします。",
+      "cueKo": "잠시 후에 다시 전화하겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #174351",
+      "audioKey": "c/d60fb437ef163708",
+      "key": "tatoeba-174351-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 11,
+      "text": "折り返しご連絡いたします。",
+      "kana": "おりかえしごれんらくいたします。",
+      "cueKo": "다시 연락드리겠다고 정중하게 말하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8424881",
+      "audioKey": "c/a3cc0bb739f62c50",
+      "key": "tatoeba-8424881-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 12,
+      "text": "後ほど私に電話をするよう彼女に伝えていただけますか？",
+      "kana": "のちほどわたしにでんわをするようかのじょにつたえていただけますか。",
+      "cueKo": "전화 온 사람에게 나중에 내게 전화해 달라고 전언 부탁하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #774500",
+      "audioKey": "c/d5995af8a93ad370",
+      "key": "tatoeba-774500-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 13,
+      "text": "了解しました。",
+      "kana": "りょうかいしました。",
+      "cueKo": "알겠다고 정중하게 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #78112",
+      "audioKey": "c/3d85814f55755b7b",
+      "key": "tatoeba-78112-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 14,
+      "text": "了解。",
+      "kana": "りょうかい。",
+      "cueKo": "알겠다고 가볍게 대답하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #762125",
+      "audioKey": "c/f707c91267ed242d",
+      "key": "tatoeba-762125-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 15,
+      "text": "ごめんちょっと遅れる。3時10分には着くと思う。",
+      "kana": "ごめんちょっとおくれる。さんじじゅっぷんにはつくとおもう。",
+      "cueKo": "약속에 조금 늦는다고 친구에게 메시지 보내기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2904021",
+      "audioKey": "c/50149b06b1f964df",
+      "key": "tatoeba-2904021-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 16,
+      "text": "ごめん、20分くらい遅れるかも。",
+      "kana": "ごめん、にじゅっぷんくらいおくれるかも。",
+      "cueKo": "20분쯤 늦을지도 모른다고 친구에게 보내기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2459210",
+      "audioKey": "c/04a66f8c728c8bff",
+      "key": "tatoeba-2459210-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 17,
+      "text": "遅れてごめん。",
+      "kana": "おくれてごめん。",
+      "cueKo": "늦어서 미안하다고 가볍게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #126714",
+      "audioKey": "c/6e3a8d87bbeacd15",
+      "key": "tatoeba-126714-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 18,
+      "text": "今そっちに向かってるとこ。",
+      "kana": "いまそっちにむかってるとこ。",
+      "cueKo": "지금 가는 중이라고 친구에게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9194721",
+      "audioKey": "c/c1dc2563fb0a0824",
+      "key": "tatoeba-9194721-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 19,
+      "text": "駅に着いたよ。",
+      "kana": "えきについたよ。",
+      "cueKo": "역에 도착했다고 친구에게 알리기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #158266",
+      "audioKey": "c/aecc43f8696c283e",
+      "key": "tatoeba-158266-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 20,
+      "text": "後で電話するね。",
+      "kana": "あとででんわするね。",
+      "cueKo": "나중에 전화하겠다고 친구에게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9846152",
+      "audioKey": "c/4fbcd38ccfdd8fa5",
+      "key": "tatoeba-9846152-say"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 21,
+      "text": "お電話ありがとうございます。",
+      "kana": "おでんわありがとうございます。",
+      "cueKo": "전화를 받은 가게 직원의 첫인사 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3401024",
+      "audioKey": "c/6d2301dd4f517ba1",
+      "key": "tatoeba-3401024-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 22,
+      "text": "かしこまりました。",
+      "kana": "かしこまりました。",
+      "cueKo": "요청을 알겠다는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11041830",
+      "audioKey": "c/cc896492216c7835",
+      "key": "tatoeba-11041830-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 23,
+      "text": "何名様ですか。",
+      "kana": "なんめいさまですか。",
+      "cueKo": "몇 명인지 묻는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4694697",
+      "audioKey": "c/df887ed28c74cf2b",
+      "key": "tatoeba-4694697-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 24,
+      "text": "お名前をお願いします。",
+      "kana": "おなまえをおねがいします。",
+      "cueKo": "이름을 말해 달라는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226565",
+      "audioKey": "c/72b9ab48d6689eff",
+      "key": "tatoeba-226565-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 25,
+      "text": "お待ちしております。",
+      "kana": "おまちしております。",
+      "cueKo": "기다리겠다는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10982401",
+      "audioKey": "c/c8d3bd93e7960509",
+      "key": "tatoeba-10982401-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 26,
+      "text": "電話番号を伺えますか？",
+      "kana": "でんわばんごうをうかがえますか。",
+      "cueKo": "전화번호를 묻는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #774502",
+      "audioKey": "c/c04a87b159e998b4",
+      "key": "tatoeba-774502-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 27,
+      "text": "少々お待ちください。",
+      "kana": "しょうしょうおまちください。",
+      "cueKo": "잠시 기다려 달라는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8886173",
+      "audioKey": "c/9812a178c3c3d2bc",
+      "key": "tatoeba-8886173-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 28,
+      "text": "もしもし、どちら様ですか？",
+      "kana": "もしもし、どちらさまですか？",
+      "cueKo": "누구냐고 묻는 전화 상대의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9594385",
+      "audioKey": "c/93af2cc31123b3eb",
+      "key": "tatoeba-9594385-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 29,
+      "text": "田中は今、席を外しております。",
+      "kana": "たなかはいま、せきをはずしております。",
+      "cueKo": "담당자가 지금 자리에 없다는 말 듣기 (이름만 바꿔서)",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #124875",
+      "audioKey": "c/0cffcd944d1bbd18",
+      "key": "tatoeba-124875-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 30,
+      "text": "申し訳ありません。田中は今、席を外しております。",
+      "kana": "もうしわけありません。たなかはいま、せきをはずしております。",
+      "cueKo": "사과하며 담당자가 자리에 없다고 전하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #889706",
+      "audioKey": "c/e2878b00db1b8773",
+      "key": "tatoeba-889706-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 31,
+      "text": "申し訳ありません。田中は今、手が離せないので、後でこちらから電話します。",
+      "kana": "もうしわけありません。たなかはいま、てがはなせないので、あとでこちらからでんわします。",
+      "cueKo": "담당자가 바쁘니 나중에 전화하겠다는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1031930",
+      "audioKey": "c/cbea8ad2178552e4",
+      "key": "tatoeba-1031930-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 32,
+      "text": "ご連絡お待ちしております。",
+      "kana": "ごれんらくおまちしております。",
+      "cueKo": "연락을 기다리겠다는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10983389",
+      "audioKey": "c/e9c141e2991b12ea",
+      "key": "tatoeba-10983389-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 33,
+      "text": "今どこにいるの？",
+      "kana": "いまどこにいるの？",
+      "cueKo": "지금 어디냐고 묻는 친구의 메시지 읽기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4865664",
+      "audioKey": "c/04cef249133b9ba1",
+      "key": "tatoeba-4865664-hear"
+    },
+    {
+      "unitOrd": 12,
+      "ord": 34,
+      "text": "了解。",
+      "kana": "りょうかい。",
+      "cueKo": "친구의 알겠다는 메시지 읽기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #762125",
+      "audioKey": "c/f707c91267ed242d",
+      "key": "tatoeba-762125-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 12,
+      "ord": 1,
+      "titleKo": "식당에 전화로 예약하기",
+      "settingKo": "가게에 전화를 걸어 자리를 예약할 때",
+      "goalKo": "인사하고 예약 의사를 밝힌 뒤, 시간과 인원과 이름을 말하고 통화를 마무리한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            21
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            1,
+            3
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            22,
+            23
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            24
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 12,
+      "ord": 2,
+      "titleKo": "LINE으로 늦는다고 알리기",
+      "settingKo": "친구와 만나기로 한 날, 약속 장소에 늦을 것 같을 때",
+      "goalKo": "어디냐는 친구의 메시지에 늦는다고 답하고, 도착했다고 알린다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            15
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            34
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            19
+          ]
+        }
+      ]
+    }
+  ]
+}
