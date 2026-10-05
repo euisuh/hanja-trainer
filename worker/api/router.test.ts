@@ -112,6 +112,8 @@ describe("conversation read API", () => {
       INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
       VALUES (?, 2, 'はい', 'はい', '네라고 답하기', 'polite', 'hear', 'corpus', 'Tatoeba #2', 'c/21c07834e26b2ae5')
     `).run(unitId).lastInsertRowid);
+    sqlite.prepare("INSERT INTO conv_unit_chunks (unit_id, chunk_id, ord) VALUES (?, ?, 1), (?, ?, 2)")
+      .run(unitId, firstChunkId, unitId, secondChunkId);
     const sceneId = Number(sqlite.prepare("INSERT INTO conv_scenes (unit_id, ord, title_ko, setting_ko, goal_ko) VALUES (?, 1, '카페', '카페 카운터', '다시 묻기')").run(unitId).lastInsertRowid);
     sqlite.prepare("INSERT INTO conv_scene_turns (scene_id, ord, speaker, chunk_ids) VALUES (?, 1, 'npc', ?)")
       .run(sceneId, JSON.stringify([secondChunkId]));
@@ -188,6 +190,21 @@ describe("conversation read API", () => {
       units: [{ id: unitId, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 1, completedPhraseCount: 1 }],
       phrases: [{ id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", spokenDays: 2, againCount: 2 }],
     });
+  });
+
+  it("composes due chunks without non-due chunks", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = Date.now();
+    const { unitId, firstChunkId, secondChunkId } = addConversationContent(fixture.sqlite, now - 1_000);
+    fixture.sqlite.prepare("UPDATE conv_chunk_states SET due = ? WHERE chunk_id = ?").run(now + 60_000, firstChunkId);
+
+    const response = await routeApiRequest(request(`/api/conv/session?unitId=${unitId}`, "GET"), fixture.env);
+
+    expect(response.status).toBe(200);
+    // SAFETY: session route is asserted to return its JSON conversation payload.
+    const session = await response.json() as { items: Array<{ kind: string; chunk?: { id: number } }> };
+    expect(session.items.filter((item) => item.kind === "chunk").map((item) => item.chunk?.id)).toEqual([secondChunkId]);
+    expect(session.items.some((item) => item.chunk?.id === firstChunkId)).toBe(false);
   });
 });
 

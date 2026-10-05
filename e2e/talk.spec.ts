@@ -1,9 +1,15 @@
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 const conversation = JSON.parse(readFileSync("e2e/fixtures/talk-unit-response.json", "utf8"));
+const sayItems = conversation.chunks.map((chunk: unknown) => ({ kind: "chunk", phase: "say", chunk }));
+const sceneItem = { kind: "scene", scene: conversation.scenes[0], review: false };
+
+function routeSession(page: Page, items: unknown[]) {
+  return page.route(/\/api\/conv\/session\?unitId=1/u, (route) => route.fulfill({ json: { unit: conversation.unit, chunks: conversation.chunks, items } }));
+}
 
 function resetProfile() {
   execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--file", "e2e/reset.sql"], { cwd: process.cwd(), stdio: "pipe" });
@@ -57,7 +63,7 @@ test.afterEach(resetProfile);
 
 test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await page.addInitScript(installTalkMocks);
-  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  await routeSession(page, sayItems);
   let submission: unknown;
   await page.route("**/api/conv/attempts", async (route) => {
     submission = route.request().postDataJSON();
@@ -75,12 +81,12 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await page.keyboard.press("3");
   await page.keyboard.press("Enter");
   await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say", loop: "drill", input: "voice", hints: 1, replays: 0 })]);
-  await expect(page.getByRole("button", { name: "장면 시작" })).toBeVisible();
+  await expect(page.getByText("오늘 Talk 완료")).toBeVisible();
 });
 
 test("Talk uses Japanese speech synthesis after chunk audio fails", async ({ page }) => {
   await page.addInitScript(installTalkAudioFailureMocks);
-  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  await routeSession(page, sayItems);
   let submission: unknown;
   await page.route("**/api/conv/attempts", async (route) => {
     submission = route.request().postDataJSON();
@@ -102,7 +108,7 @@ test("Talk uses Japanese speech synthesis after chunk audio fails", async ({ pag
 
 test("Talk attempt queues offline then flushes", async ({ page }) => {
   await page.addInitScript(installTalkMocks);
-  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  await routeSession(page, sayItems);
   let calls = 0;
   await page.route("**/api/conv/attempts", async (route) => {
     calls += 1;
@@ -124,12 +130,11 @@ test("Talk attempt queues offline then flushes", async ({ page }) => {
 
 test("Talk scene keeps NPC text hidden and self-grades tap answers", async ({ page }) => {
   await page.addInitScript(installTalkMocks);
-  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  await routeSession(page, [sceneItem]);
   let submission: unknown;
   await page.route("**/api/conv/attempts", async (route) => { submission = route.request().postDataJSON(); await route.fulfill({ json: { results: [{ grade: "good" }] } }); });
 
   await page.goto("/talk/1");
-  await page.getByRole("button", { name: "대화 연습" }).click();
   await page.getByRole("button", { name: "장면 시작" }).click();
   await expect(page.getByText("상대방")).toBeVisible();
   await expect(page.getByText(conversation.chunks[0].ja)).toBeHidden();

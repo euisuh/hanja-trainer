@@ -20,6 +20,8 @@
 .talk-screen__attempt p { margin-bottom: 0; }
 .talk-screen__ratings { display: grid; gap: 8px; grid-template-columns: repeat(3, 1fr); margin-top: 24px; }
 .talk-screen__ratings .is-preselected { background: var(--talk-highlighter); }
+.talk-screen__intents { display: grid; gap: 8px; margin-top: 24px; }
+.talk-screen__intents .is-preselected { background: var(--talk-highlighter); }
 .talk-screen__bar { background: var(--talk-paper); border-top: 1.5px solid var(--talk-ink); bottom: 0; display: flex; gap: 8px; left: 0; padding: 10px max(18px, calc((100% - 640px) / 2)); position: fixed; right: 0; }
 .talk-screen__bar button { flex: 1; }
 .talk-screen__bar .talk-screen__record { background: var(--talk-pencil-red); border-color: var(--talk-pencil-red); color: var(--talk-paper); }

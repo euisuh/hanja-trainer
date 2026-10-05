@@ -1,4 +1,5 @@
-import type { ConversationProgressResponse } from "../../shared/api";
+import { composeTalkSession } from "../../shared/talkSession";
+import type { ConversationProgressResponse, ConversationSessionResponse } from "../../shared/api";
 import type { ConversationChunk, ConversationChunkState, ConversationScene, ConversationSceneTurn, ConversationUnit } from "../../shared/types";
 import { zonedDayKey } from "./sessions";
 
@@ -70,6 +71,8 @@ type DueRow = ChunkRow & {
   correct_count: number;
   total_count: number;
 };
+
+type SessionChunkRow = ChunkRow & { due: number | null };
 
 function unit(row: UnitRow): ConversationUnit {
   return { id: row.id, track: row.track, ord: row.ord, titleKo: row.title_ko, goalKo: row.goal_ko };
@@ -192,4 +195,47 @@ export async function getDueConversationChunks(db: D1Database, profileId: number
     ORDER BY ccs.due, ccs.chunk_id, ccs.role
   `).bind(profileId, now).all<DueRow>();
   return { chunks: result.results.map((row) => ({ ...chunk(row), ...state(row) })) };
+}
+
+export async function getConversationSession(db: D1Database, profileId: number, unitId: number, now = Date.now()): Promise<ConversationSessionResponse | null> {
+  const unitRow = await db.prepare("SELECT id, track, ord, title_ko, goal_ko FROM conv_units WHERE id = ?1").bind(unitId).first<UnitRow>();
+  if (!unitRow) return null;
+  const [chunkResult, sceneResult, turnResult] = await Promise.all([
+    db.prepare(`
+      SELECT c.id, uc.unit_id, uc.ord, c.ja, c.kana, c.ko_cue, c.register, c.role, c.source_kind, c.source_ref, c.audio_key,
+        ccs.due
+      FROM conv_unit_chunks uc
+      JOIN conv_chunks c ON c.id = uc.chunk_id
+      LEFT JOIN conv_chunk_states ccs ON ccs.profile_id = ?2 AND ccs.chunk_id = c.id AND ccs.role = c.role
+      WHERE uc.unit_id = ?1 AND c.retired_at IS NULL
+      ORDER BY uc.ord, c.id
+    `).bind(unitId, profileId).all<SessionChunkRow>(),
+    db.prepare("SELECT id, unit_id, ord, title_ko, setting_ko, goal_ko FROM conv_scenes WHERE unit_id = ?1 ORDER BY ord, id").bind(unitId).all<SceneRow>(),
+    db.prepare(`
+      SELECT cst.scene_id, cst.ord, cst.speaker, cst.chunk_ids
+      FROM conv_scene_turns cst
+      JOIN conv_scenes cs ON cs.id = cst.scene_id
+      WHERE cs.unit_id = ?1
+      ORDER BY cs.ord, cs.id, cst.ord
+    `).bind(unitId).all<SceneTurnRow>(),
+  ]);
+  const turns = new Map<number, ConversationSceneTurn[]>();
+  for (const row of turnResult.results) {
+    const entries = turns.get(row.scene_id) ?? [];
+    entries.push({ sceneId: row.scene_id, ord: row.ord, speaker: row.speaker, chunkIds: chunkIds(row.chunk_ids) });
+    turns.set(row.scene_id, entries);
+  }
+  const scenes = sceneResult.results.map((row) => ({ ...scene(row), turns: turns.get(row.id) ?? [] }));
+  const practiceScene = scenes[0];
+  if (!practiceScene) return null;
+  const chunks = chunkResult.results.map(chunk);
+  const dueChunks = chunkResult.results.filter((row) => row.due !== null && row.due <= now).map(chunk);
+  const newChunks = chunkResult.results.filter((row) => row.due === null).map(chunk);
+  const items = composeTalkSession({
+    dueChunks,
+    newChunks,
+    practiceScene,
+    completedUnits: [{ chunks, scene: practiceScene }],
+  });
+  return { unit: unit(unitRow), chunks, items };
 }

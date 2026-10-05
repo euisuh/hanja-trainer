@@ -1,5 +1,5 @@
 /* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-unsafe-dictionary-type -- Existing API config boundary parser predates changed-file lint; this additive request type must keep its shared contract. */
-import type { Track } from "./types";
+import type { ConversationChunk, ConversationScene, ConversationSceneTurn, ConversationUnit, Track } from "./types";
 import type { OnyomiScript, SoundMode, ThemeId } from "./settings";
 
 // Four two-character word reviews use 37 SQL statements including profile resolution.
@@ -187,6 +187,17 @@ export type SubmitConversationAttemptRequest = {
 };
 
 export type SubmitConversationAttemptResponse = { grade: ConversationGrade };
+
+export type ConversationChunkPayload = ConversationChunk & { audioUrl: string };
+export type ConversationScenePayload = ConversationScene & { turns: ConversationSceneTurn[] };
+export type ConversationSessionItem =
+  | { kind: "chunk"; phase: "hear" | "say" | "new"; chunk: ConversationChunkPayload }
+  | { kind: "scene"; scene: ConversationScenePayload; review: boolean };
+export type ConversationSessionResponse = {
+  unit: ConversationUnit;
+  chunks: ConversationChunkPayload[];
+  items: ConversationSessionItem[];
+};
 
 export type ConversationStatsResponse = {
   calendar: StatsCalendarDay[];

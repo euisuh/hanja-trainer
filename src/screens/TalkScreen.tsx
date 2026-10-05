@@ -2,15 +2,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { enqueuePendingConversationAttempt } from "../features/conversation/attemptOutbox";
 import { SceneRunner } from "../features/conversation/SceneRunner";
+import { ListenCard } from "../features/conversation/ListenCard";
 import { useActiveProfile } from "../features/profile/ProfileContext";
 import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, matchingVoice, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
-import { apiClient, type ConversationUnitResponse } from "../lib/apiClient";
+import { apiClient } from "../lib/apiClient";
 import { apiUrl } from "../platform/apiUrl";
 import { onAppInactive } from "../platform/lifecycle";
 import "../features/conversation/talk.css";
+import type { ConversationGrade, ConversationSessionItem, ConversationSessionResponse } from "../../shared/api";
 
 type TalkStage = "cue" | "reveal" | "rate";
+type SessionEntry = { item: ConversationSessionItem; correction: boolean };
 
 const slowOnsetMs = 3_000;
 
@@ -27,7 +30,8 @@ export function TalkScreen() {
   const unitId = Number(rawUnitId);
   const { id: profileId } = useActiveProfile();
   const navigate = useNavigate();
-  const [content, setContent] = useState<ConversationUnitResponse | null>(null);
+  const [content, setContent] = useState<ConversationSessionResponse | null>(null);
+  const [items, setItems] = useState<SessionEntry[]>([]);
   const [index, setIndex] = useState(0);
   const [stage, setStage] = useState<TalkStage>("cue");
   const [recording, setRecording] = useState<LocalRecordingState>(() => localRecordingSupported() ? { status: "idle" } : { status: "unsupported" });
@@ -35,11 +39,14 @@ export function TalkScreen() {
   const [hints, setHints] = useState(0);
   const [replays, setReplays] = useState(0);
   const [selectedGrade, setSelectedGrade] = useState<"again" | "hard" | "good">("good");
-  const [sceneMode, setSceneMode] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const [spoken, setSpoken] = useState(0);
+  const [onsets, setOnsets] = useState<number[]>([]);
   const recorderRef = useRef<LocalRecorder | null>(null);
   const cueShownAtRef = useRef(0);
   const selfAudioRef = useRef<HTMLAudioElement | null>(null);
-  const card = content?.chunks[index];
+  const entry = items[index];
+  const card = entry?.item.kind === "chunk" ? entry.item.chunk : undefined;
   const voices = useSpeechVoices();
   const voice = matchingVoice(voices, "jp");
   const preselectedGrade = recording.status === "ready" ? gradeFor(recording.onsetMs) : "good";
@@ -65,9 +72,12 @@ export function TalkScreen() {
   useEffect(() => {
     if (!Number.isSafeInteger(unitId) || unitId < 1) return;
     const controller = new AbortController();
-    apiClient.conversationUnit(unitId, controller.signal).then((response) => {
-      if (response.chunks.length === 0) { setError("Talk 문장이 없습니다."); return; }
+    apiClient.conversationSession(unitId, controller.signal).then((response) => {
+      if (response.items.length === 0) { setError("Talk 문장이 없습니다."); return; }
       setContent(response);
+      setItems(response.items.map((item) => ({ item, correction: false })));
+      setIndex(0);
+      setFinished(false);
       setError("");
     // oxlint-disable-next-line anti-slop/no-unknown-parameters -- Promise rejection is an untyped I/O boundary.
     }).catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "Talk 문장을 불러오지 못했습니다."); });
@@ -86,16 +96,26 @@ export function TalkScreen() {
     void recorderRef.current?.record(cueShownAtRef.current);
   }, [recording.status]);
 
-  const rate = useCallback((grade: "again" | "hard" | "good", input: "keyboard" | "tap") => {
+  const rate = useCallback((grade: ConversationGrade, input: "keyboard" | "tap", replayCount = replays) => {
     if (!card) return;
     const latencyMs = recording.status === "ready" ? recording.onsetMs : null;
     enqueuePendingConversationAttempt(profileId, {
       clientAttemptId: attemptId(), chunkId: card.id, role: card.role, grade,
-      answeredAt: Date.now(), latencyMs, hints, replays, loop: "drill",
+      answeredAt: Date.now(), latencyMs, hints, replays: replayCount, loop: "drill",
       input: recording.status === "ready" ? "voice" : input,
     });
     recorderRef.current?.reset();
-    if (content && index + 1 < content.chunks.length) {
+    if (card.role === "say" && !entry?.correction) {
+      setSpoken((value) => value + 1);
+      if (latencyMs !== null) setOnsets((value) => [...value, latencyMs]);
+    }
+    if (grade === "again" && !entry?.correction) {
+      setItems((value) => {
+        const insertAt = Math.min(value.length, index + 4);
+        return [...value.slice(0, insertAt), { item: entry.item, correction: true }, ...value.slice(insertAt)];
+      });
+    }
+    if (index + 1 < items.length || (grade === "again" && !entry?.correction)) {
       setIndex((value) => value + 1);
       setStage("cue");
       setSelectedGrade("good");
@@ -103,9 +123,8 @@ export function TalkScreen() {
       setReplays(0);
       return;
     }
-    if (content?.scenes[0]) { setSceneMode(true); return; }
-    navigate("/home");
-  }, [card, content, hints, index, navigate, profileId, recording, replays]);
+    setFinished(true);
+  }, [card, entry, hints, index, items.length, profileId, recording, replays]);
 
   const playReference = useCallback(() => {
     if (!card) return;
@@ -146,14 +165,20 @@ export function TalkScreen() {
   }, [navigate, rate, record, reveal, selectedGrade, stage]);
 
   if (!Number.isSafeInteger(unitId) || unitId < 1 || error) return <section className="talk-root talk-screen"><p role="alert">{error || "Talk 단위를 찾을 수 없습니다."}</p><button onClick={() => navigate("/home")} type="button">돌아가기</button></section>;
-  if (!content || !card) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
-  if (sceneMode && content.scenes[0]) return <SceneRunner chunks={content.chunks} onExit={() => navigate("/home")} profileId={profileId} scene={content.scenes[0]} />;
+  if (!content || !entry) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
+  if (finished) {
+    const sorted = [...onsets].sort((left, right) => left - right);
+    const median = sorted.length === 0 ? null : sorted[Math.floor(sorted.length / 2)];
+    return <section className="talk-root talk-screen"><div className="talk-screen__page"><h1>오늘 Talk 완료</h1><p>말한 문장 {spoken}개</p><p>중간 첫소리 {median === null ? "측정 안 됨" : `${(median / 1000).toFixed(1)}초`}</p><p>다음 복습은 저장 뒤 일정에 맞춰 표시됩니다.</p><button onClick={() => navigate("/talk")} type="button">Talk로 돌아가기</button></div></section>;
+  }
+  if (entry.item.kind === "scene") return <SceneRunner chunks={content.chunks} onExit={() => { if (index + 1 < items.length) { setIndex((value) => value + 1); setStage("cue"); } else { setFinished(true); } }} profileId={profileId} scene={entry.item.scene} />;
+  if (!card) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
+  if (card.role === "hear") return <section className="talk-root talk-screen" data-talk-stage="listen"><header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {items.length}</span></header><p className="talk-screen__goal">{content.unit.goalKo}</p><ListenCard card={card} choices={content.chunks.filter((chunk) => chunk.role === "hear")} onNext={(grade, cardReplays, input) => rate(grade, input, cardReplays)} /></section>;
 
   const canRate = stage === "rate";
   return <section className="talk-root talk-screen" data-talk-stage={stage}>
-    <header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {content.chunks.length}</span></header>
+    <header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {items.length}</span></header>
     <p className="talk-screen__goal">{content.unit.goalKo}</p>
-    {content.scenes[0] && <button onClick={() => setSceneMode(true)} type="button">대화 연습</button>}
     <div className="talk-screen__page">
       <p className="talk-screen__cue">{card.koCue}</p>
       {stage !== "cue" && <div className="talk-screen__answer">

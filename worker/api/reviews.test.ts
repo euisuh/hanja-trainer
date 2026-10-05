@@ -480,10 +480,10 @@ describe("conversation attempts", () => {
     ];
 
     expect(parseConversationAttempt({ ...attempts[0], answeredAt: 1_800_000_000_000 }, 1_800_000_000_000)).toEqual(attempts[0]);
-    expect(await submitConversationAttemptBatch(fixture.env.DB, 1, attempts, new Date(1_800_000_000_100))).toEqual([{ grade: "hard" }, { grade: "good" }]);
+    expect(await submitConversationAttemptBatch(fixture.env.DB, 1, attempts, new Date(1_800_000_000_100))).toEqual([{ grade: "hard" }, { grade: "hard" }]);
     const before = fixture.sqlite.prepare("SELECT * FROM conv_chunk_states ORDER BY role").all();
     expect(fixture.sqlite.prepare("SELECT role, grade FROM conv_attempts ORDER BY client_attempt_id").all()).toEqual([
-      { role: "hear", grade: 3 },
+      { role: "hear", grade: 2 },
       { role: "say", grade: 2 },
     ]);
 

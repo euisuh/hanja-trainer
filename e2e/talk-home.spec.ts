@@ -17,7 +17,7 @@ const progress = {
 
 test("Talk index supports keyboard navigation and contents progress", async ({ page }) => {
   await page.route("**/api/conv/progress", (route) => route.fulfill({ json: progress }));
-  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  await page.route(/\/api\/conv\/session\?unitId=1/u, (route) => route.fulfill({ json: { unit: conversation.unit, chunks: conversation.chunks, items: conversation.chunks.map((chunk: unknown) => ({ kind: "chunk", phase: "say", chunk })) } }));
   await page.goto("/talk");
   await expect(page.getByRole("heading", { name: "Index" })).toBeVisible();
   await page.keyboard.press("ArrowDown");

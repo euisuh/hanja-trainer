@@ -44,6 +44,10 @@ export function parseConversationAttempt(value: unknown, now = Date.now()): Subm
 }
 
 function cappedGrade(input: SubmitConversationAttemptRequest): ConversationGrade {
+  if (input.role === "hear") {
+    if (input.grade === "again") return "again";
+    return (input.replays ?? 0) >= 2 ? "hard" : input.grade === "easy" ? "good" : input.grade;
+  }
   if ((input.hints ?? 0) >= 2) return input.grade === "again" ? "again" : "hard";
   if ((input.hints ?? 0) > 0 || (input.replays ?? 0) >= 3) return input.grade === "easy" ? "good" : input.grade;
   return input.grade;
