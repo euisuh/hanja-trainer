@@ -1,0 +1,681 @@
+{
+  "units": [
+    {
+      "ord": 8,
+      "titleKo": "쇼핑·부탁·허락",
+      "goalKo": "가게에서 물건이 있는지 묻고, 입어 봐도 되는지 허락을 구하고, 다른 사이즈나 색을 부탁하고, 정하고 계산한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 8,
+      "ord": 1,
+      "text": "見てるだけです。",
+      "kana": "みてるだけです。",
+      "cueKo": "점원이 말을 걸어올 때 '그냥 구경 중이에요'라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2413229",
+      "audioKey": "c/a6423bbf4047ba2f",
+      "key": "tatoeba-2413229-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 2,
+      "text": "ちょっと見てるだけなので、大丈夫です。",
+      "kana": "ちょっとみてるだけなので、だいじょうぶです。",
+      "cueKo": "구경만 하겠으니 괜찮다고 정중하게 사양하며 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9083377",
+      "audioKey": "c/af06ddcdf4ede119",
+      "key": "tatoeba-9083377-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 3,
+      "text": "他のサイズはありますか？",
+      "kana": "ほかのサイズはありますか？",
+      "cueKo": "같은 상품의 다른 사이즈가 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10763914",
+      "audioKey": "c/1f15fccb0cce4723",
+      "key": "tatoeba-10763914-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 4,
+      "text": "もっと大きいサイズはありますか。",
+      "kana": "もっとおおきいサイズはありますか。",
+      "cueKo": "더 큰 사이즈가 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #193236",
+      "audioKey": "c/8722e3dc1d1156b4",
+      "key": "tatoeba-193236-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 5,
+      "text": "もう少し小さいのはありますか。",
+      "kana": "もうすこしちいさいのはありますか。",
+      "cueKo": "조금 더 작은 것이 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #194094",
+      "audioKey": "c/947567981f4b9165",
+      "key": "tatoeba-194094-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 6,
+      "text": "色違いはありませんか。",
+      "kana": "いろちがいはありませんか。",
+      "cueKo": "같은 상품의 다른 색이 없냐고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #145955",
+      "audioKey": "c/a7c98270aa3bf167",
+      "key": "tatoeba-145955-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 7,
+      "text": "これの色違いってありますか？",
+      "kana": "これのいろちがいってありますか？",
+      "cueKo": "물건을 가리키며 이것의 다른 색이 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10049472",
+      "audioKey": "c/f243d65a54234260",
+      "key": "tatoeba-10049472-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 8,
+      "text": "青色のはありますか。",
+      "kana": "あおいろのはありますか。",
+      "cueKo": "원하는 색(여기서는 파란색)이 있냐고 말하기 (색 이름만 바꿔서)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #142566",
+      "audioKey": "c/8080b9e9b5551f0a",
+      "key": "tatoeba-142566-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 9,
+      "text": "もっと安いのはありますか。",
+      "kana": "もっとやすいのはありますか。",
+      "cueKo": "더 싼 것이 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2135770",
+      "audioKey": "c/3ee96840675bd915",
+      "key": "tatoeba-2135770-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 10,
+      "text": "学生割引はありますか。",
+      "kana": "がくせいわりびきはありますか。",
+      "cueKo": "학생 할인이 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #184226",
+      "audioKey": "c/ed31aa614ff22add",
+      "key": "tatoeba-184226-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 11,
+      "text": "もっと明るい色合いのが欲しいんです。",
+      "kana": "もっとあかるいいろあいのがほしいんです。",
+      "cueKo": "더 밝은 색조를 원한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10111196",
+      "audioKey": "c/9a1babc7b05c20c3",
+      "key": "tatoeba-10111196-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 12,
+      "text": "試着してもいいですか。",
+      "kana": "しちゃくしてもいいですか。",
+      "cueKo": "입어 봐도 되냐고 허락을 구하며 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #151007",
+      "audioKey": "c/b26915de07cbba59",
+      "key": "tatoeba-151007-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 13,
+      "text": "これ試着してもいいですか？",
+      "kana": "これしちゃくしてもいいですか？",
+      "cueKo": "물건을 가리키며 이것을 입어 봐도 되냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2869738",
+      "audioKey": "c/f25645b8e465b697",
+      "key": "tatoeba-2869738-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 14,
+      "text": "試着できますか。",
+      "kana": "しちゃくできますか。",
+      "cueKo": "입어 볼 수 있냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #151006",
+      "audioKey": "c/1419cb5c4ea6369d",
+      "key": "tatoeba-151006-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 15,
+      "text": "これを試着したいのですが。",
+      "kana": "これをしちゃくしたいのですが。",
+      "cueKo": "이것을 입어 보고 싶다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #217643",
+      "audioKey": "c/1db5f38ea474f921",
+      "key": "tatoeba-217643-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 16,
+      "text": "試着室はどこですか。",
+      "kana": "しちゃくしつはどこですか。",
+      "cueKo": "탈의실이 어디냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #151002",
+      "audioKey": "c/e4b311d6c51686d9",
+      "key": "tatoeba-151002-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 17,
+      "text": "これにします。",
+      "kana": "これにします。",
+      "cueKo": "여러 개 중에서 이것으로 정했다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2265662",
+      "audioKey": "c/2042cc38f2b557df",
+      "key": "tatoeba-2265662-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 18,
+      "text": "これ、買います。",
+      "kana": "これ、かいます。",
+      "cueKo": "이것을 사겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2265623",
+      "audioKey": "c/c33f07afc61d989d",
+      "key": "tatoeba-2265623-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 19,
+      "text": "もう少し考えてみます。",
+      "kana": "もうすこしかんがえてみます。",
+      "cueKo": "바로 사지 않고 조금 더 생각해 보겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #194099",
+      "audioKey": "c/0dc964875fe7bcde",
+      "key": "tatoeba-194099-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 20,
+      "text": "また後で来ます。",
+      "kana": "またあとできます。",
+      "cueKo": "나중에 다시 오겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10914867",
+      "audioKey": "c/1f2fd9bfa5dfd87e",
+      "key": "tatoeba-10914867-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 21,
+      "text": "見せてもらえますか？",
+      "kana": "みせてもらえますか？",
+      "cueKo": "물건을 가리키며 보여 달라고 부탁하며 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11469960",
+      "audioKey": "c/1f42070291303b92",
+      "key": "tatoeba-11469960-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 22,
+      "text": "ほかのを見せてください。",
+      "kana": "ほかのをみせてください。",
+      "cueKo": "다른 것도 보여 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #196433",
+      "audioKey": "c/d611e34992e65432",
+      "key": "tatoeba-196433-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 23,
+      "text": "これ包んでもらえますか？",
+      "kana": "これつつんでもらえますか？",
+      "cueKo": "이것을 포장해 달라고 부탁하며 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8655526",
+      "audioKey": "c/693ea10c8cf3cd16",
+      "key": "tatoeba-8655526-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 24,
+      "text": "プレゼント用に包んでもらえますか？",
+      "kana": "プレゼントようにつつんでもらえますか？",
+      "cueKo": "선물용으로 포장해 달라고 부탁하며 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12163584",
+      "audioKey": "c/ed9bf362f4713067",
+      "key": "tatoeba-12163584-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 25,
+      "text": "カードで払いたいんですが。",
+      "kana": "カードではらいたいんですが。",
+      "cueKo": "카드로 계산하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11582360",
+      "audioKey": "c/7ec684941fd2a3f5",
+      "key": "tatoeba-11582360-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 26,
+      "text": "現金でも大丈夫ですか？",
+      "kana": "げんきんでもだいじょうぶですか？",
+      "cueKo": "현금으로 내도 되냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11890833",
+      "audioKey": "c/d86d998900332e78",
+      "key": "tatoeba-11890833-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 27,
+      "text": "ここは免税店ですか。",
+      "kana": "ここはめんぜいてんですか。",
+      "cueKo": "여기가 면세점이냐고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #224277",
+      "audioKey": "c/763efcadacd18c59",
+      "key": "tatoeba-224277-say"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 28,
+      "text": "何かお探しですか？",
+      "kana": "なにかおさがしですか？",
+      "cueKo": "점원이 찾는 물건이 있냐고 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3555502",
+      "audioKey": "c/a76bc6d2d09133c7",
+      "key": "tatoeba-3555502-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 29,
+      "text": "こちらがお探しのものでしょうか？",
+      "kana": "こちらがおさがしのものでしょうか？",
+      "cueKo": "점원이 물건을 보여 주며 이게 찾던 것이냐고 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11700536",
+      "audioKey": "c/74809f4ec1a9f6d8",
+      "key": "tatoeba-11700536-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 30,
+      "text": "ご試着なさいますか？",
+      "kana": "ごしちゃくなさいますか？",
+      "cueKo": "점원이 입어 보겠냐고 권하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11368327",
+      "audioKey": "c/a4040e452d969f87",
+      "key": "tatoeba-11368327-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 31,
+      "text": "サイズはおいくつでしょうか。",
+      "kana": "サイズはおいくつでしょうか。",
+      "cueKo": "점원이 사이즈를 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9795497",
+      "audioKey": "c/f3d933598b54dfc9",
+      "key": "tatoeba-9795497-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 32,
+      "text": "よくお似合いです。",
+      "kana": "よくおにあいです。",
+      "cueKo": "점원이 잘 어울린다고 하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3613713",
+      "audioKey": "c/7ac6625e41978922",
+      "key": "tatoeba-3613713-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 33,
+      "text": "特大のサイズはあるんですが、その色のは切らしております。",
+      "kana": "とくだいのサイズはあるんですが、そのいろのはきらしております。",
+      "cueKo": "점원이 그 사이즈는 있지만 그 색은 품절이라고 하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123461",
+      "audioKey": "c/2fe0fa0099ecf4ea",
+      "key": "tatoeba-123461-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 34,
+      "text": "申し訳ありませんが、在庫がありません。",
+      "kana": "もうしわけありませんが、ざいこがありません。",
+      "cueKo": "점원이 재고가 없다고 사과하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #629009",
+      "audioKey": "c/d4563b953b88f276",
+      "key": "tatoeba-629009-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 35,
+      "text": "かしこまりました。確認致しますので、少々お待ち頂けますか。",
+      "kana": "かしこまりました。かくにんいたしますので、しょうしょうおまちいただけますか。",
+      "cueKo": "점원이 재고를 확인할 테니 기다려 달라는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2863727",
+      "audioKey": "c/315e846b8a1586a9",
+      "key": "tatoeba-2863727-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 36,
+      "text": "少々お待ちください。",
+      "kana": "しょうしょうおまちください。",
+      "cueKo": "잠시 기다려 달라는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8886173",
+      "audioKey": "c/9812a178c3c3d2bc",
+      "key": "tatoeba-8886173-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 37,
+      "text": "お取り寄せいたしましょうか。",
+      "kana": "おとりよせいたしましょうか。",
+      "cueKo": "점원이 주문해서 가져다 주겠냐고 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227085",
+      "audioKey": "c/2cde9a16f94b014e",
+      "key": "tatoeba-227085-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 38,
+      "text": "他のサイズもございますので、お声がけください。",
+      "kana": "ほかのサイズもございますので、おこえがけください。",
+      "cueKo": "다른 사이즈도 있으니 말씀하라는 점원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13440763",
+      "audioKey": "c/4d848277fd7ffa9a",
+      "key": "tatoeba-13440763-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 39,
+      "text": "こちらへどうぞ。",
+      "kana": "こちらへどうぞ。",
+      "cueKo": "점원이 탈의실로 안내하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1483688",
+      "audioKey": "c/9f120ae6a8be7755",
+      "key": "tatoeba-1483688-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 40,
+      "text": "こちら、お客様控えになります。",
+      "kana": "こちら、おきゃくさまひかえになります。",
+      "cueKo": "점원이 영수증 고객 보관용 사본을 건네는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13479241",
+      "audioKey": "c/af8673104fa47233",
+      "key": "tatoeba-13479241-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 41,
+      "text": "お支払いは現金ですか？カードですか？",
+      "kana": "おしはらいはげんきんですか？カードですか？",
+      "cueKo": "현금인지 카드인지 묻는 점원의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10807097",
+      "audioKey": "c/c99b52673bbd1e17",
+      "key": "tatoeba-10807097-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 42,
+      "text": "カードでお支払いの場合は、こちらのレジへどうぞ。",
+      "kana": "カードでおしはらいのばあいは、こちらのレジへどうぞ。",
+      "cueKo": "카드로 낼 거면 이쪽 계산대로 오라는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13479171",
+      "audioKey": "c/78bf63268ac349e6",
+      "key": "tatoeba-13479171-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 43,
+      "text": "またのご来店をお待ちしております。",
+      "kana": "またのごらいてんをおまちしております。",
+      "cueKo": "나갈 때 점원이 또 방문해 달라고 하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12167715",
+      "audioKey": "c/87423ed6f6d92063",
+      "key": "tatoeba-12167715-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 8,
+      "ord": 1,
+      "titleKo": "구경하다가 입어 보기",
+      "settingKo": "옷 가게에서 점원이 말을 걸어올 때",
+      "goalKo": "구경만 하겠다고 말하고, 입어 봐도 되는지 묻고, 더 큰 사이즈와 다른 색이 있는지 묻는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            38
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            12
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            39
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 8,
+      "ord": 2,
+      "titleKo": "고르고 계산하기",
+      "settingKo": "마음에 드는 옷을 골라 점원에게 갈 때",
+      "goalKo": "사겠다고 말하고, 카드로 계산하고 싶다고 말하고, 포장을 부탁한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            18
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            41
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            42
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            23
+          ]
+        }
+      ]
+    }
+  ]
+}

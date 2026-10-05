@@ -63,6 +63,10 @@
     "text": "日本に来たのは初めてですか。",
     "sourceAuthor": "bunbuku"
   },
+  "123461": {
+    "text": "特大のサイズはあるんですが、その色のは切らしております。",
+    "sourceAuthor": "bunbuku"
+  },
   "124249": {
     "text": "東京に住んでいます。",
     "sourceAuthor": "bunbuku"
@@ -71,9 +75,29 @@
     "text": "遅れてすみません。",
     "sourceAuthor": "small_snow"
   },
+  "142566": {
+    "text": "青色のはありますか。",
+    "sourceAuthor": "tommy__san"
+  },
+  "145955": {
+    "text": "色違いはありませんか。",
+    "sourceAuthor": "bunbuku"
+  },
   "148465": {
     "text": "趣味は何ですか。",
     "sourceAuthor": "tommy__san"
+  },
+  "151002": {
+    "text": "試着室はどこですか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "151006": {
+    "text": "試着できますか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "151007": {
+    "text": "試着してもいいですか。",
+    "sourceAuthor": "bunbuku"
   },
   "152203": {
     "text": "私もとても楽しかったです。",
@@ -131,6 +155,10 @@
     "text": "銀行で働いています。",
     "sourceAuthor": "small_snow"
   },
+  "184226": {
+    "text": "学生割引はありますか。",
+    "sourceAuthor": "tommy_san"
+  },
   "184550": {
     "text": "覚えてる？",
     "sourceAuthor": "small_snow"
@@ -187,9 +215,21 @@
     "text": "やっと着いた。",
     "sourceAuthor": "small_snow"
   },
+  "193236": {
+    "text": "もっと大きいサイズはありますか。",
+    "sourceAuthor": "bunbuku"
+  },
   "194081": {
     "text": "もう少し待ってください。",
     "sourceAuthor": "bunbuku"
+  },
+  "194094": {
+    "text": "もう少し小さいのはありますか。",
+    "sourceAuthor": "small_snow"
+  },
+  "194099": {
+    "text": "もう少し考えてみます。",
+    "sourceAuthor": "small_snow"
   },
   "194123": {
     "text": "もう少しゆっくりお願いします。",
@@ -197,6 +237,10 @@
   },
   "196236": {
     "text": "ホットドッグを２個、辛子とケチャップつきでおねがいします。",
+    "sourceAuthor": "bunbuku"
+  },
+  "196433": {
+    "text": "ほかのを見せてください。",
     "sourceAuthor": "bunbuku"
   },
   "197456": {
@@ -295,9 +339,17 @@
     "text": "ご一緒に食事でもしませんか。",
     "sourceAuthor": "bunbuku"
   },
+  "217643": {
+    "text": "これを試着したいのですが。",
+    "sourceAuthor": "bunbuku"
+  },
   "222064": {
     "text": "この言葉はどういう意味ですか。",
     "sourceAuthor": "mookeee"
+  },
+  "224277": {
+    "text": "ここは免税店ですか。",
+    "sourceAuthor": "bunbuku"
   },
   "224546": {
     "text": "ここで食べます。",
@@ -333,6 +385,10 @@
   },
   "227004": {
     "text": "お水をください。",
+    "sourceAuthor": "bunbuku"
+  },
+  "227085": {
+    "text": "お取り寄せいたしましょうか。",
     "sourceAuthor": "bunbuku"
   },
   "227101": {
@@ -447,6 +503,10 @@
     "text": "本当だよ！",
     "sourceAuthor": "satosi"
   },
+  "629009": {
+    "text": "申し訳ありませんが、在庫がありません。",
+    "sourceAuthor": "blay_paul"
+  },
   "688395": {
     "text": "お疲れ様でした。",
     "sourceAuthor": "arihato"
@@ -551,6 +611,10 @@
     "text": "楽しみにしています。",
     "sourceAuthor": "bunbuku"
   },
+  "2135770": {
+    "text": "もっと安いのはありますか。",
+    "sourceAuthor": "bunbuku"
+  },
   "2137193": {
     "text": "ビールはあまり好きではありません。",
     "sourceAuthor": "bunbuku"
@@ -575,8 +639,16 @@
     "text": "分かった。",
     "sourceAuthor": "DiePain"
   },
+  "2265623": {
+    "text": "これ、買います。",
+    "sourceAuthor": "Ianagisacos"
+  },
   "2265633": {
     "text": "お飲み物は何にしますか。",
+    "sourceAuthor": "Ianagisacos"
+  },
+  "2265662": {
+    "text": "これにします。",
     "sourceAuthor": "Ianagisacos"
   },
   "2304911": {
@@ -590,6 +662,10 @@
   "2374996": {
     "text": "見たことがあります。",
     "sourceAuthor": "wakatyann630"
+  },
+  "2413229": {
+    "text": "見てるだけです。",
+    "sourceAuthor": "tommy_san"
   },
   "2436329": {
     "text": "六時はどうですか。",
@@ -609,6 +685,14 @@
   },
   "2744751": {
     "text": "そうなんですか？",
+    "sourceAuthor": "tommy_san"
+  },
+  "2863727": {
+    "text": "かしこまりました。確認致しますので、少々お待ち頂けますか。",
+    "sourceAuthor": "Nekonari"
+  },
+  "2869738": {
+    "text": "これ試着してもいいですか？",
     "sourceAuthor": "tommy_san"
   },
   "2929527": {
@@ -683,6 +767,10 @@
     "text": "ポイントカードはお持ちですか？",
     "sourceAuthor": "tommy_san"
   },
+  "3555502": {
+    "text": "何かお探しですか？",
+    "sourceAuthor": "arnab"
+  },
   "3580937": {
     "text": "私はエンジニアです。",
     "sourceAuthor": "e4zh1nmcz"
@@ -693,6 +781,10 @@
   },
   "3597438": {
     "text": "大きな声で言って。聞こえないよ。",
+    "sourceAuthor": "arnab"
+  },
+  "3613713": {
+    "text": "よくお似合いです。",
     "sourceAuthor": "arnab"
   },
   "3621802": {
@@ -771,6 +863,10 @@
     "text": "これください。",
     "sourceAuthor": "bunbuku"
   },
+  "8655526": {
+    "text": "これ包んでもらえますか？",
+    "sourceAuthor": "bunbuku"
+  },
   "8688962": {
     "text": "びっくりした？",
     "sourceAuthor": "small_snow"
@@ -821,6 +917,10 @@
   },
   "9046236": {
     "text": "観光で来てるんです。",
+    "sourceAuthor": "bunbuku"
+  },
+  "9083377": {
+    "text": "ちょっと見てるだけなので、大丈夫です。",
     "sourceAuthor": "bunbuku"
   },
   "9112549": {
@@ -875,6 +975,10 @@
     "text": "月曜日はどうですか？",
     "sourceAuthor": "small_snow"
   },
+  "9795497": {
+    "text": "サイズはおいくつでしょうか。",
+    "sourceAuthor": "bunbuku"
+  },
   "9853946": {
     "text": "ねぇ、ちょっと聞いてよ。",
     "sourceAuthor": "small_snow"
@@ -889,6 +993,10 @@
   },
   "10000276": {
     "text": "その色いいね。",
+    "sourceAuthor": "small_snow"
+  },
+  "10049472": {
+    "text": "これの色違いってありますか？",
     "sourceAuthor": "small_snow"
   },
   "10066792": {
@@ -914,6 +1022,10 @@
   "10100070": {
     "text": "ごちそうさまでした。",
     "sourceAuthor": "small_snow"
+  },
+  "10111196": {
+    "text": "もっと明るい色合いのが欲しいんです。",
+    "sourceAuthor": "bunbuku"
   },
   "10171381": {
     "text": "濡れちゃった。",
@@ -987,6 +1099,14 @@
     "text": "学生です。",
     "sourceAuthor": "small_snow"
   },
+  "10763914": {
+    "text": "他のサイズはありますか？",
+    "sourceAuthor": "small_snow"
+  },
+  "10807097": {
+    "text": "お支払いは現金ですか？カードですか？",
+    "sourceAuthor": "bunbuku"
+  },
   "10899752": {
     "text": "はい、分かりました。",
     "sourceAuthor": "small_snow"
@@ -1013,6 +1133,10 @@
   },
   "10914856": {
     "text": "ええ、いいですよ。",
+    "sourceAuthor": "small_snow"
+  },
+  "10914867": {
+    "text": "また後で来ます。",
     "sourceAuthor": "small_snow"
   },
   "10918370": {
@@ -1055,8 +1179,16 @@
     "text": "意味が分かりませんでした。",
     "sourceAuthor": "small_snow"
   },
+  "11368327": {
+    "text": "ご試着なさいますか？",
+    "sourceAuthor": "bunbuku"
+  },
   "11451491": {
     "text": "何時がご都合よろしいですか？",
+    "sourceAuthor": "bunbuku"
+  },
+  "11469960": {
+    "text": "見せてもらえますか？",
     "sourceAuthor": "bunbuku"
   },
   "11488333": {
@@ -1083,6 +1215,10 @@
     "text": "その後どうなるの？",
     "sourceAuthor": "small_snow"
   },
+  "11582360": {
+    "text": "カードで払いたいんですが。",
+    "sourceAuthor": "small_snow"
+  },
   "11632729": {
     "text": "うっそ〜！絶対うそだよ！",
     "sourceAuthor": "hidemat"
@@ -1095,6 +1231,10 @@
     "text": "昨日、友達が会いに来てくれたんだ。",
     "sourceAuthor": "small_snow"
   },
+  "11700536": {
+    "text": "こちらがお探しのものでしょうか？",
+    "sourceAuthor": "bunbuku"
+  },
   "11735233": {
     "text": "とても美味しかったです。",
     "sourceAuthor": "small_snow"
@@ -1103,12 +1243,24 @@
     "text": "月曜日は行けないんです。",
     "sourceAuthor": "bunbuku"
   },
+  "11890833": {
+    "text": "現金でも大丈夫ですか？",
+    "sourceAuthor": "small_snow"
+  },
   "12024147": {
     "text": "レシートはいりません。",
     "sourceAuthor": "small_snow"
   },
+  "12163584": {
+    "text": "プレゼント用に包んでもらえますか？",
+    "sourceAuthor": "small_snow"
+  },
   "12167707": {
     "text": "あっ、びっくりした。",
+    "sourceAuthor": "small_snow"
+  },
+  "12167715": {
+    "text": "またのご来店をお待ちしております。",
     "sourceAuthor": "small_snow"
   },
   "12221723": {
@@ -1194,6 +1346,18 @@
   "13428548": {
     "text": "驚いたよ！",
     "sourceAuthor": "demiurgastel"
+  },
+  "13440763": {
+    "text": "他のサイズもございますので、お声がけください。",
+    "sourceAuthor": "Gardenia"
+  },
+  "13479171": {
+    "text": "カードでお支払いの場合は、こちらのレジへどうぞ。",
+    "sourceAuthor": "Gardenia"
+  },
+  "13479241": {
+    "text": "こちら、お客様控えになります。",
+    "sourceAuthor": "Gardenia"
   },
   "13523728": {
     "text": "久しぶり！",
