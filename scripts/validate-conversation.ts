@@ -225,7 +225,7 @@ async function main(): Promise<void> {
   const paths = process.argv.slice(2).filter((path) => path !== "--verify-remote");
   const files = paths.length > 0
     ? paths
-    : (await readdir("data/conversation")).filter((file) => file.endsWith(".json")).map((file) => join("data/conversation", file));
+    : (await readdir("data/conversation")).filter((file) => file.endsWith(".json") && !file.startsWith(".")).map((file) => join("data/conversation", file));
   if (files.length === 0) throw new Error("No conversation seed files found");
   const documents = await Promise.all(files.map(async (path) => parseConversationSeed(JSON.parse(await readFile(path, "utf8")) as unknown)));
   validateConversationDocuments(documents);
