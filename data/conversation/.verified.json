@@ -15,6 +15,14 @@
     "text": "またお越しください。",
     "sourceAuthor": "mookeee"
   },
+  "76792": {
+    "text": "カレーはまあまあでした。",
+    "sourceAuthor": "mookeee"
+  },
+  "78157": {
+    "text": "旅行は楽しかったですか。",
+    "sourceAuthor": "tommy_san"
+  },
   "78645": {
     "text": "来週の日曜なら空いてます。",
     "sourceAuthor": "bunbuku"
@@ -26,6 +34,10 @@
   "122364": {
     "text": "日本語がお上手ですね。",
     "sourceAuthor": "bunbuku"
+  },
+  "122379": {
+    "text": "日本をどう思いますか。",
+    "sourceAuthor": "arnab"
   },
   "122452": {
     "text": "日本は初めてですか。",
@@ -59,6 +71,10 @@
     "text": "趣味は何ですか。",
     "sourceAuthor": "tommy__san"
   },
+  "152203": {
+    "text": "私もとても楽しかったです。",
+    "sourceAuthor": "bunbuku"
+  },
   "153093": {
     "text": "私は病院で働いています。",
     "sourceAuthor": "bunbuku"
@@ -66,6 +82,10 @@
   "155923": {
     "text": "私は商社で働いています。",
     "sourceAuthor": "tommy__san"
+  },
+  "158373": {
+    "text": "私は映画が好きです。",
+    "sourceAuthor": "tommy_san"
   },
   "164201": {
     "text": "私のコーヒーには砂糖を入れないでください。",
@@ -95,6 +115,10 @@
     "text": "月曜日は都合が悪いんです。",
     "sourceAuthor": "bunbuku"
   },
+  "175785": {
+    "text": "結構面白い。",
+    "sourceAuthor": "small_snow"
+  },
   "179494": {
     "text": "空いてる席はありますか。",
     "sourceAuthor": "bunbuku"
@@ -105,6 +129,10 @@
   },
   "184550": {
     "text": "覚えてる？",
+    "sourceAuthor": "small_snow"
+  },
+  "185076": {
+    "text": "海外には行ったことがありません。",
     "sourceAuthor": "small_snow"
   },
   "185455": {
@@ -159,8 +187,20 @@
     "text": "ビニール袋に入れてください。",
     "sourceAuthor": "small_snow"
   },
+  "198336": {
+    "text": "はい、とても好きです。",
+    "sourceAuthor": "small_snow"
+  },
   "198378": {
     "text": "はい、行きましょう。",
+    "sourceAuthor": "small_snow"
+  },
+  "200548": {
+    "text": "とても良かったです。また行きたいですね。",
+    "sourceAuthor": "mookeee"
+  },
+  "200632": {
+    "text": "とても楽しかったです。",
     "sourceAuthor": "small_snow"
   },
   "200771": {
@@ -195,6 +235,10 @@
     "text": "全部で三千円です。",
     "sourceAuthor": "KK_kaku_"
   },
+  "213817": {
+    "text": "そうは思いません。",
+    "sourceAuthor": "Ianagisacos"
+  },
   "214165": {
     "text": "もう一度お願いします。",
     "sourceAuthor": "bunbuku"
@@ -217,6 +261,10 @@
   },
   "214729": {
     "text": "すごいじゃん。",
+    "sourceAuthor": "bunbuku"
+  },
+  "216819": {
+    "text": "サッカーが一番好きです。",
     "sourceAuthor": "bunbuku"
   },
   "217064": {
@@ -295,6 +343,10 @@
     "text": "ええ、喜んで。",
     "sourceAuthor": "small_snow"
   },
+  "228006": {
+    "text": "ええ、わたしもそう思います。",
+    "sourceAuthor": "bunbuku"
+  },
   "228460": {
     "text": "いらっしゃいませ、何名様ですか。",
     "sourceAuthor": "small_snow"
@@ -339,6 +391,10 @@
     "text": "久しぶりだね。",
     "sourceAuthor": "bunbuku"
   },
+  "431679": {
+    "text": "京都に行ったことありますか？",
+    "sourceAuthor": "aliene"
+  },
   "507553": {
     "text": "失礼します。",
     "sourceAuthor": "orzage"
@@ -363,6 +419,14 @@
     "text": "お疲れ様でした。",
     "sourceAuthor": "arihato"
   },
+  "778160": {
+    "text": "日本語がとても好きです。",
+    "sourceAuthor": "windra"
+  },
+  "921333": {
+    "text": "外国に行ったことがあります。",
+    "sourceAuthor": "riccioberto"
+  },
   "926739": {
     "text": "お願いします。",
     "sourceAuthor": "riccioberto"
@@ -379,6 +443,10 @@
     "text": "すみません、注文お願いします。",
     "sourceAuthor": "mookeee"
   },
+  "1035020": {
+    "text": "いつかフランスに行ってみたいです。",
+    "sourceAuthor": "bunbuku"
+  },
   "1059896": {
     "text": "今日の夜、空いてる？",
     "sourceAuthor": "bunbuku"
@@ -386,6 +454,10 @@
   "1064324": {
     "text": "ちょっと待って。",
     "sourceAuthor": "bunbuku"
+  },
+  "1125025": {
+    "text": "旅行は好きですか？",
+    "sourceAuthor": "mookeee"
   },
   "1166625": {
     "text": "うん。",
@@ -395,6 +467,10 @@
     "text": "ええ。",
     "sourceAuthor": "bunbuku"
   },
+  "1168408": {
+    "text": "日本の食べ物を食べたことがありますか。",
+    "sourceAuthor": "bunbuku"
+  },
   "1189862": {
     "text": "私は日本語が少し話せますが、まだ上手じゃありません。",
     "sourceAuthor": "FiRez"
@@ -402,6 +478,10 @@
   "1483688": {
     "text": "こちらへどうぞ。",
     "sourceAuthor": "marshmallowcat"
+  },
+  "1528157": {
+    "text": "ローマに行ったことがあります。",
+    "sourceAuthor": "bunbuku"
   },
   "1531875": {
     "text": "ありがとう！",
@@ -415,6 +495,10 @@
     "text": "コーヒーを一杯とクロワッサンをひとつ下さい。",
     "sourceAuthor": "Meow"
   },
+  "1680694": {
+    "text": "どうでしたか？",
+    "sourceAuthor": "aka_aj"
+  },
   "1937825": {
     "text": "大丈夫ですか。",
     "sourceAuthor": "agro1986"
@@ -423,9 +507,17 @@
     "text": "楽しみにしています。",
     "sourceAuthor": "bunbuku"
   },
+  "2137193": {
+    "text": "ビールはあまり好きではありません。",
+    "sourceAuthor": "bunbuku"
+  },
   "2154940": {
     "text": "以上です。",
     "sourceAuthor": "bunbuku"
+  },
+  "2179000": {
+    "text": "日本に行ったことがありますか。",
+    "sourceAuthor": "abbymae111"
   },
   "2196376": {
     "text": "どうしたの。",
@@ -451,6 +543,10 @@
     "text": "なるほど。",
     "sourceAuthor": "hutian"
   },
+  "2374996": {
+    "text": "見たことがあります。",
+    "sourceAuthor": "wakatyann630"
+  },
   "2436329": {
     "text": "六時はどうですか。",
     "sourceAuthor": "fgreco"
@@ -463,6 +559,10 @@
     "text": "起きてる？",
     "sourceAuthor": "tommy_san"
   },
+  "2724966": {
+    "text": "沖縄に行ったことはありますか？",
+    "sourceAuthor": "tommy_san"
+  },
   "2744751": {
     "text": "そうなんですか？",
     "sourceAuthor": "tommy_san"
@@ -470,6 +570,10 @@
   "2929527": {
     "text": "すみません、何とおっしゃいましたか？",
     "sourceAuthor": "tommy_san"
+  },
+  "2976202": {
+    "text": "読書がとても好きです。",
+    "sourceAuthor": "Fukuko"
   },
   "3024516": {
     "text": "今週末は暇？",
@@ -559,6 +663,14 @@
     "text": "手伝おうか？",
     "sourceAuthor": "tommy_san"
   },
+  "4002020": {
+    "text": "私もそう思います。",
+    "sourceAuthor": "oliviya"
+  },
+  "4270214": {
+    "text": "旅行はどうでしたか？",
+    "sourceAuthor": "tommy_san"
+  },
   "4562480": {
     "text": "もう一度言ってください。",
     "sourceAuthor": "Kiraness"
@@ -575,6 +687,14 @@
     "text": "何名様ですか。",
     "sourceAuthor": "wells"
   },
+  "4751193": {
+    "text": "旅行どうでしたか？",
+    "sourceAuthor": "tommy_san"
+  },
+  "4751197": {
+    "text": "どうでした、旅行は？",
+    "sourceAuthor": "tommy_san"
+  },
   "5762757": {
     "text": "何時に出る？",
     "sourceAuthor": "daifons"
@@ -590,6 +710,10 @@
   "5955970": {
     "text": "とんでもありません！",
     "sourceAuthor": "tatoebane"
+  },
+  "6137181": {
+    "text": "私は食べたことがありません。",
+    "sourceAuthor": "Sethlang"
   },
   "8504258": {
     "text": "いいね。",
@@ -711,6 +835,10 @@
     "text": "笑っちゃった。",
     "sourceAuthor": "small_snow"
   },
+  "10089482": {
+    "text": "北海道には一度、行ったことがあります。",
+    "sourceAuthor": "small_snow"
+  },
   "10100070": {
     "text": "ごちそうさまでした。",
     "sourceAuthor": "small_snow"
@@ -739,6 +867,10 @@
     "text": "もっと大きな声でお願いします。",
     "sourceAuthor": "small_snow"
   },
+  "10607397": {
+    "text": "麺類が好きです。",
+    "sourceAuthor": "small_snow"
+  },
   "10614923": {
     "text": "冗談だよね？",
     "sourceAuthor": "small_snow"
@@ -755,12 +887,20 @@
     "text": "ごめん、今は無理。",
     "sourceAuthor": "small_snow"
   },
+  "10668790": {
+    "text": "香港には一度行ったことがありますよ。",
+    "sourceAuthor": "small_snow"
+  },
   "10756859": {
     "text": "学生です。",
     "sourceAuthor": "small_snow"
   },
   "10899752": {
     "text": "はい、分かりました。",
+    "sourceAuthor": "small_snow"
+  },
+  "10899840": {
+    "text": "去年、友達と海外旅行に行きました。",
     "sourceAuthor": "small_snow"
   },
   "10901614": {
@@ -777,6 +917,10 @@
   },
   "10918370": {
     "text": "どうぞよろしくお願いします。",
+    "sourceAuthor": "small_snow"
+  },
+  "10952563": {
+    "text": "綺麗だと思います。",
     "sourceAuthor": "small_snow"
   },
   "11001436": {
@@ -823,6 +967,10 @@
     "text": "別々でお願いします。",
     "sourceAuthor": "small_snow"
   },
+  "11735233": {
+    "text": "とても美味しかったです。",
+    "sourceAuthor": "small_snow"
+  },
   "11744821": {
     "text": "月曜日は行けないんです。",
     "sourceAuthor": "bunbuku"
@@ -831,12 +979,24 @@
     "text": "レシートはいりません。",
     "sourceAuthor": "small_snow"
   },
+  "12221723": {
+    "text": "海外旅行に行ったことはありますか？",
+    "sourceAuthor": "small_snow"
+  },
   "12304961": {
     "text": "何時がいい？",
     "sourceAuthor": "small_snow"
   },
   "12593262": {
     "text": "韓国で生まれました。",
+    "sourceAuthor": "small_snow"
+  },
+  "12593296": {
+    "text": "去年、初めてパリに行きました。",
+    "sourceAuthor": "small_snow"
+  },
+  "12754558": {
+    "text": "宿泊先はどうでしたか？",
     "sourceAuthor": "small_snow"
   },
   "12889995": {
@@ -855,6 +1015,14 @@
     "text": "ううん。",
     "sourceAuthor": "atitarev"
   },
+  "13254274": {
+    "text": "音楽が大好きです。",
+    "sourceAuthor": "atitarev"
+  },
+  "13254283": {
+    "text": "音楽が好きです。",
+    "sourceAuthor": "atitarev"
+  },
   "13523728": {
     "text": "久しぶり！",
     "sourceAuthor": "LeviHighway"
@@ -866,6 +1034,10 @@
   "13714023": {
     "text": "領収書をください。",
     "sourceAuthor": "GreySquirrel"
+  },
+  "13753496": {
+    "text": "日本が好きですか？",
+    "sourceAuthor": "TanukiKun"
   },
   "13940407": {
     "text": "ホテルで働いています。",
