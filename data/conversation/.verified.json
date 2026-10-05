@@ -15,6 +15,10 @@
     "text": "またお越しください。",
     "sourceAuthor": "mookeee"
   },
+  "78645": {
+    "text": "来週の日曜なら空いてます。",
+    "sourceAuthor": "bunbuku"
+  },
   "122305": {
     "text": "日本食はお好きですか。",
     "sourceAuthor": "bunbuku"
@@ -71,8 +75,24 @@
     "text": "私にも同じものをください。",
     "sourceAuthor": "bunbuku"
   },
+  "169347": {
+    "text": "散歩しませんか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "172084": {
+    "text": "今度また誘ってよ。",
+    "sourceAuthor": "bunbuku"
+  },
+  "172144": {
+    "text": "今度の土曜日はどうですか。",
+    "sourceAuthor": "bunbuku"
+  },
   "175045": {
     "text": "元気？",
+    "sourceAuthor": "bunbuku"
+  },
+  "175593": {
+    "text": "月曜日は都合が悪いんです。",
     "sourceAuthor": "bunbuku"
   },
   "179494": {
@@ -91,17 +111,37 @@
     "text": "会えて嬉しいよ。",
     "sourceAuthor": "bunbuku"
   },
+  "187448": {
+    "text": "何時にどこで待ち合わせする？",
+    "sourceAuthor": "bunbuku"
+  },
+  "187455": {
+    "text": "何時にしましょうか。",
+    "sourceAuthor": "small_snow"
+  },
   "189286": {
     "text": "映画見に行かない？",
     "sourceAuthor": "mookeee"
+  },
+  "189297": {
+    "text": "映画を見に行きませんか。",
+    "sourceAuthor": "bunbuku"
   },
   "190532": {
     "text": "一緒に行かない？",
     "sourceAuthor": "bunbuku"
   },
+  "190671": {
+    "text": "一休みしませんか。",
+    "sourceAuthor": "tommy_san"
+  },
   "191216": {
     "text": "以上ですか？",
     "sourceAuthor": "small_snow"
+  },
+  "191499": {
+    "text": "悪いけど行けないよ。",
+    "sourceAuthor": "bunbuku"
   },
   "194081": {
     "text": "もう少し待ってください。",
@@ -119,6 +159,10 @@
     "text": "ビニール袋に入れてください。",
     "sourceAuthor": "small_snow"
   },
+  "198378": {
+    "text": "はい、行きましょう。",
+    "sourceAuthor": "small_snow"
+  },
   "200771": {
     "text": "どちらのご出身ですか？",
     "sourceAuthor": "tommy_san"
@@ -127,9 +171,21 @@
     "text": "どちらにお住まいですか。",
     "sourceAuthor": "bunbuku"
   },
+  "200952": {
+    "text": "どこで待ち合わせしようか。",
+    "sourceAuthor": "tommy_san"
+  },
+  "200953": {
+    "text": "どこで待ち合わせしましょうか。",
+    "sourceAuthor": "bunbuku"
+  },
   "201705": {
     "text": "どういう意味ですか？",
     "sourceAuthor": "tommy_san"
+  },
+  "202713": {
+    "text": "ちょっと無理ですね。",
+    "sourceAuthor": "bunbuku"
   },
   "202737": {
     "text": "ちょっと待ってて。",
@@ -166,6 +222,10 @@
   "217064": {
     "text": "ご注文はお決まりですか？",
     "sourceAuthor": "tommy_san"
+  },
+  "217209": {
+    "text": "ご一緒に食事でもしませんか。",
+    "sourceAuthor": "bunbuku"
   },
   "222064": {
     "text": "この言葉はどういう意味ですか。",
@@ -231,8 +291,16 @@
     "text": "おすすめは何ですか。",
     "sourceAuthor": "bunbuku"
   },
+  "228005": {
+    "text": "ええ、喜んで。",
+    "sourceAuthor": "small_snow"
+  },
   "228460": {
     "text": "いらっしゃいませ、何名様ですか。",
+    "sourceAuthor": "small_snow"
+  },
+  "228624": {
+    "text": "いつ都合がいいですか。",
     "sourceAuthor": "small_snow"
   },
   "229316": {
@@ -311,6 +379,10 @@
     "text": "すみません、注文お願いします。",
     "sourceAuthor": "mookeee"
   },
+  "1059896": {
+    "text": "今日の夜、空いてる？",
+    "sourceAuthor": "bunbuku"
+  },
   "1064324": {
     "text": "ちょっと待って。",
     "sourceAuthor": "bunbuku"
@@ -347,6 +419,10 @@
     "text": "大丈夫ですか。",
     "sourceAuthor": "agro1986"
   },
+  "2041004": {
+    "text": "楽しみにしています。",
+    "sourceAuthor": "bunbuku"
+  },
   "2154940": {
     "text": "以上です。",
     "sourceAuthor": "bunbuku"
@@ -375,6 +451,10 @@
     "text": "なるほど。",
     "sourceAuthor": "hutian"
   },
+  "2436329": {
+    "text": "六時はどうですか。",
+    "sourceAuthor": "fgreco"
+  },
   "2519008": {
     "text": "すみません、聞こえませんでした。",
     "sourceAuthor": "tommy_san"
@@ -393,6 +473,10 @@
   },
   "3024516": {
     "text": "今週末は暇？",
+    "sourceAuthor": "tommy_san"
+  },
+  "3126037": {
+    "text": "明日楽しみだな。",
     "sourceAuthor": "tommy_san"
   },
   "3190694": {
@@ -429,6 +513,10 @@
   },
   "3452051": {
     "text": "お勘定お願いします。",
+    "sourceAuthor": "tommy_san"
+  },
+  "3452060": {
+    "text": "今日の夜予定ある？",
     "sourceAuthor": "tommy_san"
   },
   "3495032": {
@@ -531,13 +619,25 @@
     "text": "で、あなたは？",
     "sourceAuthor": "small_snow"
   },
+  "8814342": {
+    "text": "明日の夜って空いてる？",
+    "sourceAuthor": "bunbuku"
+  },
   "8842211": {
     "text": "明日は月曜だよね。",
+    "sourceAuthor": "small_snow"
+  },
+  "8875105": {
+    "text": "お茶でもどうですか？",
     "sourceAuthor": "small_snow"
   },
   "8886173": {
     "text": "少々お待ちください。",
     "sourceAuthor": "small_snow"
+  },
+  "8969092": {
+    "text": "いつなら空いてる？",
+    "sourceAuthor": "bunbuku"
   },
   "9041998": {
     "text": "語学学校で働いています。",
@@ -557,6 +657,10 @@
   },
   "9203476": {
     "text": "こちらでお召し上がりですか？それともお持ち帰りですか？",
+    "sourceAuthor": "bunbuku"
+  },
+  "9420495": {
+    "text": "夜ご飯、食べに行かない？",
     "sourceAuthor": "bunbuku"
   },
   "9499960": {
@@ -583,6 +687,22 @@
     "text": "はじめまして。",
     "sourceAuthor": "Sim5634"
   },
+  "9776974": {
+    "text": "金曜日はどうですか？",
+    "sourceAuthor": "small_snow"
+  },
+  "9776980": {
+    "text": "月曜日はどうですか？",
+    "sourceAuthor": "small_snow"
+  },
+  "9961678": {
+    "text": "今日の午後は空いてますか？",
+    "sourceAuthor": "small_snow"
+  },
+  "9964582": {
+    "text": "少し休憩しませんか？",
+    "sourceAuthor": "small_snow"
+  },
   "10000276": {
     "text": "その色いいね。",
     "sourceAuthor": "small_snow"
@@ -599,8 +719,16 @@
     "text": "濡れちゃった。",
     "sourceAuthor": "small_snow"
   },
+  "10455088": {
+    "text": "駅で待ち合わせよう。",
+    "sourceAuthor": "bunbuku"
+  },
   "10455178": {
     "text": "駅で待ち合わせしようね。",
+    "sourceAuthor": "small_snow"
+  },
+  "10574111": {
+    "text": "コーヒー飲みに行かない？",
     "sourceAuthor": "small_snow"
   },
   "10602871": {
@@ -621,6 +749,10 @@
   },
   "10647275": {
     "text": "レシートをください。",
+    "sourceAuthor": "small_snow"
+  },
+  "10657668": {
+    "text": "ごめん、今は無理。",
     "sourceAuthor": "small_snow"
   },
   "10756859": {
@@ -671,6 +803,10 @@
     "text": "意味が分かりませんでした。",
     "sourceAuthor": "small_snow"
   },
+  "11451491": {
+    "text": "何時がご都合よろしいですか？",
+    "sourceAuthor": "bunbuku"
+  },
   "11488333": {
     "text": "こちらへはお仕事で？それとも観光ですか？",
     "sourceAuthor": "bunbuku"
@@ -687,8 +823,16 @@
     "text": "別々でお願いします。",
     "sourceAuthor": "small_snow"
   },
+  "11744821": {
+    "text": "月曜日は行けないんです。",
+    "sourceAuthor": "bunbuku"
+  },
   "12024147": {
     "text": "レシートはいりません。",
+    "sourceAuthor": "small_snow"
+  },
+  "12304961": {
+    "text": "何時がいい？",
     "sourceAuthor": "small_snow"
   },
   "12593262": {
@@ -714,6 +858,10 @@
   "13523728": {
     "text": "久しぶり！",
     "sourceAuthor": "LeviHighway"
+  },
+  "13640835": {
+    "text": "いいですね。",
+    "sourceAuthor": "6b"
   },
   "13714023": {
     "text": "領収書をください。",

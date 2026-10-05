@@ -1,0 +1,734 @@
+{
+  "units": [
+    {
+      "ord": 11,
+      "titleKo": "약속 잡기",
+      "goalKo": "약속을 제안하고, 날짜·시간·장소를 정하고, 안 되는 제안은 부드럽게 거절한다."
+    }
+  ],
+  "chunks": [
+    {
+      "key": "tatoeba-189297-say",
+      "unitOrd": 11,
+      "ord": 1,
+      "text": "映画を見に行きませんか。",
+      "kana": "えいがをみにいきませんか。",
+      "cueKo": "직장 동료나 지인에게 영화 보러 가자고 정중하게 권하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #189297",
+      "audioKey": "c/9b5faae19aa09f7d"
+    },
+    {
+      "key": "tatoeba-169347-say",
+      "unitOrd": 11,
+      "ord": 2,
+      "text": "散歩しませんか。",
+      "kana": "さんぽしませんか。",
+      "cueKo": "같이 산책하자고 정중하게 권하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #169347",
+      "audioKey": "c/b7bbca71c407aed5"
+    },
+    {
+      "key": "tatoeba-9964582-say",
+      "unitOrd": 11,
+      "ord": 3,
+      "text": "少し休憩しませんか？",
+      "kana": "すこしきゅうけいしませんか？",
+      "cueKo": "같이 일하던 사람에게 잠깐 쉬자고 권하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9964582",
+      "audioKey": "c/24ca374a1dda510e"
+    },
+    {
+      "key": "tatoeba-8875105-say",
+      "unitOrd": 11,
+      "ord": 4,
+      "text": "お茶でもどうですか？",
+      "kana": "おちゃでもどうですか？",
+      "cueKo": "차라도 한잔 하자고 부드럽게 권하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8875105",
+      "audioKey": "c/be867e0000bc9388"
+    },
+    {
+      "key": "tatoeba-172144-say",
+      "unitOrd": 11,
+      "ord": 5,
+      "text": "今度の土曜日はどうですか。",
+      "kana": "こんどのどようびはどうですか。",
+      "cueKo": "다음 토요일은 어떠냐고 날짜 제안하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #172144",
+      "audioKey": "c/78fd22d51316f8d7"
+    },
+    {
+      "key": "tatoeba-2436329-say",
+      "unitOrd": 11,
+      "ord": 6,
+      "text": "六時はどうですか。",
+      "kana": "ろくじはどうですか。",
+      "cueKo": "여섯 시는 어떠냐고 시간 제안하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2436329",
+      "audioKey": "c/6fa906f1df43d977"
+    },
+    {
+      "key": "tatoeba-228624-say",
+      "unitOrd": 11,
+      "ord": 7,
+      "text": "いつ都合がいいですか。",
+      "kana": "いつつごうがいいですか。",
+      "cueKo": "상대에게 언제 시간이 괜찮은지 정중하게 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #228624",
+      "audioKey": "c/27fdc51c0d95c18a"
+    },
+    {
+      "key": "tatoeba-9961678-say",
+      "unitOrd": 11,
+      "ord": 8,
+      "text": "今日の午後は空いてますか？",
+      "kana": "きょうのごごはあいてますか？",
+      "cueKo": "오늘 오후에 시간이 되는지 정중하게 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9961678",
+      "audioKey": "c/bc815772f82f8cc0"
+    },
+    {
+      "key": "tatoeba-78645-say",
+      "unitOrd": 11,
+      "ord": 9,
+      "text": "来週の日曜なら空いてます。",
+      "kana": "らいしゅうのにちようならあいてます。",
+      "cueKo": "다음 주 일요일이면 시간이 된다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #78645",
+      "audioKey": "c/926136c2341952f0"
+    },
+    {
+      "key": "tatoeba-200953-say",
+      "unitOrd": 11,
+      "ord": 10,
+      "text": "どこで待ち合わせしましょうか。",
+      "kana": "どこでまちあわせしましょうか。",
+      "cueKo": "어디서 만날지 정중하게 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #200953",
+      "audioKey": "c/95b41ebb23f1ccf0"
+    },
+    {
+      "key": "tatoeba-187455-say",
+      "unitOrd": 11,
+      "ord": 11,
+      "text": "何時にしましょうか。",
+      "kana": "なんじにしましょうか。",
+      "cueKo": "몇 시로 할지 정중하게 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #187455",
+      "audioKey": "c/66a0f8c096c2eec7"
+    },
+    {
+      "key": "tatoeba-175593-say",
+      "unitOrd": 11,
+      "ord": 12,
+      "text": "月曜日は都合が悪いんです。",
+      "kana": "げつようびはつごうがわるいんです。",
+      "cueKo": "제안받은 월요일은 곤란하다고 부드럽게 거절하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #175593",
+      "audioKey": "c/e96c5cc0fbd8a78d"
+    },
+    {
+      "key": "tatoeba-11744821-say",
+      "unitOrd": 11,
+      "ord": 13,
+      "text": "月曜日は行けないんです。",
+      "kana": "げつようびはいけないんです。",
+      "cueKo": "월요일은 갈 수 없다고 부드럽게 거절하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11744821",
+      "audioKey": "c/41ac851ef5b1612a"
+    },
+    {
+      "key": "tatoeba-202713-say",
+      "unitOrd": 11,
+      "ord": 14,
+      "text": "ちょっと無理ですね。",
+      "kana": "ちょっとむりですね。",
+      "cueKo": "제안이 어렵다고 완곡하게 거절하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #202713",
+      "audioKey": "c/46c1b3a6bc588b70"
+    },
+    {
+      "key": "tatoeba-198378-say",
+      "unitOrd": 11,
+      "ord": 15,
+      "text": "はい、行きましょう。",
+      "kana": "はい、いきましょう。",
+      "cueKo": "권유에 '네, 가요' 하고 수락하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #198378",
+      "audioKey": "c/a1c593c882ab0610"
+    },
+    {
+      "key": "tatoeba-228005-say",
+      "unitOrd": 11,
+      "ord": 16,
+      "text": "ええ、喜んで。",
+      "kana": "ええ、よろこんで。",
+      "cueKo": "초대에 '네, 기꺼이' 하고 수락하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #228005",
+      "audioKey": "c/ac8289953139522e"
+    },
+    {
+      "key": "tatoeba-13640835-say",
+      "unitOrd": 11,
+      "ord": 17,
+      "text": "いいですね。",
+      "kana": "いいですね。",
+      "cueKo": "제안에 '좋네요' 하고 호응하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13640835",
+      "audioKey": "c/650c6e918c039660"
+    },
+    {
+      "key": "tatoeba-2041004-say",
+      "unitOrd": 11,
+      "ord": 18,
+      "text": "楽しみにしています。",
+      "kana": "たのしみにしています。",
+      "cueKo": "약속을 정한 뒤 '기대하고 있겠습니다' 하고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2041004",
+      "audioKey": "c/267d5af11e20ed14"
+    },
+    {
+      "key": "tatoeba-3247983-say",
+      "unitOrd": 11,
+      "ord": 19,
+      "text": "今週末空いてる？",
+      "kana": "こんしゅうまつあいてる？",
+      "cueKo": "친구에게 이번 주말에 시간 되냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3247983",
+      "audioKey": "c/9569c4262a443f66"
+    },
+    {
+      "key": "tatoeba-8814342-say",
+      "unitOrd": 11,
+      "ord": 20,
+      "text": "明日の夜って空いてる？",
+      "kana": "あしたのよるってあいてる？",
+      "cueKo": "친구에게 내일 밤에 시간 되냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8814342",
+      "audioKey": "c/3a853105acc55e59"
+    },
+    {
+      "key": "tatoeba-8969092-say",
+      "unitOrd": 11,
+      "ord": 21,
+      "text": "いつなら空いてる？",
+      "kana": "いつならあいてる？",
+      "cueKo": "친구에게 언제라면 시간 되냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8969092",
+      "audioKey": "c/223e260bd59a3b68"
+    },
+    {
+      "key": "tatoeba-9420495-say",
+      "unitOrd": 11,
+      "ord": 22,
+      "text": "夜ご飯、食べに行かない？",
+      "kana": "よるごはん、たべにいかない？",
+      "cueKo": "친구에게 저녁 먹으러 가자고 권하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9420495",
+      "audioKey": "c/511f4b5ca42169e8"
+    },
+    {
+      "key": "tatoeba-10574111-say",
+      "unitOrd": 11,
+      "ord": 23,
+      "text": "コーヒー飲みに行かない？",
+      "kana": "コーヒーのみにいかない？",
+      "cueKo": "친구에게 커피 마시러 가자고 권하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10574111",
+      "audioKey": "c/2772b5ac12948d08"
+    },
+    {
+      "key": "tatoeba-200952-say",
+      "unitOrd": 11,
+      "ord": 24,
+      "text": "どこで待ち合わせしようか。",
+      "kana": "どこでまちあわせしようか。",
+      "cueKo": "친구에게 어디서 만날지 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #200952",
+      "audioKey": "c/760092f9a8092fc9"
+    },
+    {
+      "key": "tatoeba-187448-say",
+      "unitOrd": 11,
+      "ord": 25,
+      "text": "何時にどこで待ち合わせする？",
+      "kana": "なんじにどこでまちあわせする？",
+      "cueKo": "친구에게 몇 시에 어디서 만날지 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #187448",
+      "audioKey": "c/9bf936b136dbbd5f"
+    },
+    {
+      "key": "tatoeba-12304961-say",
+      "unitOrd": 11,
+      "ord": 26,
+      "text": "何時がいい？",
+      "kana": "なんじがいい？",
+      "cueKo": "친구에게 몇 시가 좋은지 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12304961",
+      "audioKey": "c/7e2aeb2827ec7558"
+    },
+    {
+      "key": "tatoeba-10455178-say",
+      "unitOrd": 11,
+      "ord": 27,
+      "text": "駅で待ち合わせしようね。",
+      "kana": "えきでまちあわせしようね。",
+      "cueKo": "역에서 만나자고 약속 정하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10455178",
+      "audioKey": "c/30d7134a3188ddbc"
+    },
+    {
+      "key": "tatoeba-191499-say",
+      "unitOrd": 11,
+      "ord": 28,
+      "text": "悪いけど行けないよ。",
+      "kana": "わるいけどいけないよ。",
+      "cueKo": "친구의 권유를 '미안하지만 못 가' 하고 거절하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #191499",
+      "audioKey": "c/ab49cc13b9587404"
+    },
+    {
+      "key": "tatoeba-10657668-say",
+      "unitOrd": 11,
+      "ord": 29,
+      "text": "ごめん、今は無理。",
+      "kana": "ごめん、いまはむり。",
+      "cueKo": "친구의 제안에 '미안, 지금은 안 돼' 하고 거절하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10657668",
+      "audioKey": "c/1f2307f6d66cd511"
+    },
+    {
+      "key": "tatoeba-3126037-say",
+      "unitOrd": 11,
+      "ord": 30,
+      "text": "明日楽しみだな。",
+      "kana": "あしたたのしみだな。",
+      "cueKo": "약속 전날 '내일 기대된다' 하고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3126037",
+      "audioKey": "c/22ae0dece11eb62f"
+    },
+    {
+      "key": "tatoeba-217209-hear",
+      "unitOrd": 11,
+      "ord": 31,
+      "text": "ご一緒に食事でもしませんか。",
+      "kana": "ごいっしょにしょくじでもしませんか。",
+      "cueKo": "상대가 식사나 같이 하자고 정중하게 권하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #217209",
+      "audioKey": "c/d6f30566b7f734c1"
+    },
+    {
+      "key": "tatoeba-9776980-hear",
+      "unitOrd": 11,
+      "ord": 32,
+      "text": "月曜日はどうですか？",
+      "kana": "げつようびはどうですか？",
+      "cueKo": "상대가 월요일은 어떠냐고 날짜를 제안하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9776980",
+      "audioKey": "c/5771152f88e4090b"
+    },
+    {
+      "key": "tatoeba-9776974-hear",
+      "unitOrd": 11,
+      "ord": 33,
+      "text": "金曜日はどうですか？",
+      "kana": "きんようびはどうですか？",
+      "cueKo": "상대가 금요일은 어떠냐고 다른 날짜를 제안하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9776974",
+      "audioKey": "c/c4a51aa8a3160f49"
+    },
+    {
+      "key": "tatoeba-187455-hear",
+      "unitOrd": 11,
+      "ord": 34,
+      "text": "何時にしましょうか。",
+      "kana": "なんじにしましょうか。",
+      "cueKo": "상대가 몇 시로 할지 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #187455",
+      "audioKey": "c/66a0f8c096c2eec7"
+    },
+    {
+      "key": "tatoeba-11451491-hear",
+      "unitOrd": 11,
+      "ord": 35,
+      "text": "何時がご都合よろしいですか？",
+      "kana": "なんじがごつごうよろしいですか？",
+      "cueKo": "상대가 몇 시가 괜찮은지 정중하게 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11451491",
+      "audioKey": "c/faf0a0b9c7c5b655"
+    },
+    {
+      "key": "tatoeba-8875105-hear",
+      "unitOrd": 11,
+      "ord": 36,
+      "text": "お茶でもどうですか？",
+      "kana": "おちゃでもどうですか？",
+      "cueKo": "상대가 차라도 한잔 하자고 권하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8875105",
+      "audioKey": "c/be867e0000bc9388"
+    },
+    {
+      "key": "tatoeba-190671-hear",
+      "unitOrd": 11,
+      "ord": 37,
+      "text": "一休みしませんか。",
+      "kana": "ひとやすみしませんか。",
+      "cueKo": "상대가 잠깐 쉬자고 권하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #190671",
+      "audioKey": "c/990b51a50d0e5947"
+    },
+    {
+      "key": "tatoeba-3024516-hear",
+      "unitOrd": 11,
+      "ord": 38,
+      "text": "今週末は暇？",
+      "kana": "こんしゅうまつはひま？",
+      "cueKo": "친구가 이번 주말에 시간 되냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3024516",
+      "audioKey": "c/b4dd5828f1733ae5"
+    },
+    {
+      "key": "tatoeba-2196376-hear",
+      "unitOrd": 11,
+      "ord": 39,
+      "text": "どうしたの。",
+      "kana": "どうしたの。",
+      "cueKo": "친구가 '무슨 일이야?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2196376",
+      "audioKey": "c/494f419a1729e8db"
+    },
+    {
+      "key": "tatoeba-8504258-hear",
+      "unitOrd": 11,
+      "ord": 40,
+      "text": "いいね。",
+      "kana": "いいね。",
+      "cueKo": "친구가 제안에 '좋네' 하고 답하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8504258",
+      "audioKey": "c/1dce15e2a3615bde"
+    },
+    {
+      "key": "tatoeba-10455088-hear",
+      "unitOrd": 11,
+      "ord": 41,
+      "text": "駅で待ち合わせよう。",
+      "kana": "えきでまちあわせよう。",
+      "cueKo": "친구가 역에서 만나자고 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10455088",
+      "audioKey": "c/1c0f7415b7d65052"
+    },
+    {
+      "key": "tatoeba-190532-hear",
+      "unitOrd": 11,
+      "ord": 42,
+      "text": "一緒に行かない？",
+      "kana": "いっしょにいかない？",
+      "cueKo": "친구가 같이 가자고 권하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #190532",
+      "audioKey": "c/87a343634659365a"
+    },
+    {
+      "key": "tatoeba-1059896-hear",
+      "unitOrd": 11,
+      "ord": 43,
+      "text": "今日の夜、空いてる？",
+      "kana": "きょうのよる、あいてる？",
+      "cueKo": "친구가 오늘 밤에 시간 되냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1059896",
+      "audioKey": "c/c22865cc4667f131"
+    },
+    {
+      "key": "tatoeba-3452060-hear",
+      "unitOrd": 11,
+      "ord": 44,
+      "text": "今日の夜予定ある？",
+      "kana": "きょうのよるよていある？",
+      "cueKo": "친구가 오늘 밤 약속이 있냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3452060",
+      "audioKey": "c/bb30006691fdeff2"
+    },
+    {
+      "key": "tatoeba-5762757-hear",
+      "unitOrd": 11,
+      "ord": 45,
+      "text": "何時に出る？",
+      "kana": "なんじにでる？",
+      "cueKo": "친구가 몇 시에 출발하냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5762757",
+      "audioKey": "c/b72c38e084995bf4"
+    },
+    {
+      "key": "tatoeba-172084-hear",
+      "unitOrd": 11,
+      "ord": 46,
+      "text": "今度また誘ってよ。",
+      "kana": "こんどまたさそってよ。",
+      "cueKo": "친구가 '다음에 또 불러줘' 하고 거절하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #172084",
+      "audioKey": "c/90953f99f40774e2"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 11,
+      "ord": 1,
+      "titleKo": "식사 약속 잡기",
+      "settingKo": "직장 동료가 같이 식사하자고 할 때",
+      "goalKo": "초대를 받아들이고, 안 되는 요일은 부드럽게 거절하고, 다른 요일과 시간을 정한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            31
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            16
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            12
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            34
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 11,
+      "ord": 2,
+      "titleKo": "친구와 저녁 약속",
+      "settingKo": "친구와 저녁에 만날 약속을 잡을 때",
+      "goalKo": "시간이 되는지 묻고, 저녁 먹으러 가자고 권하고, 만날 시간과 장소를 정한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            39
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            22
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            40
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            41
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            30
+          ]
+        }
+      ]
+    }
+  ]
+}
