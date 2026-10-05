@@ -4,21 +4,32 @@ import { applyMigrations } from "../test/schema";
 import { PIN_SESSION_MS } from "../auth/pin";
 import { routeApiRequest } from "./router";
 
+type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+
 function result<T>(results: T[], changes = 0): D1Result<T> {
   return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: changes, last_row_id: 0, changed_db: changes > 0, changes } };
 }
 
 function d1(sqlite: DatabaseSync): D1Database {
+  // SAFETY: test adapter implements only D1Database methods exercised by route tests.
   const adapter = Object.create(null) as D1Database;
   adapter.prepare = (query: string) => {
     let values: SQLInputValue[] = [];
+    // SAFETY: test adapter assigns every D1PreparedStatement method used by route tests.
     const statement = Object.create(null) as D1PreparedStatement;
     statement.bind = (...bound: unknown[]) => {
-      values = bound.map((value) => typeof value === "string" || typeof value === "number" || typeof value === "bigint" || value === null ? value : (() => { throw new Error(`Unsupported binding: ${String(value)}`); })());
+      // SAFETY: route tests bind only SQLite-compatible values.
+      values = bound as SQLInputValue[];
       return statement;
     };
-    statement.first = async <T>() => (sqlite.prepare(query).get(...values) as T | undefined) ?? null;
-    statement.all = async <T>() => result(sqlite.prepare(query).all(...values) as T[]);
+    statement.first = async <T>() => {
+      // SAFETY: SQL query fixture defines returned row shape T.
+      return (sqlite.prepare(query).get(...values) as T | undefined) ?? null;
+    };
+    statement.all = async <T>() => {
+      // SAFETY: SQL query fixture defines returned row shape T.
+      return result(sqlite.prepare(query).all(...values) as T[]);
+    };
     statement.run = async <T>() => result<T>([], Number(sqlite.prepare(query).run(...values).changes));
     return statement;
   };
@@ -29,14 +40,17 @@ function d1(sqlite: DatabaseSync): D1Database {
 function setup() {
   const sqlite = new DatabaseSync(":memory:");
   applyMigrations(sqlite);
+  // SAFETY: test Env requires only DB binding.
   return { sqlite, env: { DB: d1(sqlite) } as Env };
 }
 
 function request(path: string, method: "GET" | "HEAD" | "POST", headers?: HeadersInit) {
-  return new Request(`https://test${path}`, { method, headers, body: method === "POST" ? "{}" : undefined });
+  return method === "POST"
+    ? new Request(`https://test${path}`, { method, headers, body: "{}" })
+    : new Request(`https://test${path}`, { method, headers });
 }
 
-function jsonRequest(path: string, method: string, body: unknown, headers?: HeadersInit) {
+function jsonRequest(path: string, method: string, body: JsonValue, headers?: HeadersInit) {
   const requestHeaders = new Headers(headers);
   requestHeaders.set("content-type", "application/json");
   return new Request(`https://test${path}`, { method, headers: requestHeaders, body: JSON.stringify(body) });
@@ -92,11 +106,11 @@ describe("conversation read API", () => {
     const unitId = Number(sqlite.prepare("INSERT INTO conv_units (ord, title_ko, goal_ko) VALUES (1, '다시 묻기', '상대방에게 다시 말해 달라고 한다')").run().lastInsertRowid);
     const firstChunkId = Number(sqlite.prepare(`
       INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
-      VALUES (?, 1, 'もう一度お願いします', 'もういちどおねがいします', '다시 말해 달라고 하기', 'polite', 'say', 'corpus', 'Tatoeba #1', 'jp/c/0123456789abcdef.mp3')
+      VALUES (?, 1, 'もう一度お願いします', 'もういちどおねがいします', '다시 말해 달라고 하기', 'polite', 'say', 'corpus', 'Tatoeba #1', 'c/dfb32afcfa7aaf90')
     `).run(unitId).lastInsertRowid);
     const secondChunkId = Number(sqlite.prepare(`
       INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
-      VALUES (?, 2, 'はい', 'はい', '네라고 답하기', 'polite', 'hear', 'corpus', 'Tatoeba #2', 'jp/c/fedcba9876543210.mp3')
+      VALUES (?, 2, 'はい', 'はい', '네라고 답하기', 'polite', 'hear', 'corpus', 'Tatoeba #2', 'c/21c07834e26b2ae5')
     `).run(unitId).lastInsertRowid);
     const sceneId = Number(sqlite.prepare("INSERT INTO conv_scenes (unit_id, ord, title_ko, setting_ko, goal_ko) VALUES (?, 1, '카페', '카페 카운터', '다시 묻기')").run(unitId).lastInsertRowid);
     sqlite.prepare("INSERT INTO conv_scene_turns (scene_id, ord, speaker, chunk_ids) VALUES (?, 1, 'npc', ?)")
@@ -135,8 +149,8 @@ describe("conversation read API", () => {
     expect(detail).toEqual({
       unit: expectedUnit,
       chunks: [
-        { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "jp/c/0123456789abcdef.mp3", audioUrl: "/api/audio/jp/c/0123456789abcdef.mp3" },
-        { id: secondChunkId, unitId, ord: 2, ja: "はい", kana: "はい", koCue: "네라고 답하기", register: "polite", role: "hear", sourceKind: "corpus", sourceRef: "Tatoeba #2", audioKey: "jp/c/fedcba9876543210.mp3", audioUrl: "/api/audio/jp/c/fedcba9876543210.mp3" },
+        { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "c/dfb32afcfa7aaf90", audioUrl: "/api/audio/jp/c/dfb32afcfa7aaf90.mp3" },
+        { id: secondChunkId, unitId, ord: 2, ja: "はい", kana: "はい", koCue: "네라고 답하기", register: "polite", role: "hear", sourceKind: "corpus", sourceRef: "Tatoeba #2", audioKey: "c/21c07834e26b2ae5", audioUrl: "/api/audio/jp/c/21c07834e26b2ae5.mp3" },
       ],
       scenes: [{
         id: sceneId,
@@ -158,8 +172,8 @@ describe("conversation read API", () => {
 
     expect(await (await routeApiRequest(request("/api/conv/due", "GET"), fixture.env)).json()).toEqual({
       chunks: [
-        { id: secondChunkId, unitId, ord: 2, ja: "はい", kana: "はい", koCue: "네라고 답하기", register: "polite", role: "hear", sourceKind: "corpus", sourceRef: "Tatoeba #2", audioKey: "jp/c/fedcba9876543210.mp3", audioUrl: "/api/audio/jp/c/fedcba9876543210.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 1_000, correctCount: 0, totalCount: 0 },
-        { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "jp/c/0123456789abcdef.mp3", audioUrl: "/api/audio/jp/c/0123456789abcdef.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 500, correctCount: 0, totalCount: 0 },
+        { id: secondChunkId, unitId, ord: 2, ja: "はい", kana: "はい", koCue: "네라고 답하기", register: "polite", role: "hear", sourceKind: "corpus", sourceRef: "Tatoeba #2", audioKey: "c/21c07834e26b2ae5", audioUrl: "/api/audio/jp/c/21c07834e26b2ae5.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 1_000, correctCount: 0, totalCount: 0 },
+        { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "c/dfb32afcfa7aaf90", audioUrl: "/api/audio/jp/c/dfb32afcfa7aaf90.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 500, correctCount: 0, totalCount: 0 },
       ],
     });
   });
@@ -238,6 +252,7 @@ describe("bearer session tokens", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("set-cookie")).toBeNull();
     expect(response.headers.get("cache-control")).toBe("no-store");
+    // SAFETY: selected profile response is asserted as 200 by router contract.
     const body = await response.json() as { selected: true; sessionToken: string };
     expect(body).toEqual({ selected: true, sessionToken: expect.stringMatching(new RegExp(`^${profileId}\\.\\d+\\.[\\w-]+$`, "u")) });
     return body.sessionToken;
@@ -306,6 +321,7 @@ describe("bearer session tokens", () => {
 
     const unlocked = await routeApiRequest(jsonRequest("/api/pin/unlock", "POST", { profileId: secondId, pin: "1234" }, { "x-hanja-session-transport": "bearer" }), env, now);
     expect(unlocked.headers.get("set-cookie")).toBeNull();
+    // SAFETY: PIN unlock returns sessionToken on this successful test path.
     const { sessionToken } = await unlocked.json() as { sessionToken: string };
     expect((await routeApiRequest(new Request("https://test/api/profile", { headers: { authorization: `Bearer ${sessionToken}` } }), env, now)).status).toBe(200);
   });
@@ -344,6 +360,7 @@ describe("native app origins", () => {
       expect(selected.status).toBe(200);
       expect(selected.headers.get("set-cookie")).toBeNull();
       expect(selected.headers.get("access-control-allow-origin")).toBe(origin);
+      // SAFETY: native profile select returns sessionToken on this successful test path.
       const { sessionToken } = await selected.json() as { sessionToken: string };
 
       const patched = await routeApiRequest(jsonRequest("/api/settings", "PATCH", { dailyGoal: 60 }, nativeHeaders(origin, { authorization: `Bearer ${sessionToken}`, "x-hanja-profile-id": String(secondId) })), fixture.env, now + 1_000);

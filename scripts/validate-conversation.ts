@@ -3,6 +3,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
+import { conversationAudioKey } from "./generate-audio.ts";
 import {
   CONVERSATION_REGISTERS,
   CONVERSATION_ROLES,
@@ -53,10 +54,13 @@ function chunk(value: unknown, index: number): SeedConversationChunk {
   if (!CONVERSATION_REGISTERS.includes(register as SeedConversationChunk["register"])) throw new Error(`${path}.register: expected polite, casual, or keigo`);
   const role = string(input.role, `${path}.role`);
   if (!CONVERSATION_ROLES.includes(role as SeedConversationChunk["role"])) throw new Error(`${path}.role: expected say or hear`);
+  const text = string(input.text, `${path}.text`);
+  const audioKey = string(input.audioKey, `${path}.audioKey`);
+  if (audioKey !== `c/${conversationAudioKey(text)}`) throw new Error(`${path}.audioKey: must match conversation audio key`);
   return {
-    unitOrd: integer(input.unitOrd, `${path}.unitOrd`), ord: integer(input.ord, `${path}.ord`), text: string(input.text, `${path}.text`),
+    unitOrd: integer(input.unitOrd, `${path}.unitOrd`), ord: integer(input.ord, `${path}.ord`), text,
     kana: string(input.kana, `${path}.kana`), cueKo: string(input.cueKo, `${path}.cueKo`), register: register as SeedConversationChunk["register"],
-    role: role as SeedConversationChunk["role"], sourceKind, ...(sourceRef === undefined ? {} : { sourceRef }), audioKey: string(input.audioKey, `${path}.audioKey`),
+    role: role as SeedConversationChunk["role"], sourceKind, ...(sourceRef === undefined ? {} : { sourceRef }), audioKey,
   };
 }
 

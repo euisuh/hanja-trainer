@@ -5,6 +5,7 @@ import { useActiveProfile } from "../features/profile/ProfileContext";
 import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, type LocalRecordingState } from "../features/study/speech";
 import { apiClient, type ConversationUnitResponse } from "../lib/apiClient";
+import { apiUrl } from "../platform/apiUrl";
 import { onAppInactive } from "../platform/lifecycle";
 import "../features/conversation/talk.css";
 
@@ -122,7 +123,7 @@ export function TalkScreen() {
       {stage !== "cue" && <div className="talk-screen__answer">
         <strong lang="ja">{card.ja}</strong>
         <span lang="ja">{card.kana}</span>
-        <button className="talk-screen__audio" onClick={() => { setReplays((value) => value + 1); new Audio(card.audioUrl).play().catch(() => undefined); }} type="button">듣기 <kbd>Space</kbd></button>
+        <button className="talk-screen__audio" onClick={() => { setReplays((value) => value + 1); new Audio(apiUrl(card.audioUrl)).play().catch(() => undefined); }} type="button">듣기 <kbd>Space</kbd></button>
         <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} /></small>
       </div>}
       <div className="talk-screen__attempt">

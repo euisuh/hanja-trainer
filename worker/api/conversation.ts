@@ -83,7 +83,7 @@ function chunk(row: ChunkRow): ConversationChunkPayload {
     sourceKind: row.source_kind,
     sourceRef: row.source_ref,
     audioKey: row.audio_key,
-    audioUrl: `/api/audio/${row.audio_key}`,
+    audioUrl: `/api/audio/jp/${row.audio_key}.mp3`,
   };
 }
 
