@@ -14,9 +14,9 @@
 .settings-card > header { margin-bottom: var(--space-4); font-size: var(--text-sm); font-weight: var(--weight-strong); }
 .settings-card--action { border-color: var(--dashed); border-style: dashed; background: var(--panel); }
 .settings-card--action > header { color: var(--body); }
-.theme-picker > div, .sound-setting > div { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
-.theme-picker button, .sound-setting button { padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-weight: var(--weight-strong); }
-.theme-picker button[aria-pressed="true"], .sound-setting button[aria-pressed="true"] { border-color: var(--gold); background: var(--chip-bg); color: var(--ink); }
+.theme-picker > div, .appearance-picker > div, .sound-setting > div { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.theme-picker button, .appearance-picker button, .sound-setting button { padding: var(--space-4); border: 2px solid var(--ink); border-radius: var(--radius-nav-item); background: var(--card); color: var(--ink); cursor: pointer; font-weight: var(--weight-strong); }
+.theme-picker button[aria-pressed="true"], .appearance-picker button[aria-pressed="true"], .sound-setting button[aria-pressed="true"] { border-color: var(--gold); background: var(--chip-bg); color: var(--ink); }
 .sound-setting > small { display: block; margin-top: var(--space-3); color: var(--muted); font-size: var(--text-2xs); }
 .track-toggles > div, .placement-retest > div { display: flex; flex-direction: column; gap: var(--space-4); }
 .track-toggles > p, .placement-retest > p { margin: var(--space-4) 0 0; color: var(--muted); font-size: var(--text-xs); }

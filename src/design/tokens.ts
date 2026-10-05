@@ -64,12 +64,63 @@ const quietShadows = {
   nav: "0 1px 2px rgba(0,0,0,.04)",
 } as const;
 
+const notebookColors = {
+  ...defaultColors,
+  paper: "#FBF8F1", ink: "#1F2A44", body: "#1F2A44", muted: "#5C6478", faint: "#5C6478",
+  card: "#FBF8F1", panel: "#FBF8F1", chipBg: "#FFE58A", borderTan: "#D5E0EA", trackOff: "#D5E0EA",
+  dashed: "#D5E0EA", lockedBg: "#FFE58A", lockedBorder: "#D5E0EA", lockedText: "#5C6478",
+  gold: "#FFE58A", goldHover: "#FFE58A", goldText: "#1F2A44", flame: "#C2412D", flameText: "#C2412D", goalRemainder: "#D5E0EA", navMuted: "#D5E0EA",
+  calendarLow: "#D5E0EA", calendarMedium: "#2E6F5E", calendarHigh: "#1F2A44", shortcutDivider: "#1F2A44",
+  correct: "#2E6F5E", correctBg: "#FBF8F1", correctFg: "#2E6F5E", correctVivid: "#2E6F5E",
+  wrong: "#C2412D", wrongBg: "#FBF8F1", wrongFg: "#C2412D", wrongVivid: "#C2412D", overdue: "#C2412D",
+  progressTrack: "#D5E0EA", sessionOverlay: "rgba(31, 42, 68, .72)",
+  pulseGold: "rgba(255, 229, 138, .55)", pulseGoldClear: "rgba(255, 229, 138, 0)",
+  correctGlow: "rgba(46, 111, 94, .35)", correctGlowClear: "rgba(46, 111, 94, 0)",
+  winFlash: "rgba(46, 111, 94, .45)", winFlashClear: "rgba(46, 111, 94, 0)",
+  feedbackBg: "#1F2A44", feedbackText: "#FBF8F1",
+} as const;
+const notebookDarkColors = {
+  ...notebookColors,
+  paper: "#181A20", ink: "#E6E8EE", body: "#E6E8EE", muted: "#9AA2B5", faint: "#9AA2B5",
+  card: "#181A20", panel: "#181A20", chipBg: "#5A4B12", borderTan: "#2A3140", trackOff: "#2A3140",
+  dashed: "#2A3140", lockedBg: "#5A4B12", lockedBorder: "#2A3140", lockedText: "#9AA2B5",
+  gold: "#5A4B12", goldHover: "#5A4B12", goldText: "#E6E8EE", flame: "#F0806B", flameText: "#F0806B", goalRemainder: "#2A3140", navMuted: "#2A3140",
+  calendarLow: "#2A3140", calendarMedium: "#6DBBA4", calendarHigh: "#E6E8EE", shortcutDivider: "#E6E8EE",
+  correct: "#6DBBA4", correctBg: "#181A20", correctFg: "#6DBBA4", correctVivid: "#6DBBA4",
+  wrong: "#F0806B", wrongBg: "#181A20", wrongFg: "#F0806B", wrongVivid: "#F0806B", overdue: "#F0806B",
+  progressTrack: "#2A3140", sessionOverlay: "rgba(24, 26, 32, .72)",
+  pulseGold: "rgba(90, 75, 18, .55)", pulseGoldClear: "rgba(90, 75, 18, 0)",
+  correctGlow: "rgba(109, 187, 164, .35)", correctGlowClear: "rgba(109, 187, 164, 0)",
+  winFlash: "rgba(109, 187, 164, .45)", winFlashClear: "rgba(109, 187, 164, 0)",
+  feedbackBg: "#E6E8EE", feedbackText: "#181A20",
+} as const;
+const notebookFonts = {
+  ui: "'IBM Plex Sans KR', 'Noto Sans KR Variable', sans-serif", answer: "'Klee One', 'Noto Serif JP Variable', serif",
+  kr: "'IBM Plex Sans KR', 'Noto Sans KR Variable', sans-serif", jp: "'Klee One', 'Noto Serif JP Variable', serif", cn: "'IBM Plex Sans KR', 'Noto Sans KR Variable', sans-serif",
+} as const;
+const notebookTracks = {
+  kr: { accent: "#2E6F5E", accentText: "#1F2A44", soft: "#D5E0EA", font: notebookFonts.kr },
+  jp: { accent: "#C2412D", accentText: "#1F2A44", soft: "#FFE58A", font: notebookFonts.jp },
+  cn: { accent: "#2E6F5E", accentText: "#1F2A44", soft: "#D5E0EA", font: notebookFonts.cn },
+} as const;
+const notebookDarkTracks = {
+  kr: { accent: "#6DBBA4", accentText: "#E6E8EE", soft: "#2A3140", font: notebookFonts.kr },
+  jp: { accent: "#F0806B", accentText: "#E6E8EE", soft: "#5A4B12", font: notebookFonts.jp },
+  cn: { accent: "#6DBBA4", accentText: "#E6E8EE", soft: "#2A3140", font: notebookFonts.cn },
+} as const;
+const notebookRadii = {
+  keycap: "3px", small: "0", navItem: "3px", medium: "0", large: "0", extraLarge: "0",
+  answer: "0", answerKey: "3px", panel: "0", badge: "3px", control: "3px", cta: "3px",
+  modal: "0", calendar: "0", chart: "0", pill: "999px",
+} as const;
+const notebookShadows = { hard3: "none", hard4: "none", hard5: "none", hard6: "none", hard7: "none", nav: "none" } as const;
+
 type ThemeTokens = {
-  colors: typeof defaultColors | typeof quietColors;
-  fonts: typeof defaultFonts | typeof quietFonts;
-  tracks: typeof defaultTracks | typeof quietTracks;
-  radii: typeof defaultRadii | typeof quietRadii;
-  shadows: typeof defaultShadows | typeof quietShadows;
+  colors: Record<keyof typeof defaultColors, string>;
+  fonts: Record<keyof typeof defaultFonts, string>;
+  tracks: Record<keyof typeof defaultTracks, { accent: string; accentText: string; soft: string; font: string }>;
+  radii: Record<keyof typeof defaultRadii, string>;
+  shadows: Record<keyof typeof defaultShadows, string>;
   borderWidth: string;
 };
 
@@ -109,7 +160,10 @@ function theme(tokens: ThemeTokens) { return { ...tokens, cssVariables: variable
 export const themes = {
   default: theme({ colors: defaultColors, fonts: defaultFonts, tracks: defaultTracks, radii: defaultRadii, shadows: defaultShadows, borderWidth: "3px" }),
   "quiet-technical": theme({ colors: quietColors, fonts: quietFonts, tracks: quietTracks, radii: quietRadii, shadows: quietShadows, borderWidth: "1px" }),
+  notebook: theme({ colors: notebookColors, fonts: notebookFonts, tracks: notebookTracks, radii: notebookRadii, shadows: notebookShadows, borderWidth: "1.5px" }),
 } as const;
+
+export const notebookDarkTheme = theme({ colors: notebookDarkColors, fonts: notebookFonts, tracks: notebookDarkTracks, radii: notebookRadii, shadows: notebookShadows, borderWidth: "1.5px" });
 
 export const colors = themes.default.colors;
 export const fonts = themes.default.fonts;

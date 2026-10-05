@@ -15,7 +15,7 @@ import { AppRoutes, routes, type Screen } from "./routes";
 import { ProfilePicker } from "./screens/ProfilePicker";
 import { UnlockScreen } from "./screens/UnlockScreen";
 import { clientUpdateRequired, type ProfileResponse, type PublicProfile, type SettingsResponse } from "../shared/api";
-import type { ThemeId } from "../shared/settings";
+import type { AppearanceId, ThemeId } from "../shared/settings";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
 import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";
@@ -54,6 +54,7 @@ export function App() {
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [onboardingRequired, setOnboardingRequired] = useState(false);
   const [theme, setTheme] = useState<ThemeId>("quiet-technical");
+  const [appearance, setAppearance] = useState<AppearanceId>("classic");
   const screen = routes.find((route) => matchPath({ path: route.path, end: true }, pathname))?.screen ?? "onboarding";
   const screenRef = useRef(screen);
   const sessionActive = sessionScreens.has(screen);
@@ -74,6 +75,7 @@ export function App() {
     resetSettingsClientState();
     setActiveProfile(null);
     setTheme("quiet-technical");
+    setAppearance("classic");
     setGate("checking");
   }, []);
 
@@ -205,14 +207,22 @@ export function App() {
     let superseded = false;
     const updateTheme = (event: Event) => {
       // SAFETY: SETTINGS_UPDATED_EVENT is only dispatched with a SettingsResponse patch in this client.
-      const next = (event as CustomEvent<Partial<SettingsResponse>>).detail?.theme;
-      if (next) {
+      const settingsEvent = event as CustomEvent<Partial<SettingsResponse>>;
+      const next = settingsEvent.detail?.theme;
+      const nextAppearance = settingsEvent.detail?.appearance;
+      if (next || nextAppearance) {
         superseded = true;
-        setTheme(next);
+        if (next) setTheme(next);
+        if (nextAppearance) setAppearance(nextAppearance);
       }
     };
     window.addEventListener(SETTINGS_UPDATED_EVENT, updateTheme);
-    void apiClient.settings(controller.signal).then((settings) => { if (!controller.signal.aborted && !superseded) setTheme(settings.theme); }).catch(() => undefined);
+    void apiClient.settings(controller.signal).then((settings) => {
+      if (!controller.signal.aborted && !superseded) {
+        setTheme(settings.theme);
+        setAppearance(settings.appearance);
+      }
+    }).catch(() => undefined);
     return () => { controller.abort(); window.removeEventListener(SETTINGS_UPDATED_EVENT, updateTheme); };
   }, [activeProfile]);
 
@@ -275,6 +285,8 @@ export function App() {
     content = <main><p>프로필 확인 중…</p></main>;
   }
 
+  const activeTheme = appearance === "notebook" ? "notebook" : theme;
   // SAFETY: each theme token map is CSS custom-property declarations.
-  return <div className="app" data-theme={theme} style={themes[theme].cssVariables as CSSProperties}>{content}</div>;
+  const themeStyle = themes[activeTheme].cssVariables as CSSProperties;
+  return <div className="app" data-appearance={appearance} data-theme={activeTheme} style={themeStyle}>{content}</div>;
 }

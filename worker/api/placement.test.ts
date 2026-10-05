@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/no-runtime-typeof, anti-slop/no-unknown-parameters, anti-slop/require-safety-comment-for-type-assertion -- Existing Worker fixture utilities decode test-only values. */
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -73,9 +74,9 @@ describe("profile, placement, and stats API", () => {
     expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", soundMode: "on", theme: "quiet-technical" });
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
-    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical" }), fixture.env);
-    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", isAdmin: true });
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", isAdmin: true });
+    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", appearance: "notebook" }), fixture.env);
+    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", appearance: "notebook", isAdmin: true });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", appearance: "notebook", isAdmin: true });
     expect(fixture.sqlite.prepare("SELECT sound_mode FROM profile WHERE id = 1").get()).toEqual({ sound_mode: "off" });
     expect(() => fixture.sqlite.exec("UPDATE profile SET sound_mode = 'loud' WHERE id = 1")).toThrow();
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 1 });
@@ -84,6 +85,7 @@ describe("profile, placement, and stats API", () => {
     expect(invalid.status).toBe(400);
     expect(await invalid.json()).toMatchObject({ error: { code: "invalid_settings" } });
     expect((await routeApiRequest(request("/api/settings", "PATCH", { theme: "ink-paper" }), fixture.env)).status).toBe(400);
+    expect((await routeApiRequest(request("/api/settings", "PATCH", { appearance: "paper" }), fixture.env)).status).toBe(400);
     expect((await routeApiRequest(request("/api/settings", "PATCH", { soundMode: "loud" }), fixture.env)).status).toBe(400);
   });
 

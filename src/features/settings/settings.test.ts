@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { shortcutRows } from "./ShortcutSheet";
 import { createSettingsSaver, DAILY_GOAL, normalizeDailyGoal, toggleTrack } from "./useSettings";
-import { DEFAULT_SOUND_MODE, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS } from "../../../shared/settings";
+import { APPEARANCE_IDS, DEFAULT_SOUND_MODE, ONYOMI_SCRIPTS, SOUND_MODES, THEME_IDS } from "../../../shared/settings";
 import { GLOBAL_DESTINATIONS, SHORTCUTS } from "../../shell/shortcuts";
 
 describe("settings", () => {
@@ -43,6 +43,7 @@ describe("settings", () => {
 
   it("offers only persisted visual themes", () => {
     expect(THEME_IDS).toEqual(["default", "quiet-technical"]);
+    expect(APPEARANCE_IDS).toEqual(["classic", "notebook"]);
   });
 
   it("serializes and coalesces all writes for one profile", async () => {

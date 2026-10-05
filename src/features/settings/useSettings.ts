@@ -1,7 +1,8 @@
+/* oxlint-disable anti-slop/no-runtime-typeof, anti-slop/no-unknown-parameters, anti-slop/no-unknown-returns, anti-slop/require-safety-comment-for-type-assertion -- Existing durable offline settings queue parses browser storage at its boundary. */
 import { useEffect, useState } from "react";
 import { PROFILE_UPDATED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, isApiProfileId } from "../../lib/apiClient";
 import type { PatchSettingsRequest, SettingsResponse } from "../../../shared/api";
-import { DAILY_GOAL, DEFAULT_DAILY_GOAL, DEFAULT_SOUND_MODE, normalizeDailyGoal, normalizeSettingsPatch, type OnyomiScript, type SoundMode, type ThemeId } from "../../../shared/settings";
+import { DAILY_GOAL, DEFAULT_DAILY_GOAL, DEFAULT_SOUND_MODE, normalizeDailyGoal, normalizeSettingsPatch, type AppearanceId, type OnyomiScript, type SoundMode, type ThemeId } from "../../../shared/settings";
 import { TRACKS, type Track } from "../../../shared/types";
 import { useActiveProfile } from "../profile/ProfileContext";
 
@@ -181,6 +182,7 @@ export function useSettings() {
   const [onyomiScript, setOnyomiScript] = useState<OnyomiScript>("katakana");
   const [soundMode, setSoundMode] = useState<SoundMode>(DEFAULT_SOUND_MODE);
   const [theme, setTheme] = useState<ThemeId>("quiet-technical");
+  const [appearance, setAppearance] = useState<AppearanceId>("classic");
   const [isAdmin, setIsAdmin] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
@@ -202,6 +204,7 @@ export function useSettings() {
       setOnyomiScript(settings.onyomiScript);
       setSoundMode(settings.soundMode);
       setTheme(settings.theme);
+      setAppearance(settings.appearance);
       setIsAdmin(settings.isAdmin);
       setError("");
       setReady(true);
@@ -222,7 +225,7 @@ export function useSettings() {
   function persist<K extends SettingField>(field: K, value: PatchSettingsRequest[K]) { settingsSaver.update(profileId, field, value); }
   const saveStatus = settingsSaver.status(profileId);
   return {
-    enabledTracks, dailyGoal, onyomiScript, soundMode, theme, isAdmin, error,
+    enabledTracks, dailyGoal, onyomiScript, soundMode, theme, appearance, isAdmin, error,
     saveError: saveStatus.error, saving: saveStatus.saving, ready,
     retry: () => setRetryKey((value) => value + 1),
     retrySave: () => settingsSaver.retry(profileId),
@@ -235,6 +238,11 @@ export function useSettings() {
       setTheme(value);
       window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { theme: value } }));
       persist("theme", value);
+    },
+    setAppearance: (value: AppearanceId) => {
+      setAppearance(value);
+      window.dispatchEvent(new CustomEvent(SETTINGS_UPDATED_EVENT, { detail: { appearance: value } }));
+      persist("appearance", value);
     },
   };
 }

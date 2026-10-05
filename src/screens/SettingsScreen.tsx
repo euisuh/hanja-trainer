@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion -- Existing inline CSS variable bridge is typed at the JSX boundary. */
 import { useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { DailyGoal } from "../features/settings/DailyGoal";
@@ -6,6 +7,7 @@ import { ShortcutSheet } from "../features/settings/ShortcutSheet";
 import { SoundSetting } from "../features/settings/SoundSetting";
 import { TrackToggles } from "../features/settings/TrackToggles";
 import { ThemePicker } from "../features/settings/ThemePicker";
+import { AppearancePicker } from "../features/settings/AppearancePicker";
 import { ProfileSettings } from "../features/settings/ProfileSettings";
 import { useSettings } from "../features/settings/useSettings";
 import { PinSettings } from "../features/pin/PinSettings";
@@ -43,6 +45,7 @@ export function SettingsScreen() {
           <section className="settings-group">
             <h2 className="settings-group__title">화면과 소리</h2>
             <ThemePicker onChange={settings.setTheme} value={settings.theme} />
+            <AppearancePicker onChange={settings.setAppearance} value={settings.appearance} />
             <SoundSetting onChange={settings.setSoundMode} value={settings.soundMode} />
           </section>
           <section className="settings-group">

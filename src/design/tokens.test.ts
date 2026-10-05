@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { avatarHue } from "../features/profile/avatarHue";
-import { avatarBackground, themes } from "./tokens";
+import { avatarBackground, notebookDarkTheme, themes } from "./tokens";
 
 function relativeLuminance([red, green, blue]: number[]): number {
   const [r, g, b] = [red, green, blue].map((channel) => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
@@ -84,6 +84,19 @@ describe("visual themes", () => {
     expect(quiet.radii).toMatchObject({ keycap: "6px", small: "7px", navItem: "8px", medium: "8px", large: "10px", extraLarge: "10px", answer: "8px", answerKey: "6px", panel: "8px", badge: "6px", control: "8px", cta: "10px", modal: "10px", calendar: "6px", pill: "999px" });
     expect(Object.entries(quiet.radii).filter(([name]) => name !== "pill").every(([, value]) => Number.parseInt(value) >= 6 && Number.parseInt(value) <= 10)).toBe(true);
     expect(Object.values(quiet.shadows).slice(0, 5)).toEqual(Array(5).fill("none"));
+  });
+
+  it("promotes the Notebook light and dark Talk tokens", () => {
+    expect(themes.notebook.colors).toMatchObject({
+      paper: "#FBF8F1", ink: "#1F2A44", muted: "#5C6478", borderTan: "#D5E0EA", flame: "#C2412D", gold: "#FFE58A", correct: "#2E6F5E",
+    });
+    expect(themes.notebook.fonts).toMatchObject({
+      ui: "'IBM Plex Sans KR', 'Noto Sans KR Variable', sans-serif", answer: "'Klee One', 'Noto Serif JP Variable', serif", jp: "'Klee One', 'Noto Serif JP Variable', serif",
+    });
+    expect(themes.notebook.radii).toMatchObject({ answer: "0", control: "3px" });
+    expect(notebookDarkTheme.colors).toMatchObject({
+      paper: "#181A20", ink: "#E6E8EE", muted: "#9AA2B5", borderTan: "#2A3140", flame: "#F0806B", gold: "#5A4B12", correct: "#6DBBA4",
+    });
   });
 
   it("meets AA for every Quiet Technical text role", () => {

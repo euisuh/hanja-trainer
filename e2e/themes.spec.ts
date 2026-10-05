@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion -- Existing Playwright fixture decoding narrows trusted test responses. */
 import { expect, test, type Page } from "@playwright/test";
 
 type Card = { answerIndex: number; kind?: string };
@@ -129,8 +130,17 @@ test("theme selection applies live and persists", async ({ page }) => {
   await expect(page.locator(".settings-card").first()).toHaveCSS("border-top-width", "1px");
   await expect(page.locator(".settings-card").first()).toHaveCSS("box-shadow", "none");
 
+  const notebook = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
+  await page.getByRole("button", { name: "Notebook", exact: true }).click();
+  await notebook;
+  await expect(app).toHaveAttribute("data-appearance", "notebook");
+  await expect(app).toHaveAttribute("data-theme", "notebook");
+  await page.reload();
+  await expect(app).toHaveAttribute("data-appearance", "notebook");
+  expect(await app.evaluate((node) => getComputedStyle(node).getPropertyValue("--paper"))).toBe("#FBF8F1");
+
   const restored = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
-  await page.getByRole("button", { name: "기본", exact: true }).click();
+  await page.getByRole("button", { name: "클래식", exact: true }).click();
   await restored;
 });
 

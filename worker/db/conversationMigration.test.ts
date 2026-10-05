@@ -5,6 +5,7 @@ import { emitConversationSeedSql } from "../../scripts/seed.ts";
 import { parseConversationSeed } from "../../scripts/validate-conversation.ts";
 
 const MIGRATION = "0025_conversation_core.sql";
+const APPEARANCE_MIGRATION = "0029_profile_appearance.sql";
 
 function applyBeforeConversation(sqlite: DatabaseSync): void {
   for (const name of readdirSync("migrations").filter((name) => name.endsWith(".sql") && name < MIGRATION).sort()) {
@@ -14,6 +15,12 @@ function applyBeforeConversation(sqlite: DatabaseSync): void {
 
 function applyAll(sqlite: DatabaseSync): void {
   for (const name of readdirSync("migrations").filter((name) => name.endsWith(".sql")).sort()) {
+    sqlite.exec(readFileSync(`migrations/${name}`, "utf8"));
+  }
+}
+
+function applyBeforeAppearance(sqlite: DatabaseSync): void {
+  for (const name of readdirSync("migrations").filter((name) => name.endsWith(".sql") && name < APPEARANCE_MIGRATION).sort()) {
     sqlite.exec(readFileSync(`migrations/${name}`, "utf8"));
   }
 }
@@ -39,6 +46,31 @@ describe("conversation core migration", () => {
         { name: "conv_units" },
       ]);
     expect(sqlite.prepare("PRAGMA foreign_keys").get()).toEqual({ foreign_keys: 1 });
+  });
+
+  it("adds appearance without losing profile conversation rows", () => {
+    const sqlite = new DatabaseSync(":memory:");
+    databases.push(sqlite);
+    applyBeforeAppearance(sqlite);
+    const profileId = Number(sqlite.prepare("INSERT INTO profile (name) VALUES ('학습자')").run().lastInsertRowid);
+    const unitId = Number(sqlite.prepare("INSERT INTO conv_units (ord, title_ko, goal_ko) VALUES (99, '확인', '진도 확인')").run().lastInsertRowid);
+    const chunkId = Number(sqlite.prepare(`
+      INSERT INTO conv_chunks (track, key, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
+      VALUES ('jp', 'migration-check', 'fixture-ja', 'fixture-kana', '확인', 'polite', 'say', 'fixture', 'fixture', 'c/0123456789abcdef')
+    `).run().lastInsertRowid);
+    sqlite.prepare("INSERT INTO conv_unit_chunks (unit_id, chunk_id, ord) VALUES (?, ?, 1)").run(unitId, chunkId);
+    sqlite.prepare(`
+      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, role, grade, answered_at)
+      VALUES (?, 'appearance-migration', ?, 'say', 3, 100)
+    `).run(profileId, chunkId);
+    sqlite.prepare("INSERT INTO conv_checkins (profile_id, unit_id, at, note) VALUES (?, ?, 100, 'ok')").run(profileId, unitId);
+
+    sqlite.exec(readFileSync(`migrations/${APPEARANCE_MIGRATION}`, "utf8"));
+
+    expect(sqlite.prepare("SELECT name, appearance FROM profile WHERE id = ?").get(profileId)).toEqual({ name: "학습자", appearance: "classic" });
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts WHERE profile_id = ?").get(profileId)).toEqual({ count: 1 });
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM conv_checkins WHERE profile_id = ?").get(profileId)).toEqual({ count: 1 });
+    expect(sqlite.prepare("PRAGMA foreign_key_check").all()).toEqual([]);
   });
 
   it("upgrades existing profiles and cascades their conversation rows", () => {
