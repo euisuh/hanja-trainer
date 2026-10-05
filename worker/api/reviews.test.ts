@@ -502,6 +502,17 @@ describe("conversation attempts", () => {
     expect(await response.json()).toEqual({ error: { code: "invalid_conversation_attempt_batch", message: "body must be an array of 1 to 4 attempts" } });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts").get()).toEqual({ count: 0 });
   });
+
+  it("records roleplay without rescheduling unless missed", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const { chunkId } = conversationChunk(fixture.sqlite);
+    const due = 1_800_000_010_000;
+    fixture.sqlite.prepare(`INSERT INTO conv_chunk_states (profile_id, chunk_id, role, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count) VALUES (1, ?, 'say', 10, 5, 1, 2, 0, 2, 0, 2, 1, ?, 2, 2)`).run(chunkId, due);
+    await submitConversationAttemptBatch(fixture.env.DB, 1, [{ clientAttemptId: "roleplay-good", chunkId, role: "say", grade: "good", loop: "roleplay", answeredAt: 1_800_000_000_000 }], new Date(1_800_000_000_100));
+    expect(fixture.sqlite.prepare("SELECT due, reps FROM conv_chunk_states WHERE chunk_id = ?").get(chunkId)).toEqual({ due, reps: 2 });
+    await submitConversationAttemptBatch(fixture.env.DB, 1, [{ clientAttemptId: "roleplay-miss", chunkId, role: "say", grade: "again", loop: "roleplay", answeredAt: 1_800_000_000_001 }], new Date(1_800_000_000_100));
+    expect(fixture.sqlite.prepare("SELECT due, reps FROM conv_chunk_states WHERE chunk_id = ?").get(chunkId)).toEqual({ due: 1_800_000_000_001, reps: 2 });
+  });
 });
 
 const DAY = 86_400_000;

@@ -111,6 +111,17 @@ export async function submitConversationAttempt(
     FROM conv_chunk_states WHERE profile_id = ?1 AND chunk_id = ?2 AND role = ?3
   `).bind(profileId, input.chunkId, input.role).first<StateRow>();
   const eventTime = new Date(Math.min(input.answeredAt, now.getTime()));
+  if (input.loop === "roleplay") {
+    const statements = [db.prepare(`
+      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, scene_id, role, grade, answered_at, latency_ms, loop, input, hints, replays)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
+    `).bind(profileId, input.clientAttemptId, input.chunkId, input.sceneId ?? null, input.role, gradeValue(grade), eventTime.getTime(), input.latencyMs ?? null, "roleplay", input.input ?? "unknown", input.hints ?? 0, input.replays ?? 0)];
+    if (grade === "again") statements.push(db.prepare(`
+      UPDATE conv_chunk_states SET due = MIN(due, ?4) WHERE profile_id = ?1 AND chunk_id = ?2 AND role = ?3
+    `).bind(profileId, input.chunkId, input.role, eventTime.getTime()));
+    await db.batch(statements);
+    return { grade };
+  }
   const state = row ? toState(row) : initialState(eventTime);
   const scheduled = schedule(state, grade as Grade, new Date(Math.max(eventTime.getTime(), state.lastReview?.getTime() ?? eventTime.getTime())));
   await db.batch([

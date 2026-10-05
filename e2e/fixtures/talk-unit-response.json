@@ -3,5 +3,5 @@
   "chunks": [
     { "id": 1, "unitId": 1, "ord": 1, "ja": "もう一度お願いします", "kana": "もういちどおねがいします", "koCue": "다시 말해 달라고 하기", "register": "polite", "role": "say", "sourceKind": "corpus", "sourceRef": "Tatoeba #1", "audioKey": "c/dfb32afcfa7aaf90", "audioUrl": "/api/audio/jp/c/dfb32afcfa7aaf90.mp3" }
   ],
-  "scenes": []
+  "scenes": [{ "id": 1, "unitId": 1, "ord": 1, "titleKo": "장면", "settingKo": "시험", "goalKo": "시험", "turns": [{ "sceneId": 1, "ord": 1, "speaker": "npc", "chunkIds": [1] }, { "sceneId": 1, "ord": 2, "speaker": "learner", "chunkIds": [1] }] }]
 }

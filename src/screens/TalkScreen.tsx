@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { enqueuePendingConversationAttempt } from "../features/conversation/attemptOutbox";
+import { SceneRunner } from "../features/conversation/SceneRunner";
 import { useActiveProfile } from "../features/profile/ProfileContext";
 import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, matchingVoice, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
@@ -34,6 +35,7 @@ export function TalkScreen() {
   const [hints, setHints] = useState(0);
   const [replays, setReplays] = useState(0);
   const [selectedGrade, setSelectedGrade] = useState<"again" | "hard" | "good">("good");
+  const [sceneMode, setSceneMode] = useState(false);
   const recorderRef = useRef<LocalRecorder | null>(null);
   const cueShownAtRef = useRef(0);
   const selfAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -101,6 +103,7 @@ export function TalkScreen() {
       setReplays(0);
       return;
     }
+    if (content?.scenes[0]) { setSceneMode(true); return; }
     navigate("/home");
   }, [card, content, hints, index, navigate, profileId, recording, replays]);
 
@@ -144,11 +147,13 @@ export function TalkScreen() {
 
   if (!Number.isSafeInteger(unitId) || unitId < 1 || error) return <section className="talk-root talk-screen"><p role="alert">{error || "Talk 단위를 찾을 수 없습니다."}</p><button onClick={() => navigate("/home")} type="button">돌아가기</button></section>;
   if (!content || !card) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
+  if (sceneMode && content.scenes[0]) return <SceneRunner chunks={content.chunks} onExit={() => navigate("/home")} profileId={profileId} scene={content.scenes[0]} />;
 
   const canRate = stage === "rate";
   return <section className="talk-root talk-screen" data-talk-stage={stage}>
     <header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {content.chunks.length}</span></header>
     <p className="talk-screen__goal">{content.unit.goalKo}</p>
+    {content.scenes[0] && <button onClick={() => setSceneMode(true)} type="button">대화 연습</button>}
     <div className="talk-screen__page">
       <p className="talk-screen__cue">{card.koCue}</p>
       {stage !== "cue" && <div className="talk-screen__answer">

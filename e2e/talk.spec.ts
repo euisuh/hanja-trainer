@@ -75,7 +75,7 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await page.keyboard.press("3");
   await page.keyboard.press("Enter");
   await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say", loop: "drill", input: "voice", hints: 1, replays: 0 })]);
-  await expect(page.locator(".home-screen")).toBeVisible();
+  await expect(page.getByRole("button", { name: "장면 시작" })).toBeVisible();
 });
 
 test("Talk uses Japanese speech synthesis after chunk audio fails", async ({ page }) => {
@@ -93,6 +93,7 @@ test("Talk uses Japanese speech synthesis after chunk audio fails", async ({ pag
   await page.getByRole("button", { name: /듣기/u }).click();
   await expect.poll(() => page.locator("html").getAttribute("data-talk-fallback")).toContain(`"lang":"ja-JP"`);
   await expect(page.locator("html")).toHaveAttribute("data-talk-fallback", expect.stringContaining(conversation.chunks[0].ja));
+  // SAFETY: document.activeElement can be non-HTMLElement; blur only applies to focused controls.
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   await page.keyboard.press("Enter");
   await page.keyboard.press("Enter");
@@ -119,4 +120,22 @@ test("Talk attempt queues offline then flushes", async ({ page }) => {
   await page.evaluate(() => window.dispatchEvent(new Event("online")));
   await expect.poll(() => calls).toBe(1);
   await expect.poll(() => page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith("hanja-trainer:pending-conversation-attempts:entry:")).length)).toBe(0);
+});
+
+test("Talk scene keeps NPC text hidden and self-grades tap answers", async ({ page }) => {
+  await page.addInitScript(installTalkMocks);
+  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  let submission: unknown;
+  await page.route("**/api/conv/attempts", async (route) => { submission = route.request().postDataJSON(); await route.fulfill({ json: { results: [{ grade: "good" }] } }); });
+
+  await page.goto("/talk/1");
+  await page.getByRole("button", { name: "대화 연습" }).click();
+  await page.getByRole("button", { name: "장면 시작" }).click();
+  await expect(page.getByText("상대방")).toBeVisible();
+  await expect(page.getByText(conversation.chunks[0].ja)).toBeHidden();
+  await page.getByRole("button", { name: /다음/u }).click();
+  await expect(page.getByText(conversation.chunks[0].koCue)).toBeVisible();
+  await page.getByRole("button", { name: "말했어요" }).click();
+  await page.getByRole("button", { name: "바로" }).click();
+  await expect.poll(() => submission).toEqual([expect.objectContaining({ grade: "good", input: "tap", loop: "roleplay" })]);
 });
