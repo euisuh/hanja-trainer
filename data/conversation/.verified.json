@@ -11,6 +11,10 @@
     "text": "どこから来ましたか？",
     "sourceAuthor": "bunbuku"
   },
+  "76355": {
+    "text": "違う違う。オリジナリティがあるっていうか。",
+    "sourceAuthor": "Sim5634"
+  },
   "76406": {
     "text": "またお越しください。",
     "sourceAuthor": "mookeee"
@@ -38,6 +42,26 @@
   "81536": {
     "text": "本当にびっくりした。",
     "sourceAuthor": "small_snow"
+  },
+  "83847": {
+    "text": "払い戻しはどうしたらいいのですか。",
+    "sourceAuthor": "small_snow"
+  },
+  "83973": {
+    "text": "風邪に効く薬はありますか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "83981": {
+    "text": "風邪ですね。",
+    "sourceAuthor": "bunbuku"
+  },
+  "85506": {
+    "text": "鼻水が出ます。",
+    "sourceAuthor": "bunbuku"
+  },
+  "121901": {
+    "text": "熱があるんです。",
+    "sourceAuthor": "tommy_san"
   },
   "122305": {
     "text": "日本食はお好きですか。",
@@ -83,6 +107,22 @@
     "text": "道なりに進んで、三つ目の交差点を左に曲がって下さい。",
     "sourceAuthor": "KK_kaku_"
   },
+  "123688": {
+    "text": "同感です。",
+    "sourceAuthor": "wakatyann630"
+  },
+  "123816": {
+    "text": "頭痛に効く薬はありますか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "123865": {
+    "text": "頭が痛いんです。頭痛薬がありますか。",
+    "sourceAuthor": "small_snow"
+  },
+  "123866": {
+    "text": "頭が痛いんです。",
+    "sourceAuthor": "bunbuku"
+  },
   "124249": {
     "text": "東京に住んでいます。",
     "sourceAuthor": "bunbuku"
@@ -91,8 +131,16 @@
     "text": "途中で乗り換えが必要ですか。",
     "sourceAuthor": "small_snow"
   },
+  "124615": {
+    "text": "吐き気がします。",
+    "sourceAuthor": "Ianagisacos"
+  },
   "124875": {
     "text": "田中は今、席を外しております。",
+    "sourceAuthor": "bunbuku"
+  },
+  "125670": {
+    "text": "痛み止めを下さい。",
     "sourceAuthor": "bunbuku"
   },
   "126710": {
@@ -107,6 +155,18 @@
     "text": "池袋駅で乗り換えて下さい。",
     "sourceAuthor": "KK_kaku_"
   },
+  "138002": {
+    "text": "お大事に。",
+    "sourceAuthor": "bunbuku"
+  },
+  "140886": {
+    "text": "全く同感です。",
+    "sourceAuthor": "wakatyann630"
+  },
+  "142022": {
+    "text": "雪が降るかもしれません。",
+    "sourceAuthor": "arnab"
+  },
   "142076": {
     "text": "切符売り場はどこですか。",
     "sourceAuthor": "bunbuku"
@@ -115,12 +175,28 @@
     "text": "青色のはありますか。",
     "sourceAuthor": "tommy__san"
   },
+  "144764": {
+    "text": "診察券を持って来るのを忘れてしまいました。",
+    "sourceAuthor": "bunbuku"
+  },
+  "144771": {
+    "text": "診察しましょう。",
+    "sourceAuthor": "bunbuku"
+  },
   "145955": {
     "text": "色違いはありませんか。",
     "sourceAuthor": "bunbuku"
   },
   "146179": {
     "text": "乗り換えは必要ですか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "146785": {
+    "text": "少し熱が出るかもしれません。",
+    "sourceAuthor": "bunbuku"
+  },
+  "147557": {
+    "text": "初めての診察ですか。",
     "sourceAuthor": "bunbuku"
   },
   "148465": {
@@ -155,6 +231,10 @@
     "text": "私は病院で働いています。",
     "sourceAuthor": "bunbuku"
   },
+  "154725": {
+    "text": "日本はとても安全な国だと思います。",
+    "sourceAuthor": "small_snow"
+  },
   "155923": {
     "text": "私は商社で働いています。",
     "sourceAuthor": "tommy__san"
@@ -165,6 +245,10 @@
   },
   "158373": {
     "text": "私は映画が好きです。",
+    "sourceAuthor": "tommy_san"
+  },
+  "160455": {
+    "text": "私はそうは思いません。",
     "sourceAuthor": "tommy_san"
   },
   "164201": {
@@ -185,6 +269,10 @@
   },
   "172144": {
     "text": "今度の土曜日はどうですか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "173825": {
+    "text": "喉が痛いんです。",
     "sourceAuthor": "bunbuku"
   },
   "174351": {
@@ -218,6 +306,10 @@
   "184550": {
     "text": "覚えてる？",
     "sourceAuthor": "small_snow"
+  },
+  "184712": {
+    "text": "咳が出ますか。",
+    "sourceAuthor": "bunbuku"
   },
   "185076": {
     "text": "海外には行ったことがありません。",
@@ -323,6 +415,14 @@
     "text": "はい、行きましょう。",
     "sourceAuthor": "small_snow"
   },
+  "199402": {
+    "text": "どんな症状がありますか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "200370": {
+    "text": "どのような症状ですか。",
+    "sourceAuthor": "bunbuku"
+  },
   "200548": {
     "text": "とても良かったです。また行きたいですね。",
     "sourceAuthor": "mookeee"
@@ -347,6 +447,10 @@
     "text": "どこで待ち合わせしましょうか。",
     "sourceAuthor": "bunbuku"
   },
+  "201342": {
+    "text": "どうぞお大事に。",
+    "sourceAuthor": "bunbuku"
+  },
   "201705": {
     "text": "どういう意味ですか？",
     "sourceAuthor": "tommy_san"
@@ -367,9 +471,17 @@
     "text": "それは困ったね。",
     "sourceAuthor": "tommy__san"
   },
+  "205459": {
+    "text": "それはちょっと極端じゃないですか。",
+    "sourceAuthor": "small_snow"
+  },
   "213601": {
     "text": "そこへはどうやって行けばよいですか。",
     "sourceAuthor": "bunbuku"
+  },
+  "213776": {
+    "text": "そう思いませんか。",
+    "sourceAuthor": "KK_kaku_"
   },
   "213817": {
     "text": "そうは思いません。",
@@ -423,6 +535,10 @@
     "text": "これを試着したいのですが。",
     "sourceAuthor": "bunbuku"
   },
+  "218300": {
+    "text": "これは私が注文したものと違います。",
+    "sourceAuthor": "bunbuku"
+  },
   "220292": {
     "text": "この道をまっすぐ行ってください。",
     "sourceAuthor": "tommy_san"
@@ -466,6 +582,10 @@
   "226572": {
     "text": "お名前は？",
     "sourceAuthor": "bunbuku"
+  },
+  "226801": {
+    "text": "お湯が出ません。",
+    "sourceAuthor": "Ianagisacos"
   },
   "226907": {
     "text": "お待たせしました。",
@@ -595,6 +715,10 @@
     "text": "はい。",
     "sourceAuthor": "e4zh1nmcz"
   },
+  "518581": {
+    "text": "なんの問題もないじゃないですか。",
+    "sourceAuthor": "nihonjin"
+  },
   "536720": {
     "text": "嘘！",
     "sourceAuthor": "tomkun01"
@@ -671,6 +795,10 @@
     "text": "いつかフランスに行ってみたいです。",
     "sourceAuthor": "bunbuku"
   },
+  "1046244": {
+    "text": "数分遅れるかもしれません。",
+    "sourceAuthor": "bunbuku"
+  },
   "1059896": {
     "text": "今日の夜、空いてる？",
     "sourceAuthor": "bunbuku"
@@ -682,6 +810,10 @@
   "1125025": {
     "text": "旅行は好きですか？",
     "sourceAuthor": "mookeee"
+  },
+  "1126049": {
+    "text": "先生、お腹が痛いんです。",
+    "sourceAuthor": "bunbuku"
   },
   "1139064": {
     "text": "昔の友達をそこで見て驚いたよ。",
@@ -703,6 +835,10 @@
     "text": "日本の食べ物を食べたことがありますか。",
     "sourceAuthor": "bunbuku"
   },
+  "1185759": {
+    "text": "喉が痛くて微熱があるんです。",
+    "sourceAuthor": "bunbuku"
+  },
   "1189862": {
     "text": "私は日本語が少し話せますが、まだ上手じゃありません。",
     "sourceAuthor": "FiRez"
@@ -710,6 +846,10 @@
   "1270752": {
     "text": "それはひどいな。",
     "sourceAuthor": "bunbuku"
+  },
+  "1483682": {
+    "text": "申し訳ございません。",
+    "sourceAuthor": "marshmallowcat"
   },
   "1483688": {
     "text": "こちらへどうぞ。",
@@ -751,6 +891,10 @@
     "text": "折り返し電話します。",
     "sourceAuthor": "bunbuku"
   },
+  "2097872": {
+    "text": "イヤリングを片方失くしたんです。",
+    "sourceAuthor": "bunbuku"
+  },
   "2135770": {
     "text": "もっと安いのはありますか。",
     "sourceAuthor": "bunbuku"
@@ -771,9 +915,17 @@
     "text": "日本に行ったことがありますか。",
     "sourceAuthor": "abbymae111"
   },
+  "2179015": {
+    "text": "敬語というのは日本語の一番難しいところだと思います。",
+    "sourceAuthor": "abbymae111"
+  },
   "2196376": {
     "text": "どうしたの。",
     "sourceAuthor": "bunbuku"
+  },
+  "2233267": {
+    "text": "すみません、お箸を落としてしまったんですが。",
+    "sourceAuthor": "tommy_san"
   },
   "2237943": {
     "text": "私の趣味は写真です。",
@@ -782,6 +934,10 @@
   "2251469": {
     "text": "分かった。",
     "sourceAuthor": "DiePain"
+  },
+  "2255796": {
+    "text": "これは注文と違います。",
+    "sourceAuthor": "tommy_san"
   },
   "2265623": {
     "text": "これ、買います。",
@@ -794,6 +950,10 @@
   "2265662": {
     "text": "これにします。",
     "sourceAuthor": "Ianagisacos"
+  },
+  "2270834": {
+    "text": "処方箋をお出しします。",
+    "sourceAuthor": "tommy_san"
   },
   "2304911": {
     "text": "大丈夫です。",
@@ -847,6 +1007,10 @@
     "text": "すみません、駅への道を教えていただけませんか？",
     "sourceAuthor": "tommy_san"
   },
+  "2838403": {
+    "text": "何かアレルギーはありますか？",
+    "sourceAuthor": "tommy_san"
+  },
   "2863727": {
     "text": "かしこまりました。確認致しますので、少々お待ち頂けますか。",
     "sourceAuthor": "Nekonari"
@@ -855,12 +1019,24 @@
     "text": "これ試着してもいいですか？",
     "sourceAuthor": "tommy_san"
   },
+  "2903638": {
+    "text": "こちらの書類にご記入ください。",
+    "sourceAuthor": "tommy_san"
+  },
   "2904021": {
     "text": "ごめんちょっと遅れる。3時10分には着くと思う。",
     "sourceAuthor": "tommy_san"
   },
+  "2912698": {
+    "text": "全くおっしゃる通りです。",
+    "sourceAuthor": "tommy_san"
+  },
   "2929527": {
     "text": "すみません、何とおっしゃいましたか？",
+    "sourceAuthor": "tommy_san"
+  },
+  "2930030": {
+    "text": "そんなに感謝されると逆にこっちが恐縮しちゃうよ。",
     "sourceAuthor": "tommy_san"
   },
   "2976202": {
@@ -927,6 +1103,10 @@
     "text": "冗談でしょ？",
     "sourceAuthor": "arnab"
   },
+  "3496720": {
+    "text": "本当なんじゃないですか？",
+    "sourceAuthor": "arnab"
+  },
   "3507395": {
     "text": "分かりますか？",
     "sourceAuthor": "arnab"
@@ -937,6 +1117,14 @@
   },
   "3549611": {
     "text": "出口はどこですか？",
+    "sourceAuthor": "tommy_san"
+  },
+  "3554821": {
+    "text": "めまいがします。",
+    "sourceAuthor": "tommy__san"
+  },
+  "3554825": {
+    "text": "この近くに薬局はありますか？",
     "sourceAuthor": "tommy_san"
   },
   "3555502": {
@@ -991,6 +1179,10 @@
     "text": "禁煙席をお願いします。",
     "sourceAuthor": "verbum"
   },
+  "4651964": {
+    "text": "おっしゃる通りです。",
+    "sourceAuthor": "tommy_san"
+  },
   "4694697": {
     "text": "何名様ですか。",
     "sourceAuthor": "wells"
@@ -1010,6 +1202,10 @@
   "4865664": {
     "text": "今どこにいるの？",
     "sourceAuthor": "tommy_san"
+  },
+  "5719676": {
+    "text": "咳が出ます。",
+    "sourceAuthor": "saturo"
   },
   "5762757": {
     "text": "何時に出る？",
@@ -1047,6 +1243,10 @@
     "text": "これください。",
     "sourceAuthor": "bunbuku"
   },
+  "8584140": {
+    "text": "私も賛成です。",
+    "sourceAuthor": "bunbuku"
+  },
   "8655526": {
     "text": "これ包んでもらえますか？",
     "sourceAuthor": "bunbuku"
@@ -1061,6 +1261,10 @@
   },
   "8692860": {
     "text": "韓国人です。",
+    "sourceAuthor": "small_snow"
+  },
+  "8720989": {
+    "text": "基本的には賛成です。",
     "sourceAuthor": "small_snow"
   },
   "8728239": {
@@ -1083,8 +1287,16 @@
     "text": "明日の夜って空いてる？",
     "sourceAuthor": "bunbuku"
   },
+  "8815926": {
+    "text": "今現在、何か飲んでいる薬はありますか？",
+    "sourceAuthor": "bunbuku"
+  },
   "8842211": {
     "text": "明日は月曜だよね。",
+    "sourceAuthor": "small_snow"
+  },
+  "8866543": {
+    "text": "こちらに氏名・住所・電話番号をご記入ください。",
     "sourceAuthor": "small_snow"
   },
   "8875105": {
@@ -1159,6 +1371,10 @@
     "text": "もしもし、どちら様ですか？",
     "sourceAuthor": "small_snow"
   },
+  "9681715": {
+    "text": "風邪を引いたみたいなんです。",
+    "sourceAuthor": "bunbuku"
+  },
   "9681828": {
     "text": "コーヒーのお代わりをお願いします。",
     "sourceAuthor": "bunbuku"
@@ -1195,6 +1411,14 @@
     "text": "ねぇ、ちょっと聞いてよ。",
     "sourceAuthor": "small_snow"
   },
+  "9859016": {
+    "text": "痛みはいつからですか？",
+    "sourceAuthor": "bunbuku"
+  },
+  "9865994": {
+    "text": "目まいがしますか？",
+    "sourceAuthor": "bunbuku"
+  },
   "9961678": {
     "text": "今日の午後は空いてますか？",
     "sourceAuthor": "small_snow"
@@ -1205,6 +1429,10 @@
   },
   "10000276": {
     "text": "その色いいね。",
+    "sourceAuthor": "small_snow"
+  },
+  "10043066": {
+    "text": "先生に診てもらいたいです。",
     "sourceAuthor": "small_snow"
   },
   "10049472": {
@@ -1247,6 +1475,10 @@
     "text": "すみません、地下鉄の駅はどこですか？",
     "sourceAuthor": "small_snow"
   },
+  "10203581": {
+    "text": "後ほど、ご連絡します。",
+    "sourceAuthor": "small_snow"
+  },
   "10218817": {
     "text": "家に帰る途中、道に迷ってしまった。",
     "sourceAuthor": "small_snow"
@@ -1270,6 +1502,10 @@
   "10574111": {
     "text": "コーヒー飲みに行かない？",
     "sourceAuthor": "small_snow"
+  },
+  "10588666": {
+    "text": "今日はどうされましたか。",
+    "sourceAuthor": "Sonata"
   },
   "10602871": {
     "text": "待たせて、ごめんね。",
@@ -1331,6 +1567,10 @@
     "text": "お支払いは現金ですか？カードですか？",
     "sourceAuthor": "bunbuku"
   },
+  "10899609": {
+    "text": "昨日、鍵をなくしてしまいました。",
+    "sourceAuthor": "small_snow"
+  },
   "10899752": {
     "text": "はい、分かりました。",
     "sourceAuthor": "small_snow"
@@ -1347,6 +1587,14 @@
     "text": "駅を出て、あの道をまっすぐ行ってください。",
     "sourceAuthor": "small_snow"
   },
+  "10901910": {
+    "text": "去年より今年のほうが暑いです。",
+    "sourceAuthor": "small_snow"
+  },
+  "10906687": {
+    "text": "そうですね。",
+    "sourceAuthor": "small_snow"
+  },
   "10906691": {
     "text": "今何してる？",
     "sourceAuthor": "small_snow"
@@ -1358,6 +1606,10 @@
   "10908859": {
     "text": "昨日、にわか雨に降られたんだ。",
     "sourceAuthor": "bunbuku"
+  },
+  "10913715": {
+    "text": "どう思いますか？",
+    "sourceAuthor": "small_snow"
   },
   "10914856": {
     "text": "ええ、いいですよ。",
@@ -1371,6 +1623,10 @@
     "text": "どうぞよろしくお願いします。",
     "sourceAuthor": "small_snow"
   },
+  "10946947": {
+    "text": "ですが、いつもそうだとは限りません。",
+    "sourceAuthor": "small_snow"
+  },
   "10952563": {
     "text": "綺麗だと思います。",
     "sourceAuthor": "small_snow"
@@ -1381,6 +1637,10 @@
   },
   "10983389": {
     "text": "ご連絡お待ちしております。",
+    "sourceAuthor": "small_snow"
+  },
+  "10987738": {
+    "text": "確かに今日は涼しいな。",
     "sourceAuthor": "small_snow"
   },
   "11001436": {
@@ -1411,8 +1671,16 @@
     "text": "結局、来なかったよ。",
     "sourceAuthor": "small_snow"
   },
+  "11129477": {
+    "text": "フランス語は難しいと思います。",
+    "sourceAuthor": "small_snow"
+  },
   "11138356": {
     "text": "ちょっとびっくりした。",
+    "sourceAuthor": "small_snow"
+  },
+  "11243057": {
+    "text": "痛い時は、痛み止めを飲んでください。",
     "sourceAuthor": "small_snow"
   },
   "11327855": {
@@ -1422,6 +1690,10 @@
   "11368327": {
     "text": "ご試着なさいますか？",
     "sourceAuthor": "bunbuku"
+  },
+  "11391129": {
+    "text": "言葉より行動が大切だと思います。",
+    "sourceAuthor": "small_snow"
   },
   "11451491": {
     "text": "何時がご都合よろしいですか？",
@@ -1499,8 +1771,16 @@
     "text": "バス停は、ここから歩いて5分です。",
     "sourceAuthor": "small_snow"
   },
+  "11953092": {
+    "text": "絶対に来た方がいいですよ。",
+    "sourceAuthor": "bunbuku"
+  },
   "12024147": {
     "text": "レシートはいりません。",
+    "sourceAuthor": "small_snow"
+  },
+  "12148232": {
+    "text": "落とし物カウンターはどこですか？",
     "sourceAuthor": "small_snow"
   },
   "12163584": {
@@ -1554,6 +1834,10 @@
   "12980599": {
     "text": "昨日、散髪に行ったんだけど、今回のは気に入ったよ。",
     "sourceAuthor": "DJ_Saidez"
+  },
+  "13055895": {
+    "text": "あたりが静かすぎて逆に落ち着かない。",
+    "sourceAuthor": "Gardenia"
   },
   "13056492": {
     "text": "財布を家に忘れてしまった。",
@@ -1627,6 +1911,10 @@
     "text": "嘘でしょ……",
     "sourceAuthor": "LeviHighway"
   },
+  "13563728": {
+    "text": "確かに。",
+    "sourceAuthor": "kuwasiku"
+  },
   "13640835": {
     "text": "いいですね。",
     "sourceAuthor": "6b"
@@ -1643,122 +1931,6 @@
     "text": "ホテルで働いています。",
     "sourceAuthor": "small_snow"
   },
-  "14048807": {
-    "text": "ナムと申します。",
-    "sourceAuthor": "TanukiKun"
-  },
-  "76355": {
-    "text": "違う違う。オリジナリティがあるっていうか。",
-    "sourceAuthor": "Sim5634"
-  },
-  "123688": {
-    "text": "同感です。",
-    "sourceAuthor": "wakatyann630"
-  },
-  "140886": {
-    "text": "全く同感です。",
-    "sourceAuthor": "wakatyann630"
-  },
-  "142022": {
-    "text": "雪が降るかもしれません。",
-    "sourceAuthor": "arnab"
-  },
-  "146785": {
-    "text": "少し熱が出るかもしれません。",
-    "sourceAuthor": "bunbuku"
-  },
-  "154725": {
-    "text": "日本はとても安全な国だと思います。",
-    "sourceAuthor": "small_snow"
-  },
-  "160455": {
-    "text": "私はそうは思いません。",
-    "sourceAuthor": "tommy_san"
-  },
-  "205459": {
-    "text": "それはちょっと極端じゃないですか。",
-    "sourceAuthor": "small_snow"
-  },
-  "213776": {
-    "text": "そう思いませんか。",
-    "sourceAuthor": "KK_kaku_"
-  },
-  "518581": {
-    "text": "なんの問題もないじゃないですか。",
-    "sourceAuthor": "nihonjin"
-  },
-  "1046244": {
-    "text": "数分遅れるかもしれません。",
-    "sourceAuthor": "bunbuku"
-  },
-  "2179015": {
-    "text": "敬語というのは日本語の一番難しいところだと思います。",
-    "sourceAuthor": "abbymae111"
-  },
-  "2912698": {
-    "text": "全くおっしゃる通りです。",
-    "sourceAuthor": "tommy_san"
-  },
-  "2930030": {
-    "text": "そんなに感謝されると逆にこっちが恐縮しちゃうよ。",
-    "sourceAuthor": "tommy_san"
-  },
-  "3496720": {
-    "text": "本当なんじゃないですか？",
-    "sourceAuthor": "arnab"
-  },
-  "4651964": {
-    "text": "おっしゃる通りです。",
-    "sourceAuthor": "tommy_san"
-  },
-  "8584140": {
-    "text": "私も賛成です。",
-    "sourceAuthor": "bunbuku"
-  },
-  "8720989": {
-    "text": "基本的には賛成です。",
-    "sourceAuthor": "small_snow"
-  },
-  "10901910": {
-    "text": "去年より今年のほうが暑いです。",
-    "sourceAuthor": "small_snow"
-  },
-  "10906687": {
-    "text": "そうですね。",
-    "sourceAuthor": "small_snow"
-  },
-  "10913715": {
-    "text": "どう思いますか？",
-    "sourceAuthor": "small_snow"
-  },
-  "10946947": {
-    "text": "ですが、いつもそうだとは限りません。",
-    "sourceAuthor": "small_snow"
-  },
-  "10987738": {
-    "text": "確かに今日は涼しいな。",
-    "sourceAuthor": "small_snow"
-  },
-  "11129477": {
-    "text": "フランス語は難しいと思います。",
-    "sourceAuthor": "small_snow"
-  },
-  "11391129": {
-    "text": "言葉より行動が大切だと思います。",
-    "sourceAuthor": "small_snow"
-  },
-  "11953092": {
-    "text": "絶対に来た方がいいですよ。",
-    "sourceAuthor": "bunbuku"
-  },
-  "13055895": {
-    "text": "あたりが静かすぎて逆に落ち着かない。",
-    "sourceAuthor": "Gardenia"
-  },
-  "13563728": {
-    "text": "確かに。",
-    "sourceAuthor": "kuwasiku"
-  },
   "13985927": {
     "text": "日本語は最も美しい言語の一つです。",
     "sourceAuthor": "TanukiKun"
@@ -1766,5 +1938,9 @@
   "14034470": {
     "text": "今朝は寒いじゃないですか。",
     "sourceAuthor": "LeviHighway"
+  },
+  "14048807": {
+    "text": "ナムと申します。",
+    "sourceAuthor": "TanukiKun"
   }
 }

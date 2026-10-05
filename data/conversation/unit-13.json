@@ -1,0 +1,740 @@
+{
+  "units": [
+    {
+      "ord": 13,
+      "titleKo": "문제 해결·병원·약국",
+      "goalKo": "문제가 생겼을 때 부드럽게 상황을 설명하고, 병원·약국·분실·주문 실수 상황에서 해결을 부탁하고 직원의 질문에 답한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 13,
+      "ord": 1,
+      "text": "頭が痛いんです。",
+      "kana": "あたまがいたいんです。",
+      "cueKo": "머리가 아프다고 부드럽게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123866",
+      "audioKey": "c/6ed51214618e0b62",
+      "key": "tatoeba-123866-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 2,
+      "text": "熱があるんです。",
+      "kana": "ねつがあるんです。",
+      "cueKo": "열이 있다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #121901",
+      "audioKey": "c/f97e92cc441a86d4",
+      "key": "tatoeba-121901-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 3,
+      "text": "喉が痛いんです。",
+      "kana": "のどがいたいんです。",
+      "cueKo": "목이 아프다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #173825",
+      "audioKey": "c/f8ba8e0828c25d1e",
+      "key": "tatoeba-173825-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 4,
+      "text": "先生、お腹が痛いんです。",
+      "kana": "せんせい、おなかがいたいんです。",
+      "cueKo": "의사에게 배가 아프다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1126049",
+      "audioKey": "c/cec88e01a129ef07",
+      "key": "tatoeba-1126049-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 5,
+      "text": "喉が痛くて微熱があるんです。",
+      "kana": "のどがいたくてびねつがあるんです。",
+      "cueKo": "목이 아프고 미열이 있다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1185759",
+      "audioKey": "c/845e5f0cf6016b3a",
+      "key": "tatoeba-1185759-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 6,
+      "text": "風邪を引いたみたいなんです。",
+      "kana": "かぜをひいたみたいなんです。",
+      "cueKo": "감기에 걸린 것 같다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9681715",
+      "audioKey": "c/494c8702a0b081bf",
+      "key": "tatoeba-9681715-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 7,
+      "text": "吐き気がします。",
+      "kana": "はきけがします。",
+      "cueKo": "속이 메스껍다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #124615",
+      "audioKey": "c/b441689cea05cbfb",
+      "key": "tatoeba-124615-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 8,
+      "text": "めまいがします。",
+      "kana": "めまいがします。",
+      "cueKo": "어지럽다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3554821",
+      "audioKey": "c/7774851a722fc8c1",
+      "key": "tatoeba-3554821-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 9,
+      "text": "咳が出ます。",
+      "kana": "せきがでます。",
+      "cueKo": "기침이 난다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5719676",
+      "audioKey": "c/960bf5a5808d7a87",
+      "key": "tatoeba-5719676-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 10,
+      "text": "鼻水が出ます。",
+      "kana": "はなみずがでます。",
+      "cueKo": "콧물이 난다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #85506",
+      "audioKey": "c/59b3c45e74598e2d",
+      "key": "tatoeba-85506-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 11,
+      "text": "頭が痛いんです。頭痛薬がありますか。",
+      "kana": "あたまがいたいんです。ずつうやくがありますか。",
+      "cueKo": "머리가 아프다고 말하고 두통약이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123865",
+      "audioKey": "c/350006d225400924",
+      "key": "tatoeba-123865-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 12,
+      "text": "頭痛に効く薬はありますか。",
+      "kana": "ずつうにきくくすりはありますか。",
+      "cueKo": "두통에 듣는 약이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123816",
+      "audioKey": "c/3843da6745e6995e",
+      "key": "tatoeba-123816-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 13,
+      "text": "風邪に効く薬はありますか。",
+      "kana": "かぜにきくくすりはありますか。",
+      "cueKo": "감기에 듣는 약이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #83973",
+      "audioKey": "c/864da4423fbb6091",
+      "key": "tatoeba-83973-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 14,
+      "text": "痛み止めを下さい。",
+      "kana": "いたみどめをください。",
+      "cueKo": "진통제를 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #125670",
+      "audioKey": "c/3ab4783168f087f5",
+      "key": "tatoeba-125670-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 15,
+      "text": "先生に診てもらいたいです。",
+      "kana": "せんせいにみてもらいたいです。",
+      "cueKo": "의사에게 진료받고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10043066",
+      "audioKey": "c/3dac90a50ab284a9",
+      "key": "tatoeba-10043066-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 16,
+      "text": "診察券を持って来るのを忘れてしまいました。",
+      "kana": "しんさつけんをもってくるのをわすれてしまいました。",
+      "cueKo": "진찰권을 가져오는 것을 깜빡했다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #144764",
+      "audioKey": "c/c5894c85bd78d2c0",
+      "key": "tatoeba-144764-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 17,
+      "text": "昨日、鍵をなくしてしまいました。",
+      "kana": "きのう、かぎをなくしてしまいました。",
+      "cueKo": "어제 열쇠를 잃어버렸다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899609",
+      "audioKey": "c/7c81faa06a647819",
+      "key": "tatoeba-10899609-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 18,
+      "text": "すみません、お箸を落としてしまったんですが。",
+      "kana": "すみません、おはしをおとしてしまったんですが。",
+      "cueKo": "젓가락을 떨어뜨렸다고 조심스럽게 말을 꺼내기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2233267",
+      "audioKey": "c/1e5cec8e79f5f451",
+      "key": "tatoeba-2233267-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 19,
+      "text": "イヤリングを片方失くしたんです。",
+      "kana": "イヤリングをかたほうなくしたんです。",
+      "cueKo": "귀걸이 한 짝을 잃어버렸다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2097872",
+      "audioKey": "c/fd7905872dc0e2ba",
+      "key": "tatoeba-2097872-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 20,
+      "text": "これは注文と違います。",
+      "kana": "これはちゅうもんとちがいます。",
+      "cueKo": "이건 주문한 것과 다르다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2255796",
+      "audioKey": "c/e8992b2416a09d0b",
+      "key": "tatoeba-2255796-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 21,
+      "text": "これは私が注文したものと違います。",
+      "kana": "これはわたしがちゅうもんしたものとちがいます。",
+      "cueKo": "이건 내가 주문한 것과 다르다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #218300",
+      "audioKey": "c/6f59d0b36a106e8a",
+      "key": "tatoeba-218300-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 22,
+      "text": "お湯が出ません。",
+      "kana": "おゆがでません。",
+      "cueKo": "온수가 나오지 않는다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226801",
+      "audioKey": "c/2cdc3663cd5bbcc0",
+      "key": "tatoeba-226801-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 23,
+      "text": "落とし物カウンターはどこですか？",
+      "kana": "おとしものカウンターはどこですか？",
+      "cueKo": "분실물 센터가 어디인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12148232",
+      "audioKey": "c/59e5686e3984a22d",
+      "key": "tatoeba-12148232-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 24,
+      "text": "この近くに薬局はありますか？",
+      "kana": "このちかくにやっきょくはありますか？",
+      "cueKo": "근처에 약국이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3554825",
+      "audioKey": "c/381b7ec41daf7c4a",
+      "key": "tatoeba-3554825-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 25,
+      "text": "払い戻しはどうしたらいいのですか。",
+      "kana": "はらいもどしはどうしたらいいのですか。",
+      "cueKo": "환불은 어떻게 하면 되는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #83847",
+      "audioKey": "c/2b4bf974c4511914",
+      "key": "tatoeba-83847-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 26,
+      "text": "ありがとうございます。",
+      "kana": "ありがとうございます。",
+      "cueKo": "공손하게 고맙다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9559301",
+      "audioKey": "c/4ad50db06886ad5d",
+      "key": "tatoeba-9559301-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 27,
+      "text": "はい、分かりました。",
+      "kana": "はい、わかりました。",
+      "cueKo": "설명을 듣고 알겠다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899752",
+      "audioKey": "c/7ca1ada17273863a",
+      "key": "tatoeba-10899752-say"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 28,
+      "text": "今日はどうされましたか。",
+      "kana": "きょうはどうされましたか。",
+      "cueKo": "병원에서 \"오늘은 어떻게 오셨어요?\"라는 질문 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10588666",
+      "audioKey": "c/ba23a35d6d8552b0",
+      "key": "tatoeba-10588666-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 29,
+      "text": "痛みはいつからですか？",
+      "kana": "いたみはいつからですか？",
+      "cueKo": "\"통증은 언제부터예요?\"라는 질문 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9859016",
+      "audioKey": "c/77f801e8d1ba4ccc",
+      "key": "tatoeba-9859016-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 30,
+      "text": "どのような症状ですか。",
+      "kana": "どのようなしょうじょうですか。",
+      "cueKo": "\"어떤 증상이세요?\"라는 질문 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #200370",
+      "audioKey": "c/b811f57510930819",
+      "key": "tatoeba-200370-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 31,
+      "text": "どんな症状がありますか。",
+      "kana": "どんなしょうじょうがありますか。",
+      "cueKo": "\"어떤 증상이 있나요?\"라는 질문 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #199402",
+      "audioKey": "c/c3b73f829f681bad",
+      "key": "tatoeba-199402-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 32,
+      "text": "初めての診察ですか。",
+      "kana": "はじめてのしんさつですか。",
+      "cueKo": "\"처음 진료받으시나요?\"라는 질문 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #147557",
+      "audioKey": "c/a41aad133810d65c",
+      "key": "tatoeba-147557-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 33,
+      "text": "咳が出ますか。",
+      "kana": "せきがでますか。",
+      "cueKo": "기침이 나는지 묻는 의사의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #184712",
+      "audioKey": "c/7158c54d5dd5f4b4",
+      "key": "tatoeba-184712-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 34,
+      "text": "目まいがしますか？",
+      "kana": "めまいがしますか？",
+      "cueKo": "어지러운지 묻는 의사의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9865994",
+      "audioKey": "c/13db06a789835212",
+      "key": "tatoeba-9865994-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 35,
+      "text": "何かアレルギーはありますか？",
+      "kana": "なにかアレルギーはありますか？",
+      "cueKo": "알레르기가 있는지 묻는 질문 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2838403",
+      "audioKey": "c/149931b81f668065",
+      "key": "tatoeba-2838403-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 36,
+      "text": "今現在、何か飲んでいる薬はありますか？",
+      "kana": "いまげんざい、なにかのんでいるくすりはありますか？",
+      "cueKo": "지금 복용 중인 약이 있는지 묻는 질문 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8815926",
+      "audioKey": "c/c0ecc307780c9b9d",
+      "key": "tatoeba-8815926-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 37,
+      "text": "こちらの書類にご記入ください。",
+      "kana": "こちらのしょるいにごきにゅうください。",
+      "cueKo": "\"이 서류에 기입해 주세요\"라는 안내 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2903638",
+      "audioKey": "c/054c21d5bcbb2391",
+      "key": "tatoeba-2903638-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 38,
+      "text": "こちらに氏名・住所・電話番号をご記入ください。",
+      "kana": "こちらにしめい・じゅうしょ・でんわばんごうをごきにゅうください。",
+      "cueKo": "\"여기에 성명·주소·전화번호를 기입해 주세요\"라는 안내 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8866543",
+      "audioKey": "c/795c0f1765998896",
+      "key": "tatoeba-8866543-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 39,
+      "text": "診察しましょう。",
+      "kana": "しんさつしましょう。",
+      "cueKo": "\"진찰하겠습니다\"라는 의사의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #144771",
+      "audioKey": "c/10cfc509369c213d",
+      "key": "tatoeba-144771-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 40,
+      "text": "風邪ですね。",
+      "kana": "かぜですね。",
+      "cueKo": "\"감기네요\"라는 의사의 진단 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #83981",
+      "audioKey": "c/166f410d6cc5b8e7",
+      "key": "tatoeba-83981-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 41,
+      "text": "処方箋をお出しします。",
+      "kana": "しょほうせんをおだしします。",
+      "cueKo": "\"처방전을 드리겠습니다\"라는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2270834",
+      "audioKey": "c/7645b48a3c648242",
+      "key": "tatoeba-2270834-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 42,
+      "text": "痛い時は、痛み止めを飲んでください。",
+      "kana": "いたいときは、いたみどめをのんでください。",
+      "cueKo": "아플 때 진통제를 먹으라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11243057",
+      "audioKey": "c/a3ab4e0463e99975",
+      "key": "tatoeba-11243057-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 43,
+      "text": "お大事に。",
+      "kana": "おだいじに。",
+      "cueKo": "\"몸조리 잘하세요\"라는 인사 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #138002",
+      "audioKey": "c/74af27fc9f50701b",
+      "key": "tatoeba-138002-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 44,
+      "text": "どうぞお大事に。",
+      "kana": "どうぞおだいじに。",
+      "cueKo": "\"부디 몸조리 잘하세요\"라는 인사 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #201342",
+      "audioKey": "c/f6f7ca1674013f13",
+      "key": "tatoeba-201342-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 45,
+      "text": "申し訳ございません。",
+      "kana": "もうしわけございません。",
+      "cueKo": "직원의 정중한 사과 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1483682",
+      "audioKey": "c/257cb7f0328984e1",
+      "key": "tatoeba-1483682-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 46,
+      "text": "後ほど、ご連絡します。",
+      "kana": "のちほど、ごれんらくします。",
+      "cueKo": "\"나중에 연락드리겠습니다\"라는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10203581",
+      "audioKey": "c/8a9aecc6ee8fdfbb",
+      "key": "tatoeba-10203581-hear"
+    },
+    {
+      "unitOrd": 13,
+      "ord": 47,
+      "text": "少々お待ちください。",
+      "kana": "しょうしょうおまちください。",
+      "cueKo": "잠시 기다려 달라는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8886173",
+      "audioKey": "c/9812a178c3c3d2bc",
+      "key": "tatoeba-8886173-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 13,
+      "ord": 1,
+      "titleKo": "병원에서 증상 말하기",
+      "settingKo": "병원 접수와 진료실에서 의사에게 증상을 설명할 때",
+      "goalKo": "증상을 부드럽게 설명하고, 의사의 질문에 답하고, 약을 부탁한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            9
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            40
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            13
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            41
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 13,
+      "ord": 2,
+      "titleKo": "열쇠를 잃어버렸을 때",
+      "settingKo": "분실물을 신고하러 갔을 때",
+      "goalKo": "잃어버린 물건을 말하고, 안내에 따라 연락처를 적는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            38
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            27
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            46
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            26
+          ]
+        }
+      ]
+    }
+  ]
+}
