@@ -6,7 +6,7 @@ export const MAX_RECORDING_MS = 15_000;
 
 export type LocalRecordingState =
   | { status: "idle" | "requesting" | "recording" | "unsupported" | "denied" | "error" | "no_audio" | "interrupted" }
-  | { status: "ready"; url: string; mimeType: string; durationMs: number };
+  | { status: "ready"; url: string; mimeType: string; durationMs: number; onsetMs: number | null };
 
 export function localRecordingSupported(): boolean {
   // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser API capability probe.
@@ -227,7 +227,7 @@ export class LocalRecorder {
         if (blob.size === 0 || measured && onset === null) { this.fail(generation, "no_audio"); return; }
         try {
           this.url = this.createObjectURL!(blob);
-          this.emit({ status: "ready", url: this.url, mimeType: blob.type, durationMs });
+          this.emit({ status: "ready", url: this.url, mimeType: blob.type, durationMs, onsetMs: measured ? onset ?? null : null });
         } catch {
           this.fail(generation, "error");
         }

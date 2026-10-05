@@ -6,6 +6,8 @@ import { ReviewSyncStatus } from "./features/session/ReviewSyncStatus";
 import { SessionSummaryStatus } from "./features/session/SessionSummaryStatus";
 import { setAnswerSubmitProfile } from "./features/session/useAnswerSubmit";
 import { setSessionSummaryProfile } from "./features/session/useSessionSummary";
+import { setConversationAttemptProfile } from "./features/conversation/attemptOutbox";
+import { ConversationAttemptSync } from "./features/conversation/ConversationAttemptSync";
 import { resetSettingsClientState } from "./features/settings/useSettings";
 import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
 import { nativeShell, needsExplicitSelection, setSessionToken } from "./platform/sessionToken";
@@ -23,10 +25,11 @@ import "./styles.css";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail", "study", "about"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
-const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking"]);
+const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking", "talk"]);
 
 type Gate = "checking" | "error" | "update" | "choosing" | "locked" | "unlocked";
 
+// oxlint-disable-next-line anti-slop/no-unknown-parameters -- Promise rejection is an untyped I/O boundary.
 function isProfileRequired(caught: unknown): boolean {
   return caught instanceof ApiClientError && (caught.code === "pin_required" || caught.code === "profile_required" || caught.code === "profile_changed");
 }
@@ -67,6 +70,7 @@ export function App() {
     setSessionToken(null);
     setAnswerSubmitProfile(null);
     setSessionSummaryProfile(null);
+    setConversationAttemptProfile(null);
     resetSettingsClientState();
     setActiveProfile(null);
     setTheme("quiet-technical");
@@ -185,6 +189,7 @@ export function App() {
   useEffect(() => {
     setAnswerSubmitProfile(activeProfile?.id ?? null);
     setSessionSummaryProfile(activeProfile?.id ?? null);
+    setConversationAttemptProfile(activeProfile?.id ?? null);
     if (!activeProfile) resetSettingsClientState();
   }, [activeProfile]);
 
@@ -199,6 +204,7 @@ export function App() {
     const controller = new AbortController();
     let superseded = false;
     const updateTheme = (event: Event) => {
+      // SAFETY: SETTINGS_UPDATED_EVENT is only dispatched with a SettingsResponse patch in this client.
       const next = (event as CustomEvent<Partial<SettingsResponse>>).detail?.theme;
       if (next) {
         superseded = true;
@@ -260,6 +266,7 @@ export function App() {
         {headerScreens.has(screen) && <AppHeader onSwitch={() => void switchProfile()} />}
         <ReviewSyncStatus />
         <SessionSummaryStatus />
+        <ConversationAttemptSync />
         <main><AppRoutes /></main>
         {!navlessScreens.has(screen) && !sessionActive && <BottomNav />}
       </ProfileProvider>
@@ -268,5 +275,6 @@ export function App() {
     content = <main><p>프로필 확인 중…</p></main>;
   }
 
+  // SAFETY: each theme token map is CSS custom-property declarations.
   return <div className="app" data-theme={theme} style={themes[theme].cssVariables as CSSProperties}>{content}</div>;
 }

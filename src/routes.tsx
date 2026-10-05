@@ -13,6 +13,7 @@ import { SettingsScreen } from "./screens/SettingsScreen";
 import { SpeakingScreen } from "./screens/SpeakingScreen";
 import { StatsScreen } from "./screens/StatsScreen";
 import { UnitStudyScreen } from "./screens/UnitStudyScreen";
+import { TalkScreen } from "./screens/TalkScreen";
 
 export type Screen =
   | "onboarding"
@@ -26,6 +27,7 @@ export type Screen =
   | "detail"
   | "study"
   | "speaking"
+  | "talk"
   | "stats"
   | "settings"
   | "about";
@@ -48,6 +50,7 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "detail", path: "/detail/:key", Component: DetailScreen },
   { screen: "study", path: "/study/:unitId", Component: UnitStudyScreen },
   { screen: "speaking", path: "/speaking/:unitId", Component: SpeakingScreen },
+  { screen: "talk", path: "/talk/:unitId", Component: TalkScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
   { screen: "settings", path: "/settings", Component: SettingsScreen },
   { screen: "about", path: "/about", Component: AboutScreen },

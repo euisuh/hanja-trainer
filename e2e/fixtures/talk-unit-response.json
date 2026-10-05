@@ -1,0 +1,7 @@
+{
+  "unit": { "id": 1, "track": "jp", "ord": 1, "titleKo": "다시 묻기", "goalKo": "상대방에게 다시 말해 달라고 한다" },
+  "chunks": [
+    { "id": 1, "unitId": 1, "ord": 1, "ja": "もう一度お願いします", "kana": "もういちどおねがいします", "koCue": "다시 말해 달라고 하기", "register": "polite", "role": "say", "sourceKind": "corpus", "sourceRef": "Tatoeba #1", "audioKey": "jp/c/0123456789abcdef.mp3", "audioUrl": "/api/audio/jp/c/0123456789abcdef.mp3" }
+  ],
+  "scenes": []
+}

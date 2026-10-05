@@ -1,0 +1,26 @@
+.talk-screen { background: repeating-linear-gradient(transparent 0 31px, var(--talk-ruled-line) 31px 32px); color: var(--talk-ink); font-family: var(--talk-font-ui); min-height: 100dvh; padding: 18px 18px 96px 58px; position: relative; }
+.talk-screen::before { background: var(--talk-pencil-red); bottom: 0; content: ""; left: 42px; opacity: .45; position: absolute; top: 0; width: 1px; }
+.talk-screen__meta { background: var(--talk-paper); color: var(--talk-muted); display: flex; font: 12px var(--talk-font-meta); justify-content: space-between; padding: 2px 0; position: relative; }
+.talk-screen__goal, .talk-screen__cue, .talk-screen__answer, .talk-screen__attempt { background: var(--talk-paper); position: relative; }
+.talk-screen__goal { color: var(--talk-tab-green); margin: 28px 0 8px; padding: 2px 0; }
+.talk-screen__page { max-width: 640px; }
+.talk-screen__cue { font-size: 20px; line-height: 1.6; margin: 0; padding: 4px 0; }
+.talk-screen__answer { margin-top: 24px; padding: 4px 0; }
+.talk-screen__answer strong { display: block; font: 600 34px/1.5 var(--talk-font-jp); }
+.talk-screen__answer span { color: var(--talk-pencil-red); font: 500 14px var(--talk-font-reading); }
+.talk-screen__audio { margin-top: 12px; }
+.talk-screen button { background: var(--talk-paper); border: 1.5px solid var(--talk-ink); border-radius: 3px; color: var(--talk-ink); font: 600 14px var(--talk-font-ui); padding: 10px 12px; }
+.talk-screen button:focus-visible { outline: 2px solid var(--talk-tab-green); outline-offset: 2px; }
+.talk-screen button:disabled { opacity: .55; }
+.talk-screen kbd { font: 11px var(--talk-font-meta); opacity: .7; }
+.talk-screen__attempt { border: 1.5px solid var(--talk-ink); margin-top: 24px; padding: 12px; }
+.talk-screen__attempt small { color: var(--talk-muted); font: 12px var(--talk-font-meta); }
+.talk-screen__attempt p { margin-bottom: 0; }
+.talk-screen__ratings { display: grid; gap: 8px; grid-template-columns: repeat(3, 1fr); margin-top: 24px; }
+.talk-screen__ratings .is-preselected { background: var(--talk-highlighter); }
+.talk-screen__bar { background: var(--talk-paper); border-top: 1.5px solid var(--talk-ink); bottom: 0; display: flex; gap: 8px; left: 0; padding: 10px max(18px, calc((100% - 640px) / 2)); position: fixed; right: 0; }
+.talk-screen__bar button { flex: 1; }
+.talk-screen__bar .talk-screen__record { background: var(--talk-pencil-red); border-color: var(--talk-pencil-red); color: var(--talk-paper); }
+@media (prefers-reduced-motion: no-preference) { .talk-screen__page { animation: talk-page-in 140ms ease-out; } }
+@keyframes talk-page-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+@media (max-width: 600px) { .talk-screen { padding-left: 44px; } .talk-screen::before { left: 30px; } }

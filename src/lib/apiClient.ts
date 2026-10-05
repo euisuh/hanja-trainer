@@ -3,6 +3,13 @@ import { PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEA
 import { apiUrl } from "../platform/apiUrl";
 import { discardSessionToken, getSessionToken, nativeShell, renewSessionToken, setSessionToken } from "../platform/sessionToken";
 import { TRACKS, type Track } from "../../shared/types";
+import type { ConversationChunk, ConversationScene, ConversationSceneTurn, ConversationUnit } from "../../shared/types";
+
+export type ConversationUnitResponse = {
+  unit: ConversationUnit;
+  chunks: Array<ConversationChunk & { audioUrl: string }>;
+  scenes: Array<ConversationScene & { turns: ConversationSceneTurn[] }>;
+};
 
 export class ApiClientError extends Error {
   constructor(public readonly status: number, public readonly code: string, message: string, public readonly retryAfter?: number) {
@@ -158,6 +165,7 @@ function keepSessionToken<T extends object>(body: T): T {
 }
 
 export const apiClient = {
+  conversationUnit: (unitId: number, signal?: AbortSignal) => requestJson<ConversationUnitResponse>(`/api/conv/units/${unitId}`, { signal }),
   curriculum: (track: Track, signal?: AbortSignal) => requestJson<CurriculumResponse>(`/api/curriculum?track=${track}`, { signal }),
   unitStudy: (unitId: number, signal?: AbortSignal) => requestJson<UnitStudyResponse>(`/api/curriculum/units/${unitId}`, { signal }),
   character: (key: string, signal?: AbortSignal) => requestJson<CharacterDetailResponse>(`/api/characters/${encodeURIComponent(key)}`, { signal }),
