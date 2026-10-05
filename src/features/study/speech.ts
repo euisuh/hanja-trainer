@@ -5,40 +5,113 @@ import { apiUrl } from "../../platform/apiUrl";
 export const MAX_RECORDING_MS = 15_000;
 
 export type LocalRecordingState =
-  | { status: "idle" | "requesting" | "recording" | "unsupported" | "denied" | "error" }
-  | { status: "ready"; url: string };
+  | { status: "idle" | "requesting" | "recording" | "unsupported" | "denied" | "error" | "no_audio" | "interrupted" }
+  | { status: "ready"; url: string; mimeType: string; durationMs: number };
 
 export function localRecordingSupported(): boolean {
+  // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser API capability probe.
   return typeof navigator !== "undefined" && typeof navigator.mediaDevices?.getUserMedia === "function"
+    // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser API capability probe.
     && typeof MediaRecorder !== "undefined" && typeof URL.createObjectURL === "function";
 }
 
 type TimerId = ReturnType<typeof globalThis.setTimeout>;
 type RecordingEnvironment = {
   getUserMedia?: (() => Promise<MediaStream>) | null;
-  createRecorder?: ((stream: MediaStream) => MediaRecorder) | null;
+  createRecorder?: ((stream: MediaStream, options?: MediaRecorderOptions) => MediaRecorder) | null;
   createObjectURL?: ((blob: Blob) => string) | null;
   revokeObjectURL?: (url: string) => void;
   setTimer?: (callback: () => void, delay: number) => TimerId;
   clearTimer?: (timer: TimerId) => void;
+  now?: () => number;
 };
+
+const recordingMimeTypes = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm"];
+const ONSET_RMS_THRESHOLD = 0.02;
+
+export function recordingMimeType(isSupported: (type: string) => boolean): string | undefined {
+  return recordingMimeTypes.find((type) => isSupported(type));
+}
 
 function stopTracks(stream: MediaStream | null) {
   for (const track of stream?.getTracks() ?? []) track.stop();
 }
 
+// oxlint-disable-next-line anti-slop/no-unknown-parameters -- Browser rejection reason is untyped.
 function permissionDenied(error: unknown): boolean {
+  // oxlint-disable-next-line anti-slop/no-runtime-typeof -- DOMException-like browser errors lack a shared type.
   const name = error && typeof error === "object" && "name" in error ? String(error.name) : "";
   return name === "NotAllowedError" || name === "SecurityError";
 }
 
+function audioContextConstructor(): typeof AudioContext | undefined {
+  if (typeof window === "undefined") return undefined;
+  // SAFETY: The optional legacy constructor is the only non-standard Window member read here.
+  const legacyWindow = window as Window & { webkitAudioContext?: typeof AudioContext };
+  return window.AudioContext ?? legacyWindow.webkitAudioContext;
+}
+
+// undefined = onset could not be measured here (no AudioContext or a stream it cannot read); null = measured silence.
+export function measureOnset(stream: MediaStream, signal?: AbortSignal): Promise<number | null | undefined> {
+  const AudioContextConstructor = audioContextConstructor();
+  if (!AudioContextConstructor) return Promise.resolve(undefined);
+  let context: AudioContext;
+  try {
+    context = new AudioContextConstructor();
+  } catch {
+    return Promise.resolve(undefined);
+  }
+  let source: MediaStreamAudioSourceNode;
+  let analyser: AnalyserNode;
+  try {
+    source = context.createMediaStreamSource(stream);
+    analyser = context.createAnalyser();
+  } catch {
+    void context.close().catch(() => undefined);
+    return Promise.resolve(undefined);
+  }
+  analyser.fftSize = 2048;
+  source.connect(analyser);
+  const samples = new Float32Array(analyser.fftSize);
+  const startedAt = performance.now();
+  return new Promise((resolve) => {
+    let cancelFrame: (() => void) | null = null;
+    const finish = (onset: number | null) => {
+      cancelFrame?.();
+      signal?.removeEventListener("abort", onAbort);
+      source.disconnect();
+      analyser.disconnect();
+      void context.close().catch(() => undefined);
+      resolve(onset);
+    };
+    const onAbort = () => finish(null);
+    const sample = () => {
+      analyser.getFloatTimeDomainData(samples);
+      const rms = Math.sqrt(samples.reduce((sum, value) => sum + value ** 2, 0) / samples.length);
+      if (rms >= ONSET_RMS_THRESHOLD) { finish(Math.max(0, performance.now() - startedAt)); return; }
+      const requestFrame = globalThis.requestAnimationFrame;
+      if (requestFrame !== undefined) {
+        const frame = requestFrame(sample);
+        cancelFrame = () => globalThis.cancelAnimationFrame?.(frame);
+      } else {
+        const timer = globalThis.setTimeout(sample, 16);
+        cancelFrame = () => globalThis.clearTimeout(timer);
+      }
+    };
+    if (signal?.aborted) { finish(null); return; }
+    signal?.addEventListener("abort", onAbort, { once: true });
+    sample();
+  });
+}
+
 export class LocalRecorder {
   private readonly getUserMedia: (() => Promise<MediaStream>) | null;
-  private readonly createRecorder: ((stream: MediaStream) => MediaRecorder) | null;
+  private readonly createRecorder: ((stream: MediaStream, options?: MediaRecorderOptions) => MediaRecorder) | null;
   private readonly createObjectURL: ((blob: Blob) => string) | null;
   private readonly revokeObjectURL: (url: string) => void;
   private readonly setTimer: (callback: () => void, delay: number) => TimerId;
   private readonly clearTimer: (timer: TimerId) => void;
+  private readonly now: () => number;
   private recorder: MediaRecorder | null = null;
   private stream: MediaStream | null = null;
   private timer: TimerId | null = null;
@@ -47,6 +120,9 @@ export class LocalRecorder {
   private generation = 0;
   private disposed = false;
   private state: LocalRecordingState;
+  private startedAt: number | null = null;
+  private onset: Promise<number | null | undefined> | null = null;
+  private onsetAbort: AbortController | null = null;
 
   constructor(private readonly onChange: (state: LocalRecordingState) => void, environment: RecordingEnvironment = {}) {
     const mediaDevices = typeof navigator === "undefined" ? undefined : navigator.mediaDevices;
@@ -54,11 +130,13 @@ export class LocalRecorder {
     this.getUserMedia = environment.getUserMedia === undefined
       ? mediaDevices?.getUserMedia ? () => mediaDevices.getUserMedia({ audio: true }) : null
       : environment.getUserMedia;
-    this.createRecorder = environment.createRecorder === undefined ? Recorder ? (stream) => new Recorder(stream) : null : environment.createRecorder;
+    this.createRecorder = environment.createRecorder === undefined ? Recorder ? (stream, options) => new Recorder(stream, options) : null : environment.createRecorder;
+    // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser API capability probe.
     this.createObjectURL = environment.createObjectURL === undefined ? typeof URL.createObjectURL === "function" ? (blob) => URL.createObjectURL(blob) : null : environment.createObjectURL;
     this.revokeObjectURL = environment.revokeObjectURL ?? ((url) => URL.revokeObjectURL(url));
     this.setTimer = environment.setTimer ?? ((callback, delay) => globalThis.setTimeout(callback, delay));
     this.clearTimer = environment.clearTimer ?? ((timer) => globalThis.clearTimeout(timer));
+    this.now = environment.now ?? (() => Date.now());
     this.state = this.supported ? { status: "idle" } : { status: "unsupported" };
   }
 
@@ -73,6 +151,9 @@ export class LocalRecorder {
   }
 
   private clearCapture() {
+    this.onsetAbort?.abort();
+    this.onsetAbort = null;
+    this.onset = null;
     if (this.timer !== null) this.clearTimer(this.timer);
     this.timer = null;
     const recorder = this.recorder;
@@ -88,6 +169,7 @@ export class LocalRecorder {
     stopTracks(this.stream);
     this.stream = null;
     this.chunks = [];
+    this.startedAt = null;
   }
 
   private releaseClip() {
@@ -95,7 +177,7 @@ export class LocalRecorder {
     this.url = null;
   }
 
-  private fail(generation: number, status: "denied" | "error") {
+  private fail(generation: number, status: "denied" | "error" | "no_audio" | "interrupted") {
     if (generation !== this.generation) return;
     this.generation += 1;
     this.clearCapture();
@@ -118,29 +200,45 @@ export class LocalRecorder {
     }
     if (generation !== this.generation || this.disposed) { stopTracks(stream); return; }
     this.stream = stream;
+    if (audioContextConstructor()) {
+      this.onsetAbort = new AbortController();
+      this.onset = measureOnset(stream, this.onsetAbort.signal);
+    }
     try {
-      const recorder = this.createRecorder!(stream);
+      const Recorder = globalThis.MediaRecorder;
+      const mimeType = Recorder?.isTypeSupported ? recordingMimeType((type) => Recorder.isTypeSupported(type)) : undefined;
+      const recorder = this.createRecorder!(stream, mimeType ? { mimeType } : undefined);
       this.recorder = recorder;
       recorder.ondataavailable = (event) => { if (generation === this.generation && event.data.size > 0) this.chunks.push(event.data); };
       recorder.onerror = () => this.fail(generation, "error");
-      recorder.onstop = () => {
+      const complete = (onset: number | null | undefined, measured: boolean) => {
         if (generation !== this.generation) return;
+        this.onset = null;
+        this.onsetAbort = null;
         this.recorder = null;
         if (this.timer !== null) this.clearTimer(this.timer);
         this.timer = null;
         stopTracks(this.stream);
         this.stream = null;
-        const blob = new Blob(this.chunks, { type: recorder.mimeType || "audio/webm" });
+        const blob = new Blob(this.chunks, { type: recorder.mimeType || mimeType || "audio/webm" });
         this.chunks = [];
-        if (blob.size === 0) { this.fail(generation, "error"); return; }
+        const durationMs = this.startedAt === null ? 0 : Math.max(0, this.now() - this.startedAt);
+        this.startedAt = null;
+        if (blob.size === 0 || measured && onset === null) { this.fail(generation, "no_audio"); return; }
         try {
           this.url = this.createObjectURL!(blob);
-          this.emit({ status: "ready", url: this.url });
+          this.emit({ status: "ready", url: this.url, mimeType: blob.type, durationMs });
         } catch {
           this.fail(generation, "error");
         }
       };
+      recorder.onstop = () => {
+        const onset = this.onset;
+        if (onset) { void onset.then((value) => complete(value, true)); return; }
+        complete(null, false);
+      };
       recorder.start();
+      this.startedAt = this.now();
       this.timer = this.setTimer(() => this.stop(), MAX_RECORDING_MS);
       this.emit({ status: "recording" });
     } catch {
@@ -154,6 +252,7 @@ export class LocalRecorder {
     if (this.timer !== null) this.clearTimer(this.timer);
     this.timer = null;
     try {
+      this.onsetAbort?.abort();
       recorder.stop();
       stopTracks(this.stream);
       this.stream = null;
@@ -167,6 +266,11 @@ export class LocalRecorder {
     this.clearCapture();
     this.releaseClip();
     this.emit(this.supported ? { status: "idle" } : { status: "unsupported" });
+  }
+
+  interrupt() {
+    if (this.state.status !== "requesting" && this.state.status !== "recording") return;
+    this.fail(this.generation, "interrupted");
   }
 
   dispose() {

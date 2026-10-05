@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { joinSpokenReadings } from "../../../shared/spokenReading";
-import { cachedAudioUrl, LocalRecorder, MAX_RECORDING_MS, matchingVoice, sentenceAudioUrl, speechLanguages, type LocalRecordingState } from "./speech";
+import { cachedAudioUrl, LocalRecorder, MAX_RECORDING_MS, matchingVoice, measureOnset, recordingMimeType, sentenceAudioUrl, speechLanguages, type LocalRecordingState } from "./speech";
 
 class FakeRecorder {
   state: RecordingState = "inactive";
@@ -12,13 +12,20 @@ class FakeRecorder {
   start() { this.state = "recording"; }
   stop() {
     this.state = "inactive";
+    // SAFETY: The recorder callback only reads BlobEvent.data in this test.
     this.ondataavailable?.({ data: new Blob(["voice"]) } as BlobEvent);
     this.onstop?.(new Event("stop"));
   }
 }
 
+function asMediaRecorder(recorder: FakeRecorder): MediaRecorder {
+  // SAFETY: FakeRecorder supplies every member LocalRecorder reads in these unit tests.
+  return recorder as MediaRecorder;
+}
+
 function stream(stops: { count: number }): MediaStream {
-  return { getTracks: () => [{ stop: () => { stops.count += 1; } }] } as unknown as MediaStream;
+  // SAFETY: Tests exercise only MediaStream.getTracks and each fake track's stop method.
+  return { getTracks: () => [{ stop: () => { stops.count += 1; } }] } as MediaStream;
 }
 
 describe("study speech voices", () => {
@@ -51,6 +58,33 @@ describe("study speech voices", () => {
     expect(sentenceAudioUrl("jp", "Tatoeba #abc")).toBeNull();
   });
 
+  it("prefers mp4, then webm opus, then webm recording formats", () => {
+    expect(recordingMimeType((type) => type !== "audio/mp4")).toBe("audio/webm;codecs=opus");
+    expect(recordingMimeType((type) => type === "audio/webm")).toBe("audio/webm");
+    expect(recordingMimeType(() => false)).toBeUndefined();
+  });
+
+  it("measures onset from a synthetic silence-then-tone buffer", async () => {
+    const frames = [new Float32Array(2048), Float32Array.from({ length: 2048 }, () => 0.05)];
+    class FakeAnalyser {
+      fftSize = 0;
+      getFloatTimeDomainData(target: Float32Array) { target.set(frames.shift() ?? new Float32Array(target.length)); }
+      disconnect() {}
+    }
+    class FakeAudioContext {
+      createMediaStreamSource() { return { connect: () => undefined, disconnect: () => undefined }; }
+      createAnalyser() { return new FakeAnalyser(); }
+      close() { return Promise.resolve(); }
+    }
+    vi.stubGlobal("window", { AudioContext: FakeAudioContext });
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { queueMicrotask(() => callback(0)); return 1; });
+    try {
+      expect(await measureOnset(stream({ count: 0 }))).toBeTypeOf("number");
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("records for at most 15 seconds and revokes replaced or discarded clips", async () => {
     const states: LocalRecordingState[] = [];
     const stops = { count: 0 };
@@ -59,10 +93,14 @@ describe("study speech voices", () => {
     let urls = 0;
     const recorder = new LocalRecorder((state) => states.push(state), {
       getUserMedia: async () => stream(stops),
-      createRecorder: () => new FakeRecorder() as unknown as MediaRecorder,
+      createRecorder: () => asMediaRecorder(new FakeRecorder()),
       createObjectURL: () => `blob:clip-${urls += 1}`,
       revokeObjectURL: (url) => revoked.push(url),
-      setTimer: (callback, delay) => { timers.push({ callback, delay }); return timers.length as unknown as ReturnType<typeof setTimeout>; },
+      setTimer: (callback, delay) => {
+        timers.push({ callback, delay });
+        // SAFETY: Timer handles remain opaque; this fake only needs a stable handle.
+        return timers.length as ReturnType<typeof setTimeout>;
+      },
       clearTimer: () => undefined,
     });
 
@@ -70,13 +108,13 @@ describe("study speech voices", () => {
     expect(recorder.currentState.status).toBe("recording");
     expect(timers[0].delay).toBe(MAX_RECORDING_MS);
     timers[0].callback();
-    expect(recorder.currentState).toEqual({ status: "ready", url: "blob:clip-1" });
+    expect(recorder.currentState).toMatchObject({ status: "ready", url: "blob:clip-1", mimeType: "audio/webm" });
     expect(stops.count).toBe(1);
 
     await recorder.record();
     expect(revoked).toEqual(["blob:clip-1"]);
     recorder.stop();
-    expect(recorder.currentState).toEqual({ status: "ready", url: "blob:clip-2" });
+    expect(recorder.currentState).toMatchObject({ status: "ready", url: "blob:clip-2", mimeType: "audio/webm" });
     recorder.discard();
     expect(recorder.currentState).toEqual({ status: "idle" });
     expect(revoked).toEqual(["blob:clip-1", "blob:clip-2"]);
@@ -91,7 +129,7 @@ describe("study speech voices", () => {
 
     const denied = new LocalRecorder(() => undefined, {
       getUserMedia: async () => { throw Object.assign(new Error("no"), { name: "NotAllowedError" }); },
-      createRecorder: () => new FakeRecorder() as unknown as MediaRecorder,
+      createRecorder: () => asMediaRecorder(new FakeRecorder()),
       createObjectURL: () => "blob:unused",
     });
     await denied.record();
@@ -104,7 +142,7 @@ describe("study speech voices", () => {
     const pending = new Promise<MediaStream>((resolve) => { resolveStream = resolve; });
     const waiting = new LocalRecorder(() => undefined, {
       getUserMedia: () => pending,
-      createRecorder: () => new FakeRecorder() as unknown as MediaRecorder,
+      createRecorder: () => asMediaRecorder(new FakeRecorder()),
       createObjectURL: () => "blob:unused",
     });
     const request = waiting.record();
@@ -122,5 +160,56 @@ describe("study speech voices", () => {
     await broken.record();
     expect(broken.currentState.status).toBe("error");
     expect(errorStops.count).toBe(1);
+  });
+
+  it("discards interrupted, empty, and silent recordings", async () => {
+    const stops = { count: 0 };
+    const interrupted = new LocalRecorder(() => undefined, {
+      getUserMedia: async () => stream(stops),
+      createRecorder: () => asMediaRecorder(new FakeRecorder()),
+      createObjectURL: () => "blob:unused",
+    });
+    await interrupted.record();
+    interrupted.interrupt();
+    expect(interrupted.currentState.status).toBe("interrupted");
+    expect(stops.count).toBe(1);
+
+    class EmptyRecorder extends FakeRecorder {
+      stop() { this.state = "inactive"; this.onstop?.(new Event("stop")); }
+    }
+    const empty = new LocalRecorder(() => undefined, {
+      getUserMedia: async () => stream({ count: 0 }),
+      createRecorder: () => asMediaRecorder(new EmptyRecorder()),
+      createObjectURL: () => "blob:unused",
+    });
+    await empty.record();
+    empty.stop();
+    expect(empty.currentState.status).toBe("no_audio");
+
+    class SilentAnalyser {
+      fftSize = 0;
+      getFloatTimeDomainData(target: Float32Array) { target.fill(0); }
+      disconnect() {}
+    }
+    class SilentAudioContext {
+      createMediaStreamSource() { return { connect: () => undefined, disconnect: () => undefined }; }
+      createAnalyser() { return new SilentAnalyser(); }
+      close() { return Promise.resolve(); }
+    }
+    vi.stubGlobal("window", { AudioContext: SilentAudioContext });
+    vi.stubGlobal("requestAnimationFrame", () => 1);
+    try {
+      const silent = new LocalRecorder(() => undefined, {
+        getUserMedia: async () => stream({ count: 0 }),
+        createRecorder: () => asMediaRecorder(new FakeRecorder()),
+        createObjectURL: () => "blob:unused",
+      });
+      await silent.record();
+      silent.stop();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(silent.currentState.status).toBe("no_audio");
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });

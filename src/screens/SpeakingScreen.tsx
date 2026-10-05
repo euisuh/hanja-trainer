@@ -4,6 +4,7 @@ import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, matchingVoice, sentenceAudioUrl, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
 import { trackThemes } from "../features/tracks/trackTheme";
 import { apiClient } from "../lib/apiClient";
+import { onAppInactive } from "../platform/lifecycle";
 import type { ApiSentence, UnitStudyResponse } from "../../shared/api";
 import type { Track } from "../../shared/types";
 import "../features/study/study.css";
@@ -53,6 +54,8 @@ export function SpeakingScreen() {
     };
   }, []);
 
+  useEffect(() => onAppInactive(() => recorderRef.current?.interrupt()), []);
+
   useEffect(() => {
     if (!Number.isSafeInteger(unitId) || unitId < 1) return;
     const controller = new AbortController();
@@ -60,6 +63,7 @@ export function SpeakingScreen() {
       setDetail(content);
       setIndex(0);
       setError("");
+    // oxlint-disable-next-line anti-slop/no-unknown-parameters -- Promise rejection is an untyped I/O boundary.
     }).catch((caught: unknown) => {
       if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "말하기 카드를 불러오지 못했습니다.");
     });
@@ -101,6 +105,7 @@ export function SpeakingScreen() {
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     };
+    // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser audio constructor capability probe.
     if (!cachedUrl || typeof Audio !== "function") { fallback(); return; }
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     const audio = new Audio(cachedUrl);
@@ -145,6 +150,7 @@ export function SpeakingScreen() {
   if (!card) return <section className="speaking-empty"><button onClick={back} type="button">← 학습 지도로 (Esc)</button><h1>말하기 연습</h1><p>이 유닛에는 읽기가 확인된 일본어·중국어 예문이 없습니다.</p></section>;
 
   const theme = trackThemes[card.track];
+  // SAFETY: These are CSS custom properties omitted from React's CSSProperties type.
   return (
     <section className="speaking-session" data-speaking-track={card.track} style={{ "--speaking-accent": theme.accent, "--speaking-accent-text": theme.accentText, "--speaking-soft": theme.soft, "--speaking-font": theme.font } as CSSProperties}>
       <header className="speaking-session__chrome">
@@ -170,12 +176,14 @@ export function SpeakingScreen() {
           {recording.status === "unsupported" && <p role="alert">이 브라우저는 로컬 녹음을 지원하지 않습니다.</p>}
           {recording.status === "denied" && <p role="alert">마이크 권한이 거부되었습니다. 브라우저 권한을 확인해 주세요.</p>}
           {recording.status === "error" && <p role="alert">녹음을 만들지 못했습니다. 다시 시도해 주세요.</p>}
+          {recording.status === "no_audio" && <p role="alert">음성이 감지되지 않았습니다. 다시 시도해 주세요.</p>}
+          {recording.status === "interrupted" && <p role="alert">녹음이 중단되었습니다. 다시 시도해 주세요.</p>}
           {recording.status === "requesting" && <p>마이크 권한을 확인하는 중…</p>}
           {recording.status === "recording" && <p>녹음 중 · 최대 15초</p>}
           {recording.status === "recording" ? <button onClick={() => recorderRef.current?.stop()} type="button">녹음 중지</button> : recording.status === "ready" ? <>
             <button onClick={() => void recorderRef.current?.record()} type="button">다시 녹음</button>
             <button onClick={() => recorderRef.current?.discard()} type="button">녹음 삭제</button>
-          </> : <button disabled={recording.status === "requesting" || recording.status === "unsupported"} onClick={() => void recorderRef.current?.record()} type="button">{recording.status === "denied" || recording.status === "error" ? "녹음 다시 시도" : "녹음 시작"}</button>}
+          </> : <button disabled={recording.status === "requesting" || recording.status === "unsupported"} onClick={() => void recorderRef.current?.record()} type="button">{recording.status === "denied" || recording.status === "error" || recording.status === "no_audio" || recording.status === "interrupted" ? "녹음 다시 시도" : "녹음 시작"}</button>}
         </div>
         <p className="speaking-card__privacy">녹음은 이 화면의 메모리에만 머물며 저장·전송·채점되지 않습니다.</p>
       </article>
