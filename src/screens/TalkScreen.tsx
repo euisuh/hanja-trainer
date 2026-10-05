@@ -31,6 +31,9 @@ export function TalkScreen() {
   const { id: profileId } = useActiveProfile();
   const navigate = useNavigate();
   const [content, setContent] = useState<ConversationSessionResponse | null>(null);
+  // ponytail: character data is ~488 KB, so load the hanja bridge on demand instead of bloating the app chunk.
+  const [bridge, setBridge] = useState<typeof import("../../shared/hanjaBridge").hanjaBridge | null>(null);
+  useEffect(() => { void import("../../shared/hanjaBridge").then((module) => setBridge(() => module.hanjaBridge)); }, []);
   const [items, setItems] = useState<SessionEntry[]>([]);
   const [index, setIndex] = useState(0);
   const [stage, setStage] = useState<TalkStage>("cue");
@@ -182,7 +185,7 @@ export function TalkScreen() {
     <div className="talk-screen__page">
       <p className="talk-screen__cue">{card.koCue}</p>
       {stage !== "cue" && <div className="talk-screen__answer">
-        <strong lang="ja">{card.ja}</strong>
+        <strong lang="ja">{(bridge ? bridge(card.ja) : [{ text: card.ja, reading: null }]).map((run, index) => run.reading === null ? run.text : <span className="talk-screen__hanja-bridge" key={index}><mark>{run.text}</mark><small>{run.text}({run.reading})</small></span>)}</strong>
         <span lang="ja">{card.kana}</span>
         <button className="talk-screen__audio" onClick={playReference} type="button">듣기 <kbd>Space</kbd></button>
         {recording.status === "ready" && <label className="talk-screen__self-audio">내 목소리 <audio controls ref={selfAudioRef} src={recording.url} /> <kbd>Shift+Space</kbd></label>}

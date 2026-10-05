@@ -7,6 +7,9 @@
 .talk-screen__cue { font-size: 20px; line-height: 1.6; margin: 0; padding: 4px 0; }
 .talk-screen__answer { margin-top: 24px; padding: 4px 0; }
 .talk-screen__answer strong { display: block; font: 600 34px/1.5 var(--talk-font-jp); }
+.talk-screen__answer .talk-screen__hanja-bridge { color: inherit; display: inline-block; font: inherit; position: relative; }
+.talk-screen__hanja-bridge mark { background: var(--talk-highlighter); color: inherit; }
+.talk-screen__hanja-bridge small { background: var(--talk-paper); border: 1px solid var(--talk-ink); font: 12px var(--talk-font-ui); left: 50%; padding: 1px 3px; position: absolute; top: 100%; transform: translateX(-50%); white-space: nowrap; z-index: 1; }
 .talk-screen__answer span { color: var(--talk-pencil-red); font: 500 14px var(--talk-font-reading); }
 .talk-screen__audio { margin-top: 12px; }
 .talk-screen__source { color: var(--talk-muted); display: block; font: 12px var(--talk-font-meta); margin-top: 12px; }
