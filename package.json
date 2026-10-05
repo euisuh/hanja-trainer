@@ -20,6 +20,7 @@
     "preseed:remote": "npm run sentences:readings",
     "seed:remote": "tsx scripts/seed.ts --remote data/characters/*.json data/sentences/*.json data/words/*.json",
     "audio:generate": "tsx scripts/generate-audio.ts --remote data/characters/*.json",
+    "audio:generate:conv": "tsx scripts/generate-audio.ts --conversation --remote",
     "deploy": "npm run build && wrangler deploy",
     "build:mobile": "VITE_API_ORIGIN=https://hanja.uiseoya.com vite build && cap sync",
     "android": "npm run build:mobile && cap open android",

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { SeedSentenceDocument, SeedSentenceEntry } from "../shared/types.ts";
-import { buildSentenceAudioEntries, cloudflareAccessHeaders } from "./generate-audio.ts";
+import { buildConversationAudioEntries, buildSentenceAudioEntries, cloudflareAccessHeaders, conversationAudioKey, missingRemote } from "./generate-audio.ts";
 
 test("builds Cloudflare Access service-token headers", () => {
   assert.deepEqual(cloudflareAccessHeaders({ CF_ACCESS_CLIENT_ID: "id", CF_ACCESS_CLIENT_SECRET: "secret" }), {
@@ -42,4 +42,35 @@ test("dedupes repeated Tatoeba ids and rejects conflicting text for the same id"
 test("skips sentences whose source is not a Tatoeba reference", () => {
   const entries = buildSentenceAudioEntries([{ sentences: [sentence({ source: "한국어문회 예문" })] }]);
   assert.deepEqual(entries, []);
+});
+
+test("builds stable hashed conversation keys per text, voice, and speed", () => {
+  const key = conversationAudioKey("もう一度お願いします。", "ja-JP-Neural2-B");
+  assert.match(key, /^[0-9a-f]{16}$/u);
+  assert.equal(conversationAudioKey("もう一度お願いします。", "ja-JP-Neural2-B"), key);
+  assert.notEqual(conversationAudioKey("もう一度お願いします。", "ja-JP-Neural2-C"), key);
+  assert.equal(buildConversationAudioEntries([
+    { text: "もう一度お願いします。", voice: "ja-JP-Neural2-B" },
+    { text: "もう一度お願いします。", voice: "ja-JP-Neural2-B" },
+  ]).length, 1);
+});
+
+test("checks only missing conversation clips", async () => {
+  const entries = buildConversationAudioEntries([
+    { text: "もう一度お願いします。" },
+    { text: "ゆっくりお願いします。" },
+  ]);
+  const seen: string[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    seen.push(String(input));
+    return new Response(null, { status: seen.length === 1 ? 200 : 404 });
+  };
+  try {
+    const missing = await missingRemote(entries, "https://example.com/api/audio", 1);
+    assert.deepEqual(missing, [entries[1]]);
+    assert.ok(seen.every((url) => /\/jp\/c\/[0-9a-f]{16}\.mp3$/u.test(url)));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
