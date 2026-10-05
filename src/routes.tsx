@@ -52,9 +52,9 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "detail", path: "/detail/:key", Component: DetailScreen },
   { screen: "study", path: "/study/:unitId", Component: UnitStudyScreen },
   { screen: "speaking", path: "/speaking/:unitId", Component: SpeakingScreen },
+  { screen: "talk-diary", path: "/talk/diary", Component: TalkDiaryScreen },
   { screen: "talk", path: "/talk/:unitId", Component: TalkScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
-  { screen: "talk-diary", path: "/talk/diary", Component: TalkDiaryScreen },
   { screen: "settings", path: "/settings", Component: SettingsScreen },
   { screen: "about", path: "/about", Component: AboutScreen },
 ];
