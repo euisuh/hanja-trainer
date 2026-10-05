@@ -176,6 +176,18 @@ describe("conversation read API", () => {
         { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "c/dfb32afcfa7aaf90", audioUrl: "/api/audio/jp/c/dfb32afcfa7aaf90.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 500, correctCount: 0, totalCount: 0 },
       ],
     });
+
+    const attempt = fixture.sqlite.prepare(`
+      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, role, grade, answered_at, loop, input, hints, replays)
+      VALUES (1, ?, ?, 'say', ?, ?, 'drill', 'voice', 0, 0)
+    `);
+    attempt.run("first-day", firstChunkId, 3, Date.UTC(2026, 9, 4));
+    attempt.run("second-day", firstChunkId, 1, Date.UTC(2026, 9, 5));
+    attempt.run("again", firstChunkId, 1, Date.UTC(2026, 9, 5, 1));
+    expect(await (await routeApiRequest(request("/api/conv/progress", "GET"), fixture.env)).json()).toEqual({
+      units: [{ id: unitId, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 1, completedPhraseCount: 1 }],
+      phrases: [{ id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", spokenDays: 2, againCount: 2 }],
+    });
   });
 });
 

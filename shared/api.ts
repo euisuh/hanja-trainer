@@ -197,6 +197,31 @@ export type ConversationStatsResponse = {
   transferRate: number | null;
 };
 
+export type ConversationPhraseProgress = {
+  id: number;
+  unitId: number;
+  ord: number;
+  ja: string;
+  kana: string;
+  koCue: string;
+  spokenDays: number;
+  againCount: number;
+};
+
+export type ConversationUnitProgress = {
+  id: number;
+  ord: number;
+  titleKo: string;
+  goalKo: string;
+  phraseCount: number;
+  completedPhraseCount: number;
+};
+
+export type ConversationProgressResponse = {
+  units: ConversationUnitProgress[];
+  phrases: ConversationPhraseProgress[];
+};
+
 export type DueReviewCard = {
   characterKey: string;
   track: Track;

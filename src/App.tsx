@@ -25,7 +25,7 @@ import "./styles.css";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail", "study", "about"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
-const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking", "talk"]);
+const sessionScreens = new Set<Screen>(["placement", "lesson", "review-session", "session-complete", "speaking", "talk", "talk-home", "talk-contents", "talk-diary"]);
 
 type Gate = "checking" | "error" | "update" | "choosing" | "locked" | "unlocked";
 

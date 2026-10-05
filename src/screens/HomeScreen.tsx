@@ -178,6 +178,9 @@ export function HomeScreen() {
             {selectedTrack !== "kr" && <button aria-label="말하기 연습" className="home-shelf__item" onClick={() => navigate(`/speaking/${unit.id}`)} type="button">
               <span aria-hidden="true" className="home-shelf__glyph">音</span><strong>말하기</strong>
             </button>}
+            {selectedTrack === "jp" && <button aria-label="Talk" className="home-shelf__item" onClick={() => navigate("/talk")} type="button">
+              <span aria-hidden="true" className="home-shelf__glyph">話</span><strong>Talk</strong>
+            </button>}
             {unit.nodes.some((node) => node.state !== "done") && <button aria-label="이 유닛 건너뛰기" className="home-shelf__item" onClick={() => navigate("/lesson", { state: { unitId: unit.id, tracks: [selectedTrack], testOut: true } })} type="button">
               <span aria-hidden="true" className="home-shelf__glyph">跳</span><strong>건너뛰기</strong>
             </button>}

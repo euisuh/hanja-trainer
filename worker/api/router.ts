@@ -12,7 +12,7 @@ import { getStats } from "./stats";
 import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
-import { getConversationUnit, getConversationUnits, getDueConversationChunks } from "./conversation";
+import { getConversationProgress, getConversationUnit, getConversationUnits, getDueConversationChunks } from "./conversation";
 import { getConversationStats } from "./conversationStats";
 
 // A browser sets exactly one of these on every request it makes. `curl`, the
@@ -120,6 +120,7 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
     }
 
     if (request.method === "GET" && pathname === "/api/conv/units") return Response.json(await getConversationUnits(env.DB));
+    if (request.method === "GET" && pathname === "/api/conv/progress") return Response.json(await getConversationProgress(env.DB, profileId));
 
     const conversationUnitMatch = request.method === "GET" ? pathname.match(/^\/api\/conv\/units\/(\d+)$/) : null;
     if (conversationUnitMatch) {

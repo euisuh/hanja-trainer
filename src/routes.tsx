@@ -15,6 +15,8 @@ import { StatsScreen } from "./screens/StatsScreen";
 import { UnitStudyScreen } from "./screens/UnitStudyScreen";
 import { TalkScreen } from "./screens/TalkScreen";
 import { TalkDiaryScreen } from "./screens/TalkDiaryScreen";
+import { TalkContentsScreen } from "./screens/TalkContentsScreen";
+import { TalkHomeScreen } from "./screens/TalkHomeScreen";
 
 export type Screen =
   | "onboarding"
@@ -29,6 +31,8 @@ export type Screen =
   | "study"
   | "speaking"
   | "talk"
+  | "talk-home"
+  | "talk-contents"
   | "stats"
   | "talk-diary"
   | "settings"
@@ -52,6 +56,8 @@ export const routes: readonly ScreenRoute[] = [
   { screen: "detail", path: "/detail/:key", Component: DetailScreen },
   { screen: "study", path: "/study/:unitId", Component: UnitStudyScreen },
   { screen: "speaking", path: "/speaking/:unitId", Component: SpeakingScreen },
+  { screen: "talk-home", path: "/talk", Component: TalkHomeScreen },
+  { screen: "talk-contents", path: "/talk/contents", Component: TalkContentsScreen },
   { screen: "talk-diary", path: "/talk/diary", Component: TalkDiaryScreen },
   { screen: "talk", path: "/talk/:unitId", Component: TalkScreen },
   { screen: "stats", path: "/stats", Component: StatsScreen },
