@@ -32,6 +32,26 @@ function installTalkMocks() {
   } });
 }
 
+function installTalkAudioFailureMocks() {
+  class TestUtterance {
+    lang = "";
+    voice: { lang: string } | null = null;
+    constructor(public text: string) {}
+  }
+  class TestAudio extends EventTarget {
+    play() { this.dispatchEvent(new Event("error")); return Promise.resolve(); }
+  }
+  Object.defineProperty(window, "Audio", { configurable: true, value: TestAudio });
+  Object.defineProperty(window, "SpeechSynthesisUtterance", { configurable: true, value: TestUtterance });
+  Object.defineProperty(window, "speechSynthesis", { configurable: true, value: {
+    addEventListener: () => undefined,
+    cancel: () => undefined,
+    getVoices: () => [{ lang: "ja-JP" }],
+    removeEventListener: () => undefined,
+    speak: (utterance: TestUtterance) => { document.documentElement.dataset.talkFallback = JSON.stringify({ lang: utterance.lang, text: utterance.text }); },
+  } });
+}
+
 test.beforeEach(resetProfile);
 test.afterEach(resetProfile);
 
@@ -54,8 +74,29 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await page.keyboard.press("Shift+Space");
   await page.keyboard.press("3");
   await page.keyboard.press("Enter");
-  await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say" })]);
+  await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say", loop: "drill", input: "voice", hints: 1, replays: 0 })]);
   await expect(page.locator(".home-screen")).toBeVisible();
+});
+
+test("Talk uses Japanese speech synthesis after chunk audio fails", async ({ page }) => {
+  await page.addInitScript(installTalkAudioFailureMocks);
+  await page.route("**/api/conv/units/1", (route) => route.fulfill({ json: conversation }));
+  let submission: unknown;
+  await page.route("**/api/conv/attempts", async (route) => {
+    submission = route.request().postDataJSON();
+    await route.fulfill({ json: { results: [{ grade: "good" }] } });
+  });
+
+  await page.goto("/talk/1");
+  await expect(page.getByText(conversation.chunks[0].koCue)).toBeVisible();
+  await page.keyboard.press("Space");
+  await page.getByRole("button", { name: /듣기/u }).click();
+  await expect.poll(() => page.locator("html").getAttribute("data-talk-fallback")).toContain(`"lang":"ja-JP"`);
+  await expect(page.locator("html")).toHaveAttribute("data-talk-fallback", expect.stringContaining(conversation.chunks[0].ja));
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Enter");
+  await expect.poll(() => submission).toEqual([expect.objectContaining({ loop: "drill", input: "keyboard", hints: 1, replays: 1 })]);
 });
 
 test("Talk attempt queues offline then flushes", async ({ page }) => {

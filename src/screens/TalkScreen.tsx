@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { enqueuePendingConversationAttempt } from "../features/conversation/attemptOutbox";
 import { useActiveProfile } from "../features/profile/ProfileContext";
 import { SourceAttribution } from "../features/source/SourceAttribution";
-import { LocalRecorder, localRecordingSupported, type LocalRecordingState } from "../features/study/speech";
+import { LocalRecorder, localRecordingSupported, matchingVoice, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
 import { apiClient, type ConversationUnitResponse } from "../lib/apiClient";
 import { apiUrl } from "../platform/apiUrl";
 import { onAppInactive } from "../platform/lifecycle";
@@ -31,12 +31,15 @@ export function TalkScreen() {
   const [stage, setStage] = useState<TalkStage>("cue");
   const [recording, setRecording] = useState<LocalRecordingState>(() => localRecordingSupported() ? { status: "idle" } : { status: "unsupported" });
   const [error, setError] = useState("");
+  const [hints, setHints] = useState(0);
   const [replays, setReplays] = useState(0);
   const [selectedGrade, setSelectedGrade] = useState<"again" | "hard" | "good">("good");
   const recorderRef = useRef<LocalRecorder | null>(null);
   const cueShownAtRef = useRef(0);
   const selfAudioRef = useRef<HTMLAudioElement | null>(null);
   const card = content?.chunks[index];
+  const voices = useSpeechVoices();
+  const voice = matchingVoice(voices, "jp");
   const preselectedGrade = recording.status === "ready" ? gradeFor(recording.onsetMs) : "good";
 
   const onRecordingChange = useCallback((next: LocalRecordingState) => {
@@ -71,6 +74,7 @@ export function TalkScreen() {
 
   const reveal = useCallback(() => {
     recorderRef.current?.reset();
+    setHints(1);
     setStage("reveal");
   }, []);
 
@@ -80,23 +84,45 @@ export function TalkScreen() {
     void recorderRef.current?.record(cueShownAtRef.current);
   }, [recording.status]);
 
-  const rate = useCallback((grade: "again" | "hard" | "good") => {
+  const rate = useCallback((grade: "again" | "hard" | "good", input: "keyboard" | "tap") => {
     if (!card) return;
     const latencyMs = recording.status === "ready" ? recording.onsetMs : null;
     enqueuePendingConversationAttempt(profileId, {
       clientAttemptId: attemptId(), chunkId: card.id, role: card.role, grade,
-      answeredAt: Date.now(), latencyMs, replays,
+      answeredAt: Date.now(), latencyMs, hints, replays, loop: "drill",
+      input: recording.status === "ready" ? "voice" : input,
     });
     recorderRef.current?.reset();
     if (content && index + 1 < content.chunks.length) {
       setIndex((value) => value + 1);
       setStage("cue");
       setSelectedGrade("good");
+      setHints(0);
       setReplays(0);
       return;
     }
     navigate("/home");
-  }, [card, content, index, navigate, profileId, recording, replays]);
+  }, [card, content, hints, index, navigate, profileId, recording, replays]);
+
+  const playReference = useCallback(() => {
+    if (!card) return;
+    setReplays((value) => value + 1);
+    const fallback = () => {
+      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
+      const utterance = new SpeechSynthesisUtterance(card.ja);
+      utterance.lang = speechLanguages.jp;
+      if (voice) utterance.voice = voice;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    };
+    // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser audio constructor capability probe.
+    if (typeof Audio !== "function") { fallback(); return; }
+    const audio = new Audio(apiUrl(card.audioUrl));
+    let failed = false;
+    const fallbackOnce = () => { if (!failed) { failed = true; fallback(); } };
+    audio.addEventListener("error", fallbackOnce, { once: true });
+    void audio.play().catch(fallbackOnce);
+  }, [card, voice]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -109,7 +135,7 @@ export function TalkScreen() {
       if (stage === "rate" && event.key === "1") { event.preventDefault(); setSelectedGrade("again"); return; }
       if (stage === "rate" && event.key === "2") { event.preventDefault(); setSelectedGrade("hard"); return; }
       if (stage === "rate" && event.key === "3") { event.preventDefault(); setSelectedGrade("good"); return; }
-      if (event.key === "Enter" && stage === "rate") { event.preventDefault(); rate(selectedGrade); return; }
+      if (event.key === "Enter" && stage === "rate") { event.preventDefault(); rate(selectedGrade, "keyboard"); return; }
       if (event.key === "Enter" && stage === "reveal") { event.preventDefault(); setStage("rate"); }
     }
     window.addEventListener("keydown", onKeyDown);
@@ -128,7 +154,7 @@ export function TalkScreen() {
       {stage !== "cue" && <div className="talk-screen__answer">
         <strong lang="ja">{card.ja}</strong>
         <span lang="ja">{card.kana}</span>
-        <button className="talk-screen__audio" onClick={() => { setReplays((value) => value + 1); new Audio(apiUrl(card.audioUrl)).play().catch(() => undefined); }} type="button">듣기 <kbd>Space</kbd></button>
+        <button className="talk-screen__audio" onClick={playReference} type="button">듣기 <kbd>Space</kbd></button>
         {recording.status === "ready" && <label className="talk-screen__self-audio">내 목소리 <audio controls ref={selfAudioRef} src={recording.url} /> <kbd>Shift+Space</kbd></label>}
         <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} /></small>
       </div>}
@@ -149,7 +175,7 @@ export function TalkScreen() {
       {stage === "cue" && <button onClick={reveal} type="button">정답 공개 <kbd>Space</kbd></button>}
       {stage !== "rate" && <button className="talk-screen__record" disabled={recording.status === "requesting" || recording.status === "unsupported"} onClick={record} type="button">{recording.status === "recording" ? "녹음 중지" : "말하기"} <kbd>R</kbd></button>}
       {stage === "reveal" && <button onClick={() => { setSelectedGrade(preselectedGrade); setStage("rate"); }} type="button">평가하기 <kbd>Enter</kbd></button>}
-      {stage === "rate" && <button onClick={() => rate(selectedGrade)} type="button">다음 쪽 <kbd>Enter</kbd></button>}
+      {stage === "rate" && <button onClick={() => rate(selectedGrade, "tap")} type="button">다음 쪽 <kbd>Enter</kbd></button>}
     </footer>
   </section>;
 }
