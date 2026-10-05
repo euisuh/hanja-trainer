@@ -103,7 +103,7 @@
       "ord": 8,
       "text": "分かりません。",
       "kana": "わかりません。",
-      "cueKo": "이해가 안 된다고 말하기",
+      "cueKo": "이해가 안 된다고 말하기 (그대로 쓰면 퉁명스러우니 ちょっと…를 붙여 부드럽게)",
       "register": "polite",
       "role": "say",
       "sourceKind": "corpus",
@@ -233,30 +233,17 @@
       "ord": 18,
       "text": "すみません、何とおっしゃいましたか？",
       "kana": "すみません、なんとおっしゃいましたか？",
-      "cueKo": "상대가 못 들었다며 정중하게 다시 묻는 말 듣기",
+      "cueKo": "모르는 사람이나 윗사람에게 정중하게 다시 말해 달라고 하기 (뭐라고 하셨나요?)",
       "register": "keigo",
-      "role": "hear",
+      "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #2929527",
       "audioKey": "c/92010e0fcd43ab97",
-      "key": "tatoeba-2929527-hear"
+      "key": "tatoeba-2929527-say"
     },
     {
       "unitOrd": 2,
       "ord": 19,
-      "text": "もう一度ゆっくりお話しいただけますか？",
-      "kana": "もういちどゆっくりおはなしいただけますか？",
-      "cueKo": "상대가 한 번 더 천천히 말해 달라고 정중히 부탁하는 말 듣기",
-      "register": "keigo",
-      "role": "hear",
-      "sourceKind": "corpus",
-      "sourceRef": "Tatoeba #9176323",
-      "audioKey": "c/05487c1c995bf38d",
-      "key": "tatoeba-9176323-hear"
-    },
-    {
-      "unitOrd": 2,
-      "ord": 20,
       "text": "大きな声で言って。聞こえないよ。",
       "kana": "おおきなこえでいって。きこえないよ。",
       "cueKo": "친구가 \"더 크게 말해, 안 들려\" 하는 말 듣기",
@@ -342,20 +329,6 @@
           "chunkOrds": [
             9,
             10
-          ]
-        },
-        {
-          "ord": 4,
-          "speaker": "npc",
-          "chunkOrds": [
-            16
-          ]
-        },
-        {
-          "ord": 5,
-          "speaker": "learner",
-          "chunkOrds": [
-            14
           ]
         }
       ]
