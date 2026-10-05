@@ -1,0 +1,299 @@
+{
+  "units": [
+    {
+      "ord": 3,
+      "titleKo": "편의점 계산",
+      "goalKo": "편의점 점원의 질문에 알맞게 대답하며 계산을 마친다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 3,
+      "ord": 1,
+      "text": "いらっしゃいませ。",
+      "kana": "いらっしゃいませ。",
+      "cueKo": "점원이 손님을 맞이하는 인사 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #338114",
+      "audioKey": "c/cc6d85fe3eef930d",
+      "key": "tatoeba-338114-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 2,
+      "text": "ポイントカードはお持ちですか？",
+      "kana": "ポイントカードはおもちですか？",
+      "cueKo": "포인트 카드가 있냐는 점원의 질문 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3515218",
+      "audioKey": "c/2d7d9d245d3470ad",
+      "key": "tatoeba-3515218-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 3,
+      "text": "以上ですか？",
+      "kana": "いじょうですか？",
+      "cueKo": "더 살 것이 없는지 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #191216",
+      "audioKey": "c/a491860046c1194f",
+      "key": "tatoeba-191216-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 4,
+      "text": "全部で三千円です。",
+      "kana": "ぜんぶでさんぜんえんです。",
+      "cueKo": "점원이 전체 금액을 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #205018",
+      "audioKey": "c/4e77f507519180b3",
+      "key": "tatoeba-205018-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 5,
+      "text": "これください。",
+      "kana": "これください。",
+      "cueKo": "물건을 가리키며 이거 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8583430",
+      "audioKey": "c/96893f0154ea9b99",
+      "key": "tatoeba-8583430-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 6,
+      "text": "以上です。",
+      "kana": "いじょうです。",
+      "cueKo": "더 살 것이 없다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2154940",
+      "audioKey": "c/8f68cdcce7307e86",
+      "key": "tatoeba-2154940-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 7,
+      "text": "お願いします。",
+      "kana": "おねがいします。",
+      "cueKo": "점원의 제안에 부탁한다고 답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #926739",
+      "audioKey": "c/166d84de42c2d0ed",
+      "key": "tatoeba-926739-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 8,
+      "text": "大丈夫です。",
+      "kana": "だいじょうぶです。",
+      "cueKo": "괜찮다고 정중하게 거절하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2304911",
+      "audioKey": "c/e93d846ebd8d70c8",
+      "key": "tatoeba-2304911-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 9,
+      "text": "いえ、結構です。",
+      "kana": "いえ、けっこうです。",
+      "cueKo": "필요 없다고 정중하게 사양하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #229316",
+      "audioKey": "c/a309fe2fbfd2b145",
+      "key": "tatoeba-229316-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 10,
+      "text": "カードでお願いします。",
+      "kana": "カードでおねがいします。",
+      "cueKo": "카드로 계산해 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226474",
+      "audioKey": "c/68c189e83c3cb762",
+      "key": "tatoeba-226474-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 11,
+      "text": "現金で支払います。",
+      "kana": "げんきんでしはらいます。",
+      "cueKo": "현금으로 내겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13183806",
+      "audioKey": "c/2cab472ce7b8ebb5",
+      "key": "tatoeba-13183806-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 12,
+      "text": "お会計お願いします。",
+      "kana": "おかいけいおねがいします。",
+      "cueKo": "계산해 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1014812",
+      "audioKey": "c/46f677aa6353bdef",
+      "key": "tatoeba-1014812-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 13,
+      "text": "ビニール袋に入れてください。",
+      "kana": "ビニールぶくろにいれてください。",
+      "cueKo": "비닐봉지에 담아 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #197456",
+      "audioKey": "c/6925e735a20c4c85",
+      "key": "tatoeba-197456-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 14,
+      "text": "袋は有りますか？",
+      "kana": "ふくろはありますか？",
+      "cueKo": "봉지가 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2362311",
+      "audioKey": "c/067cb12404a3d583",
+      "key": "tatoeba-2362311-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 15,
+      "text": "スプーンをいただけますか。",
+      "kana": "スプーンをいただけますか。",
+      "cueKo": "스푼을 받을 수 있는지 정중히 묻기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214525",
+      "audioKey": "c/3bd8a5e4bea15e17",
+      "key": "tatoeba-214525-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 16,
+      "text": "レシートはいりません。",
+      "kana": "レシートはいりません。",
+      "cueKo": "영수증은 필요 없다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12024147",
+      "audioKey": "c/2086a2e4e764c3c2",
+      "key": "tatoeba-12024147-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 17,
+      "text": "レシートをください。",
+      "kana": "レシートをください。",
+      "cueKo": "영수증을 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10647275",
+      "audioKey": "c/ecefb8e384948b36",
+      "key": "tatoeba-10647275-say"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 3,
+      "ord": 1,
+      "titleKo": "편의점에서 계산하기",
+      "settingKo": "편의점 계산대",
+      "goalKo": "점원의 질문에 대답하고 카드로 계산한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            3
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            6
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            2
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            8
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            10
+          ]
+        }
+      ]
+    }
+  ]
+}
