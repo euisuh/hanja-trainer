@@ -187,9 +187,30 @@ describe("conversation read API", () => {
     attempt.run("second-day", firstChunkId, 1, Date.UTC(2026, 9, 5));
     attempt.run("again", firstChunkId, 1, Date.UTC(2026, 9, 5, 1));
     expect(await (await routeApiRequest(request("/api/conv/progress", "GET"), fixture.env)).json()).toEqual({
-      units: [{ id: unitId, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 1, completedPhraseCount: 1 }],
+      units: [{ id: unitId, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 1, completedPhraseCount: 1, checkin: null }],
       phrases: [{ id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", sourceKind: "corpus", sourceRef: "Tatoeba #1", spokenDays: 2, againCount: 2 }],
     });
+  });
+
+  it("stores one real-world check-in per unit without changing scheduling", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const { unitId, firstChunkId } = addConversationContent(fixture.sqlite);
+    const dueBefore = fixture.sqlite.prepare("SELECT due FROM conv_chunk_states WHERE profile_id = 1 AND chunk_id = ?").get(firstChunkId);
+
+    const headers = { "x-hanja-profile-id": "1" };
+    const first = await routeApiRequest(jsonRequest("/api/conv/checkins", "POST", { unitId, note: "카페에서 사용" }, headers), fixture.env);
+    expect(first.status).toBe(200);
+    expect(await first.json()).toEqual(expect.objectContaining({ unitId, note: "카페에서 사용" }));
+
+    const second = await routeApiRequest(jsonRequest("/api/conv/checkins", "POST", { unitId, note: "역에서 사용" }, headers), fixture.env);
+    expect(second.status).toBe(200);
+    expect(fixture.sqlite.prepare("SELECT unit_id, note FROM conv_checkins WHERE profile_id = 1").all()).toEqual([{ unit_id: unitId, note: "역에서 사용" }]);
+    expect(fixture.sqlite.prepare("SELECT due FROM conv_chunk_states WHERE profile_id = 1 AND chunk_id = ?").get(firstChunkId)).toEqual(dueBefore);
+
+    const progress = await (await routeApiRequest(request("/api/conv/progress", "GET"), fixture.env)).json();
+    expect(progress).toEqual(expect.objectContaining({ units: [expect.objectContaining({ id: unitId, checkin: expect.objectContaining({ note: "역에서 사용" }) })] }));
+    const invalid = await routeApiRequest(jsonRequest("/api/conv/checkins", "POST", { unitId, note: "two\nlines" }, headers), fixture.env);
+    expect(invalid.status).toBe(400);
   });
 
   it("composes due chunks without non-due chunks", async () => {

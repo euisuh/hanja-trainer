@@ -12,7 +12,7 @@ import { getStats } from "./stats";
 import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
-import { getConversationProgress, getConversationSession, getConversationUnit, getConversationUnits, getDueConversationChunks } from "./conversation";
+import { getConversationProgress, getConversationSession, getConversationUnit, getConversationUnits, getDueConversationChunks, parseConversationCheckin, saveConversationCheckin } from "./conversation";
 import { getConversationStats } from "./conversationStats";
 
 // A browser sets exactly one of these on every request it makes. `curl`, the
@@ -212,6 +212,19 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
       const inputs = value.map((item) => parseConversationAttempt(item));
       if (inputs.some((input) => input === null)) return error(400, "invalid_conversation_attempt", "conversation attempt fields are invalid");
       return Response.json({ results: await submitConversationAttemptBatch(env.DB, profileId, inputs as NonNullable<(typeof inputs)[number]>[]) });
+    }
+
+    if (request.method === "POST" && pathname === "/api/conv/checkins") {
+      let value: unknown;
+      try {
+        value = await request.json();
+      } catch {
+        return error(400, "invalid_json", "request body must be valid JSON");
+      }
+      const input = parseConversationCheckin(value);
+      if (!input) return error(400, "invalid_conversation_checkin", "unit id or note is invalid");
+      const checkin = await saveConversationCheckin(env.DB, profileId, input);
+      return checkin ? Response.json(checkin) : error(404, "unit_not_found", "conversation unit was not found");
     }
 
     if (request.method === "GET" && pathname === "/api/reviews/due") {

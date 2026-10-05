@@ -25,7 +25,7 @@ export function TalkDiaryScreen() {
     <section className="talk-root talk-diary">
       <Link className="talk-diary__back" to="/home">← 돌아가기</Link>
       <h1>Talk diary</h1>
-      <TalkDiaryCalendar calendar={stats.calendar} spokenDaysThisWeek={stats.spokenDaysThisWeek} />
+      <TalkDiaryCalendar calendar={stats.calendar} spokenDaysThisWeek={stats.spokenDaysThisWeek} checkinsThisWeek={stats.checkinsThisWeek} />
       <div className="talk-diary__metrics">
         <article className="talk-diary__metric"><strong>기억한 말</strong><span>{stats.spokenChunkRetention ?? "—"}</span></article>
         <article className="talk-diary__metric"><strong>첫 시도</strong><span>{value(stats.unaidedFirstTryRate, "%")}</span></article>

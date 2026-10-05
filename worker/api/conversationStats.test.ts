@@ -43,6 +43,7 @@ function seed(sqlite: DatabaseSync) {
   attempt.run("transfer-ok", firstChunk, secondScene, 3, day + 86_400_000, 3000, 0, 0, "roleplay");
   attempt.run("two", secondChunk, firstScene, 3, day, 4000, 0, 0, "drill");
   attempt.run("transfer-fail", secondChunk, secondScene, 2, day + 86_400_000, 9000, 0, 0, "roleplay");
+  sqlite.prepare("INSERT INTO conv_checkins (profile_id, unit_id, at, note) VALUES (1, ?, ?, '사용했다')").run(unitId, day + 86_400_000);
 }
 
 describe("conversation stats", () => {
@@ -61,6 +62,7 @@ describe("conversation stats", () => {
     expect(stats.transferRate).toBe(0.5);
     expect(stats.calendar.filter((day) => day.count > 0).map((day) => day.date)).toEqual(["2026-10-04", "2026-10-05"]);
     expect(stats.spokenDaysThisWeek).toBe(2);
+    expect(stats.checkinsThisWeek).toBe(1);
   });
 
   it("returns null where no metric denominator exists", async () => {
@@ -72,5 +74,6 @@ describe("conversation stats", () => {
     expect(stats.unaidedFirstTryRate).toBeNull();
     expect(stats.medianOnsetLatencyMs).toBeNull();
     expect(stats.transferRate).toBeNull();
+    expect(stats.checkinsThisWeek).toBe(0);
   });
 });

@@ -1,5 +1,6 @@
+/* oxlint-disable anti-slop/no-runtime-typeof, anti-slop/no-unsafe-dictionary-type, anti-slop/no-unknown-parameters, anti-slop/require-safety-comment-for-type-assertion -- Check-in parser validates the untyped JSON request boundary before database writes. */
 import { composeTalkSession } from "../../shared/talkSession";
-import type { ConversationProgressResponse, ConversationSessionResponse } from "../../shared/api";
+import type { ConversationCheckin, ConversationProgressResponse, ConversationSessionResponse, SubmitConversationCheckinRequest } from "../../shared/api";
 import type { ConversationChunk, ConversationChunkState, ConversationScene, ConversationSceneTurn, ConversationUnit } from "../../shared/types";
 import { zonedDayKey } from "./sessions";
 
@@ -15,6 +16,7 @@ type ConversationDueChunk = ConversationChunkPayload & Omit<ConversationChunkSta
 type ConversationDueResponse = { chunks: ConversationDueChunk[] };
 
 type ProgressRow = Pick<ChunkRow, "id" | "unit_id" | "ord" | "ja" | "kana" | "ko_cue" | "source_kind" | "source_ref"> & { answered_at: number | null; grade: number | null };
+type CheckinRow = { unit_id: number; at: number; note: string };
 type TimezoneRow = { timezone: string };
 
 type UnitRow = {
@@ -128,7 +130,7 @@ export async function getConversationUnits(db: D1Database): Promise<Conversation
 }
 
 export async function getConversationProgress(db: D1Database, profileId: number): Promise<ConversationProgressResponse> {
-  const [profile, unitResult, phraseResult] = await Promise.all([
+  const [profile, unitResult, phraseResult, checkinResult] = await Promise.all([
     db.prepare("SELECT timezone FROM profile WHERE id = ?1").bind(profileId).first<TimezoneRow>(),
     db.prepare("SELECT id, ord, title_ko, goal_ko FROM conv_units ORDER BY ord, id").all<Pick<UnitRow, "id" | "ord" | "title_ko" | "goal_ko">>(),
     db.prepare(`
@@ -138,6 +140,7 @@ export async function getConversationProgress(db: D1Database, profileId: number)
       WHERE c.role = 'say'
       ORDER BY c.unit_id, c.ord, c.id, a.answered_at, a.id
     `).bind(profileId).all<ProgressRow>(),
+    db.prepare("SELECT unit_id, at, note FROM conv_checkins WHERE profile_id = ?1").bind(profileId).all<CheckinRow>(),
   ]);
   if (!profile?.timezone) throw new Error("Profile row is missing");
   const phrases = new Map<number, ConversationProgressResponse["phrases"][number] & { days: Set<string> }>();
@@ -148,13 +151,35 @@ export async function getConversationProgress(db: D1Database, profileId: number)
     phrases.set(row.id, phrase);
   }
   const phraseList = [...phrases.values()].map(({ days, ...phrase }) => ({ ...phrase, spokenDays: days.size }));
+  const checkins = new Map(checkinResult.results.map((checkin) => [checkin.unit_id, { unitId: checkin.unit_id, at: checkin.at, note: checkin.note }]));
   return {
     units: unitResult.results.map((row) => {
       const unitPhrases = phraseList.filter((phrase) => phrase.unitId === row.id);
-      return { id: row.id, ord: row.ord, titleKo: row.title_ko, goalKo: row.goal_ko, phraseCount: unitPhrases.length, completedPhraseCount: unitPhrases.filter((phrase) => phrase.spokenDays >= 2).length };
+      return { id: row.id, ord: row.ord, titleKo: row.title_ko, goalKo: row.goal_ko, phraseCount: unitPhrases.length, completedPhraseCount: unitPhrases.filter((phrase) => phrase.spokenDays >= 2).length, checkin: checkins.get(row.id) ?? null };
     }),
     phrases: phraseList,
   };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function parseConversationCheckin(value: unknown): SubmitConversationCheckinRequest | null {
+  if (!isRecord(value) || !Number.isSafeInteger(value.unitId) || (value.unitId as number) < 1 || typeof value.note !== "string") return null;
+  const note = value.note.trim();
+  if (note.length > 280 || /[\r\n]/u.test(note)) return null;
+  return { unitId: value.unitId as number, note };
+}
+
+export async function saveConversationCheckin(db: D1Database, profileId: number, input: SubmitConversationCheckinRequest, at = Date.now()): Promise<ConversationCheckin | null> {
+  const unit = await db.prepare("SELECT id FROM conv_units WHERE id = ?1").bind(input.unitId).first<{ id: number }>();
+  if (!unit) return null;
+  await db.prepare(`
+    INSERT INTO conv_checkins (profile_id, unit_id, at, note) VALUES (?1, ?2, ?3, ?4)
+    ON CONFLICT (profile_id, unit_id) DO UPDATE SET at = excluded.at, note = excluded.note
+  `).bind(profileId, input.unitId, at, input.note).run();
+  return { unitId: input.unitId, at, note: input.note };
 }
 
 export async function getConversationUnit(db: D1Database, unitId: number): Promise<ConversationUnitResponse | null> {

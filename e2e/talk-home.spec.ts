@@ -6,8 +6,8 @@ const conversation = JSON.parse(readFileSync("e2e/fixtures/talk-unit-response.js
 
 const progress = {
   units: [
-    { id: 1, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 2, completedPhraseCount: 1 },
-    { id: 2, ord: 2, titleKo: "인사", goalKo: "상대방에게 인사한다", phraseCount: 1, completedPhraseCount: 0 },
+    { id: 1, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 2, completedPhraseCount: 1, checkin: null },
+    { id: 2, ord: 2, titleKo: "인사", goalKo: "상대방에게 인사한다", phraseCount: 1, completedPhraseCount: 0, checkin: null },
   ],
   phrases: [
     { id: 1, unitId: 1, ord: 1, ja: "fixture one", kana: "fixture one", koCue: "다시 말해 달라고 하기", sourceKind: "corpus", sourceRef: "Tatoeba #1", spokenDays: 2, againCount: 0 },
@@ -18,6 +18,7 @@ const progress = {
 
 test("Talk index supports keyboard navigation and contents progress", async ({ page }) => {
   await page.route("**/api/conv/progress", (route) => route.fulfill({ json: progress }));
+  await page.route("**/api/conv/checkins", (route) => route.fulfill({ json: { unitId: 1, at: Date.UTC(2026, 9, 6), note: "카페에서 사용" } }));
   await page.route(/\/api\/conv\/session\?unitId=1/u, (route) => route.fulfill({ json: { unit: conversation.unit, chunks: conversation.chunks, items: conversation.chunks.map((chunk: ConversationChunkPayload) => ({ kind: "chunk", phase: "say", chunk })) } }));
   await page.goto("/talk");
   await expect(page.getByRole("heading", { name: "Index" })).toBeVisible();
@@ -32,6 +33,11 @@ test("Talk index supports keyboard navigation and contents progress", async ({ p
   await expect(page.getByRole("heading", { name: "Contents" })).toBeVisible();
   await expect(page.getByText("Weak pages")).toBeVisible();
   await expect(page.getByRole("link", { name: "Tatoeba #1" })).toBeVisible();
+  await expect(page.getByLabel("실제로 해봤다").first()).toBeVisible();
+  await page.getByLabel("다시 묻기 체크인 메모").fill("카페에서 사용");
+  await page.getByLabel("실제로 해봤다").first().click();
+  await expect(page.getByLabel("실제로 해봤다").first()).toBeChecked();
+  await expect(page.getByLabel("다시 묻기 체크인 메모")).toBeDisabled();
   await expect(page.getByLabel("두 날짜에 말함").locator("svg")).toBeVisible();
 });
 

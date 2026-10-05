@@ -202,11 +202,15 @@ export type ConversationSessionResponse = {
 export type ConversationStatsResponse = {
   calendar: StatsCalendarDay[];
   spokenDaysThisWeek: number;
+  checkinsThisWeek: number;
   spokenChunkRetention: number | null;
   unaidedFirstTryRate: number | null;
   medianOnsetLatencyMs: number | null;
   transferRate: number | null;
 };
+
+export type ConversationCheckin = { unitId: number; at: number; note: string };
+export type SubmitConversationCheckinRequest = { unitId: number; note: string };
 
 export type ConversationPhraseProgress = {
   id: number;
@@ -228,6 +232,7 @@ export type ConversationUnitProgress = {
   goalKo: string;
   phraseCount: number;
   completedPhraseCount: number;
+  checkin: ConversationCheckin | null;
 };
 
 export type ConversationProgressResponse = {

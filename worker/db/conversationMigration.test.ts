@@ -30,6 +30,7 @@ describe("conversation core migration", () => {
     expect(sqlite.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name LIKE 'conv_%' ORDER BY name").all())
       .toEqual([
         { name: "conv_attempts" },
+        { name: "conv_checkins" },
         { name: "conv_chunk_states" },
         { name: "conv_chunks" },
         { name: "conv_scene_turns" },

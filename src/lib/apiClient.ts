@@ -1,5 +1,5 @@
 /* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-unsafe-dictionary-type, anti-slop/no-conditional-empty-object-spread -- Existing transport/error boundary predates changed-file lint; this adds one typed endpoint. */
-import { PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type CharacterDetailResponse, type ConversationProgressResponse, type ConversationSessionResponse, type ConversationStatsResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitConversationAttemptRequest, type SubmitConversationAttemptResponse, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../../shared/api";
+import { PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type CharacterDetailResponse, type ConversationCheckin, type ConversationProgressResponse, type ConversationSessionResponse, type ConversationStatsResponse, type CreateProfileRequest, type CreateSessionRequest, type CurriculumResponse, type DueReviewsResponse, type ManagedProfile, type OnboardingStateResponse, type PatchSettingsRequest, type PinStateResponse, type PlacementAnswer, type PlacementScoreResponse, type ProfileResponse, type ProfilesResponse, type RenameProfileRequest, type SettingsResponse, type StartSessionRequest, type StartSessionResponse, type StatsResponse, type SubmitConversationAttemptRequest, type SubmitConversationAttemptResponse, type SubmitConversationCheckinRequest, type SubmitReviewRequest, type SubmitReviewResponse, type UnitStudyResponse, type UnitTestAnswer, type UnitTestResult } from "../../shared/api";
 import { apiUrl } from "../platform/apiUrl";
 import { discardSessionToken, getSessionToken, nativeShell, renewSessionToken, setSessionToken } from "../platform/sessionToken";
 import { TRACKS, type Track } from "../../shared/types";
@@ -198,6 +198,12 @@ export const apiClient = {
     body: JSON.stringify(body),
     signal,
   }, false, true, profileId),
+  saveConversationCheckin: (body: SubmitConversationCheckinRequest, signal?: AbortSignal) => requestJson<ConversationCheckin>("/api/conv/checkins", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+    signal,
+  }),
   conversationStats: (signal?: AbortSignal) => requestJson<ConversationStatsResponse>("/api/conv/stats", { signal }),
   dueReviews: (tracks: Track[], limit = 50, signal?: AbortSignal) => requestJson<DueReviewsResponse>(`/api/reviews/due?tracks=${tracks.join(",")}&limit=${limit}`, { signal }),
   profile: (signal?: AbortSignal, notifyAuth = true, expectedProfileId: number | null = activeProfileId) => requestJson<ProfileResponse>("/api/profile", { signal }, notifyAuth, true, expectedProfileId),

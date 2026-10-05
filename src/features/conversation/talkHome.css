@@ -26,6 +26,11 @@
 .talk-contents__unit h2, .talk-contents__weak h2 { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1.5px solid var(--talk-ink); }
 .talk-contents__unit h2 small { color: var(--talk-muted); font: 12px var(--talk-font-meta); }
 .talk-contents__unit > p { margin: 8px 0; color: var(--talk-muted); }
+.talk-contents__checkin { display: flex; align-items: center; gap: 12px; margin: 16px 0; padding: 12px 0; border-top: 1px solid var(--talk-ruled-line); border-bottom: 1px solid var(--talk-ruled-line); }
+.talk-contents__checkin label { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.talk-contents__checkin input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--talk-tab-green); }
+.talk-contents__checkin input[type="text"] { min-width: 0; flex: 1; padding: 6px 8px; border: 1px solid var(--talk-ink); border-radius: 0; background: var(--talk-paper); color: var(--talk-ink); font: inherit; }
+.talk-contents__checkin input:disabled { color: var(--talk-muted); }
 .talk-contents__unit ol { margin: 0; padding: 0; list-style: none; }
 .talk-contents__unit li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--talk-ruled-line); }
 .talk-contents__tick { display: grid; width: 21px; height: 21px; flex: 0 0 21px; place-items: center; border: 1.5px solid var(--talk-ink); color: var(--talk-tab-green); transform: rotate(-10deg); }
