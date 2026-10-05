@@ -1,0 +1,647 @@
+{
+  "units": [
+    {
+      "ord": 5,
+      "titleKo": "카페·식당 주문",
+      "goalKo": "식당이나 카페에서 자리를 안내받고, 메뉴를 주문하고 요청을 덧붙이고, 계산까지 일본어로 마친다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 5,
+      "ord": 1,
+      "text": "窓際の席でお願いします。",
+      "kana": "まどぎわのせきでおねがいします。",
+      "cueKo": "창가 자리로 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9540499",
+      "audioKey": "c/f8e627d196ffe308",
+      "key": "tatoeba-9540499-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 2,
+      "text": "禁煙席をお願いします。",
+      "kana": "きんえんせきをおねがいします。",
+      "cueKo": "금연석으로 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4632701",
+      "audioKey": "c/7988c1dbf76a1cc4",
+      "key": "tatoeba-4632701-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 3,
+      "text": "空いてる席はありますか。",
+      "kana": "あいてるせきはありますか。",
+      "cueKo": "예약 없이 들어가서 빈 자리가 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #179494",
+      "audioKey": "c/9e979177c59b3e52",
+      "key": "tatoeba-179494-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 4,
+      "text": "メニューをください。",
+      "kana": "メニューをください。",
+      "cueKo": "메뉴판을 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12890046",
+      "audioKey": "c/52bdae129b5d4b90",
+      "key": "tatoeba-12890046-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 5,
+      "text": "すみません、注文お願いします。",
+      "kana": "すみません、ちゅうもんおねがいします。",
+      "cueKo": "직원을 불러 주문하겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1022297",
+      "audioKey": "c/2c4b2dfc3d6c1552",
+      "key": "tatoeba-1022297-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 6,
+      "text": "おすすめは何ですか。",
+      "kana": "おすすめはなんですか。",
+      "cueKo": "점원에게 추천 메뉴가 뭔지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227687",
+      "audioKey": "c/9d0711a114086c3f",
+      "key": "tatoeba-227687-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 7,
+      "text": "おすすめの料理は何ですか。",
+      "kana": "おすすめのりょうりはなんですか。",
+      "cueKo": "식당에서 추천 요리가 뭔지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227685",
+      "audioKey": "c/54d575f1423c884b",
+      "key": "tatoeba-227685-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 8,
+      "text": "これは何ですか？",
+      "kana": "これはなんですか？",
+      "cueKo": "메뉴를 가리키며 이게 뭐냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4621452",
+      "audioKey": "c/e344c791637cf345",
+      "key": "tatoeba-4621452-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 9,
+      "text": "コーヒーをください。",
+      "kana": "コーヒーをください。",
+      "cueKo": "커피를 달라고 주문하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #224884",
+      "audioKey": "c/157a0b8ae91274e8",
+      "key": "tatoeba-224884-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 10,
+      "text": "紅茶をください。",
+      "kana": "こうちゃをください。",
+      "cueKo": "홍차를 달라고 주문하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8576120",
+      "audioKey": "c/2165ad19719ed07a",
+      "key": "tatoeba-8576120-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 11,
+      "text": "コーヒーを一杯とクロワッサンをひとつ下さい。",
+      "kana": "コーヒーをいっぱいとクロワッサンをひとつください。",
+      "cueKo": "커피 한 잔과 크루아상 하나를 함께 주문하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1614410",
+      "audioKey": "c/c7d5687e1b4b9a1c",
+      "key": "tatoeba-1614410-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 12,
+      "text": "ホットドッグを２個、辛子とケチャップつきでおねがいします。",
+      "kana": "ホットドッグを２こ、からしとケチャップつきでおねがいします。",
+      "cueKo": "핫도그 두 개를 머스터드와 케첩을 곁들여 주문하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #196236",
+      "audioKey": "c/3400252e2e526877",
+      "key": "tatoeba-196236-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 13,
+      "text": "私にも同じものをください。",
+      "kana": "わたしにもおなじものをください。",
+      "cueKo": "같이 온 사람과 같은 메뉴로 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #164480",
+      "audioKey": "c/2faa3617a4b58a4a",
+      "key": "tatoeba-164480-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 14,
+      "text": "私のコーヒーには砂糖を入れないでください。",
+      "kana": "わたしのコーヒーにはさとうをいれないでください。",
+      "cueKo": "내 커피에는 설탕을 넣지 말아 달라고 요청하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #164201",
+      "audioKey": "c/a7361e9e687e9812",
+      "key": "tatoeba-164201-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 15,
+      "text": "コーヒーにはミルクをたくさん入れて下さい。",
+      "kana": "コーヒーにはミルクをたくさんいれてください。",
+      "cueKo": "커피에 우유를 많이 넣어 달라고 요청하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #224907",
+      "audioKey": "c/95bad62c4ec199d6",
+      "key": "tatoeba-224907-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 16,
+      "text": "もう少し待ってください。",
+      "kana": "もうすこしまってください。",
+      "cueKo": "아직 못 골랐으니 조금 더 기다려 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #194081",
+      "audioKey": "c/a86e39eea4d89ef3",
+      "key": "tatoeba-194081-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 17,
+      "text": "ここで食べます。",
+      "kana": "ここでたべます。",
+      "cueKo": "매장에서 먹고 간다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #224546",
+      "audioKey": "c/f5ff76a9c586437e",
+      "key": "tatoeba-224546-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 18,
+      "text": "お水をください。",
+      "kana": "おみずをください。",
+      "cueKo": "물을 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227004",
+      "audioKey": "c/ec3f3b427203201a",
+      "key": "tatoeba-227004-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 19,
+      "text": "お水のおかわりをお願いします。",
+      "kana": "おみずのおかわりをおねがいします。",
+      "cueKo": "물을 더 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11062662",
+      "audioKey": "c/b8a49aab8bdd6001",
+      "key": "tatoeba-11062662-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 20,
+      "text": "コーヒーのお代わりをお願いします。",
+      "kana": "コーヒーのおかわりをおねがいします。",
+      "cueKo": "커피를 리필해 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9681828",
+      "audioKey": "c/277c00338dae3eb1",
+      "key": "tatoeba-9681828-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 21,
+      "text": "以上です。",
+      "kana": "いじょうです。",
+      "cueKo": "주문이 끝났다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2154940",
+      "audioKey": "c/8f68cdcce7307e86",
+      "key": "tatoeba-2154940-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 22,
+      "text": "カードは使えますか。",
+      "kana": "カードはつかえますか。",
+      "cueKo": "카드로 계산할 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226472",
+      "audioKey": "c/2d7400240a6643a0",
+      "key": "tatoeba-226472-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 23,
+      "text": "お会計お願いします。",
+      "kana": "おかいけいおねがいします。",
+      "cueKo": "식사를 마치고 계산해 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1014812",
+      "audioKey": "c/46f677aa6353bdef",
+      "key": "tatoeba-1014812-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 24,
+      "text": "お勘定お願いします。",
+      "kana": "おかんじょうおねがいします。",
+      "cueKo": "식사를 마치고 계산서를 부탁하기 (お会計와 같은 뜻)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3452051",
+      "audioKey": "c/65a3d721080a139f",
+      "key": "tatoeba-3452051-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 25,
+      "text": "別々でお願いします。",
+      "kana": "べつべつでおねがいします。",
+      "cueKo": "계산을 따로따로 해 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11548108",
+      "audioKey": "c/160e0a8c56c8144d",
+      "key": "tatoeba-11548108-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 26,
+      "text": "会計は別々でお願いします。",
+      "kana": "かいけいはべつべつでおねがいします。",
+      "cueKo": "일행과 계산은 따로 하겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11548105",
+      "audioKey": "c/6d3573908ea41a76",
+      "key": "tatoeba-11548105-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 27,
+      "text": "領収書をください。",
+      "kana": "りょうしゅうしょをください。",
+      "cueKo": "영수증을 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13714023",
+      "audioKey": "c/a321dcf3fd5680f2",
+      "key": "tatoeba-13714023-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 28,
+      "text": "ごちそうさまでした。",
+      "kana": "ごちそうさまでした。",
+      "cueKo": "다 먹고 나갈 때 인사하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10100070",
+      "audioKey": "c/2d4f59d25a70947c",
+      "key": "tatoeba-10100070-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 29,
+      "text": "いらっしゃいませ、何名様ですか。",
+      "kana": "いらっしゃいませ、なんめいさまですか。",
+      "cueKo": "입장할 때 직원이 인원수를 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #228460",
+      "audioKey": "c/ead566f25f50e6e7",
+      "key": "tatoeba-228460-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 30,
+      "text": "何名様ですか。",
+      "kana": "なんめいさまですか。",
+      "cueKo": "직원이 몇 명이냐고 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4694697",
+      "audioKey": "c/df887ed28c74cf2b",
+      "key": "tatoeba-4694697-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 31,
+      "text": "ご予約はされていますか？",
+      "kana": "ごよやくはされていますか？",
+      "cueKo": "직원이 예약했는지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3595025",
+      "audioKey": "c/112c595fd4e61d40",
+      "key": "tatoeba-3595025-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 32,
+      "text": "こちらへどうぞ。",
+      "kana": "こちらへどうぞ。",
+      "cueKo": "직원이 자리로 안내하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1483688",
+      "audioKey": "c/9f120ae6a8be7755",
+      "key": "tatoeba-1483688-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 33,
+      "text": "ご注文はお決まりですか？",
+      "kana": "ごちゅうもんはおきまりですか？",
+      "cueKo": "주문하겠냐고 묻는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #217064",
+      "audioKey": "c/97c645e5c0f8e640",
+      "key": "tatoeba-217064-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 34,
+      "text": "お飲み物は何にしますか。",
+      "kana": "おのみものはなににしますか。",
+      "cueKo": "마실 것은 뭘로 하겠냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2265633",
+      "audioKey": "c/5792cb324c648a31",
+      "key": "tatoeba-2265633-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 35,
+      "text": "こちらでお召し上がりですか？それともお持ち帰りですか？",
+      "kana": "こちらでおめしあがりですか？それともおもちかえりですか？",
+      "cueKo": "매장에서 먹을지 포장할지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9203476",
+      "audioKey": "c/95bec51b86ce80f1",
+      "key": "tatoeba-9203476-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 36,
+      "text": "お持ち帰りですか。",
+      "kana": "おもちかえりですか。",
+      "cueKo": "포장이냐고 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227101",
+      "audioKey": "c/5d619758f41e77e8",
+      "key": "tatoeba-227101-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 37,
+      "text": "少々お待ちください。",
+      "kana": "しょうしょうおまちください。",
+      "cueKo": "잠시 기다려 달라는 직원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8886173",
+      "audioKey": "c/9812a178c3c3d2bc",
+      "key": "tatoeba-8886173-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 38,
+      "text": "お待たせしました。",
+      "kana": "おまたせしました。",
+      "cueKo": "음식이나 계산서를 가져오며 하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226907",
+      "audioKey": "c/137bb3271b029982",
+      "key": "tatoeba-226907-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 39,
+      "text": "以上ですか？",
+      "kana": "いじょうですか？",
+      "cueKo": "주문이 이게 다냐고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #191216",
+      "audioKey": "c/a491860046c1194f",
+      "key": "tatoeba-191216-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 40,
+      "text": "お会計はレジでお願いします。",
+      "kana": "おかいけいはレジでおねがいします。",
+      "cueKo": "계산은 계산대에서 해 달라는 직원의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #227370",
+      "audioKey": "c/d83d18304404a045",
+      "key": "tatoeba-227370-hear"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 41,
+      "text": "またお越しください。",
+      "kana": "またおこしください。",
+      "cueKo": "나갈 때 직원이 또 오라고 하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #76406",
+      "audioKey": "c/2634a77d4eef2308",
+      "key": "tatoeba-76406-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 5,
+      "ord": 1,
+      "titleKo": "자리 안내받고 주문하기",
+      "settingKo": "식당에서 직원이 자리로 안내해 줄 때",
+      "goalKo": "메뉴판을 부탁하고 직원을 불러 음식을 주문한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            37
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            11,
+            9,
+            10,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 5,
+      "ord": 2,
+      "titleKo": "식사 후 계산하기",
+      "settingKo": "식사를 마치고 계산을 부탁할 때",
+      "goalKo": "계산을 부탁하고 따로 계산하겠다고 말한 뒤 카드가 되는지 묻는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            23,
+            24
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            40
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            25,
+            26
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            38
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            22,
+            27
+          ]
+        }
+      ]
+    }
+  ]
+}
