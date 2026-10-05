@@ -10,6 +10,7 @@ import { getStats } from "./stats";
 import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
+import { getConversationUnit, getConversationUnits, getDueConversationChunks } from "./conversation";
 
 // A browser sets exactly one of these on every request it makes. `curl`, the
 // audio generator, and future native clients set neither, so they are allowed:
@@ -114,6 +115,18 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
       if (!track) return error(400, "invalid_track", "track must be kr, jp, or cn");
       return Response.json(await getCurriculumContent(env.DB, profileId, track));
     }
+
+    if (request.method === "GET" && pathname === "/api/conv/units") return Response.json(await getConversationUnits(env.DB));
+
+    const conversationUnitMatch = request.method === "GET" ? pathname.match(/^\/api\/conv\/units\/(\d+)$/) : null;
+    if (conversationUnitMatch) {
+      const unitId = Number(conversationUnitMatch[1]);
+      if (!Number.isSafeInteger(unitId) || unitId < 1) return error(400, "invalid_unit", "unit id is invalid");
+      const detail = await getConversationUnit(env.DB, unitId);
+      return detail ? Response.json(detail) : error(404, "unit_not_found", "conversation unit was not found");
+    }
+
+    if (request.method === "GET" && pathname === "/api/conv/due") return Response.json(await getDueConversationChunks(env.DB, profileId));
 
     const unitStudyMatch = request.method === "GET" ? pathname.match(/^\/api\/curriculum\/units\/(\d+)$/) : null;
     if (unitStudyMatch) {

@@ -84,6 +84,87 @@ describe("cross-site API writes", () => {
   });
 });
 
+describe("conversation read API", () => {
+  const databases: DatabaseSync[] = [];
+  afterEach(() => { for (const database of databases.splice(0)) database.close(); });
+
+  function addConversationContent(sqlite: DatabaseSync, due = Date.now() - 1_000) {
+    const unitId = Number(sqlite.prepare("INSERT INTO conv_units (ord, title_ko, goal_ko) VALUES (1, '다시 묻기', '상대방에게 다시 말해 달라고 한다')").run().lastInsertRowid);
+    const firstChunkId = Number(sqlite.prepare(`
+      INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
+      VALUES (?, 1, 'もう一度お願いします', 'もういちどおねがいします', '다시 말해 달라고 하기', 'polite', 'say', 'corpus', 'Tatoeba #1', 'jp/c/0123456789abcdef.mp3')
+    `).run(unitId).lastInsertRowid);
+    const secondChunkId = Number(sqlite.prepare(`
+      INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
+      VALUES (?, 2, 'はい', 'はい', '네라고 답하기', 'polite', 'hear', 'corpus', 'Tatoeba #2', 'jp/c/fedcba9876543210.mp3')
+    `).run(unitId).lastInsertRowid);
+    const sceneId = Number(sqlite.prepare("INSERT INTO conv_scenes (unit_id, ord, title_ko, setting_ko, goal_ko) VALUES (?, 1, '카페', '카페 카운터', '다시 묻기')").run(unitId).lastInsertRowid);
+    sqlite.prepare("INSERT INTO conv_scene_turns (scene_id, ord, speaker, chunk_ids) VALUES (?, 1, 'npc', ?)")
+      .run(sceneId, JSON.stringify([secondChunkId]));
+    sqlite.prepare("INSERT INTO conv_scene_turns (scene_id, ord, speaker, chunk_ids) VALUES (?, 2, 'learner', ?)")
+      .run(sceneId, JSON.stringify([firstChunkId]));
+    const state = sqlite.prepare(`
+      INSERT INTO conv_chunk_states (profile_id, chunk_id, role, stability, difficulty, elapsed_days, scheduled_days, reps, lapses, state, due)
+      VALUES (1, ?, ?, 1, 5, 0, 1, 1, 0, 1, ?)
+    `);
+    state.run(firstChunkId, "say", due + 500);
+    state.run(secondChunkId, "hear", due);
+    return { unitId, sceneId, firstChunkId, secondChunkId };
+  }
+
+  it("requires an authenticated profile", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    addConversationContent(fixture.sqlite);
+    fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run();
+
+    const response = await routeApiRequest(request("/api/conv/units", "GET"), fixture.env);
+
+    expect(response.status).toBe(401);
+    expect(await response.json()).toEqual({ error: { code: "profile_required", message: "Select a profile" } });
+  });
+
+  it("returns shared conversation payloads, missing-unit 404, and due chunks by due date", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const now = Date.now();
+    const { unitId, sceneId, firstChunkId, secondChunkId } = addConversationContent(fixture.sqlite, now - 1_000);
+
+    const expectedUnit = { id: unitId, track: "jp", ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다" };
+    expect(await (await routeApiRequest(request("/api/conv/units", "GET"), fixture.env)).json()).toEqual({ units: [expectedUnit] });
+
+    const detail = await (await routeApiRequest(request(`/api/conv/units/${unitId}`, "GET"), fixture.env)).json();
+    expect(detail).toEqual({
+      unit: expectedUnit,
+      chunks: [
+        { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "jp/c/0123456789abcdef.mp3", audioUrl: "/api/audio/jp/c/0123456789abcdef.mp3" },
+        { id: secondChunkId, unitId, ord: 2, ja: "はい", kana: "はい", koCue: "네라고 답하기", register: "polite", role: "hear", sourceKind: "corpus", sourceRef: "Tatoeba #2", audioKey: "jp/c/fedcba9876543210.mp3", audioUrl: "/api/audio/jp/c/fedcba9876543210.mp3" },
+      ],
+      scenes: [{
+        id: sceneId,
+        unitId,
+        ord: 1,
+        titleKo: "카페",
+        settingKo: "카페 카운터",
+        goalKo: "다시 묻기",
+        turns: [
+          { sceneId, ord: 1, speaker: "npc", chunkIds: [secondChunkId] },
+          { sceneId, ord: 2, speaker: "learner", chunkIds: [firstChunkId] },
+        ],
+      }],
+    });
+
+    const missing = await routeApiRequest(request("/api/conv/units/999", "GET"), fixture.env);
+    expect(missing.status).toBe(404);
+    expect(await missing.json()).toEqual({ error: { code: "unit_not_found", message: "conversation unit was not found" } });
+
+    expect(await (await routeApiRequest(request("/api/conv/due", "GET"), fixture.env)).json()).toEqual({
+      chunks: [
+        { id: secondChunkId, unitId, ord: 2, ja: "はい", kana: "はい", koCue: "네라고 답하기", register: "polite", role: "hear", sourceKind: "corpus", sourceRef: "Tatoeba #2", audioKey: "jp/c/fedcba9876543210.mp3", audioUrl: "/api/audio/jp/c/fedcba9876543210.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 1_000, correctCount: 0, totalCount: 0 },
+        { id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", register: "polite", role: "say", sourceKind: "corpus", sourceRef: "Tatoeba #1", audioKey: "jp/c/0123456789abcdef.mp3", audioUrl: "/api/audio/jp/c/0123456789abcdef.mp3", stability: 1, difficulty: 5, elapsedDays: 0, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 1, lastReview: null, due: now - 500, correctCount: 0, totalCount: 0 },
+      ],
+    });
+  });
+});
+
 describe("profile expectations", () => {
   const databases: DatabaseSync[] = [];
   afterEach(() => { for (const database of databases.splice(0)) database.close(); });
