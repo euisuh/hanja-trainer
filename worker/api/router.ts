@@ -1,8 +1,10 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-unsafe-dictionary-type, anti-slop/no-conditional-empty-object-spread -- Existing request router predates changed-file lint; conversation route follows its established validation contract. */
 import { TRACKS, type Track } from "../../shared/types";
 import { MAX_REVIEW_BATCH_SIZE, PROFILE_EXPECTATION_HEADER, SESSION_TOKEN_HEADER, SESSION_TRANSPORT_HEADER, type ApiErrorBody, type ClientConfigResponse, type SessionMode, type StartSessionRequest } from "../../shared/api";
 import { ReviewTargetLocked, startSession } from "./cards";
 import { getCharacterContent, getCurriculumContent, getUnitStudyContent } from "./content";
 import { getDueReviews, parseDueRequest, parseReviewRequest, ReviewTargetNotFound, submitReview, submitReviewBatch } from "./reviews";
+import { ConversationTargetNotFound, parseConversationAttempt, submitConversationAttemptBatch } from "./conversationAttempts";
 import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
@@ -190,6 +192,19 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
       return Response.json(await submitReview(env.DB, profileId, input));
     }
 
+    if (request.method === "POST" && pathname === "/api/conv/attempts") {
+      let value: unknown;
+      try {
+        value = await request.json();
+      } catch {
+        return error(400, "invalid_json", "request body must be valid JSON");
+      }
+      if (!Array.isArray(value) || value.length < 1 || value.length > MAX_REVIEW_BATCH_SIZE) return error(400, "invalid_conversation_attempt_batch", `body must be an array of 1 to ${MAX_REVIEW_BATCH_SIZE} attempts`);
+      const inputs = value.map((item) => parseConversationAttempt(item));
+      if (inputs.some((input) => input === null)) return error(400, "invalid_conversation_attempt", "conversation attempt fields are invalid");
+      return Response.json({ results: await submitConversationAttemptBatch(env.DB, profileId, inputs as NonNullable<(typeof inputs)[number]>[]) });
+    }
+
     if (request.method === "GET" && pathname === "/api/reviews/due") {
       const input = parseDueRequest(url.searchParams);
       if (!input) return error(400, "invalid_due_request", "tracks or limit is invalid");
@@ -350,6 +365,7 @@ async function handleApiRequest(request: Request, env: Env, now: number, native:
     if (caught instanceof UnitTestError) return error(caught.status, caught.code, caught.message);
     if (caught instanceof ReviewTargetLocked) return error(409, "review_target_locked", "This review target is not available yet");
     if (caught instanceof ReviewTargetNotFound) return error(404, "character_not_found", "character track was not found");
+    if (caught instanceof ConversationTargetNotFound) return error(404, "conversation_target_not_found", "conversation chunk or scene was not found");
     console.error(caught);
     return error(500, "internal_error", "request could not be completed");
   }

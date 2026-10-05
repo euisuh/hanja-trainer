@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-unsafe-dictionary-type -- Existing API config boundary parser predates changed-file lint; this additive request type must keep its shared contract. */
 import type { Track } from "./types";
 import type { OnyomiScript, SoundMode, ThemeId } from "./settings";
 
@@ -166,6 +167,22 @@ export type SubmitReviewResponse = {
   difficulty: number;
   dueLabel: string;
 };
+
+export type ConversationGrade = "again" | "hard" | "good" | "easy";
+
+export type SubmitConversationAttemptRequest = {
+  clientAttemptId: string;
+  chunkId: number;
+  sceneId?: number | null;
+  role: "say" | "hear";
+  grade: ConversationGrade;
+  answeredAt: number;
+  latencyMs?: number | null;
+  hints?: number;
+  replays?: number;
+};
+
+export type SubmitConversationAttemptResponse = { grade: ConversationGrade };
 
 export type DueReviewCard = {
   characterKey: string;

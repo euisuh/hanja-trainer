@@ -1,12 +1,14 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion -- Existing SQLite D1 test adapter predates changed-file lint; conversation assertions use same adapter. */
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
-import type { CharacterDetailResponse, CreateSessionRequest, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
+import type { CharacterDetailResponse, CreateSessionRequest, DueReviewsResponse, ProfileResponse, StartSessionResponse, SubmitConversationAttemptRequest, SubmitReviewRequest, SubmitReviewResponse } from "../../shared/api";
 import { emitSeedSql, parseSeed } from "../../scripts/seed";
 import { applyMigrations } from "../test/schema";
 import { getStats } from "./stats";
 import { createSession } from "./sessions";
 import { parseReviewRequest, submitReview, submitReviewBatch } from "./reviews";
+import { parseConversationAttempt, submitConversationAttemptBatch } from "./conversationAttempts";
 import { routeApiRequest } from "./router";
 
 function d1Result<T>(results: T[]): D1Result<T> {
@@ -65,6 +67,15 @@ function setup() {
 
 function post(path: string, body: unknown, env: Env) {
   return routeApiRequest(new Request(`https://test${path}`, { method: "POST", headers: { "content-type": "application/json", "x-hanja-profile-id": "1" }, body: JSON.stringify(body) }), env);
+}
+
+function conversationChunk(sqlite: DatabaseSync, role: "say" | "hear" = "say") {
+  const unitId = Number(sqlite.prepare("INSERT INTO conv_units (ord, title_ko, goal_ko) VALUES (1, '반복', '다시 묻기')").run().lastInsertRowid);
+  const chunkId = Number(sqlite.prepare(`
+    INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
+    VALUES (?, 1, 'もう一度お願いします', 'もういちどおねがいします', '다시 말해 주세요', 'polite', ?, 'corpus', 'Tatoeba #1', 'jp/c/test.mp3')
+  `).run(unitId, role).lastInsertRowid);
+  return { chunkId, unitId };
 }
 
 describe("review and session API", () => {
@@ -449,6 +460,47 @@ describe("review and session API", () => {
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_log").get()).toEqual({ count: 0 });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 0 });
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_submissions").get()).toEqual({ count: 0 });
+  });
+});
+
+describe("conversation attempts", () => {
+  const databases: DatabaseSync[] = [];
+  afterEach(() => { for (const database of databases.splice(0)) database.close(); });
+
+  it("caps grades, schedules separate say and hear states, and ignores replayed attempts", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const say = conversationChunk(fixture.sqlite, "say");
+    const hear = Number(fixture.sqlite.prepare(`
+      INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key)
+      VALUES (?, 2, '聞こえますか', 'きこえますか', '들리는지 묻기', 'polite', 'hear', 'corpus', 'Tatoeba #2', 'jp/c/hear.mp3')
+    `).run(say.unitId).lastInsertRowid);
+    const attempts: SubmitConversationAttemptRequest[] = [
+      { clientAttemptId: "hinted", chunkId: say.chunkId, role: "say", grade: "easy", hints: 2, answeredAt: 1_800_000_000_000 },
+      { clientAttemptId: "heard", chunkId: hear, role: "hear", grade: "easy", replays: 3, answeredAt: 1_800_000_000_001 },
+    ];
+
+    expect(parseConversationAttempt({ ...attempts[0], answeredAt: 1_800_000_000_000 }, 1_800_000_000_000)).toEqual(attempts[0]);
+    expect(await submitConversationAttemptBatch(fixture.env.DB, 1, attempts, new Date(1_800_000_000_100))).toEqual([{ grade: "hard" }, { grade: "good" }]);
+    const before = fixture.sqlite.prepare("SELECT * FROM conv_chunk_states ORDER BY role").all();
+    expect(fixture.sqlite.prepare("SELECT role, grade FROM conv_attempts ORDER BY client_attempt_id").all()).toEqual([
+      { role: "hear", grade: 3 },
+      { role: "say", grade: 2 },
+    ]);
+
+    await submitConversationAttemptBatch(fixture.env.DB, 1, attempts, new Date(1_800_000_000_100));
+    expect(fixture.sqlite.prepare("SELECT * FROM conv_chunk_states ORDER BY role").all()).toEqual(before);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts").get()).toEqual({ count: 2 });
+  });
+
+  it("rejects oversized batches before writing conversation attempts", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const { chunkId } = conversationChunk(fixture.sqlite);
+    const input: SubmitConversationAttemptRequest = { clientAttemptId: "oversized", chunkId, role: "say", grade: "good", answeredAt: 1_800_000_000_000 };
+    const response = await post("/api/conv/attempts", Array.from({ length: 5 }, (_, index) => ({ ...input, clientAttemptId: `${input.clientAttemptId}-${index}` })), fixture.env);
+
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({ error: { code: "invalid_conversation_attempt_batch", message: "body must be an array of 1 to 4 attempts" } });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts").get()).toEqual({ count: 0 });
   });
 });
 

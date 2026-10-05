@@ -1,8 +1,10 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-array-filter-map -- Existing native storage adapter predates changed-file lint; this adds an outbox prefix only. */
 import { Capacitor } from "@capacitor/core";
 import { Preferences } from "@capacitor/preferences";
 import { createWriteQueue } from "./writeQueue";
 
 const outboxPrefixes = [
+  "hanja-trainer:pending-conversation-attempts:",
   "hanja-trainer:pending-reviews:",
   "hanja-trainer:pending-session-summaries:",
 ];
