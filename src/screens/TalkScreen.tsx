@@ -189,7 +189,7 @@ export function TalkScreen() {
         <span lang="ja">{card.kana}</span>
         <button className="talk-screen__audio" onClick={playReference} type="button">듣기 <kbd>Space</kbd></button>
         {recording.status === "ready" && <label className="talk-screen__self-audio">내 목소리 <audio controls ref={selfAudioRef} src={recording.url} /> <kbd>Shift+Space</kbd></label>}
-        <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} /></small>
+        <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} sourceAuthor={card.sourceAuthor} /></small>
       </div>}
       <div className="talk-screen__attempt">
         <small>내 시도 · 기기 안에서만 측정</small>

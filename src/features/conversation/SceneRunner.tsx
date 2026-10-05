@@ -4,6 +4,7 @@ import { apiUrl } from "../../platform/apiUrl";
 import { LocalRecorder, localRecordingSupported, type LocalRecordingState } from "../study/speech";
 import { enqueuePendingConversationAttempt } from "./attemptOutbox";
 import { createSceneState, scenePassed, sceneReducer, type SceneAction } from "./sceneMachine";
+import { SourceAttribution } from "../source/SourceAttribution";
 
 type SceneChunk = ConversationChunk & { audioUrl: string };
 type Props = { scene: ConversationScene & { turns: ConversationSceneTurn[] }; chunks: SceneChunk[]; profileId: number; onExit: () => void };
@@ -78,8 +79,8 @@ export function SceneRunner({ scene, chunks, profileId, onExit }: Props) {
   return <section className="talk-root talk-scene" data-scene-phase={state.phase}>
     <header className="talk-scene__meta"><span>{scene.titleKo}</span><span>{state.turnIndex + 1} / {scene.turns.length}</span></header>
     <div className="talk-scene__spread">
-      <article className="talk-scene__their"><small>상대방</small>{state.npcTextVisible && <strong lang="ja">{npc?.ja}</strong>}<button onClick={replay} type="button">다시 듣기 <kbd>Space</kbd></button></article>
-      <article className="talk-scene__yours"><small>내 차례</small>{state.phase !== "npc" && <><p className="talk-scene__cue">{target?.koCue}</p>{state.phase === "reveal" && <strong className="talk-scene__target" lang="ja">{target?.ja}</strong>}</>}</article>
+      <article className="talk-scene__their"><small>상대방</small>{state.npcTextVisible && <><strong lang="ja">{npc?.ja}</strong><small className="talk-screen__source">출처 · <SourceAttribution source={npc?.sourceRef} sourceAuthor={npc?.sourceAuthor} /></small></>}<button onClick={replay} type="button">다시 듣기 <kbd>Space</kbd></button></article>
+      <article className="talk-scene__yours"><small>내 차례</small>{state.phase !== "npc" && <><p className="talk-scene__cue">{target?.koCue}</p>{state.phase === "reveal" && <><strong className="talk-scene__target" lang="ja">{target?.ja}</strong><small className="talk-screen__source">출처 · <SourceAttribution source={target?.sourceRef} sourceAuthor={target?.sourceAuthor} /></small></>}</>}</article>
     </div>
     <footer className="talk-scene__bar">
       {(state.phase === "npc" || state.phase === "reveal") && <button onClick={() => dispatch({ type: "next" })} type="button">다음 <kbd>Enter</kbd></button>}

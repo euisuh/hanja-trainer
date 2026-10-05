@@ -215,6 +215,8 @@ export type ConversationPhraseProgress = {
   ja: string;
   kana: string;
   koCue: string;
+  sourceKind: string;
+  sourceRef: string;
   spokenDays: number;
   againCount: number;
 };

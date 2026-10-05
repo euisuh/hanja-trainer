@@ -188,7 +188,7 @@ describe("conversation read API", () => {
     attempt.run("again", firstChunkId, 1, Date.UTC(2026, 9, 5, 1));
     expect(await (await routeApiRequest(request("/api/conv/progress", "GET"), fixture.env)).json()).toEqual({
       units: [{ id: unitId, ord: 1, titleKo: "다시 묻기", goalKo: "상대방에게 다시 말해 달라고 한다", phraseCount: 1, completedPhraseCount: 1 }],
-      phrases: [{ id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", spokenDays: 2, againCount: 2 }],
+      phrases: [{ id: firstChunkId, unitId, ord: 1, ja: "もう一度お願いします", kana: "もういちどおねがいします", koCue: "다시 말해 달라고 하기", sourceKind: "corpus", sourceRef: "Tatoeba #1", spokenDays: 2, againCount: 2 }],
     });
   });
 

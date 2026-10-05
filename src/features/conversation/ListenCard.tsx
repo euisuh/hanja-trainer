@@ -65,7 +65,7 @@ export function ListenCard({ card, choices, capstone = false, onNext }: Props) {
     </div>
     {answered && <div className="talk-screen__answer">
       <p>{correct ? "맞았습니다." : "다시 확인하세요."}</p>
-      <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} /></small>
+      <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} sourceAuthor={card.sourceAuthor} /></small>
     </div>}
     <footer className="talk-screen__bar">
       <button onClick={() => replay()} type="button">다시 듣기 <kbd>Space</kbd></button>

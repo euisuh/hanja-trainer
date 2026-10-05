@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../features/settings/about.css";
 
+type ConversationSourceDocument = { chunks: Array<{ sourceRef?: string }> };
+
 const sources = [
   { name: "한국어문회 급수배정", license: "라이선스 명시 없음 · 사실 정보(급수·한자 목록)만 사용", href: "https://www.hanja.re.kr/kccpt/exam/levelConfirm.do" },
   { name: "HanjaDict (훈음)", license: "MIT License", href: "https://github.com/seyoungsong/hanjadict" },
@@ -21,13 +23,15 @@ const learningSources = [
   { name: "Butler & Roediger (2008) · 선택형 검사와 피드백", href: "https://doi.org/10.3758/MC.36.3.604" },
 ] as const;
 
-const talkSources = [
+const talkSourceDetails = [
   { name: "Tatoeba", license: "CC BY 2.0 FR · 문장별 출처 링크 표시", href: "https://tatoeba.org/" },
   { name: "Tanaka Corpus", license: "public domain", href: "https://www.edrdg.org/wiki/index.php/Tanaka_Corpus" },
   { name: "JMdict", license: "CC BY-SA 4.0", href: "https://www.edrdg.org/jmdict/j_jmdict.html" },
   { name: "Common Voice ja", license: "CC0", href: "https://commonvoice.mozilla.org/datasets" },
   { name: "JVS", license: "CC BY-SA 4.0", href: "https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus" },
 ] as const;
+
+export const talkSources = talkSourceDetails.filter((source) => Object.values(import.meta.glob<ConversationSourceDocument>("../../data/conversation/*.json", { eager: true, import: "default" })).some((document) => document.chunks.some((chunk) => chunk.sourceRef?.startsWith(`${source.name} #`))));
 
 export function AboutScreen() {
   const navigate = useNavigate();

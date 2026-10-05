@@ -33,6 +33,7 @@ export interface ConversationChunk {
   role: ConversationRole;
   sourceKind: string;
   sourceRef: string;
+  sourceAuthor?: string;
   audioKey: string;
   retiredAt?: number | null;
 }

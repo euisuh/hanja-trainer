@@ -14,7 +14,7 @@ type ConversationUnitResponse = {
 type ConversationDueChunk = ConversationChunkPayload & Omit<ConversationChunkState, "profileId" | "chunkId" | "role">;
 type ConversationDueResponse = { chunks: ConversationDueChunk[] };
 
-type ProgressRow = Pick<ChunkRow, "id" | "unit_id" | "ord" | "ja" | "kana" | "ko_cue"> & { answered_at: number | null; grade: number | null };
+type ProgressRow = Pick<ChunkRow, "id" | "unit_id" | "ord" | "ja" | "kana" | "ko_cue" | "source_kind" | "source_ref"> & { answered_at: number | null; grade: number | null };
 type TimezoneRow = { timezone: string };
 
 type UnitRow = {
@@ -132,7 +132,7 @@ export async function getConversationProgress(db: D1Database, profileId: number)
     db.prepare("SELECT timezone FROM profile WHERE id = ?1").bind(profileId).first<TimezoneRow>(),
     db.prepare("SELECT id, ord, title_ko, goal_ko FROM conv_units ORDER BY ord, id").all<Pick<UnitRow, "id" | "ord" | "title_ko" | "goal_ko">>(),
     db.prepare(`
-      SELECT c.id, c.unit_id, c.ord, c.ja, c.kana, c.ko_cue, a.answered_at, a.grade
+      SELECT c.id, c.unit_id, c.ord, c.ja, c.kana, c.ko_cue, c.source_kind, c.source_ref, a.answered_at, a.grade
       FROM conv_chunks c
       LEFT JOIN conv_attempts a ON a.chunk_id = c.id AND a.profile_id = ?1 AND a.input = 'voice'
       WHERE c.role = 'say'
@@ -142,7 +142,7 @@ export async function getConversationProgress(db: D1Database, profileId: number)
   if (!profile?.timezone) throw new Error("Profile row is missing");
   const phrases = new Map<number, ConversationProgressResponse["phrases"][number] & { days: Set<string> }>();
   for (const row of phraseResult.results) {
-    const phrase = phrases.get(row.id) ?? { id: row.id, unitId: row.unit_id, ord: row.ord, ja: row.ja, kana: row.kana, koCue: row.ko_cue, spokenDays: 0, againCount: 0, days: new Set<string>() };
+    const phrase = phrases.get(row.id) ?? { id: row.id, unitId: row.unit_id, ord: row.ord, ja: row.ja, kana: row.kana, koCue: row.ko_cue, sourceKind: row.source_kind, sourceRef: row.source_ref, spokenDays: 0, againCount: 0, days: new Set<string>() };
     if (row.answered_at !== null) phrase.days.add(zonedDayKey(new Date(row.answered_at), profile.timezone));
     if (row.grade === 1) phrase.againCount += 1;
     phrases.set(row.id, phrase);

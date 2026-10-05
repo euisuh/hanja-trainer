@@ -1,10 +1,11 @@
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { expect, test, type Page } from "@playwright/test";
+import type { ConversationChunkPayload } from "../shared/api";
 
 const npx = process.platform === "win32" ? "npx.cmd" : "npx";
 const conversation = JSON.parse(readFileSync("e2e/fixtures/talk-unit-response.json", "utf8"));
-const sayItems = conversation.chunks.map((chunk) => ({ kind: "chunk", phase: "say", chunk }));
+const sayItems = conversation.chunks.map((chunk: ConversationChunkPayload) => ({ kind: "chunk", phase: "say", chunk }));
 const sceneItem = { kind: "scene", scene: conversation.scenes[0], review: false };
 
 function routeSession(page: Page, items: unknown[]) {
@@ -75,6 +76,7 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await page.keyboard.press("Space");
   await expect(page.getByText("一度(일도)")).toBeVisible();
   await expect(page.getByRole("link", { name: conversation.chunks[0].sourceRef })).toHaveAttribute("href", "https://tatoeba.org/sentences/show/1");
+  await expect(page.getByText("fixture-owner", { exact: true })).toBeVisible();
   await page.keyboard.press("r");
   await expect(page.getByRole("button", { name: /바로/u })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByText("내 목소리", { exact: false })).toBeVisible();
