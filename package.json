@@ -19,6 +19,7 @@
     "seed:local": "tsx scripts/seed.ts --local data/characters/*.json data/sentences/*.json data/words/*.json",
     "preseed:remote": "npm run sentences:readings",
     "seed:remote": "tsx scripts/seed.ts --remote data/characters/*.json data/sentences/*.json data/words/*.json",
+    "validate:conversation": "node --import tsx scripts/validate-conversation.ts",
     "audio:generate": "tsx scripts/generate-audio.ts --remote data/characters/*.json",
     "audio:generate:conv": "tsx scripts/generate-audio.ts --conversation --remote",
     "deploy": "npm run build && wrangler deploy",

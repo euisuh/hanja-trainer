@@ -1,5 +1,19 @@
 # Character data sources
 
+## Conversation sources
+
+Talk chunks record `sourceKind` and an exact `sourceRef`. Corpus and textbook
+chunks must cite a stable, line-level reference such as `Tatoeba #123`; broad
+collection names are not enough. `authored` chunks are the sole exception and
+omit `sourceRef`; use them only for human-authored Japanese text approved for
+shipping. Do not use generated Japanese text. Korean cues and scene metadata
+are human-written and do not need a Japanese source reference.
+
+For Tatoeba, record the sentence ID and retain the CC BY 2.0 FR attribution
+requirements described in the example-sentence sources section below. For
+other sources, add the source, license, exact reference format, and required
+attribution here before committing chunks from that source.
+
 Retrieved 2026-08-30. Seed files contain factual character memberships and
 dictionary fields only; no source prose or examples are copied.
 

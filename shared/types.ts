@@ -77,6 +77,46 @@ export interface ConversationAttempt {
   latencyMs: number | null;
 }
 
+export interface SeedConversationUnit {
+  ord: number;
+  titleKo: string;
+  goalKo: string;
+}
+
+export interface SeedConversationChunk {
+  unitOrd: number;
+  ord: number;
+  text: string;
+  kana: string;
+  cueKo: string;
+  register: ConversationRegister;
+  role: ConversationRole;
+  sourceKind: string;
+  sourceRef?: string;
+  audioKey: string;
+}
+
+export interface SeedConversationSceneTurn {
+  ord: number;
+  speaker: "npc" | "learner";
+  chunkOrds: number[];
+}
+
+export interface SeedConversationScene {
+  unitOrd: number;
+  ord: number;
+  titleKo: string;
+  settingKo: string;
+  goalKo: string;
+  turns: SeedConversationSceneTurn[];
+}
+
+export interface SeedConversationDocument {
+  units: SeedConversationUnit[];
+  chunks: SeedConversationChunk[];
+  scenes: SeedConversationScene[];
+}
+
 export interface ExampleSentence {
   id: number;
   characterId: number;

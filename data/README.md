@@ -54,6 +54,24 @@ constituent `level` and `levelOrd`, an immutable same-language Wiktionary
 `sourceUrl`, and the two canonical character keys in `members`. Word rows are
 seeded after character rows.
 
+## Conversation seeds
+
+`data/conversation/*.json` contains one self-contained Talk unit. A document
+has `units`, `chunks`, and `scenes`. `unitOrd` links chunks and scenes to a
+unit; `chunkOrds` on a scene turn resolve to chunks in that same unit. The seed
+stores resolved chunk IDs in `conv_scene_turns.chunk_ids`.
+
+Chunks require `text`, kana `kana`, Korean `cueKo`, `register` (`polite`,
+`casual`, or `keigo`), `role` (`say` or `hear`), `sourceKind`, and `audioKey`.
+`sourceRef` is required unless `sourceKind` is `authored`. Scenes require at
+least one turn; every turn needs one or more existing `chunkOrds` targets.
+
+Run `npm run validate:conversation` before seeding. `scripts/seed.ts` seeds
+conversation files idempotently when they are passed as arguments; the
+`seed:local`/`seed:remote` globs add `data/conversation/*.json` with the first
+real unit. `scripts/fixtures/conversation-sample.json` is a test fixture only
+and its Japanese must never ship.
+
 ## Level ordinals
 
 Ascending values mean harder material.

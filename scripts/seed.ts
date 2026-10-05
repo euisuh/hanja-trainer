@@ -1,3 +1,5 @@
+// JSON seed input is untyped at the filesystem boundary; this file validates it before use.
+// oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-unsafe-dictionary-type, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -6,6 +8,9 @@ import { spawnSync } from "node:child_process";
 import {
   TRACKS,
   type SeedCharacterEntry,
+  type SeedConversationDocument,
+  type SeedConversationScene,
+  type SeedConversationChunk,
   type SeedCurriculumUnit,
   type SeedDocument,
   type SeedSentence,
@@ -17,6 +22,7 @@ import {
   type SourceKind,
   type Track,
 } from "../shared/types.ts";
+import { parseConversationSeed } from "./validate-conversation.ts";
 
 export const LEVEL_ORDS: Record<Track, Readonly<Record<string, number>>> = {
   kr: {
@@ -324,6 +330,41 @@ export function emitWordSeedSql(document: SeedWordDocument): string {
   return `${sql.join("\n")}\n`;
 }
 
+function conversationUnitId(ord: number): string {
+  return `(SELECT id FROM conv_units WHERE track='jp' AND ord=${ord})`;
+}
+
+function conversationSceneId(unitOrd: number, ord: number): string {
+  return `(SELECT id FROM conv_scenes WHERE unit_id=${conversationUnitId(unitOrd)} AND ord=${ord})`;
+}
+
+function conversationChunkId(unitOrd: number, ord: number): string {
+  return `(SELECT id FROM conv_chunks WHERE unit_id=${conversationUnitId(unitOrd)} AND ord=${ord})`;
+}
+
+function emitConversationChunkSql(chunk: SeedConversationChunk): string {
+  return `INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key) VALUES (${conversationUnitId(chunk.unitOrd)}, ${chunk.ord}, ${quote(chunk.text)}, ${quote(chunk.kana)}, ${quote(chunk.cueKo)}, ${quote(chunk.register)}, ${quote(chunk.role)}, ${quote(chunk.sourceKind)}, ${quote(chunk.sourceRef ?? "authored")}, ${quote(chunk.audioKey)}) ON CONFLICT(unit_id, ord) DO UPDATE SET ja=excluded.ja, kana=excluded.kana, ko_cue=excluded.ko_cue, register=excluded.register, role=excluded.role, source_kind=excluded.source_kind, source_ref=excluded.source_ref, audio_key=excluded.audio_key;`;
+}
+
+function emitConversationSceneSql(scene: SeedConversationScene): string[] {
+  const sceneId = conversationSceneId(scene.unitOrd, scene.ord);
+  return [
+    `INSERT INTO conv_scenes (unit_id, ord, title_ko, setting_ko, goal_ko) VALUES (${conversationUnitId(scene.unitOrd)}, ${scene.ord}, ${quote(scene.titleKo)}, ${quote(scene.settingKo)}, ${quote(scene.goalKo)}) ON CONFLICT(unit_id, ord) DO UPDATE SET title_ko=excluded.title_ko, setting_ko=excluded.setting_ko, goal_ko=excluded.goal_ko;`,
+    `DELETE FROM conv_scene_turns WHERE scene_id=${sceneId};`,
+    ...scene.turns.map((turn) => `INSERT INTO conv_scene_turns (scene_id, ord, speaker, chunk_ids) VALUES (${sceneId}, ${turn.ord}, ${quote(turn.speaker)}, json_array(${turn.chunkOrds.map((ord) => conversationChunkId(scene.unitOrd, ord)).join(", ")}));`),
+  ];
+}
+
+export function emitConversationSeedSql(document: SeedConversationDocument): string {
+  const sql = ["PRAGMA foreign_keys = ON;"];
+  for (const unit of document.units) {
+    sql.push(`INSERT INTO conv_units (track, ord, title_ko, goal_ko) VALUES ('jp', ${unit.ord}, ${quote(unit.titleKo)}, ${quote(unit.goalKo)}) ON CONFLICT(track, ord) DO UPDATE SET title_ko=excluded.title_ko, goal_ko=excluded.goal_ko;`);
+  }
+  for (const chunk of document.chunks) sql.push(emitConversationChunkSql(chunk));
+  for (const scene of document.scenes) sql.push(...emitConversationSceneSql(scene));
+  return `${sql.join("\n")}\n`;
+}
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const mode = args.includes("--remote") ? "--remote" : "--local";
@@ -334,6 +375,7 @@ async function main(): Promise<void> {
     const isDocument = typeof value === "object" && value !== null;
     if (isDocument && "sentences" in value) return emitSentenceSeedSql(parseSentenceSeed(value));
     if (isDocument && "words" in value) return emitWordSeedSql(parseWordSeed(value));
+    if (isDocument && ("chunks" in value || "scenes" in value)) return emitConversationSeedSql(parseConversationSeed(value));
     return emitSeedSql(parseSeed(value));
   }));
   const directory = await mkdtemp(join(tmpdir(), "hanja-seed-"));
