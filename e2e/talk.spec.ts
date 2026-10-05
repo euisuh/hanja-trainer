@@ -45,6 +45,8 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
 
   await page.goto("/talk/1");
   await expect(page.getByText(conversation.chunks[0].koCue)).toBeVisible();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("link", { name: conversation.chunks[0].sourceRef })).toHaveAttribute("href", "https://tatoeba.org/sentences/show/1");
   await page.keyboard.press("r");
   await expect(page.getByRole("button", { name: /바로/u })).toHaveAttribute("aria-pressed", "true");
   await page.keyboard.press("3");

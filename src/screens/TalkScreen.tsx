@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { enqueuePendingConversationAttempt } from "../features/conversation/attemptOutbox";
 import { useActiveProfile } from "../features/profile/ProfileContext";
+import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, type LocalRecordingState } from "../features/study/speech";
 import { apiClient, type ConversationUnitResponse } from "../lib/apiClient";
 import { onAppInactive } from "../platform/lifecycle";
@@ -122,6 +123,7 @@ export function TalkScreen() {
         <strong lang="ja">{card.ja}</strong>
         <span lang="ja">{card.kana}</span>
         <button className="talk-screen__audio" onClick={() => { setReplays((value) => value + 1); new Audio(card.audioUrl).play().catch(() => undefined); }} type="button">듣기 <kbd>Space</kbd></button>
+        <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} /></small>
       </div>}
       <div className="talk-screen__attempt">
         <small>내 시도 · 기기 안에서만 측정</small>

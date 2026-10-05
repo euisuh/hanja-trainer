@@ -9,6 +9,8 @@
 .talk-screen__answer strong { display: block; font: 600 34px/1.5 var(--talk-font-jp); }
 .talk-screen__answer span { color: var(--talk-pencil-red); font: 500 14px var(--talk-font-reading); }
 .talk-screen__audio { margin-top: 12px; }
+.talk-screen__source { color: var(--talk-muted); display: block; font: 12px var(--talk-font-meta); margin-top: 12px; }
+.talk-screen__source a { color: inherit; }
 .talk-screen button { background: var(--talk-paper); border: 1.5px solid var(--talk-ink); border-radius: 3px; color: var(--talk-ink); font: 600 14px var(--talk-font-ui); padding: 10px 12px; }
 .talk-screen button:focus-visible { outline: 2px solid var(--talk-tab-green); outline-offset: 2px; }
 .talk-screen button:disabled { opacity: .55; }

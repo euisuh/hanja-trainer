@@ -21,6 +21,14 @@ const learningSources = [
   { name: "Butler & Roediger (2008) · 선택형 검사와 피드백", href: "https://doi.org/10.3758/MC.36.3.604" },
 ] as const;
 
+const talkSources = [
+  { name: "Tatoeba", license: "CC BY 2.0 FR · 문장별 출처 링크 표시", href: "https://tatoeba.org/" },
+  { name: "Tanaka Corpus", license: "public domain", href: "https://www.edrdg.org/wiki/index.php/Tanaka_Corpus" },
+  { name: "JMdict", license: "CC BY-SA 4.0", href: "https://www.edrdg.org/jmdict/j_jmdict.html" },
+  { name: "Common Voice ja", license: "CC0", href: "https://commonvoice.mozilla.org/datasets" },
+  { name: "JVS", license: "CC BY-SA 4.0", href: "https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus" },
+] as const;
+
 export function AboutScreen() {
   const navigate = useNavigate();
   const { hash } = useLocation();
@@ -141,6 +149,19 @@ export function AboutScreen() {
         </p>
         <ul className="about-sources">
           {sources.map((source) => (
+            <li key={source.name}>
+              <a href={source.href} rel="noopener noreferrer" target="_blank">{source.name}</a>
+              <span>{source.license}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="about-section">
+        <h2>Talk 출처와 라이선스</h2>
+        <p>Talk 일본어 문장은 원문별 출처를 카드 공개 뒤에 표시합니다.</p>
+        <ul className="about-sources">
+          {talkSources.map((source) => (
             <li key={source.name}>
               <a href={source.href} rel="noopener noreferrer" target="_blank">{source.name}</a>
               <span>{source.license}</span>
