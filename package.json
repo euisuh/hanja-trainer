@@ -23,7 +23,9 @@
     "deploy": "npm run build && wrangler deploy",
     "build:mobile": "VITE_API_ORIGIN=https://hanja.uiseoya.com vite build && cap sync",
     "android": "npm run build:mobile && cap open android",
-    "ios": "npm run build:mobile && cap open ios"
+    "ios": "npm run build:mobile && cap open ios",
+    "lint:slop": "NODE_NO_WARNINGS=1 oxlint -c oxlint.config.ts",
+    "lint:slop:changed": "node tools/oxlint/changed.mjs"
   },
   "dependencies": {
     "@capacitor/app": "8.1.1",
@@ -46,6 +48,7 @@
     "@capacitor/cli": "8.5.2",
     "@capacitor/ios": "8.5.2",
     "@eslint/js": "^10.0.1",
+    "@oxlint/plugins": "1.78.0",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.4.0",
     "@types/react": "^19.2.18",
@@ -56,6 +59,7 @@
     "globals": "^17.11.0",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
+    "oxlint": "1.78.0",
     "pinyin-pro": "^3.29.3",
     "tsx": "^4.23.12",
     "typescript": "^6.0.3",
