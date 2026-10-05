@@ -3,6 +3,80 @@ export type Track = (typeof TRACKS)[number];
 
 export type SourceKind = "textbook" | "past_paper" | "corpus";
 
+export const CONVERSATION_ROLES = ["say", "hear"] as const;
+export type ConversationRole = (typeof CONVERSATION_ROLES)[number];
+
+export const CONVERSATION_REGISTERS = ["polite", "casual", "keigo"] as const;
+export type ConversationRegister = (typeof CONVERSATION_REGISTERS)[number];
+
+export interface ConversationUnit {
+  id: number;
+  track: "jp";
+  ord: number;
+  titleKo: string;
+  goalKo: string;
+}
+
+export interface ConversationChunk {
+  id: number;
+  unitId: number;
+  ord: number;
+  ja: string;
+  kana: string;
+  koCue: string;
+  register: ConversationRegister;
+  role: ConversationRole;
+  sourceKind: string;
+  sourceRef: string;
+  audioKey: string;
+}
+
+export interface ConversationScene {
+  id: number;
+  unitId: number;
+  ord: number;
+  titleKo: string;
+  settingKo: string;
+  goalKo: string;
+}
+
+export interface ConversationSceneTurn {
+  sceneId: number;
+  ord: number;
+  speaker: "npc" | "learner";
+  chunkIds: number[];
+}
+
+export interface ConversationChunkState {
+  profileId: number;
+  chunkId: number;
+  role: ConversationRole;
+  stability: number;
+  difficulty: number;
+  elapsedDays: number;
+  scheduledDays: number;
+  learningSteps: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  lastReview: number | null;
+  due: number;
+  correctCount: number;
+  totalCount: number;
+}
+
+export interface ConversationAttempt {
+  id: number;
+  profileId: number;
+  clientAttemptId: string;
+  chunkId: number;
+  sceneId: number | null;
+  role: ConversationRole;
+  grade: 1 | 2 | 3 | 4;
+  answeredAt: number;
+  latencyMs: number | null;
+}
+
 export interface ExampleSentence {
   id: number;
   characterId: number;
