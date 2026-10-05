@@ -1,0 +1,694 @@
+{
+  "units": [
+    {
+      "ord": 10,
+      "titleKo": "반말 전환 (친구)",
+      "goalKo": "친구에게 존댓말 대신 반말로 맞장구치고, 안부를 묻고, 주말 약속을 잡는다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 10,
+      "ord": 1,
+      "text": "うん。",
+      "kana": "うん。",
+      "cueKo": "친구가 부를 때 가볍게 '응' 하고 대답하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1166625",
+      "audioKey": "c/d933f25e849a17ad",
+      "key": "tatoeba-1166625-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 2,
+      "text": "ううん。",
+      "kana": "ううん。",
+      "cueKo": "'아니'라고 가볍게 부정하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13211669",
+      "audioKey": "c/2cff8cec1e31b7ab",
+      "key": "tatoeba-13211669-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 3,
+      "text": "そうなんだ。",
+      "kana": "そうなんだ。",
+      "cueKo": "친구 얘기에 '아, 그렇구나' 하고 맞장구치기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5955920",
+      "audioKey": "c/bfc342bafeb9ec85",
+      "key": "tatoeba-5955920-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 4,
+      "text": "まじで？",
+      "kana": "まじで？",
+      "cueKo": "놀라서 '진짜?' 하고 되묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #605858",
+      "audioKey": "c/2353578e3854bc4d",
+      "key": "tatoeba-605858-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 5,
+      "text": "本当？",
+      "kana": "ほんとう？",
+      "cueKo": "친구가 한 말을 믿기 어려울 때 '정말?' 하고 확인하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4751",
+      "audioKey": "c/766c9fc75df84e34",
+      "key": "tatoeba-4751-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 6,
+      "text": "すごいじゃん。",
+      "kana": "すごいじゃん。",
+      "cueKo": "친구에게 '대단하잖아' 하고 감탄하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214729",
+      "audioKey": "c/4dbb5030ed08230a",
+      "key": "tatoeba-214729-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 7,
+      "text": "早いじゃん。",
+      "kana": "はやいじゃん。",
+      "cueKo": "약속 장소에 먼저 와 있는 친구에게 '일찍 왔네' 하고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9112549",
+      "audioKey": "c/834f0e017776223d",
+      "key": "tatoeba-9112549-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 8,
+      "text": "その色いいね。",
+      "kana": "そのいろいいね。",
+      "cueKo": "친구의 옷이나 물건이 마음에 든다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10000276",
+      "audioKey": "c/2752f91f16fdd245",
+      "key": "tatoeba-10000276-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 9,
+      "text": "久しぶり！",
+      "kana": "ひさしぶり！",
+      "cueKo": "오랜만에 만난 친구에게 인사하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13523728",
+      "audioKey": "c/d4d3804a281f7841",
+      "key": "tatoeba-13523728-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 10,
+      "text": "元気？",
+      "kana": "げんき？",
+      "cueKo": "친구에게 '잘 지내?' 하고 안부 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #175045",
+      "audioKey": "c/2e03800d0652b47f",
+      "key": "tatoeba-175045-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 11,
+      "text": "今何してる？",
+      "kana": "いまなにしてる？",
+      "cueKo": "친구에게 지금 뭐 하고 있냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10906691",
+      "audioKey": "c/557d771196acbdf0",
+      "key": "tatoeba-10906691-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 12,
+      "text": "起きてる？",
+      "kana": "おきてる？",
+      "cueKo": "자고 있을지도 모르는 친구에게 깨어 있냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2569603",
+      "audioKey": "c/235f3383e926a3cf",
+      "key": "tatoeba-2569603-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 13,
+      "text": "知ってる？",
+      "kana": "しってる？",
+      "cueKo": "친구에게 '알고 있어?' 하고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11512359",
+      "audioKey": "c/76be305824f43d74",
+      "key": "tatoeba-11512359-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 14,
+      "text": "覚えてる？",
+      "kana": "おぼえてる？",
+      "cueKo": "친구에게 '기억나?' 하고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #184550",
+      "audioKey": "c/73b0b8a587c53f4d",
+      "key": "tatoeba-184550-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 15,
+      "text": "ごめん、忘れちゃった。",
+      "kana": "ごめん、わすれちゃった。",
+      "cueKo": "친구에게 '미안, 깜빡했어' 하고 사과하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1556116",
+      "audioKey": "c/ff44c8730516b0fe",
+      "key": "tatoeba-1556116-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 16,
+      "text": "飽きちゃった。",
+      "kana": "あきちゃった。",
+      "cueKo": "'질려 버렸어' 하고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11054750",
+      "audioKey": "c/0f2e3778d8cae576",
+      "key": "tatoeba-11054750-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 17,
+      "text": "笑っちゃった。",
+      "kana": "わらっちゃった。",
+      "cueKo": "'나도 모르게 웃어 버렸어' 하고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10066792",
+      "audioKey": "c/bc8721c0230dcbd7",
+      "key": "tatoeba-10066792-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 18,
+      "text": "濡れちゃった。",
+      "kana": "ぬれちゃった。",
+      "cueKo": "'젖어 버렸어' 하고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10171381",
+      "audioKey": "c/1e7ea143076052ea",
+      "key": "tatoeba-10171381-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 19,
+      "text": "今週末空いてる？",
+      "kana": "こんしゅうまつあいてる？",
+      "cueKo": "친구에게 이번 주말에 시간 되냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3247983",
+      "audioKey": "c/9569c4262a443f66",
+      "key": "tatoeba-3247983-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 20,
+      "text": "映画見に行かない？",
+      "kana": "えいがみにいかない？",
+      "cueKo": "친구에게 영화 보러 가자고 권하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #189286",
+      "audioKey": "c/e53a0b1d55c3676d",
+      "key": "tatoeba-189286-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 21,
+      "text": "駅で待ち合わせしようね。",
+      "kana": "えきでまちあわせしようね。",
+      "cueKo": "역에서 만나자고 약속 정하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10455178",
+      "audioKey": "c/30d7134a3188ddbc",
+      "key": "tatoeba-10455178-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 22,
+      "text": "冗談だよね？",
+      "kana": "じょうだんだよね？",
+      "cueKo": "믿기지 않아서 '농담이지?' 하고 확인하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10614923",
+      "audioKey": "c/b979d73c71e670ae",
+      "key": "tatoeba-10614923-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 23,
+      "text": "明日は月曜だよね。",
+      "kana": "あしたはげつようだよね。",
+      "cueKo": "'내일 월요일 맞지?' 하고 확인하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8842211",
+      "audioKey": "c/87cf16d550935697",
+      "key": "tatoeba-8842211-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 24,
+      "text": "待たせて、ごめんね。",
+      "kana": "またせて、ごめんね。",
+      "cueKo": "기다리게 한 친구에게 사과하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10602871",
+      "audioKey": "c/b8935a59edcec8a9",
+      "key": "tatoeba-10602871-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 25,
+      "text": "ちょっと待って。",
+      "kana": "ちょっとまって。",
+      "cueKo": "친구에게 '잠깐만' 하고 멈추게 하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1064324",
+      "audioKey": "c/4fe06e4acef19c10",
+      "key": "tatoeba-1064324-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 26,
+      "text": "分かった。",
+      "kana": "わかった。",
+      "cueKo": "'알았어' 하고 대답하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2251469",
+      "audioKey": "c/0907f448b5d41741",
+      "key": "tatoeba-2251469-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 27,
+      "text": "今夜は空いてるよ。",
+      "kana": "こんやはあいてるよ。",
+      "cueKo": "오늘 밤은 시간이 된다고 대답하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10630194",
+      "audioKey": "c/1e01a9278acb3113",
+      "key": "tatoeba-10630194-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 28,
+      "text": "いいよ。",
+      "kana": "いいよ。",
+      "cueKo": "친구의 부탁이나 제안을 '좋아' 하고 받아들이기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9499960",
+      "audioKey": "c/7a40d83622c9d766",
+      "key": "tatoeba-9499960-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 29,
+      "text": "手伝おうか？",
+      "kana": "てつだおうか？",
+      "cueKo": "곤란해하는 친구에게 '도와줄까?' 하고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3878008",
+      "audioKey": "c/72c0bd0522484789",
+      "key": "tatoeba-3878008-say"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 30,
+      "text": "久しぶりだね。",
+      "kana": "ひさしぶりだね。",
+      "cueKo": "오랜만에 만난 친구가 건네는 인사 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #417004",
+      "audioKey": "c/a629e29e3fb58668",
+      "key": "tatoeba-417004-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 31,
+      "text": "どうしたの。",
+      "kana": "どうしたの。",
+      "cueKo": "친구가 '무슨 일이야?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2196376",
+      "audioKey": "c/494f419a1729e8db",
+      "key": "tatoeba-2196376-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 32,
+      "text": "いいね。",
+      "kana": "いいね。",
+      "cueKo": "친구가 제안에 '좋네' 하고 답하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8504258",
+      "audioKey": "c/1dce15e2a3615bde",
+      "key": "tatoeba-8504258-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 33,
+      "text": "何してるの？",
+      "kana": "なにしてるの？",
+      "cueKo": "친구가 지금 뭐 하고 있냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4704",
+      "audioKey": "c/e10025f1ee91f2c3",
+      "key": "tatoeba-4704-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 34,
+      "text": "本当だよ！",
+      "kana": "ほんとうだよ！",
+      "cueKo": "친구가 '진짜야!' 하고 강조하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #628692",
+      "audioKey": "c/1f73a1175111cff4",
+      "key": "tatoeba-628692-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 35,
+      "text": "やばい、宿題やってない。",
+      "kana": "やばい、しゅくだいやってない。",
+      "cueKo": "친구가 '큰일 났다, 숙제 안 했어' 하고 당황하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3241575",
+      "audioKey": "c/812ad4b65909b125",
+      "key": "tatoeba-3241575-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 36,
+      "text": "ありがとう！",
+      "kana": "ありがとう！",
+      "cueKo": "친구가 고마워하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1531875",
+      "audioKey": "c/da277a03ff24b120",
+      "key": "tatoeba-1531875-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 37,
+      "text": "昨日何時に寝た？",
+      "kana": "きのうなんじにねた？",
+      "cueKo": "친구가 어제 몇 시에 잤냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3395375",
+      "audioKey": "c/48c47b36e5b7f247",
+      "key": "tatoeba-3395375-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 38,
+      "text": "何時に出る？",
+      "kana": "なんじにでる？",
+      "cueKo": "친구가 몇 시에 출발하냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5762757",
+      "audioKey": "c/b72c38e084995bf4",
+      "key": "tatoeba-5762757-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 39,
+      "text": "疲れちゃったの？",
+      "kana": "つかれちゃったの？",
+      "cueKo": "친구가 지쳐 보이는 나에게 '피곤해?' 하고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3753221",
+      "audioKey": "c/93be1474cbbcc1f0",
+      "key": "tatoeba-3753221-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 40,
+      "text": "冗談でしょ？",
+      "kana": "じょうだんでしょ？",
+      "cueKo": "친구가 '농담이지?' 하고 믿지 못하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3495530",
+      "audioKey": "c/a5e6e628e3728305",
+      "key": "tatoeba-3495530-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 41,
+      "text": "タメでいいよ。",
+      "kana": "ためでいいよ。",
+      "cueKo": "친구가 '반말로 해도 돼' 하고 말하는 것 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3262066",
+      "audioKey": "c/c183096e8270ab66",
+      "key": "tatoeba-3262066-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 42,
+      "text": "一緒に行かない？",
+      "kana": "いっしょにいかない？",
+      "cueKo": "친구가 같이 가자고 권하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #190532",
+      "audioKey": "c/87a343634659365a",
+      "key": "tatoeba-190532-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 43,
+      "text": "今週末は暇？",
+      "kana": "こんしゅうまつはひま？",
+      "cueKo": "친구가 이번 주말에 시간 되냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3024516",
+      "audioKey": "c/b4dd5828f1733ae5",
+      "key": "tatoeba-3024516-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 44,
+      "text": "ちょっと待ってて。",
+      "kana": "ちょっとまってて。",
+      "cueKo": "친구가 '잠깐 기다려' 하고 말하는 것 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #202737",
+      "audioKey": "c/4a4b9ce2579bf447",
+      "key": "tatoeba-202737-hear"
+    },
+    {
+      "unitOrd": 10,
+      "ord": 45,
+      "text": "会えて嬉しいよ。",
+      "kana": "あえてうれしいよ。",
+      "cueKo": "친구가 만나서 반갑다고 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #185455",
+      "audioKey": "c/b025120feff2d141",
+      "key": "tatoeba-185455-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 10,
+      "ord": 1,
+      "titleKo": "주말에 뭐 해?",
+      "settingKo": "친구에게 주말 약속을 제안할 때",
+      "goalKo": "주말에 시간이 되는지 묻고, 영화를 제안하고, 만날 곳을 정한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            19
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            31
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 10,
+      "ord": 2,
+      "titleKo": "큰일 났어",
+      "settingKo": "친구가 숙제를 안 했다며 당황할 때",
+      "goalKo": "놀라며 반응하고, 도와주겠다고 말한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            35
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            4,
+            5
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            34
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            29
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            36
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            28
+          ]
+        }
+      ]
+    }
+  ]
+}
