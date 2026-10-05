@@ -1,0 +1,37 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phrasebook - speaking session</title>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&family=IBM+Plex+Sans+KR:wght@400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBF8F1;--ruled:#D5E0EA;--ink:#1F2A44;--muted:#5C6478;--pencil:#C2412D;--hl:#FFE58A;--tab:#2E6F5E}
+@media(prefers-color-scheme:dark){:root{--paper:#181A20;--ruled:#2A3140;--ink:#E6E8EE;--muted:#9AA2B5;--pencil:#F0806B;--hl:#5A4B12;--tab:#6DBBA4}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 "IBM Plex Sans KR",sans-serif}
+.app{max-width:440px;margin:0 auto;min-height:100vh;padding:0 0 110px 44px;position:relative;
+background:repeating-linear-gradient(transparent 0 31px,var(--ruled) 31px 32px);background-position:0 8px}
+.app:before{content:"";position:absolute;left:36px;top:0;bottom:0;width:1px;background:var(--pencil);opacity:.5}
+.tabs{position:absolute;left:0;top:70px;display:flex;flex-direction:column;gap:6px}
+.tabs span{writing-mode:vertical-rl;font:600 12px "Zen Maru Gothic";background:var(--ruled);padding:8px 5px;border-radius:0 5px 5px 0;color:var(--muted)}
+.tabs .on{background:var(--tab);color:var(--paper)}
+.in{padding:18px 18px 0 14px}
+.meta{font:12px "IBM Plex Mono";color:var(--muted);display:flex;justify-content:space-between;background:var(--paper);padding:2px 0}
+h1{font:600 14px "IBM Plex Sans KR";margin:26px 0 0;background:var(--paper);display:inline-block;color:var(--tab)}
+.sit{font:400 15px "IBM Plex Sans KR";background:var(--paper);margin:6px 0 24px;padding:2px 0;color:var(--muted)}
+.jp{font:600 34px/1.5 "Klee One",serif;background:var(--paper);display:block;padding:2px 0}
+.rd{font:500 14px "Zen Maru Gothic";color:var(--pencil);background:var(--paper)}
+.ko{background:var(--paper);display:inline-block;margin-top:2px}
+mark{background:linear-gradient(transparent 55%,var(--hl) 55%);color:inherit}
+.note{margin:26px 0 0;font:400 14px/1.7 "Klee One";color:var(--pencil);transform:rotate(-1deg);background:var(--paper);display:inline-block;padding:2px 6px}
+.try{margin-top:24px;border:1.5px solid var(--ink);padding:12px;background:var(--paper)}
+.try small{font:12px "IBM Plex Mono";color:var(--muted)}.try .t{font:400 20px "Klee One";margin-top:4px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1.5px solid var(--ink)}
+.bar div{max-width:440px;margin:0 auto;display:flex;gap:10px;padding:10px 14px 14px}
+button{font:600 14px "IBM Plex Sans KR";background:var(--paper);color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;padding:10px 12px;flex:1;cursor:pointer}
+button.rec{background:var(--pencil);border-color:var(--pencil);color:#fff;flex:1.6}kbd{font:11px "IBM Plex Mono";opacity:.7;margin-left:4px}
+button:focus-visible{outline:2px solid var(--tab);outline-offset:2px}
+</style></head><body><div class="app">
+<div class="tabs"><span>空港</span><span class="on">買物</span><span>食事</span><span>交通</span></div>
+<div class="in"><div class="meta"><span>p.42 · 買物</span><span>3 / 12 구</span></div>
+<h1>#17 편의점에서 봉투를 거절할 때</h1><div class="sit">점원이 "봉투 드릴까요?" 라고 물었다.</div>
+<span class="jp">いいえ、<mark>大丈夫</mark>です。</span><span class="rd">いいえ、だいじょうぶです</span><br><span class="ko">아니요, 괜찮아요.</span>
+<div class="note">大丈夫 = 大(대)丈(장)夫(부). 한국어 "대장부"와 같은 글자, 뜻은 "괜찮다"로 바뀜.<br>だい↘じょうぶ — 둘째 박 'じょ'가 가장 높다.</div>
+<div class="try"><small>내 발음 · 2회째</small><div class="t">だいじょうぶ…です</div></div></div></div>
+<div class="bar"><div><button>듣기<kbd>Space</kbd></button><button class="rec">말하기<kbd>R</kbd></button><button>다음 쪽<kbd>→</kbd></button></div></div>
+</body></html>
