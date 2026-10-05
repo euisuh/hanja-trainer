@@ -1,0 +1,388 @@
+{
+  "units": [
+    {
+      "ord": 1,
+      "titleKo": "인사와 맞장구",
+      "goalKo": "인사, 감사, 사과를 말하고 짧은 맞장구로 대화를 이어 간다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 1,
+      "ord": 1,
+      "text": "おはようございます。",
+      "kana": "おはようございます。",
+      "cueKo": "아침에 아는 사람에게 인사하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #335372",
+      "audioKey": "c/59b794afd6a31412",
+      "key": "tatoeba-335372-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 2,
+      "text": "おはようございます。",
+      "kana": "おはようございます。",
+      "cueKo": "아침 인사를 듣고 뜻 알기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #335372",
+      "audioKey": "c/59b794afd6a31412",
+      "key": "tatoeba-335372-hear"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 3,
+      "text": "こんにちは。",
+      "kana": "こんにちは。",
+      "cueKo": "낮에 만난 사람에게 인사하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #373351",
+      "audioKey": "c/4a79734465e43aa9",
+      "key": "tatoeba-373351-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 4,
+      "text": "ありがとうございます。",
+      "kana": "ありがとうございます。",
+      "cueKo": "공손하게 고맙다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9559301",
+      "audioKey": "c/4ad50db06886ad5d",
+      "key": "tatoeba-9559301-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 5,
+      "text": "どういたしまして。",
+      "kana": "どういたしまして。",
+      "cueKo": "고맙다는 말을 듣고 천만에요 하고 답하기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #408295",
+      "audioKey": "c/9ae9e37949b20ea0",
+      "key": "tatoeba-408295-hear"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 6,
+      "text": "すみません。",
+      "kana": "すみません。",
+      "cueKo": "점원이나 모르는 사람을 부르며 말 걸기 (저기요)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #408301",
+      "audioKey": "c/851479882e6df848",
+      "key": "tatoeba-408301-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 7,
+      "text": "すみません、通してください。",
+      "kana": "すみません、とおしてください。",
+      "cueKo": "좁은 곳에서 지나가겠다고 양해 구하기 (실례합니다, 지나갈게요)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214191",
+      "audioKey": "c/bbac9697cce23a61",
+      "key": "tatoeba-214191-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 8,
+      "text": "遅れてすみません。",
+      "kana": "おくれてすみません。",
+      "cueKo": "약속에 늦어서 미안하다고 사과하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #126710",
+      "audioKey": "c/4063aa208ee900a1",
+      "key": "tatoeba-126710-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 9,
+      "text": "あっ、ごめんなさい。",
+      "kana": "あっ、ごめんなさい。",
+      "cueKo": "부딪히거나 실수했을 때 바로 미안하다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3621802",
+      "audioKey": "c/55bf33433ffb56f4",
+      "key": "tatoeba-3621802-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 10,
+      "text": "申し訳ありません。",
+      "kana": "もうしわけありません。",
+      "cueKo": "윗사람이나 손님에게 정중하게 사과하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13117666",
+      "audioKey": "c/20a675431a10b790",
+      "key": "tatoeba-13117666-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 11,
+      "text": "失礼します。",
+      "kana": "しつれいします。",
+      "cueKo": "자리를 뜨거나 방을 나서며 인사하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #507553",
+      "audioKey": "c/49379fa6a3b02699",
+      "key": "tatoeba-507553-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 12,
+      "text": "お疲れ様でした。",
+      "kana": "おつかれさまでした。",
+      "cueKo": "일을 마친 동료에게 수고했다고 인사하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #688395",
+      "audioKey": "c/d14f11aa0b360277",
+      "key": "tatoeba-688395-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 13,
+      "text": "はい。",
+      "kana": "はい。",
+      "cueKo": "네, 하고 짧게 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #509772",
+      "audioKey": "c/3189685986061054",
+      "key": "tatoeba-509772-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 14,
+      "text": "ええ。",
+      "kana": "ええ。",
+      "cueKo": "네, 맞아요 하고 부드럽게 동의하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1166626",
+      "audioKey": "c/d657c3635b449451",
+      "key": "tatoeba-1166626-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 15,
+      "text": "そうですか。",
+      "kana": "そうですか。",
+      "cueKo": "상대 말에 그렇군요 하고 받아주기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #5955917",
+      "audioKey": "c/16e6bc21607cd7d7",
+      "key": "tatoeba-5955917-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 16,
+      "text": "そうなんですか？",
+      "kana": "そうなんですか？",
+      "cueKo": "새로 알게 된 사실에 그래요? 하고 맞장구치기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2744751",
+      "audioKey": "c/4dbf9ee028dd118f",
+      "key": "tatoeba-2744751-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 17,
+      "text": "なるほど。",
+      "kana": "なるほど。",
+      "cueKo": "설명을 듣고 아하, 그렇구나 하고 납득하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2350395",
+      "audioKey": "c/59970aa77c1da442",
+      "key": "tatoeba-2350395-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 18,
+      "text": "大丈夫です。",
+      "kana": "だいじょうぶです。",
+      "cueKo": "괜찮다고 말하기 (필요 없어요, 문제 없어요)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2304911",
+      "audioKey": "c/e93d846ebd8d70c8",
+      "key": "tatoeba-2304911-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 19,
+      "text": "大丈夫ですか。",
+      "kana": "だいじょうぶですか。",
+      "cueKo": "괜찮은지 묻는 말을 듣고 뜻 알기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1937825",
+      "audioKey": "c/f14615370a8ee92a",
+      "key": "tatoeba-1937825-hear"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 20,
+      "text": "お先にどうぞ。",
+      "kana": "おさきにどうぞ。",
+      "cueKo": "먼저 가라고 양보하는 말을 듣고 뜻 알기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226990",
+      "audioKey": "c/09c83378b22318e3",
+      "key": "tatoeba-226990-hear"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 21,
+      "text": "お元気ですか。",
+      "kana": "おげんきですか。",
+      "cueKo": "안부를 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #400933",
+      "audioKey": "c/01578905e2097f10",
+      "key": "tatoeba-400933-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 22,
+      "text": "元気です。",
+      "kana": "げんきです。",
+      "cueKo": "잘 지낸다는 대답을 듣고 뜻 알기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3495032",
+      "audioKey": "c/6c60afe73e366218",
+      "key": "tatoeba-3495032-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 1,
+      "ord": 1,
+      "titleKo": "좁은 길에서 양해 구하기",
+      "settingKo": "사람이 많은 복도",
+      "goalKo": "지나가겠다고 양해를 구하고, 양보해 준 사람에게 감사하고 인사한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 1,
+      "ord": 2,
+      "titleKo": "아침 인사와 안부",
+      "settingKo": "출근한 사무실",
+      "goalKo": "아침 인사를 나누고 안부를 묻고, 대답에 맞장구친다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            2
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            21
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            22
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            15,
+            17
+          ]
+        }
+      ]
+    }
+  ]
+}
