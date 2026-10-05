@@ -1,0 +1,344 @@
+{
+  "units": [
+    {
+      "ord": 2,
+      "titleKo": "못 알아들었을 때",
+      "goalKo": "못 알아들은 말을 다시 말해 달라고, 천천히 말해 달라고, 뜻이 뭐냐고 물어서 일본어로 대화를 이어 간다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 2,
+      "ord": 1,
+      "text": "もう一度お願いします。",
+      "kana": "もういちどおねがいします。",
+      "cueKo": "상대에게 한 번 더 말해 달라고 정중히 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214165",
+      "audioKey": "c/ddd48bcb132a70f7"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 2,
+      "text": "もう一度言ってください。",
+      "kana": "もういちどいってください。",
+      "cueKo": "한 번 더 말해 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4562480",
+      "audioKey": "c/2dbd0f9ce6313668"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 3,
+      "text": "すみません、もう一度言っていただけますか。",
+      "kana": "すみません、もういちどいっていただけますか。",
+      "cueKo": "아주 공손하게 한 번 더 말해 달라고 부탁하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214201",
+      "audioKey": "c/dfee43bfb99bbcf9"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 4,
+      "text": "もう少しゆっくりお願いします。",
+      "kana": "もうすこしゆっくりおねがいします。",
+      "cueKo": "조금 더 천천히 말해 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #194123",
+      "audioKey": "c/f94873a9fc3c4e6a"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 5,
+      "text": "ゆっくり話してください。",
+      "kana": "ゆっくりはなしてください。",
+      "cueKo": "천천히 말해 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8795518",
+      "audioKey": "c/b138a3c236409b01"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 6,
+      "text": "すみません、もう一度ゆっくり言ってください。",
+      "kana": "すみません、もういちどゆっくりいってください。",
+      "cueKo": "사과하며 한 번 더 천천히 말해 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214202",
+      "audioKey": "c/88c281b1fa2821fc"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 7,
+      "text": "すみません、聞こえませんでした。",
+      "kana": "すみません、きこえませんでした。",
+      "cueKo": "미안하다며 말이 안 들렸다고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2519008",
+      "audioKey": "c/35083bae3e04370d"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 8,
+      "text": "分かりません。",
+      "kana": "わかりません。",
+      "cueKo": "이해가 안 된다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #349070",
+      "audioKey": "c/9867096ec0874950"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 9,
+      "text": "どういう意味ですか？",
+      "kana": "どういういみですか？",
+      "cueKo": "무슨 뜻이냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #201705",
+      "audioKey": "c/c2fff8bc32decebc"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 10,
+      "text": "この言葉はどういう意味ですか。",
+      "kana": "このことばはどういういみですか。",
+      "cueKo": "방금 말한 단어가 무슨 뜻이냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #222064",
+      "audioKey": "c/906aa170ef970c1e"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 11,
+      "text": "意味が分かりませんでした。",
+      "kana": "いみがわかりませんでした。",
+      "cueKo": "말뜻을 이해하지 못했다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11327855",
+      "audioKey": "c/ec782fec1e286ec0"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 12,
+      "text": "もっと大きな声でお願いします。",
+      "kana": "もっとおおきなこえでおねがいします。",
+      "cueKo": "더 큰 소리로 말해 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10605827",
+      "audioKey": "c/d218ef8ae7641b34"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 13,
+      "text": "ちょっと待ってください。",
+      "kana": "ちょっとまってください。",
+      "cueKo": "상대에게 잠깐 기다려 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10901614",
+      "audioKey": "c/5ca967d155be0a25"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 14,
+      "text": "はい、分かりました。",
+      "kana": "はい、わかりました。",
+      "cueKo": "설명을 듣고 알겠다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899752",
+      "audioKey": "c/7ca1ada17273863a"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 15,
+      "text": "えーとですね。",
+      "kana": "えーとですね。",
+      "cueKo": "말을 고르며 시간 벌기 (음…)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11001436",
+      "audioKey": "c/9218e19b6ee0f19c"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 16,
+      "text": "分かりますか？",
+      "kana": "わかりますか？",
+      "cueKo": "상대가 \"알겠어요?\" 하고 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3507395",
+      "audioKey": "c/288c4074a3bc9056"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 17,
+      "text": "ええ、いいですよ。",
+      "kana": "ええ、いいですよ。",
+      "cueKo": "상대가 \"네, 그러세요\" 하고 허락하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10914856",
+      "audioKey": "c/c8a0619a1db34138"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 18,
+      "text": "すみません、何とおっしゃいましたか？",
+      "kana": "すみません、なんとおっしゃいましたか？",
+      "cueKo": "상대가 못 들었다며 정중하게 다시 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2929527",
+      "audioKey": "c/92010e0fcd43ab97"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 19,
+      "text": "もう一度ゆっくりお話しいただけますか？",
+      "kana": "もういちどゆっくりおはなしいただけますか？",
+      "cueKo": "상대가 한 번 더 천천히 말해 달라고 정중히 부탁하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9176323",
+      "audioKey": "c/05487c1c995bf38d"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 20,
+      "text": "大きな声で言って。聞こえないよ。",
+      "kana": "おおきなこえでいって。きこえないよ。",
+      "cueKo": "친구가 \"더 크게 말해, 안 들려\" 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3597438",
+      "audioKey": "c/2f992b95d4bd2ae3"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 2,
+      "ord": 1,
+      "titleKo": "천천히, 한 번 더",
+      "settingKo": "회사나 수업에서 상대의 설명이 너무 빠를 때",
+      "goalKo": "천천히 다시 말해 달라고 부탁하고, 이해했다고 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            4,
+            5
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            1,
+            2
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            16
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 2,
+      "ord": 2,
+      "titleKo": "무슨 뜻이에요?",
+      "settingKo": "대화 중에 모르는 말이 나왔을 때",
+      "goalKo": "잠깐 시간을 달라고 한 뒤 모르는 말의 뜻을 묻는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            13
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            9,
+            10
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            16
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            14
+          ]
+        }
+      ]
+    }
+  ]
+}
