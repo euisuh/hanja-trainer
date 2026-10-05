@@ -23,3 +23,4 @@ test-results/
 # Release signing keys (Android upload keystore)
 *.jks
 *.keystore
+playwright.local.config.ts
