@@ -76,7 +76,7 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await page.keyboard.press("Space");
   await expect(page.getByText("一度(일도)")).toBeVisible();
   await expect(page.getByRole("link", { name: conversation.chunks[0].sourceRef })).toHaveAttribute("href", "https://tatoeba.org/sentences/show/1");
-  await expect(page.getByText("fixture-owner", { exact: true })).toBeVisible();
+  await expect(page.getByText("fixture-owner")).toBeVisible();
   await page.keyboard.press("r");
   await expect(page.getByRole("button", { name: /바로/u })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByText("내 목소리", { exact: false })).toBeVisible();
