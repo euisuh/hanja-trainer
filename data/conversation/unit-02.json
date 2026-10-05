@@ -17,7 +17,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #214165",
-      "audioKey": "c/ddd48bcb132a70f7"
+      "audioKey": "c/ddd48bcb132a70f7",
+      "key": "tatoeba-214165-say"
     },
     {
       "unitOrd": 2,
@@ -29,7 +30,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #4562480",
-      "audioKey": "c/2dbd0f9ce6313668"
+      "audioKey": "c/2dbd0f9ce6313668",
+      "key": "tatoeba-4562480-say"
     },
     {
       "unitOrd": 2,
@@ -41,7 +43,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #214201",
-      "audioKey": "c/dfee43bfb99bbcf9"
+      "audioKey": "c/dfee43bfb99bbcf9",
+      "key": "tatoeba-214201-say"
     },
     {
       "unitOrd": 2,
@@ -53,7 +56,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #194123",
-      "audioKey": "c/f94873a9fc3c4e6a"
+      "audioKey": "c/f94873a9fc3c4e6a",
+      "key": "tatoeba-194123-say"
     },
     {
       "unitOrd": 2,
@@ -65,7 +69,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #8795518",
-      "audioKey": "c/b138a3c236409b01"
+      "audioKey": "c/b138a3c236409b01",
+      "key": "tatoeba-8795518-say"
     },
     {
       "unitOrd": 2,
@@ -77,7 +82,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #214202",
-      "audioKey": "c/88c281b1fa2821fc"
+      "audioKey": "c/88c281b1fa2821fc",
+      "key": "tatoeba-214202-say"
     },
     {
       "unitOrd": 2,
@@ -89,7 +95,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #2519008",
-      "audioKey": "c/35083bae3e04370d"
+      "audioKey": "c/35083bae3e04370d",
+      "key": "tatoeba-2519008-say"
     },
     {
       "unitOrd": 2,
@@ -101,7 +108,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #349070",
-      "audioKey": "c/9867096ec0874950"
+      "audioKey": "c/9867096ec0874950",
+      "key": "tatoeba-349070-say"
     },
     {
       "unitOrd": 2,
@@ -113,7 +121,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #201705",
-      "audioKey": "c/c2fff8bc32decebc"
+      "audioKey": "c/c2fff8bc32decebc",
+      "key": "tatoeba-201705-say"
     },
     {
       "unitOrd": 2,
@@ -125,7 +134,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #222064",
-      "audioKey": "c/906aa170ef970c1e"
+      "audioKey": "c/906aa170ef970c1e",
+      "key": "tatoeba-222064-say"
     },
     {
       "unitOrd": 2,
@@ -137,7 +147,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #11327855",
-      "audioKey": "c/ec782fec1e286ec0"
+      "audioKey": "c/ec782fec1e286ec0",
+      "key": "tatoeba-11327855-say"
     },
     {
       "unitOrd": 2,
@@ -149,7 +160,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #10605827",
-      "audioKey": "c/d218ef8ae7641b34"
+      "audioKey": "c/d218ef8ae7641b34",
+      "key": "tatoeba-10605827-say"
     },
     {
       "unitOrd": 2,
@@ -161,7 +173,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #10901614",
-      "audioKey": "c/5ca967d155be0a25"
+      "audioKey": "c/5ca967d155be0a25",
+      "key": "tatoeba-10901614-say"
     },
     {
       "unitOrd": 2,
@@ -173,7 +186,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #10899752",
-      "audioKey": "c/7ca1ada17273863a"
+      "audioKey": "c/7ca1ada17273863a",
+      "key": "tatoeba-10899752-say"
     },
     {
       "unitOrd": 2,
@@ -185,7 +199,8 @@
       "role": "say",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #11001436",
-      "audioKey": "c/9218e19b6ee0f19c"
+      "audioKey": "c/9218e19b6ee0f19c",
+      "key": "tatoeba-11001436-say"
     },
     {
       "unitOrd": 2,
@@ -197,7 +212,8 @@
       "role": "hear",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #3507395",
-      "audioKey": "c/288c4074a3bc9056"
+      "audioKey": "c/288c4074a3bc9056",
+      "key": "tatoeba-3507395-hear"
     },
     {
       "unitOrd": 2,
@@ -209,7 +225,8 @@
       "role": "hear",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #10914856",
-      "audioKey": "c/c8a0619a1db34138"
+      "audioKey": "c/c8a0619a1db34138",
+      "key": "tatoeba-10914856-hear"
     },
     {
       "unitOrd": 2,
@@ -221,7 +238,8 @@
       "role": "hear",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #2929527",
-      "audioKey": "c/92010e0fcd43ab97"
+      "audioKey": "c/92010e0fcd43ab97",
+      "key": "tatoeba-2929527-hear"
     },
     {
       "unitOrd": 2,
@@ -233,7 +251,8 @@
       "role": "hear",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #9176323",
-      "audioKey": "c/05487c1c995bf38d"
+      "audioKey": "c/05487c1c995bf38d",
+      "key": "tatoeba-9176323-hear"
     },
     {
       "unitOrd": 2,
@@ -245,7 +264,8 @@
       "role": "hear",
       "sourceKind": "corpus",
       "sourceRef": "Tatoeba #3597438",
-      "audioKey": "c/2f992b95d4bd2ae3"
+      "audioKey": "c/2f992b95d4bd2ae3",
+      "key": "tatoeba-3597438-hear"
     }
   ],
   "scenes": [

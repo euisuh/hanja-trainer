@@ -19,6 +19,8 @@ export interface ConversationUnit {
 
 export interface ConversationChunk {
   id: number;
+  key?: string;
+  track?: "jp";
   unitId: number;
   ord: number;
   ja: string;
@@ -29,6 +31,7 @@ export interface ConversationChunk {
   sourceKind: string;
   sourceRef: string;
   audioKey: string;
+  retiredAt?: number | null;
 }
 
 export interface ConversationScene {
@@ -84,6 +87,7 @@ export interface SeedConversationUnit {
 }
 
 export interface SeedConversationChunk {
+  key: string;
   unitOrd: number;
   ord: number;
   text: string;

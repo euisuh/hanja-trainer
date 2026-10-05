@@ -8,6 +8,7 @@
   ],
   "chunks": [
     {
+      "key": "ask-repeat-polite",
       "unitOrd": 2,
       "ord": 1,
       "text": "もう一度お願いします。",
@@ -19,6 +20,7 @@
       "audioKey": "c/ddd48bcb132a70f7"
     },
     {
+      "key": "could-not-hear-polite",
       "unitOrd": 2,
       "ord": 2,
       "text": "すみません、聞き取れませんでした。",
@@ -30,6 +32,7 @@
       "audioKey": "c/fe14bfec146335df"
     },
     {
+      "key": "ask-slower-keigo",
       "unitOrd": 2,
       "ord": 3,
       "text": "ゆっくり話していただけますか。",
@@ -41,6 +44,7 @@
       "audioKey": "c/ade02f6fda052d8f"
     },
     {
+      "key": "ask-repeat-hear",
       "unitOrd": 2,
       "ord": 4,
       "text": "もう一回お願いします。",

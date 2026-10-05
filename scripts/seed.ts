@@ -339,11 +339,13 @@ function conversationSceneId(unitOrd: number, ord: number): string {
 }
 
 function conversationChunkId(unitOrd: number, ord: number): string {
-  return `(SELECT id FROM conv_chunks WHERE unit_id=${conversationUnitId(unitOrd)} AND ord=${ord})`;
+  return `(SELECT chunk_id FROM conv_unit_chunks WHERE unit_id=${conversationUnitId(unitOrd)} AND ord=${ord})`;
 }
 
 function emitConversationChunkSql(chunk: SeedConversationChunk): string {
-  return `INSERT INTO conv_chunks (unit_id, ord, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key) VALUES (${conversationUnitId(chunk.unitOrd)}, ${chunk.ord}, ${quote(chunk.text)}, ${quote(chunk.kana)}, ${quote(chunk.cueKo)}, ${quote(chunk.register)}, ${quote(chunk.role)}, ${quote(chunk.sourceKind)}, ${quote(chunk.sourceRef ?? "authored")}, ${quote(chunk.audioKey)}) ON CONFLICT(unit_id, ord) DO UPDATE SET ja=excluded.ja, kana=excluded.kana, ko_cue=excluded.ko_cue, register=excluded.register, role=excluded.role, source_kind=excluded.source_kind, source_ref=excluded.source_ref, audio_key=excluded.audio_key;`;
+  const unitId = conversationUnitId(chunk.unitOrd);
+  const chunkId = `(SELECT id FROM conv_chunks WHERE track='jp' AND key=${quote(chunk.key)})`;
+  return `INSERT INTO conv_chunks (track, key, ja, kana, ko_cue, register, role, source_kind, source_ref, audio_key, retired_at) VALUES ('jp', ${quote(chunk.key)}, ${quote(chunk.text)}, ${quote(chunk.kana)}, ${quote(chunk.cueKo)}, ${quote(chunk.register)}, ${quote(chunk.role)}, ${quote(chunk.sourceKind)}, ${quote(chunk.sourceRef ?? "authored")}, ${quote(chunk.audioKey)}, NULL) ON CONFLICT(track, key) WHERE key <> '' DO UPDATE SET ja=excluded.ja, kana=excluded.kana, ko_cue=excluded.ko_cue, register=excluded.register, role=excluded.role, source_kind=excluded.source_kind, source_ref=excluded.source_ref, audio_key=excluded.audio_key, retired_at=NULL;\nINSERT INTO conv_unit_chunks (unit_id, chunk_id, ord) VALUES (${unitId}, ${chunkId}, ${chunk.ord}) ON CONFLICT(unit_id, chunk_id) DO UPDATE SET ord=excluded.ord;`;
 }
 
 function emitConversationSceneSql(scene: SeedConversationScene): string[] {
@@ -360,7 +362,11 @@ export function emitConversationSeedSql(document: SeedConversationDocument): str
   for (const unit of document.units) {
     sql.push(`INSERT INTO conv_units (track, ord, title_ko, goal_ko) VALUES ('jp', ${unit.ord}, ${quote(unit.titleKo)}, ${quote(unit.goalKo)}) ON CONFLICT(track, ord) DO UPDATE SET title_ko=excluded.title_ko, goal_ko=excluded.goal_ko;`);
   }
+  const unitIds = document.units.map((unit) => conversationUnitId(unit.ord)).join(", ");
+  if (unitIds) sql.push(`UPDATE conv_unit_chunks SET ord=ord + 1000000 WHERE unit_id IN (${unitIds});`);
   for (const chunk of document.chunks) sql.push(emitConversationChunkSql(chunk));
+  const keys = document.chunks.map((chunk) => quote(chunk.key)).join(", ");
+  sql.push(`UPDATE conv_chunks SET retired_at=unixepoch() WHERE track='jp' AND retired_at IS NULL${keys ? ` AND key NOT IN (${keys})` : ""};`);
   for (const scene of document.scenes) sql.push(...emitConversationSceneSql(scene));
   return `${sql.join("\n")}\n`;
 }

@@ -58,7 +58,7 @@ function chunk(value: unknown, index: number): SeedConversationChunk {
   const audioKey = string(input.audioKey, `${path}.audioKey`);
   if (audioKey !== `c/${conversationAudioKey(text)}`) throw new Error(`${path}.audioKey: must match conversation audio key`);
   return {
-    unitOrd: integer(input.unitOrd, `${path}.unitOrd`), ord: integer(input.ord, `${path}.ord`), text,
+    key: string(input.key, `${path}.key`), unitOrd: integer(input.unitOrd, `${path}.unitOrd`), ord: integer(input.ord, `${path}.ord`), text,
     kana: string(input.kana, `${path}.kana`), cueKo: string(input.cueKo, `${path}.cueKo`), register: register as SeedConversationChunk["register"],
     role: role as SeedConversationChunk["role"], sourceKind, ...(sourceRef === undefined ? {} : { sourceRef }), audioKey,
   };
@@ -98,6 +98,19 @@ export function parseConversationSeed(value: unknown): SeedConversationDocument 
   for (const item of scenes) if (!unitOrds.has(item.unitOrd)) throw new Error(`scenes[${scenes.indexOf(item)}].unitOrd: unknown unit ${item.unitOrd}`);
   const chunkKeys = chunks.map((item) => `${item.unitOrd}:${item.ord}`);
   if (new Set(chunkKeys).size !== chunkKeys.length) throw new Error("conversation.chunks: duplicate unitOrd and ord");
+  const keys = new Map<string, SeedConversationChunk>();
+  const identities = new Map<string, string>();
+  for (const item of chunks) {
+    const existing = keys.get(item.key);
+    if (existing && (existing.text !== item.text || existing.role !== item.role || existing.kana !== item.kana || existing.cueKo !== item.cueKo || existing.register !== item.register || existing.sourceKind !== item.sourceKind || existing.sourceRef !== item.sourceRef || existing.audioKey !== item.audioKey)) {
+      throw new Error(`conversation.chunks: inconsistent key ${item.key}`);
+    }
+    keys.set(item.key, item);
+    const identity = `${item.text}:${item.role}`;
+    const key = identities.get(identity);
+    if (key !== undefined && key !== item.key) throw new Error(`conversation.chunks: duplicate text and role uses ${key} and ${item.key}`);
+    identities.set(identity, item.key);
+  }
   const sceneKeys = scenes.map((item) => `${item.unitOrd}:${item.ord}`);
   if (new Set(sceneKeys).size !== sceneKeys.length) throw new Error("conversation.scenes: duplicate unitOrd and ord");
   const knownChunks = new Set(chunkKeys);

@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
+import { emitConversationSeedSql } from "../../scripts/seed.ts";
+import { parseConversationSeed } from "../../scripts/validate-conversation.ts";
 
 const MIGRATION = "0025_conversation_core.sql";
 
@@ -32,6 +34,7 @@ describe("conversation core migration", () => {
         { name: "conv_chunks" },
         { name: "conv_scene_turns" },
         { name: "conv_scenes" },
+        { name: "conv_unit_chunks" },
         { name: "conv_units" },
       ]);
     expect(sqlite.prepare("PRAGMA foreign_keys").get()).toEqual({ foreign_keys: 1 });
@@ -67,5 +70,50 @@ describe("conversation core migration", () => {
     }
     expect(sqlite.prepare("SELECT COUNT(*) AS count FROM conv_chunks").get()).toEqual({ count: 1 });
     expect(sqlite.prepare("PRAGMA foreign_key_check").all()).toEqual([]);
+  });
+
+  it("keeps global chunk identity through reorder, retirement, and shared units", () => {
+    const sqlite = new DatabaseSync(":memory:");
+    databases.push(sqlite);
+    applyAll(sqlite);
+    const document = parseConversationSeed(JSON.parse(readFileSync("scripts/fixtures/conversation-sample.json", "utf8")));
+    const shared = structuredClone(document);
+    shared.units.push({ ...document.units[0], ord: 3 });
+    shared.chunks.push({ ...document.chunks[0], unitOrd: 3, ord: 1 });
+    sqlite.exec(emitConversationSeedSql(shared));
+
+    const sharedRows = sqlite.prepare(`
+      SELECT cuc.unit_id, cuc.chunk_id FROM conv_unit_chunks cuc
+      JOIN conv_chunks c ON c.id = cuc.chunk_id
+      WHERE c.key = 'ask-repeat-polite' ORDER BY cuc.unit_id
+    `).all();
+    expect(sharedRows).toHaveLength(2);
+    expect(sharedRows[0]?.chunk_id).toBe(sharedRows[1]?.chunk_id);
+
+    const chunkId = Number(sharedRows[0]?.chunk_id);
+    sqlite.prepare("INSERT INTO profile (name) VALUES ('학습자')").run();
+    sqlite.prepare(`
+      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, role, grade, answered_at)
+      VALUES (2, 'attempt-identity', ?, 'say', 3, 100)
+    `).run(chunkId);
+    expect(() => sqlite.prepare("DELETE FROM conv_chunks WHERE id = ?").run(chunkId)).toThrow(/FOREIGN KEY constraint failed/u);
+
+    const reordered = structuredClone(shared);
+    reordered.chunks = reordered.chunks.map((chunk) => chunk.unitOrd === 2
+      ? { ...chunk, ord: [2, 1, 3, 4][chunk.ord - 1] ?? chunk.ord }
+      : chunk);
+    sqlite.exec(emitConversationSeedSql(reordered));
+    expect(sqlite.prepare(`
+      SELECT cuc.ord FROM conv_unit_chunks cuc
+      JOIN conv_chunks c ON c.id = cuc.chunk_id
+      WHERE cuc.unit_id = (SELECT id FROM conv_units WHERE ord = 2) AND c.key = 'ask-repeat-polite'
+    `).get()).toEqual({ ord: 2 });
+
+    const retired = structuredClone(reordered);
+    retired.chunks = retired.chunks.filter((chunk) => chunk.key !== "could-not-hear-polite");
+    retired.scenes = [];
+    sqlite.exec(emitConversationSeedSql(retired));
+    expect(sqlite.prepare("SELECT retired_at IS NOT NULL AS retired FROM conv_chunks WHERE key = 'could-not-hear-polite'").get()).toEqual({ retired: 1 });
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM conv_chunks WHERE key = 'could-not-hear-polite'").get()).toEqual({ count: 1 });
   });
 });
