@@ -169,6 +169,8 @@ export type SubmitReviewResponse = {
 };
 
 export type ConversationGrade = "again" | "hard" | "good" | "easy";
+export type ConversationLoop = "echo" | "shadow" | "drill" | "roleplay" | "free";
+export type ConversationInput = "voice" | "tap" | "keyboard";
 
 export type SubmitConversationAttemptRequest = {
   clientAttemptId: string;
@@ -180,9 +182,20 @@ export type SubmitConversationAttemptRequest = {
   latencyMs?: number | null;
   hints?: number;
   replays?: number;
+  loop?: ConversationLoop;
+  input?: ConversationInput;
 };
 
 export type SubmitConversationAttemptResponse = { grade: ConversationGrade };
+
+export type ConversationStatsResponse = {
+  calendar: StatsCalendarDay[];
+  spokenDaysThisWeek: number;
+  spokenChunkRetention: number | null;
+  unaidedFirstTryRate: number | null;
+  medianOnsetLatencyMs: number | null;
+  transferRate: number | null;
+};
 
 export type DueReviewCard = {
   characterKey: string;

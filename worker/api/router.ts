@@ -13,6 +13,7 @@ import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, listProfi
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 import { getConversationUnit, getConversationUnits, getDueConversationChunks } from "./conversation";
+import { getConversationStats } from "./conversationStats";
 
 // A browser sets exactly one of these on every request it makes. `curl`, the
 // audio generator, and future native clients set neither, so they are allowed:
@@ -129,6 +130,7 @@ async function dispatchApiRequest(request: Request, env: Env, profileId: number)
     }
 
     if (request.method === "GET" && pathname === "/api/conv/due") return Response.json(await getDueConversationChunks(env.DB, profileId));
+    if (request.method === "GET" && pathname === "/api/conv/stats") return Response.json(await getConversationStats(env.DB, profileId));
 
     const unitStudyMatch = request.method === "GET" ? pathname.match(/^\/api\/curriculum\/units\/(\d+)$/) : null;
     if (unitStudyMatch) {

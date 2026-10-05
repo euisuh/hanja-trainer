@@ -38,6 +38,8 @@ export function parseConversationAttempt(value: unknown, now = Date.now()): Subm
   if (value.latencyMs !== undefined && value.latencyMs !== null && (!Number.isSafeInteger(value.latencyMs) || (value.latencyMs as number) < 0)) return null;
   if (value.hints !== undefined && (!Number.isSafeInteger(value.hints) || (value.hints as number) < 0)) return null;
   if (value.replays !== undefined && (!Number.isSafeInteger(value.replays) || (value.replays as number) < 0)) return null;
+  if (value.loop !== undefined && !["echo", "shadow", "drill", "roleplay", "free"].includes(value.loop as string)) return null;
+  if (value.input !== undefined && !["voice", "tap", "keyboard"].includes(value.input as string)) return null;
   return value as SubmitConversationAttemptRequest;
 }
 
@@ -113,9 +115,9 @@ export async function submitConversationAttempt(
   const scheduled = schedule(state, grade as Grade, new Date(Math.max(eventTime.getTime(), state.lastReview?.getTime() ?? eventTime.getTime())));
   await db.batch([
     db.prepare(`
-      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, scene_id, role, grade, answered_at, latency_ms)
-      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
-    `).bind(profileId, input.clientAttemptId, input.chunkId, input.sceneId ?? null, input.role, gradeValue(grade), eventTime.getTime(), input.latencyMs ?? null),
+      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, scene_id, role, grade, answered_at, latency_ms, loop, input, hints, replays)
+      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
+    `).bind(profileId, input.clientAttemptId, input.chunkId, input.sceneId ?? null, input.role, gradeValue(grade), eventTime.getTime(), input.latencyMs ?? null, input.loop ?? "unknown", input.input ?? "unknown", input.hints ?? 0, input.replays ?? 0),
     prepareUpsertState(db, profileId, input, scheduled.next),
   ]);
   return { grade };

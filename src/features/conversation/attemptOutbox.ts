@@ -15,6 +15,8 @@ function parseAttempt(value: unknown): SubmitConversationAttemptRequest | null {
   if (input.latencyMs !== undefined && input.latencyMs !== null && (!Number.isSafeInteger(input.latencyMs) || (input.latencyMs as number) < 0)) return null;
   if (input.hints !== undefined && (!Number.isSafeInteger(input.hints) || (input.hints as number) < 0)) return null;
   if (input.replays !== undefined && (!Number.isSafeInteger(input.replays) || (input.replays as number) < 0)) return null;
+  if (input.loop !== undefined && !["echo", "shadow", "drill", "roleplay", "free"].includes(input.loop as string)) return null;
+  if (input.input !== undefined && !["voice", "tap", "keyboard"].includes(input.input as string)) return null;
   return input as SubmitConversationAttemptRequest;
 }
 
