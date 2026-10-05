@@ -11,18 +11,19 @@ import { parseReviewRequest, submitReview, submitReviewBatch } from "./reviews";
 import { parseConversationAttempt, submitConversationAttemptBatch } from "./conversationAttempts";
 import { routeApiRequest } from "./router";
 
-function d1Result<T>(results: T[]): D1Result<T> {
-  return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: 0, last_row_id: 0, changed_db: false, changes: 0 } };
+function d1Result<T>(results: T[], changes = 0): D1Result<T> {
+  return { results, success: true, meta: { duration: 0, size_after: 0, rows_read: 0, rows_written: changes, last_row_id: 0, changed_db: changes > 0, changes } };
 }
 
 type QueryBudget = { bindingCalls: number; statements: number };
+type TestStatement = D1PreparedStatement & { execute: <T>() => D1Result<T> };
 
 function d1(sqlite: DatabaseSync, budget: QueryBudget): D1Database {
   const adapter = Object.create(null) as D1Database;
   let batching = false;
   adapter.prepare = (query: string) => {
     let values: SQLInputValue[] = [];
-    const prepared = Object.create(null) as D1PreparedStatement;
+    const prepared = Object.create(null) as TestStatement;
     prepared.bind = (...bound: unknown[]) => {
       values = bound.map((value) => {
         if (typeof value === "string" || typeof value === "number" || typeof value === "bigint" || value === null) return value;
@@ -30,18 +31,22 @@ function d1(sqlite: DatabaseSync, budget: QueryBudget): D1Database {
       });
       return prepared;
     };
+    prepared.execute = <T>() => {
+      if (/^\s*SELECT\b/i.test(query)) return d1Result(sqlite.prepare(query).all(...values) as T[]);
+      const result = sqlite.prepare(query).run(...values);
+      return d1Result<T>([], Number(result.changes));
+    };
     prepared.first = async <T>() => {
       if (!batching) { budget.bindingCalls += 1; budget.statements += 1; }
-      return (sqlite.prepare(query).get(...values) as T | undefined) ?? null;
+      return prepared.execute<T>().results[0] ?? null;
     };
     prepared.all = async <T>() => {
       if (!batching) { budget.bindingCalls += 1; budget.statements += 1; }
-      return d1Result(sqlite.prepare(query).all(...values) as T[]);
+      return prepared.execute<T>();
     };
     prepared.run = async <T>() => {
       if (!batching) { budget.bindingCalls += 1; budget.statements += 1; }
-      sqlite.prepare(query).run(...values);
-      return d1Result<T>([]);
+      return prepared.execute<T>();
     };
     return prepared;
   };
@@ -49,8 +54,15 @@ function d1(sqlite: DatabaseSync, budget: QueryBudget): D1Database {
     budget.bindingCalls += 1;
     budget.statements += statements.length;
     batching = true;
-    try { return await Promise.all(statements.map((statement) => statement.all<T>())); }
-    finally { batching = false; }
+    sqlite.exec("BEGIN");
+    try {
+      const results = statements.map((statement) => (statement as TestStatement).execute<T>());
+      sqlite.exec("COMMIT");
+      return results;
+    } catch (error) {
+      sqlite.exec("ROLLBACK");
+      throw error;
+    } finally { batching = false; }
   };
   return adapter;
 }
@@ -490,6 +502,39 @@ describe("conversation attempts", () => {
     await submitConversationAttemptBatch(fixture.env.DB, 1, attempts, new Date(1_800_000_000_100));
     expect(fixture.sqlite.prepare("SELECT * FROM conv_chunk_states ORDER BY role").all()).toEqual(before);
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts").get()).toEqual({ count: 2 });
+  });
+
+  it("treats concurrent duplicate client attempt IDs as idempotent", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const { chunkId } = conversationChunk(fixture.sqlite);
+    const input: SubmitConversationAttemptRequest = { clientAttemptId: "duplicate-race", chunkId, role: "say", grade: "good", answeredAt: 1_700_000_000_000 };
+
+    const responses = await Promise.all([post("/api/conv/attempts", [input], fixture.env), post("/api/conv/attempts", [input], fixture.env)]);
+
+    expect(responses.map(({ status }) => status)).toEqual([200, 200]);
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts").get()).toEqual({ count: 1 });
+    expect(fixture.sqlite.prepare("SELECT reps FROM conv_chunk_states").get()).toEqual({ reps: 1 });
+  });
+
+  it("retries a stale chunk-state schedule once", async () => {
+    const fixture = setup(); databases.push(fixture.sqlite);
+    const { chunkId } = conversationChunk(fixture.sqlite);
+    fixture.sqlite.prepare(`INSERT INTO conv_chunk_states (profile_id, chunk_id, role, stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count) VALUES (1, ?, 'say', 10, 5, 1, 2, 0, 1, 0, 2, 1, 1800000010000, 1, 1)`).run(chunkId);
+    const database = fixture.env.DB;
+    const racingDb = Object.create(database) as D1Database;
+    let raced = false;
+    racingDb.batch = async <T>(statements: D1PreparedStatement[]) => {
+      if (!raced) {
+        raced = true;
+        fixture.sqlite.prepare("UPDATE conv_chunk_states SET reps = reps + 1 WHERE chunk_id = ?").run(chunkId);
+      }
+      return database.batch<T>(statements);
+    };
+
+    await submitConversationAttemptBatch(racingDb, 1, [{ clientAttemptId: "stale-reps", chunkId, role: "say", grade: "good", answeredAt: 1_800_000_000_000 }], new Date(1_800_000_000_100));
+
+    expect(fixture.sqlite.prepare("SELECT reps FROM conv_chunk_states WHERE chunk_id = ?").get(chunkId)).toEqual({ reps: 3 });
+    expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM conv_attempts").get()).toEqual({ count: 1 });
   });
 
   it("rejects oversized batches before writing conversation attempts", async () => {

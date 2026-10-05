@@ -74,7 +74,13 @@ function toState(row: StateRow): ReviewState {
   };
 }
 
-function prepareUpsertState(db: D1Database, profileId: number, input: SubmitConversationAttemptRequest, state: ReviewState): D1PreparedStatement {
+function prepareUpsertState(
+  db: D1Database,
+  profileId: number,
+  input: SubmitConversationAttemptRequest,
+  state: ReviewState,
+  expectedReps: number,
+): D1PreparedStatement {
   return db.prepare(`
     INSERT INTO conv_chunk_states (
       profile_id, chunk_id, role, stability, difficulty, elapsed_days, scheduled_days,
@@ -86,9 +92,28 @@ function prepareUpsertState(db: D1Database, profileId: number, input: SubmitConv
       learning_steps = excluded.learning_steps, reps = excluded.reps, lapses = excluded.lapses,
       state = excluded.state, last_review = excluded.last_review, due = excluded.due,
       correct_count = excluded.correct_count, total_count = excluded.total_count
+    WHERE conv_chunk_states.reps = ?16
   `).bind(profileId, input.chunkId, input.role, state.stability, state.difficulty, state.elapsedDays,
     state.scheduledDays, state.learningSteps, state.reps, state.lapses, state.state,
-    state.lastReview?.getTime() ?? null, state.due.getTime(), state.correctCount, state.totalCount);
+    state.lastReview?.getTime() ?? null, state.due.getTime(), state.correctCount, state.totalCount, expectedReps);
+}
+
+function prepareAttempt(
+  db: D1Database,
+  profileId: number,
+  input: SubmitConversationAttemptRequest,
+  grade: ConversationGrade,
+  eventTime: Date,
+): D1PreparedStatement {
+  return db.prepare(`
+    INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, scene_id, role, grade, answered_at, latency_ms, loop, input, hints, replays)
+    VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
+  `).bind(profileId, input.clientAttemptId, input.chunkId, input.sceneId ?? null, input.role, gradeValue(grade), eventTime.getTime(), input.latencyMs ?? null, input.loop ?? "unknown", input.input ?? "unknown", input.hints ?? 0, input.replays ?? 0);
+}
+
+async function existingAttempt(db: D1Database, profileId: number, input: SubmitConversationAttemptRequest): Promise<AttemptRow | null> {
+  return db.prepare("SELECT id FROM conv_attempts WHERE profile_id = ?1 AND client_attempt_id = ?2")
+    .bind(profileId, input.clientAttemptId).first<AttemptRow>();
 }
 
 export async function submitConversationAttempt(
@@ -98,8 +123,7 @@ export async function submitConversationAttempt(
   now = new Date(),
 ): Promise<SubmitConversationAttemptResponse> {
   const grade = cappedGrade(input);
-  const existing = await db.prepare("SELECT id FROM conv_attempts WHERE profile_id = ?1 AND client_attempt_id = ?2")
-    .bind(profileId, input.clientAttemptId).first<AttemptRow>();
+  const existing = await existingAttempt(db, profileId, input);
   if (existing) return { grade };
 
   const target = await db.prepare(`
@@ -116,25 +140,40 @@ export async function submitConversationAttempt(
   `).bind(profileId, input.chunkId, input.role).first<StateRow>();
   const eventTime = new Date(Math.min(input.answeredAt, now.getTime()));
   if (input.loop === "roleplay") {
-    const statements = [db.prepare(`
-      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, scene_id, role, grade, answered_at, latency_ms, loop, input, hints, replays)
-      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
-    `).bind(profileId, input.clientAttemptId, input.chunkId, input.sceneId ?? null, input.role, gradeValue(grade), eventTime.getTime(), input.latencyMs ?? null, "roleplay", input.input ?? "unknown", input.hints ?? 0, input.replays ?? 0)];
+    const statements = [prepareAttempt(db, profileId, input, grade, eventTime)];
     if (grade === "again") statements.push(db.prepare(`
       UPDATE conv_chunk_states SET due = MIN(due, ?4) WHERE profile_id = ?1 AND chunk_id = ?2 AND role = ?3
     `).bind(profileId, input.chunkId, input.role, eventTime.getTime()));
-    await db.batch(statements);
+    try {
+      await db.batch(statements);
+    } catch (error) {
+      if (await existingAttempt(db, profileId, input)) return { grade };
+      throw error;
+    }
     return { grade };
   }
   const state = row ? toState(row) : initialState(eventTime);
   const scheduled = schedule(state, grade as Grade, new Date(Math.max(eventTime.getTime(), state.lastReview?.getTime() ?? eventTime.getTime())));
-  await db.batch([
-    db.prepare(`
-      INSERT INTO conv_attempts (profile_id, client_attempt_id, chunk_id, scene_id, role, grade, answered_at, latency_ms, loop, input, hints, replays)
-      VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
-    `).bind(profileId, input.clientAttemptId, input.chunkId, input.sceneId ?? null, input.role, gradeValue(grade), eventTime.getTime(), input.latencyMs ?? null, input.loop ?? "unknown", input.input ?? "unknown", input.hints ?? 0, input.replays ?? 0),
-    prepareUpsertState(db, profileId, input, scheduled.next),
-  ]);
+  const stateWrite = prepareUpsertState(db, profileId, input, scheduled.next, state.reps);
+  let result: D1Result<unknown>[];
+  try {
+    result = await db.batch([prepareAttempt(db, profileId, input, grade, eventTime), stateWrite]);
+  } catch (error) {
+    if (await existingAttempt(db, profileId, input)) return { grade };
+    throw error;
+  }
+  if (result[1].meta.changes !== 1) {
+    const current = await db.prepare(`
+      SELECT stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses,
+        state, last_review, due, correct_count, total_count
+      FROM conv_chunk_states WHERE profile_id = ?1 AND chunk_id = ?2 AND role = ?3
+    `).bind(profileId, input.chunkId, input.role).first<StateRow>();
+    if (current) {
+      const retried = toState(current);
+      const rescheduled = schedule(retried, grade as Grade, new Date(Math.max(eventTime.getTime(), retried.lastReview?.getTime() ?? eventTime.getTime())));
+      await db.batch([prepareUpsertState(db, profileId, input, rescheduled.next, retried.reps)]);
+    }
+  }
   return { grade };
 }
 
