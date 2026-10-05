@@ -63,17 +63,37 @@
     "text": "日本に来たのは初めてですか。",
     "sourceAuthor": "bunbuku"
   },
+  "123360": {
+    "text": "突き当たりに郵便局があります。",
+    "sourceAuthor": "bunbuku"
+  },
   "123461": {
     "text": "特大のサイズはあるんですが、その色のは切らしております。",
     "sourceAuthor": "bunbuku"
+  },
+  "123616": {
+    "text": "道なりに進んで、三つ目の交差点を左に曲がって下さい。",
+    "sourceAuthor": "KK_kaku_"
   },
   "124249": {
     "text": "東京に住んでいます。",
     "sourceAuthor": "bunbuku"
   },
+  "124574": {
+    "text": "途中で乗り換えが必要ですか。",
+    "sourceAuthor": "small_snow"
+  },
   "126710": {
     "text": "遅れてすみません。",
     "sourceAuthor": "small_snow"
+  },
+  "126779": {
+    "text": "池袋駅で乗り換えて下さい。",
+    "sourceAuthor": "KK_kaku_"
+  },
+  "142076": {
+    "text": "切符売り場はどこですか。",
+    "sourceAuthor": "bunbuku"
   },
   "142566": {
     "text": "青色のはありますか。",
@@ -83,9 +103,21 @@
     "text": "色違いはありませんか。",
     "sourceAuthor": "bunbuku"
   },
+  "146179": {
+    "text": "乗り換えは必要ですか。",
+    "sourceAuthor": "bunbuku"
+  },
   "148465": {
     "text": "趣味は何ですか。",
     "sourceAuthor": "tommy__san"
+  },
+  "150259": {
+    "text": "次の停車駅はどこですか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "150314": {
+    "text": "次の駅で乗り換えですよ。",
+    "sourceAuthor": "bunbuku"
   },
   "151002": {
     "text": "試着室はどこですか。",
@@ -183,6 +215,10 @@
     "text": "何があったの？",
     "sourceAuthor": "bunbuku"
   },
+  "188894": {
+    "text": "駅はどこですか。",
+    "sourceAuthor": "bunbuku"
+  },
   "189286": {
     "text": "映画見に行かない？",
     "sourceAuthor": "mookeee"
@@ -247,6 +283,10 @@
     "text": "ビニール袋に入れてください。",
     "sourceAuthor": "small_snow"
   },
+  "198059": {
+    "text": "バス乗り場はどこですか。",
+    "sourceAuthor": "bunbuku"
+  },
   "198336": {
     "text": "はい、とても好きです。",
     "sourceAuthor": "small_snow"
@@ -299,6 +339,10 @@
     "text": "それは困ったね。",
     "sourceAuthor": "tommy__san"
   },
+  "213601": {
+    "text": "そこへはどうやって行けばよいですか。",
+    "sourceAuthor": "bunbuku"
+  },
   "213817": {
     "text": "そうは思いません。",
     "sourceAuthor": "Ianagisacos"
@@ -310,6 +354,10 @@
   "214191": {
     "text": "すみません、通してください。",
     "sourceAuthor": "bunbuku"
+  },
+  "214192": {
+    "text": "すみません、道に迷ってしまいました。",
+    "sourceAuthor": "small_snow"
   },
   "214201": {
     "text": "すみません、もう一度言っていただけますか。",
@@ -327,6 +375,10 @@
     "text": "すごいじゃん。",
     "sourceAuthor": "bunbuku"
   },
+  "214829": {
+    "text": "すぐに分かりますよ。",
+    "sourceAuthor": "small_snow"
+  },
   "216819": {
     "text": "サッカーが一番好きです。",
     "sourceAuthor": "bunbuku"
@@ -343,6 +395,10 @@
     "text": "これを試着したいのですが。",
     "sourceAuthor": "bunbuku"
   },
+  "220292": {
+    "text": "この道をまっすぐ行ってください。",
+    "sourceAuthor": "tommy_san"
+  },
   "222064": {
     "text": "この言葉はどういう意味ですか。",
     "sourceAuthor": "mookeee"
@@ -354,6 +410,10 @@
   "224546": {
     "text": "ここで食べます。",
     "sourceAuthor": "Ianagisacos"
+  },
+  "224770": {
+    "text": "ここから駅までどのくらいかかりますか。",
+    "sourceAuthor": "mookeee"
   },
   "224884": {
     "text": "コーヒーをください。",
@@ -443,6 +503,10 @@
     "text": "いえ、結構です。",
     "sourceAuthor": "bunbuku"
   },
+  "234833": {
+    "text": "ＪＲの駅まで歩いて何分くらいかかりますか。",
+    "sourceAuthor": "mookeee"
+  },
   "335372": {
     "text": "おはようございます。",
     "sourceAuthor": "Aurix"
@@ -453,6 +517,10 @@
   },
   "349070": {
     "text": "分かりません。",
+    "sourceAuthor": "zipangu"
+  },
+  "350727": {
+    "text": "駅まで歩いて10分ぐらいかかります。",
     "sourceAuthor": "zipangu"
   },
   "373351": {
@@ -534,6 +602,10 @@
   "1022297": {
     "text": "すみません、注文お願いします。",
     "sourceAuthor": "mookeee"
+  },
+  "1035010": {
+    "text": "どうやって海岸に行けばいいですか。",
+    "sourceAuthor": "bunbuku"
   },
   "1035020": {
     "text": "いつかフランスに行ってみたいです。",
@@ -619,6 +691,10 @@
     "text": "ビールはあまり好きではありません。",
     "sourceAuthor": "bunbuku"
   },
+  "2151547": {
+    "text": "二番目の角を右に曲がってください。",
+    "sourceAuthor": "Blanka_Meduzo"
+  },
   "2154940": {
     "text": "以上です。",
     "sourceAuthor": "bunbuku"
@@ -675,9 +751,17 @@
     "text": "すみません、聞こえませんでした。",
     "sourceAuthor": "tommy_san"
   },
+  "2519088": {
+    "text": "郵便局への行き方を教えてください。",
+    "sourceAuthor": "tommy_san"
+  },
   "2569603": {
     "text": "起きてる？",
     "sourceAuthor": "tommy_san"
+  },
+  "2708994": {
+    "text": "郵便局はふたつ先の信号を右です。",
+    "sourceAuthor": "nhanquinho"
   },
   "2724966": {
     "text": "沖縄に行ったことはありますか？",
@@ -685,6 +769,10 @@
   },
   "2744751": {
     "text": "そうなんですか？",
+    "sourceAuthor": "tommy_san"
+  },
+  "2790222": {
+    "text": "すみません、駅への道を教えていただけませんか？",
     "sourceAuthor": "tommy_san"
   },
   "2863727": {
@@ -767,6 +855,10 @@
     "text": "ポイントカードはお持ちですか？",
     "sourceAuthor": "tommy_san"
   },
+  "3549611": {
+    "text": "出口はどこですか？",
+    "sourceAuthor": "tommy_san"
+  },
   "3555502": {
     "text": "何かお探しですか？",
     "sourceAuthor": "arnab"
@@ -831,6 +923,10 @@
     "text": "どうでした、旅行は？",
     "sourceAuthor": "tommy_san"
   },
+  "4769881": {
+    "text": "次の角を右に曲がってください。",
+    "sourceAuthor": "tommy_san"
+  },
   "5762757": {
     "text": "何時に出る？",
     "sourceAuthor": "daifons"
@@ -879,6 +975,14 @@
     "text": "韓国人です。",
     "sourceAuthor": "small_snow"
   },
+  "8728239": {
+    "text": "郵便局はこの近くですか？",
+    "sourceAuthor": "bunbuku"
+  },
+  "8755532": {
+    "text": "動物園はこの近くですか？",
+    "sourceAuthor": "bunbuku"
+  },
   "8795518": {
     "text": "ゆっくり話してください。",
     "sourceAuthor": "dotheduyet1999"
@@ -918,6 +1022,10 @@
   "9046236": {
     "text": "観光で来てるんです。",
     "sourceAuthor": "bunbuku"
+  },
+  "9073662": {
+    "text": "最寄りの駅はどこですか？",
+    "sourceAuthor": "small_snow"
   },
   "9083377": {
     "text": "ちょっと見てるだけなので、大丈夫です。",
@@ -979,6 +1087,10 @@
     "text": "サイズはおいくつでしょうか。",
     "sourceAuthor": "bunbuku"
   },
+  "9853743": {
+    "text": "このバスって動物園で止まりますか？",
+    "sourceAuthor": "small_snow"
+  },
   "9853946": {
     "text": "ねぇ、ちょっと聞いてよ。",
     "sourceAuthor": "small_snow"
@@ -1031,6 +1143,10 @@
     "text": "濡れちゃった。",
     "sourceAuthor": "small_snow"
   },
+  "10181629": {
+    "text": "すみません、地下鉄の駅はどこですか？",
+    "sourceAuthor": "small_snow"
+  },
   "10218817": {
     "text": "家に帰る途中、道に迷ってしまった。",
     "sourceAuthor": "small_snow"
@@ -1042,6 +1158,10 @@
   "10455178": {
     "text": "駅で待ち合わせしようね。",
     "sourceAuthor": "small_snow"
+  },
+  "10485508": {
+    "text": "次の駅で降りてください。",
+    "sourceAuthor": "bunbuku"
   },
   "10565813": {
     "text": "どうしたの？大丈夫？",
@@ -1077,6 +1197,10 @@
   },
   "10647275": {
     "text": "レシートをください。",
+    "sourceAuthor": "small_snow"
+  },
+  "10650485": {
+    "text": "ここから動物園までは歩いて行ける距離ですか？",
     "sourceAuthor": "small_snow"
   },
   "10657668": {
@@ -1117,6 +1241,10 @@
   },
   "10901614": {
     "text": "ちょっと待ってください。",
+    "sourceAuthor": "small_snow"
+  },
+  "10901646": {
+    "text": "駅を出て、あの道をまっすぐ行ってください。",
     "sourceAuthor": "small_snow"
   },
   "10906691": {
@@ -1199,6 +1327,10 @@
     "text": "知ってる？",
     "sourceAuthor": "megamanenm"
   },
+  "11542272": {
+    "text": "その角を右に曲がれば、左手にありますよ。",
+    "sourceAuthor": "bunbuku"
+  },
   "11546070": {
     "text": "結果はどうなったの？",
     "sourceAuthor": "small_snow"
@@ -1245,6 +1377,10 @@
   },
   "11890833": {
     "text": "現金でも大丈夫ですか？",
+    "sourceAuthor": "small_snow"
+  },
+  "11909845": {
+    "text": "バス停は、ここから歩いて5分です。",
     "sourceAuthor": "small_snow"
   },
   "12024147": {
@@ -1321,6 +1457,10 @@
   },
   "13117666": {
     "text": "申し訳ありません。",
+    "sourceAuthor": "atitarev"
+  },
+  "13152284": {
+    "text": "左に曲がってください。",
     "sourceAuthor": "atitarev"
   },
   "13201460": {

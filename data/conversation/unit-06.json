@@ -1,0 +1,596 @@
+{
+  "units": [
+    {
+      "ord": 6,
+      "titleKo": "길·전철",
+      "goalKo": "길과 전철 노선을 묻고 확인한다. 가는 방법을 묻고, 두 단계 길 안내와 환승 안내를 알아듣는다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 6,
+      "ord": 1,
+      "text": "すみません。",
+      "kana": "すみません。",
+      "cueKo": "점원이나 모르는 사람을 부르며 말 걸기 (저기요)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #408301",
+      "audioKey": "c/851479882e6df848",
+      "key": "tatoeba-408301-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 2,
+      "text": "駅はどこですか。",
+      "kana": "えきはどこですか。",
+      "cueKo": "역이 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #188894",
+      "audioKey": "c/3f2055198f6be1ee",
+      "key": "tatoeba-188894-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 3,
+      "text": "すみません、地下鉄の駅はどこですか？",
+      "kana": "すみません、ちかてつのえきはどこですか？",
+      "cueKo": "지나가는 사람에게 지하철역이 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10181629",
+      "audioKey": "c/296fc3db220cbc38",
+      "key": "tatoeba-10181629-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 4,
+      "text": "最寄りの駅はどこですか？",
+      "kana": "もよりのえきはどこですか？",
+      "cueKo": "가장 가까운 역이 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9073662",
+      "audioKey": "c/00b77cd71e3ea288",
+      "key": "tatoeba-9073662-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 5,
+      "text": "すみません、駅への道を教えていただけませんか？",
+      "kana": "すみません、えきへのみちをおしえていただけませんか？",
+      "cueKo": "역으로 가는 길을 아주 공손하게 물어보기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2790222",
+      "audioKey": "c/202b0042ab21b913",
+      "key": "tatoeba-2790222-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 6,
+      "text": "郵便局への行き方を教えてください。",
+      "kana": "ゆうびんきょくへのいきかたをおしえてください。",
+      "cueKo": "우체국 가는 방법을 알려 달라고 말하기 (장소 이름만 바꿔서)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2519088",
+      "audioKey": "c/5fc42c10fe11a80f",
+      "key": "tatoeba-2519088-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 7,
+      "text": "そこへはどうやって行けばよいですか。",
+      "kana": "そこへはどうやっていけばよいですか。",
+      "cueKo": "그곳에 어떻게 가면 되는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #213601",
+      "audioKey": "c/38bf30ae9274da37",
+      "key": "tatoeba-213601-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 8,
+      "text": "どうやって海岸に行けばいいですか。",
+      "kana": "どうやってかいがんにいけばいいですか。",
+      "cueKo": "해변에 어떻게 가면 되는지 묻기 (장소 이름만 바꿔서)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #1035010",
+      "audioKey": "c/cd4ac47daed24142",
+      "key": "tatoeba-1035010-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 9,
+      "text": "動物園はこの近くですか？",
+      "kana": "どうぶつえんはこのちかくですか？",
+      "cueKo": "동물원이 이 근처인지 묻기 (장소 이름만 바꿔서)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8755532",
+      "audioKey": "c/892146a59696bfcd",
+      "key": "tatoeba-8755532-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 10,
+      "text": "郵便局はこの近くですか？",
+      "kana": "ゆうびんきょくはこのちかくですか？",
+      "cueKo": "우체국이 이 근처인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8728239",
+      "audioKey": "c/edc08c7f645329a3",
+      "key": "tatoeba-8728239-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 11,
+      "text": "このバスって動物園で止まりますか？",
+      "kana": "このバスってどうぶつえんでとまりますか？",
+      "cueKo": "이 버스가 동물원에 서는지 묻기 (전철이면 '電車'로 바꿔서)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9853743",
+      "audioKey": "c/41e8984b2f61f6bd",
+      "key": "tatoeba-9853743-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 12,
+      "text": "次の停車駅はどこですか。",
+      "kana": "つぎのていしゃえきはどこですか。",
+      "cueKo": "다음 정차역이 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #150259",
+      "audioKey": "c/d00f196447c1001d",
+      "key": "tatoeba-150259-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 13,
+      "text": "途中で乗り換えが必要ですか。",
+      "kana": "とちゅうでのりかえがひつようですか。",
+      "cueKo": "가는 도중에 갈아타야 하는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #124574",
+      "audioKey": "c/579431e2a633974d",
+      "key": "tatoeba-124574-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 14,
+      "text": "乗り換えは必要ですか。",
+      "kana": "のりかえはひつようですか。",
+      "cueKo": "환승이 필요한지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #146179",
+      "audioKey": "c/5742306afacd6967",
+      "key": "tatoeba-146179-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 15,
+      "text": "ここから駅までどのくらいかかりますか。",
+      "kana": "ここからえきまでどのくらいかかりますか。",
+      "cueKo": "여기서 역까지 얼마나 걸리는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #224770",
+      "audioKey": "c/9a16e30682bb9d90",
+      "key": "tatoeba-224770-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 16,
+      "text": "ＪＲの駅まで歩いて何分くらいかかりますか。",
+      "kana": "ジェイアールのえきまであるいてなんぷんくらいかかりますか。",
+      "cueKo": "JR역까지 걸어서 몇 분쯤 걸리는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #234833",
+      "audioKey": "c/ab5ae1a091c55751",
+      "key": "tatoeba-234833-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 17,
+      "text": "ここから動物園までは歩いて行ける距離ですか？",
+      "kana": "ここからどうぶつえんまではあるいていけるきょりですか？",
+      "cueKo": "여기서 동물원까지 걸어갈 만한 거리인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10650485",
+      "audioKey": "c/2065cee118e9e58f",
+      "key": "tatoeba-10650485-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 18,
+      "text": "すみません、道に迷ってしまいました。",
+      "kana": "すみません、みちにまよってしまいました。",
+      "cueKo": "미안하다며 길을 잃었다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214192",
+      "audioKey": "c/740b990b91dad2d6",
+      "key": "tatoeba-214192-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 19,
+      "text": "切符売り場はどこですか。",
+      "kana": "きっぷうりばはどこですか。",
+      "cueKo": "표 파는 곳이 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #142076",
+      "audioKey": "c/051180366b3109cf",
+      "key": "tatoeba-142076-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 20,
+      "text": "出口はどこですか？",
+      "kana": "でぐちはどこですか？",
+      "cueKo": "출구가 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3549611",
+      "audioKey": "c/b04b250971bbebc6",
+      "key": "tatoeba-3549611-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 21,
+      "text": "バス乗り場はどこですか。",
+      "kana": "バスのりばはどこですか。",
+      "cueKo": "버스 타는 곳이 어디냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #198059",
+      "audioKey": "c/415e36989e6fbac0",
+      "key": "tatoeba-198059-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 22,
+      "text": "はい、分かりました。",
+      "kana": "はい、わかりました。",
+      "cueKo": "설명을 듣고 알겠다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899752",
+      "audioKey": "c/7ca1ada17273863a",
+      "key": "tatoeba-10899752-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 23,
+      "text": "ありがとうございます。",
+      "kana": "ありがとうございます。",
+      "cueKo": "공손하게 고맙다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9559301",
+      "audioKey": "c/4ad50db06886ad5d",
+      "key": "tatoeba-9559301-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 24,
+      "text": "この道をまっすぐ行ってください。",
+      "kana": "このみちをまっすぐいってください。",
+      "cueKo": "'이 길로 곧장 가세요'라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #220292",
+      "audioKey": "c/8515cb1137711e36",
+      "key": "tatoeba-220292-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 25,
+      "text": "駅を出て、あの道をまっすぐ行ってください。",
+      "kana": "えきをでて、あのみちをまっすぐいってください。",
+      "cueKo": "역을 나와서 저 길로 곧장 가라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10901646",
+      "audioKey": "c/400966a0dd0c87dc",
+      "key": "tatoeba-10901646-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 26,
+      "text": "次の角を右に曲がってください。",
+      "kana": "つぎのかどをみぎにまがってください。",
+      "cueKo": "'다음 모퉁이에서 오른쪽으로 도세요'라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4769881",
+      "audioKey": "c/92ea0ad16ce359ec",
+      "key": "tatoeba-4769881-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 27,
+      "text": "左に曲がってください。",
+      "kana": "ひだりにまがってください。",
+      "cueKo": "'왼쪽으로 도세요'라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13152284",
+      "audioKey": "c/01dd2a66152a03e6",
+      "key": "tatoeba-13152284-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 28,
+      "text": "二番目の角を右に曲がってください。",
+      "kana": "にばんめのかどをみぎにまがってください。",
+      "cueKo": "'두 번째 모퉁이에서 오른쪽으로 도세요'라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2151547",
+      "audioKey": "c/eeee84fe8eac75de",
+      "key": "tatoeba-2151547-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 29,
+      "text": "道なりに進んで、三つ目の交差点を左に曲がって下さい。",
+      "kana": "みちなりにすすんで、みっつめのこうさてんをひだりにまがってください。",
+      "cueKo": "길을 따라가다 세 번째 교차로에서 왼쪽으로 도라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123616",
+      "audioKey": "c/fff373a3a5768b04",
+      "key": "tatoeba-123616-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 30,
+      "text": "郵便局はふたつ先の信号を右です。",
+      "kana": "ゆうびんきょくはふたつさきのしんごうをみぎです。",
+      "cueKo": "우체국은 두 번째 앞 신호등에서 오른쪽이라는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2708994",
+      "audioKey": "c/21f283e931153667",
+      "key": "tatoeba-2708994-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 31,
+      "text": "突き当たりに郵便局があります。",
+      "kana": "つきあたりにゆうびんきょくがあります。",
+      "cueKo": "길 끝에 우체국이 있다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #123360",
+      "audioKey": "c/a5290df79b40ba5d",
+      "key": "tatoeba-123360-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 32,
+      "text": "その角を右に曲がれば、左手にありますよ。",
+      "kana": "そのかどをみぎにまがれば、ひだりてにありますよ。",
+      "cueKo": "그 모퉁이에서 오른쪽으로 돌면 왼쪽에 있다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11542272",
+      "audioKey": "c/e17246b6fc38a8b0",
+      "key": "tatoeba-11542272-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 33,
+      "text": "すぐに分かりますよ。",
+      "kana": "すぐにわかりますよ。",
+      "cueKo": "'금방 찾으실 수 있어요'라는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214829",
+      "audioKey": "c/4a0f981b04c3016d",
+      "key": "tatoeba-214829-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 34,
+      "text": "次の駅で乗り換えですよ。",
+      "kana": "つぎのえきでのりかえですよ。",
+      "cueKo": "다음 역에서 갈아탄다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #150314",
+      "audioKey": "c/a4169e679f0c1835",
+      "key": "tatoeba-150314-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 35,
+      "text": "池袋駅で乗り換えて下さい。",
+      "kana": "いけぶくろえきでのりかえてください。",
+      "cueKo": "이케부쿠로역에서 갈아타라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #126779",
+      "audioKey": "c/2478bb879ccf684e",
+      "key": "tatoeba-126779-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 36,
+      "text": "次の駅で降りてください。",
+      "kana": "つぎのえきでおりてください。",
+      "cueKo": "다음 역에서 내리라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10485508",
+      "audioKey": "c/30f5d58fe5004482",
+      "key": "tatoeba-10485508-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 37,
+      "text": "駅まで歩いて10分ぐらいかかります。",
+      "kana": "えきまであるいてじゅっぷんぐらいかかります。",
+      "cueKo": "역까지 걸어서 10분쯤 걸린다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #350727",
+      "audioKey": "c/d1f1ccd4479ad561",
+      "key": "tatoeba-350727-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 38,
+      "text": "バス停は、ここから歩いて5分です。",
+      "kana": "バスていは、ここからあるいてごふんです。",
+      "cueKo": "버스 정류장은 여기서 걸어서 5분이라는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11909845",
+      "audioKey": "c/e11c8cf7b48e5e77",
+      "key": "tatoeba-11909845-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 6,
+      "ord": 1,
+      "titleKo": "역으로 가는 길",
+      "settingKo": "길에서 지나가는 사람에게 역으로 가는 길을 물을 때",
+      "goalKo": "길을 정중하게 묻고, 두 단계 안내를 듣고, 걸리는 시간을 확인한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            24,
+            26
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            15
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            37
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 6,
+      "ord": 2,
+      "titleKo": "환승 확인하기",
+      "settingKo": "역에서 직원에게 환승이 필요한지 묻고 표 파는 곳을 찾을 때",
+      "goalKo": "환승이 필요한지 묻고, 갈아탈 역을 확인하고, 표 파는 곳을 찾는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            13
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            35
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            19
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            22
+          ]
+        }
+      ]
+    }
+  ]
+}
