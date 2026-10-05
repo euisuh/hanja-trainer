@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 import { DatabaseSync } from "node:sqlite";
 import type { SeedConversationDocument } from "../shared/types.ts";
 import { applyMigrations } from "../worker/test/schema.ts";
 import { emitConversationSeedSql } from "./seed.ts";
-import { parseConversationSeed } from "./validate-conversation.ts";
+import { parseConversationSeed, validateConversationDocuments, verifyConversationDocuments } from "./validate-conversation.ts";
 
 async function sample(): Promise<SeedConversationDocument> {
   return parseConversationSeed(JSON.parse(await readFile("scripts/fixtures/conversation-sample.json", "utf8")));
@@ -44,6 +46,26 @@ test("conversation validator rejects a missing source reference", async () => {
   assert.throws(() => parseConversationSeed(input), /sourceRef: required/);
 });
 
+test("conversation validator rejects unapproved authored content and invalid sources", async () => {
+  const input = structuredClone(await sample());
+  delete input.chunks[0].ownerApproved;
+  assert.throws(() => parseConversationSeed(input), /ownerApproved/);
+
+  const unsupported = {
+    ...input,
+    chunks: input.chunks.map((chunk, index) => index === 0
+      ? { ...chunk, ownerApproved: "2026-10-06", sourceKind: "unsupported" }
+      : chunk),
+  };
+  assert.throws(() => parseConversationSeed(unsupported), /sourceKind/);
+
+  const invalidReference = structuredClone(input);
+  invalidReference.chunks[0].ownerApproved = "2026-10-06";
+  invalidReference.chunks[0].sourceKind = "corpus";
+  invalidReference.chunks[0].sourceRef = "Tatoeba 123";
+  assert.throws(() => parseConversationSeed(invalidReference), /invalid corpus reference/);
+});
+
 test("conversation validator rejects a dead-end scene", async () => {
   const input = structuredClone(await sample());
   input.scenes[0].turns = [];
@@ -60,4 +82,69 @@ test("conversation validator rejects a chunk without kana", async () => {
   const input = structuredClone(await sample());
   input.chunks[0].kana = "";
   assert.throws(() => parseConversationSeed(input), /chunks\[0\]\.kana/);
+});
+
+test("conversation validator rejects non-kana readings and scene role mismatches", async () => {
+  const input = structuredClone(await sample());
+  input.chunks[0].kana = input.chunks[0].text;
+  assert.throws(() => parseConversationSeed(input), /expected kana and punctuation/);
+
+  const roles = structuredClone(await sample());
+  roles.scenes[0].turns[0].chunkOrds = [1];
+  assert.throws(() => parseConversationSeed(roles), /npc must reference hear chunks/);
+});
+
+test("conversation validator rejects unit ord collisions across files", async () => {
+  const first = await sample();
+  const second = structuredClone(first);
+  assert.throws(() => validateConversationDocuments([first, second]), /duplicate ord across files/);
+});
+
+test("remote verification caches Tatoeba text and source author", async () => {
+  const document = await sample();
+  const chunk = document.chunks[0];
+  chunk.sourceKind = "corpus";
+  chunk.sourceRef = "Tatoeba #123";
+  const directory = await mkdtemp(join(tmpdir(), "conversation-verify-"));
+  const cachePath = join(directory, ".verified.json");
+  try {
+    let calls = 0;
+    await verifyConversationDocuments([document], async (id) => {
+      calls += 1;
+      assert.equal(id, "123");
+      return { text: chunk.text, sourceAuthor: "fixture-owner" };
+    }, cachePath);
+    assert.equal(calls, 1);
+    assert.deepEqual(JSON.parse(await readFile(cachePath, "utf8")), {
+      123: { text: chunk.text, sourceAuthor: "fixture-owner" },
+    });
+    await verifyConversationDocuments([document], async () => {
+      throw new Error("cache miss");
+    }, cachePath);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("remote verification requires exact excerpt spans", async () => {
+  const document = await sample();
+  const chunk = document.chunks[0];
+  chunk.sourceKind = "excerpt";
+  chunk.sourceRef = "Tatoeba #123 [1/2]";
+  const directory = await mkdtemp(join(tmpdir(), "conversation-excerpt-"));
+  const cachePath = join(directory, ".verified.json");
+  try {
+    await writeFile(cachePath, JSON.stringify({
+      123: { text: `「${chunk.text}」「別の文。」`, sourceAuthor: "fixture-owner" },
+    }));
+    await verifyConversationDocuments([document], async () => {
+      throw new Error("cache miss");
+    }, cachePath);
+    chunk.sourceRef = "Tatoeba #123 [2/2]";
+    await assert.rejects(verifyConversationDocuments([document], async () => {
+      throw new Error("cache miss");
+    }, cachePath), /excerpt must be an exact/);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
 });

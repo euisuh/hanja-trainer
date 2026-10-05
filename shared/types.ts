@@ -9,6 +9,9 @@ export type ConversationRole = (typeof CONVERSATION_ROLES)[number];
 export const CONVERSATION_REGISTERS = ["polite", "casual", "keigo"] as const;
 export type ConversationRegister = (typeof CONVERSATION_REGISTERS)[number];
 
+export const CONVERSATION_SOURCE_KINDS = ["corpus", "excerpt", "jmdict", "authored"] as const;
+export type ConversationSourceKind = (typeof CONVERSATION_SOURCE_KINDS)[number];
+
 export interface ConversationUnit {
   id: number;
   track: "jp";
@@ -95,8 +98,9 @@ export interface SeedConversationChunk {
   cueKo: string;
   register: ConversationRegister;
   role: ConversationRole;
-  sourceKind: string;
+  sourceKind: ConversationSourceKind;
   sourceRef?: string;
+  ownerApproved?: string;
   audioKey: string;
 }
 

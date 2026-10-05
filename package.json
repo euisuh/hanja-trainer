@@ -20,6 +20,7 @@
     "preseed:remote": "npm run sentences:readings",
     "seed:remote": "tsx scripts/seed.ts --remote data/characters/*.json data/sentences/*.json data/words/*.json data/conversation/*.json",
     "validate:conversation": "node --import tsx scripts/validate-conversation.ts",
+    "verify:conversation": "npm run validate:conversation -- --verify-remote",
     "audio:generate": "tsx scripts/generate-audio.ts --remote data/characters/*.json",
     "audio:generate:conv": "tsx scripts/generate-audio.ts --conversation --remote data/conversation/*.json",
     "deploy": "npm run build && wrangler deploy",
