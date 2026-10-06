@@ -1,0 +1,90 @@
+.app[data-appearance="notebook"] * {
+  box-shadow: none !important;
+}
+
+.app[data-appearance="notebook"] :is(button, input, select, textarea) {
+  border: 1.5px solid var(--ink);
+  border-radius: 3px;
+}
+
+.app[data-appearance="notebook"] :is(button, a, input, select, textarea):active:not(:disabled):not([aria-disabled="true"]) {
+  transform: none !important;
+  background: color-mix(in srgb, var(--paper) 88%, var(--ink));
+}
+
+.app[data-appearance="notebook"] .app-header {
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-2);
+  border-bottom: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.app[data-appearance="notebook"] .active-profile,
+.app[data-appearance="notebook"] .metric,
+.app[data-appearance="notebook"] .daily-goal {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.app[data-appearance="notebook"] .metric--streak strong,
+.app[data-appearance="notebook"] .metric span:last-child {
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .bottom-nav-shell {
+  padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  border-top: 1.5px solid var(--ink);
+  background: var(--paper);
+}
+
+.app[data-appearance="notebook"] .bottom-nav {
+  width: min(100%, 1080px);
+  flex-wrap: nowrap;
+  gap: 0;
+  padding: 0;
+  border-bottom: 1.5px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+}
+
+.app[data-appearance="notebook"] .bottom-nav a {
+  flex: 1 1 0;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-3);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+}
+
+.app[data-appearance="notebook"] .bottom-nav a.active {
+  border-bottom-color: var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .bottom-nav kbd {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: currentColor;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: inherit;
+  font-weight: var(--weight-medium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app[data-appearance="notebook"] :is(button, a, input, select, textarea) {
+    transition: none;
+  }
+}
