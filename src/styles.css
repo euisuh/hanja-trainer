@@ -531,3 +531,24 @@ kbd {
   font-weight: var(--weight-medium);
   white-space: nowrap;
 }
+
+.talk-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--home-accent, currentColor);
+  border-radius: 3px;
+  background: var(--home-soft, transparent);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.talk-banner__glyph { font-size: 2rem; line-height: 1; color: var(--home-accent, currentColor); }
+.talk-banner__text { display: grid; gap: 2px; flex: 1; }
+.talk-banner__text small { opacity: 0.75; }
+.talk-banner__go { font-size: 1.25rem; }
+.talk-banner:hover { background: var(--home-accent, currentColor); color: var(--home-accent-text); }
+.talk-banner:hover .talk-banner__glyph { color: inherit; }

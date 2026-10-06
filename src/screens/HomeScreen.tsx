@@ -140,6 +140,13 @@ export function HomeScreen() {
   return (
     <section className="home-screen" style={{ "--home-accent": theme.accent, "--home-accent-text": theme.accentText, "--home-soft": theme.soft, "--home-font": theme.font } as CSSProperties}>
       <TrackTabs active={selectedTrack} enabled={enabledTracks} onChange={setTrack} />
+      {selectedTrack === "jp" && !settingsError && (
+        <button className="talk-banner" onClick={() => navigate("/talk")} type="button">
+          <span aria-hidden="true" className="talk-banner__glyph">話</span>
+          <span className="talk-banner__text"><strong>일본어 회화 Talk</strong><small>실생활 말하기 연습 · 오늘의 세션 시작</small></span>
+          <span aria-hidden="true" className="talk-banner__go">→</span>
+        </button>
+      )}
       {laggingTrack && (
         <aside className="track-imbalance" style={{ "--nudge-accent": trackThemes[laggingTrack].accent, "--nudge-soft": trackThemes[laggingTrack].soft } as CSSProperties}>
           <p><strong>{trackThemes[laggingTrack].label} 트랙이 한동안 조용해요.</strong> 오늘 짧게 시작해 볼까요?</p>
