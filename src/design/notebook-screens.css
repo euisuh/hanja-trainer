@@ -1,0 +1,219 @@
+.app[data-appearance="notebook"] {
+  background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--border-tan) 31px 32px);
+  background-position: 0 8px;
+}
+
+.app[data-appearance="notebook"] .detail-screen,
+.app[data-appearance="notebook"] .settings-screen,
+.app[data-appearance="notebook"] .about-screen,
+.app[data-appearance="notebook"] .stats-screen,
+.app[data-appearance="notebook"] .onboarding-screen,
+.app[data-appearance="notebook"] .placement-result,
+.app[data-appearance="notebook"] .session-complete {
+  position: relative;
+}
+
+.app[data-appearance="notebook"] .detail-screen::before,
+.app[data-appearance="notebook"] .settings-screen::before,
+.app[data-appearance="notebook"] .about-screen::before,
+.app[data-appearance="notebook"] .stats-screen::before,
+.app[data-appearance="notebook"] .onboarding-screen::before,
+.app[data-appearance="notebook"] .placement-result::before,
+.app[data-appearance="notebook"] .session-complete::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--space-2) * -1);
+  width: 1px;
+  background: var(--flame);
+  content: "";
+  opacity: .45;
+  pointer-events: none;
+}
+
+.app[data-appearance="notebook"] :is(.detail-back, .track-panel, .interval-chart, .personal-record, .settings-card, .shortcut-sheet, .about-section, .streak-hero, .streak-calendar, .track-mastery-card, .track-card, .placement-result__card, .session-complete__stats > div, .session-complete__profile, .unlock-card, .profile-picker__card, .profile-picker__option, .pin-keys button, .pin-action, .pin-recovery code, .pin-recovery-form input, .session-empty button) {
+  border-width: 1.5px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] :is(.detail-back, .track-panel, .interval-chart, .personal-record, .settings-card, .about-section, .streak-hero, .streak-calendar, .track-mastery-card, .track-card, .placement-result__card, .session-complete__stats > div, .unlock-card, .profile-picker__card, .profile-picker__option) {
+  background-color: var(--paper);
+}
+
+.app[data-appearance="notebook"] :is(.settings-group__title, .onboarding-eyebrow, .about-section h2, .track-panel > header, .streak-calendar > header, .track-mastery-card > small, .session-complete__stats small) {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: var(--weight-medium);
+  letter-spacing: .08em;
+}
+
+.app[data-appearance="notebook"] :is(.detail-back, .track-panel__more, .settings-about-link, .about-back, .theme-picker button, .appearance-picker button, .sound-setting button, .track-toggles button, .placement-retest button, .onyomi-script-setting button, .profile-setting button, .onboarding-cta, .placement-result__cta, .session-complete > button, .pin-action, .pin-keys button, .session-empty button) {
+  border-width: 1.5px;
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] :is(.detail-back, .track-panel__more, .settings-about-link, .about-back, .theme-picker button, .appearance-picker button, .sound-setting button, .track-toggles button, .placement-retest button, .onyomi-script-setting button, .profile-setting button, .pin-action--secondary) {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] :is(.onboarding-cta, .placement-result__cta, .session-complete > button, .pin-action:not(.pin-action--secondary), .pin-keys button, .session-empty button) {
+  background: var(--chip-bg);
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] :is(.settings-card, .about-section, .streak-calendar, .track-mastery-card, .interval-chart) {
+  border-color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .shortcut-sheet,
+.app[data-appearance="notebook"] .session-complete__profile {
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .shortcut-sheet > header,
+.app[data-appearance="notebook"] .session-complete__profile small {
+  color: var(--muted);
+}
+
+.app[data-appearance="notebook"] .shortcut-sheet__row {
+  border-color: var(--border-tan);
+}
+
+.app[data-appearance="notebook"] .shortcut-sheet__row kbd {
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+.app[data-appearance="notebook"] .detail-hero {
+  border-width: 1.5px;
+  border-radius: 0;
+  background: var(--paper);
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] .detail-hero > strong {
+  color: var(--ink);
+  text-shadow: 1px 1px 0 var(--chip-bg);
+}
+
+.app[data-appearance="notebook"] .track-panel {
+  border-color: var(--detail-accent);
+}
+
+.app[data-appearance="notebook"] .track-panel__badges span,
+.app[data-appearance="notebook"] .personal-record__tracks button[aria-pressed="true"] {
+  border-radius: 3px;
+}
+
+.app[data-appearance="notebook"] .personal-record,
+.app[data-appearance="notebook"] .detail-empty--standalone,
+.app[data-appearance="notebook"] .settings-card--action {
+  border-width: 1.5px;
+  border-radius: 0;
+  background: var(--paper);
+}
+
+.app[data-appearance="notebook"] .streak-hero {
+  background: var(--paper);
+}
+
+.app[data-appearance="notebook"] .streak-hero__flame svg {
+  fill: var(--flame);
+}
+
+.app[data-appearance="notebook"] .streak-calendar__day {
+  border-radius: 0;
+}
+
+.app[data-appearance="notebook"] .track-mastery-card {
+  border-width: 1.5px;
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] .track-mastery-card__bar {
+  border-radius: 0;
+}
+
+.app[data-appearance="notebook"] .track-card {
+  border-width: 1.5px;
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] .track-card__check,
+.app[data-appearance="notebook"] .placement-result__badge {
+  border-radius: 3px;
+}
+
+.app[data-appearance="notebook"] .placement-result__card {
+  border-width: 1.5px;
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] .placement-result__card .placement-result__badge {
+  background: var(--chip-bg);
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .session-complete__glyph,
+.app[data-appearance="notebook"] .session-complete__xp {
+  color: var(--flame);
+}
+
+.app[data-appearance="notebook"] .session-complete__stats > div.session-complete__stat--quiet {
+  border-color: var(--border-tan);
+  box-shadow: none;
+}
+
+.app[data-appearance="notebook"] .unlock-screen,
+.app[data-appearance="notebook"] .profile-picker {
+  background-image: repeating-linear-gradient(to bottom, transparent 0 31px, var(--border-tan) 31px 32px);
+}
+
+.app[data-appearance="notebook"] .unlock-card,
+.app[data-appearance="notebook"] .profile-picker__card {
+  border-color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .unlock-card__mark {
+  border-width: 1.5px;
+  border-radius: 3px;
+  background: var(--chip-bg);
+  box-shadow: none;
+  color: var(--ink);
+}
+
+.app[data-appearance="notebook"] .profile-picker__option {
+  min-width: 0;
+}
+
+.app[data-appearance="notebook"] .profile-picker__lock,
+.app[data-appearance="notebook"] .pin-dot,
+.app[data-appearance="notebook"] .pin-dot--filled {
+  border-radius: 3px;
+}
+
+.app[data-appearance="notebook"] .pin-recovery-form input {
+  background: var(--paper);
+}
+
+@media (max-width: 560px) {
+  .app[data-appearance="notebook"] :is(.detail-overview, .detail-tracks, .detail-history, .settings-controls, .shortcut-sheet) {
+    min-width: 0;
+  }
+
+  .app[data-appearance="notebook"] .settings-layout {
+    display: block;
+  }
+
+  .app[data-appearance="notebook"] .about-table-wrap {
+    max-width: 100%;
+  }
+
+  .app[data-appearance="notebook"] .session-complete__stats {
+    grid-template-columns: 1fr;
+  }
+}
