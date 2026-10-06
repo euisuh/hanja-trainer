@@ -149,4 +149,26 @@ describe("conversation core migration", () => {
     expect(sqlite.prepare("SELECT retired_at IS NOT NULL AS retired FROM conv_chunks WHERE key = 'could-not-hear-polite'").get()).toEqual({ retired: 1 });
     expect(sqlite.prepare("SELECT COUNT(*) AS count FROM conv_chunks WHERE key = 'could-not-hear-polite'").get()).toEqual({ count: 1 });
   });
+
+  it("keeps every unit's chunks live when several unit files are seeded in one run", () => {
+    const sqlite = new DatabaseSync(":memory:");
+    databases.push(sqlite);
+    applyAll(sqlite);
+    const base = parseConversationSeed(JSON.parse(readFileSync("scripts/fixtures/conversation-sample.json", "utf8")));
+    const unitFile = (unitOrd: number, keySuffix: string) => {
+      const document = structuredClone(base);
+      document.units = [{ ...base.units[0], ord: unitOrd }];
+      document.scenes = [];
+      document.chunks = base.chunks.map((chunk) => ({ ...chunk, unitOrd, key: `${chunk.key}-${keySuffix}`, text: `${chunk.text}${keySuffix}`, audioKey: chunk.audioKey }));
+      return document;
+    };
+    const first = unitFile(7, "a");
+    const second = unitFile(8, "b");
+    sqlite.exec(`${emitConversationSeedSql(first)}\n${emitConversationSeedSql(second)}`);
+    const total = first.chunks.length + second.chunks.length;
+    expect(sqlite.prepare("SELECT COUNT(*) AS live FROM conv_chunks WHERE retired_at IS NULL").get()).toEqual({ live: total });
+    for (const ord of [7, 8]) {
+      expect(sqlite.prepare("SELECT COUNT(*) AS n FROM conv_unit_chunks WHERE unit_id = (SELECT id FROM conv_units WHERE ord = ?)").get(ord)).toEqual({ n: base.chunks.length });
+    }
+  });
 });

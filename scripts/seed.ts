@@ -365,8 +365,10 @@ export function emitConversationSeedSql(document: SeedConversationDocument): str
   const unitIds = document.units.map((unit) => conversationUnitId(unit.ord)).join(", ");
   if (unitIds) sql.push(`UPDATE conv_unit_chunks SET ord=ord + 1000000 WHERE unit_id IN (${unitIds});`);
   for (const chunk of document.chunks) sql.push(emitConversationChunkSql(chunk));
-  const keys = document.chunks.map((chunk) => quote(chunk.key)).join(", ");
-  sql.push(`UPDATE conv_chunks SET retired_at=unixepoch() WHERE track='jp' AND retired_at IS NULL${keys ? ` AND key NOT IN (${keys})` : ""};`);
+  // Retire only chunks no unit still lists. Scoping this to the file's own keys retired every other
+  // unit's chunks whenever several unit files were seeded in one run.
+  if (unitIds) sql.push(`DELETE FROM conv_unit_chunks WHERE unit_id IN (${unitIds}) AND ord >= 1000000;`);
+  sql.push("UPDATE conv_chunks SET retired_at=unixepoch() WHERE track='jp' AND retired_at IS NULL AND id NOT IN (SELECT chunk_id FROM conv_unit_chunks);");
   for (const scene of document.scenes) sql.push(...emitConversationSceneSql(scene));
   return `${sql.join("\n")}\n`;
 }
