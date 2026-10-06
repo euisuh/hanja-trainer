@@ -32,7 +32,7 @@ env:
 jobs:
   android:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, macOS, ARM64]
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       ANDROID_SDK_ROOT: ${{ github.workspace }}/../.ci-cache/android-sdk
@@ -68,7 +68,7 @@ jobs:
 
   ios:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, macOS, ARM64]
+    runs-on: macos-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
