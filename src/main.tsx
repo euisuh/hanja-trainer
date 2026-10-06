@@ -13,6 +13,7 @@ import "@fontsource-variable/plus-jakarta-sans";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource/zen-maru-gothic/500.css";
 import "./design/talk.css";
+import "./design/notebook-flashcards.css";
 import { loadSessionToken } from "./platform/sessionToken";
 import { restoreOutboxStorage } from "./platform/storage";
 
