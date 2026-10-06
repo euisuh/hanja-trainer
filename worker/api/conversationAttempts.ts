@@ -129,7 +129,7 @@ export async function submitConversationAttempt(
   const target = await db.prepare(`
     SELECT c.id FROM conv_chunks c
     LEFT JOIN conv_scenes s ON s.id = ?3
-    WHERE c.id = ?1 AND c.role = ?2 AND (?3 IS NULL OR s.unit_id = c.unit_id)
+    WHERE c.id = ?1 AND c.role = ?2 AND (?3 IS NULL OR EXISTS (SELECT 1 FROM conv_unit_chunks cuc WHERE cuc.unit_id = s.unit_id AND cuc.chunk_id = c.id AND cuc.ord < 1000000))
   `).bind(input.chunkId, input.role, input.sceneId ?? null).first<AttemptRow>();
   if (!target) throw new ConversationTargetNotFound();
 

@@ -134,21 +134,23 @@ export async function getConversationProgress(db: D1Database, profileId: number)
     db.prepare("SELECT timezone FROM profile WHERE id = ?1").bind(profileId).first<TimezoneRow>(),
     db.prepare("SELECT id, ord, title_ko, goal_ko FROM conv_units ORDER BY ord, id").all<Pick<UnitRow, "id" | "ord" | "title_ko" | "goal_ko">>(),
     db.prepare(`
-      SELECT c.id, c.unit_id, c.ord, c.ja, c.kana, c.ko_cue, c.source_kind, c.source_ref, a.answered_at, a.grade
-      FROM conv_chunks c
+      SELECT c.id, cuc.unit_id, cuc.ord, c.ja, c.kana, c.ko_cue, c.source_kind, c.source_ref, a.answered_at, a.grade
+      FROM conv_unit_chunks cuc
+      JOIN conv_chunks c ON c.id = cuc.chunk_id AND c.retired_at IS NULL
       LEFT JOIN conv_attempts a ON a.chunk_id = c.id AND a.profile_id = ?1 AND a.input = 'voice'
-      WHERE c.role = 'say'
-      ORDER BY c.unit_id, c.ord, c.id, a.answered_at, a.id
+      WHERE c.role = 'say' AND cuc.ord < 1000000
+      ORDER BY cuc.unit_id, cuc.ord, c.id, a.answered_at, a.id
     `).bind(profileId).all<ProgressRow>(),
     db.prepare("SELECT unit_id, at, note FROM conv_checkins WHERE profile_id = ?1").bind(profileId).all<CheckinRow>(),
   ]);
   if (!profile?.timezone) throw new Error("Profile row is missing");
   const phrases = new Map<number, ConversationProgressResponse["phrases"][number] & { days: Set<string> }>();
   for (const row of phraseResult.results) {
-    const phrase = phrases.get(row.id) ?? { id: row.id, unitId: row.unit_id, ord: row.ord, ja: row.ja, kana: row.kana, koCue: row.ko_cue, sourceKind: row.source_kind, sourceRef: row.source_ref, spokenDays: 0, againCount: 0, days: new Set<string>() };
+    const phraseKey = row.unit_id * 1_000_000 + row.id;
+    const phrase = phrases.get(phraseKey) ?? { id: row.id, unitId: row.unit_id, ord: row.ord, ja: row.ja, kana: row.kana, koCue: row.ko_cue, sourceKind: row.source_kind, sourceRef: row.source_ref, spokenDays: 0, againCount: 0, days: new Set<string>() };
     if (row.answered_at !== null) phrase.days.add(zonedDayKey(new Date(row.answered_at), profile.timezone));
     if (row.grade === 1) phrase.againCount += 1;
-    phrases.set(row.id, phrase);
+    phrases.set(phraseKey, phrase);
   }
   const phraseList = [...phrases.values()].map(({ days, ...phrase }) => ({ ...phrase, spokenDays: days.size }));
   const checkins = new Map(checkinResult.results.map((checkin) => [checkin.unit_id, { unitId: checkin.unit_id, at: checkin.at, note: checkin.note }]));
@@ -211,7 +213,9 @@ export async function getConversationUnit(db: D1Database, unitId: number): Promi
 
 export async function getDueConversationChunks(db: D1Database, profileId: number, now = Date.now()): Promise<ConversationDueResponse> {
   const result = await db.prepare(`
-    SELECT c.id, c.unit_id, c.ord, c.ja, c.kana, c.ko_cue, c.register, c.role, c.source_kind, c.source_ref, c.audio_key,
+    SELECT c.id, COALESCE((SELECT cuc.unit_id FROM conv_unit_chunks cuc WHERE cuc.chunk_id = c.id AND cuc.ord < 1000000 ORDER BY cuc.unit_id LIMIT 1), 0) AS unit_id,
+      COALESCE((SELECT cuc.ord FROM conv_unit_chunks cuc WHERE cuc.chunk_id = c.id AND cuc.ord < 1000000 ORDER BY cuc.unit_id LIMIT 1), 0) AS ord,
+      c.ja, c.kana, c.ko_cue, c.register, c.role, c.source_kind, c.source_ref, c.audio_key,
       ccs.profile_id, ccs.chunk_id, ccs.stability, ccs.difficulty, ccs.elapsed_days, ccs.scheduled_days, ccs.learning_steps,
       ccs.reps, ccs.lapses, ccs.state, ccs.last_review, ccs.due, ccs.correct_count, ccs.total_count
     FROM conv_chunk_states ccs
