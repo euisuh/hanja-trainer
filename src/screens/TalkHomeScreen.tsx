@@ -54,7 +54,7 @@ export function TalkHomeScreen() {
   if (!progress) return <section className="talk-root talk-home"><p>Talk 페이지를 불러오는 중…</p></section>;
   return <section className="talk-root talk-home">
     <header className="talk-home__header"><span>JP · Talk</span><nav aria-label="Talk 탐색"><Link aria-current="page" to="/talk">Index</Link><Link to="/talk/contents">Contents <kbd>C</kbd></Link><Link to="/talk/diary">Diary</Link></nav></header>
-    <div className="talk-home__tabs" aria-label="상황 목록">
+    <div role="group" className="talk-home__tabs" aria-label="상황 목록">
       {progress.units.map((unit) => <a href={`#unit-${unit.id}`} key={unit.id}>{unit.titleKo}</a>)}
     </div>
     <main className="talk-home__content">

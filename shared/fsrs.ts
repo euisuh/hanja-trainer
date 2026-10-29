@@ -120,9 +120,11 @@ export function formatDueLabel(
   state: ReviewState,
   now: Date,
 ): { label: string; overdue: boolean } {
-  const utcDay = (date: Date) =>
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / DAY_MS;
-  const days = utcDay(state.due) - utcDay(now);
+  // Local calendar days (DST-safe via Date.UTC of local fields): "today" must roll over at the
+  // learner's midnight, not UTC midnight (09:00 in KST).
+  const localDay = (date: Date) =>
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / DAY_MS;
+  const days = localDay(state.due) - localDay(now);
   if (days === 0) return { label: "오늘 만기", overdue: false };
   return days < 0
     ? { label: `${Math.abs(days)}일 지남`, overdue: true }

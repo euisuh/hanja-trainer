@@ -71,10 +71,12 @@ describe("FSRS scheduling", () => {
     expect(skip).toEqual(wrong);
   });
 
-  it("formats overdue, current, and future due labels", () => {
-    expect(formatDueLabel(dueAt("2025-12-29T00:00:00.000Z"), start)).toEqual({ label: "3일 지남", overdue: true });
-    expect(formatDueLabel(dueAt("2026-01-01T23:59:00.000Z"), start)).toEqual({ label: "오늘 만기", overdue: false });
-    expect(formatDueLabel(dueAt("2026-01-06T00:00:00.000Z"), start)).toEqual({ label: "5일 후", overdue: false });
+  it("formats overdue, current, and future due labels by local calendar day", () => {
+    const now = new Date(2026, 0, 1, 0, 0);
+    const at = (y: number, m: number, d: number, h = 0, mi = 0) => ({ ...initialState(start), due: new Date(y, m, d, h, mi) });
+    expect(formatDueLabel(at(2025, 11, 29), now)).toEqual({ label: "3일 지남", overdue: true });
+    expect(formatDueLabel(at(2026, 0, 1, 23, 59), now)).toEqual({ label: "오늘 만기", overdue: false });
+    expect(formatDueLabel(at(2026, 0, 6), now)).toEqual({ label: "5일 후", overdue: false });
   });
 
   it("returns chronological interval history", () => {

@@ -60,7 +60,7 @@ export function ListenCard({ card, choices, capstone = false, onNext }: Props) {
   const correct = selectedId === card.id;
   return <div className="talk-screen__listen">
     <p className="talk-screen__cue">듣고 뜻을 고르세요.</p>
-    <div aria-label="뜻 고르기" className="talk-screen__intents">
+    <div role="group" aria-label="뜻 고르기" className="talk-screen__intents">
       {choices.map((choice, index) => <button aria-pressed={selectedId === choice.id} className={selectedId === choice.id ? "is-preselected" : undefined} disabled={answered} key={choice.id} onClick={() => setSelectedId(choice.id)} type="button">{choice.koCue} <kbd>{index + 1}</kbd></button>)}
     </div>
     {answered && <div className="talk-screen__answer">

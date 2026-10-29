@@ -85,7 +85,7 @@ export function SceneRunner({ scene, chunks, profileId, onExit }: Props) {
     <footer className="talk-scene__bar">
       {(state.phase === "npc" || state.phase === "reveal") && <button onClick={() => dispatch({ type: "next" })} type="button">다음 <kbd>Enter</kbd></button>}
       {state.phase === "learner" && <><button onClick={() => dispatch({ type: "hint" })} type="button">힌트 <kbd>H</kbd></button><button disabled={recording.status === "requesting" || recording.status === "unsupported"} onClick={record} type="button">{recording.status === "recording" ? "녹음 중지" : "말하기"} <kbd>R</kbd></button><button onClick={() => dispatch({ type: "answer", latencyMs: null })} type="button">말했어요</button></>}
-      {state.phase === "grading" && <div aria-label="자기 평가"><button onClick={() => dispatch({ type: "grade", grade: "again" })} type="button">못함</button><button onClick={() => dispatch({ type: "grade", grade: "hard" })} type="button">막힘</button><button onClick={() => dispatch({ type: "grade", grade: "good" })} type="button">바로</button></div>}
+      {state.phase === "grading" && <div role="group" aria-label="자기 평가"><button onClick={() => dispatch({ type: "grade", grade: "again" })} type="button">못함</button><button onClick={() => dispatch({ type: "grade", grade: "hard" })} type="button">막힘</button><button onClick={() => dispatch({ type: "grade", grade: "good" })} type="button">바로</button></div>}
     </footer>
   </section>;
 }

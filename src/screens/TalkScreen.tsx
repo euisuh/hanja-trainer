@@ -198,7 +198,7 @@ export function TalkScreen() {
         {recording.status === "no_audio" && <p role="alert">소리가 감지되지 않았습니다. 직접 평가할 수 있습니다.</p>}
         {recording.status === "ready" && <p>첫 소리 {recording.onsetMs === null ? "측정 안 됨" : `${(recording.onsetMs / 1000).toFixed(1)}초`}</p>}
       </div>
-      {canRate && <div aria-label="자기 평가" className="talk-screen__ratings">
+      {canRate && <div role="group" aria-label="자기 평가" className="talk-screen__ratings">
         <button aria-pressed={selectedGrade === "again"} className={selectedGrade === "again" ? "is-preselected" : undefined} onClick={() => setSelectedGrade("again")} type="button">못함 <kbd>1</kbd></button>
         <button aria-pressed={selectedGrade === "hard"} className={selectedGrade === "hard" ? "is-preselected" : undefined} onClick={() => setSelectedGrade("hard")} type="button">막힘 <kbd>2</kbd></button>
         <button aria-pressed={selectedGrade === "good"} className={selectedGrade === "good" ? "is-preselected" : undefined} onClick={() => setSelectedGrade("good")} type="button">바로 <kbd>3</kbd></button>

@@ -11,7 +11,7 @@ type Props = {
 
 export function AnswerOptions({ options, answerIndex, spent, selectedIndex, lang, onPick }: Props) {
   return (
-    <div className={`answer-options${options.length === 4 ? "" : " answer-options--flexible"}`} aria-label="답 선택">
+    <div role="group" className={`answer-options${options.length === 4 ? "" : " answer-options--flexible"}`} aria-label="답 선택">
       {options.map((option, index) => {
         const correct = spent && index === answerIndex;
         const wrong = spent && index === selectedIndex && !correct;

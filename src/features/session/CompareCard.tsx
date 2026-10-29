@@ -19,7 +19,7 @@ const labels = { kr: "한국 · 훈음", jp: "日本 · 音/訓", cn: "中国 ·
 
 export function CompareCard({ character, onyomiScript }: { character: CharacterEntry; onyomiScript: OnyomiScript }) {
   return (
-    <div className="compare-card" aria-label="교차 트랙 비교">
+    <div role="group" className="compare-card" aria-label="교차 트랙 비교">
       {character.tracks.map((entry) => (
         <section className={`compare-card__panel compare-card__panel--${entry.track}`} key={entry.track} lang={trackThemes[entry.track].lang}>
           <div>{labels[entry.track]}</div>
