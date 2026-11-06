@@ -284,6 +284,8 @@ export type ProfileResponse = {
   id: number;
   name: string;
   isAdmin: boolean;
+  // True for guest profiles from POST /api/demo/session (optional: older Workers omit it).
+  isGuest?: boolean;
   xp: number;
   todayXp: number;
   goal: number;

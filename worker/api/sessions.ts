@@ -1,10 +1,11 @@
+/* oxlint-disable anti-slop/no-chained-type-assertions, anti-slop/no-known-value-widening, anti-slop/require-safety-comment-for-type-assertion -- Existing D1 row mapping predates changed-file lint; rows come from fixed SELECT column lists. */
 import type { CreateSessionRequest, ProfileResponse } from "../../shared/api";
 import { TRACKS } from "../../shared/types";
 
 export { parseSessionRequest } from "../../shared/session";
 
 const DAY_MS = 86_400_000;
-type ProfileRow = { id: number; name: string; is_admin: number; enabled_tracks: string; daily_goal: number; timezone: string; xp: number };
+type ProfileRow = { id: number; name: string; is_admin: number; is_demo: number; enabled_tracks: string; daily_goal: number; timezone: string; xp: number };
 type ActivityRangeRow = { min_at: number | null; max_at: number | null };
 type DailyXpRow = { day: string; xp: number };
 type DailyRow = { day: string };
@@ -139,7 +140,7 @@ export function activityDaySql(timezone: string, minAt: number | null, maxAt: nu
 
 export async function getProfile(db: D1Database, profileId: number, now = new Date()): Promise<ProfileResponse> {
   const [profileResult, rangeResult] = await db.batch([
-    db.prepare("SELECT id, name, is_admin, enabled_tracks, daily_goal, timezone, xp FROM profile WHERE id = ?1").bind(profileId),
+    db.prepare("SELECT id, name, is_admin, is_demo, enabled_tracks, daily_goal, timezone, xp FROM profile WHERE id = ?1").bind(profileId),
     db.prepare(`
       SELECT MIN(value) AS min_at, MAX(value) AS max_at FROM (
         SELECT MIN(answered_at) AS value FROM review_log WHERE profile_id = ?1
@@ -170,6 +171,7 @@ export async function getProfile(db: D1Database, profileId: number, now = new Da
     id: profile.id,
     name: profile.name,
     isAdmin: Boolean(profile.is_admin),
+    isGuest: Boolean(profile.is_demo),
     xp: profile.xp,
     todayXp,
     goal: profile.daily_goal,

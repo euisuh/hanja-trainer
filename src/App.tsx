@@ -3,6 +3,7 @@ import { matchPath, Navigate, useLocation, useNavigate } from "react-router-dom"
 import { cssVariables } from "./design/tokens";
 import { Landing } from "./features/landing/Landing";
 import { startDemo } from "./features/landing/startDemo";
+import { GuestNotice } from "./features/demo/GuestNotice";
 import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
 import { ReviewSyncStatus } from "./features/session/ReviewSyncStatus";
 import { SessionSummaryStatus } from "./features/session/SessionSummaryStatus";
@@ -36,7 +37,7 @@ function isProfileRequired(caught: unknown): boolean {
 }
 
 function identity(profile: ProfileResponse): ActiveProfile {
-  return { id: profile.id, name: profile.name, isAdmin: profile.isAdmin };
+  return { id: profile.id, name: profile.name, isAdmin: profile.isAdmin, isGuest: profile.isGuest === true };
 }
 
 function afterProfileUnmount(): Promise<void> {
@@ -260,6 +261,7 @@ export function App() {
     content = onboardingRequired && !navlessScreens.has(screen) ? <Navigate replace to="/onboarding" /> : (
       <ProfileProvider key={activeProfile.id} profile={activeProfile}>
         {headerScreens.has(screen) && <AppHeader onSwitch={() => void switchProfile()} />}
+        {activeProfile.isGuest && screen === "settings" && <GuestNotice onSignIn={() => void switchProfile()} />}
         <ReviewSyncStatus />
         <SessionSummaryStatus />
         <ConversationAttemptSync />

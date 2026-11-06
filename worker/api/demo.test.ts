@@ -3,7 +3,7 @@ import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import { routeApiRequest } from "./router";
 import { DEMO_LIVE_CAP, DEMO_PER_CLIENT_PER_HOUR, DEMO_WRITE_QUOTA } from "./demo";
-import { createSessionToken, DEMO_TTL_MS, setDevicePin } from "../auth/pin";
+import { createSessionToken, GUEST_IDLE_MS, GUEST_MAX_AGE_MS, setDevicePin } from "../auth/pin";
 import { applyMigrations } from "../test/schema";
 
 function result<T>(results: T[], changes = 0): D1Result<T> {
@@ -28,7 +28,8 @@ function d1(sqlite: DatabaseSync): D1Database {
   return adapter;
 }
 
-const NOW = 2_200_000_000_000;
+// Real clock: patchSettings stamps updated_at with the wall clock, which feeds guest idle expiry.
+const NOW = Date.now();
 const databases: DatabaseSync[] = [];
 afterEach(() => { for (const database of databases.splice(0)) database.close(); });
 
@@ -93,27 +94,132 @@ describe("demo sandbox", () => {
     expect(authed.status).toBe(200);
   });
 
-  it("expires after 24 hours even with renewals, and the next create purges it with its data", async () => {
+  it("slides the 7-day expiry with activity, then rejects and purges an idle guest with its data", async () => {
     const { sqlite, env } = setup();
-    const demo = await startDemo(env);
-    sqlite.prepare("INSERT INTO sessions (profile_id, mode, started_at, ended_at, answered, correct, best_combo, xp) VALUES (?, 'lesson', 0, 0, 0, 0, 0, 0)").run(demo.id);
-    // A token renewed just before the TTL is still valid…
-    const { pin_secret: secret } = sqlite.prepare("SELECT pin_secret FROM profile WHERE id = ?").get(demo.id) as { pin_secret: string };
-    const late = await createSessionToken(demo.id, secret, NOW + DEMO_TTL_MS - 60_000);
-    const health = (now: number) => routeApiRequest(new Request("https://test/api/health", { headers: { authorization: `Bearer ${late}` } }), env, now);
-    expect((await health(NOW + DEMO_TTL_MS - 60_000)).status).toBe(200);
-    // …but not past it, even though the token itself has not expired.
-    expect((await health(NOW + DEMO_TTL_MS)).status).toBe(401);
-    await startDemo(env, NOW + DEMO_TTL_MS, "198.51.100.9");
-    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM profile WHERE id = ?").get(demo.id)).toEqual({ count: 0 });
-    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM sessions WHERE profile_id = ?").get(demo.id)).toEqual({ count: 0 });
+    const guest = await startDemo(env);
+    sqlite.prepare("INSERT INTO sessions (profile_id, mode, started_at, ended_at, answered, correct, best_combo, xp) VALUES (?, 'lesson', 0, 0, 0, 0, 0, 0)").run(guest.id);
+    const day = 24 * 3_600_000;
+    const health = (cookie: string, now: number) => routeApiRequest(request("/api/health", { cookie }), env, now);
+    // Activity on day 6 renews the cookie for another 7 days and moves the idle clock.
+    const day6 = await health(guest.cookie, NOW + 6 * day);
+    expect(day6.status).toBe(200);
+    expect(day6.headers.getSetCookie()[0]).toMatch(/^hanja_session=\d+\.\d+\.[\w-]+; Max-Age=604800; HttpOnly/u);
+    const renewed = cookies(day6);
+    expect((await health(renewed, NOW + 12 * day)).status).toBe(200);
+    // Seven idle days after the last activity it is gone, even with an unexpired token.
+    const { pin_secret: secret } = sqlite.prepare("SELECT pin_secret FROM profile WHERE id = ?").get(guest.id) as { pin_secret: string };
+    const late = await createSessionToken(guest.id, secret, NOW + 18 * day, GUEST_IDLE_MS);
+    const bearer = (now: number) => routeApiRequest(new Request("https://test/api/health", { headers: { authorization: `Bearer ${late}` } }), env, now);
+    expect((await bearer(NOW + 12 * day + GUEST_IDLE_MS)).status).toBe(401);
+    await startDemo(env, NOW + 12 * day + GUEST_IDLE_MS, "198.51.100.9");
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM profile WHERE id = ?").get(guest.id)).toEqual({ count: 0 });
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM sessions WHERE profile_id = ?").get(guest.id)).toEqual({ count: 0 });
+  });
+
+  it("resumes the same guest on the same browser, and starts a new one once it expired", async () => {
+    const { sqlite, env } = setup();
+    const guest = await startDemo(env);
+    sqlite.prepare("UPDATE profile SET xp = 42 WHERE id = ?").run(guest.id);
+    const again = await routeApiRequest(request("/api/demo/session", { method: "POST", body: {}, cookie: guest.cookie }), env, NOW + 3_600_000);
+    expect(again.status).toBe(200);
+    expect(again.headers.getSetCookie()[0]).toContain("; Max-Age=604800;");
+    const resumed = Number(/hanja_session=(\d+)\./u.exec(cookies(again))![1]);
+    expect(resumed).toBe(guest.id);
+    expect(sqlite.prepare("SELECT xp FROM profile WHERE id = ?").get(resumed)).toEqual({ xp: 42 });
+    // Resuming does not spend the per-client create budget.
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM profile WHERE is_demo = 1").get()).toEqual({ count: 1 });
+    const expired = await routeApiRequest(request("/api/demo/session", { method: "POST", body: {}, cookie: guest.cookie }), env, NOW + GUEST_IDLE_MS + 3_600_000);
+    expect(expired.status).toBe(200);
+    expect(Number(/hanja_session=(\d+)\./u.exec(cookies(expired))![1])).not.toBe(guest.id);
+  });
+
+  it("ignores client-influenced timestamps: a far-future endedAt or updated_at cannot extend a guest", async () => {
+    const { sqlite, env } = setup();
+    const guest = await startDemo(env);
+    const posted = await routeApiRequest(request("/api/sessions", {
+      method: "POST", cookie: guest.cookie, profileId: guest.id,
+      body: { sessionId: "far-future", mode: "lesson", startedAt: "2099-01-01T00:00:00.000Z", endedAt: "2099-01-01T00:10:00.000Z", answered: 1, correct: 1, skipped: 0, bestCombo: 1, xp: 10 },
+    }), env, NOW);
+    expect(posted.status).toBe(200);
+    sqlite.prepare("UPDATE profile SET updated_at = ? WHERE id = ?").run(Date.parse("2099-01-01"), guest.id);
+    const idle = NOW + GUEST_IDLE_MS + 1;
+    expect((await routeApiRequest(request("/api/health", { cookie: guest.cookie }), env, idle)).status).not.toBe(200);
+    await startDemo(env, idle, "198.51.100.7");
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM profile WHERE id = ?").get(guest.id)).toEqual({ count: 0 });
+  });
+
+  it("caps a guest at 30 days from creation however active it stays", async () => {
+    const { sqlite, env } = setup();
+    const guest = await startDemo(env);
+    const day = 24 * 3_600_000;
+    let cookie = guest.cookie;
+    for (const at of [6, 12, 18, 24, 29]) {
+      const response = await routeApiRequest(request("/api/health", { cookie }), env, NOW + at * day);
+      expect(response.status).toBe(200);
+      cookie = cookies(response);
+      // Cookie life never runs past creation + 30 days.
+      const maxAge = Number(/Max-Age=(\d+)/u.exec(response.headers.getSetCookie()[0])![1]) * 1_000;
+      expect(at * day + maxAge).toBeLessThanOrEqual(GUEST_MAX_AGE_MS);
+    }
+    const profile = await routeApiRequest(request("/api/profile", { cookie }), env, NOW + GUEST_MAX_AGE_MS);
+    expect(profile.status).toBe(401);
+    // Resume refuses it too and hands out a fresh guest.
+    const resumed = await routeApiRequest(request("/api/demo/session", { method: "POST", body: {}, cookie }), env, NOW + GUEST_MAX_AGE_MS);
+    expect(Number(/hanja_session=(\d+)\./u.exec(cookies(resumed))![1])).not.toBe(guest.id);
+    expect(sqlite.prepare("SELECT COUNT(*) AS count FROM profile WHERE id = ?").get(guest.id)).toEqual({ count: 0 });
+  });
+
+  it("records every activity precisely: the profile lives as long as the cookie it just renewed", async () => {
+    const { env } = setup();
+    const guest = await startDemo(env);
+    const lastActivity = NOW + 3_600_000 - 1_000; // 59m59s, inside any hourly throttle window
+    const touched = await routeApiRequest(request("/api/health", { cookie: guest.cookie }), env, lastActivity);
+    const renewed = cookies(touched);
+    expect(touched.headers.getSetCookie()[0]).toContain("; Max-Age=604800;");
+    expect((await routeApiRequest(request("/api/profile", { cookie: renewed }), env, lastActivity + GUEST_IDLE_MS - 1_000)).status).toBe(200);
+  });
+
+  it("does not resume a guest purged between resolve and touch", async () => {
+    const { sqlite, env } = setup();
+    const guest = await startDemo(env);
+    // Delete the row the moment the touch runs, as a concurrent purge would.
+    const racing = { ...env, DB: { ...env.DB, prepare: (query: string) => {
+      if (query.includes("SET demo_active_at")) sqlite.prepare("DELETE FROM profile WHERE id = ?").run(guest.id);
+      return env.DB.prepare(query);
+    }, batch: env.DB.batch } as D1Database } as Env;
+    const resumed = await routeApiRequest(request("/api/demo/session", { method: "POST", body: {}, cookie: guest.cookie }), racing, NOW + 60_000);
+    expect(resumed.status).toBe(200);
+    const fresh = cookies(resumed);
+    expect(Number(/hanja_session=(\d+)\./u.exec(fresh)![1])).not.toBe(guest.id);
+    expect((await routeApiRequest(request("/api/health", { cookie: fresh }), env, NOW + 60_000)).status).toBe(200);
+  });
+
+  it("rejects a request whose guest is purged between resolve and touch", async () => {
+    const { sqlite, env } = setup();
+    const guest = await startDemo(env);
+    const racing = { ...env, DB: { ...env.DB, prepare: (query: string) => {
+      if (query.includes("SET demo_active_at")) sqlite.prepare("DELETE FROM profile WHERE id = ?").run(guest.id);
+      return env.DB.prepare(query);
+    }, batch: env.DB.batch } as D1Database } as Env;
+    const response = await routeApiRequest(request("/api/health", { cookie: guest.cookie }), racing, NOW + 60_000);
+    expect(response.status).toBe(401);
+    expect(response.headers.getSetCookie()).toContain("hanja_session=; Max-Age=0; HttpOnly; Secure; SameSite=Strict; Path=/");
+  });
+
+  it("labels the guest profile and reports it on /api/profile", async () => {
+    const { env } = setup();
+    const guest = await startDemo(env);
+    const profile = await (await routeApiRequest(request("/api/profile", { cookie: guest.cookie }), env, NOW)).json() as { name: string; isGuest?: boolean };
+    expect(profile).toMatchObject({ name: "게스트", isGuest: true });
+    const owner = await (await routeApiRequest(request("/api/profile"), env, NOW)).json() as { isGuest?: boolean };
+    expect(owner.isGuest).toBe(false);
   });
 
   it("never lets an expired or purged demo cookie fall through to the lone PIN-less owner", async () => {
     const { sqlite, env } = setup();
     const demo = await startDemo(env);
     const as = (path: string, now: number, method = "GET", body?: unknown) => routeApiRequest(request(path, { method, body, cookie: demo.cookie, profileId: 1 }), env, now);
-    for (const now of [NOW + DEMO_TTL_MS, NOW + 3 * 3_600_000]) {
+    for (const now of [NOW + GUEST_IDLE_MS, NOW + GUEST_IDLE_MS + 24 * 3_600_000]) {
       const profile = await as("/api/profile", now);
       expect(profile.status).toBe(401);
       expect(profile.headers.getSetCookie()).toContain("hanja_session=; Max-Age=0; HttpOnly; Secure; SameSite=Strict; Path=/");
@@ -137,8 +243,8 @@ describe("demo sandbox", () => {
 
   it("caps live demo profiles", async () => {
     const { sqlite, env } = setup();
-    const insert = sqlite.prepare("INSERT INTO profile (name, is_demo, demo_client, created_at) VALUES ('체험', 1, ?, ?)");
-    for (let index = 0; index < DEMO_LIVE_CAP; index += 1) insert.run(`client-${index}`, NOW);
+    const insert = sqlite.prepare("INSERT INTO profile (name, is_demo, demo_client, created_at, updated_at, demo_active_at) VALUES ('게스트', 1, ?, ?, ?, ?)");
+    for (let index = 0; index < DEMO_LIVE_CAP; index += 1) insert.run(`client-${index}`, NOW, NOW, NOW);
     const full = await routeApiRequest(request("/api/demo/session", { method: "POST", body: {} }), env, NOW);
     expect(full.status).toBe(503);
     expect(await full.json()).toMatchObject({ error: { code: "demo_capacity" } });

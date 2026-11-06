@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from "react";
 
-export type ActiveProfile = { id: number; name: string; isAdmin: boolean };
+export type ActiveProfile = { id: number; name: string; isAdmin: boolean; isGuest?: boolean };
 
 const ProfileContext = createContext<ActiveProfile | null>(null);
 

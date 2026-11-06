@@ -9,12 +9,12 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
-import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, deviceCookie, findPinRecord, listProfiles, PIN_COOKIE, verifyDeviceCookie, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
+import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, deviceCookie, GUEST_IDLE_MS, guestTtl, findPinRecord, listProfiles, PIN_COOKIE, verifyDeviceCookie, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 import { getConversationProgress, getConversationSession, getConversationUnit, getConversationUnits, getDueConversationChunks, parseConversationCheckin, saveConversationCheckin } from "./conversation";
 import { getConversationStats } from "./conversationStats";
-import { consumeDemoWrite, createDemoSession } from "./demo";
+import { consumeDemoWrite, createDemoSession, touchGuest } from "./demo";
 import type { PublicProfile } from "../../shared/api";
 
 // Set ALLOW_PROFILE_LIST="true" (wrangler `vars` or `--var`) to list every real
@@ -73,11 +73,11 @@ function withCookie(response: Response, cookie: string): Response {
 // Tokens reach JavaScript only when the client explicitly asks for bearer
 // transport while presenting a credential, or already authenticated with a
 // bearer token. A cookie session is never converted into a readable token.
-function issueSession(request: Request, body: Record<string, unknown>, token: string, device: string | null = null): Response {
+function issueSession(request: Request, body: Record<string, unknown>, token: string, device: string | null = null, maxAgeMs?: number): Response {
   if (request.headers.get(SESSION_TRANSPORT_HEADER) === "bearer" || nativeOrigin(request)) {
     return Response.json({ ...body, sessionToken: token }, { headers: { "cache-control": "no-store" } });
   }
-  const response = withCookie(Response.json(body), sessionCookie(token));
+  const response = withCookie(Response.json(body), sessionCookie(token, maxAgeMs));
   if (device) response.headers.append("set-cookie", device);
   return response;
 }
@@ -101,8 +101,8 @@ async function visibleProfiles(env: ApiEnv, credentials: SessionCredentials, now
   return profiles.filter((profile) => profile.isAdmin).map((profile) => ({ ...profile, name: REDACTED_ADMIN_NAME }));
 }
 
-function renewSession(response: Response, credentials: SessionCredentials, token: string): Response {
-  if (credentials.authorization === null) return withCookie(response, sessionCookie(token));
+function renewSession(response: Response, credentials: SessionCredentials, token: string, maxAgeMs?: number): Response {
+  if (credentials.authorization === null) return withCookie(response, sessionCookie(token, maxAgeMs));
   const headers = new Headers(response.headers);
   headers.set(SESSION_TOKEN_HEADER, token);
   headers.set("cache-control", "no-store");
@@ -403,7 +403,13 @@ async function handleApiRequest(request: Request, env: ApiEnv, now: number, nati
     }
     if (request.method === "POST" && pathname === "/api/demo/session") {
       const ip = request.headers.get("cf-connecting-ip") ?? "unknown";
-      return issueSession(request, { demo: true }, await createDemoSession(env.DB, ip, now));
+      // A returning guest on the same browser resumes the same profile and progress.
+      const current = await resolveSession(env.DB, credentials, now);
+      if (current?.is_demo && current.pin_secret && await touchGuest(env.DB, current.id, now)) {
+        const ttl = guestTtl(current, now);
+        return issueSession(request, { demo: true }, await createSessionToken(current.id, current.pin_secret, now, ttl), null, ttl);
+      }
+      return issueSession(request, { demo: true }, await createDemoSession(env.DB, ip, now), null, GUEST_IDLE_MS);
     }
     if (request.method === "POST" && pathname === "/api/session/end") {
       return native ? Response.json({ ended: true }) : withCookie(Response.json({ ended: true }), clearSessionCookie);
@@ -427,6 +433,9 @@ async function handleApiRequest(request: Request, env: ApiEnv, now: number, nati
       if (pathname === "/api/pin" || (pathname.startsWith("/api/profiles") && request.method !== "GET")) {
         return error(403, "demo_forbidden", "Not available in the demo");
       }
+      if (!await touchGuest(env.DB, record.id, now)) {
+        return withCookie(error(401, "profile_required", "Select a profile"), clearSessionCookie);
+      }
       if (request.method !== "GET" && request.method !== "HEAD") await consumeDemoWrite(env.DB, record.id);
     }
 
@@ -442,7 +451,8 @@ async function handleApiRequest(request: Request, env: ApiEnv, now: number, nati
     }
 
     const response = await dispatchApiRequest(request, env, record.id);
-    return record.pin_secret ? renewSession(response, credentials, await createSessionToken(record.id, record.pin_secret, now)) : response;
+    const ttl = record.is_demo ? guestTtl(record, now) : undefined;
+    return record.pin_secret ? renewSession(response, credentials, await createSessionToken(record.id, record.pin_secret, now, ttl), ttl) : response;
   } catch (caught) {
     if (caught instanceof PinError) return error(caught.status, caught.code, caught.message, caught.retryAfter);
     if (caught instanceof ProfileError) return error(caught.status, caught.code, caught.message);

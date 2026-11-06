@@ -21,7 +21,7 @@ export function Landing({ onDemo, onSignIn }: { onDemo: () => Promise<void>; onS
     try {
       await onDemo();
     } catch {
-      // The picker repeats the demo button and shows why it failed on retry.
+      // The sign-in screens repeat the guest option and show why it failed on retry.
       onSignIn();
     } finally {
       setPending(false);
@@ -36,7 +36,7 @@ export function Landing({ onDemo, onSignIn }: { onDemo: () => Promise<void>; onS
           <h1 id="landing-title">한 글자, 세 발음</h1>
           <p>한국 한자, 일본 한자, 중국 한자를 같은 글자 하나로 나란히 배웁니다.</p>
           <div className="landing__actions">
-            <button className="landing__primary" disabled={pending} onClick={() => void tryDemo()} type="button">Try the demo</button>
+            <button className="landing__primary" disabled={pending} onClick={() => void tryDemo()} type="button">Continue as guest</button>
             <button className="landing__secondary" onClick={onSignIn} type="button">Sign in</button>
           </div>
         </div>

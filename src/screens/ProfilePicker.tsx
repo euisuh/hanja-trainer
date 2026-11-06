@@ -3,7 +3,6 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } f
 import { avatarBackground } from "../design/tokens";
 import { avatarHue } from "../features/profile/avatarHue";
 import type { PublicProfile } from "../../shared/api";
-import { DemoEntry } from "../features/demo/DemoEntry";
 import "../features/pin/pin.css";
 
 type Props = { profiles: PublicProfile[]; onSelect: (profile: PublicProfile) => Promise<void>; onDemo?: () => Promise<void> };
@@ -13,25 +12,28 @@ export function ProfilePicker({ profiles, onSelect, onDemo }: Props) {
   const [pendingId, setPendingId] = useState<number | null>(null);
   const [error, setError] = useState("");
 
+  // The guest option, when offered, is the last button in the grid.
+  const count = profiles.length + (onDemo ? 1 : 0);
+
   useEffect(() => { buttons.current[0]?.focus(); }, [profiles]);
 
   function moveFocus(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next: number | null = null;
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % profiles.length;
-    if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (index - 1 + profiles.length) % profiles.length;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % count;
+    if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (index - 1 + count) % count;
     if (event.key === "Home") next = 0;
-    if (event.key === "End") next = profiles.length - 1;
+    if (event.key === "End") next = count - 1;
     if (next === null) return;
     event.preventDefault();
     buttons.current[next]?.focus();
   }
 
-  async function select(profile: PublicProfile) {
+  async function select(id: number, enter: () => Promise<void>) {
     if (pendingId !== null) return;
-    setPendingId(profile.id);
+    setPendingId(id);
     setError("");
     try {
-      await onSelect(profile);
+      await enter();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "프로필을 선택하지 못했습니다.");
       setPendingId(null);
@@ -51,7 +53,7 @@ export function ProfilePicker({ profiles, onSelect, onDemo }: Props) {
               className="profile-picker__option"
               disabled={pendingId !== null}
               key={profile.id}
-              onClick={() => void select(profile)}
+              onClick={() => void select(profile.id, () => onSelect(profile))}
               onKeyDown={(event) => moveFocus(event, index)}
               ref={(button) => { buttons.current[index] = button; }}
               type="button"
@@ -61,9 +63,22 @@ export function ProfilePicker({ profiles, onSelect, onDemo }: Props) {
               {profile.hasPin && <span className="profile-picker__lock" aria-hidden="true">PIN</span>}
             </button>
           ))}
+          {onDemo && (
+            <button
+              aria-label="게스트, 이 브라우저에 7일간 보관"
+              className="profile-picker__option"
+              disabled={pendingId !== null}
+              onClick={() => void select(-1, onDemo)}
+              onKeyDown={(event) => moveFocus(event, profiles.length)}
+              ref={(button) => { buttons.current[profiles.length] = button; }}
+              type="button"
+            >
+              <span className="profile-picker__avatar" aria-hidden="true">G</span>
+              <strong>게스트</strong>
+            </button>
+          )}
         </div>
         {error && <p className="pin-message" role="alert">{error}</p>}
-        {onDemo && <DemoEntry onStart={onDemo} />}
       </section>
     </main>
   );

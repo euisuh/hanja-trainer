@@ -2,3 +2,6 @@
 .demo-entry button { min-height: 44px; padding: 0 var(--space-5); border: 1px solid var(--ink); border-radius: var(--radius-control); background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-weight: var(--weight-strong); }
 .demo-entry button:hover:not(:disabled) { background: var(--chip-bg); }
 .demo-entry button:disabled { cursor: wait; opacity: .65; }
+.guest-notice { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center; justify-content: space-between; max-width: 64em; margin: var(--space-4) auto 0; padding: var(--space-4) var(--space-5); border: 1px solid var(--border-tan); border-radius: var(--radius-panel); background: var(--card); color: var(--body); font-size: var(--text-sm); word-break: keep-all; }
+.guest-notice p { margin: 0; }
+.guest-notice button { padding: var(--space-2) 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-weight: var(--weight-strong); text-decoration: underline; }

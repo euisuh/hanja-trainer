@@ -6,7 +6,10 @@ export const PIN_COOKIE = "hanja_session";
 // It only reveals the profile list (GET /api/profiles); it never authenticates.
 export const DEVICE_COOKIE = "hanja_device";
 const DEVICE_MS = 400 * 24 * 60 * 60 * 1_000;
-export const DEMO_TTL_MS = 24 * 60 * 60 * 1_000;
+// Guest (demo) sessions and profiles live this long after the last activity…
+export const GUEST_IDLE_MS = 7 * 24 * 60 * 60 * 1_000;
+// …and never longer than this after creation, however active.
+export const GUEST_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1_000;
 const RECOVERY_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const RECOVERED_SECRET_PREFIX = "recovered:";
 // Pre-multi-profile cookie name (single-part expiry.signature payload, no profile
@@ -25,6 +28,8 @@ export type PinRecord = {
   pin_secret: string | null;
   is_demo: number;
   created_at: number;
+  updated_at: number;
+  demo_active_at: number | null;
   pin_failures: number;
   pin_locked_until: number | null;
   recovery_hash: string | null;
@@ -118,7 +123,7 @@ async function createRecoveryCredentials(derive = derivePinHash) {
 
 export async function findPinRecord(db: D1Database, profileId: number): Promise<PinRecord | null> {
   return db.prepare(`
-    SELECT id, is_admin, is_demo, created_at, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
+    SELECT id, is_admin, is_demo, created_at, updated_at, demo_active_at, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
       recovery_hash, recovery_salt, recovery_iterations
     FROM profile WHERE id = ?1
   `).bind(profileId).first<PinRecord>();
@@ -145,7 +150,7 @@ export async function listProfiles(db: D1Database): Promise<PublicProfile[]> {
 
 export async function readOnlyProfile(db: D1Database): Promise<PinRecord | null> {
   const result = await db.prepare(`
-    SELECT id, is_admin, is_demo, created_at, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
+    SELECT id, is_admin, is_demo, created_at, updated_at, demo_active_at, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
       recovery_hash, recovery_salt, recovery_iterations
     FROM profile WHERE is_demo = 0 ORDER BY id LIMIT 2
   `).all<PinRecord>();
@@ -290,8 +295,8 @@ export async function resolveSession(db: D1Database, credentials: SessionCredent
   if (parsed) {
     const record = await findPinRecord(db, parsed.profileId);
     if (record && await verifyPinSession(record, token, now) && await adminCanAuthenticate(db, record)
-      // Demo sandboxes die after DEMO_TTL_MS even if the lazy purge has not run yet.
-      && !(record.is_demo && record.created_at <= now - DEMO_TTL_MS)) return record;
+      // Guests die when idle or too old even if the lazy purge has not run yet.
+      && !(record.is_demo && guestExpired(record, now))) return record;
   }
   if (bearer) return null;
   // A lone PIN-less profile preserves the original single-profile experience.
@@ -303,8 +308,18 @@ export async function resolveSession(db: D1Database, credentials: SessionCredent
   return only && !only.pin_hash ? only : null;
 }
 
-export async function createSessionToken(profileId: number, secret: string, now: number): Promise<string> {
-  const expiry = String(now + PIN_SESSION_MS);
+// demo_active_at and created_at are written only from the Worker clock (worker/api/demo.ts).
+export function guestExpired(record: Pick<PinRecord, "demo_active_at" | "created_at">, now: number): boolean {
+  return (record.demo_active_at ?? 0) <= now - GUEST_IDLE_MS || record.created_at <= now - GUEST_MAX_AGE_MS;
+}
+
+// Token and cookie lifetime for a guest just touched at `now`: the same instant the profile expires.
+export function guestTtl(record: Pick<PinRecord, "created_at">, now: number): number {
+  return Math.min(GUEST_IDLE_MS, record.created_at + GUEST_MAX_AGE_MS - now);
+}
+
+export async function createSessionToken(profileId: number, secret: string, now: number, ttl = PIN_SESSION_MS): Promise<string> {
+  const expiry = String(now + ttl);
   const payload = `${profileId}.${expiry}`;
   return `${payload}.${base64Url(await sign(payload, secret))}`;
 }
@@ -334,8 +349,10 @@ export async function verifyDeviceCookie(db: D1Database, header: string | null, 
   }
 }
 
-export function sessionCookie(token: string): string {
-  return `${PIN_COOKIE}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/`;
+// Real profiles get a browser-session cookie; guests pass maxAgeMs so they can come back within GUEST_IDLE_MS.
+export function sessionCookie(token: string, maxAgeMs?: number): string {
+  const maxAge = maxAgeMs === undefined ? "" : `; Max-Age=${Math.floor(maxAgeMs / 1_000)}`;
+  return `${PIN_COOKIE}=${token}${maxAge}; HttpOnly; Secure; SameSite=Strict; Path=/`;
 }
 
 export const clearSessionCookie = `${PIN_COOKIE}=; Max-Age=0; HttpOnly; Secure; SameSite=Strict; Path=/`;

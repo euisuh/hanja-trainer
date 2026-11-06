@@ -46,12 +46,12 @@ npm run dev
 `npm run dev` builds the SPA, then starts `wrangler dev`. The SPA and API share
 one origin; verify the Worker with `curl http://localhost:8787/api/health`.
 
-### Profile list privacy and demo mode
+### Profile list privacy and guest accounts
 
 `GET /api/profiles` returns real profile names only to a caller that holds a
 real session, carries the `hanja_device` cookie (set by a successful PIN unlock
 or recovery in that browser, 400 days, rotated with the PIN), or when the only
-profile has no PIN. Everyone else, demo visitors included, gets one nameless
+profile has no PIN. Everyone else, guests included, gets one nameless
 admin entry (`관리자`) so the owner can still unlock on a new device; family
 members on a new device appear after the admin unlocks there once. Native
 clients get no device cookie, so after their token expires they also see only
@@ -64,20 +64,33 @@ cookie. That setup is public by design (see "Optional profile PIN"): nothing
 else exists to protect, and gating it would lock a PIN-less owner out with no
 way to earn the cookie. Set an admin PIN before exposing the site. A rejected
 session cookie never falls back to it unless the cookie was for that same
-profile, so an expired demo cookie gets `401` and is cleared.
+profile, so an expired guest cookie gets `401` and is cleared.
 
 To list every profile anonymously, as before, start the Worker
 with `--var ALLOW_PROFILE_LIST:true` (e2e does) or set it in `vars`; it defaults
 to off.
 
-"가입 없이 체험하기" on the picker and unlock screens calls
-`POST /api/demo/session`, which creates a throwaway profile (`is_demo = 1`, no
-PIN, onboarded, Japanese track only) and signs the visitor in like any session.
-Limits: 5 creates per client IP per hour (hashed `CF-Connecting-IP`), 200 live
-demo profiles, 500 writes per demo profile. A demo profile is rejected 24 hours
-after creation and deleted, with its data, by the next demo create. Demo
-sessions cannot change a PIN, manage profiles, or be selected by id. Demo rows
-do not count toward the five-profile limit.
+Visitors can continue as a guest: "Continue as guest" on the landing page, the
+"게스트" tile in the profile picker, or "게스트로 둘러보기" on the unlock screen.
+Each calls `POST /api/demo/session`. Every guest gets a private profile named
+`게스트` (`is_demo = 1`, no PIN, onboarded, Japanese track only). Guests never
+share an account, never see each other, and never see real profiles.
+
+- A guest session lasts 7 days after the last activity, and never more than
+  30 days after creation. Every guest request atomically checks and moves the
+  server-owned `demo_active_at` (migration 0034, written only from the Worker
+  clock, never from client data or `updated_at`) and renews the cookie to
+  expire at the same moment. An expired guest is rejected and then deleted,
+  with its data, by the next guest create.
+- Calling the endpoint again from a browser that still holds a valid guest
+  session resumes that same profile and its progress; otherwise it creates a
+  new one.
+- Limits: 5 creates per client IP per hour (hashed `CF-Connecting-IP`), 200
+  live guest profiles, 2,000 writes per guest profile.
+- Guests cannot change a PIN, manage profiles, or be selected by id. Guest rows
+  do not count toward the five-profile limit. Settings shows guests a notice
+  that progress stays on this browser for 7 days, with a link to sign in, which
+  ends the guest session.
 
 ## Mobile (Capacitor)
 
