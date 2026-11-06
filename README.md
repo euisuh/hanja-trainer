@@ -1,5 +1,7 @@
 # Hanja Trainer
 
+![Landing page on desktop next to the Talk shadowing panel on a phone](docs/screenshots/hero.webp)
+
 Spaced-repetition trainer for Chinese-origin characters, taught across three
 tracks at once: Korean Hanja (한자능력검정), Japanese Kanji (JLPT/漢検) and
 Chinese Hanzi (HSK/通用规范汉字表). The same character is shown with its shared
@@ -8,7 +10,75 @@ single-user, keyboard-first app (1-4 answer, Enter advance, Esc pause) that also
 works on mobile. Example sentences come from real corpora and textbooks; none are
 AI-generated.
 
-Live demo: https://hanja.uiseoya.com <!-- TODO-DEMO-URL: confirm final public demo URL -->
+Live demo: https://hanja.uiseoya.com (Continue as guest; no signup, progress kept 7 days in your browser)
+
+## How it works
+
+Each character appears once with its shared meaning and its Korean, Japanese
+and Chinese readings. Answers feed an FSRS schedule, so the review queue holds
+only cards that are due. Talk mode then moves from characters to speech: you
+work through situation scenes (ordering at a cafe, asking someone to repeat),
+say each line from a Korean cue, and shadow it. Talk sentences are
+Tatoeba-sourced; a small number of staff lines are authored for this app and
+labeled "authored for this app" on the card. Speech feedback runs in the
+browser (recording and recognition stay on the device) and stores nothing; it
+compares what was heard with the line and does not score pronunciation.
+
+## Screenshots
+
+Captured from a local build through the guest flow with
+`scripts/capture-readme-screenshots.mjs`. The app UI is in Korean. The study
+history on the stats screen is seeded fixture data, not real usage.
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/landing-desktop.webp" alt="Landing page with Try the demo and Sign in buttons and the character 學 shown in three tracks"></td>
+    <td><img src="docs/screenshots/home-desktop.webp" alt="Home screen with the JLPT N5 unit path map and a due-review card"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/three-readings-desktop.webp" alt="Character detail for 日 with Korean, Japanese and Chinese readings side by side"></td>
+    <td><img src="docs/screenshots/review-desktop.webp" alt="Review queue listing eight kanji cards due today"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/talk-contents-desktop.webp" alt="Talk contents list with Japanese phrases, readings and Tatoeba source credits"></td>
+    <td><img src="docs/screenshots/talk-scene-desktop.webp" alt="Talk role-play scene showing the Korean cue and the Japanese line to say"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/talk-shadow-desktop.webp" alt="Shadowing panel comparing the recognized speech with the target line and showing a missing sound"></td>
+    <td><img src="docs/screenshots/stats-desktop.webp" alt="Stats screen with a five-day streak, 18-week activity grid and JLPT mastery progress"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/signin-guest-desktop.webp" alt="Device lock screen with a PIN keypad and a button to browse as a guest"></td>
+    <td></td>
+  </tr>
+</table>
+
+Mobile (390 px wide):
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/landing-mobile.webp" alt="Mobile landing page" width="180"></td>
+    <td><img src="docs/screenshots/home-mobile.webp" alt="Mobile home screen with the unit path map" width="180"></td>
+    <td><img src="docs/screenshots/three-readings-mobile.webp" alt="Mobile character detail with three readings stacked" width="180"></td>
+    <td><img src="docs/screenshots/review-mobile.webp" alt="Mobile review queue" width="180"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/talk-contents-mobile.webp" alt="Mobile Talk contents list" width="180"></td>
+    <td><img src="docs/screenshots/talk-scene-mobile.webp" alt="Mobile Talk scene with an authored staff line" width="180"></td>
+    <td><img src="docs/screenshots/talk-shadow-mobile.webp" alt="Mobile shadowing panel with speech feedback" width="180"></td>
+    <td><img src="docs/screenshots/stats-mobile.webp" alt="Mobile stats screen" width="180"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/signin-guest-mobile.webp" alt="Mobile device lock screen with a guest button" width="180"></td>
+  </tr>
+</table>
+
+The stats screens use made-up study history for the local guest profile, inserted into local D1 by the script as a fixture.
+
+To regenerate: start the local dev server with an admin PIN set (the landing page
+only shows then), run `node scripts/capture-readme-screenshots.mjs`; usage is in
+the script header. Local D1 only; the microphone and speech recognition are
+stubbed so the shadowing panel can be captured headlessly.
 
 ## Tech stack
 
