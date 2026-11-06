@@ -1,0 +1,405 @@
+{
+  "note": "Authored chunks that still need audio. Generate with `npm run audio:generate:conv` (remote creds), then delete the entries.",
+  "chunks": [
+    {
+      "audioKey": "c/817a19272a294152",
+      "text": "袋はご利用ですか？",
+      "key": "authored-501b6690c7-hear"
+    },
+    {
+      "audioKey": "c/cee7bd40c765a16a",
+      "text": "お箸はお付けしますか？",
+      "key": "authored-7f3ac2152d-hear"
+    },
+    {
+      "audioKey": "c/492f41822209a433",
+      "text": "お弁当は温めますか？",
+      "key": "authored-69d9e67c84-hear"
+    },
+    {
+      "audioKey": "c/cde6b426e97c652d",
+      "text": "合計で五百八十円になります。",
+      "key": "authored-46b1bbca70-hear"
+    },
+    {
+      "audioKey": "c/04698af922558903",
+      "text": "千円お預かりします。",
+      "key": "authored-61ba579a94-hear"
+    },
+    {
+      "audioKey": "c/bb937ab511751e29",
+      "text": "四百二十円のお返しです。",
+      "key": "authored-e88025c88f-hear"
+    },
+    {
+      "audioKey": "c/5315f0c0327b9e9a",
+      "text": "ありがとうございました。",
+      "key": "authored-882395686e-hear"
+    },
+    {
+      "audioKey": "c/9cec79002bfe7fea",
+      "text": "袋お願いします。",
+      "key": "authored-ef6eeb55c5-say"
+    },
+    {
+      "audioKey": "c/532d53a38d0e8fed",
+      "text": "温めてください。",
+      "key": "authored-82d0dfb9ba-say"
+    },
+    {
+      "audioKey": "c/5a7cd140985bea4a",
+      "text": "現金でお願いします。",
+      "key": "authored-2923263b22-say"
+    },
+    {
+      "audioKey": "c/b3caa3bcfc703b36",
+      "text": "今、ご飯食べてる。",
+      "key": "authored-a050b8d063-say"
+    },
+    {
+      "audioKey": "c/d0fd6bc52678398f",
+      "text": "今、ご飯を食べています。",
+      "key": "authored-d456486f9a-say"
+    },
+    {
+      "audioKey": "c/73d7b80932c37db3",
+      "text": "もう食べちゃった。",
+      "key": "authored-62a7ca7d14-say"
+    },
+    {
+      "audioKey": "c/298ca19920d80319",
+      "text": "もう食べてしまいました。",
+      "key": "authored-2436d6794d-say"
+    },
+    {
+      "audioKey": "c/0905450ec37749bc",
+      "text": "飲んじゃった。",
+      "key": "authored-cbc6c9f81c-say"
+    },
+    {
+      "audioKey": "c/24f8483cf3b05994",
+      "text": "財布、忘れちゃった。",
+      "key": "authored-9155932226-say"
+    },
+    {
+      "audioKey": "c/a558fc941fefbf1e",
+      "text": "遅れちゃう！急ごう。",
+      "key": "authored-ff406e4cf6-say"
+    },
+    {
+      "audioKey": "c/32e54ffd1cb4474e",
+      "text": "先に置いとくね。",
+      "key": "authored-52a8af9b43-say"
+    },
+    {
+      "audioKey": "c/e606d4f2996cafad",
+      "text": "これって何？",
+      "key": "authored-7eee44c6ff-say"
+    },
+    {
+      "audioKey": "c/931df42f19d804d9",
+      "text": "じゃ、行こう。",
+      "key": "authored-c6d5fe4b8e-say"
+    },
+    {
+      "audioKey": "c/640d5d1ef2709ea9",
+      "text": "それじゃ、またね。",
+      "key": "authored-05cddc81a2-say"
+    },
+    {
+      "audioKey": "c/d599f9ab745911f6",
+      "text": "どうしたんですか。",
+      "key": "authored-e71846c403-say"
+    },
+    {
+      "audioKey": "c/dc3cdb4508a2cb12",
+      "text": "実は、ちょっと疲れたんです。",
+      "key": "authored-0ad73c67e9-say"
+    },
+    {
+      "audioKey": "c/e2d876cc93228413",
+      "text": "ちょっと疲れてるんだ。",
+      "key": "authored-576b9e1835-say"
+    },
+    {
+      "audioKey": "c/49bd850433d652fa",
+      "text": "えーと、何だっけ。",
+      "key": "authored-43a30af6b3-say"
+    },
+    {
+      "audioKey": "c/07ad2ea0d8a29e01",
+      "text": "あのー、すみません。",
+      "key": "authored-7fc9343fcc-say"
+    },
+    {
+      "audioKey": "c/8d9cda8ee47e9ff6",
+      "text": "うーん、どうしよう。",
+      "key": "authored-63425d0095-say"
+    },
+    {
+      "audioKey": "c/9105449e5de7f41c",
+      "text": "まあ、いいか。",
+      "key": "authored-9aefe7a8c6-say"
+    },
+    {
+      "audioKey": "c/63511f53c9058a5e",
+      "text": "何、読んでるの？",
+      "key": "authored-a4d199d37a-hear"
+    },
+    {
+      "audioKey": "c/4d2a1359ef90a2a7",
+      "text": "あれ、まだ起きてたの？",
+      "key": "authored-0860657b11-hear"
+    },
+    {
+      "audioKey": "c/efd015fb8318eaf0",
+      "text": "ええと、どちら様でしょうか。",
+      "key": "authored-e48802fab1-hear"
+    },
+    {
+      "audioKey": "c/3c42514ce35ae758",
+      "text": "ごめん、ちょっと遅れる。",
+      "key": "authored-5abc7eb03b-hear"
+    },
+    {
+      "audioKey": "c/ca3a9cbc95884278",
+      "text": "さっき連絡しといたよ。",
+      "key": "authored-ff62d85cde-hear"
+    },
+    {
+      "audioKey": "c/0c68021712ed1f49",
+      "text": "疲れちゃったから、帰るね。",
+      "key": "authored-1aa0df1fba-hear"
+    },
+    {
+      "audioKey": "c/422fde3f6cea7625",
+      "text": "大丈夫、待ってる。",
+      "key": "authored-0a81d86be0-say"
+    },
+    {
+      "audioKey": "c/859282429fba52e7",
+      "text": "はい、何でしょうか。",
+      "key": "authored-e9d177112e-hear"
+    },
+    {
+      "audioKey": "c/a0855a1257e6e1e3",
+      "text": "ええと、この近くにコンビニはありますか。",
+      "key": "authored-e8b1536861-say"
+    },
+    {
+      "audioKey": "c/d1f600539c1e9383",
+      "text": "コンビニなら、あの角を曲がったところですよ。",
+      "key": "authored-0c6b31a7c0-hear"
+    },
+    {
+      "audioKey": "c/63c43f9db80de75f",
+      "text": "助かりました。ありがとうございます。",
+      "key": "authored-581aa95215-say"
+    },
+    {
+      "audioKey": "c/9baede68c2c13e38",
+      "text": "店内でお召し上がりですか？",
+      "key": "authored-cdaff7659e-hear"
+    },
+    {
+      "audioKey": "c/e00d37efb3289845",
+      "text": "ご注文は以上でよろしいですか？",
+      "key": "authored-5ea80d29fe-hear"
+    },
+    {
+      "audioKey": "c/5e2a7c4410473d30",
+      "text": "合計で千二百円になります。",
+      "key": "authored-b62a7f7455-hear"
+    },
+    {
+      "audioKey": "c/3e46c8c6e46958fc",
+      "text": "サイズはどうなさいますか？",
+      "key": "authored-2dd1d96658-hear"
+    },
+    {
+      "audioKey": "c/e3f3cdbab6c699ba",
+      "text": "こちらがおすすめです。",
+      "key": "authored-da1f8f2606-hear"
+    },
+    {
+      "audioKey": "c/ed0de0419cc4a51a",
+      "text": "二人です。",
+      "key": "authored-be01c1fc1b-say"
+    },
+    {
+      "audioKey": "c/2eb0b8cfa4193040",
+      "text": "持ち帰りでお願いします。",
+      "key": "authored-4767a1c896-say"
+    },
+    {
+      "audioKey": "c/37adbbee5facbdaa",
+      "text": "はい、止まります。",
+      "key": "authored-18c337ca37-hear"
+    },
+    {
+      "audioKey": "c/4278a7a43b3abba2",
+      "text": "いいえ、乗り換えはありません。",
+      "key": "authored-1a4f2e12bb-hear"
+    },
+    {
+      "audioKey": "c/dbf8f9fc626410ba",
+      "text": "試着室はあちらです。",
+      "key": "authored-8a359dbb09-hear"
+    },
+    {
+      "audioKey": "c/dfcbbec3de192c35",
+      "text": "こちらは五千四百円になります。",
+      "key": "authored-eba69073f0-hear"
+    },
+    {
+      "audioKey": "c/d01dd9051729d44f",
+      "text": "在庫を確認いたしますので、少々お待ちください。",
+      "key": "authored-6258f987e3-hear"
+    },
+    {
+      "audioKey": "c/8b16b84b7b22a668",
+      "text": "プレゼント用にお包みしましょうか？",
+      "key": "authored-45db156f58-hear"
+    },
+    {
+      "audioKey": "c/067abd92317fbf7a",
+      "text": "いい天気だね。",
+      "key": "authored-e046fc25bc-say"
+    },
+    {
+      "audioKey": "c/912547e2f7eb494d",
+      "text": "いい天気ですね。",
+      "key": "authored-87810621ff-say"
+    },
+    {
+      "audioKey": "c/92c344463ebed7c6",
+      "text": "明日は雨だよ。",
+      "key": "authored-c6c6cf177f-say"
+    },
+    {
+      "audioKey": "c/af568ea64983c8e8",
+      "text": "明日は雨ですよ。",
+      "key": "authored-c0b3041304-say"
+    },
+    {
+      "audioKey": "c/87b92f195fc33f6a",
+      "text": "明日は雨だよね？",
+      "key": "authored-b72541389e-say"
+    },
+    {
+      "audioKey": "c/f188e8ed0547da63",
+      "text": "明日は雨ですよね。",
+      "key": "authored-8e79f7bd22-say"
+    },
+    {
+      "audioKey": "c/9d5da7cceb7ffef3",
+      "text": "明日は雨かな。",
+      "key": "authored-ed7f84f9ec-say"
+    },
+    {
+      "audioKey": "c/3808329a425b29cd",
+      "text": "明日は雨でしょうか。",
+      "key": "authored-ea7b09337f-say"
+    },
+    {
+      "audioKey": "c/bf235676f3b8ff7c",
+      "text": "これ、おいしいね。",
+      "key": "authored-40059c72f4-say"
+    },
+    {
+      "audioKey": "c/74cc2ed6f008afa3",
+      "text": "これ、おいしいよ。食べてみて。",
+      "key": "authored-467673a39f-say"
+    },
+    {
+      "audioKey": "c/c445f103a871d55d",
+      "text": "疲れたよね。",
+      "key": "authored-cb62d2b098-say"
+    },
+    {
+      "audioKey": "c/3ea2629be0741f6c",
+      "text": "ちょっと寒くない？",
+      "key": "authored-76dd66cfb8-say"
+    },
+    {
+      "audioKey": "c/49fea6d7c0d21141",
+      "text": "だって、忙しいんだもん。",
+      "key": "authored-43970d28b4-say"
+    },
+    {
+      "audioKey": "c/72d51f437f788faf",
+      "text": "そうだよね。",
+      "key": "authored-0f419574c1-say"
+    },
+    {
+      "audioKey": "c/f23e9b5b2f3ba667",
+      "text": "そうですよね。",
+      "key": "authored-e86a84f096-say"
+    },
+    {
+      "audioKey": "c/6340b88734187b50",
+      "text": "そうかな。",
+      "key": "authored-8b4a6d0002-say"
+    },
+    {
+      "audioKey": "c/df81780d44b72b2b",
+      "text": "私は行かないけどね。",
+      "key": "authored-6945144a67-say"
+    },
+    {
+      "audioKey": "c/11c6d619f2403f7c",
+      "text": "今日、暑いね。",
+      "key": "authored-11e3acaf2d-hear"
+    },
+    {
+      "audioKey": "c/c88ff2873cd6fde1",
+      "text": "明日、休みだっけ？",
+      "key": "authored-c4f7fd786c-hear"
+    },
+    {
+      "audioKey": "c/e6b986cebe3cc626",
+      "text": "先に行ってるよ。",
+      "key": "authored-f3b1989962-hear"
+    },
+    {
+      "audioKey": "c/4d505cb38869dc03",
+      "text": "先に行っていますね。",
+      "key": "authored-885e03a330-hear"
+    },
+    {
+      "audioKey": "c/8796428a43b06da0",
+      "text": "どこ行こうか。",
+      "key": "authored-2ca545444a-hear"
+    },
+    {
+      "audioKey": "c/8b3592fa70f39bb9",
+      "text": "どこへ行きましょうか。",
+      "key": "authored-97e2f5d65e-hear"
+    },
+    {
+      "audioKey": "c/334913fec4e4d08e",
+      "text": "行けたら行くね。",
+      "key": "authored-e0562f3895-hear"
+    },
+    {
+      "audioKey": "c/6513d09ad680cbc9",
+      "text": "涼しいところがいいな。",
+      "key": "authored-e60973cfbe-say"
+    },
+    {
+      "audioKey": "c/3c832b256cd06e8b",
+      "text": "涼しいところがいいですね。",
+      "key": "authored-e9165e32ae-say"
+    },
+    {
+      "audioKey": "c/47c800fd3b21ac86",
+      "text": "うん、すぐ行くね。",
+      "key": "authored-9837a5db70-say"
+    },
+    {
+      "audioKey": "c/40f3798897ac9534",
+      "text": "はい、すぐ行きます。",
+      "key": "authored-d73d775b8d-say"
+    }
+  ]
+}

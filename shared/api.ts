@@ -1,5 +1,6 @@
 /* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-unsafe-dictionary-type -- Existing API config boundary parser predates changed-file lint; this additive request type must keep its shared contract. */
-import type { ConversationChunk, ConversationScene, ConversationSceneTurn, ConversationUnit, Track } from "./types";
+import type { SlotDrillSlot } from "./slotDrill";
+import type { ConversationChunk, ConversationRegister, ConversationScene, ConversationSceneTurn, ConversationUnit, Track } from "./types";
 import type { AppearanceId, OnyomiScript, SoundMode, ThemeId } from "./settings";
 
 // Four two-character word reviews use 37 SQL statements including profile resolution.
@@ -175,6 +176,8 @@ export type ConversationInput = "voice" | "tap" | "keyboard";
 export type SubmitConversationAttemptRequest = {
   clientAttemptId: string;
   chunkId: number;
+  // Slot drill attempt: chunkId is the template's pattern chunk, FSRS state is written per template.
+  templateId?: number;
   sceneId?: number | null;
   role: "say" | "hear";
   grade: ConversationGrade;
@@ -190,7 +193,20 @@ export type SubmitConversationAttemptResponse = { grade: ConversationGrade };
 
 export type ConversationChunkPayload = ConversationChunk & { audioUrl: string };
 export type ConversationScenePayload = ConversationScene & { turns: ConversationSceneTurn[] };
+export type ConversationTemplatePayload = {
+  id: number;
+  key: string;
+  unitId: number;
+  ord: number;
+  jaTemplate: string;
+  kanaTemplate: string;
+  cueKo: string;
+  register: ConversationRegister;
+  patternChunkId: number;
+  slots: SlotDrillSlot[];
+};
 export type ConversationSessionItem =
+  | { kind: "drill"; template: ConversationTemplatePayload }
   | { kind: "chunk"; phase: "hear" | "say" | "new"; chunk: ConversationChunkPayload }
   | { kind: "scene"; scene: ConversationScenePayload; review: boolean };
 export type ConversationSessionResponse = {

@@ -1,0 +1,558 @@
+{
+  "units": [
+    {
+      "ord": 4,
+      "titleKo": "구어 줄임말과 말버릇",
+      "goalKo": "〜てる・〜ちゃう・〜んです 같은 줄임 표현과 えーと・あのー 같은 말버릇을 알아듣고, 반말과 정중체를 짝으로 말한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 4,
+      "ord": 1,
+      "text": "今、ご飯食べてる。",
+      "kana": "いま、ごはんたべてる。",
+      "cueKo": "지금 밥 먹는 중이라고 반말로 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "食べている→食べてる. い가 빠지는 것이 구어의 기본",
+      "audioKey": "c/b3caa3bcfc703b36",
+      "key": "authored-a050b8d063-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 2,
+      "text": "今、ご飯を食べています。",
+      "kana": "いま、ごはんをたべています。",
+      "cueKo": "지금 밥 먹는 중이라고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "정중체는 〜ています가 기본. 줄여도 〜てます까지",
+      "audioKey": "c/d0fd6bc52678398f",
+      "key": "authored-d456486f9a-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 3,
+      "text": "もう食べちゃった。",
+      "kana": "もうたべちゃった。",
+      "cueKo": "벌써 먹어 버렸다고 반말로 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜てしまった→〜ちゃった. 완료에 아쉬움이 섞임",
+      "audioKey": "c/73d7b80932c37db3",
+      "key": "authored-62a7ca7d14-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 4,
+      "text": "もう食べてしまいました。",
+      "kana": "もうたべてしまいました。",
+      "cueKo": "벌써 먹어 버렸다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "격식 있는 상황에서는 食べてしまいました. 구어 정중체에서는 食べちゃいました도 쓴다.",
+      "audioKey": "c/298ca19920d80319",
+      "key": "authored-2436d6794d-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 5,
+      "text": "飲んじゃった。",
+      "kana": "のんじゃった。",
+      "cueKo": "마셔 버렸다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ん 뒤는 〜じゃう (飲んで→飲んじゃう), 食べて는 〜ちゃう",
+      "audioKey": "c/0905450ec37749bc",
+      "key": "authored-cbc6c9f81c-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 6,
+      "text": "財布、忘れちゃった。",
+      "kana": "さいふ、わすれちゃった。",
+      "cueKo": "지갑을 두고 왔다고 아쉽게 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "を를 빼고 말하는 것도 구어의 특징",
+      "audioKey": "c/24f8483cf3b05994",
+      "key": "authored-9155932226-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 7,
+      "text": "遅れちゃう！急ごう。",
+      "kana": "おくれちゃう！いそごう。",
+      "cueKo": "늦겠다며 서두르자고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ちゃう는 〜てしまう. 현재형은 '곧 ~해 버리겠다'",
+      "audioKey": "c/a558fc941fefbf1e",
+      "key": "authored-ff406e4cf6-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 8,
+      "text": "先に置いとくね。",
+      "kana": "さきにおいとくね。",
+      "cueKo": "먼저 놔 둘게라고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ておく→〜とく. 미리 해 둔다는 뜻",
+      "audioKey": "c/32e54ffd1cb4474e",
+      "key": "authored-52a8af9b43-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 9,
+      "text": "これって何？",
+      "kana": "これってなに？",
+      "cueKo": "물건을 가리키며 이게 뭐냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "って는 は의 구어형. 한국어 '이건 뭐야'의 '건'에 가깝다",
+      "audioKey": "c/e606d4f2996cafad",
+      "key": "authored-7eee44c6ff-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 10,
+      "text": "じゃ、行こう。",
+      "kana": "じゃ、いこう。",
+      "cueKo": "그럼 가자고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "それでは→じゃ. 이야기를 닫고 움직일 때",
+      "audioKey": "c/931df42f19d804d9",
+      "key": "authored-c6d5fe4b8e-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 11,
+      "text": "それじゃ、またね。",
+      "kana": "それじゃ、またね。",
+      "cueKo": "헤어지며 그럼 또 보자고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ね로 부드럽게 끝맺음. 정중하면 それでは、また",
+      "audioKey": "c/640d5d1ef2709ea9",
+      "key": "authored-05cddc81a2-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 12,
+      "text": "どうしたんですか。",
+      "kana": "どうしたんですか。",
+      "cueKo": "상대가 이상할 때 무슨 일이냐고 정중히 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "んです는 이유를 묻거나 설명할 때. 한국어 '~거예요?'",
+      "audioKey": "c/d599f9ab745911f6",
+      "key": "authored-e71846c403-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 13,
+      "text": "実は、ちょっと疲れたんです。",
+      "kana": "じつは、ちょっとつかれたんです。",
+      "cueKo": "사실은 좀 피곤하다고 이유를 설명하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "んです는 설명하는 말투. 단순 사실이면 疲れました",
+      "audioKey": "c/dc3cdb4508a2cb12",
+      "key": "authored-0ad73c67e9-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 14,
+      "text": "ちょっと疲れてるんだ。",
+      "kana": "ちょっとつかれてるんだ。",
+      "cueKo": "좀 피곤하다고 반말로 설명하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "んだ는 んです의 반말. 〜てる와 함께 쓰이는 일이 많다",
+      "audioKey": "c/e2d876cc93228413",
+      "key": "authored-576b9e1835-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 15,
+      "text": "えーと、何だっけ。",
+      "kana": "えーと、なんだっけ。",
+      "cueKo": "말이 생각나지 않을 때 시간을 벌며 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "えーと는 필러. 〜だっけ는 '뭐였지'",
+      "audioKey": "c/49bd850433d652fa",
+      "key": "authored-43a30af6b3-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 16,
+      "text": "あのー、すみません。",
+      "kana": "あのー、すみません。",
+      "cueKo": "모르는 사람에게 조심스럽게 말을 걸기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "あのー는 말 걸기 전의 필러. 길게 끌수록 조심스러운 느낌",
+      "audioKey": "c/07ad2ea0d8a29e01",
+      "key": "authored-7fc9343fcc-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 17,
+      "text": "うーん、どうしよう。",
+      "kana": "うーん、どうしよう。",
+      "cueKo": "망설이며 어떡하지라고 중얼거리기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "うーん은 생각 중. 한국어 '음…'",
+      "audioKey": "c/8d9cda8ee47e9ff6",
+      "key": "authored-63425d0095-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 18,
+      "text": "まあ、いいか。",
+      "kana": "まあ、いいか。",
+      "cueKo": "그냥 괜찮다고 넘기며 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "まあ는 '뭐'. 〜か로 스스로 납득하는 말투",
+      "audioKey": "c/9105449e5de7f41c",
+      "key": "authored-9aefe7a8c6-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 19,
+      "text": "何、読んでるの？",
+      "kana": "なに、よんでるの？",
+      "cueKo": "친구가 뭐 읽는 중이냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜の？는 반말 의문. 읽고 있다→読んでる로 い가 빠짐",
+      "audioKey": "c/63511f53c9058a5e",
+      "key": "authored-a4d199d37a-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 20,
+      "text": "あれ、まだ起きてたの？",
+      "kana": "あれ、まだおきてたの？",
+      "cueKo": "아직 안 잤냐고 놀라며 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "起きていた→起きてた. あれ는 의외라는 느낌",
+      "audioKey": "c/4d2a1359ef90a2a7",
+      "key": "authored-0860657b11-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 21,
+      "text": "ええと、どちら様でしょうか。",
+      "kana": "ええと、どちらさまでしょうか。",
+      "cueKo": "누구시냐고 묻는 정중한 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "둘 다 말을 고르는 필러. 이 문장의 공손함은 どちら様でしょうか에서 나온다.",
+      "audioKey": "c/efd015fb8318eaf0",
+      "key": "authored-e48802fab1-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 22,
+      "text": "ごめん、ちょっと遅れる。",
+      "kana": "ごめん、ちょっとおくれる。",
+      "cueKo": "친구가 조금 늦는다고 알리는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ちょっと는 '조금'. 사과는 ごめん (정중하면 すみません)",
+      "audioKey": "c/3c42514ce35ae758",
+      "key": "authored-5abc7eb03b-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 23,
+      "text": "さっき連絡しといたよ。",
+      "kana": "さっきれんらくしといたよ。",
+      "cueKo": "미리 연락해 뒀다는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ておいた→〜といた. よ는 알려 주는 느낌",
+      "audioKey": "c/ca3a9cbc95884278",
+      "key": "authored-ff62d85cde-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 24,
+      "text": "疲れちゃったから、帰るね。",
+      "kana": "つかれちゃったから、かえるね。",
+      "cueKo": "피곤해서 먼저 간다는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ちゃった는 〜てしまった. から는 이유",
+      "audioKey": "c/0c68021712ed1f49",
+      "key": "authored-1aa0df1fba-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 25,
+      "text": "大丈夫、待ってる。",
+      "kana": "だいじょうぶ、まってる。",
+      "cueKo": "괜찮으니 기다리고 있겠다고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "待っている→待ってる. 大丈夫는 '괜찮아'",
+      "audioKey": "c/422fde3f6cea7625",
+      "key": "authored-0a81d86be0-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 26,
+      "text": "はい、何でしょうか。",
+      "kana": "はい、なんでしょうか。",
+      "cueKo": "말을 걸었을 때 무슨 일이냐고 답하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "何でしょうか는 '무슨 일이신가요'. 점원, 직원이 자주 쓴다",
+      "audioKey": "c/859282429fba52e7",
+      "key": "authored-e9d177112e-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 27,
+      "text": "ええと、この近くにコンビニはありますか。",
+      "kana": "ええと、このちかくにこんびにはありますか。",
+      "cueKo": "말을 고르며 근처에 편의점이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ええと로 시작하면 말을 고르는 중이라는 신호",
+      "audioKey": "c/a0855a1257e6e1e3",
+      "key": "authored-e8b1536861-say"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 28,
+      "text": "コンビニなら、あの角を曲がったところですよ。",
+      "kana": "こんびになら、あのかどをまがったところですよ。",
+      "cueKo": "편의점은 저 모퉁이를 돌면 있다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜なら는 '~라면'. ですよ는 알려 주는 느낌",
+      "audioKey": "c/d1f600539c1e9383",
+      "key": "authored-0c6b31a7c0-hear"
+    },
+    {
+      "unitOrd": 4,
+      "ord": 29,
+      "text": "助かりました。ありがとうございます。",
+      "kana": "たすかりました。ありがとうございます。",
+      "cueKo": "도움이 됐다며 고맙다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "助かりました는 '도움이 됐어요'. 고맙다는 말에 자주 붙인다",
+      "audioKey": "c/63c43f9db80de75f",
+      "key": "authored-581aa95215-say"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 4,
+      "ord": 1,
+      "titleKo": "늦는 친구와 통화하기",
+      "settingKo": "약속 장소에서 기다리는 중에 친구가 전화한다. 줄임 표현이 섞인 반말로 답한다.",
+      "goalKo": "〜てる・〜ちゃう・〜とく가 섞인 친구의 말을 알아듣고 반말로 짧게 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            22
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            23
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 4,
+      "ord": 2,
+      "titleKo": "말 걸고 길 묻기",
+      "settingKo": "처음 보는 사람에게 말을 걸어 근처 편의점을 묻는다. 말을 고르는 필러를 쓴다.",
+      "goalKo": "あのー・ええと로 말을 시작해 정중하게 묻고, ですよ로 끝나는 답을 알아듣는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            16
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            26
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            27
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            29
+          ]
+        }
+      ]
+    }
+  ]
+}

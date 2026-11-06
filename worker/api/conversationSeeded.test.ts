@@ -65,6 +65,55 @@ describe("conversation reads and writes against seed-shaped data", () => {
     expect(session?.items.some((item) => item.kind === "chunk")).toBe(true);
   });
 
+  it("serves a slot drill in the session and grades it into per-template FSRS state", async () => {
+    const sqlite = new DatabaseSync(":memory:");
+    databases.push(sqlite);
+    applyMigrations(sqlite);
+    sqlite.exec(emitConversationSeedSql(parseConversationSeed(JSON.parse(readFileSync("data/conversation/unit-05.json", "utf8")))));
+    const unitId = Number((sqlite.prepare("SELECT id FROM conv_units").get() as { id: number }).id);
+    const now = 1_800_000_000_000;
+    const session = await getConversationSession(d1(sqlite), 1, unitId, now);
+    const drills = session?.items.filter((item) => item.kind === "drill") ?? [];
+    expect(drills).toHaveLength(1);
+    expect(session?.items.at(-1)?.kind).toBe("scene");
+    const drill = drills[0];
+    if (drill?.kind !== "drill") throw new Error("drill missing");
+    expect(drill.template.key).toBe("tpl-o-kudasai");
+    expect(drill.template.slots.length).toBeGreaterThanOrEqual(4);
+
+    await expect(submitConversationAttempt(d1(sqlite), 1, {
+      clientAttemptId: "drill-1", chunkId: drill.template.patternChunkId, templateId: drill.template.id, role: "say", grade: "good", answeredAt: now, loop: "drill", input: "tap",
+    }, new Date(now))).resolves.toEqual({ grade: "good" });
+    // The test D1 adapter reports changes: 0 for batch writes, which triggers the conflict retry, so reps may be 2 here.
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM conv_template_states WHERE profile_id = 1 AND template_id = ? AND reps >= 1").get(drill.template.id)).toEqual({ n: 1 });
+    expect(sqlite.prepare("SELECT COUNT(*) AS n FROM conv_chunk_states").get()).toEqual({ n: 0 });
+    const after = await getConversationSession(d1(sqlite), 1, unitId, now);
+    expect(after?.items.some((item) => item.kind === "drill")).toBe(false);
+    await expect(submitConversationAttempt(d1(sqlite), 1, {
+      clientAttemptId: "drill-2", chunkId: drill.template.patternChunkId + 1, templateId: drill.template.id, role: "say", grade: "good", answeredAt: now, loop: "drill",
+    }, new Date(now))).rejects.toThrow();
+  });
+
+  it("rotates to the next unseen scene after one is practiced", async () => {
+    const sqlite = new DatabaseSync(":memory:");
+    databases.push(sqlite);
+    applyMigrations(sqlite);
+    sqlite.exec(emitConversationSeedSql(parseConversationSeed(JSON.parse(readFileSync("data/conversation/unit-05.json", "utf8")))));
+    const unitId = Number((sqlite.prepare("SELECT id FROM conv_units").get() as { id: number }).id);
+    const chunk = sqlite.prepare("SELECT id FROM conv_chunks WHERE key = 'tatoeba-224884-say'").get() as { id: number };
+    const sceneOrds: number[] = [];
+    for (let round = 0; round < 4; round += 1) {
+      const session = await getConversationSession(d1(sqlite), 1, unitId, 1_800_000_000_000 + round);
+      const scene = session?.items.at(-1);
+      if (scene?.kind !== "scene") throw new Error("scene missing");
+      sceneOrds.push(scene.scene.ord);
+      await submitConversationAttempt(d1(sqlite), 1, {
+        clientAttemptId: `scene-round-${round}`, chunkId: chunk.id, sceneId: scene.scene.id, role: "say", grade: "good", answeredAt: 1_800_000_000_000 + round, loop: "roleplay", input: "tap",
+      }, new Date(1_800_000_100_000));
+    }
+    expect(sceneOrds).toEqual([1, 2, 3, 1]);
+  });
+
   it("accepts a scene attempt for a chunk that the scene's unit lists", async () => {
     const sqlite = seededDatabase();
     const chunk = sqlite.prepare("SELECT id, role FROM conv_chunks WHERE key = 'ask-repeat-polite'").get() as { id: number; role: "say" | "hear" };

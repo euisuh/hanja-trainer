@@ -42,6 +42,8 @@ describe("conversation core migration", () => {
         { name: "conv_chunks" },
         { name: "conv_scene_turns" },
         { name: "conv_scenes" },
+        { name: "conv_template_states" },
+        { name: "conv_templates" },
         { name: "conv_unit_chunks" },
         { name: "conv_units" },
       ]);

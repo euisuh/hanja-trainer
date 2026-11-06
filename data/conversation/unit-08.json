@@ -565,6 +565,70 @@
       "sourceRef": "Tatoeba #12167715",
       "audioKey": "c/87423ed6f6d92063",
       "key": "tatoeba-12167715-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 44,
+      "text": "試着室はあちらです。",
+      "kana": "しちゃくしつはあちらです。",
+      "cueKo": "탈의실 위치를 알려 주는 점원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a clothing store. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "あちら는 あそこ의 공손한 말. 방향을 정중하게 가리킬 때 씀",
+      "audioKey": "c/dbf8f9fc626410ba",
+      "key": "authored-8a359dbb09-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 45,
+      "text": "こちらは五千四百円になります。",
+      "kana": "こちらはごせんよんひゃくえんになります。",
+      "cueKo": "점원이 가격을 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a shop counter. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "〜になります는 '변하다'가 아니라 '〜입니다'라는 점원 말투",
+      "audioKey": "c/dfcbbec3de192c35",
+      "key": "authored-eba69073f0-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 46,
+      "text": "在庫を確認いたしますので、少々お待ちください。",
+      "kana": "ざいこをかくにんいたしますので、しょうしょうおまちください。",
+      "cueKo": "재고를 확인할 테니 기다려 달라는 점원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a clothing store when checking stock. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "いたします는 します의 겸양어. ので는 '〜니까'",
+      "audioKey": "c/d01dd9051729d44f",
+      "key": "authored-6258f987e3-hear"
+    },
+    {
+      "unitOrd": 8,
+      "ord": 47,
+      "text": "プレゼント用にお包みしましょうか？",
+      "kana": "ぷれぜんとようにおつつみしましょうか？",
+      "cueKo": "선물용으로 포장해 줄지 묻는 점원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a shop counter. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "お包みする는 包む의 겸양 표현. 대답은 お願いします",
+      "audioKey": "c/8b16b84b7b22a668",
+      "key": "authored-45db156f58-hear"
     }
   ],
   "scenes": [
@@ -673,6 +737,97 @@
           "speaker": "learner",
           "chunkOrds": [
             23
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 8,
+      "ord": 3,
+      "titleKo": "재고 확인하고 입어 보고 선물 포장",
+      "settingKo": "옷 가게. 더 큰 사이즈를 부탁하고, 입어 보고, 계산하며 선물 포장을 부탁한다.",
+      "goalKo": "사이즈 재고를 확인받고 입어 본 뒤 카드 결제와 선물 포장을 부탁한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            28,
+            29
+          ],
+          "variants": [
+            {
+              "chunkOrd": 28,
+              "replyOrd": 4
+            },
+            {
+              "chunkOrd": 29,
+              "replyOrd": 5
+            }
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            4,
+            5
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            46
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            12
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            44
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            45
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 9,
+          "speaker": "npc",
+          "chunkOrds": [
+            47
+          ]
+        },
+        {
+          "ord": 10,
+          "speaker": "learner",
+          "chunkOrds": [
+            24
           ]
         }
       ]

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { enqueuePendingConversationAttempt } from "../features/conversation/attemptOutbox";
 import { SceneRunner } from "../features/conversation/SceneRunner";
+import { SlotDrillCard } from "../features/conversation/SlotDrillCard";
 import { ListenCard } from "../features/conversation/ListenCard";
 import { useActiveProfile } from "../features/profile/ProfileContext";
 import { SourceAttribution } from "../features/source/SourceAttribution";
@@ -175,6 +176,15 @@ export function TalkScreen() {
     return <section className="talk-root talk-screen"><div className="talk-screen__page"><h1>오늘 Talk 완료</h1><p>말한 문장 {spoken}개</p><p>중간 첫소리 {median === null ? "측정 안 됨" : `${(median / 1000).toFixed(1)}초`}</p><p>다음 복습은 저장 뒤 일정에 맞춰 표시됩니다.</p><button onClick={() => navigate("/talk")} type="button">Talk로 돌아가기</button></div></section>;
   }
   if (entry.item.kind === "scene") return <SceneRunner chunks={content.chunks} onExit={() => { if (index + 1 < items.length) { setIndex((value) => value + 1); setStage("cue"); } else { setFinished(true); } }} profileId={profileId} scene={entry.item.scene} />;
+  if (entry.item.kind === "drill") {
+    const template = entry.item.template;
+    const rateDrill = (grade: ConversationGrade) => {
+      enqueuePendingConversationAttempt(profileId, { clientAttemptId: attemptId(), chunkId: template.patternChunkId, templateId: template.id, role: "say", grade, answeredAt: Date.now(), loop: "drill", input: "tap" });
+      setSpoken((value) => value + 1);
+      if (index + 1 < items.length) { setIndex((value) => value + 1); setStage("cue"); } else { setFinished(true); }
+    };
+    return <SlotDrillCard key={`${template.id}:${index}`} onRate={rateDrill} template={template} />;
+  }
   if (!card) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
   if (card.role === "hear") return <section className="talk-root talk-screen" data-talk-stage="listen"><header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {items.length}</span></header><p className="talk-screen__goal">{content.unit.goalKo}</p><ListenCard card={card} choices={content.chunks.filter((chunk) => chunk.role === "hear")} onNext={(grade, cardReplays, input) => rate(grade, input, cardReplays)} /></section>;
 
@@ -189,6 +199,7 @@ export function TalkScreen() {
         <span lang="ja">{card.kana}</span>
         <button className="talk-screen__audio" onClick={playReference} type="button">듣기 <kbd>Space</kbd></button>
         {recording.status === "ready" && <label className="talk-screen__self-audio">내 목소리 <audio controls ref={selfAudioRef} src={recording.url} /> <kbd>Shift+Space</kbd></label>}
+        {card.noteKo && <small className="talk-screen__source talk-screen__note">{card.noteKo}</small>}
         <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} sourceAuthor={card.sourceAuthor} /></small>
       </div>}
       <div className="talk-screen__attempt">

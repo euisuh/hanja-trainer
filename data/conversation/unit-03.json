@@ -188,6 +188,166 @@
       "sourceRef": "Tatoeba #10647275",
       "audioKey": "c/ecefb8e384948b36",
       "key": "tatoeba-10647275-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 15,
+      "text": "袋はご利用ですか？",
+      "kana": "ふくろはごりようですか？",
+      "cueKo": "봉투가 필요하냐고 묻는 점원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "ご利用ですか는 '쓰시겠어요?'. 봉투가 유료라서 나오는 질문",
+      "audioKey": "c/817a19272a294152",
+      "key": "authored-501b6690c7-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 16,
+      "text": "お箸はお付けしますか？",
+      "kana": "おはしはおつけしますか？",
+      "cueKo": "젓가락을 넣어 줄지 묻는 점원의 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "お付けします는 '붙여 드릴까요'. 대답은 お願いします나 大丈夫です",
+      "audioKey": "c/cee7bd40c765a16a",
+      "key": "authored-7f3ac2152d-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 17,
+      "text": "お弁当は温めますか？",
+      "kana": "おべんとうはあたためますか？",
+      "cueKo": "도시락을 데워 줄지 묻는 점원의 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "温めます는 '데우다'. 대답은 お願いします / 大丈夫です",
+      "audioKey": "c/492f41822209a433",
+      "key": "authored-69d9e67c84-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 18,
+      "text": "合計で五百八十円になります。",
+      "kana": "ごうけいでごひゃくはちじゅうえんになります。",
+      "cueKo": "점원이 합계 금액을 말하는 것 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a till when stating the total. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "〜になります는 '변하다'가 아니라 '〜입니다'라는 점원 말투",
+      "audioKey": "c/cde6b426e97c652d",
+      "key": "authored-46b1bbca70-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 19,
+      "text": "千円お預かりします。",
+      "kana": "せんえんおあずかりします。",
+      "cueKo": "점원이 받은 돈을 확인하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a till when taking cash. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "お預かりします는 '받겠습니다'. 거스름돈이 나온다는 신호",
+      "audioKey": "c/04698af922558903",
+      "key": "authored-61ba579a94-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 20,
+      "text": "四百二十円のお返しです。",
+      "kana": "よんひゃくにじゅうえんのおかえしです。",
+      "cueKo": "점원이 거스름돈을 건네며 하는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a till when giving change. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "お返し는 '거스름돈'. 400은 よんひゃく (よっ、しひゃく 아님)",
+      "audioKey": "c/bb937ab511751e29",
+      "key": "authored-e88025c88f-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 21,
+      "text": "ありがとうございました。",
+      "kana": "ありがとうございました。",
+      "cueKo": "점원이 계산 뒤에 하는 인사 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a till after payment. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "ございました는 과거형이지만 '이용해 주셔서 감사합니다'라는 마무리 인사",
+      "audioKey": "c/5315f0c0327b9e9a",
+      "key": "authored-882395686e-hear"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 22,
+      "text": "袋お願いします。",
+      "kana": "ふくろおねがいします。",
+      "cueKo": "봉투를 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Learner reply, standard phrasing at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "조사 を를 줄여서 말하는 것이 자연스러운 구어 (袋をお願いします)",
+      "audioKey": "c/9cec79002bfe7fea",
+      "key": "authored-ef6eeb55c5-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 23,
+      "text": "温めてください。",
+      "kana": "あたためてください。",
+      "cueKo": "도시락을 데워 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Learner reply, standard phrasing at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "〜てください는 '〜해 주세요'. 温める는 '데우다'",
+      "audioKey": "c/532d53a38d0e8fed",
+      "key": "authored-82d0dfb9ba-say"
+    },
+    {
+      "unitOrd": 3,
+      "ord": 24,
+      "text": "現金でお願いします。",
+      "kana": "げんきんでおねがいします。",
+      "cueKo": "현금으로 계산하겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Learner reply, standard phrasing at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "で는 수단 '〜로'. カードで와 같은 틀",
+      "audioKey": "c/5a7cd140985bea4a",
+      "key": "authored-2923263b22-say"
     }
   ],
   "scenes": [
@@ -252,6 +412,90 @@
           "speaker": "learner",
           "chunkOrds": [
             10
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 3,
+      "ord": 2,
+      "titleKo": "봉투·데우기·결제 응대",
+      "settingKo": "편의점 계산대. 도시락을 사고 점원의 질문에 차례로 답한다.",
+      "goalKo": "봉투, 데우기, 결제 방법에 대한 점원의 질문에 알맞게 답하고 거스름돈까지 받는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            15,
+            16
+          ],
+          "variants": [
+            {
+              "chunkOrd": 15,
+              "replyOrd": 22
+            },
+            {
+              "chunkOrd": 16,
+              "replyOrd": 7
+            }
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            22,
+            7
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            23
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            18
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            24
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            19
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "npc",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 9,
+          "speaker": "npc",
+          "chunkOrds": [
+            21
           ]
         }
       ]

@@ -1,0 +1,549 @@
+{
+  "units": [
+    {
+      "ord": 15,
+      "titleKo": "문말 조사 ね・よ・かな",
+      "goalKo": "ね・よ・よね・かな・だっけ 같은 문장 끝 조사의 느낌 차이를 알고, 반말과 정중체로 짝을 맞춰 말한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 15,
+      "ord": 1,
+      "text": "いい天気だね。",
+      "kana": "いいてんきだね。",
+      "cueKo": "날씨가 좋다며 동의를 구하듯 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ね는 상대도 같은 것을 느끼길 기대. 한국어 '~네/~지'",
+      "audioKey": "c/067abd92317fbf7a",
+      "key": "authored-e046fc25bc-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 2,
+      "text": "いい天気ですね。",
+      "kana": "いいてんきですね。",
+      "cueKo": "날씨가 좋다며 정중하게 동의를 구하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "정중체도 ね는 그대로 붙는다 (だ→です)",
+      "audioKey": "c/912547e2f7eb494d",
+      "key": "authored-87810621ff-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 3,
+      "text": "明日は雨だよ。",
+      "kana": "あしたはあめだよ。",
+      "cueKo": "내일 비 온다고 알려 주기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "よ는 상대가 모르는 정보를 알려 줄 때. 한국어 '~야'",
+      "audioKey": "c/92c344463ebed7c6",
+      "key": "authored-c6c6cf177f-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 4,
+      "text": "明日は雨ですよ。",
+      "kana": "あしたはあめですよ。",
+      "cueKo": "내일 비 온다고 정중하게 알려 주기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ですよ는 알려 주는 말. 강하게 들리면 ですよ를 줄인다",
+      "audioKey": "c/af568ea64983c8e8",
+      "key": "authored-c0b3041304-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 5,
+      "text": "明日は雨だよね？",
+      "kana": "あしたはあめだよね？",
+      "cueKo": "내일 비 오는 게 맞는지 확인하며 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "よね는 알고 있는 걸 확인. 한국어 '~지?'에 가깝다",
+      "audioKey": "c/87b92f195fc33f6a",
+      "key": "authored-b72541389e-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 6,
+      "text": "明日は雨ですよね。",
+      "kana": "あしたはあめですよね。",
+      "cueKo": "내일 비 오는 게 맞는지 정중하게 확인하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ですよね는 정중한 확인. 끝을 올리면 질문",
+      "audioKey": "c/f188e8ed0547da63",
+      "key": "authored-8e79f7bd22-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 7,
+      "text": "明日は雨かな。",
+      "kana": "あしたはあめかな。",
+      "cueKo": "비가 올지 혼잣말처럼 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "かな는 혼잣말 '~일까'. 상대에게 묻는 정중형은 でしょうか",
+      "audioKey": "c/9d5da7cceb7ffef3",
+      "key": "authored-ed7f84f9ec-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 8,
+      "text": "明日は雨でしょうか。",
+      "kana": "あしたはあめでしょうか。",
+      "cueKo": "비가 올지 정중하게 묻기 (정중체)",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "でしょうか는 추측하며 묻는 정중한 말",
+      "audioKey": "c/3808329a425b29cd",
+      "key": "authored-ea7b09337f-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 9,
+      "text": "これ、おいしいね。",
+      "kana": "これ、おいしいね。",
+      "cueKo": "맛있다며 공감을 구하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ね는 공감. 혼자 느낀 감탄에도 붙는다",
+      "audioKey": "c/bf235676f3b8ff7c",
+      "key": "authored-40059c72f4-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 10,
+      "text": "これ、おいしいよ。食べてみて。",
+      "kana": "これ、おいしいよ。たべてみて。",
+      "cueKo": "맛있으니 먹어 보라고 권하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "よ는 권하는 힘이 있다. 食べてみて는 '먹어 봐'",
+      "audioKey": "c/74cc2ed6f008afa3",
+      "key": "authored-467673a39f-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 11,
+      "text": "疲れたよね。",
+      "kana": "つかれたよね。",
+      "cueKo": "서로 피곤하다고 공감하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "よね는 공감 확인. 상대도 피곤할 거라 확신할 때",
+      "audioKey": "c/c445f103a871d55d",
+      "key": "authored-cb62d2b098-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 12,
+      "text": "ちょっと寒くない？",
+      "kana": "ちょっとさむくない？",
+      "cueKo": "춥지 않냐고 동의를 구하며 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ない？는 동의 유도. 한국어 '춥지 않아?'",
+      "audioKey": "c/3ea2629be0741f6c",
+      "key": "authored-76dd66cfb8-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 13,
+      "text": "だって、忙しいんだもん。",
+      "kana": "だって、いそがしいんだもん。",
+      "cueKo": "이유를 대며 변명하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "もん은 변명하는 말투. 친한 사이에서만 쓴다",
+      "audioKey": "c/49fea6d7c0d21141",
+      "key": "authored-43970d28b4-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 14,
+      "text": "そうだよね。",
+      "kana": "そうだよね。",
+      "cueKo": "그러게 맞아라며 동의하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "そうだよね는 '맞아 그치'. そうですね보다 친밀",
+      "audioKey": "c/72d51f437f788faf",
+      "key": "authored-0f419574c1-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 15,
+      "text": "そうですよね。",
+      "kana": "そうですよね。",
+      "cueKo": "상대 말에 정중하게 공감하며 동의하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "そうですね보다 상대 말에 깊이 공감하는 느낌",
+      "audioKey": "c/f23e9b5b2f3ba667",
+      "key": "authored-e86a84f096-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 16,
+      "text": "そうかな。",
+      "kana": "そうかな。",
+      "cueKo": "그런가 하며 완곡하게 의문 제기하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "そうかな는 반론의 완곡형. 정중하면 そうでしょうか",
+      "audioKey": "c/6340b88734187b50",
+      "key": "authored-8b4a6d0002-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 17,
+      "text": "私は行かないけどね。",
+      "kana": "わたしはいかないけどね。",
+      "cueKo": "나는 안 가지만이라며 말끝을 흐리기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "けどね는 문장을 흐려 부드럽게 한다",
+      "audioKey": "c/df81780d44b72b2b",
+      "key": "authored-6945144a67-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 18,
+      "text": "今日、暑いね。",
+      "kana": "きょう、あついね。",
+      "cueKo": "친구가 더위에 공감을 구하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ね로 끝나면 대답은 보통 そうだね",
+      "audioKey": "c/11c6d619f2403f7c",
+      "key": "authored-11e3acaf2d-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 19,
+      "text": "明日、休みだっけ？",
+      "kana": "あした、やすみだっけ？",
+      "cueKo": "휴일인지 기억을 더듬으며 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜だっけ는 '~였지?'. 기억을 확인할 때",
+      "audioKey": "c/c88ff2873cd6fde1",
+      "key": "authored-c4f7fd786c-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 20,
+      "text": "先に行ってるよ。",
+      "kana": "さきにいってるよ。",
+      "cueKo": "먼저 가 있겠다고 알리는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "行っている→行ってる. よ는 알려 주는 느낌",
+      "audioKey": "c/e6b986cebe3cc626",
+      "key": "authored-f3b1989962-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 21,
+      "text": "先に行っていますね。",
+      "kana": "さきにいっていますね。",
+      "cueKo": "먼저 가 있겠다고 부드럽게 알리는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ますね는 '~할게요'. 알리며 부드럽게 한다",
+      "audioKey": "c/4d505cb38869dc03",
+      "key": "authored-885e03a330-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 22,
+      "text": "どこ行こうか。",
+      "kana": "どこいこうか。",
+      "cueKo": "어디 갈지 제안하듯 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜か는 반말에서도 제안으로 쓰인다. に가 생략됨",
+      "audioKey": "c/8796428a43b06da0",
+      "key": "authored-2ca545444a-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 23,
+      "text": "どこへ行きましょうか。",
+      "kana": "どこへいきましょうか。",
+      "cueKo": "어디 갈지 정중하게 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "〜ましょうか는 '~할까요'. 제안하며 묻는 말",
+      "audioKey": "c/8b3592fa70f39bb9",
+      "key": "authored-97e2f5d65e-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 24,
+      "text": "行けたら行くね。",
+      "kana": "いけたらいくね。",
+      "cueKo": "확답 없이 가 보겠다는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "'行けたら行く'는 거절을 암시하는 일이 많다",
+      "audioKey": "c/334913fec4e4d08e",
+      "key": "authored-e0562f3895-hear"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 25,
+      "text": "涼しいところがいいな。",
+      "kana": "すずしいところがいいな。",
+      "cueKo": "시원한 곳이 좋겠다고 혼잣말처럼 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "な는 혼잣말, 바람. いいな는 '좋겠다'",
+      "audioKey": "c/6513d09ad680cbc9",
+      "key": "authored-e60973cfbe-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 26,
+      "text": "涼しいところがいいですね。",
+      "kana": "すずしいところがいいですね。",
+      "cueKo": "시원한 곳이 좋겠다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "いい+な는 반말, いい+ですね는 정중. 끝 조사가 바뀐다",
+      "audioKey": "c/3c832b256cd06e8b",
+      "key": "authored-e9165e32ae-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 27,
+      "text": "うん、すぐ行くね。",
+      "kana": "うん、すぐいくね。",
+      "cueKo": "곧 가겠다고 부드럽게 답하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "ね는 '~할게'. 약속하며 부드럽게 한다",
+      "audioKey": "c/47c800fd3b21ac86",
+      "key": "authored-9837a5db70-say"
+    },
+    {
+      "unitOrd": 15,
+      "ord": 28,
+      "text": "はい、すぐ行きます。",
+      "kana": "はい、すぐいきます。",
+      "cueKo": "곧 가겠다고 정중하게 답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a spoken-register chunk (GAPS.md, unit-04/unit-15 section).",
+      "noteKo": "정중체는 ね를 뺀 〜ます로 끝내도 자연스럽다",
+      "audioKey": "c/40f3798897ac9534",
+      "key": "authored-d73d775b8d-say"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 15,
+      "ord": 1,
+      "titleKo": "더운 날 친구와 약속",
+      "settingKo": "더운 날 친구와 어디 갈지 이야기한다. 문장 끝 ね로 맞장구치고 반말로 답한다.",
+      "goalKo": "ね・よ・な로 끝나는 친구의 말에 맞장구치고 반말로 짧게 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            18
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            14
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            22
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 15,
+      "ord": 2,
+      "titleKo": "같은 약속을 정중체로",
+      "settingKo": "직장 선배와 어디 갈지 이야기한다. 같은 흐름을 정중체로 말한다.",
+      "goalKo": "ましょうか・ますね로 끝나는 말에 정중체로 맞장구치고 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            23
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            26
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            21
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            28
+          ]
+        }
+      ]
+    }
+  ]
+}

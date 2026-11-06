@@ -3,6 +3,9 @@ import verifiedTatoeba from "../../../data/conversation/.verified.json";
 
 const tatoebaOwners = new Map(Object.entries(verifiedTatoeba).map(([id, entry]) => [id, entry.sourceAuthor]));
 
+export const AUTHORED_SOURCE = "authored";
+export const AUTHORED_LABEL = "authored for this app";
+
 function talkSource(source: string, sourceAuthor?: string) {
   const match = /^Tatoeba #(\d+)(?: \[\d+\/\d+\])?$/u.exec(source);
   if (!match) return null;
@@ -10,6 +13,7 @@ function talkSource(source: string, sourceAuthor?: string) {
 }
 
 export function SourceAttribution({ source, sourceAuthor, sourceUrl }: { source?: string; sourceAuthor?: string; sourceUrl?: string }) {
+  if (source === AUTHORED_SOURCE) return AUTHORED_LABEL;
   const word = sourceUrl ? wordAttribution(sourceUrl) : null;
   const talk = source ? talkSource(source, sourceAuthor) : null;
   const attribution = word ?? (talk ? {

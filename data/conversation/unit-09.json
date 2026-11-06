@@ -663,9 +663,22 @@
           "speaker": "npc",
           "chunkOrds": [
             35,
-            36,
             37,
             38
+          ],
+          "variants": [
+            {
+              "chunkOrd": 35,
+              "replyOrd": 18
+            },
+            {
+              "chunkOrd": 37,
+              "replyOrd": 20
+            },
+            {
+              "chunkOrd": 38,
+              "replyOrd": 18
+            }
           ]
         },
         {

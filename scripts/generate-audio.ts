@@ -179,7 +179,7 @@ async function main(): Promise<void> {
   const paths = files.length > 0
     ? files
     : conversation
-      ? (await readdir("data/conversation")).filter((file) => file.endsWith(".json")).map((file) => join("data/conversation", file))
+      ? (await readdir("data/conversation")).filter((file) => file.startsWith("unit-") && file.endsWith(".json")).map((file) => join("data/conversation", file))
       : (await readdir("data/characters")).filter((file) => file.endsWith(".json")).map((file) => join("data/characters", file));
   let entries: AudioEntry[];
   if (conversation) {

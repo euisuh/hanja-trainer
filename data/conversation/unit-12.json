@@ -479,13 +479,24 @@
           "chunkOrds": [
             22,
             23
+          ],
+          "variants": [
+            {
+              "chunkOrd": 22,
+              "replyOrd": 4
+            },
+            {
+              "chunkOrd": 23,
+              "replyOrd": 6
+            }
           ]
         },
         {
           "ord": 4,
           "speaker": "learner",
           "chunkOrds": [
-            4
+            4,
+            6
           ]
         },
         {

@@ -31,6 +31,7 @@ export function parseConversationAttempt(value: unknown, now = Date.now()): Subm
   if (!isRecord(value)) return null;
   if (typeof value.clientAttemptId !== "string" || value.clientAttemptId.length < 1 || value.clientAttemptId.length > 128) return null;
   if (!Number.isSafeInteger(value.chunkId) || (value.chunkId as number) < 1) return null;
+  if (value.templateId !== undefined && (!Number.isSafeInteger(value.templateId) || (value.templateId as number) < 1 || value.role !== "say")) return null;
   if (value.sceneId !== undefined && value.sceneId !== null && (!Number.isSafeInteger(value.sceneId) || (value.sceneId as number) < 1)) return null;
   if (!CONVERSATION_ROLES.includes(value.role as ConversationRole)) return null;
   if (value.grade !== "again" && value.grade !== "hard" && value.grade !== "good" && value.grade !== "easy") return null;
@@ -116,6 +117,52 @@ async function existingAttempt(db: D1Database, profileId: number, input: SubmitC
     .bind(profileId, input.clientAttemptId).first<AttemptRow>();
 }
 
+const TEMPLATE_STATE_COLUMNS = "stability, difficulty, elapsed_days, scheduled_days, learning_steps, reps, lapses, state, last_review, due, correct_count, total_count";
+
+function prepareUpsertTemplateState(db: D1Database, profileId: number, templateId: number, state: ReviewState, expectedReps: number): D1PreparedStatement {
+  return db.prepare(`
+    INSERT INTO conv_template_states (
+      profile_id, template_id, stability, difficulty, elapsed_days, scheduled_days,
+      learning_steps, reps, lapses, state, last_review, due, correct_count, total_count
+    ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)
+    ON CONFLICT (profile_id, template_id) DO UPDATE SET
+      stability = excluded.stability, difficulty = excluded.difficulty,
+      elapsed_days = excluded.elapsed_days, scheduled_days = excluded.scheduled_days,
+      learning_steps = excluded.learning_steps, reps = excluded.reps, lapses = excluded.lapses,
+      state = excluded.state, last_review = excluded.last_review, due = excluded.due,
+      correct_count = excluded.correct_count, total_count = excluded.total_count
+    WHERE conv_template_states.reps = ?15
+  `).bind(profileId, templateId, state.stability, state.difficulty, state.elapsedDays, state.scheduledDays, state.learningSteps,
+    state.reps, state.lapses, state.state, state.lastReview?.getTime() ?? null, state.due.getTime(), state.correctCount, state.totalCount, expectedReps);
+}
+
+// Slot drill: FSRS state is per template (conv_template_states); the attempt row points at the template's pattern chunk.
+async function submitTemplateAttempt(db: D1Database, profileId: number, input: SubmitConversationAttemptRequest, grade: ConversationGrade, now: Date): Promise<SubmitConversationAttemptResponse> {
+  const templateId = input.templateId as number;
+  const target = await db.prepare("SELECT id FROM conv_templates WHERE id = ?1 AND pattern_chunk_id = ?2").bind(templateId, input.chunkId).first<AttemptRow>();
+  if (!target) throw new ConversationTargetNotFound();
+  const eventTime = new Date(Math.min(input.answeredAt, now.getTime()));
+  for (let tries = 0; tries < 2; tries += 1) {
+    const row = await db.prepare(`SELECT ${TEMPLATE_STATE_COLUMNS} FROM conv_template_states WHERE profile_id = ?1 AND template_id = ?2`).bind(profileId, templateId).first<StateRow>();
+    const state = row ? toState(row) : initialState(eventTime);
+    const scheduled = schedule(state, grade as Grade, new Date(Math.max(eventTime.getTime(), state.lastReview?.getTime() ?? eventTime.getTime())));
+    const write = prepareUpsertTemplateState(db, profileId, templateId, scheduled.next, state.reps);
+    if (tries === 0) {
+      let result: D1Result<unknown>[];
+      try {
+        result = await db.batch([prepareAttempt(db, profileId, input, grade, eventTime), write]);
+      } catch (error) {
+        if (await existingAttempt(db, profileId, input)) return { grade };
+        throw error;
+      }
+      if (result[1].meta.changes === 1) return { grade };
+    } else {
+      await db.batch([write]);
+    }
+  }
+  return { grade };
+}
+
 export async function submitConversationAttempt(
   db: D1Database,
   profileId: number,
@@ -125,6 +172,7 @@ export async function submitConversationAttempt(
   const grade = cappedGrade(input);
   const existing = await existingAttempt(db, profileId, input);
   if (existing) return { grade };
+  if (input.templateId !== undefined) return submitTemplateAttempt(db, profileId, input, grade, now);
 
   const target = await db.prepare(`
     SELECT c.id FROM conv_chunks c

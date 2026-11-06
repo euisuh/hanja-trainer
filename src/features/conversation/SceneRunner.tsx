@@ -3,7 +3,7 @@ import type { ConversationChunk, ConversationScene, ConversationSceneTurn } from
 import { apiUrl } from "../../platform/apiUrl";
 import { LocalRecorder, localRecordingSupported, type LocalRecordingState } from "../study/speech";
 import { enqueuePendingConversationAttempt } from "./attemptOutbox";
-import { createSceneState, scenePassed, sceneReducer, type SceneAction } from "./sceneMachine";
+import { createSceneState, expectedReplyId, pickNpcLines, scenePassed, sceneReducer, type SceneAction } from "./sceneMachine";
 import { SourceAttribution } from "../source/SourceAttribution";
 
 type SceneChunk = ConversationChunk & { audioUrl: string };
@@ -12,26 +12,19 @@ type Props = { scene: ConversationScene & { turns: ConversationSceneTurn[] }; ch
 function attemptId(): string { return crypto.randomUUID(); }
 
 export function SceneRunner({ scene, chunks, profileId, onExit }: Props) {
-  const [state, setState] = useState(createSceneState);
-  const [npcChoices, setNpcChoices] = useState<Map<number, number>>(new Map());
+  const [state, setState] = useState(() => createSceneState(pickNpcLines(scene.turns)));
   const [recording, setRecording] = useState<LocalRecordingState>(() => localRecordingSupported() ? { status: "idle" } : { status: "unsupported" });
   const recorderRef = useRef<LocalRecorder | null>(null);
   const submittedResults = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const chunkById = useMemo(() => new Map(chunks.map((chunk) => [chunk.id, chunk])), [chunks]);
   const turn = scene.turns[state.turnIndex];
-  const targetId = turn?.speaker === "npc" ? npcChoices.get(state.turnIndex) : turn?.chunkIds[0];
+  const targetId = turn?.speaker === "npc" ? state.npcPlayed[state.turnIndex] : expectedReplyId(scene.turns, state.turnIndex, state.npcPlayed);
   const target = targetId ? chunkById.get(targetId) : undefined;
   const npcTurn = scene.turns.slice(0, state.turnIndex + 1).reverse().find(({ speaker }) => speaker === "npc");
-  const npc = npcTurn ? chunkById.get(npcChoices.get(scene.turns.indexOf(npcTurn)) ?? 0) : undefined;
+  const npc = npcTurn ? chunkById.get(state.npcPlayed[scene.turns.indexOf(npcTurn)] ?? 0) : undefined;
   const dispatch = useCallback((action: SceneAction) => setState((current) => sceneReducer(current, action, scene.turns)), [scene.turns]);
-  const start = () => {
-    setNpcChoices(new Map(scene.turns.map((turn, index) => {
-      const ids = turn.speaker === "npc" ? turn.chunkIds : [];
-      return [index, ids[Math.floor(Math.random() * ids.length)]];
-    })));
-    dispatch({ type: "start" });
-  };
+  const start = () => dispatch({ type: "start" });
 
   useEffect(() => {
     const recorder = new LocalRecorder((next) => { setRecording(next); if (next.status === "ready") dispatch({ type: "answer", latencyMs: next.onsetMs }); });
@@ -75,12 +68,12 @@ export function SceneRunner({ scene, chunks, profileId, onExit }: Props) {
   }, [dispatch, onExit, record, replay, state.phase]);
 
   if (state.phase === "intro") return <section className="talk-root talk-scene"><p className="talk-scene__meta">p.{scene.ord} · 대화 연습</p><h1>{scene.titleKo}</h1><p>{scene.settingKo}</p><p>{scene.goalKo}</p><button onClick={start} type="button">장면 시작</button><button onClick={onExit} type="button">돌아가기</button></section>;
-  if (state.phase === "complete") return <section className="talk-root talk-scene"><p className="talk-scene__meta">대화 연습 끝</p><h1>{scenePassed(state) ? "통과" : "다시 연습"}</h1><button onClick={() => { submittedResults.current = 0; setState(createSceneState()); }} type="button">다시 하기</button><button onClick={onExit} type="button">끝내기</button></section>;
+  if (state.phase === "complete") return <section className="talk-root talk-scene"><p className="talk-scene__meta">대화 연습 끝</p><h1>{scenePassed(state) ? "통과" : "다시 연습"}</h1><button onClick={() => { submittedResults.current = 0; setState(createSceneState(pickNpcLines(scene.turns))); }} type="button">다시 하기</button><button onClick={onExit} type="button">끝내기</button></section>;
   return <section className="talk-root talk-scene" data-scene-phase={state.phase}>
     <header className="talk-scene__meta"><span>{scene.titleKo}</span><span>{state.turnIndex + 1} / {scene.turns.length}</span></header>
     <div className="talk-scene__spread">
       <article className="talk-scene__their"><small>상대방</small>{state.npcTextVisible && <><strong lang="ja">{npc?.ja}</strong><small className="talk-screen__source">출처 · <SourceAttribution source={npc?.sourceRef} sourceAuthor={npc?.sourceAuthor} /></small></>}<button onClick={replay} type="button">다시 듣기 <kbd>Space</kbd></button></article>
-      <article className="talk-scene__yours"><small>내 차례</small>{state.phase !== "npc" && <><p className="talk-scene__cue">{target?.koCue}</p>{state.phase === "reveal" && <><strong className="talk-scene__target" lang="ja">{target?.ja}</strong><small className="talk-screen__source">출처 · <SourceAttribution source={target?.sourceRef} sourceAuthor={target?.sourceAuthor} /></small></>}</>}</article>
+      <article className="talk-scene__yours"><small>내 차례</small>{state.phase !== "npc" && <><p className="talk-scene__cue">{target?.koCue}</p>{state.phase === "reveal" && <><strong className="talk-scene__target" lang="ja">{target?.ja}</strong>{target?.noteKo && <small className="talk-screen__source talk-screen__note">{target.noteKo}</small>}<small className="talk-screen__source">출처 · <SourceAttribution source={target?.sourceRef} sourceAuthor={target?.sourceAuthor} /></small></>}</>}</article>
     </div>
     <footer className="talk-scene__bar">
       {(state.phase === "npc" || state.phase === "reveal") && <button onClick={() => dispatch({ type: "next" })} type="button">다음 <kbd>Enter</kbd></button>}

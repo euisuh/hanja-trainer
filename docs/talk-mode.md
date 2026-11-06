@@ -17,7 +17,7 @@ learning is a phrase ("chunk") used in a situation, not a kanji. It is a new
 | 1 | Design direction | **Notebook** (Phrasebook). Not Playbill. |
 | 2 | Scope | New Talk mode under the JP track. Not a replacement of the whole app. |
 | 3 | Theme rollout | Notebook look is built for Talk only first (Phase 1). App-wide retheme is Phase 2, after Talk ships. |
-| 4 | Dialogue sourcing | Default (a): Japanese text comes from licensed corpora with exact `source_ref`; Korean cue cards and scene order are human-written. Missing lines are logged as gaps, never invented. Revisit if the gap log is large. |
+| 4 | Dialogue sourcing | Default (a): Japanese text comes from licensed corpora with exact `source_ref`; Korean cue cards and scene order are human-written. Missing lines are logged as gaps. **Amended 2026-11-06:** the gap log was large (no staff speech, no spoken-register chunks), so gaps listed in `data/conversation/GAPS.md` may be filled with `sourceKind: "authored"` rows, rules below. Every other line stays a verified Tatoeba sentence. |
 | 5 | Streak / XP | None in Talk. A plain diary calendar and one weekly line only. |
 | 6 | STT feedback, pitch-accent display | Out of Phase 1. |
 
@@ -40,6 +40,38 @@ here before the content or feedback slices start.
 - Data model: `conv_*` tables (next migration is `0025`) with the chunk fields
   (`register`, `role`, `source_kind`, `source_ref`, `audio_key`).
 - Existing kanji/hanja code paths and tests must keep passing.
+
+## Authored lines (since 2026-11-06)
+
+Tatoeba has almost no staff speech or spoken-register chunks, so a learner could not
+practice a real till or restaurant exchange. A chunk may be `sourceKind: "authored"` only when:
+
+- it is an NPC/staff line (`authoredScope: "npc"`, role `hear`), or a spoken-register chunk
+  or learner reply that is listed in `data/conversation/GAPS.md` (`authoredScope: "spoken"`);
+- it uses conservative, standard phrasing only (no slang, no invented idiom);
+- it carries `ownerApproved` (YYYY-MM-DD) and a non-empty `reviewNote` saying what was checked;
+- the UI shows it as "authored for this app" (`SourceAttribution`), never as Tatoeba.
+
+Caps, enforced by `npm run validate:conversation`: authored rows (deduped by key) are at most
+20% of all chunks, and authored `npc` lines are at most 50% of any one unit. Authored rows have
+no audio until generated; `data/conversation/audio-todo.json` lists the `audioKey`s to generate
+with `npm run audio:generate:conv` (needs remote credentials). Remove entries once audio exists.
+
+## Branching scenes (variants)
+
+An NPC turn may carry 2-3 `variants`: `{ chunkOrd, replyOrd }` pairs. The runner plays one variant at
+random per run and expects the matching `replyOrd` at the next learner turn. The turn's `chunkOrds` must
+list exactly the variant chunks, and the learner turn right after must list every `replyOrd`. Replies must
+converge (the scene stays linear after that learner turn). DB column: `conv_scene_turns.variants`.
+
+## Slot drills (templates)
+
+A unit file may carry `templates`: a pattern such as `___をください。` with 4-6 noun `slots` and a `{slot}`
+Korean cue. `shared/slotDrill.ts` builds one say card per template (random slot, never the same twice in a row).
+FSRS state is keyed per template (`conv_template_states`, state key `tpl:<key>`), not per slot. The pattern must
+come from a shipped Tatoeba say chunk (`patternChunkKey`); slot nouns are authored (`reviewNote`).
+`/api/conv/session` adds one `drill` item per new or due template before the closing scene; an attempt with
+`templateId` (chunkId = the pattern chunk) writes `conv_template_states` instead of `conv_chunk_states`.
 
 ## Notebook design (Talk only in Phase 1)
 

@@ -16,6 +16,6 @@ run([
   ...readdirSync("data/characters").sort().map((name) => `data/characters/${name}`),
   ...readdirSync("data/sentences").sort().map((name) => `data/sentences/${name}`),
   ...readdirSync("data/words").filter((name) => name.endsWith(".json")).sort().map((name) => `data/words/${name}`),
-  ...readdirSync("data/conversation").filter((name) => name.endsWith(".json") && !name.startsWith(".")).sort().map((name) => `data/conversation/${name}`),
+  ...readdirSync("data/conversation").filter((name) => name.startsWith("unit-") && name.endsWith(".json")).sort().map((name) => `data/conversation/${name}`),
 ]);
 run(["wrangler", "d1", "execute", "hanja", "--local", "--file", "e2e/reset.sql"]);

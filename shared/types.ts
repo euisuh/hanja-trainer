@@ -12,6 +12,10 @@ export type ConversationRegister = (typeof CONVERSATION_REGISTERS)[number];
 export const CONVERSATION_SOURCE_KINDS = ["corpus", "excerpt", "jmdict", "authored"] as const;
 export type ConversationSourceKind = (typeof CONVERSATION_SOURCE_KINDS)[number];
 
+// "npc": staff/NPC line (hear only). "spoken": spoken-register chunk or learner reply listed in data/conversation/GAPS.md.
+export const CONVERSATION_AUTHORED_SCOPES = ["npc", "spoken"] as const;
+export type ConversationAuthoredScope = (typeof CONVERSATION_AUTHORED_SCOPES)[number];
+
 export interface ConversationUnit {
   id: number;
   track: "jp";
@@ -34,6 +38,7 @@ export interface ConversationChunk {
   sourceKind: string;
   sourceRef: string;
   sourceAuthor?: string;
+  noteKo?: string | null;
   audioKey: string;
   retiredAt?: number | null;
 }
@@ -47,11 +52,18 @@ export interface ConversationScene {
   goalKo: string;
 }
 
+// An NPC turn may play one of 2-3 variants; the learner's expected reply is the matching replyChunkId.
+export interface ConversationTurnVariant {
+  chunkId: number;
+  replyChunkId: number;
+}
+
 export interface ConversationSceneTurn {
   sceneId: number;
   ord: number;
   speaker: "npc" | "learner";
   chunkIds: number[];
+  variants?: ConversationTurnVariant[];
 }
 
 export interface ConversationChunkState {
@@ -102,13 +114,22 @@ export interface SeedConversationChunk {
   sourceKind: ConversationSourceKind;
   sourceRef?: string;
   ownerApproved?: string;
+  authoredScope?: ConversationAuthoredScope;
+  reviewNote?: string;
+  noteKo?: string;
   audioKey: string;
+}
+
+export interface SeedConversationTurnVariant {
+  chunkOrd: number;
+  replyOrd: number;
 }
 
 export interface SeedConversationSceneTurn {
   ord: number;
   speaker: "npc" | "learner";
   chunkOrds: number[];
+  variants?: SeedConversationTurnVariant[];
 }
 
 export interface SeedConversationScene {
@@ -120,10 +141,32 @@ export interface SeedConversationScene {
   turns: SeedConversationSceneTurn[];
 }
 
+export interface SeedConversationSlot {
+  ja: string;
+  kana: string;
+  meaningKo: string;
+}
+
+// "___" in jaTemplate/kanaTemplate is replaced by a slot; cueKo carries "{slot}". Slot nouns are authored, so a reviewNote is required.
+export interface SeedConversationTemplate {
+  key: string;
+  unitOrd: number;
+  ord: number;
+  jaTemplate: string;
+  kanaTemplate: string;
+  cueKo: string;
+  register: ConversationRegister;
+  patternChunkKey: string;
+  ownerApproved: string;
+  reviewNote: string;
+  slots: SeedConversationSlot[];
+}
+
 export interface SeedConversationDocument {
   units: SeedConversationUnit[];
   chunks: SeedConversationChunk[];
   scenes: SeedConversationScene[];
+  templates?: SeedConversationTemplate[];
 }
 
 export interface ExampleSentence {

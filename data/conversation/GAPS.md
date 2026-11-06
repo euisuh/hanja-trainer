@@ -1,5 +1,27 @@
 # Conversation content gaps
 
+## Filled by authored lines (2026-11-06)
+
+The authored policy is in `docs/talk-mode.md`. These gaps below are now filled with `authored` rows
+(each carries a `reviewNote`; audio pending, see `audio-todo.json`). Per-unit gap files under `gaps/` still describe the original Tatoeba search.
+
+- Unit 3: 袋はご利用ですか, お箸はお付けしますか, お弁当は温めますか, 合計で〜円になります, 千円お預かりします, 〜円のお返しです, ありがとうございました (staff); 袋お願いします, 温めてください, 現金でお願いします (learner). New scene 2 uses them. 以上でよろしいですか alone is not authored in unit 3: 以上ですか？ (#191216) stays (unit 5 has ご注文は以上でよろしいですか).
+- Unit 5: 店内でお召し上がりですか, ご注文は以上でよろしいですか, 合計で〜円になります, サイズはどうなさいますか, こちらがおすすめです (staff); 二人です, 持ち帰りでお願いします (learner). New scene 3 covers the party-size exchange, 〜円になります and the recommendation reply.
+- Unit 6: はい、止まります, いいえ、乗り換えはありません (staff confirmations). New scene 3.
+- Unit 8: 試着室はあちらです, こちらは〜円になります, 在庫を確認いたしますので少々お待ちください, プレゼント用にお包みしましょうか (staff). New scene 3.
+- Unit 4 (구어 줄임말과 말버릇) and unit 15 (문말 조사 ね・よ・かな): spoken-register chunks with no Tatoeba pair worth shipping as a casual/polite contrast. Authored (`authoredScope: "spoken"`): contractions 〜てる, 〜ちゃう/〜じゃう, 〜とく, って, じゃ, 〜んです/〜んだ; fillers えーと, ええと, あのー, うーん, まあ; sentence-final ね, よ, よね, かな, だっけ, けどね, もん, 〜ない？; casual/polite pairs for the same meaning. About two thirds are casual register. Unit numbers 4 and 15 replace the brainstorm map entries (numbers/time, workplace); those topics are not started.
+### Status of the per-unit gap files (`gaps/unit-NN.md`)
+
+Filled (authored, audio pending):
+- gaps/unit-05: 二人です (二人です.); 店内でお召し上がりですか (店内でお召し上がりですか？); 持ち帰りでお願いします (持ち帰りでお願いします。); 以上でよろしいですか (as ご注文は以上でよろしいですか？); サイズはいかがなさいますか (サイズはどうなさいますか？, wording differs); staff reply to おすすめは何ですか (こちらがおすすめです。); 〜円になります (合計で千二百円になります。); ありがとうございました (staff). Scene 3 covers the party-size exchange.
+- gaps/unit-06: staff answers to a confirmation question (はい、止まります。 / いいえ、乗り換えはありません。). Scene 3 uses both as NPC variants.
+- gaps/unit-08: 在庫を確認します (在庫を確認いたしますので、少々お待ちください。); こちらは〜になります (こちらは五千四百円になります。); 試着室へどうぞ (試着室はあちらです。, wording differs); gift wrapping offer (プレゼント用にお包みしましょうか？, new). Scene 3 uses them.
+- GAPS.md unit 3: 袋はご利用ですか, お箸はお付けしますか, 温めますか (お弁当は温めますか？), 〜円になります, お預かりします, お返し, 袋お願いします, 温めてください, 現金でお願いします.
+
+Still open (not authored, no Tatoeba hit): gaps/unit-05 〜抜きでできますか; gaps/unit-06 〜で乗り換えですか, 〜は何番線ですか, 〜線に乗り換えて, まっすぐ行って、右ですね; gaps/unit-08 他の色はありますか (exact), サイズの答え (Mです / 〜センチです), 在庫はありますか, 取り置きお願いします, ちょっと…似合いますか replies; every item in gaps/unit-07, 09, 10, 11, 12, 13, 14 and 16 (those files are unchanged); GAPS.md unit 1 and unit 2 items.
+
+- Still open: 日本語で何て言いますか, 〜ということですか, ちょっと分かりません, fast NPC opener in unit 2, サイズ answers in unit 8, all unit 16 hedges (not authored yet).
+
 Chunks wanted by the curriculum with no natural Tatoeba sentence. Not invented.
 
 ## Unit 2

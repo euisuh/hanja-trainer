@@ -500,6 +500,38 @@
       "sourceRef": "Tatoeba #11909845",
       "audioKey": "c/e11c8cf7b48e5e77",
       "key": "tatoeba-11909845-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 39,
+      "text": "はい、止まります。",
+      "kana": "はい、とまります。",
+      "cueKo": "그 역에 정차한다는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a station or platform. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "止まります는 '(차가) 서다'. 내리다는 降ります",
+      "audioKey": "c/37adbbee5facbdaa",
+      "key": "authored-18c337ca37-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 40,
+      "text": "いいえ、乗り換えはありません。",
+      "kana": "いいえ、のりかえはありません。",
+      "cueKo": "환승이 필요 없다는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing used at a station or platform. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "noteKo": "乗り換え는 환승. ありません은 '없습니다'",
+      "audioKey": "c/4278a7a43b3abba2",
+      "key": "authored-1a4f2e12bb-hear"
     }
   ],
   "scenes": [
@@ -523,13 +555,24 @@
           "chunkOrds": [
             24,
             26
+          ],
+          "variants": [
+            {
+              "chunkOrd": 24,
+              "replyOrd": 15
+            },
+            {
+              "chunkOrd": 26,
+              "replyOrd": 16
+            }
           ]
         },
         {
           "ord": 3,
           "speaker": "learner",
           "chunkOrds": [
-            15
+            15,
+            16
           ]
         },
         {
@@ -589,6 +632,108 @@
           "chunkOrds": [
             22
           ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 6,
+      "ord": 3,
+      "titleKo": "정차역과 환승 확인하기",
+      "settingKo": "플랫폼에서 역무원이나 옆 사람에게 정차 여부와 환승을 묻는다.",
+      "goalKo": "정차 여부와 환승 필요 여부를 묻고 대답을 알아듣는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            11
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            39
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            14
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            40,
+            34
+          ],
+          "variants": [
+            {
+              "chunkOrd": 40,
+              "replyOrd": 23
+            },
+            {
+              "chunkOrd": 34,
+              "replyOrd": 22
+            }
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            23,
+            22
+          ]
+        }
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "key": "tpl-wa-doko",
+      "unitOrd": 6,
+      "ord": 1,
+      "jaTemplate": "___はどこですか。",
+      "kanaTemplate": "___はどこですか。",
+      "cueKo": "{slot} 어디냐고 묻기",
+      "register": "polite",
+      "patternChunkKey": "tatoeba-3549611-say",
+      "ownerApproved": "2026-11-06",
+      "reviewNote": "Pattern taken from the linked Tatoeba say chunk; slot nouns are plain high-frequency nouns, authored for this app.",
+      "slots": [
+        {
+          "ja": "駅",
+          "kana": "えき",
+          "meaningKo": "역"
+        },
+        {
+          "ja": "出口",
+          "kana": "でぐち",
+          "meaningKo": "출구"
+        },
+        {
+          "ja": "切符売り場",
+          "kana": "きっぷうりば",
+          "meaningKo": "매표소"
+        },
+        {
+          "ja": "バス乗り場",
+          "kana": "バスのりば",
+          "meaningKo": "버스 승강장"
+        },
+        {
+          "ja": "トイレ",
+          "kana": "トイレ",
+          "meaningKo": "화장실"
+        },
+        {
+          "ja": "改札",
+          "kana": "かいさつ",
+          "meaningKo": "개찰구"
         }
       ]
     }
