@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/no-unsafe-dictionary-type, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-conditional-empty-object-spread -- Existing profile-management HTTP boundary predates changed-file lint; parseCreateProfile/parseRenameProfile validate every key. */
 import type { ManagedProfile } from "../../shared/api";
 import { createPinCredentials, derivePinHash, isPin, type PinCredentials } from "../auth/pin";
 
@@ -62,7 +63,7 @@ function managedProfile(row: ProfileRow): ManagedProfile {
 
 async function requireAdmin(db: D1Database, callerId: number): Promise<AdminRow> {
   const row = await db.prepare(`
-    SELECT is_admin, pin_hash, (SELECT COUNT(*) FROM profile) AS profile_count
+    SELECT is_admin, pin_hash, (SELECT COUNT(*) FROM profile WHERE is_demo = 0) AS profile_count
     FROM profile WHERE id = ?1
   `).bind(callerId).first<AdminRow>();
   if (!row?.is_admin) throw new ProfileError(403, "admin_required", "An admin profile is required");

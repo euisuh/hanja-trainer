@@ -37,7 +37,8 @@ export function runServer() {
   const port = parsePort(process.env.E2E_PORT ?? "8787");
   const logPath = join(root, "test-results", "wrangler.log");
   mkdirSync(dirname(logPath), { recursive: true });
-  const npm = npmInvocation(["run", "dev", "--", "--port", String(port)]);
+  // e2e drives multi-profile flows through the anonymous profile list.
+  const npm = npmInvocation(["run", "dev", "--", "--port", String(port), "--var", "ALLOW_PROFILE_LIST:true"]);
   const log = openSync(logPath, "w");
   let child;
   try {

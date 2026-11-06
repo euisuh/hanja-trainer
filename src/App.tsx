@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { matchPath, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { cssVariables } from "./design/tokens";
 import { Landing } from "./features/landing/Landing";
+import { startDemo } from "./features/landing/startDemo";
 import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
 import { ReviewSyncStatus } from "./features/session/ReviewSyncStatus";
 import { SessionSummaryStatus } from "./features/session/SessionSummaryStatus";
@@ -159,7 +160,11 @@ export function App() {
           if (needsExplicitSelection(onlyProfile)) await apiClient.selectProfile(onlyProfile.id);
           await activateCurrentProfile("preserve", controller.signal);
         } catch (caught) {
-          if (!controller.signal.aborted) setGate(isProfileRequired(caught) && state.enabled ? "locked" : "error");
+          if (controller.signal.aborted) return;
+          // Anonymous visitors see one nameless admin entry, so the landing page fronts the lock screen too.
+          const locked = isProfileRequired(caught) && state.enabled;
+          setLanding(locked);
+          setGate(locked ? "locked" : "error");
         }
       } catch {
         if (!controller.signal.aborted) setGate("error");
@@ -214,6 +219,8 @@ export function App() {
     await activateCurrentProfile("select");
   }
 
+  const tryDemo = () => startDemo(() => activateCurrentProfile("select"));
+
   async function switchProfile() {
     teardownActiveProfile();
     try {
@@ -237,12 +244,15 @@ export function App() {
       <button onClick={() => { setGate("checking"); setRetryKey((value) => value + 1); }} type="button">다시 시도</button>
     </main>;
   } else if (gate === "choosing") {
-    content = landing && pathname === "/" ? <Landing onSignIn={() => setLanding(false)} /> : <ProfilePicker onSelect={selectProfile} profiles={profiles} />;
+    content = landing && pathname === "/" ? <Landing onDemo={tryDemo} onSignIn={() => setLanding(false)} /> : <ProfilePicker onDemo={tryDemo} onSelect={selectProfile} profiles={profiles} />;
+  } else if (gate === "locked" && selectedProfile && landing && pathname === "/") {
+    content = <Landing onDemo={tryDemo} onSignIn={() => setLanding(false)} />;
   } else if (gate === "locked" && selectedProfile) {
     content = <UnlockScreen
       key={selectedProfile.id}
       lockedUntil={lockedUntil}
       onBack={profiles.length > 1 ? () => { setSelectedProfile(null); setGate("choosing"); } : undefined}
+      onDemo={tryDemo}
       onUnlock={() => { resumeProfileRequests(); return activateCurrentProfile(profiles.length > 1 ? "select" : "preserve"); }}
       profile={selectedProfile}
     />;

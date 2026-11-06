@@ -41,7 +41,8 @@ function setup() {
   const sqlite = new DatabaseSync(":memory:");
   applyMigrations(sqlite);
   // SAFETY: test Env requires only DB binding.
-  return { sqlite, env: { DB: d1(sqlite) } as Env };
+  // These suites exercise sessions, not device trust: run as a trusted (listing) deployment.
+  return { sqlite, env: { ...({ DB: d1(sqlite) } as Env), ALLOW_PROFILE_LIST: "true" } };
 }
 
 function request(path: string, method: "GET" | "HEAD" | "POST", headers?: HeadersInit) {

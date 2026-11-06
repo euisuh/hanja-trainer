@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion -- Existing SQLite D1 test adapter and fixtures predate changed-file lint. */
 import { readFileSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
@@ -80,14 +81,16 @@ function setup() {
   insertState.run(members[0].character_id, 8, now - 86_400_000, now - 172_800_000);
   insertState.run(members[1].character_id, 2, now - 86_400_000, now - 86_400_000);
   sqlite.prepare("INSERT INTO review_log (character_id, track, rating, answered_at, correct, elapsed_ms, scheduled_days_before, scheduled_days_after, mode) VALUES (?, 'kr', 3, ?, 1, 2000, 1, 2, 'lesson')").run(members[0].character_id, now - 86_400_000);
-  return { sqlite, env: { DB: d1(sqlite) } as Env, members };
+  // These suites exercise sessions, not device trust: run as a trusted (listing) deployment.
+  return { sqlite, env: { ...({ DB: d1(sqlite) } as Env), ALLOW_PROFILE_LIST: "true" }, members };
 }
 
 function setupSeeds(files: string[]) {
   const sqlite = new DatabaseSync(":memory:");
   applyMigrations(sqlite);
   for (const file of files) sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(file, "utf8")) as unknown)));
-  return { sqlite, env: { DB: d1(sqlite) } as Env };
+  // These suites exercise sessions, not device trust: run as a trusted (listing) deployment.
+  return { sqlite, env: { ...({ DB: d1(sqlite) } as Env), ALLOW_PROFILE_LIST: "true" } };
 }
 
 function expectedOrder(track: Track): string[] {

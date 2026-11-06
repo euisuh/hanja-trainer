@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { startDemo } from "./startDemo";
 import "./landing.css";
 
 const specimen = [
@@ -14,15 +13,15 @@ const features = [
   { title: "통계", body: "연속 학습일, 하루 목표, 트랙별 숙달도를 한 화면에서 봅니다." },
 ] as const;
 
-export function Landing({ onSignIn }: { onSignIn: () => void }) {
+export function Landing({ onDemo, onSignIn }: { onDemo: () => Promise<void>; onSignIn: () => void }) {
   const [pending, setPending] = useState(false);
 
   async function tryDemo() {
     setPending(true);
     try {
-      // Until demo mode ships, the stub resolves false and the visitor lands on the picker.
-      if (!(await startDemo())) onSignIn();
+      await onDemo();
     } catch {
+      // The picker repeats the demo button and shows why it failed on retry.
       onSignIn();
     } finally {
       setPending(false);

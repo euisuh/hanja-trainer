@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion -- Existing avatar style object predates changed-file lint; it holds only CSS custom properties. */
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { avatarBackground } from "../design/tokens";
 import { Keypad } from "../features/pin/Keypad";
@@ -5,16 +6,18 @@ import { RecoveryCodeNotice } from "../features/pin/RecoveryCodeNotice";
 import { avatarHue } from "../features/profile/avatarHue";
 import { ApiClientError, apiClient } from "../lib/apiClient";
 import type { PublicProfile } from "../../shared/api";
+import { DemoEntry } from "../features/demo/DemoEntry";
 import "../features/pin/pin.css";
 
 type UnlockScreenProps = {
   lockedUntil: number | null;
   onBack?: () => void;
+  onDemo?: () => Promise<void>;
   onUnlock: () => Promise<void>;
   profile: PublicProfile;
 };
 
-export function UnlockScreen({ lockedUntil: initialLockedUntil, onBack, onUnlock, profile }: UnlockScreenProps) {
+export function UnlockScreen({ lockedUntil: initialLockedUntil, onBack, onDemo, onUnlock, profile }: UnlockScreenProps) {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [announcement, setAnnouncement] = useState(() => initialLockedUntil && initialLockedUntil > Date.now()
@@ -143,6 +146,7 @@ export function UnlockScreen({ lockedUntil: initialLockedUntil, onBack, onUnlock
           </>
         )}
         {!issuedRecoveryCode && <><p className="pin-message">{remaining ? `${remaining}초 후 다시 시도할 수 있습니다.` : error}</p><p role="alert" aria-live="assertive" className="pin-announcement">{announcement}</p></>}
+        {onDemo && <DemoEntry onStart={onDemo} />}
       </section>
     </main>
   );

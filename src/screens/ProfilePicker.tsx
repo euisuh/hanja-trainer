@@ -1,12 +1,14 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion -- Existing avatar style object predates changed-file lint; it holds only CSS custom properties. */
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { avatarBackground } from "../design/tokens";
 import { avatarHue } from "../features/profile/avatarHue";
 import type { PublicProfile } from "../../shared/api";
+import { DemoEntry } from "../features/demo/DemoEntry";
 import "../features/pin/pin.css";
 
-type Props = { profiles: PublicProfile[]; onSelect: (profile: PublicProfile) => Promise<void> };
+type Props = { profiles: PublicProfile[]; onSelect: (profile: PublicProfile) => Promise<void>; onDemo?: () => Promise<void> };
 
-export function ProfilePicker({ profiles, onSelect }: Props) {
+export function ProfilePicker({ profiles, onSelect, onDemo }: Props) {
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
   const [pendingId, setPendingId] = useState<number | null>(null);
   const [error, setError] = useState("");
@@ -61,6 +63,7 @@ export function ProfilePicker({ profiles, onSelect }: Props) {
           ))}
         </div>
         {error && <p className="pin-message" role="alert">{error}</p>}
+        {onDemo && <DemoEntry onStart={onDemo} />}
       </section>
     </main>
   );

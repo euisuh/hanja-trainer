@@ -1,0 +1,4 @@
+.demo-entry { margin-top: var(--space-6); }
+.demo-entry button { min-height: 44px; padding: 0 var(--space-5); border: 1px solid var(--ink); border-radius: var(--radius-control); background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-weight: var(--weight-strong); }
+.demo-entry button:hover:not(:disabled) { background: var(--chip-bg); }
+.demo-entry button:disabled { cursor: wait; opacity: .65; }

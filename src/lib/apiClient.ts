@@ -257,6 +257,7 @@ export const apiClient = {
     return profile;
   },
   deleteProfile: (profileId: number) => requestJson<{ deleted: true }>(`/api/profiles/${profileId}`, { method: "DELETE" }),
+  startDemo: async () => keepSessionToken(await requestJson<{ demo: true; sessionToken?: string }>("/api/demo/session", { method: "POST", headers: credentialHeaders(), body: "{}" }, true, false)),
   selectProfile: async (profileId: number) => keepSessionToken(await requestJson<{ selected: true; sessionToken?: string }>("/api/profiles/select", { method: "POST", headers: credentialHeaders(), body: JSON.stringify({ profileId }) }, true, false)),
   endSession: async () => {
     setSessionToken(null);

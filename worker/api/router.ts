@@ -9,11 +9,18 @@ import { createSession, getProfile, parseSessionRequest } from "./sessions";
 import { parsePlacementAnswers, scoreAndSavePlacement } from "./placement";
 import { getOnboardingState, getSettings, parseSettingsPatch, patchSettings } from "./settings";
 import { getStats } from "./stats";
-import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, listProfiles, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
+import { clearLegacyPinCookie, clearSessionCookie, createSessionToken, deviceCookie, findPinRecord, listProfiles, PIN_COOKIE, verifyDeviceCookie, PinError, readOnlyProfile, recoverAdminPin, removeDevicePin, resolveSession, selectProfile, sessionCookie, setDevicePin, unlockDevice, type SessionCredentials } from "../auth/pin";
 import { completeUnitTest, parseUnitTestSubmission, UnitTestError } from "./unitTest";
 import { createProfile, deleteProfile, ProfileError, renameProfile } from "./profiles";
 import { getConversationProgress, getConversationSession, getConversationUnit, getConversationUnits, getDueConversationChunks, parseConversationCheckin, saveConversationCheckin } from "./conversation";
 import { getConversationStats } from "./conversationStats";
+import { consumeDemoWrite, createDemoSession } from "./demo";
+import type { PublicProfile } from "../../shared/api";
+
+// Set ALLOW_PROFILE_LIST="true" (wrangler `vars` or `--var`) to list every real
+// profile to anonymous callers, as before demo mode. Default: hidden.
+type ApiEnv = Env & { ALLOW_PROFILE_LIST?: string };
+const REDACTED_ADMIN_NAME = "관리자";
 
 // A browser sets exactly one of these on every request it makes. `curl`, the
 // audio generator, and future native clients set neither, so they are allowed:
@@ -66,10 +73,32 @@ function withCookie(response: Response, cookie: string): Response {
 // Tokens reach JavaScript only when the client explicitly asks for bearer
 // transport while presenting a credential, or already authenticated with a
 // bearer token. A cookie session is never converted into a readable token.
-function issueSession(request: Request, body: Record<string, unknown>, token: string): Response {
-  return request.headers.get(SESSION_TRANSPORT_HEADER) === "bearer" || nativeOrigin(request)
-    ? Response.json({ ...body, sessionToken: token }, { headers: { "cache-control": "no-store" } })
-    : withCookie(Response.json(body), sessionCookie(token));
+function issueSession(request: Request, body: Record<string, unknown>, token: string, device: string | null = null): Response {
+  if (request.headers.get(SESSION_TRANSPORT_HEADER) === "bearer" || nativeOrigin(request)) {
+    return Response.json({ ...body, sessionToken: token }, { headers: { "cache-control": "no-store" } });
+  }
+  const response = withCookie(Response.json(body), sessionCookie(token));
+  if (device) response.headers.append("set-cookie", device);
+  return response;
+}
+
+// Real profile names are shown only to a caller who already holds a real
+// session, a device cookie from an earlier PIN unlock, or when the lone profile
+// has no PIN (and is therefore public anyway). Everyone else -- including demo
+// visitors -- sees just a nameless admin entry, enough for the owner to unlock
+// on a new device; that unlock then sets the device cookie.
+async function trustedCaller(env: ApiEnv, credentials: SessionCredentials, now: number, native: boolean): Promise<boolean> {
+  if (env.ALLOW_PROFILE_LIST === "true") return true;
+  const session = await resolveSession(env.DB, credentials, now);
+  if (session && !session.is_demo) return true;
+  return !native && await verifyDeviceCookie(env.DB, credentials.cookie, now);
+}
+
+async function visibleProfiles(env: ApiEnv, credentials: SessionCredentials, now: number, native: boolean): Promise<PublicProfile[]> {
+  const profiles = await listProfiles(env.DB);
+  if (profiles.length === 1 && !profiles[0].hasPin) return profiles;
+  if (await trustedCaller(env, credentials, now, native)) return profiles;
+  return profiles.filter((profile) => profile.isAdmin).map((profile) => ({ ...profile, name: REDACTED_ADMIN_NAME }));
 }
 
 function renewSession(response: Response, credentials: SessionCredentials, token: string): Response {
@@ -320,7 +349,7 @@ export async function routeApiRequest(request: Request, env: Env, now = Date.now
   return withCors(await handleApiRequest(request, env, now, true), origin);
 }
 
-async function handleApiRequest(request: Request, env: Env, now: number, native: boolean): Promise<Response> {
+async function handleApiRequest(request: Request, env: ApiEnv, now: number, native: boolean): Promise<Response> {
   try {
     const url = new URL(request.url);
     if (!native && request.method !== "GET" && request.method !== "HEAD" && crossSite(request, url)) {
@@ -334,38 +363,71 @@ async function handleApiRequest(request: Request, env: Env, now: number, native:
       return Response.json({ minCompatVersion: MIN_CLIENT_COMPAT_VERSION } satisfies ClientConfigResponse);
     }
     if (request.method === "GET" && pathname === "/api/profiles") {
-      return Response.json({ profiles: await listProfiles(env.DB) });
+      return Response.json({ profiles: await visibleProfiles(env, credentials, now, native) });
     }
     if (request.method === "GET" && pathname === "/api/pin/state") {
-      const record = await resolveSession(env.DB, credentials, now) ?? await readOnlyProfile(env.DB);
+      // Anonymous callers with several profiles see only the nameless admin entry
+      // (visibleProfiles), so they get that entry's lock state.
+      const adminRecord = async () => {
+        const admin = await env.DB.prepare("SELECT id FROM profile WHERE is_admin = 1").first<{ id: number }>();
+        return admin ? findPinRecord(env.DB, admin.id) : null;
+      };
+      const record = await resolveSession(env.DB, credentials, now) ?? await readOnlyProfile(env.DB) ?? await adminRecord();
       if (!record) return error(401, "profile_required", "Select a profile");
       const locked = Boolean(record.pin_locked_until && record.pin_locked_until > now);
       return Response.json({ enabled: Boolean(record.pin_hash), locked, lockedUntil: locked ? record.pin_locked_until : null });
     }
     if (request.method === "POST" && pathname === "/api/pin/unlock") {
       const body = await jsonBody(request);
-      const result = await unlockDevice(env.DB, profileId(body.profileId), body.pin, now);
-      return issueSession(request, { unlocked: true, ...(result.recoveryCode ? { recoveryCode: result.recoveryCode } : {}) }, result.token);
+      const id = profileId(body.profileId);
+      const result = await unlockDevice(env.DB, id, body.pin, now);
+      return issueSession(request, { unlocked: true, ...(result.recoveryCode ? { recoveryCode: result.recoveryCode } : {}) }, result.token, await deviceCookie(env.DB, id, now));
     }
     if (request.method === "POST" && pathname === "/api/pin/recover") {
       const body = await jsonBody(request);
-      return issueSession(request, { recovered: true }, await recoverAdminPin(env.DB, profileId(body.profileId), body.code, now));
+      const id = profileId(body.profileId);
+      const token = await recoverAdminPin(env.DB, id, body.code, now);
+      return issueSession(request, { recovered: true }, token, await deviceCookie(env.DB, id, now));
     }
     if (request.method === "POST" && pathname === "/api/profiles/select") {
       const body = await jsonBody(request);
-      return issueSession(request, { selected: true }, await selectProfile(env.DB, profileId(body.profileId), now));
+      const id = profileId(body.profileId);
+      // A PIN-less profile hidden from this caller's list cannot be selected by
+      // guessing its id; PIN profiles still answer pin_required from selectProfile.
+      const target = await findPinRecord(env.DB, id);
+      const only = await readOnlyProfile(env.DB);
+      if (target && !target.pin_hash && !target.is_demo && only?.id !== id && !await trustedCaller(env, credentials, now, native)) {
+        return error(403, "device_not_trusted", "Unlock with the admin PIN on this device first");
+      }
+      return issueSession(request, { selected: true }, await selectProfile(env.DB, id, now));
+    }
+    if (request.method === "POST" && pathname === "/api/demo/session") {
+      const ip = request.headers.get("cf-connecting-ip") ?? "unknown";
+      return issueSession(request, { demo: true }, await createDemoSession(env.DB, ip, now));
     }
     if (request.method === "POST" && pathname === "/api/session/end") {
       return native ? Response.json({ ended: true }) : withCookie(Response.json({ ended: true }), clearSessionCookie);
     }
 
     const record = await resolveSession(env.DB, credentials, now);
-    if (!record) return error(401, "profile_required", "Select a profile");
+    if (!record) {
+      const required = error(401, "profile_required", "Select a profile");
+      // Drop a rejected cookie (e.g. an expired demo) so the browser starts clean.
+      return credentials.cookie?.includes(`${PIN_COOKIE}=`) ? withCookie(required, clearSessionCookie) : required;
+    }
     const rawExpectedProfileId = request.headers.get(PROFILE_EXPECTATION_HEADER);
     const expectedProfileId = rawExpectedProfileId !== null && /^[1-9]\d*$/u.test(rawExpectedProfileId) ? Number(rawExpectedProfileId) : null;
     if (rawExpectedProfileId !== null && (!Number.isSafeInteger(expectedProfileId) || expectedProfileId !== record.id)
       || rawExpectedProfileId === null && request.method !== "GET" && request.method !== "HEAD") {
       return error(409, "profile_changed", "The active profile changed");
+    }
+
+    if (record.is_demo) {
+      // Sandboxes cannot touch credentials or profile management, and every write spends quota.
+      if (pathname === "/api/pin" || (pathname.startsWith("/api/profiles") && request.method !== "GET")) {
+        return error(403, "demo_forbidden", "Not available in the demo");
+      }
+      if (request.method !== "GET" && request.method !== "HEAD") await consumeDemoWrite(env.DB, record.id);
     }
 
     if (request.method === "POST" && pathname === "/api/pin") {

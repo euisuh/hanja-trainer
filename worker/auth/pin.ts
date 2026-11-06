@@ -1,6 +1,12 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion -- Existing PIN/session module predates changed-file lint; request bodies are validated by isPin and cookiePayload at this boundary. */
 export const PIN_ITERATIONS = 100_000;
 export const PIN_SESSION_MS = 2 * 60 * 60 * 1_000;
 export const PIN_COOKIE = "hanja_session";
+// Long-lived proof that this browser once unlocked a real profile with its PIN.
+// It only reveals the profile list (GET /api/profiles); it never authenticates.
+export const DEVICE_COOKIE = "hanja_device";
+const DEVICE_MS = 400 * 24 * 60 * 60 * 1_000;
+export const DEMO_TTL_MS = 24 * 60 * 60 * 1_000;
 const RECOVERY_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const RECOVERED_SECRET_PREFIX = "recovered:";
 // Pre-multi-profile cookie name (single-part expiry.signature payload, no profile
@@ -17,6 +23,8 @@ export type PinRecord = {
   pin_salt: string | null;
   pin_iterations: number | null;
   pin_secret: string | null;
+  is_demo: number;
+  created_at: number;
   pin_failures: number;
   pin_locked_until: number | null;
   recovery_hash: string | null;
@@ -108,9 +116,9 @@ async function createRecoveryCredentials(derive = derivePinHash) {
   return { code, ...await createHashCredentials(code, derive) };
 }
 
-async function findPinRecord(db: D1Database, profileId: number): Promise<PinRecord | null> {
+export async function findPinRecord(db: D1Database, profileId: number): Promise<PinRecord | null> {
   return db.prepare(`
-    SELECT id, is_admin, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
+    SELECT id, is_admin, is_demo, created_at, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
       recovery_hash, recovery_salt, recovery_iterations
     FROM profile WHERE id = ?1
   `).bind(profileId).first<PinRecord>();
@@ -125,7 +133,7 @@ export async function readPinRecord(db: D1Database, profileId: number): Promise<
 export async function listProfiles(db: D1Database): Promise<PublicProfile[]> {
   const result = await db.prepare(`
     SELECT id, name, pin_hash IS NOT NULL AS has_pin, is_admin
-    FROM profile ORDER BY id
+    FROM profile WHERE is_demo = 0 ORDER BY id
   `).all<{ id: number; name: string; has_pin: number; is_admin: number }>();
   return result.results.map((profile) => ({
     id: profile.id,
@@ -137,9 +145,9 @@ export async function listProfiles(db: D1Database): Promise<PublicProfile[]> {
 
 export async function readOnlyProfile(db: D1Database): Promise<PinRecord | null> {
   const result = await db.prepare(`
-    SELECT id, is_admin, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
+    SELECT id, is_admin, is_demo, created_at, pin_hash, pin_salt, pin_iterations, pin_secret, pin_failures, pin_locked_until,
       recovery_hash, recovery_salt, recovery_iterations
-    FROM profile ORDER BY id LIMIT 2
+    FROM profile WHERE is_demo = 0 ORDER BY id LIMIT 2
   `).all<PinRecord>();
   return result.results.length === 1 ? result.results[0] : null;
 }
@@ -212,7 +220,7 @@ export async function removeDevicePin(
     WHERE id = ?3 AND pin_hash IS ?4 AND pin_salt IS ?5
       AND pin_iterations IS ?6 AND pin_secret IS ?7
       AND recovery_hash IS ?8 AND recovery_salt IS ?9 AND recovery_iterations IS ?10
-      AND (is_admin = 0 OR (SELECT COUNT(*) FROM profile) = 1)
+      AND (is_admin = 0 OR (SELECT COUNT(*) FROM profile WHERE is_demo = 0) = 1)
   `).bind(
     base64(randomBytes(32)), now, profileId,
     record.pin_hash, record.pin_salt, record.pin_iterations, record.pin_secret,
@@ -223,11 +231,11 @@ export async function removeDevicePin(
   throw new PinError(409, "admin_pin_required", "Admin PIN is required while multiple profiles exist");
 }
 
-function cookieValue(header: string | null): string | null {
+function cookieValue(header: string | null, cookie = PIN_COOKIE): string | null {
   if (!header) return null;
   for (const part of header.split(";")) {
     const [name, ...value] = part.trim().split("=");
-    if (name === PIN_COOKIE) return value.join("=");
+    if (name === cookie) return value.join("=");
   }
   return null;
 }
@@ -269,7 +277,7 @@ async function verifyPinSession(record: PinRecord, token: string | null, now: nu
 async function adminCanAuthenticate(db: D1Database, record: PinRecord): Promise<boolean> {
   if (!record.is_admin || record.pin_hash) return true;
   if (record.pin_secret?.startsWith(RECOVERED_SECRET_PREFIX)) return true;
-  const count = await db.prepare("SELECT COUNT(*) AS count FROM profile").first<{ count: number }>();
+  const count = await db.prepare("SELECT COUNT(*) AS count FROM profile WHERE is_demo = 0").first<{ count: number }>();
   return count?.count === 1;
 }
 
@@ -281,12 +289,17 @@ export async function resolveSession(db: D1Database, credentials: SessionCredent
   const parsed = cookiePayload(token);
   if (parsed) {
     const record = await findPinRecord(db, parsed.profileId);
-    if (record && await verifyPinSession(record, token, now) && await adminCanAuthenticate(db, record)) return record;
+    if (record && await verifyPinSession(record, token, now) && await adminCanAuthenticate(db, record)
+      // Demo sandboxes die after DEMO_TTL_MS even if the lazy purge has not run yet.
+      && !(record.is_demo && record.created_at <= now - DEMO_TTL_MS)) return record;
   }
   if (bearer) return null;
   // A lone PIN-less profile preserves the original single-profile experience.
   // Two or more profiles always require an explicit, signed selection.
   const only = await readOnlyProfile(db);
+  // A rejected cookie may fall back only to its own profile (an expired owner
+  // session); a stale demo or other profile's credential never lands on the owner.
+  if (parsed && parsed.profileId !== only?.id) return null;
   return only && !only.pin_hash ? only : null;
 }
 
@@ -294,6 +307,31 @@ export async function createSessionToken(profileId: number, secret: string, now:
   const expiry = String(now + PIN_SESSION_MS);
   const payload = `${profileId}.${expiry}`;
   return `${payload}.${base64Url(await sign(payload, secret))}`;
+}
+
+export function randomSecret(): string {
+  return base64(randomBytes(32));
+}
+
+// Domain-separated from session tokens ("device." prefix) so neither can stand in for the other.
+export async function deviceCookie(db: D1Database, profileId: number, now: number): Promise<string | null> {
+  const record = await findPinRecord(db, profileId);
+  if (!record?.pin_secret || record.is_demo) return null;
+  const expiry = String(now + DEVICE_MS);
+  const signature = base64Url(await sign(`device.${profileId}.${expiry}`, record.pin_secret));
+  return `${DEVICE_COOKIE}=${profileId}.${expiry}.${signature}; Max-Age=${DEVICE_MS / 1_000}; HttpOnly; Secure; SameSite=Strict; Path=/`;
+}
+
+export async function verifyDeviceCookie(db: D1Database, header: string | null, now: number): Promise<boolean> {
+  const parsed = cookiePayload(cookieValue(header, DEVICE_COOKIE));
+  if (!parsed || Number(parsed.expiry) <= now) return false;
+  const record = await findPinRecord(db, parsed.profileId);
+  if (!record?.pin_secret || record.is_demo) return false;
+  try {
+    return constantTimeEqual(decodeBase64Url(parsed.signature), await sign(`device.${parsed.profileId}.${parsed.expiry}`, record.pin_secret));
+  } catch {
+    return false;
+  }
 }
 
 export function sessionCookie(token: string): string {
@@ -316,6 +354,8 @@ async function ensureSessionSecret(db: D1Database, record: PinRecord, now: numbe
 
 export async function selectProfile(db: D1Database, profileId: number, now: number): Promise<string> {
   let record = await readPinRecord(db, profileId);
+  // A demo sandbox is reachable only through the token minted for its visitor.
+  if (record.is_demo) throw new PinError(404, "profile_not_found", "Profile was not found");
   if (record.pin_hash) throw new PinError(401, "pin_required", "Profile PIN is required");
   if (!await adminCanAuthenticate(db, record)) throw new PinError(409, "admin_pin_required", "Admin PIN is required while multiple profiles exist");
   record = await ensureSessionSecret(db, record, now);

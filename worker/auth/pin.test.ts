@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion -- Existing SQLite D1 test adapter predates changed-file lint. */
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { afterEach, describe, expect, it } from "vitest";
 import { routeApiRequest } from "../api/router";
@@ -182,13 +183,21 @@ describe("device PIN", () => {
     expect((await routeApiRequest(request("/api/health"), fixture.env)).status).toBe(200);
 
     const profileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
+    // Anonymous callers no longer see real names once profiles multiply.
     expect(await (await routeApiRequest(request("/api/profiles"), fixture.env)).json()).toEqual({ profiles: [
+      { id: 1, name: "관리자", hasPin: false, isAdmin: true },
+    ] });
+    expect(await (await routeApiRequest(request("/api/profiles"), { ...fixture.env, ALLOW_PROFILE_LIST: "true" } as Env)).json()).toEqual({ profiles: [
       { id: 1, name: "나", hasPin: false, isAdmin: true },
       { id: profileId, name: "둘", hasPin: false, isAdmin: false },
     ] });
     expect((await routeApiRequest(request("/api/health"), fixture.env)).status).toBe(401);
 
-    const selected = await routeApiRequest(request("/api/profiles/select", "POST", { profileId }), fixture.env);
+    // A stranger cannot select the hidden PIN-less profile by guessing its id.
+    const guessed = await routeApiRequest(request("/api/profiles/select", "POST", { profileId }), fixture.env);
+    expect(guessed.status).toBe(403);
+    expect(guessed.headers.get("set-cookie")).toBeNull();
+    const selected = await routeApiRequest(request("/api/profiles/select", "POST", { profileId }), { ...fixture.env, ALLOW_PROFILE_LIST: "true" } as Env);
     expect(selected.status).toBe(200);
     const selectedCookie = cookie(selected);
     expect((await routeApiRequest(request("/api/health", "GET", undefined, selectedCookie, profileId), fixture.env)).status).toBe(200);
@@ -209,7 +218,9 @@ describe("device PIN", () => {
     const adminSelection = cookie(await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), fixture.env, now));
     const profileId = Number(fixture.sqlite.prepare("INSERT INTO profile (name) VALUES ('둘')").run().lastInsertRowid);
     expect((await routeApiRequest(request("/api/health", "GET", undefined, adminSelection), fixture.env, now)).status).toBe(401);
-    const unsafeSelection = await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), fixture.env, now);
+    const strangerSelection = await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), fixture.env, now);
+    expect(strangerSelection.status).toBe(403);
+    const unsafeSelection = await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), { ...fixture.env, ALLOW_PROFILE_LIST: "true" } as Env, now);
     expect(unsafeSelection.status).toBe(409);
     expect(await unsafeSelection.json()).toMatchObject({ error: { code: "admin_pin_required" } });
 
@@ -246,6 +257,7 @@ describe("device PIN", () => {
     expect(recovered.status).toBe(200);
     expect(await recovered.json()).toEqual({ recovered: true });
     const recoveredCookie = cookie(recovered);
+    const deviceCookie = recovered.headers.getSetCookie().find((value) => value.startsWith("hanja_device="))!.split(";", 1)[0];
     const stored = await readPinRecord(fixture.env.DB, 1);
     expect(stored).toMatchObject({
       pin_hash: null,
@@ -260,7 +272,9 @@ describe("device PIN", () => {
     expect(stored.pin_secret).not.toBe(before.pin_secret);
     expect((await routeApiRequest(request("/api/health", "GET", undefined, recoveredCookie), fixture.env, now)).status).toBe(200);
     expect((await routeApiRequest(request("/api/session/end", "POST", undefined, recoveredCookie), fixture.env, now)).status).toBe(200);
-    const selected = await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), fixture.env, now);
+    // The recovered, PIN-less admin is selectable only from the device that recovered it.
+    expect((await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }), fixture.env, now)).status).toBe(403);
+    const selected = await routeApiRequest(request("/api/profiles/select", "POST", { profileId: 1 }, deviceCookie), fixture.env, now);
     expect(selected.status).toBe(200);
     const selectedCookie = cookie(selected);
     expect((await routeApiRequest(request("/api/health", "GET", undefined, selectedCookie), fixture.env, now)).status).toBe(200);

@@ -46,6 +46,39 @@ npm run dev
 `npm run dev` builds the SPA, then starts `wrangler dev`. The SPA and API share
 one origin; verify the Worker with `curl http://localhost:8787/api/health`.
 
+### Profile list privacy and demo mode
+
+`GET /api/profiles` returns real profile names only to a caller that holds a
+real session, carries the `hanja_device` cookie (set by a successful PIN unlock
+or recovery in that browser, 400 days, rotated with the PIN), or when the only
+profile has no PIN. Everyone else, demo visitors included, gets one nameless
+admin entry (`관리자`) so the owner can still unlock on a new device; family
+members on a new device appear after the admin unlocks there once. Native
+clients get no device cookie, so after their token expires they also see only
+the admin entry. The same trust (real session, device cookie, or the flag
+below) is required to select a PIN-less non-admin profile, so a hidden profile
+cannot be entered by guessing its id (`403 device_not_trusted`).
+
+The lone PIN-less profile still signs in automatically without a device
+cookie. That setup is public by design (see "Optional profile PIN"): nothing
+else exists to protect, and gating it would lock a PIN-less owner out with no
+way to earn the cookie. Set an admin PIN before exposing the site. A rejected
+session cookie never falls back to it unless the cookie was for that same
+profile, so an expired demo cookie gets `401` and is cleared.
+
+To list every profile anonymously, as before, start the Worker
+with `--var ALLOW_PROFILE_LIST:true` (e2e does) or set it in `vars`; it defaults
+to off.
+
+"가입 없이 체험하기" on the picker and unlock screens calls
+`POST /api/demo/session`, which creates a throwaway profile (`is_demo = 1`, no
+PIN, onboarded, Japanese track only) and signs the visitor in like any session.
+Limits: 5 creates per client IP per hour (hashed `CF-Connecting-IP`), 200 live
+demo profiles, 500 writes per demo profile. A demo profile is rejected 24 hours
+after creation and deleted, with its data, by the next demo create. Demo
+sessions cannot change a PIN, manage profiles, or be selected by id. Demo rows
+do not count toward the five-profile limit.
+
 ## Mobile (Capacitor)
 
 `android/` and `ios/` wrap the same SPA; see `docs/mobile-roadmap.md`. The app
