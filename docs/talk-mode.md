@@ -57,6 +57,10 @@ Caps, enforced by `npm run validate:conversation`: authored rows (deduped by key
 no audio until generated; `data/conversation/audio-todo.json` lists the `audioKey`s to generate
 with `npm run audio:generate:conv` (needs remote credentials). Remove entries once audio exists.
 
+Travel units 17-19 (transit, hotel, numbers and prices, added 2026-11-06) follow the same policy: each authored line
+is listed in `data/conversation/GAPS.md`, and a Tatoeba row with no `owner` is never shipped because it cannot be
+attributed. The overall cap stays at 20% (18.8% after these units); it was not raised.
+
 ## Branching scenes (variants)
 
 An NPC turn may carry 2-3 `variants`: `{ chunkOrd, replyOrd }` pairs. The runner plays one variant at

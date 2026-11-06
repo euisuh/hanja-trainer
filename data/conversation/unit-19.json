@@ -1,0 +1,1236 @@
+{
+  "units": [
+    {
+      "ord": 19,
+      "titleKo": "숫자·가격·시간",
+      "goalKo": "개수와 사람 수를 세고, 가격과 시각을 묻고 알아듣고, 결제와 면세, 영업시간을 확인한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 19,
+      "ord": 1,
+      "text": "これはいくらですか。",
+      "kana": "これはいくらですか。",
+      "cueKo": "이거 얼마냐고 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #432825",
+      "noteKo": "주제는 これは. これがいくらですか는 어색하다",
+      "audioKey": "c/3047538f8299b1b7",
+      "key": "tatoeba-432825-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 2,
+      "text": "千二百円です。",
+      "kana": "せんにひゃくえんです。",
+      "cueKo": "1200엔이라는 가격 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "noteKo": "千二百은 せんにひゃく. 300 さんびゃく, 600 ろっぴゃく",
+      "audioKey": "c/2eb001f1569e9d84",
+      "key": "authored-743e94e41f-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 3,
+      "text": "二千円です。",
+      "kana": "にせんえんです。",
+      "cueKo": "2천 엔이라는 가격 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/05b9aadea71999e2",
+      "key": "authored-3427e13711-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 4,
+      "text": "じゃあ、これにします。",
+      "kana": "じゃあ、これにします。",
+      "cueKo": "그럼 이걸로 하겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "'이걸로 할게요'는 これにします. これでします는 틀린다",
+      "audioKey": "c/46e13b382ffe0694",
+      "key": "authored-65732bc37f-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 5,
+      "text": "もう少し安いのはありますか。",
+      "kana": "もうすこしやすいのはありますか。",
+      "cueKo": "좀 더 싼 것이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #194118",
+      "audioKey": "c/da882c1cf36cc965",
+      "key": "tatoeba-194118-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 6,
+      "text": "少々お待ちください。",
+      "kana": "しょうしょうおまちください。",
+      "cueKo": "잠시 기다려 달라는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8886173",
+      "audioKey": "c/9812a178c3c3d2bc",
+      "key": "tatoeba-8886173-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 7,
+      "text": "ありがとうございます。",
+      "kana": "ありがとうございます。",
+      "cueKo": "고맙다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9559301",
+      "audioKey": "c/4ad50db06886ad5d",
+      "key": "tatoeba-9559301-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 8,
+      "text": "一万二千円です。",
+      "kana": "いちまんにせんえんです。",
+      "cueKo": "1만 2천 엔이라는 가격 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "noteKo": "한국어 '만 원'과 달리 一万円. 一을 빼지 않는다",
+      "audioKey": "c/5bdfaa13c0a7e80b",
+      "key": "authored-fb490b0f9f-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 9,
+      "text": "少しまけていただけませんか。",
+      "kana": "すこしまけていただけませんか。",
+      "cueKo": "조금 깎아 달라고 정중히 부탁하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "일본 가게는 정찰제가 많다. 깎아 달라는 말은 시장이나 전자상가에서",
+      "audioKey": "c/f352383df2bd1b6d",
+      "key": "authored-0949771338-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 10,
+      "text": "申し訳ございません、お値引きはしておりません。",
+      "kana": "もうしわけございません、おねびきはしておりません。",
+      "cueKo": "할인은 하지 않는다는 정중한 거절 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/389c4315bc789776",
+      "key": "authored-15d956983e-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 11,
+      "text": "ちょっと高いので、やめておきます。",
+      "kana": "ちょっとたかいので、やめておきます。",
+      "cueKo": "비싸서 이번엔 사지 않겠다고 정중히 사양하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "'안 살게요'는 買いません보다 やめておきます가 부드럽다",
+      "audioKey": "c/9ea94ace3cbd4579",
+      "key": "authored-37b59a72df-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 12,
+      "text": "かしこまりました。",
+      "kana": "かしこまりました。",
+      "cueKo": "직원이 알겠다고 정중히 답하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11041830",
+      "audioKey": "c/cc896492216c7835",
+      "key": "tatoeba-11041830-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 13,
+      "text": "また来ます。",
+      "kana": "またきます。",
+      "cueKo": "다시 오겠다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3492798",
+      "audioKey": "c/4a15d8f491b0ed63",
+      "key": "tatoeba-3492798-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 14,
+      "text": "またのご来店をお待ちしております。",
+      "kana": "またのごらいてんをおまちしております。",
+      "cueKo": "또 방문하기를 기다린다는 인사 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12167715",
+      "audioKey": "c/87423ed6f6d92063",
+      "key": "tatoeba-12167715-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 15,
+      "text": "カードで支払えますか。",
+      "kana": "カードでしはらえますか。",
+      "cueKo": "카드로 결제할 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226473",
+      "noteKo": "지불하다는 支払う. 결제 수단은 で: カードで",
+      "audioKey": "c/115b316baa07d4d7",
+      "key": "tatoeba-226473-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 16,
+      "text": "はい、お使いいただけます。",
+      "kana": "はい、おつかいいただけます。",
+      "cueKo": "카드를 쓸 수 있다는 대답 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/f99778f3b38ab884",
+      "key": "authored-c7c04d3511-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 17,
+      "text": "申し訳ございません、現金のみです。",
+      "kana": "もうしわけございません、げんきんのみです。",
+      "cueKo": "현금만 받는다는 정중한 대답 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/668733faed8b0b0a",
+      "key": "authored-fd57d0b086-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 18,
+      "text": "カードでお願いします。",
+      "kana": "カードでおねがいします。",
+      "cueKo": "카드로 부탁한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226474",
+      "audioKey": "c/68c189e83c3cb762",
+      "key": "tatoeba-226474-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 19,
+      "text": "現金でお願いします。",
+      "kana": "げんきんでおねがいします。",
+      "cueKo": "현금으로 부탁한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Learner reply, standard phrasing at a convenience-store till. Authored for this app; no standalone Tatoeba sentence (GAPS.md).",
+      "audioKey": "c/5a7cd140985bea4a",
+      "key": "authored-2923263b22-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 20,
+      "text": "レシートはお渡ししますか？",
+      "kana": "レシートはおわたししますか？",
+      "cueKo": "영수증을 드릴지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/2f43ff621aa221a9",
+      "key": "authored-0b24acded1-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 21,
+      "text": "レシートはいりません。",
+      "kana": "レシートはいりません。",
+      "cueKo": "영수증은 필요 없다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12024147",
+      "noteKo": "'필요 없다'는 いりません. 要る(필요)와 居る(있다)는 소리가 같다",
+      "audioKey": "c/2086a2e4e764c3c2",
+      "key": "tatoeba-12024147-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 22,
+      "text": "大人二枚と、子ども一枚お願いします。",
+      "kana": "おとなにまいと、こどもいちまいおねがいします。",
+      "cueKo": "어른 두 장과 어린이 한 장을 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "二枚 にまい, 一枚 いちまい. 나열할 때 마지막에도 枚를 붙인다",
+      "audioKey": "c/d0c49dcc7deff119",
+      "key": "authored-b23ea464e2-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 23,
+      "text": "全部で三千円です。",
+      "kana": "ぜんぶでさんぜんえんです。",
+      "cueKo": "전부 3천 엔이라는 금액 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #205018",
+      "audioKey": "c/4e77f507519180b3",
+      "key": "tatoeba-205018-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 24,
+      "text": "二千五百円になります。",
+      "kana": "にせんごひゃくえんになります。",
+      "cueKo": "2500엔이라는 금액 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/c2e567568d34990b",
+      "key": "authored-8296219077-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 25,
+      "text": "一万円札でもいいですか。",
+      "kana": "いちまんえんさつでもいいですか。",
+      "cueKo": "1만 엔 지폐도 괜찮은지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "'만 원'과 달리 一万円札. 一을 빼지 않는다. でも는 '~라도'",
+      "audioKey": "c/84825471e433fda0",
+      "key": "authored-28e1ff5125-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 26,
+      "text": "この店は免税店ですか。",
+      "kana": "このみせはめんぜいてんですか。",
+      "cueKo": "이 가게가 면세점인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #991960",
+      "noteKo": "免税店은 めんぜいてん. 店은 한국어 점과 달리 てん으로 읽는다",
+      "audioKey": "c/3067d0a221e7ec15",
+      "key": "tatoeba-991960-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 27,
+      "text": "はい、パスポートをお見せください。",
+      "kana": "はい、パスポートをおみせください。",
+      "cueKo": "면세 처리를 위해 여권을 보여 달라는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/56347b7a275a4b42",
+      "key": "authored-d35bcf8237-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 28,
+      "text": "申し訳ございません、免税はできないんです。",
+      "kana": "もうしわけございません、めんぜいはできないんです。",
+      "cueKo": "면세는 불가능하다는 정중한 대답 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "audioKey": "c/18160c97d74f6a3f",
+      "key": "authored-ec99880afd-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 29,
+      "text": "はい、どうぞ。",
+      "kana": "はい、どうぞ。",
+      "cueKo": "'여기 있어요' 하며 건네기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10918319",
+      "audioKey": "c/4fab179f3dbf7944",
+      "key": "tatoeba-10918319-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 30,
+      "text": "はい、分かりました。",
+      "kana": "はい、わかりました。",
+      "cueKo": "알겠다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899752",
+      "audioKey": "c/7ca1ada17273863a",
+      "key": "tatoeba-10899752-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 31,
+      "text": "営業時間は何時から何時までですか？",
+      "kana": "えいぎょうじかんはなんじからなんじまでですか？",
+      "cueKo": "영업시간이 몇 시부터 몇 시까지인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #189350",
+      "noteKo": "'~부터 ~까지'는 から ~まで. 시작 시각에 から, 끝 시각에 まで",
+      "audioKey": "c/8ad004bed09d80de",
+      "key": "tatoeba-189350-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 32,
+      "text": "営業時間は十時から七時までです。",
+      "kana": "えいぎょうじかんはじゅうじからしちじまでです。",
+      "cueKo": "영업시간이 10시부터 7시까지라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "noteKo": "7시는 しちじ. ななじ라고 읽지 않는다. 4시 よじ, 9시 くじ",
+      "audioKey": "c/ed3cd0592a4951ea",
+      "key": "authored-770ea61bd1-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 33,
+      "text": "定休日はありますか。",
+      "kana": "ていきゅうびはありますか。",
+      "cueKo": "정기 휴일이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "audioKey": "c/a79d7503f29feb94",
+      "key": "authored-71a35b31cb-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 34,
+      "text": "月曜日は定休日です。",
+      "kana": "げつようびはていきゅうびです。",
+      "cueKo": "월요일이 정기 휴일이라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9679074",
+      "audioKey": "c/9759c88178f90deb",
+      "key": "tatoeba-9679074-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 35,
+      "text": "次の電車は何時に出ますか。",
+      "kana": "つぎのでんしゃはなんじにでますか。",
+      "cueKo": "다음 전철이 몇 시에 출발하는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #150255",
+      "noteKo": "시각 뒤는 に: 何時に. 出る는 '나가다'뿐 아니라 '출발하다'로도 쓴다",
+      "audioKey": "c/7f97a1adbfa36349",
+      "key": "tatoeba-150255-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 36,
+      "text": "三時四十五分です。",
+      "kana": "さんじよんじゅうごふんです。",
+      "cueKo": "3시 45분이라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "noteKo": "〜분: 4분 よんぷん, 5분 ごふん, 10분 じゅっぷん. 45분은 よんじゅうごふん",
+      "audioKey": "c/2bb64befb091bff9",
+      "key": "authored-ff399999ef-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 37,
+      "text": "何分かかりますか？",
+      "kana": "なんぷんかかりますか？",
+      "cueKo": "몇 분 걸리는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #187304",
+      "audioKey": "c/5db8e91a2e64f421",
+      "key": "tatoeba-187304-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 38,
+      "text": "二十分ぐらいです。",
+      "kana": "にじゅっぷんぐらいです。",
+      "cueKo": "20분 정도라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 19).",
+      "noteKo": "20분은 にじゅっぷん. 작은 っ가 들어간다. にじっぷん도 쓴다",
+      "audioKey": "c/89ef915811368807",
+      "key": "authored-d1a3cac269-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 39,
+      "text": "これ全部でいくらだったの？",
+      "kana": "これぜんぶでいくらだったの？",
+      "cueKo": "친구가 전부 얼마였냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10286299",
+      "audioKey": "c/dd174b153419efdc",
+      "key": "tatoeba-10286299-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 40,
+      "text": "三千円だったよ。",
+      "kana": "さんぜんえんだったよ。",
+      "cueKo": "3천 엔이었다고 반말로 대답하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "과거는 だった. 정중체 でした의 반말. 끝의 よ로 알려 준다",
+      "audioKey": "c/3ab1d71b3f6e9034",
+      "key": "authored-9b55689307-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 41,
+      "text": "割り勘にしよう。",
+      "kana": "わりかんにしよう。",
+      "cueKo": "친구가 더치페이하자고 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12281317",
+      "noteKo": "割り勘은 각자 부담하는 계산. 한국어 '더치페이'에 해당한다",
+      "audioKey": "c/d289396a101f9fdd",
+      "key": "tatoeba-12281317-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 42,
+      "text": "いいよ、一人千五百円ね。",
+      "kana": "いいよ、ひとりせんごひゃくえんね。",
+      "cueKo": "좋다고 하며 한 사람 1500엔이라고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 19).",
+      "noteKo": "一人 ひとり, 二人 ふたり는 특별한 읽기. 三人부터 さんにん",
+      "audioKey": "c/d8a4e6a7731e3a8a",
+      "key": "authored-ab5130c04b-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 43,
+      "text": "バニラアイスクリームを二つ下さい。",
+      "kana": "バニラアイスクリームをふたつください。",
+      "cueKo": "바닐라 아이스크림 두 개 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #197931",
+      "noteKo": "一つ〜九つ, 十(とお). 11개 이상은 보통 個 등 대상에 맞는 조수사를 쓴다.",
+      "audioKey": "c/caf44907afcab533",
+      "key": "tatoeba-197931-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 44,
+      "text": "荷物は何個ですか。",
+      "kana": "にもつはなんこですか。",
+      "cueKo": "짐이 몇 개인지 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #186547",
+      "noteKo": "個는 작은 물건을 세는 말. 何個는 なんこ",
+      "audioKey": "c/a0027dd06ae55c61",
+      "key": "tatoeba-186547-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 45,
+      "text": "会計は別々でお願いします。",
+      "kana": "かいけいはべつべつでおねがいします。",
+      "cueKo": "계산은 따로 부탁한다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11548105",
+      "audioKey": "c/6d3573908ea41a76",
+      "key": "tatoeba-11548105-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 46,
+      "text": "税込みです。",
+      "kana": "ぜいこみです。",
+      "cueKo": "세금 포함 가격이라는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12098495",
+      "audioKey": "c/7dcd221e786fc483",
+      "key": "tatoeba-12098495-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 47,
+      "text": "価格は消費税込みです。",
+      "kana": "かかくはしょうひぜいこみです。",
+      "cueKo": "가격에 소비세가 포함돼 있다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11064165",
+      "audioKey": "c/dc05ed2c6e162086",
+      "key": "tatoeba-11064165-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 48,
+      "text": "消費税は含まれていません。",
+      "kana": "しょうひぜいはふくまれていません。",
+      "cueKo": "소비세가 포함되지 않았다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9796124",
+      "audioKey": "c/19a8c4ec4865bc5a",
+      "key": "tatoeba-9796124-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 49,
+      "text": "領収書をいただけますか。",
+      "kana": "りょうしゅうしょをいただけますか。",
+      "cueKo": "영수증을 받을 수 있는지 정중히 묻기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #77815",
+      "audioKey": "c/105048191445d6d7",
+      "key": "tatoeba-77815-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 50,
+      "text": "お支払いは現金になさいますか。",
+      "kana": "おしはらいはげんきんになさいますか。",
+      "cueKo": "결제를 현금으로 할지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3495499",
+      "audioKey": "c/244cde37f70a9be8",
+      "key": "tatoeba-3495499-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 51,
+      "text": "お支払いは現金ですか？カードですか？",
+      "kana": "おしはらいはげんきんですか？カードですか？",
+      "cueKo": "현금인지 카드인지 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10807097",
+      "audioKey": "c/c99b52673bbd1e17",
+      "key": "tatoeba-10807097-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 52,
+      "text": "学生割引はありますか。",
+      "kana": "がくせいわりびきはありますか。",
+      "cueKo": "학생 할인이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #184226",
+      "audioKey": "c/ed31aa614ff22add",
+      "key": "tatoeba-184226-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 53,
+      "text": "お店は何時に閉まりますか？",
+      "kana": "おみせはなんじにしまりますか？",
+      "cueKo": "가게가 몇 시에 닫는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11640662",
+      "noteKo": "'닫는다'는 閉まる(자동사). 閉める는 내가 닫는다",
+      "audioKey": "c/55cf7da4a3ceda7a",
+      "key": "tatoeba-11640662-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 54,
+      "text": "２４時間営業ですか。",
+      "kana": "にじゅうよじかんえいぎょうですか。",
+      "cueKo": "24시간 영업인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #235561",
+      "noteKo": "24時間 にじゅうよじかん. 4시간은 よじかん(よんじかん 아님)",
+      "audioKey": "c/8f1b31830b82943c",
+      "key": "tatoeba-235561-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 55,
+      "text": "電車は後五分で発車します。",
+      "kana": "でんしゃはあとごふんではっしゃします。",
+      "cueKo": "전철이 5분 뒤에 출발한다는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #338063",
+      "audioKey": "c/393ebf398778eb79",
+      "key": "tatoeba-338063-hear"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 56,
+      "text": "電車は何時発ですか。",
+      "kana": "でんしゃはなんじはつですか。",
+      "cueKo": "전철이 몇 시 출발인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #8673093",
+      "audioKey": "c/407f2684e1f84bf3",
+      "key": "tatoeba-8673093-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 57,
+      "text": "2時半に戻ります。",
+      "kana": "にじはんにもどります。",
+      "cueKo": "2시 반에 돌아온다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12164673",
+      "noteKo": "半은 '반'. 2時30分보다 2時半이 자연스럽다. 시각 뒤에는 に",
+      "audioKey": "c/0c29388567b68501",
+      "key": "tatoeba-12164673-say"
+    },
+    {
+      "unitOrd": 19,
+      "ord": 58,
+      "text": "明日の朝は、何時出発？",
+      "kana": "あしたのあさは、なんじしゅっぱつ？",
+      "cueKo": "친구가 내일 아침 몇 시 출발이냐고 묻는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11571091",
+      "noteKo": "구어에서는 何時に의 に를 생략해 何時出発?로 말한다",
+      "audioKey": "c/4445655dc367b110",
+      "key": "tatoeba-11571091-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 19,
+      "ord": 1,
+      "titleKo": "가격 묻기",
+      "settingKo": "가게에서 물건 가격을 묻는다.",
+      "goalKo": "이거 얼마냐고 묻고, 가격을 알아듣고, 사겠다거나 더 싼 것을 묻는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            2,
+            3
+          ],
+          "variants": [
+            {
+              "chunkOrd": 2,
+              "replyOrd": 4
+            },
+            {
+              "chunkOrd": 3,
+              "replyOrd": 5
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            4,
+            5
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            6
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 2,
+      "titleKo": "깎아 달라는 말 대신 정중히 사양",
+      "settingKo": "비싼 물건 앞에서 정찰제라는 답을 듣고 정중히 사양한다.",
+      "goalKo": "값을 알아듣고, 정중히 거절당하고, 부드럽게 사양한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            8
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            9
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            10
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            11
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            12
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            13
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "npc",
+          "chunkOrds": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 3,
+      "titleKo": "결제 방법과 영수증",
+      "settingKo": "계산대에서 카드가 되는지 묻고 영수증은 사양한다.",
+      "goalKo": "결제 수단을 묻고 답하고 영수증을 거절한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            15
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            16,
+            17
+          ],
+          "variants": [
+            {
+              "chunkOrd": 16,
+              "replyOrd": 18
+            },
+            {
+              "chunkOrd": 17,
+              "replyOrd": 19
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            18,
+            19
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 4,
+      "titleKo": "입장권 사기",
+      "settingKo": "매표소에서 어른과 어린이 표를 사고 금액을 듣는다.",
+      "goalKo": "장수를 말하고, 금액을 알아듣고, 낼 방법을 말한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            22
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            23,
+            24
+          ],
+          "variants": [
+            {
+              "chunkOrd": 23,
+              "replyOrd": 25
+            },
+            {
+              "chunkOrd": 24,
+              "replyOrd": 15
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            25,
+            15
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            6
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 5,
+      "titleKo": "면세 확인",
+      "settingKo": "가게에서 면세 처리가 되는지 묻는다.",
+      "goalKo": "면세 여부를 묻고 답을 알아듣는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            26
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            27,
+            28
+          ],
+          "variants": [
+            {
+              "chunkOrd": 27,
+              "replyOrd": 29
+            },
+            {
+              "chunkOrd": 28,
+              "replyOrd": 30
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            29,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 6,
+      "titleKo": "영업시간 묻기",
+      "settingKo": "가게 영업시간과 쉬는 날을 묻는다.",
+      "goalKo": "영업시간을 묻고 시각과 요일을 알아듣는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            31
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            34
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 7,
+      "titleKo": "전철 시각과 소요 시간",
+      "settingKo": "역에서 다음 전철 시각을 묻고, 그 전철로 목적지까지 걸리는 시간을 묻는다.",
+      "goalKo": "시각과 분 단위 숫자를 알아듣는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            35
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            36
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            37
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            38
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 19,
+      "ord": 8,
+      "titleKo": "친구와 정산",
+      "settingKo": "식사 후 친구와 금액을 확인하고 나눈다.",
+      "goalKo": "금액을 반말로 말하고 더치페이에 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            39
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            40
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            41
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            42
+          ]
+        }
+      ]
+    }
+  ]
+}

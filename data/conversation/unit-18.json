@@ -1,0 +1,1121 @@
+{
+  "units": [
+    {
+      "ord": 18,
+      "titleKo": "호텔·숙박",
+      "goalKo": "호텔에서 체크인과 체크아웃을 하고, 짐과 늦은 체크아웃을 부탁하고, 고장과 추가 물품을 말한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 18,
+      "ord": 1,
+      "text": "いらっしゃいませ。",
+      "kana": "いらっしゃいませ。",
+      "cueKo": "직원이 손님을 맞이하는 인사 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #338114",
+      "audioKey": "c/cc6d85fe3eef930d",
+      "key": "tatoeba-338114-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 2,
+      "text": "チェックインしたいのですが。",
+      "kana": "チェックインしたいのですが。",
+      "cueKo": "체크인하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #203008",
+      "noteKo": "한국어 '체크인을 하다'와 달리 チェックインする로 を 없이 쓴다",
+      "audioKey": "c/aa4fcf8a979b96e0",
+      "key": "tatoeba-203008-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 3,
+      "text": "ご予約はされていますか？",
+      "kana": "ごよやくはされていますか？",
+      "cueKo": "예약했는지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3595025",
+      "audioKey": "c/112c595fd4e61d40",
+      "key": "tatoeba-3595025-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 4,
+      "text": "予約してあります。",
+      "kana": "よやくしてあります。",
+      "cueKo": "예약해 두었다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2213120",
+      "noteKo": "'예약했어요'는 予約しました보다 予約してあります. 해 둔 상태",
+      "audioKey": "c/00180e7d62f58737",
+      "key": "tatoeba-2213120-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 5,
+      "text": "お名前をお願いします。",
+      "kana": "おなまえをおねがいします。",
+      "cueKo": "이름을 말해 달라는 요청 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226565",
+      "audioKey": "c/72b9ab48d6689eff",
+      "key": "tatoeba-226565-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 6,
+      "text": "キムと申します。",
+      "kana": "キムともうします。",
+      "cueKo": "이름을 정중하게 말하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 18).",
+      "noteKo": "申します는 私は〜です보다 정중하다. 자기 이름에는 さん을 붙이지 않는다",
+      "audioKey": "c/aeb91d5c656d3f5e",
+      "key": "authored-94b2cdd986-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 7,
+      "text": "こちらがお部屋の鍵になります。",
+      "kana": "こちらがおへやのかぎになります。",
+      "cueKo": "방 열쇠를 건네며 하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10984988",
+      "audioKey": "c/cf33afd9abf06119",
+      "key": "tatoeba-10984988-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 8,
+      "text": "朝食は何時からですか？",
+      "kana": "ちょうしょくはなんじからですか？",
+      "cueKo": "조식이 몇 시부터인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10650776",
+      "noteKo": "'~부터'는 から, '~까지'는 まで. 시각 뒤에 붙인다",
+      "audioKey": "c/8e141d6ec3ca9629",
+      "key": "tatoeba-10650776-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 9,
+      "text": "朝食は８時からです。",
+      "kana": "ちょうしょくははちじからです。",
+      "cueKo": "조식이 8시부터라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10644027",
+      "audioKey": "c/154823ef2d1c0c65",
+      "key": "tatoeba-10644027-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 10,
+      "text": "ありがとうございます。",
+      "kana": "ありがとうございます。",
+      "cueKo": "고맙다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9559301",
+      "audioKey": "c/4ad50db06886ad5d",
+      "key": "tatoeba-9559301-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 11,
+      "text": "何時からチェックインできますか。",
+      "kana": "なんじからチェックインできますか。",
+      "cueKo": "몇 시부터 체크인할 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #187464",
+      "noteKo": "する의 가능형은 できる. チェックインできる처럼 を 없이 쓴다",
+      "audioKey": "c/e4c3273e8add6b5d",
+      "key": "tatoeba-187464-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 12,
+      "text": "午後三時からです。",
+      "kana": "ごごさんじからです。",
+      "cueKo": "오후 3시부터라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "noteKo": "3시 さんじ. 4시는 よじ, 7시는 しちじ, 9시는 くじ로 읽는다",
+      "audioKey": "c/79b79af74c7b7c90",
+      "key": "authored-9b14d5e987-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 13,
+      "text": "午後二時からです。",
+      "kana": "ごごにじからです。",
+      "cueKo": "오후 2시부터라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "noteKo": "2시 にじ. 4시는 よじ, 7시는 しちじ, 9시는 くじ로 읽는다",
+      "audioKey": "c/68e627f3ea6cc70d",
+      "key": "authored-9fe3e48834-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 14,
+      "text": "チェックインまで荷物を預かってもらえますか。",
+      "kana": "チェックインまでにもつをあずかってもらえますか。",
+      "cueKo": "체크인 때까지 짐을 맡아 줄 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #203005",
+      "noteKo": "내가 맡기다는 預ける, 직원이 맡다는 預かる. 방향이 반대다",
+      "audioKey": "c/7266c0193039b0fa",
+      "key": "tatoeba-203005-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 15,
+      "text": "荷物を預かって欲しいのですが。",
+      "kana": "にもつをあずかってほしいのですが。",
+      "cueKo": "짐을 맡아 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #186534",
+      "audioKey": "c/645ba8966d0db132",
+      "key": "tatoeba-186534-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 16,
+      "text": "かしこまりました。",
+      "kana": "かしこまりました。",
+      "cueKo": "직원이 알겠다고 정중히 답하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11041830",
+      "audioKey": "c/cc896492216c7835",
+      "key": "tatoeba-11041830-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 17,
+      "text": "チェックアウトは何時ですか。",
+      "kana": "チェックアウトはなんじですか。",
+      "cueKo": "체크아웃이 몇 시인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #203009",
+      "audioKey": "c/594183f2d02f3fb2",
+      "key": "tatoeba-203009-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 18,
+      "text": "十一時までにお願いします。",
+      "kana": "じゅういちじまでにおねがいします。",
+      "cueKo": "11시까지 나가 달라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "noteKo": "までに는 기한(그때까지 끝낼 것). まで는 그때까지 계속",
+      "audioKey": "c/a4c08e5b2e709c43",
+      "key": "authored-5986029b9c-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 19,
+      "text": "チェックアウトを一時間遅らせていただけませんか。",
+      "kana": "チェックアウトをいちじかんおくらせていただけませんか。",
+      "cueKo": "체크아웃을 한 시간 늦춰 달라고 부탁하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 18).",
+      "noteKo": "'늦추다'는 遅らせる. 〜ていただけませんか로 정중하게 부탁한다",
+      "audioKey": "c/a44a5816c17898cf",
+      "key": "authored-7c7383155f-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 20,
+      "text": "はい、大丈夫ですよ。",
+      "kana": "はい、だいじょうぶですよ。",
+      "cueKo": "괜찮다고 해 주는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/69307dd588491996",
+      "key": "authored-b43f8b6a42-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 21,
+      "text": "申し訳ございません、少し難しいです。",
+      "kana": "もうしわけございません、すこしむずかしいです。",
+      "cueKo": "어렵다고 정중히 거절하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/833b3b3f634e9900",
+      "key": "authored-f035c7e9ac-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 22,
+      "text": "はい、分かりました。",
+      "kana": "はい、わかりました。",
+      "cueKo": "알겠다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899752",
+      "audioKey": "c/7ca1ada17273863a",
+      "key": "tatoeba-10899752-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 23,
+      "text": "チェックアウトお願いします。",
+      "kana": "チェックアウトおねがいします。",
+      "cueKo": "체크아웃을 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2666710",
+      "audioKey": "c/565dc7523a16df92",
+      "key": "tatoeba-2666710-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 24,
+      "text": "お部屋の鍵をお預かりします。",
+      "kana": "おへやのかぎをおあずかりします。",
+      "cueKo": "방 열쇠를 받겠다는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/9fa34c3da0472cca",
+      "key": "authored-373054d31f-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 25,
+      "text": "はい、どうぞ。",
+      "kana": "はい、どうぞ。",
+      "cueKo": "'여기 있어요' 하며 건네기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10918319",
+      "audioKey": "c/4fab179f3dbf7944",
+      "key": "tatoeba-10918319-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 26,
+      "text": "またのご利用をお待ちしております。",
+      "kana": "またのごりようをおまちしております。",
+      "cueKo": "또 이용하기를 기다린다는 인사 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/8204b2c56e6503b6",
+      "key": "authored-fae6c8c9df-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 27,
+      "text": "お世話になりました。",
+      "kana": "おせわになりました。",
+      "cueKo": "신세 졌다고 인사하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #226998",
+      "noteKo": "떠날 때는 과거형 お世話になりました. お世話になります는 앞으로의 인사",
+      "audioKey": "c/241801a3a2384c77",
+      "key": "tatoeba-226998-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 28,
+      "text": "シャワーが壊れています。",
+      "kana": "シャワーがこわれています。",
+      "cueKo": "샤워기가 고장 났다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #215749",
+      "noteKo": "고장 난 상태는 壊れています. 壊れました는 망가진 순간을 말한다",
+      "audioKey": "c/a8319563f0fbbba2",
+      "key": "tatoeba-215749-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 29,
+      "text": "申し訳ございません。すぐ係の者がお伺いします。",
+      "kana": "もうしわけございません。すぐかかりのものがおうかがいします。",
+      "cueKo": "죄송하다며 직원을 보내겠다는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/ef1541b7bb74a831",
+      "key": "authored-2ac3e2b008-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 30,
+      "text": "申し訳ございません。別のお部屋をご用意します。",
+      "kana": "もうしわけございません。べつのおへやをごよういします。",
+      "cueKo": "죄송하다며 다른 방을 준비하겠다는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/675cfcbe43b7df0e",
+      "key": "authored-5617905a82-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 31,
+      "text": "お願いします。",
+      "kana": "おねがいします。",
+      "cueKo": "부탁한다고 짧게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #926739",
+      "audioKey": "c/166d84de42c2d0ed",
+      "key": "tatoeba-926739-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 32,
+      "text": "ほかに何かございますか。",
+      "kana": "ほかになにかございますか。",
+      "cueKo": "다른 용건이 있는지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/6b6877294affe17f",
+      "key": "authored-210e8f59b0-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 33,
+      "text": "タオルをもう一枚いただけますか。",
+      "kana": "タオルをもういちまいいただけますか。",
+      "cueKo": "수건을 한 장 더 달라고 부탁하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 18).",
+      "noteKo": "수건은 枚로 센다. もう+수량은 '더 한 장'",
+      "audioKey": "c/f51575068c4902c1",
+      "key": "authored-85a5015899-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 34,
+      "text": "すぐにお持ちします。",
+      "kana": "すぐにおもちします。",
+      "cueKo": "곧 가져다 주겠다는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/f7b4734c013858d8",
+      "key": "authored-34c6fb56e1-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 35,
+      "text": "Wi-Fiのパスワードを教えていただけますか？",
+      "kana": "ワイファイのパスワードをおしえていただけますか？",
+      "cueKo": "와이파이 비밀번호를 알려 달라고 부탁하기",
+      "register": "keigo",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4769884",
+      "noteKo": "Wi-Fi는 ワイファイ로 읽는다. 한국어 와이파이와 발음이 다르다",
+      "audioKey": "c/30b6b68d1b0029f3",
+      "key": "tatoeba-4769884-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 36,
+      "text": "こちらのカードに書いてあります。",
+      "kana": "こちらのカードにかいてあります。",
+      "cueKo": "카드에 적혀 있다는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "noteKo": "書いてあります는 누가 적어 둔 상태. 書いています와 다르다",
+      "audioKey": "c/55e139a82f4af9d1",
+      "key": "authored-e591f9f6c0-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 37,
+      "text": "Wi-Fiがつながらないんですが。",
+      "kana": "ワイファイがつながらないんですが。",
+      "cueKo": "와이파이가 연결되지 않는다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 18).",
+      "noteKo": "つながる는 자동사라 Wi-Fiが. を가 아니다",
+      "audioKey": "c/be8597ff06e972e8",
+      "key": "authored-d33a819f69-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 38,
+      "text": "お部屋番号を教えていただけますか。",
+      "kana": "おへやばんごうをおしえていただけますか。",
+      "cueKo": "방 번호를 알려 달라는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 18).",
+      "audioKey": "c/f0b2a995d48ce9ec",
+      "key": "authored-14cb1dc0bd-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 39,
+      "text": "部屋番号は５です。",
+      "kana": "へやばんごうはごです。",
+      "cueKo": "방 번호가 5번이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3576142",
+      "audioKey": "c/36609a4fa6275800",
+      "key": "tatoeba-3576142-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 40,
+      "text": "チェックインをお願いします。",
+      "kana": "チェックインをおねがいします。",
+      "cueKo": "체크인을 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #203004",
+      "audioKey": "c/c34839f57a226ecf",
+      "key": "tatoeba-203004-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 41,
+      "text": "チェックインするのが少し遅くなります。",
+      "kana": "チェックインするのがすこしおそくなります。",
+      "cueKo": "체크인이 조금 늦어진다고 알리기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #203007",
+      "noteKo": "遅くなる는 '늦어지다'(변화). 遅いです와 다르다",
+      "audioKey": "c/5c7c9b684cb41d7c",
+      "key": "tatoeba-203007-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 42,
+      "text": "チェックインカウンターはどこですか？",
+      "kana": "チェックインカウンターはどこですか？",
+      "cueKo": "체크인 카운터가 어디인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9732750",
+      "audioKey": "c/e53c3003dde6d7ea",
+      "key": "tatoeba-9732750-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 43,
+      "text": "今すぐチェックアウトしたいのですが。",
+      "kana": "いますぐチェックアウトしたいのですが。",
+      "cueKo": "지금 바로 체크아웃하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #172830",
+      "audioKey": "c/2c9e3d4cc81a5180",
+      "key": "tatoeba-172830-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 44,
+      "text": "一泊いくらですか。",
+      "kana": "いっぱくいくらですか。",
+      "cueKo": "1박에 얼마인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #190209",
+      "noteKo": "一泊 いっぱく. 2박 にはく, 3박 さんぱく으로 소리가 바뀐다",
+      "audioKey": "c/a213e851c6ab286e",
+      "key": "tatoeba-190209-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 45,
+      "text": "もう少し安い部屋はありますか。",
+      "kana": "もうすこしやすいへやはありますか。",
+      "cueKo": "좀 더 싼 방이 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #194116",
+      "audioKey": "c/16a5b6c42960549d",
+      "key": "tatoeba-194116-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 46,
+      "text": "シングルを予約したいんですが。",
+      "kana": "シングルをよやくしたいんですが。",
+      "cueKo": "싱글룸을 예약하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11637487",
+      "audioKey": "c/0861feb17565c30e",
+      "key": "tatoeba-11637487-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 47,
+      "text": "申し訳ありませんが、ただ今満室になっています。",
+      "kana": "もうしわけありませんが、ただいままんしつになっています。",
+      "cueKo": "지금은 만실이라는 사과 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #145037",
+      "audioKey": "c/de05d0031b963747",
+      "key": "tatoeba-145037-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 48,
+      "text": "お部屋のご用意ができました。",
+      "kana": "おへやのごよういができました。",
+      "cueKo": "방 준비가 끝났다는 안내 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10855091",
+      "audioKey": "c/57ab3b2e92148d77",
+      "key": "tatoeba-10855091-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 49,
+      "text": "毛布をもう一枚ほしいのですが。",
+      "kana": "もうふをもういちまいほしいのですが。",
+      "cueKo": "담요를 한 장 더 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #80171",
+      "audioKey": "c/e1680061f8cd8eef",
+      "key": "tatoeba-80171-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 50,
+      "text": "エアコンが故障しています。",
+      "kana": "エアコンがこしょうしています。",
+      "cueKo": "에어컨이 고장 났다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #228047",
+      "noteKo": "故障는 한국어 ‘고장’과 같은 한자. 일본어로는 こしょう라고 읽는다.",
+      "audioKey": "c/987b1bf95e565c64",
+      "key": "tatoeba-228047-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 51,
+      "text": "６時に起こして下さい。",
+      "kana": "ろくじにおこしてください。",
+      "cueKo": "6시에 깨워 달라고 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #235054",
+      "noteKo": "시각 뒤에는 に: 6時に. '깨우다'는 起こす",
+      "audioKey": "c/b78d23ad7ce084b6",
+      "key": "tatoeba-235054-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 52,
+      "text": "部屋は何階ですか？",
+      "kana": "へやはなんがいですか？",
+      "cueKo": "방이 몇 층인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11065678",
+      "noteKo": "何階는 なんがい. 3층 さんがい, 6층 ろっかい로 소리가 바뀐다",
+      "audioKey": "c/90b4c5a1e5761dbe",
+      "key": "tatoeba-11065678-say"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 53,
+      "text": "ロビーで待ってて。",
+      "kana": "ロビーでまってて。",
+      "cueKo": "친구가 로비에서 기다리라고 하는 말 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11527198",
+      "noteKo": "待っていて→待ってて. 구어에서는 い가 빠진다",
+      "audioKey": "c/6f99532f611a794a",
+      "key": "tatoeba-11527198-hear"
+    },
+    {
+      "unitOrd": 18,
+      "ord": 54,
+      "text": "鍵ある？",
+      "kana": "かぎある？",
+      "cueKo": "친구에게 열쇠 있냐고 묻기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #12403571",
+      "noteKo": "구어에서는 は/が를 빼고 鍵ある?로 말한다",
+      "audioKey": "c/92c4b1bfde8e3fe1",
+      "key": "tatoeba-12403571-say"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 18,
+      "ord": 1,
+      "titleKo": "체크인",
+      "settingKo": "프런트에서 예약한 이름을 말하고 체크인한다.",
+      "goalKo": "체크인 흐름을 따라 예약과 이름을 말하고 열쇠와 조식 시간을 확인한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "learner",
+          "chunkOrds": [
+            2
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "npc",
+          "chunkOrds": [
+            3
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "learner",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "npc",
+          "chunkOrds": [
+            5
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "learner",
+          "chunkOrds": [
+            6
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "npc",
+          "chunkOrds": [
+            7
+          ]
+        },
+        {
+          "ord": 8,
+          "speaker": "learner",
+          "chunkOrds": [
+            8
+          ]
+        },
+        {
+          "ord": 9,
+          "speaker": "npc",
+          "chunkOrds": [
+            9
+          ]
+        },
+        {
+          "ord": 10,
+          "speaker": "learner",
+          "chunkOrds": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 18,
+      "ord": 2,
+      "titleKo": "체크인 전에 짐 맡기기",
+      "settingKo": "도착이 이르다. 체크인 시각을 묻고 짐을 맡긴다.",
+      "goalKo": "체크인 시각을 알아듣고 짐을 맡아 달라고 부탁한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            11
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            12,
+            13
+          ],
+          "variants": [
+            {
+              "chunkOrd": 12,
+              "replyOrd": 14
+            },
+            {
+              "chunkOrd": 13,
+              "replyOrd": 15
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            14,
+            15
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            16
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 18,
+      "ord": 3,
+      "titleKo": "체크아웃 시각과 레이트 체크아웃",
+      "settingKo": "체크아웃 시각을 묻고 한 시간 늦춰 달라고 부탁한다.",
+      "goalKo": "시각을 알아듣고 정중하게 연장을 부탁하고 결과에 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            18
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            19
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            20,
+            21
+          ],
+          "variants": [
+            {
+              "chunkOrd": 20,
+              "replyOrd": 10
+            },
+            {
+              "chunkOrd": 21,
+              "replyOrd": 22
+            }
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            10,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 18,
+      "ord": 4,
+      "titleKo": "체크아웃하기",
+      "settingKo": "프런트에서 열쇠를 반납하고 체크아웃한다.",
+      "goalKo": "체크아웃을 부탁하고 열쇠를 건네고 인사하고 나간다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            23
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            24
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            26
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 18,
+      "ord": 5,
+      "titleKo": "고장 신고와 수건 요청",
+      "settingKo": "방의 샤워기가 고장 나 프런트에 전화하고 수건도 부탁한다.",
+      "goalKo": "고장을 알리고 직원의 대응에 답한 뒤 수건을 부탁한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            28
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            29,
+            30
+          ],
+          "variants": [
+            {
+              "chunkOrd": 29,
+              "replyOrd": 31
+            },
+            {
+              "chunkOrd": 30,
+              "replyOrd": 10
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            31,
+            10
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            32
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            34
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 18,
+      "ord": 6,
+      "titleKo": "와이파이 문의",
+      "settingKo": "프런트에서 와이파이 비밀번호를 묻고 연결이 안 될 때 도움을 청한다.",
+      "goalKo": "비밀번호를 묻고, 연결 문제를 말하고, 방 번호를 알려 준다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            35
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            36
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            37
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            38
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            39
+          ]
+        }
+      ]
+    }
+  ]
+}

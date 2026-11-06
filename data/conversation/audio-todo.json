@@ -400,6 +400,266 @@
       "audioKey": "c/40f3798897ac9534",
       "text": "はい、すぐ行きます。",
       "key": "authored-d73d775b8d-say"
+    },
+    {
+      "audioKey": "c/7b6a275d6003a9db",
+      "text": "窓口でお買い求めください。",
+      "key": "authored-791f3574d4-hear"
+    },
+    {
+      "audioKey": "c/49fdbf6fa261930e",
+      "text": "京都行きは何番線ですか。",
+      "key": "authored-a6abf1e549-say"
+    },
+    {
+      "audioKey": "c/cd10541ca01db8c8",
+      "text": "三番線です。",
+      "key": "authored-11eb736cca-hear"
+    },
+    {
+      "audioKey": "c/8ac61c30ce4370ef",
+      "text": "五番線です。",
+      "key": "authored-cc25f7682c-hear"
+    },
+    {
+      "audioKey": "c/4ac4d6865eae7f94",
+      "text": "このICカードにチャージしたいんですが。",
+      "key": "authored-67a7a0c591-say"
+    },
+    {
+      "audioKey": "c/69e2f37b0824ae00",
+      "text": "あちらの券売機でできますよ。",
+      "key": "authored-38c92200d9-hear"
+    },
+    {
+      "audioKey": "c/59b32ed83fc63c86",
+      "text": "おいくらにしますか？",
+      "key": "authored-f7d866cca8-hear"
+    },
+    {
+      "audioKey": "c/e8610c574f9fd6ae",
+      "text": "二千円お願いします。",
+      "key": "authored-92571f7d8b-say"
+    },
+    {
+      "audioKey": "c/b7c67f5ba6894181",
+      "text": "千八百円になります。",
+      "key": "authored-bfa14463dc-hear"
+    },
+    {
+      "audioKey": "c/1ec9124a60725301",
+      "text": "どちらへ行かれますか。",
+      "key": "authored-09aae09e87-hear"
+    },
+    {
+      "audioKey": "c/281327ee9565b160",
+      "text": "駅に行きたいんですが。",
+      "key": "authored-2544348e52-say"
+    },
+    {
+      "audioKey": "c/2bff353311c28c11",
+      "text": "まっすぐですね。",
+      "key": "authored-79d9f1e4a9-say"
+    },
+    {
+      "audioKey": "c/4d058472e56ca790",
+      "text": "右ですね。",
+      "key": "authored-9b62427dea-say"
+    },
+    {
+      "audioKey": "c/cd3fd2fe3e5aab3b",
+      "text": "左ですね。",
+      "key": "authored-1f35db5591-say"
+    },
+    {
+      "audioKey": "c/aeb91d5c656d3f5e",
+      "text": "キムと申します。",
+      "key": "authored-94b2cdd986-say"
+    },
+    {
+      "audioKey": "c/79b79af74c7b7c90",
+      "text": "午後三時からです。",
+      "key": "authored-9b14d5e987-hear"
+    },
+    {
+      "audioKey": "c/68e627f3ea6cc70d",
+      "text": "午後二時からです。",
+      "key": "authored-9fe3e48834-hear"
+    },
+    {
+      "audioKey": "c/a4c08e5b2e709c43",
+      "text": "十一時までにお願いします。",
+      "key": "authored-5986029b9c-hear"
+    },
+    {
+      "audioKey": "c/a44a5816c17898cf",
+      "text": "チェックアウトを一時間遅らせていただけませんか。",
+      "key": "authored-7c7383155f-say"
+    },
+    {
+      "audioKey": "c/69307dd588491996",
+      "text": "はい、大丈夫ですよ。",
+      "key": "authored-b43f8b6a42-hear"
+    },
+    {
+      "audioKey": "c/833b3b3f634e9900",
+      "text": "申し訳ございません、少し難しいです。",
+      "key": "authored-f035c7e9ac-hear"
+    },
+    {
+      "audioKey": "c/9fa34c3da0472cca",
+      "text": "お部屋の鍵をお預かりします。",
+      "key": "authored-373054d31f-hear"
+    },
+    {
+      "audioKey": "c/8204b2c56e6503b6",
+      "text": "またのご利用をお待ちしております。",
+      "key": "authored-fae6c8c9df-hear"
+    },
+    {
+      "audioKey": "c/ef1541b7bb74a831",
+      "text": "申し訳ございません。すぐ係の者がお伺いします。",
+      "key": "authored-2ac3e2b008-hear"
+    },
+    {
+      "audioKey": "c/675cfcbe43b7df0e",
+      "text": "申し訳ございません。別のお部屋をご用意します。",
+      "key": "authored-5617905a82-hear"
+    },
+    {
+      "audioKey": "c/6b6877294affe17f",
+      "text": "ほかに何かございますか。",
+      "key": "authored-210e8f59b0-hear"
+    },
+    {
+      "audioKey": "c/f51575068c4902c1",
+      "text": "タオルをもう一枚いただけますか。",
+      "key": "authored-85a5015899-say"
+    },
+    {
+      "audioKey": "c/f7b4734c013858d8",
+      "text": "すぐにお持ちします。",
+      "key": "authored-34c6fb56e1-hear"
+    },
+    {
+      "audioKey": "c/55e139a82f4af9d1",
+      "text": "こちらのカードに書いてあります。",
+      "key": "authored-e591f9f6c0-hear"
+    },
+    {
+      "audioKey": "c/be8597ff06e972e8",
+      "text": "Wi-Fiがつながらないんですが。",
+      "key": "authored-d33a819f69-say"
+    },
+    {
+      "audioKey": "c/f0b2a995d48ce9ec",
+      "text": "お部屋番号を教えていただけますか。",
+      "key": "authored-14cb1dc0bd-hear"
+    },
+    {
+      "audioKey": "c/2eb001f1569e9d84",
+      "text": "千二百円です。",
+      "key": "authored-743e94e41f-hear"
+    },
+    {
+      "audioKey": "c/05b9aadea71999e2",
+      "text": "二千円です。",
+      "key": "authored-3427e13711-hear"
+    },
+    {
+      "audioKey": "c/46e13b382ffe0694",
+      "text": "じゃあ、これにします。",
+      "key": "authored-65732bc37f-say"
+    },
+    {
+      "audioKey": "c/5bdfaa13c0a7e80b",
+      "text": "一万二千円です。",
+      "key": "authored-fb490b0f9f-hear"
+    },
+    {
+      "audioKey": "c/389c4315bc789776",
+      "text": "申し訳ございません、お値引きはしておりません。",
+      "key": "authored-15d956983e-hear"
+    },
+    {
+      "audioKey": "c/9ea94ace3cbd4579",
+      "text": "ちょっと高いので、やめておきます。",
+      "key": "authored-37b59a72df-say"
+    },
+    {
+      "audioKey": "c/f99778f3b38ab884",
+      "text": "はい、お使いいただけます。",
+      "key": "authored-c7c04d3511-hear"
+    },
+    {
+      "audioKey": "c/668733faed8b0b0a",
+      "text": "申し訳ございません、現金のみです。",
+      "key": "authored-fd57d0b086-hear"
+    },
+    {
+      "audioKey": "c/2f43ff621aa221a9",
+      "text": "レシートはお渡ししますか？",
+      "key": "authored-0b24acded1-hear"
+    },
+    {
+      "audioKey": "c/d0c49dcc7deff119",
+      "text": "大人二枚と、子ども一枚お願いします。",
+      "key": "authored-b23ea464e2-say"
+    },
+    {
+      "audioKey": "c/c2e567568d34990b",
+      "text": "二千五百円になります。",
+      "key": "authored-8296219077-hear"
+    },
+    {
+      "audioKey": "c/84825471e433fda0",
+      "text": "一万円札でもいいですか。",
+      "key": "authored-28e1ff5125-say"
+    },
+    {
+      "audioKey": "c/56347b7a275a4b42",
+      "text": "はい、パスポートをお見せください。",
+      "key": "authored-d35bcf8237-hear"
+    },
+    {
+      "audioKey": "c/18160c97d74f6a3f",
+      "text": "申し訳ございません、免税はできないんです。",
+      "key": "authored-ec99880afd-hear"
+    },
+    {
+      "audioKey": "c/ed3cd0592a4951ea",
+      "text": "営業時間は十時から七時までです。",
+      "key": "authored-770ea61bd1-hear"
+    },
+    {
+      "audioKey": "c/a79d7503f29feb94",
+      "text": "定休日はありますか。",
+      "key": "authored-71a35b31cb-say"
+    },
+    {
+      "audioKey": "c/2bb64befb091bff9",
+      "text": "三時四十五分です。",
+      "key": "authored-ff399999ef-hear"
+    },
+    {
+      "audioKey": "c/89ef915811368807",
+      "text": "二十分ぐらいです。",
+      "key": "authored-d1a3cac269-hear"
+    },
+    {
+      "audioKey": "c/3ab1d71b3f6e9034",
+      "text": "三千円だったよ。",
+      "key": "authored-9b55689307-say"
+    },
+    {
+      "audioKey": "c/d8a4e6a7731e3a8a",
+      "text": "いいよ、一人千五百円ね。",
+      "key": "authored-ab5130c04b-say"
+    },
+    {
+      "audioKey": "c/f352383df2bd1b6d",
+      "text": "少しまけていただけませんか。",
+      "key": "authored-0949771338-say"
     }
   ]
 }

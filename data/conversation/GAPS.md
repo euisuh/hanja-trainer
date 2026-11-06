@@ -10,6 +10,16 @@ The authored policy is in `docs/talk-mode.md`. These gaps below are now filled w
 - Unit 6: はい、止まります, いいえ、乗り換えはありません (staff confirmations). New scene 3.
 - Unit 8: 試着室はあちらです, こちらは〜円になります, 在庫を確認いたしますので少々お待ちください, プレゼント用にお包みしましょうか (staff). New scene 3.
 - Unit 4 (구어 줄임말과 말버릇) and unit 15 (문말 조사 ね・よ・かな): spoken-register chunks with no Tatoeba pair worth shipping as a casual/polite contrast. Authored (`authoredScope: "spoken"`): contractions 〜てる, 〜ちゃう/〜じゃう, 〜とく, って, じゃ, 〜んです/〜んだ; fillers えーと, ええと, あのー, うーん, まあ; sentence-final ね, よ, よね, かな, だっけ, けどね, もん, 〜ない？; casual/polite pairs for the same meaning. About two thirds are casual register. Unit numbers 4 and 15 replace the brainstorm map entries (numbers/time, workplace); those topics are not started.
+## Travel units 17-19 (2026-11-06)
+
+New units for a Korean-native, travel-first learner: 17 표·승강장·택시, 18 호텔·숙박, 19 숫자·가격·시간. Every Japanese line is a verified Tatoeba sentence unless listed here. Authored share after this change: 131/697 unique chunks (18.8%, cap 20%, not raised); authored npc lines are at most 24% of any new unit. Audio keys are in `audio-todo.json`.
+
+- Unit 17 authored staff (npc): 窓口でお買い求めください, 三番線です, 五番線です, あちらの券売機でできますよ, おいくらにしますか？, 千八百円になります, どちらへ行かれますか. Learner (spoken): 京都行きは何番線ですか (no Tatoeba hit with a real destination: only ダウンタウン行き #203857), このICカードにチャージしたいんですが (チャージ has no usable hit), 二千円お願いします, 駅に行きたいんですが, まっすぐですね / 右ですね / 左ですね (confirmations, also open in gaps/unit-06).
+- Unit 18 authored staff (npc): 午後三時からです, 午後二時からです, 十一時までにお願いします, はい、大丈夫ですよ, 申し訳ございません、少し難しいです, お部屋の鍵をお預かりします, またのご利用をお待ちしております, 申し訳ございません。すぐ係の者がお伺いします, 申し訳ございません。別のお部屋をご用意します, ほかに何かございますか, すぐにお持ちします, こちらのカードに書いてあります, お部屋番号を教えていただけますか. Learner (spoken): キムと申します, チェックアウトを一時間遅らせていただけませんか (late checkout: no Tatoeba hit), タオルをもう一枚いただけますか, Wi-Fiがつながらないんですが.
+- Unit 19 authored staff (npc): 千二百円です, 二千円です, 一万二千円です, 申し訳ございません、お値引きはしておりません, はい、お使いいただけます, 申し訳ございません、現金のみです, レシートはお渡ししますか？, 二千五百円になります, はい、パスポートをお見せください, 申し訳ございません、免税はできないんです, 営業時間は十時から七時までです (#189349 has no owner on Tatoeba, so it cannot carry attribution), 三時四十五分です, 二十分ぐらいです. Learner or friend lines (spoken): じゃあ、これにします, ちょっと高いので、やめておきます (polite refusal), 現金でお願いします (reused from unit 3), 大人二枚と、子ども一枚お願いします, 一万円札でもいいですか, 定休日はありますか, 三千円だったよ, いいよ、一人千五百円ね.
+- Dropped because the Tatoeba row has no owner (cannot be attributed): #142099 切符は１枚１０００円です, #146174 乗り場は何番線ですか, #146180 乗り換えはありますか, #123466, #200406, #215169, #186549, #83396, #187432.
+- Left out as unsure, not authored: ICカードの残高不足の案内 (残高が足りません vs 不足しています varies by railway), タクシーでの「ここを右に」の道案内, ルームサービスの注文, モーニングコールの職員側の言い方, 返金・キャンセル料の説明, 手荷物を宅配便で送る依頼, 免税カウンターでの手続き説明の全文.
+
 ### Status of the per-unit gap files (`gaps/unit-NN.md`)
 
 Filled (authored, audio pending):

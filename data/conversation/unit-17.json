@@ -1,0 +1,844 @@
+{
+  "units": [
+    {
+      "ord": 17,
+      "titleKo": "표·승강장·택시",
+      "goalKo": "표를 사고, 승강장과 환승을 확인하고, IC카드를 충전하고, 택시를 타고, 길을 잃었을 때 도움을 청한다."
+    }
+  ],
+  "chunks": [
+    {
+      "unitOrd": 17,
+      "ord": 1,
+      "text": "全部で三千円です。",
+      "kana": "ぜんぶでさんぜんえんです。",
+      "cueKo": "전부 3천 엔이라는 금액 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #205018",
+      "audioKey": "c/4e77f507519180b3",
+      "key": "tatoeba-205018-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 2,
+      "text": "切符はどこで買えますか。",
+      "kana": "きっぷはどこでかえますか。",
+      "cueKo": "표를 어디서 살 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #2533670",
+      "noteKo": "장소 묻기는 どこで買えますか. 'どこに買う'로 옮기면 틀린다",
+      "audioKey": "c/0e3aa6927d29596c",
+      "key": "tatoeba-2533670-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 3,
+      "text": "窓口でお買い求めください。",
+      "kana": "まどぐちでおかいもとめください。",
+      "cueKo": "표는 창구에서 사라는 안내 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "noteKo": "お買い求めください는 買ってください의 안내문용 정중체",
+      "audioKey": "c/7b6a275d6003a9db",
+      "key": "authored-791f3574d4-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 4,
+      "text": "大人２枚ください。",
+      "kana": "おとなにまいください。",
+      "cueKo": "어른 표 두 장 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #137485",
+      "noteKo": "표는 枚로 센다. を 없이 〜ください만으로도 자연스럽다",
+      "audioKey": "c/bfd43dcf68eac9f0",
+      "key": "tatoeba-137485-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 5,
+      "text": "ありがとうございます。",
+      "kana": "ありがとうございます。",
+      "cueKo": "고맙다고 정중하게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #9559301",
+      "audioKey": "c/4ad50db06886ad5d",
+      "key": "tatoeba-9559301-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 6,
+      "text": "京都行きは何番線ですか。",
+      "kana": "きょうとゆきはなんばんせんですか。",
+      "cueKo": "교토행은 몇 번 선인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "noteKo": "〜行き는 '~행'. 몇 번 선은 何番線. 어디냐고 묻는 どこ와 구별한다",
+      "audioKey": "c/49fdbf6fa261930e",
+      "key": "authored-a6abf1e549-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 7,
+      "text": "三番線です。",
+      "kana": "さんばんせんです。",
+      "cueKo": "3번 선이라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "audioKey": "c/cd10541ca01db8c8",
+      "key": "authored-11eb736cca-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 8,
+      "text": "五番線です。",
+      "kana": "ごばんせんです。",
+      "cueKo": "5번 선이라는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "audioKey": "c/8ac61c30ce4370ef",
+      "key": "authored-cc25f7682c-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 9,
+      "text": "途中で乗り換えが必要ですか。",
+      "kana": "とちゅうでのりかえがひつようですか。",
+      "cueKo": "도중에 환승이 필요한지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #124574",
+      "audioKey": "c/579431e2a633974d",
+      "key": "tatoeba-124574-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 10,
+      "text": "乗り換えは必要ですか。",
+      "kana": "のりかえはひつようですか。",
+      "cueKo": "환승이 필요한지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #146179",
+      "noteKo": "한국어 환승(換乘)과 한자 순서가 반대. 乗り換え로 쓴다",
+      "audioKey": "c/5742306afacd6967",
+      "key": "tatoeba-146179-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 11,
+      "text": "次の駅で乗り換えですよ。",
+      "kana": "つぎのえきでのりかえですよ。",
+      "cueKo": "다음 역에서 갈아탄다는 대답 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #150314",
+      "noteKo": "갈아타는 장소는 で. 次の駅に乗り換え는 틀린다",
+      "audioKey": "c/a4169e679f0c1835",
+      "key": "tatoeba-150314-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 12,
+      "text": "はい、分かりました。",
+      "kana": "はい、わかりました。",
+      "cueKo": "알겠다고 대답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10899752",
+      "audioKey": "c/7ca1ada17273863a",
+      "key": "tatoeba-10899752-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 13,
+      "text": "このICカードにチャージしたいんですが。",
+      "kana": "このアイシーカードにチャージしたいんですが。",
+      "cueKo": "IC카드를 충전하고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "noteKo": "'충전'은 充電이 아니라 チャージ. 대상은 カードに",
+      "audioKey": "c/4ac4d6865eae7f94",
+      "key": "authored-67a7a0c591-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 14,
+      "text": "あちらの券売機でできますよ。",
+      "kana": "あちらのけんばいきでできますよ。",
+      "cueKo": "저쪽 발매기에서 할 수 있다는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "audioKey": "c/69e2f37b0824ae00",
+      "key": "authored-38c92200d9-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 15,
+      "text": "おいくらにしますか？",
+      "kana": "おいくらにしますか？",
+      "cueKo": "얼마를 충전할지 묻는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "audioKey": "c/59b32ed83fc63c86",
+      "key": "authored-f7d866cca8-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 16,
+      "text": "二千円お願いします。",
+      "kana": "にせんえんおねがいします。",
+      "cueKo": "2천 엔이라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "noteKo": "2천은 にせん. 3천 さんぜん, 8천 はっせん으로 소리가 바뀐다",
+      "audioKey": "c/e8610c574f9fd6ae",
+      "key": "authored-92571f7d8b-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 17,
+      "text": "すみません、タクシー乗り場はどこですか？",
+      "kana": "すみません、タクシーのりばはどこですか？",
+      "cueKo": "택시 승차장이 어디인지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #3071318",
+      "noteKo": "장소를 묻는 주제는 は. 乗り場がどこですか는 어색하다",
+      "audioKey": "c/daa518310d4b61e1",
+      "key": "tatoeba-3071318-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 18,
+      "text": "駅の近くにタクシー乗り場があります。",
+      "kana": "えきのちかくにタクシーのりばがあります。",
+      "cueKo": "역 근처에 택시 승차장이 있다고 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #188912",
+      "noteKo": "있다(존재)는 に+あります. 동작 장소 で와 구별한다",
+      "audioKey": "c/c2f3806d860f20e0",
+      "key": "tatoeba-188912-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 19,
+      "text": "空港まで、お願いします。",
+      "kana": "くうこうまで、おねがいします。",
+      "cueKo": "택시 기사에게 공항까지 가 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10647131",
+      "noteKo": "택시 행선지는 まで가 기본. 空港で는 틀린다",
+      "audioKey": "c/2d731971cf4798ab",
+      "key": "tatoeba-10647131-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 20,
+      "text": "かしこまりました。",
+      "kana": "かしこまりました。",
+      "cueKo": "직원이 알겠다고 정중히 답하는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #11041830",
+      "audioKey": "c/cc896492216c7835",
+      "key": "tatoeba-11041830-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 21,
+      "text": "ここで止めてください。",
+      "kana": "ここでとめてください。",
+      "cueKo": "여기서 세워 달라고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #224556",
+      "noteKo": "ここで는 멈추는 지점, ここに는 차를 세워 둘 위치를 나타낸다.",
+      "audioKey": "c/3f84b954a2c49fa1",
+      "key": "tatoeba-224556-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 22,
+      "text": "千八百円になります。",
+      "kana": "せんはっぴゃくえんになります。",
+      "cueKo": "택시 요금 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "noteKo": "800은 はっぴゃく로 바뀐다. 300 さんびゃく, 600 ろっぴゃく",
+      "audioKey": "c/b7c67f5ba6894181",
+      "key": "authored-bfa14463dc-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 23,
+      "text": "領収書をお願いします。",
+      "kana": "りょうしゅうしょをおねがいします。",
+      "cueKo": "영수증을 부탁하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10647274",
+      "audioKey": "c/dcf4b076c0adeb7a",
+      "key": "tatoeba-10647274-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 24,
+      "text": "すみません、道に迷ってしまいました。",
+      "kana": "すみません、みちにまよってしまいました。",
+      "cueKo": "길을 잃었다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214192",
+      "noteKo": "'길을 잃다'는 道を가 아니라 道に迷う",
+      "audioKey": "c/740b990b91dad2d6",
+      "key": "tatoeba-214192-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 25,
+      "text": "どちらへ行かれますか。",
+      "kana": "どちらへいかれますか。",
+      "cueKo": "어디로 가는지 묻는 말 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "npc",
+      "reviewNote": "Staff line, standard phrasing heard at this place. Authored for this app; no standalone Tatoeba sentence (GAPS.md, unit 17).",
+      "audioKey": "c/1ec9124a60725301",
+      "key": "authored-09aae09e87-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 26,
+      "text": "駅に行きたいんですが。",
+      "kana": "えきにいきたいんですが。",
+      "cueKo": "역에 가고 싶다고 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "noteKo": "행선지는 に/へ. 駅を行きたい는 틀린다. 〜んですが로 부드럽게",
+      "audioKey": "c/281327ee9565b160",
+      "key": "authored-2544348e52-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 27,
+      "text": "この道をまっすぐ行ってください。",
+      "kana": "このみちをまっすぐいってください。",
+      "cueKo": "이 길로 곧장 가라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #220292",
+      "noteKo": "지나가는 길은 を: 道を行く. 道に行く는 아니다",
+      "audioKey": "c/8515cb1137711e36",
+      "key": "tatoeba-220292-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 28,
+      "text": "次の角を右に曲がってください。",
+      "kana": "つぎのかどをみぎにまがってください。",
+      "cueKo": "다음 모퉁이에서 우회전하라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #4769881",
+      "audioKey": "c/92ea0ad16ce359ec",
+      "key": "tatoeba-4769881-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 29,
+      "text": "左に曲がってください。",
+      "kana": "ひだりにまがってください。",
+      "cueKo": "좌회전하라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #13152284",
+      "audioKey": "c/01dd2a66152a03e6",
+      "key": "tatoeba-13152284-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 30,
+      "text": "まっすぐですね。",
+      "kana": "まっすぐですね。",
+      "cueKo": "곧장이라고 확인하며 되묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "audioKey": "c/2bff353311c28c11",
+      "key": "authored-79d9f1e4a9-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 31,
+      "text": "右ですね。",
+      "kana": "みぎですね。",
+      "cueKo": "오른쪽이라고 확인하며 되묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "audioKey": "c/4d058472e56ca790",
+      "key": "authored-9b62427dea-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 32,
+      "text": "左ですね。",
+      "kana": "ひだりですね。",
+      "cueKo": "왼쪽이라고 확인하며 되묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-06",
+      "authoredScope": "spoken",
+      "reviewNote": "Standard spoken form, conservative phrasing. Authored for this app as a learner or spoken-register line (GAPS.md, unit 17).",
+      "audioKey": "c/cd3fd2fe3e5aab3b",
+      "key": "authored-1f35db5591-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 33,
+      "text": "すぐに分かりますよ。",
+      "kana": "すぐにわかりますよ。",
+      "cueKo": "금방 알 수 있다는 말 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #214829",
+      "audioKey": "c/4a0f981b04c3016d",
+      "key": "tatoeba-214829-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 34,
+      "text": "乗り換え券をください。",
+      "kana": "のりかえけんをください。",
+      "cueKo": "환승권을 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #146177",
+      "audioKey": "c/64d1307563a84277",
+      "key": "tatoeba-146177-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 35,
+      "text": "自由席を三枚ください。",
+      "kana": "じゆうせきをさんまいください。",
+      "cueKo": "자유석 세 장 달라고 하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #149679",
+      "noteKo": "三枚는 さんまい. 장은 枚, 사람은 人, 작은 물건은 個",
+      "audioKey": "c/b238f873283b41be",
+      "key": "tatoeba-149679-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 36,
+      "text": "駅へはタクシーで何分くらいかかりますか。",
+      "kana": "えきへはタクシーでなんぷんくらいかかりますか。",
+      "cueKo": "역까지 택시로 몇 분 걸리는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #188881",
+      "noteKo": "수단은 で: タクシーで. 何分은 なんぷん으로 읽는다",
+      "audioKey": "c/13ae3f9d9060aa21",
+      "key": "tatoeba-188881-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 37,
+      "text": "三番線、ドアが閉まります。ご注意下さい。",
+      "kana": "さんばんせん、ドアがしまります。ごちゅういください。",
+      "cueKo": "승강장 안내방송 듣기",
+      "register": "keigo",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #338029",
+      "noteKo": "'문이 닫힌다'는 ドアが閉まります. を가 아니라 が(자동사)",
+      "audioKey": "c/486a704275843193",
+      "key": "tatoeba-338029-hear"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 38,
+      "text": "タクシーで行こうよ。",
+      "kana": "タクシーでいこうよ。",
+      "cueKo": "친구에게 택시로 가자고 말하기",
+      "register": "casual",
+      "role": "say",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #203728",
+      "noteKo": "行こう가 권유를 나타내고, よ는 말에 강조를 더한다",
+      "audioKey": "c/ec2e9c73e5e7468f",
+      "key": "tatoeba-203728-say"
+    },
+    {
+      "unitOrd": 17,
+      "ord": 39,
+      "text": "東京駅で乗り換えるんだよ。",
+      "kana": "とうきょうえきでのりかえるんだよ。",
+      "cueKo": "친구가 도쿄역에서 갈아탄다고 말하는 것 듣기",
+      "register": "casual",
+      "role": "hear",
+      "sourceKind": "corpus",
+      "sourceRef": "Tatoeba #10669727",
+      "audioKey": "c/51677717b979b959",
+      "key": "tatoeba-10669727-hear"
+    }
+  ],
+  "scenes": [
+    {
+      "unitOrd": 17,
+      "ord": 1,
+      "titleKo": "표 사기",
+      "settingKo": "역에서 표를 어디서 사는지 묻고 창구에서 산다.",
+      "goalKo": "표를 어디서 살 수 있는지 묻고, 장수를 말하고, 가격을 알아듣는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            2
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            3
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            4
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            1
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 17,
+      "ord": 2,
+      "titleKo": "승강장과 환승",
+      "settingKo": "역 직원에게 승강장 번호와 환승 여부를 묻는다.",
+      "goalKo": "몇 번 선인지 묻고 번호를 알아들은 뒤 환승을 확인한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            6
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            7,
+            8
+          ],
+          "variants": [
+            {
+              "chunkOrd": 7,
+              "replyOrd": 10
+            },
+            {
+              "chunkOrd": 8,
+              "replyOrd": 9
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            10,
+            9
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            11
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 17,
+      "ord": 3,
+      "titleKo": "IC카드 충전",
+      "settingKo": "역 창구나 발매기 앞에서 IC카드를 충전하려 한다.",
+      "goalKo": "충전하고 싶다고 말하고, 안내나 금액 질문에 답한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            13
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            14,
+            15
+          ],
+          "variants": [
+            {
+              "chunkOrd": 14,
+              "replyOrd": 5
+            },
+            {
+              "chunkOrd": 15,
+              "replyOrd": 16
+            }
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            5,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 17,
+      "ord": 4,
+      "titleKo": "택시 타기",
+      "settingKo": "역 앞에서 택시 승차장을 찾아 타고 내린다.",
+      "goalKo": "승차장을 묻고, 행선지를 말하고, 세워 달라고 하고, 영수증을 받는다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            17
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            18
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            19
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            20
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            21
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            22
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "unitOrd": 17,
+      "ord": 5,
+      "titleKo": "길을 잃었을 때",
+      "settingKo": "길을 잃어 지나가는 사람에게 역으로 가는 길을 묻는다.",
+      "goalKo": "길을 잃었다고 말하고, 행선지를 말하고, 방향 안내를 확인한다.",
+      "turns": [
+        {
+          "ord": 1,
+          "speaker": "learner",
+          "chunkOrds": [
+            24
+          ]
+        },
+        {
+          "ord": 2,
+          "speaker": "npc",
+          "chunkOrds": [
+            25
+          ]
+        },
+        {
+          "ord": 3,
+          "speaker": "learner",
+          "chunkOrds": [
+            26
+          ]
+        },
+        {
+          "ord": 4,
+          "speaker": "npc",
+          "chunkOrds": [
+            27,
+            28,
+            29
+          ],
+          "variants": [
+            {
+              "chunkOrd": 27,
+              "replyOrd": 30
+            },
+            {
+              "chunkOrd": 28,
+              "replyOrd": 31
+            },
+            {
+              "chunkOrd": 29,
+              "replyOrd": 32
+            }
+          ]
+        },
+        {
+          "ord": 5,
+          "speaker": "learner",
+          "chunkOrds": [
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "ord": 6,
+          "speaker": "npc",
+          "chunkOrds": [
+            33
+          ]
+        },
+        {
+          "ord": 7,
+          "speaker": "learner",
+          "chunkOrds": [
+            5
+          ]
+        }
+      ]
+    }
+  ]
+}

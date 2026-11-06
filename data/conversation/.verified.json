@@ -23,6 +23,10 @@
     "text": "カレーはまあまあでした。",
     "sourceAuthor": "mookeee"
   },
+  "77815": {
+    "text": "領収書をいただけますか。",
+    "sourceAuthor": "mookeee"
+  },
   "78112": {
     "text": "了解しました。",
     "sourceAuthor": "mookeee"
@@ -38,6 +42,10 @@
   "78991": {
     "text": "予約したいんですが。",
     "sourceAuthor": "bunbuku"
+  },
+  "80171": {
+    "text": "毛布をもう一枚ほしいのですが。",
+    "sourceAuthor": "mookeee"
   },
   "81536": {
     "text": "本当にびっくりした。",
@@ -155,6 +163,10 @@
     "text": "池袋駅で乗り換えて下さい。",
     "sourceAuthor": "KK_kaku_"
   },
+  "137485": {
+    "text": "大人２枚ください。",
+    "sourceAuthor": "bunbuku"
+  },
   "138002": {
     "text": "お大事に。",
     "sourceAuthor": "bunbuku"
@@ -183,8 +195,16 @@
     "text": "診察しましょう。",
     "sourceAuthor": "bunbuku"
   },
+  "145037": {
+    "text": "申し訳ありませんが、ただ今満室になっています。",
+    "sourceAuthor": "KK_kaku_"
+  },
   "145955": {
     "text": "色違いはありませんか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "146177": {
+    "text": "乗り換え券をください。",
     "sourceAuthor": "bunbuku"
   },
   "146179": {
@@ -195,6 +215,10 @@
     "text": "少し熱が出るかもしれません。",
     "sourceAuthor": "bunbuku"
   },
+  "146842": {
+    "text": "少しはまけてくれませんか。",
+    "sourceAuthor": "small_snow"
+  },
   "147557": {
     "text": "初めての診察ですか。",
     "sourceAuthor": "bunbuku"
@@ -202,6 +226,14 @@
   "148465": {
     "text": "趣味は何ですか。",
     "sourceAuthor": "tommy__san"
+  },
+  "149679": {
+    "text": "自由席を三枚ください。",
+    "sourceAuthor": "small_snow"
+  },
+  "150255": {
+    "text": "次の電車は何時に出ますか。",
+    "sourceAuthor": "bunbuku"
   },
   "150259": {
     "text": "次の停車駅はどこですか。",
@@ -271,6 +303,10 @@
     "text": "今度の土曜日はどうですか。",
     "sourceAuthor": "bunbuku"
   },
+  "172830": {
+    "text": "今すぐチェックアウトしたいのですが。",
+    "sourceAuthor": "bunbuku"
+  },
   "173825": {
     "text": "喉が痛いんです。",
     "sourceAuthor": "bunbuku"
@@ -319,6 +355,18 @@
     "text": "会えて嬉しいよ。",
     "sourceAuthor": "bunbuku"
   },
+  "186534": {
+    "text": "荷物を預かって欲しいのですが。",
+    "sourceAuthor": "tommy__san"
+  },
+  "186547": {
+    "text": "荷物は何個ですか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "187304": {
+    "text": "何分かかりますか？",
+    "sourceAuthor": "KK_kaku_"
+  },
   "187448": {
     "text": "何時にどこで待ち合わせする？",
     "sourceAuthor": "bunbuku"
@@ -327,13 +375,25 @@
     "text": "何時にしましょうか。",
     "sourceAuthor": "small_snow"
   },
+  "187464": {
+    "text": "何時からチェックインできますか。",
+    "sourceAuthor": "small_snow"
+  },
   "188169": {
     "text": "何があったの？",
     "sourceAuthor": "bunbuku"
   },
+  "188881": {
+    "text": "駅へはタクシーで何分くらいかかりますか。",
+    "sourceAuthor": "KK_kaku_"
+  },
   "188894": {
     "text": "駅はどこですか。",
     "sourceAuthor": "bunbuku"
+  },
+  "188912": {
+    "text": "駅の近くにタクシー乗り場があります。",
+    "sourceAuthor": "small_snow"
   },
   "189286": {
     "text": "映画見に行かない？",
@@ -343,9 +403,17 @@
     "text": "映画を見に行きませんか。",
     "sourceAuthor": "bunbuku"
   },
+  "189350": {
+    "text": "営業時間は何時から何時までですか？",
+    "sourceAuthor": "tommy_san"
+  },
   "189616": {
     "text": "雨に降られてぬれちゃったよ。",
     "sourceAuthor": "bunbuku"
+  },
+  "190209": {
+    "text": "一泊いくらですか。",
+    "sourceAuthor": "tommy__san"
   },
   "190532": {
     "text": "一緒に行かない？",
@@ -387,6 +455,14 @@
     "text": "もう少し考えてみます。",
     "sourceAuthor": "small_snow"
   },
+  "194116": {
+    "text": "もう少し安い部屋はありますか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "194118": {
+    "text": "もう少し安いのはありますか。",
+    "sourceAuthor": "bunbuku"
+  },
   "194123": {
     "text": "もう少しゆっくりお願いします。",
     "sourceAuthor": "small_snow"
@@ -402,6 +478,10 @@
   "197456": {
     "text": "ビニール袋に入れてください。",
     "sourceAuthor": "small_snow"
+  },
+  "197931": {
+    "text": "バニラアイスクリームを二つ下さい。",
+    "sourceAuthor": "bunbuku"
   },
   "198059": {
     "text": "バス乗り場はどこですか。",
@@ -463,6 +543,30 @@
     "text": "ちょっと待ってて。",
     "sourceAuthor": "small_snow"
   },
+  "203004": {
+    "text": "チェックインをお願いします。",
+    "sourceAuthor": "small_snow"
+  },
+  "203005": {
+    "text": "チェックインまで荷物を預かってもらえますか。",
+    "sourceAuthor": "small_snow"
+  },
+  "203007": {
+    "text": "チェックインするのが少し遅くなります。",
+    "sourceAuthor": "small_snow"
+  },
+  "203008": {
+    "text": "チェックインしたいのですが。",
+    "sourceAuthor": "huizi99"
+  },
+  "203009": {
+    "text": "チェックアウトは何時ですか。",
+    "sourceAuthor": "bunbuku"
+  },
+  "203728": {
+    "text": "タクシーで行こうよ。",
+    "sourceAuthor": "arnab"
+  },
   "205018": {
     "text": "全部で三千円です。",
     "sourceAuthor": "KK_kaku_"
@@ -519,6 +623,10 @@
     "text": "すぐに分かりますよ。",
     "sourceAuthor": "small_snow"
   },
+  "215749": {
+    "text": "シャワーが壊れています。",
+    "sourceAuthor": "bunbuku"
+  },
   "216819": {
     "text": "サッカーが一番好きです。",
     "sourceAuthor": "bunbuku"
@@ -555,6 +663,10 @@
     "text": "ここで食べます。",
     "sourceAuthor": "Ianagisacos"
   },
+  "224556": {
+    "text": "ここで止めてください。",
+    "sourceAuthor": "small_snow"
+  },
   "224770": {
     "text": "ここから駅までどのくらいかかりますか。",
     "sourceAuthor": "mookeee"
@@ -569,6 +681,10 @@
   },
   "226472": {
     "text": "カードは使えますか。",
+    "sourceAuthor": "small_snow"
+  },
+  "226473": {
+    "text": "カードで支払えますか。",
     "sourceAuthor": "small_snow"
   },
   "226474": {
@@ -593,6 +709,10 @@
   },
   "226990": {
     "text": "お先にどうぞ。",
+    "sourceAuthor": "bunbuku"
+  },
+  "226998": {
+    "text": "お世話になりました。",
     "sourceAuthor": "bunbuku"
   },
   "227004": {
@@ -643,6 +763,10 @@
     "text": "ええ、わたしもそう思います。",
     "sourceAuthor": "bunbuku"
   },
+  "228047": {
+    "text": "エアコンが故障しています。",
+    "sourceAuthor": "bunbuku"
+  },
   "228460": {
     "text": "いらっしゃいませ、何名様ですか。",
     "sourceAuthor": "small_snow"
@@ -659,13 +783,29 @@
     "text": "ＪＲの駅まで歩いて何分くらいかかりますか。",
     "sourceAuthor": "mookeee"
   },
+  "235054": {
+    "text": "６時に起こして下さい。",
+    "sourceAuthor": "bunbuku"
+  },
   "235060": {
     "text": "６時に４人予約したいのですが。",
     "sourceAuthor": "bunbuku"
   },
+  "235561": {
+    "text": "２４時間営業ですか。",
+    "sourceAuthor": "e4zh1nmcz"
+  },
   "335372": {
     "text": "おはようございます。",
     "sourceAuthor": "Aurix"
+  },
+  "338029": {
+    "text": "三番線、ドアが閉まります。ご注意下さい。",
+    "sourceAuthor": "shiboy"
+  },
+  "338063": {
+    "text": "電車は後五分で発車します。",
+    "sourceAuthor": "shiboy"
   },
   "338114": {
     "text": "いらっしゃいませ。",
@@ -705,6 +845,10 @@
   },
   "431679": {
     "text": "京都に行ったことありますか？",
+    "sourceAuthor": "aliene"
+  },
+  "432825": {
+    "text": "これはいくらですか。",
     "sourceAuthor": "aliene"
   },
   "507553": {
@@ -774,6 +918,10 @@
   "975671": {
     "text": "日本語を勉強しています。",
     "sourceAuthor": "ultrasaurus"
+  },
+  "991960": {
+    "text": "この店は免税店ですか。",
+    "sourceAuthor": "mookeee"
   },
   "1014812": {
     "text": "お会計お願いします。",
@@ -923,6 +1071,10 @@
     "text": "どうしたの。",
     "sourceAuthor": "bunbuku"
   },
+  "2213120": {
+    "text": "予約してあります。",
+    "sourceAuthor": "bunbuku"
+  },
   "2233267": {
     "text": "すみません、お箸を落としてしまったんですが。",
     "sourceAuthor": "tommy_san"
@@ -987,8 +1139,16 @@
     "text": "郵便局への行き方を教えてください。",
     "sourceAuthor": "tommy_san"
   },
+  "2533670": {
+    "text": "切符はどこで買えますか。",
+    "sourceAuthor": "bunbuku"
+  },
   "2569603": {
     "text": "起きてる？",
+    "sourceAuthor": "tommy_san"
+  },
+  "2666710": {
+    "text": "チェックアウトお願いします。",
     "sourceAuthor": "tommy_san"
   },
   "2708994": {
@@ -1047,6 +1207,10 @@
     "text": "今週末は暇？",
     "sourceAuthor": "tommy_san"
   },
+  "3071318": {
+    "text": "すみません、タクシー乗り場はどこですか？",
+    "sourceAuthor": "tommy_san"
+  },
   "3126037": {
     "text": "明日楽しみだな。",
     "sourceAuthor": "tommy_san"
@@ -1095,8 +1259,16 @@
     "text": "今日の夜予定ある？",
     "sourceAuthor": "tommy_san"
   },
+  "3492798": {
+    "text": "また来ます。",
+    "sourceAuthor": "arnab"
+  },
   "3495032": {
     "text": "元気です。",
+    "sourceAuthor": "arnab"
+  },
+  "3495499": {
+    "text": "お支払いは現金になさいますか。",
     "sourceAuthor": "arnab"
   },
   "3495530": {
@@ -1129,6 +1301,10 @@
   },
   "3555502": {
     "text": "何かお探しですか？",
+    "sourceAuthor": "arnab"
+  },
+  "3576142": {
+    "text": "部屋番号は５です。",
     "sourceAuthor": "arnab"
   },
   "3580937": {
@@ -1199,6 +1375,10 @@
     "text": "次の角を右に曲がってください。",
     "sourceAuthor": "tommy_san"
   },
+  "4769884": {
+    "text": "Wi-Fiのパスワードを教えていただけますか？",
+    "sourceAuthor": "tommy_san"
+  },
   "4865664": {
     "text": "今どこにいるの？",
     "sourceAuthor": "tommy_san"
@@ -1250,6 +1430,10 @@
   "8655526": {
     "text": "これ包んでもらえますか？",
     "sourceAuthor": "bunbuku"
+  },
+  "8673093": {
+    "text": "電車は何時発ですか。",
+    "sourceAuthor": "small_snow"
   },
   "8688962": {
     "text": "びっくりした？",
@@ -1371,6 +1555,10 @@
     "text": "もしもし、どちら様ですか？",
     "sourceAuthor": "small_snow"
   },
+  "9679074": {
+    "text": "月曜日は定休日です。",
+    "sourceAuthor": "small_snow"
+  },
   "9681715": {
     "text": "風邪を引いたみたいなんです。",
     "sourceAuthor": "bunbuku"
@@ -1387,6 +1575,10 @@
     "text": "はじめまして。",
     "sourceAuthor": "Sim5634"
   },
+  "9732750": {
+    "text": "チェックインカウンターはどこですか？",
+    "sourceAuthor": "small_snow"
+  },
   "9776974": {
     "text": "金曜日はどうですか？",
     "sourceAuthor": "small_snow"
@@ -1398,6 +1590,10 @@
   "9795497": {
     "text": "サイズはおいくつでしょうか。",
     "sourceAuthor": "bunbuku"
+  },
+  "9796124": {
+    "text": "消費税は含まれていません。",
+    "sourceAuthor": "small_snow"
   },
   "9846152": {
     "text": "後で電話するね。",
@@ -1483,6 +1679,10 @@
     "text": "家に帰る途中、道に迷ってしまった。",
     "sourceAuthor": "small_snow"
   },
+  "10286299": {
+    "text": "これ全部でいくらだったの？",
+    "sourceAuthor": "small_snow"
+  },
   "10455088": {
     "text": "駅で待ち合わせよう。",
     "sourceAuthor": "bunbuku"
@@ -1531,12 +1731,28 @@
     "text": "頭痛がひどくてね。それで早く寝たんだよ。",
     "sourceAuthor": "bunbuku"
   },
+  "10644027": {
+    "text": "朝食は８時からです。",
+    "sourceAuthor": "small_snow"
+  },
+  "10647131": {
+    "text": "空港まで、お願いします。",
+    "sourceAuthor": "small_snow"
+  },
+  "10647274": {
+    "text": "領収書をお願いします。",
+    "sourceAuthor": "small_snow"
+  },
   "10647275": {
     "text": "レシートをください。",
     "sourceAuthor": "small_snow"
   },
   "10650485": {
     "text": "ここから動物園までは歩いて行ける距離ですか？",
+    "sourceAuthor": "small_snow"
+  },
+  "10650776": {
+    "text": "朝食は何時からですか？",
     "sourceAuthor": "small_snow"
   },
   "10657668": {
@@ -1546,6 +1762,10 @@
   "10668790": {
     "text": "香港には一度行ったことがありますよ。",
     "sourceAuthor": "small_snow"
+  },
+  "10669727": {
+    "text": "東京駅で乗り換えるんだよ。",
+    "sourceAuthor": "bunbuku"
   },
   "10669763": {
     "text": "寝坊しちゃって、始発に間に合わなかったんだ。",
@@ -1565,6 +1785,10 @@
   },
   "10807097": {
     "text": "お支払いは現金ですか？カードですか？",
+    "sourceAuthor": "bunbuku"
+  },
+  "10855091": {
+    "text": "お部屋のご用意ができました。",
     "sourceAuthor": "bunbuku"
   },
   "10899609": {
@@ -1619,6 +1843,10 @@
     "text": "また後で来ます。",
     "sourceAuthor": "small_snow"
   },
+  "10918319": {
+    "text": "はい、どうぞ。",
+    "sourceAuthor": "small_snow"
+  },
   "10918370": {
     "text": "どうぞよろしくお願いします。",
     "sourceAuthor": "small_snow"
@@ -1637,6 +1865,10 @@
   },
   "10983389": {
     "text": "ご連絡お待ちしております。",
+    "sourceAuthor": "small_snow"
+  },
+  "10984988": {
+    "text": "こちらがお部屋の鍵になります。",
     "sourceAuthor": "small_snow"
   },
   "10987738": {
@@ -1666,6 +1898,14 @@
   "11062662": {
     "text": "お水のおかわりをお願いします。",
     "sourceAuthor": "bunbuku"
+  },
+  "11064165": {
+    "text": "価格は消費税込みです。",
+    "sourceAuthor": "bunbuku"
+  },
+  "11065678": {
+    "text": "部屋は何階ですか？",
+    "sourceAuthor": "small_snow"
   },
   "11075451": {
     "text": "結局、来なかったよ。",
@@ -1711,6 +1951,10 @@
     "text": "知ってる？",
     "sourceAuthor": "megamanenm"
   },
+  "11527198": {
+    "text": "ロビーで待ってて。",
+    "sourceAuthor": "small_snow"
+  },
   "11542272": {
     "text": "その角を右に曲がれば、左手にありますよ。",
     "sourceAuthor": "bunbuku"
@@ -1731,6 +1975,10 @@
     "text": "その後どうなるの？",
     "sourceAuthor": "small_snow"
   },
+  "11571091": {
+    "text": "明日の朝は、何時出発？",
+    "sourceAuthor": "small_snow"
+  },
   "11582360": {
     "text": "カードで払いたいんですが。",
     "sourceAuthor": "small_snow"
@@ -1738,6 +1986,14 @@
   "11632729": {
     "text": "うっそ〜！絶対うそだよ！",
     "sourceAuthor": "hidemat"
+  },
+  "11637487": {
+    "text": "シングルを予約したいんですが。",
+    "sourceAuthor": "small_snow"
+  },
+  "11640662": {
+    "text": "お店は何時に閉まりますか？",
+    "sourceAuthor": "small_snow"
   },
   "11674920": {
     "text": "目覚ましかけ忘れてて、仕事に遅刻しちゃった。",
@@ -1779,12 +2035,20 @@
     "text": "レシートはいりません。",
     "sourceAuthor": "small_snow"
   },
+  "12098495": {
+    "text": "税込みです。",
+    "sourceAuthor": "small_snow"
+  },
   "12148232": {
     "text": "落とし物カウンターはどこですか？",
     "sourceAuthor": "small_snow"
   },
   "12163584": {
     "text": "プレゼント用に包んでもらえますか？",
+    "sourceAuthor": "small_snow"
+  },
+  "12164673": {
+    "text": "2時半に戻ります。",
     "sourceAuthor": "small_snow"
   },
   "12167707": {
@@ -1799,8 +2063,16 @@
     "text": "海外旅行に行ったことはありますか？",
     "sourceAuthor": "small_snow"
   },
+  "12281317": {
+    "text": "割り勘にしよう。",
+    "sourceAuthor": "small_snow"
+  },
   "12304961": {
     "text": "何時がいい？",
+    "sourceAuthor": "small_snow"
+  },
+  "12403571": {
+    "text": "鍵ある？",
     "sourceAuthor": "small_snow"
   },
   "12455624": {
