@@ -1,19 +1,38 @@
 # Hanja Trainer
 
-Duolingo-style spaced-repetition trainer for Chinese-origin characters,
-taught across three tracks at once: Korean Hanja (한자능력검정), Japanese
-Kanji (JLPT/漢検), Chinese Hanzi (HSK/通用规范汉字表). Same character, same
-core meaning, three pronunciations — reinforced side by side.
+Spaced-repetition trainer for Chinese-origin characters, taught across three
+tracks at once: Korean Hanja (한자능력검정), Japanese Kanji (JLPT/漢検) and
+Chinese Hanzi (HSK/通用规范汉字表). The same character is shown with its shared
+core meaning and its three readings, so the tracks reinforce each other. It is a
+single-user, keyboard-first app (1-4 answer, Enter advance, Esc pause) that also
+works on mobile. Example sentences come from real corpora and textbooks; none are
+AI-generated.
 
-- `design-prompt.md` — product/UX spec handed to Claude Design.
-- `design/Hanja Trainer.dc.html` + `design/support.js` — the resulting
-  wireframe (Claude Design canvas export). Reference for screen layout and
-  interaction only — **not** the app's runtime; the real app does not use
-  the `x-dc`/`sc-if`/`sc-for` template DSL from `support.js`.
+Live demo: https://hanja.uiseoya.com <!-- TODO-DEMO-URL: confirm final public demo URL -->
 
-Solo single-user product. Keyboard-first (1-4 answer, Enter advance, Esc
-pause, no mouse-required flow), mobile-responsive. FSRS-scheduled reviews.
-Real corpus/textbook example sentences only, no AI-generated content.
+## Tech stack
+
+- Cloudflare Workers (API and static assets), D1 (SQLite) and R2 (cached audio)
+- React + Vite single-page app, TypeScript throughout
+- Capacitor wrappers for iOS and Android (`android/`, `ios/`)
+- FSRS for review scheduling
+- Vitest and Playwright for tests
+
+## Architecture
+
+- `src/` is the SPA; `worker/` is the Worker API; `shared/` holds types used by both.
+- The SPA and API share one origin. `npm run dev` builds the SPA, then runs `wrangler dev`.
+- Learner state (reviews, FSRS cards, session summaries) lives in D1; `migrations/` is append-only.
+- Character, curriculum and sentence datasets are checked in under `data/` and loaded by an idempotent seed script.
+- Reading audio is generated offline and cached in R2.
+- Queued offline reviews keep the answer timestamp so delayed sync schedules from the original event.
+- The native apps load the same SPA and call the deployed Worker with bearer tokens.
+- Product spec: `design-prompt.md`; wireframe reference: `design/`.
+
+## Licenses and data sources
+
+Code is MIT (`LICENSE`). Data keeps its source licenses: see `NOTICE` and
+`data/SOURCES.md`.
 
 ## Development
 
@@ -79,36 +98,6 @@ npx wrangler deploy --dry-run
 The Playwright suite resets the local profile and learning history, reseeds the
 local D1 database, and drives all happy paths with keyboard events. Responsive
 screenshots are written under `test-results/`.
-
-### Automatic checks on the Mac
-
-GitHub schedules PR checks and main-branch checks; the repository-scoped
-`uiseos-Mac-mini-hanja` runner executes them on this Mac. The existing `CI`
-and `Mobile builds` workflows use `[self-hosted, macOS, ARM64]`. One runner
-executes jobs sequentially; newer commits cancel superseded runs. Mobile
-builds retain their path filters. No deployment or signing runs in CI.
-
-The runner lives in `/Users/uiseo/actions-runner/hanja`, with its own checkout
-under `_work/`; it never builds in the development checkout. Browser tests
-use port `18787` and reset only their checkout's local D1 database. Node 22,
-JDK 21, and Android build tools are installed by the workflows; npm/Gradle
-caches and the Android SDK stay in `.ci-cache/` beside that checkout. Xcode must
-remain installed. No Android emulator is needed.
-
-The macOS login service starts automatically when `uiseo` logs in. The Mac
-must remain awake and online; otherwise checks queue until it returns.
-
-```sh
-cd /Users/uiseo/actions-runner/hanja
-./svc.sh status
-./svc.sh stop   # pause accepting jobs
-./svc.sh start
-```
-
-Keep the repository private and restrict write access to trusted people.
-Fork PRs are skipped, but this runner runs as `uiseo`, not in a security
-sandbox. GitHub still stores check logs and seven-day screenshot/APK artifacts;
-only execution and dependency caches move to the Mac.
 
 ## D1 migrations
 

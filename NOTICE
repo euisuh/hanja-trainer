@@ -1,0 +1,29 @@
+Hanja Trainer
+
+Code is licensed under the MIT License (see LICENSE). Data files under data/
+are not covered by that license; each keeps the license of its source.
+Exact versions, hashes and retrieval dates are in data/SOURCES.md.
+
+Sentences
+  Tatoeba (https://tatoeba.org), CC BY 2.0 FR, some entries CC0. Each sentence
+  is cited as "Tatoeba #<id>"; contributor attribution is recorded in
+  data/conversation/.verified.json and at https://tatoeba.org/sentences/show/<id>.
+
+Word data
+  Korean, Japanese and Chinese Wiktionary (data/words/*-wiktionary.json),
+  CC BY-SA 4.0. These selections stay CC BY-SA 4.0 and must be shared alike.
+
+Character data
+  Unicode Unihan 17.0.0 (definitions, strokes, readings, variants), Unicode
+  data license: https://www.unicode.org/license.txt
+  HanjaDict (https://github.com/seyoungsong/hanjadict), MIT. Korean glosses.
+  profesorm/hsk30 (https://github.com/profesorm/hsk30), CC BY 4.0. HSK 3.0 membership.
+  davidluzgouveia/kanji-data (https://github.com/davidluzgouveia/kanji-data),
+  MIT repository license. Its jlpt_new mapping derives from scraped Tanos lists
+  with no separate upstream license recorded: verify before redistributing.
+  KANJIDIC2 dictionary fields: license per EDRDG; verify.
+  dahlia/shinjitai-table: no license published; only factual mappings used. Verify.
+  TypoStudio/matchit-packs: no license published; only factual grade membership
+  used, no prose copied. Verify.
+  Hangul Eomun Hoe (한국어문회) grade lists and Japan Kanji Aptitude Test
+  Foundation (日本漢字能力検定協会) grade table: factual level assignments only. Verify.

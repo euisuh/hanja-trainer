@@ -1,8 +1,8 @@
 # Talk mode: Japanese daily-conversation path
 
 Status: owner-approved direction, 2026-10-05. This file is authoritative. The
-files in `docs/talk-mode/brainstorm/` are source material; where they disagree
-with this file, this file wins.
+earlier brainstorm notes were removed from the tree (see git history before
+the public-readiness commit).
 
 ## Goal
 
@@ -26,7 +26,7 @@ here before the content or feedback slices start.
 
 ## Phase 1 scope
 
-- 16 situation units (see `brainstorm/opus-curriculum.md` section on the unit map).
+- 16 situation units.
   Phase 1 ships the engine plus pilot unit 2 ("ask someone to repeat"); other
   units are one data PR each later.
 - Cards: say-from-Korean-cue (A), listen-and-pick-intent (B), linear scene
@@ -37,8 +37,7 @@ here before the content or feedback slices start.
   `AnalyserNode`. No audio leaves the device. Everything else is self-graded and
   the UI says so.
 - No pronunciation score, no "fluency" claim.
-- Data model: follow `brainstorm/sonnet-mechanics.md` section 4 (`conv_*`
-  tables, next migration is `0025`), plus the chunk fields from the opus plan
+- Data model: `conv_*` tables (next migration is `0025`) with the chunk fields
   (`register`, `role`, `source_kind`, `source_ref`, `audio_key`).
 - Existing kanji/hanja code paths and tests must keep passing.
 
@@ -50,8 +49,7 @@ ink `#1F2A44` / `#E6E8EE`; muted `#5C6478` / `#9AA2B5`; pencil red (record, note
 Type: JP phrase Klee One 600 34px; reading Zen Maru Gothic 500; Korean UI
 IBM Plex Sans KR; mono meta IBM Plex Mono. Radius 3px buttons, 0 cards, 1.5px ink
 borders on interactive elements. Page turn = 140ms 12px slide + fade, honoring
-`prefers-reduced-motion`. Full spec: `brainstorm/fable-design.md` Direction 2.
-Mock: `brainstorm/design-notebook.html`.
+`prefers-reduced-motion`.
 
 Scope the tokens to a Talk root class so kanji screens are visually untouched
 until Phase 2. Keyboard-first (Space, R, 1-3, Enter, Esc, `/`, `[` `]`), mobile

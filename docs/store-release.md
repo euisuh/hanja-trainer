@@ -1,4 +1,4 @@
-# Private store release
+# Store release
 
 Decision [#292](https://github.com/euisuh/hanja-trainer/issues/292): the apps ship
 only through **TestFlight internal testing** and the **Google Play internal
