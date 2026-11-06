@@ -35,3 +35,13 @@
 .talk-scene__their strong, .talk-scene__target { display: block; font: 600 34px/1.5 var(--talk-font-jp); }
 .talk-scene__target { margin-top: 20px; color: var(--talk-accent); }
 @media (max-width: 600px) { .talk-scene__spread { grid-template-columns: 1fr; } .talk-scene__their, .talk-scene__yours { min-height: 140px; } .talk-screen__answer strong, .talk-scene__their strong, .talk-scene__target { font-size: 28px; } }
+.talk-screen__shadow { display: grid; gap: 12px; margin-top: 24px; padding: 12px; border: 1px solid var(--talk-line); border-radius: var(--radius-panel); background: var(--card); }
+.talk-screen__shadow small { color: var(--talk-muted); font-size: 12px; }
+.talk-screen__shadow p { margin: 0; }
+.talk-screen__shadow-actions { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+.talk-screen__shadow .talk-screen__ratings { margin-top: 0; }
+.talk-screen__shadow audio { display: block; max-width: 100%; margin-top: 4px; }
+.talk-screen__heard ul { margin: 8px 0; padding-left: 1.2em; }
+.talk-screen__diff { font: 600 22px/1.6 var(--talk-font-jp); word-break: keep-all; }
+.talk-screen__diff-missing { background: var(--wrong-bg); color: var(--wrong-fg); text-decoration: underline dotted; }
+.talk-screen__diff-extra { background: var(--correct-bg); color: var(--ink); text-decoration: line-through; }

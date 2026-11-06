@@ -15,7 +15,42 @@ Acceptance: both `jp` and `cn` sentence cards can record, replay, replace, and
 discard a clip using keyboard and touch controls; no network request contains
 recorded audio.
 
-## Follow-up: transcript feedback experiment
+## Shipped: Talk shadowing with on-device feedback
+
+Talk "say" cards (chunks and slot drills) get a "따라 말하기" action after the
+answer is revealed. It opens a shadowing panel:
+
+1. Play the line (cached chunk audio; speech synthesis `ja-JP` when the clip is
+   missing or fails, and always for composed slot-drill lines).
+2. Record one clip with `MediaRecorder` (same `LocalRecorder` as above) and
+   replay it beside the reference.
+3. Where the browser has `SpeechRecognition`/`webkitSpeechRecognition`, the
+   same take is recognized as `ja-JP` by the browser. The transcript and the
+   target are normalized (NFKC, katakana to hiragana, punctuation and spaces
+   removed) and compared character by character against both the written line
+   and its kana reading, keeping the closer match. The panel shows matched,
+   missing and extra characters, a percentage, and plain Korean hints (for
+   example a dropped particle). Logic lives in `shared/speechScore.ts`.
+4. The learner picks 다시 / 비슷해요 / 좋아요 (again / hard / good) and confirms.
+   A score of 90% or more preselects good, 60% or more hard, below that again.
+   The learner can change it; nothing is submitted until they confirm.
+
+Without `SpeechRecognition` (Firefox, some WebViews), or when its permission or
+service fails, the panel says automatic comparison is unavailable and works as
+record, replay and self-grade only. Without recording support it is self-grade
+only.
+
+What is stored: the rating only, as a normal FSRS "say" attempt with
+`loop: "shadow"` and `input: "voice"`. The audio clip and the transcript stay
+in component memory and are dropped on close, re-record, or navigation.
+Browser recognition may be performed by the browser vendor's speech service;
+the app itself sends nothing to its Worker. The feedback is a text comparison,
+not a pronunciation score, and is labeled as a reference in the UI.
+
+Not shipped: the server-side Chirp 3 path below. It stays an option only if
+browser recognition proves too uneven.
+
+## Follow-up: transcript feedback experiment (not built)
 
 Use a Worker-authenticated endpoint to send one bounded clip to Google Cloud
 Speech-to-Text V2 `Recognize` with Chirp 3. Google documents GA support for

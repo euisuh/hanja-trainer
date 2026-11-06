@@ -4,6 +4,7 @@ import { enqueuePendingConversationAttempt } from "../features/conversation/atte
 import { SceneRunner } from "../features/conversation/SceneRunner";
 import { SlotDrillCard } from "../features/conversation/SlotDrillCard";
 import { ListenCard } from "../features/conversation/ListenCard";
+import { ShadowPanel } from "../features/conversation/ShadowPanel";
 import { useActiveProfile } from "../features/profile/ProfileContext";
 import { SourceAttribution } from "../features/source/SourceAttribution";
 import { LocalRecorder, localRecordingSupported, matchingVoice, speechLanguages, useSpeechVoices, type LocalRecordingState } from "../features/study/speech";
@@ -11,7 +12,7 @@ import { apiClient } from "../lib/apiClient";
 import { apiUrl } from "../platform/apiUrl";
 import { onAppInactive } from "../platform/lifecycle";
 import "../features/conversation/talk.css";
-import type { ConversationGrade, ConversationSessionItem, ConversationSessionResponse } from "../../shared/api";
+import type { ConversationGrade, ConversationInput, ConversationLoop, ConversationSessionItem, ConversationSessionResponse } from "../../shared/api";
 
 type TalkStage = "cue" | "reveal" | "rate";
 type SessionEntry = { item: ConversationSessionItem; correction: boolean };
@@ -43,6 +44,7 @@ export function TalkScreen() {
   const [hints, setHints] = useState(0);
   const [replays, setReplays] = useState(0);
   const [selectedGrade, setSelectedGrade] = useState<"again" | "hard" | "good">("good");
+  const [shadowing, setShadowing] = useState(false);
   const [finished, setFinished] = useState(false);
   const [spoken, setSpoken] = useState(0);
   const [onsets, setOnsets] = useState<number[]>([]);
@@ -100,15 +102,16 @@ export function TalkScreen() {
     void recorderRef.current?.record(cueShownAtRef.current);
   }, [recording.status]);
 
-  const rate = useCallback((grade: ConversationGrade, input: "keyboard" | "tap", replayCount = replays) => {
+  const rate = useCallback((grade: ConversationGrade, input: ConversationInput, replayCount = replays, loop: ConversationLoop = "drill") => {
     if (!card) return;
     const latencyMs = recording.status === "ready" ? recording.onsetMs : null;
     enqueuePendingConversationAttempt(profileId, {
       clientAttemptId: attemptId(), chunkId: card.id, role: card.role, grade,
-      answeredAt: Date.now(), latencyMs, hints, replays: replayCount, loop: "drill",
+      answeredAt: Date.now(), latencyMs, hints, replays: replayCount, loop,
       input: recording.status === "ready" ? "voice" : input,
     });
     recorderRef.current?.reset();
+    setShadowing(false);
     if (card.role === "say" && !entry?.correction) {
       setSpoken((value) => value + 1);
       if (latencyMs !== null) setOnsets((value) => [...value, latencyMs]);
@@ -142,7 +145,7 @@ export function TalkScreen() {
       window.speechSynthesis.speak(utterance);
     };
     // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser audio constructor capability probe.
-    if (typeof Audio !== "function") { fallback(); return; }
+    if (typeof Audio !== "function" || !card.audioUrl) { fallback(); return; }
     const audio = new Audio(apiUrl(card.audioUrl));
     let failed = false;
     const fallbackOnce = () => { if (!failed) { failed = true; fallback(); } };
@@ -155,6 +158,8 @@ export function TalkScreen() {
       const target = event.target;
       if (target instanceof HTMLElement && (target.matches("button, input, textarea, select, audio") || target.isContentEditable)) return;
       if (event.key === "Escape") { event.preventDefault(); navigate("/home"); return; }
+      if (shadowing) return;
+      if (stage === "reveal" && (event.key === "r" || event.key === "R")) { event.preventDefault(); setShadowing(true); return; }
       if (event.key === "r" || event.key === "R") { event.preventDefault(); record(); return; }
       if (event.shiftKey && event.key === " " && stage === "rate") { event.preventDefault(); void selfAudioRef.current?.play().catch(() => undefined); return; }
       if (event.key === " ") { event.preventDefault(); reveal(); return; }
@@ -166,7 +171,7 @@ export function TalkScreen() {
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [navigate, rate, record, reveal, selectedGrade, stage]);
+  }, [navigate, rate, record, reveal, selectedGrade, shadowing, stage]);
 
   if (!Number.isSafeInteger(unitId) || unitId < 1 || error) return <section className="talk-root talk-screen"><p role="alert">{error || "Talk 단위를 찾을 수 없습니다."}</p><button onClick={() => navigate("/home")} type="button">돌아가기</button></section>;
   if (!content || !entry) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
@@ -202,14 +207,15 @@ export function TalkScreen() {
         {card.noteKo && <small className="talk-screen__source talk-screen__note">{card.noteKo}</small>}
         <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} sourceAuthor={card.sourceAuthor} /></small>
       </div>}
-      <div className="talk-screen__attempt">
+      {shadowing && <ShadowPanel targets={[card.ja, card.kana]} onClose={() => setShadowing(false)} onPlayReference={playReference} onRate={(grade) => rate(grade, "voice", replays, "shadow")} />}
+      {!shadowing && <div className="talk-screen__attempt">
         <small>내 시도 · 기기 안에서만 측정</small>
         {recording.status === "recording" && <p>녹음 중… <button onClick={record} type="button">중지 <kbd>R</kbd></button></p>}
         {recording.status === "denied" && <p role="alert">마이크를 쓸 수 없습니다. 답을 떠올린 뒤 공개하세요.</p>}
         {recording.status === "no_audio" && <p role="alert">소리가 감지되지 않았습니다. 직접 평가할 수 있습니다.</p>}
         {recording.status === "ready" && <p>첫 소리 {recording.onsetMs === null ? "측정 안 됨" : `${(recording.onsetMs / 1000).toFixed(1)}초`}</p>}
-      </div>
-      {canRate && <div role="group" aria-label="자기 평가" className="talk-screen__ratings">
+      </div>}
+      {canRate && !shadowing && <div role="group" aria-label="자기 평가" className="talk-screen__ratings">
         <button aria-pressed={selectedGrade === "again"} className={selectedGrade === "again" ? "is-preselected" : undefined} onClick={() => setSelectedGrade("again")} type="button">못함 <kbd>1</kbd></button>
         <button aria-pressed={selectedGrade === "hard"} className={selectedGrade === "hard" ? "is-preselected" : undefined} onClick={() => setSelectedGrade("hard")} type="button">막힘 <kbd>2</kbd></button>
         <button aria-pressed={selectedGrade === "good"} className={selectedGrade === "good" ? "is-preselected" : undefined} onClick={() => setSelectedGrade("good")} type="button">바로 <kbd>3</kbd></button>
@@ -217,8 +223,9 @@ export function TalkScreen() {
     </div>
     <footer className="talk-screen__bar">
       {stage === "cue" && <button onClick={reveal} type="button">정답 공개 <kbd>Space</kbd></button>}
-      {stage !== "rate" && <button className="talk-screen__record" disabled={recording.status === "requesting" || recording.status === "unsupported"} onClick={record} type="button">{recording.status === "recording" ? "녹음 중지" : "말하기"} <kbd>R</kbd></button>}
-      {stage === "reveal" && <button onClick={() => { setSelectedGrade(preselectedGrade); setStage("rate"); }} type="button">평가하기 <kbd>Enter</kbd></button>}
+      {stage === "cue" && <button className="talk-screen__record" disabled={recording.status === "requesting" || recording.status === "unsupported"} onClick={record} type="button">{recording.status === "recording" ? "녹음 중지" : "말하기"} <kbd>R</kbd></button>}
+      {stage === "reveal" && !shadowing && <button className="talk-screen__record" onClick={() => setShadowing(true)} type="button">따라 말하기 <kbd>R</kbd></button>}
+      {stage === "reveal" && !shadowing && <button onClick={() => { setSelectedGrade(preselectedGrade); setStage("rate"); }} type="button">평가하기 <kbd>Enter</kbd></button>}
       {stage === "rate" && <button onClick={() => rate(selectedGrade, "tap")} type="button">다음 쪽 <kbd>Enter</kbd></button>}
     </footer>
   </section>;
