@@ -1,45 +1,37 @@
-.talk-screen { background: repeating-linear-gradient(transparent 0 31px, var(--talk-ruled-line) 31px 32px); color: var(--talk-ink); font-family: var(--talk-font-ui); min-height: 100dvh; padding: 18px 18px 96px 58px; position: relative; }
-.talk-screen::before { background: var(--talk-pencil-red); bottom: 0; content: ""; left: 42px; opacity: .45; position: absolute; top: 0; width: 1px; }
-.talk-screen__meta { background: var(--talk-paper); color: var(--talk-muted); display: flex; font: 12px var(--talk-font-meta); justify-content: space-between; padding: 2px 0; position: relative; }
-.talk-screen__goal, .talk-screen__cue, .talk-screen__answer, .talk-screen__attempt { background: var(--talk-paper); position: relative; }
-.talk-screen__goal { color: var(--talk-tab-green); margin: 28px 0 8px; padding: 2px 0; }
-.talk-screen__page { max-width: 640px; }
-.talk-screen__cue { font-size: 20px; line-height: 1.6; margin: 0; padding: 4px 0; }
-.talk-screen__answer { margin-top: 24px; padding: 4px 0; }
+.talk-screen, .talk-scene { min-height: 100dvh; padding: 20px 20px 96px; background: var(--talk-paper); color: var(--talk-ink); font-family: var(--talk-font-ui); }
+.talk-screen__meta, .talk-scene__meta { display: flex; justify-content: space-between; gap: 1em; color: var(--talk-muted); font-size: 13px; }
+.talk-screen__goal { margin: 28px 0 8px; color: var(--talk-accent); }
+.talk-screen__page, .talk-scene__spread { max-width: 40em; }
+.talk-screen__cue, .talk-scene__cue { margin: 0; font-size: 20px; line-height: 1.6; }
+.talk-screen__answer { margin-top: 24px; }
 .talk-screen__answer strong { display: block; font: 600 34px/1.5 var(--talk-font-jp); }
-.talk-screen__answer .talk-screen__hanja-bridge { color: inherit; display: inline-block; font: inherit; position: relative; }
-.talk-screen__hanja-bridge mark { background: var(--talk-highlighter); color: inherit; }
-.talk-screen__hanja-bridge small { background: var(--talk-paper); border: 1px solid var(--talk-ink); font: 12px var(--talk-font-ui); left: 50%; padding: 1px 3px; position: absolute; top: 100%; transform: translateX(-50%); white-space: nowrap; z-index: 1; }
-.talk-screen__answer span { color: var(--talk-pencil-red); font: 500 14px var(--talk-font-reading); }
+.talk-screen__answer .talk-screen__hanja-bridge { position: relative; display: inline-block; color: inherit; font: inherit; }
+.talk-screen__hanja-bridge mark { background: var(--talk-highlight); color: inherit; }
+.talk-screen__hanja-bridge small { position: absolute; z-index: 1; top: 100%; left: 50%; padding: 2px 6px; border: 1px solid var(--talk-line); border-radius: var(--radius-badge); background: var(--card); font: 12px var(--talk-font-ui); transform: translateX(-50%); white-space: nowrap; }
+.talk-screen__answer span { color: var(--talk-accent); font: 500 14px var(--talk-font-reading); }
 .talk-screen__audio { margin-top: 12px; }
-.talk-screen__source { color: var(--talk-muted); display: block; font: 12px var(--talk-font-meta); margin-top: 12px; }
+.talk-screen__source { display: block; margin-top: 12px; color: var(--talk-muted); font-size: 12px; }
 .talk-screen__source a { color: inherit; }
-.talk-screen button { background: var(--talk-paper); border: 1.5px solid var(--talk-ink); border-radius: 3px; color: var(--talk-ink); font: 600 14px var(--talk-font-ui); padding: 10px 12px; }
-.talk-screen button:focus-visible { outline: 2px solid var(--talk-tab-green); outline-offset: 2px; }
+.talk-screen button, .talk-scene button { padding: 10px 14px; border: 1px solid var(--talk-line); border-radius: var(--radius-control); background: var(--card); color: var(--talk-ink); cursor: pointer; font: 600 14px var(--talk-font-ui); }
+.talk-screen button:hover:not(:disabled), .talk-scene button:hover:not(:disabled) { border-color: var(--talk-ink); }
+.talk-screen button:focus-visible, .talk-scene button:focus-visible { outline: 2px solid var(--talk-action); outline-offset: 2px; }
 .talk-screen button:disabled { opacity: .55; }
-.talk-screen kbd { font: 11px var(--talk-font-meta); opacity: .7; }
-.talk-screen__attempt { border: 1.5px solid var(--talk-ink); margin-top: 24px; padding: 12px; }
-.talk-screen__attempt small { color: var(--talk-muted); font: 12px var(--talk-font-meta); }
+.talk-screen kbd { font-size: 11px; opacity: .7; }
+.talk-screen__attempt { margin-top: 24px; padding: 12px; border: 1px solid var(--talk-line); border-radius: var(--radius-panel); background: var(--card); }
+.talk-screen__attempt small { color: var(--talk-muted); font-size: 12px; }
 .talk-screen__attempt p { margin-bottom: 0; }
 .talk-screen__ratings { display: grid; gap: 8px; grid-template-columns: repeat(3, 1fr); margin-top: 24px; }
-.talk-screen__ratings .is-preselected { background: var(--talk-highlighter); }
 .talk-screen__intents { display: grid; gap: 8px; margin-top: 24px; }
-.talk-screen__intents .is-preselected { background: var(--talk-highlighter); }
-.talk-screen__bar { background: var(--talk-paper); border-top: 1.5px solid var(--talk-ink); bottom: 0; display: flex; gap: 8px; left: 0; padding: 10px max(18px, calc((100% - 640px) / 2)); position: fixed; right: 0; }
+.talk-screen .is-preselected { border-color: var(--talk-action); background: var(--talk-highlight); }
+.talk-screen__bar, .talk-scene__bar { position: fixed; right: 0; bottom: 0; left: 0; display: flex; gap: 8px; padding: 10px max(20px, calc((100% - 40em) / 2)); border-top: 1px solid var(--talk-line); background: var(--talk-paper); }
 .talk-screen__bar button { flex: 1; }
-.talk-screen__bar .talk-screen__record { background: var(--talk-pencil-red); border-color: var(--talk-pencil-red); color: var(--talk-paper); }
+.talk-screen__bar .talk-screen__record { border-color: var(--talk-action); background: var(--talk-action); color: var(--gold-text); }
 @media (prefers-reduced-motion: no-preference) { .talk-screen__page { animation: talk-page-in 140ms ease-out; } }
 @keyframes talk-page-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
-@media (max-width: 600px) { .talk-screen { padding-left: 44px; } .talk-screen::before { left: 30px; } }
-.talk-scene { background: repeating-linear-gradient(transparent 0 31px, var(--talk-ruled-line) 31px 32px); color: var(--talk-ink); font-family: var(--talk-font-ui); min-height: 100dvh; padding: 18px 18px 96px; }
-.talk-scene button { background: var(--talk-paper); border: 1.5px solid var(--talk-ink); border-radius: 3px; color: var(--talk-ink); font: 600 14px var(--talk-font-ui); padding: 10px 12px; }
-.talk-scene__meta { color: var(--talk-muted); display: flex; font: 12px var(--talk-font-meta); justify-content: space-between; }
-.talk-scene__spread { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 36px; max-width: 720px; }
+.talk-scene__spread { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 36px; }
 .talk-scene__their, .talk-scene__yours { min-height: 220px; padding: 16px 0; }
-.talk-scene__their { border-top: 1.5px solid var(--talk-ink); }
-.talk-scene__their small, .talk-scene__yours small { color: var(--talk-muted); display: block; font: 12px var(--talk-font-meta); margin-bottom: 32px; }
+.talk-scene__their { border-top: 1px solid var(--talk-ink); }
+.talk-scene__their small, .talk-scene__yours small { display: block; margin-bottom: 32px; color: var(--talk-muted); font-size: 12px; }
 .talk-scene__their strong, .talk-scene__target { display: block; font: 600 34px/1.5 var(--talk-font-jp); }
-.talk-scene__cue { font-size: 20px; line-height: 1.6; }
-.talk-scene__target { color: var(--talk-pencil-red); margin-top: 20px; }
-.talk-scene__bar { background: var(--talk-paper); border-top: 1.5px solid var(--talk-ink); bottom: 0; display: flex; gap: 8px; left: 0; padding: 10px 18px; position: fixed; right: 0; }
-@media (max-width: 600px) { .talk-scene__spread { grid-template-columns: 1fr; } .talk-scene__their, .talk-scene__yours { min-height: 140px; } }
+.talk-scene__target { margin-top: 20px; color: var(--talk-accent); }
+@media (max-width: 600px) { .talk-scene__spread { grid-template-columns: 1fr; } .talk-scene__their, .talk-scene__yours { min-height: 140px; } .talk-screen__answer strong, .talk-scene__their strong, .talk-scene__target { font-size: 28px; } }

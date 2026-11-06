@@ -5,6 +5,8 @@ import { extname, join, relative } from "node:path";
 const root = new URL("../src/", import.meta.url);
 const tokenFiles = new Set(["design/talk.css", "design/tokens.ts"]);
 const color = /#[\da-f]{3,8}\b|\brgba?\(|\bhsla?\(/giu;
+// The single Quiet theme has no pills, linear gradients, monospace labels or italics.
+const banned = /999px|radius-pill|(?:linear|radial)-gradient|monospace|font-style:\s*italic/iu;
 const violations = [];
 const tokenSource = await readFile(new URL("../src/design/tokens.ts", import.meta.url), "utf8");
 
@@ -61,6 +63,7 @@ async function scan(directory) {
       lines.forEach((line, index) => {
         if (color.test(line)) violations.push(`${name}:${index + 1}: ${line.trim()}`);
         color.lastIndex = 0;
+        if (path.endsWith(".css") && banned.test(line)) violations.push(`${name}:${index + 1}: banned style: ${line.trim()}`);
       });
     }
   }

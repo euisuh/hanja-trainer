@@ -20,7 +20,6 @@
   border: 3px solid var(--ink);
   border-radius: var(--radius-medium);
   background: var(--gold);
-  box-shadow: var(--shadow-6);
   cursor: pointer;
   font-size: var(--text-md);
   font-weight: var(--weight-strong);

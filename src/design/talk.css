@@ -1,23 +1,13 @@
+/* Talk screens read from the shared Quiet tokens; these names keep the Talk selectors short. */
 .talk-root {
-  --talk-paper: #FBF8F1;
-  --talk-ruled-line: #D5E0EA;
-  --talk-ink: #1F2A44;
-  --talk-muted: #5C6478;
-  --talk-pencil-red: #C2412D;
-  --talk-highlighter: #FFE58A;
-  --talk-tab-green: #2E6F5E;
-  --talk-font-jp: "Klee One", "Noto Serif JP Variable", serif;
-  --talk-font-reading: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
-  --talk-font-ui: "IBM Plex Sans KR", "Noto Sans KR Variable", sans-serif;
-  --talk-font-meta: "IBM Plex Mono", ui-monospace, monospace;
-}
-
-.talk-root[data-talk-theme="dark"] {
-  --talk-paper: #181A20;
-  --talk-ruled-line: #2A3140;
-  --talk-ink: #E6E8EE;
-  --talk-muted: #9AA2B5;
-  --talk-pencil-red: #F0806B;
-  --talk-highlighter: #5A4B12;
-  --talk-tab-green: #6DBBA4;
+  --talk-paper: var(--paper);
+  --talk-line: var(--border-tan);
+  --talk-ink: var(--ink);
+  --talk-muted: var(--muted);
+  --talk-accent: var(--jp-accent);
+  --talk-highlight: var(--jp-soft);
+  --talk-action: var(--gold);
+  --talk-font-jp: var(--font-jp);
+  --talk-font-reading: var(--font-ui);
+  --talk-font-ui: var(--font-ui);
 }

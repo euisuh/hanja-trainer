@@ -18,7 +18,6 @@
   border: 2px solid var(--ink);
   border-radius: var(--radius-small);
   background: var(--card);
-  box-shadow: var(--shadow-3);
   cursor: pointer;
   font-size: var(--text-sm);
   font-weight: var(--weight-strong);
@@ -51,7 +50,7 @@ button.session-sync {
   height: 16px;
   overflow: hidden;
   border: 2px solid var(--ink);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   background: var(--progress-track);
 }
 
@@ -64,7 +63,7 @@ button.session-sync {
 
 .combo-badge {
   padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   background: var(--ink);
   color: var(--gold);
   font-size: var(--text-base);
@@ -89,20 +88,13 @@ button.session-sync {
 }
 
 .combo-badge[data-tier="4"] {
-  background: linear-gradient(96deg, var(--flame) 0%, var(--gold) 55%, var(--flame) 100%);
-  background-size: 220% 100%;
-  color: var(--ink);
-  font-size: var(--text-md);
-  animation: om-pop 400ms cubic-bezier(.22, 1.2, .36, 1),
-             om-combo-sheen 2.2s linear 400ms infinite;
-}
-
-.app[data-theme="quiet-technical"] .combo-badge:is([data-tier="1"], [data-tier="3"]) {
+  background: var(--gold-hover);
   color: var(--card);
+  font-size: var(--text-md);
+  animation: om-pop 400ms cubic-bezier(.22, 1.2, .36, 1);
 }
 
-.app[data-theme="quiet-technical"] .combo-badge[data-tier="4"] {
-  background-image: linear-gradient(96deg, var(--gold-hover) 0%, var(--gold) 55%, var(--gold-hover) 100%);
+.app .combo-badge:is([data-tier="1"], [data-tier="3"]) {
   color: var(--card);
 }
 
@@ -138,7 +130,7 @@ button.session-sync {
 .recall-check > div { display: flex; gap: var(--space-3); }
 .recall-actions { justify-content: center; margin-top: var(--space-5); }
 .recall-actions button,
-.recall-check button { padding: var(--space-4) var(--space-5); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); box-shadow: var(--shadow-3); cursor: pointer; font-weight: var(--weight-strong); }
+.recall-check button { padding: var(--space-4) var(--space-5); border: 2px solid var(--ink); border-radius: var(--radius-small); background: var(--card); cursor: pointer; font-weight: var(--weight-strong); }
 .recall-reveal,
 .recall-check button:last-child { background: var(--session-accent) !important; color: var(--card); }
 .recall-check { flex-direction: column; align-items: center; margin-top: var(--space-5); }
@@ -151,7 +143,6 @@ button.session-sync {
   border: 3px solid var(--ink);
   border-radius: var(--radius-extra-large);
   background: var(--card);
-  box-shadow: var(--shadow-7);
 }
 
 .quiz-card--wrong {
@@ -161,10 +152,6 @@ button.session-sync {
 .quiz-card--correct {
   animation: om-win-card 420ms cubic-bezier(.22, 1.2, .36, 1),
     om-win-flash 620ms ease-out;
-}
-
-.app[data-theme="quiet-technical"] .quiz-card--correct {
-  --shadow-7: 0 0 0 transparent;
 }
 
 .quiz-card__badges {
@@ -327,7 +314,6 @@ button.session-sync {
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
   background: var(--card);
-  box-shadow: var(--shadow-4);
   color: var(--ink);
   cursor: pointer;
   text-align: left;
@@ -382,7 +368,7 @@ button.session-sync {
 }
 
 .answer-option--correct .answer-option__key { background: var(--correct); color: var(--ink); }
-.app[data-theme="quiet-technical"] .answer-option--correct .answer-option__key { color: var(--card); }
+.app .answer-option--correct .answer-option__key { color: var(--card); }
 .answer-option--correct .answer-option__mark { color: var(--correct-fg); }
 .answer-option--wrong { border-color: var(--wrong); background: var(--wrong-bg); }
 .answer-option--wrong .answer-option__key { background: var(--wrong-fg); color: var(--card); }
@@ -441,7 +427,6 @@ button.session-sync {
   border: 3px solid var(--ink);
   border-radius: var(--radius-control);
   background: var(--gold);
-  box-shadow: var(--shadow-4);
   color: var(--gold-text);
   cursor: pointer;
   font-size: var(--text-base);
@@ -467,7 +452,7 @@ button.session-sync {
   display: inline-block;
   margin-left: var(--space-2);
   padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   background: var(--correct-vivid);
   color: var(--ink);
   font-variant-numeric: tabular-nums;
@@ -475,7 +460,7 @@ button.session-sync {
 }
 .feedback-bar__lost {
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   background: var(--wrong-bg);
   color: var(--wrong-fg);
   font-size: var(--text-xs);
@@ -585,7 +570,6 @@ button.session-sync {
   border: 3px solid var(--ink);
   border-radius: var(--radius-panel);
   background: var(--card);
-  box-shadow: var(--shadow-4);
   cursor: pointer;
   font-size: var(--text-base);
   font-weight: var(--weight-strong);
@@ -622,7 +606,7 @@ button.session-sync {
 
 .session-complete__xp { color: var(--correct-fg); font-variant-numeric: tabular-nums; }
 
-.app[data-theme="quiet-technical"] .session-complete__xp { color: var(--gold-hover); }
+.app .session-complete__xp { color: var(--gold-hover); }
 
 .session-complete__stats {
   display: grid;
@@ -637,7 +621,6 @@ button.session-sync {
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
   background: var(--card);
-  box-shadow: var(--shadow-5);
   animation: om-rise 300ms ease-out both;
 }
 
@@ -696,7 +679,6 @@ button.session-sync {
   border: 3px solid var(--ink);
   border-radius: var(--radius-answer);
   background: var(--gold);
-  box-shadow: var(--shadow-6);
   cursor: pointer;
   font-size: var(--text-md);
   font-weight: var(--weight-strong);

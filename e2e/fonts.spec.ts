@@ -8,7 +8,7 @@ test("self-hosted fonts load without third-party requests", async ({ page }) => 
   await page.goto("/home");
   await expect(page.locator(".app")).toBeVisible();
 
-  const faces = ["Plus Jakarta Sans Variable", "Noto Sans KR Variable", "Noto Serif KR Variable", "Noto Serif JP Variable", "Noto Serif SC Variable", "Space Grotesk Variable"];
+  const faces = ["Noto Sans KR Variable", "Noto Serif KR Variable", "Noto Serif JP Variable", "Noto Serif SC Variable"];
   const loaded = await page.evaluate(async (families) => {
     const samples: Record<string, string> = { "Noto Serif JP Variable": "漢字", "Noto Serif SC Variable": "汉字", "Noto Serif KR Variable": "漢字", "Noto Sans KR Variable": "한자" };
     await Promise.all(families.map((family) => document.fonts.load(`700 24px '${family}'`, samples[family] ?? "Aa")));

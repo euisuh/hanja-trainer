@@ -113,7 +113,7 @@ test("restores a failed edit after reload and clears it after retry", async ({ p
   expect(attempts).toBe(2);
 });
 
-test("does not let the app's older settings load revert a saved theme", async ({ page }) => {
+test("does not let an older settings load revert a saved sound mode", async ({ page }) => {
   let settingsGets = 0;
   let release!: () => void;
   const held = new Promise<void>((resolve) => { release = resolve; });
@@ -129,15 +129,12 @@ test("does not let the app's older settings load revert a saved theme", async ({
   await page.goto("/settings");
   await expect(page.getByRole("heading", { name: "설정" })).toBeVisible();
   const saved = page.waitForResponse((response) => response.url().endsWith("/api/settings") && response.request().method() === "PATCH" && response.ok());
-  await page.getByRole("button", { name: "기본" }).click();
+  await page.getByRole("button", { name: "끄기" }).click();
   await saved;
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "default");
   release();
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "default");
 });
 
-test("lets the app theme load finish after an unrelated settings event", async ({ page }) => {
-  execFileSync(npx, ["wrangler", "d1", "execute", "hanja", "--local", "--command", "UPDATE profile SET theme = 'default' WHERE id = 1"], { cwd: process.cwd(), stdio: "pipe" });
+test("lets the settings load finish after an unrelated settings event", async ({ page }) => {
   let settingsGets = 0;
   let release!: () => void;
   const held = new Promise<void>((resolve) => { release = resolve; });
@@ -154,5 +151,4 @@ test("lets the app theme load finish after an unrelated settings event", async (
   await page.getByRole("slider", { name: "일일 XP 목표" }).press("ArrowRight");
   await saved;
   release();
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "default");
 });

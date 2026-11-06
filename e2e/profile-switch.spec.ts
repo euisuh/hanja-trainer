@@ -68,7 +68,7 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   const pin = await page.request.post("/api/pin", { data: { pin: "1234" }, headers: { "x-hanja-profile-id": "1" } });
   expect(pin.ok()).toBe(true);
   executeSql(`
-    UPDATE profile SET name = '민지', theme = 'default', timezone = '${alternateTimezone}', onboarded_at = 1 WHERE id = 1;
+    UPDATE profile SET name = '민지', timezone = '${alternateTimezone}', onboarded_at = 1 WHERE id = 1;
     INSERT INTO profile (name) VALUES ('준');
   `);
   const publicProfiles = await (await page.request.get("/api/profiles")).json() as { profiles: Array<{ id: number; name: string }> };
@@ -94,7 +94,6 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   });
 
   await page.goto("/home");
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
   const admin = page.getByRole("button", { name: "민지, PIN 필요" });
   const second = page.getByRole("button", { name: "준" });
   await expect(admin).toBeFocused();
@@ -136,7 +135,6 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   await expect(page).toHaveURL(/\/home$/u);
   await page.unroute("**/api/pin/unlock");
   await expect(page.locator(".active-profile strong")).toHaveText("민지");
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "default");
 
   const started = await browserRequest(page, "/api/session/start", "POST", { mode: "lesson", tracks: ["kr"], limit: 1 });
   expect(started.status).toBe(200);
@@ -164,10 +162,8 @@ test("switches profiles without leaking progress or browser state", async ({ pag
 
   await page.getByRole("button", { name: "프로필 전환" }).click();
   await expect(page.getByRole("heading", { name: "누가 학습하나요?" })).toBeVisible();
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
   releasePatch();
   await finishedPatch;
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
   await expect(admin).toBeFocused();
   await page.keyboard.press("ArrowRight");
   await expect(second).toBeFocused();
@@ -215,7 +211,6 @@ test("switches profiles without leaking progress or browser state", async ({ pag
   await expect(page).toHaveURL(/\/home$/u);
   await timezonePatched;
   await expect(page.locator(".active-profile strong")).toHaveText("준");
-  await expect(page.locator(".app")).toHaveAttribute("data-theme", "quiet-technical");
   await expect(page.locator(".metric").first().locator("strong")).toHaveText("0");
   await expect(page.locator(".path-map__heading small")).toHaveText(/^0 \/ \d+ 자$/u);
   await expect(page.locator(".path-node--done")).toHaveCount(0);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { avatarHue } from "../features/profile/avatarHue";
-import { avatarBackground, notebookDarkTheme, themes } from "./tokens";
+import { avatarBackground, theme } from "./tokens";
 
 function relativeLuminance([red, green, blue]: number[]): number {
   const [r, g, b] = [red, green, blue].map((channel) => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
@@ -38,86 +38,23 @@ describe("visual themes", () => {
     }
   });
 
-  it("keeps every existing default token unchanged", () => {
-    const current = themes.default;
-    expect(current.colors).toMatchObject({
-      paper: "#EFEAE0", ink: "#16130F", body: "#4A443B", muted: "#6E675C", faint: "#6F685F",
-      card: "#FFFFFF", panel: "#F6F2E9", chipBg: "#F1ECE1", borderTan: "#E2DAC9", gold: "#E8B33D", goldHover: "#D19A22", flameText: "#9A3E0B",
-      calendarLow: "#FBE7C6", calendarMedium: "#F0B95E", calendarHigh: "#E8873D",
-      correct: "#3DAE28", correctBg: "#E9F8E2", correctFg: "#2A7A1B", correctVivid: "#58CC02",
-      wrong: "#E33B3B", wrongBg: "#FDEAEA", wrongFg: "#B32020", wrongVivid: "#FF4B4B",
-      correctGlow: "rgba(47, 125, 90, .35)", correctGlowClear: "rgba(47, 125, 90, 0)",
-      winFlash: "rgba(88, 204, 2, .45)", winFlashClear: "rgba(88, 204, 2, 0)",
-    });
-    expect(current.colors.goldHover).not.toBe(current.colors.gold);
-    expect(current.cssVariables).toMatchObject({ "--correct-vivid": current.colors.correctVivid, "--wrong-vivid": current.colors.wrongVivid, "--flame-text": current.colors.flameText, "--win-flash": current.colors.winFlash, "--win-flash-clear": current.colors.winFlashClear });
-    expect(current.fonts).toEqual({
-      ui: "'Plus Jakarta Sans Variable', 'Noto Sans KR Variable', sans-serif",
-      answer: "'Noto Sans KR Variable', sans-serif",
-      kr: "'Noto Serif KR Variable', 'Noto Serif KR', serif", jp: "'Noto Serif JP Variable', 'Noto Serif JP', serif", cn: "'Noto Serif SC Variable', 'Noto Serif SC', serif",
-    });
-    expect(current.tracks).toEqual({
-      kr: { accent: "#3B5BDB", accentText: "#3B5BDB", soft: "#EEF1FD", font: current.fonts.kr },
-      jp: { accent: "#C23F29", accentText: "#C23F29", soft: "#FDEEEB", font: current.fonts.jp },
-      cn: { accent: "#0B7D56", accentText: "#0B7D56", soft: "#E7F6F0", font: current.fonts.cn },
-    });
-    expect(current.radii).toEqual({ keycap: "7px", small: "12px", navItem: "15px", medium: "20px", large: "22px", extraLarge: "28px", answer: "18px", answerKey: "9px", panel: "16px", badge: "8px", control: "14px", cta: "24px", modal: "26px", calendar: "4px", chart: "7px 7px 3px 3px", pill: "999px" });
-    expect(current.shadows).toEqual({ hard3: "0 3px 0 #16130F", hard4: "0 4px 0 #16130F", hard5: "0 5px 0 #16130F", hard6: "0 6px 0 #16130F", hard7: "0 7px 0 #16130F", nav: "0 6px 24px rgba(22, 19, 15, .32)" });
+  it("defines one Quiet theme with 8px radii, no pills and no shadows", () => {
+    expect(theme.colors).toMatchObject({ paper: "#F4F5F6", ink: "#201F1D", card: "#FFFFFF", goldText: "#FFFFFF", feedbackBg: "#201F1D" });
+    expect(theme.fonts.ui).toBe("'Noto Sans KR Variable', system-ui, sans-serif");
+    expect(theme.tracks).toMatchObject({ kr: { accent: "#5B6B8C" }, jp: { accent: "#A5583C" }, cn: { accent: "#4A7A62" } });
+    expect(theme.cssVariables).toMatchObject({ "--paper": theme.colors.paper, "--kr-accent": theme.tracks.kr.accent, "--font-ui": theme.fonts.ui, "--border-width": "1px" });
+    expect(Object.keys(theme.cssVariables)).not.toContain("--radius-pill");
+    expect(Object.values(theme.radii).every((value) => Number.parseInt(value) <= 8)).toBe(true);
+    expect(theme.radii.control).toBe("8px");
   });
 
-  it("reproduces Quiet Technical and fixes glyph fonts", () => {
-    const quiet = themes["quiet-technical"];
-    expect(quiet.colors).toMatchObject({
-      paper: "#F7F6F4", ink: "#201F1D", card: "#FFFFFF", panel: "#F5F4F2", chipBg: "#F0EFED",
-      borderTan: "#DEDCDA", muted: "#5A5854", faint: "#8A877F", gold: "#B45309", goldHover: "#92400E", goldText: "#FFFFFF", flame: "#B45309", flameText: "#92400E",
-      calendarLow: "#EEF0F6", calendarMedium: "#4C5F8A", calendarHigh: "#201F1D",
-      correct: "#2F7D5A", correctBg: "#EDF6F1", correctFg: "#2F7D5A", correctVivid: "#3DAE28",
-      wrong: "#B0492E", wrongBg: "#FCEFEC", wrongFg: "#B0492E", wrongVivid: "#D14A4A", feedbackBg: "#201F1D", feedbackText: "#F7F6F4",
-      correctGlow: "rgba(47, 125, 90, .5)", correctGlowClear: "rgba(47, 125, 90, 0)",
-      winFlash: "rgba(47, 125, 90, .40)", winFlashClear: "rgba(47, 125, 90, 0)",
-    });
-    expect(quiet.cssVariables).toMatchObject({ "--correct-vivid": quiet.colors.correctVivid, "--wrong-vivid": quiet.colors.wrongVivid, "--flame-text": quiet.colors.flameText, "--win-flash": quiet.colors.winFlash, "--win-flash-clear": quiet.colors.winFlashClear });
-    expect(quiet.tracks).toMatchObject({
-      kr: { accent: "#4C5F8A", soft: "#EEF0F6" }, jp: { accent: "#A85A3D", soft: "#F7EEEA" }, cn: { accent: "#4C7A63", soft: "#EEF5F0" },
-    });
-    expect(quiet.fonts).toEqual({ ...themes.default.fonts, ui: "'Space Grotesk Variable', system-ui, sans-serif", answer: "'Space Grotesk Variable', system-ui, sans-serif" });
-    expect(quiet.radii).toMatchObject({ keycap: "6px", small: "7px", navItem: "8px", medium: "8px", large: "10px", extraLarge: "10px", answer: "8px", answerKey: "6px", panel: "8px", badge: "6px", control: "8px", cta: "10px", modal: "10px", calendar: "6px", pill: "999px" });
-    expect(Object.entries(quiet.radii).filter(([name]) => name !== "pill").every(([, value]) => Number.parseInt(value) >= 6 && Number.parseInt(value) <= 10)).toBe(true);
-    expect(Object.values(quiet.shadows).slice(0, 5)).toEqual(Array(5).fill("none"));
-  });
-
-  it("promotes the Notebook light and dark Talk tokens", () => {
-    expect(themes.notebook.colors).toMatchObject({
-      paper: "#FBF8F1", ink: "#1F2A44", muted: "#5C6478", borderTan: "#D5E0EA", flame: "#C2412D", gold: "#FFE58A", correct: "#2E6F5E",
-    });
-    expect(themes.notebook.fonts).toMatchObject({
-      ui: "'IBM Plex Sans KR', 'Noto Sans KR Variable', sans-serif", answer: "'Klee One', 'Noto Serif JP Variable', serif", jp: "'Klee One', 'Noto Serif JP Variable', serif",
-    });
-    expect(themes.notebook.radii).toMatchObject({ answer: "0", control: "3px" });
-    expect(notebookDarkTheme.colors).toMatchObject({
-      paper: "#181A20", ink: "#E6E8EE", muted: "#9AA2B5", borderTan: "#2A3140", flame: "#F0806B", gold: "#5A4B12", correct: "#6DBBA4",
-    });
-  });
-
-  it("meets AA for every Quiet Technical text role", () => {
-    const { colors, tracks } = themes["quiet-technical"];
+  it("meets AA for every text role", () => {
+    const { colors, tracks } = theme;
     const pairs = [
-      [colors.ink, colors.paper], [colors.muted, colors.paper], [colors.faint, colors.ink],
-      [colors.goldText, colors.gold], [colors.flameText, colors.card], [colors.flameText, colors.paper],
-      [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
-      [colors.feedbackText, colors.feedbackBg],
-      ...Object.values(tracks).flatMap((track) => [[track.accent, colors.card], [track.accentText, track.soft]]),
-    ];
-    for (const [foreground, background] of pairs) expect(contrast(foreground, background)).toBeGreaterThanOrEqual(4.5);
-  });
-
-  it("meets AA for every default text role", () => {
-    const { colors, tracks } = themes.default;
-    const pairs = [
-      [colors.ink, colors.paper], [colors.muted, colors.paper],
-      [colors.goldText, colors.gold], [colors.flameText, colors.card], [colors.flameText, colors.paper],
-      [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg],
-      ...Object.values(tracks).flatMap((track) => [[track.accent, colors.card], [track.accentText, track.soft]]),
+      [colors.ink, colors.paper], [colors.muted, colors.paper], [colors.faint, colors.paper], [colors.faint, colors.card],
+      [colors.goldText, colors.gold], [colors.goldText, colors.goldHover], [colors.flameText, colors.card], [colors.flameText, colors.paper],
+      [colors.correctFg, colors.correctBg], [colors.wrongFg, colors.wrongBg], [colors.feedbackText, colors.feedbackBg],
+      ...Object.values(tracks).flatMap((track) => [[track.accentText, track.soft]]),
     ];
     for (const [foreground, background] of pairs) expect(contrast(foreground, background)).toBeGreaterThanOrEqual(4.5);
   });

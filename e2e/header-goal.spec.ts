@@ -27,7 +27,6 @@ async function refreshProfile(page: Page) {
 test("daily goal stays conic and sweeps through completion", async ({ page }) => {
   const state = { todayXp: 20 };
   await mockProfile(page, state);
-  expect((await page.request.patch("/api/settings", { data: { theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
   await page.goto("/settings");
 
   const goal = page.locator(".daily-goal");
@@ -127,15 +126,12 @@ test("profile updates avoid duplicate reads and reject stale or mismatched detai
   await expect(page.locator(".app-header")).not.toContainText("999XP");
 });
 
-test("streak text and boundary meet contrast in both themes", async ({ page }) => {
+test("streak text and boundary meet contrast", async ({ page }) => {
   const state = { todayXp: 20 };
   await mockProfile(page, state);
 
-  for (const theme of ["default", "quiet-technical"] as const) {
-    expect((await page.request.patch("/api/settings", { data: { theme }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
+  {
     await page.goto("/settings");
-    const app = page.locator(".app");
-    await expect(app).toHaveAttribute("data-theme", theme);
 
     const ratios = await page.locator(".metric--streak").evaluate((metric) => {
       const parse = (value: string) => {
@@ -153,14 +149,12 @@ test("streak text and boundary meet contrast in both themes", async ({ page }) =
       const app = metric.closest<HTMLElement>(".app")!;
       const appStyle = getComputedStyle(app);
       const metricStyle = getComputedStyle(metric);
-      const flame = parse(appStyle.getPropertyValue("--flame").trim());
       const card = parse(appStyle.getPropertyValue("--card").trim());
-      const gradientStart = flame.map((channel, index) => channel * 0.14 + card[index] * 0.86);
       const foreground = parse(getComputedStyle(metric.querySelector("strong")!).color);
       const border = parse(metricStyle.borderTopColor);
       return {
         boundary: contrast(border, parse(appStyle.backgroundColor)),
-        text: Math.min(contrast(foreground, gradientStart), contrast(foreground, card)),
+        text: contrast(foreground, card),
       };
     });
 

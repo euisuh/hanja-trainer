@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { matchPath, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { themes } from "./design/tokens";
+import { cssVariables } from "./design/tokens";
+import { Landing } from "./features/landing/Landing";
 import { ProfileProvider, type ActiveProfile } from "./features/profile/ProfileContext";
 import { ReviewSyncStatus } from "./features/session/ReviewSyncStatus";
 import { SessionSummaryStatus } from "./features/session/SessionSummaryStatus";
@@ -9,21 +10,18 @@ import { setSessionSummaryProfile } from "./features/session/useSessionSummary";
 import { setConversationAttemptProfile } from "./features/conversation/attemptOutbox";
 import { ConversationAttemptSync } from "./features/conversation/ConversationAttemptSync";
 import { resetSettingsClientState } from "./features/settings/useSettings";
-import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, SETTINGS_UPDATED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
+import { ApiClientError, ONBOARDING_COMPLETED_EVENT, PIN_REQUIRED_EVENT, apiClient, pauseProfileRequests, resumeProfileRequests, setApiProfileId } from "./lib/apiClient";
 import { nativeShell, needsExplicitSelection, setSessionToken } from "./platform/sessionToken";
 import { AppRoutes, routes, type Screen } from "./routes";
 import { ProfilePicker } from "./screens/ProfilePicker";
 import { UnlockScreen } from "./screens/UnlockScreen";
-import { clientUpdateRequired, type ProfileResponse, type PublicProfile, type SettingsResponse } from "../shared/api";
-import type { AppearanceId, ThemeId } from "../shared/settings";
+import { clientUpdateRequired, type ProfileResponse, type PublicProfile } from "../shared/api";
 import { AppHeader } from "./shell/AppHeader";
 import { BottomNav } from "./shell/BottomNav";
 import { useGlobalHotkeys } from "./shell/useGlobalHotkeys";
 // Global overrides must follow screen styles, including after native boot restore.
 import "./design/animations.css";
 import "./styles.css";
-import "./design/notebook-shell.css";
-import "./design/notebook-screens.css";
 
 const headerScreens = new Set<Screen>(["home", "review", "stats", "settings", "detail", "study", "about"]);
 const navlessScreens = new Set<Screen>(["onboarding", "placement", "placement-result"]);
@@ -55,8 +53,8 @@ export function App() {
   const [activeProfile, setActiveProfile] = useState<ActiveProfile | null>(null);
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [onboardingRequired, setOnboardingRequired] = useState(false);
-  const [theme, setTheme] = useState<ThemeId>("quiet-technical");
-  const [appearance, setAppearance] = useState<AppearanceId>("classic");
+  // Visitors with no stored session see the landing page before the profile picker.
+  const [landing, setLanding] = useState(false);
   const screen = routes.find((route) => matchPath({ path: route.path, end: true }, pathname))?.screen ?? "onboarding";
   const screenRef = useRef(screen);
   const sessionActive = sessionScreens.has(screen);
@@ -76,8 +74,6 @@ export function App() {
     setConversationAttemptProfile(null);
     resetSettingsClientState();
     setActiveProfile(null);
-    setTheme("quiet-technical");
-    setAppearance("classic");
     setGate("checking");
   }, []);
 
@@ -147,7 +143,10 @@ export function App() {
           try {
             await activateCurrentProfile("guard", controller.signal);
           } catch (caught) {
-            if (!controller.signal.aborted) setGate(isProfileRequired(caught) ? "choosing" : "error");
+            if (controller.signal.aborted) return;
+            const choosing = isProfileRequired(caught);
+            setLanding(choosing);
+            setGate(choosing ? "choosing" : "error");
           }
           return;
         }
@@ -203,31 +202,6 @@ export function App() {
     return () => window.removeEventListener(ONBOARDING_COMPLETED_EVENT, completeOnboarding);
   }, []);
 
-  useEffect(() => {
-    if (!activeProfile) return;
-    const controller = new AbortController();
-    let superseded = false;
-    const updateTheme = (event: Event) => {
-      // SAFETY: SETTINGS_UPDATED_EVENT is only dispatched with a SettingsResponse patch in this client.
-      const settingsEvent = event as CustomEvent<Partial<SettingsResponse>>;
-      const next = settingsEvent.detail?.theme;
-      const nextAppearance = settingsEvent.detail?.appearance;
-      if (next || nextAppearance) {
-        superseded = true;
-        if (next) setTheme(next);
-        if (nextAppearance) setAppearance(nextAppearance);
-      }
-    };
-    window.addEventListener(SETTINGS_UPDATED_EVENT, updateTheme);
-    void apiClient.settings(controller.signal).then((settings) => {
-      if (!controller.signal.aborted && !superseded) {
-        setTheme(settings.theme);
-        setAppearance(settings.appearance);
-      }
-    }).catch(() => undefined);
-    return () => { controller.abort(); window.removeEventListener(SETTINGS_UPDATED_EVENT, updateTheme); };
-  }, [activeProfile]);
-
   async function selectProfile(profile: PublicProfile) {
     setSelectedProfile(profile);
     setLockedUntil(null);
@@ -263,7 +237,7 @@ export function App() {
       <button onClick={() => { setGate("checking"); setRetryKey((value) => value + 1); }} type="button">다시 시도</button>
     </main>;
   } else if (gate === "choosing") {
-    content = <ProfilePicker onSelect={selectProfile} profiles={profiles} />;
+    content = landing && pathname === "/" ? <Landing onSignIn={() => setLanding(false)} /> : <ProfilePicker onSelect={selectProfile} profiles={profiles} />;
   } else if (gate === "locked" && selectedProfile) {
     content = <UnlockScreen
       key={selectedProfile.id}
@@ -287,8 +261,6 @@ export function App() {
     content = <main><p>프로필 확인 중…</p></main>;
   }
 
-  const activeTheme = appearance === "notebook" ? "notebook" : theme;
-  // SAFETY: each theme token map is CSS custom-property declarations.
-  const themeStyle = themes[activeTheme].cssVariables as CSSProperties;
-  return <div className="app" data-appearance={appearance} data-theme={activeTheme} style={themeStyle}>{content}</div>;
+  // SAFETY: the token map is CSS custom-property declarations.
+  return <div className="app" style={cssVariables as CSSProperties}>{content}</div>;
 }
