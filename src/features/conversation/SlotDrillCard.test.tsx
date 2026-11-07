@@ -16,7 +16,7 @@ describe("SlotDrillCard", () => {
   it("never shows the same noun twice in a row for one template", () => {
     let previous = "";
     for (let round = 0; round < 30; round += 1) {
-      const cue = /talk-screen__cue">([^<]+)</.exec(renderToStaticMarkup(<SlotDrillCard onRate={() => undefined} template={template} />))?.[1] ?? "";
+      const cue = /talk-screen__cue">([^<]+)</.exec(renderToStaticMarkup(<SlotDrillCard speed={1} changeSpeed={() => undefined} onRate={() => undefined} template={template} />))?.[1] ?? "";
       expect(cue).not.toBe("");
       expect(cue).not.toBe(previous);
       previous = cue;
@@ -24,7 +24,7 @@ describe("SlotDrillCard", () => {
   });
 
   it("shows the cue and slot options but hides the answer until reveal", () => {
-    const markup = renderToStaticMarkup(<SlotDrillCard onRate={() => undefined} template={template} />);
+    const markup = renderToStaticMarkup(<SlotDrillCard speed={1} changeSpeed={() => undefined} onRate={() => undefined} template={template} />);
     expect(markup).toContain("달라고 주문하기");
     expect(markup).toContain("コーヒー / 紅茶 / お水 / お茶");
     expect(markup).not.toContain("ください。</strong>");

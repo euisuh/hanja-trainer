@@ -5,7 +5,9 @@ import { LocalRecorder, localRecordingSupported, speechLanguages, type LocalReco
 import { startRecognition, type ActiveRecognition } from "../study/recognition";
 
 type ShadowGrade = Extract<ConversationGrade, "again" | "hard" | "good">;
-type Props = {
+import { SpeedControl, type SpeedProps } from "./SpeedControl";
+
+type Props = SpeedProps & {
   // Accepted spellings of the line (kanji form and reading); the transcript is scored against the closer one.
   targets: readonly string[];
   onPlayReference: () => void;
@@ -18,7 +20,7 @@ const grades: ReadonlyArray<readonly [ShadowGrade, string]> = [["again", "다시
 
 // Shadowing: hear the line, record it on this device, compare by ear and by on-device recognition, grade yourself.
 // Neither the clip nor the transcript leaves this component's memory; only the confirmed grade is reported.
-export function ShadowPanel({ targets, onPlayReference, onRate, onClose }: Props) {
+export function ShadowPanel({ targets, speed, changeSpeed, onPlayReference, onRate, onClose }: Props) {
   const [recording, setRecording] = useState<LocalRecordingState>(() => localRecordingSupported() ? { status: "idle" } : { status: "unsupported" });
   const [heard, setHeard] = useState<Heard>({ status: "idle" });
   const [picked, setPicked] = useState<ShadowGrade | null>(null);
@@ -68,6 +70,7 @@ export function ShadowPanel({ targets, onPlayReference, onRate, onClose }: Props
   return <div className="talk-screen__shadow" data-shadow-status={recording.status}>
     <small>따라 말하기 · 기기 안에서만 녹음·인식, 저장하지 않음</small>
     <div className="talk-screen__shadow-actions">
+      <SpeedControl speed={speed} changeSpeed={changeSpeed} />
       <button onClick={onPlayReference} type="button">원어민 듣기</button>
       <button disabled={recording.status === "requesting" || unsupported} onClick={toggle} type="button">{recording.status === "recording" ? "녹음 중지" : ready ? "다시 녹음" : "녹음 시작"}</button>
     </div>
@@ -77,7 +80,7 @@ export function ShadowPanel({ targets, onPlayReference, onRate, onClose }: Props
     {recording.status === "no_audio" && <p role="alert">소리가 감지되지 않았습니다. 다시 녹음하거나 직접 평가하세요.</p>}
     {(recording.status === "error" || recording.status === "interrupted") && <p role="alert">녹음하지 못했습니다. 다시 시도하거나 직접 평가하세요.</p>}
     {unsupported && <p role="alert">이 브라우저는 녹음을 지원하지 않습니다. 듣고 따라 한 뒤 직접 평가하세요.</p>}
-    {ready && <label className="talk-screen__self-audio">내 목소리 <audio controls src={recording.url} /></label>}
+    {ready && <label className="talk-screen__self-audio">내 목소리 <audio controls onPlay={(event) => { event.currentTarget.playbackRate = speed; }} src={recording.url} /></label>}
     {ready && heard.status === "unavailable" && <p>이 기기에서는 자동 비교를 쓸 수 없습니다. 두 소리를 비교해 직접 평가하세요.</p>}
     {ready && heard.status === "listening" && <p>인식하는 중…</p>}
     {heard.status === "scored" && <div aria-live="polite" className="talk-screen__heard">

@@ -13,6 +13,8 @@ import { apiUrl } from "../platform/apiUrl";
 import { onAppInactive } from "../platform/lifecycle";
 import "../features/conversation/talk.css";
 import type { ConversationGrade, ConversationInput, ConversationLoop, ConversationSessionItem, ConversationSessionResponse } from "../../shared/api";
+import { usePlaybackSpeed } from "../features/conversation/usePlaybackSpeed";
+import { TalkRecap } from "../features/conversation/TalkRecap";
 
 type TalkStage = "cue" | "reveal" | "rate";
 type SessionEntry = { item: ConversationSessionItem; correction: boolean };
@@ -32,6 +34,8 @@ export function TalkScreen() {
   const unitId = Number(rawUnitId);
   const { id: profileId } = useActiveProfile();
   const navigate = useNavigate();
+  const playback = usePlaybackSpeed();
+  const [practicedIds, setPracticedIds] = useState<number[]>([]);
   const [content, setContent] = useState<ConversationSessionResponse | null>(null);
   // ponytail: character data is ~488 KB, so load the hanja bridge on demand instead of bloating the app chunk.
   const [bridge, setBridge] = useState<typeof import("../../shared/hanjaBridge").hanjaBridge | null>(null);
@@ -84,6 +88,7 @@ export function TalkScreen() {
       setItems(response.items.map((item) => ({ item, correction: false })));
       setIndex(0);
       setFinished(false);
+      setPracticedIds([]);
       setError("");
     // oxlint-disable-next-line anti-slop/no-unknown-parameters -- Promise rejection is an untyped I/O boundary.
     }).catch((caught: unknown) => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "Talk 문장을 불러오지 못했습니다."); });
@@ -104,6 +109,7 @@ export function TalkScreen() {
 
   const rate = useCallback((grade: ConversationGrade, input: ConversationInput, replayCount = replays, loop: ConversationLoop = "drill") => {
     if (!card) return;
+    setPracticedIds((ids) => [...ids, card.id]);
     const latencyMs = recording.status === "ready" ? recording.onsetMs : null;
     enqueuePendingConversationAttempt(profileId, {
       clientAttemptId: attemptId(), chunkId: card.id, role: card.role, grade,
@@ -140,6 +146,7 @@ export function TalkScreen() {
       if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
       const utterance = new SpeechSynthesisUtterance(card.ja);
       utterance.lang = speechLanguages.jp;
+      utterance.rate = playback.speed;
       if (voice) utterance.voice = voice;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
@@ -147,11 +154,12 @@ export function TalkScreen() {
     // oxlint-disable-next-line anti-slop/no-runtime-typeof -- Browser audio constructor capability probe.
     if (typeof Audio !== "function" || !card.audioUrl) { fallback(); return; }
     const audio = new Audio(apiUrl(card.audioUrl));
+    audio.playbackRate = playback.speed;
     let failed = false;
     const fallbackOnce = () => { if (!failed) { failed = true; fallback(); } };
     audio.addEventListener("error", fallbackOnce, { once: true });
     void audio.play().catch(fallbackOnce);
-  }, [card, voice]);
+  }, [card, voice, playback.speed]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -178,20 +186,21 @@ export function TalkScreen() {
   if (finished) {
     const sorted = [...onsets].sort((left, right) => left - right);
     const median = sorted.length === 0 ? null : sorted[Math.floor(sorted.length / 2)];
-    return <section className="talk-root talk-screen"><div className="talk-screen__page"><h1>오늘 Talk 완료</h1><p>말한 문장 {spoken}개</p><p>중간 첫소리 {median === null ? "측정 안 됨" : `${(median / 1000).toFixed(1)}초`}</p><p>다음 복습은 저장 뒤 일정에 맞춰 표시됩니다.</p><button onClick={() => navigate("/talk")} type="button">Talk로 돌아가기</button></div></section>;
+    return <section className="talk-root talk-screen"><div className="talk-screen__page"><h1>오늘 Talk 완료</h1><p>말한 문장 {spoken}개</p><p>중간 첫소리 {median === null ? "측정 안 됨" : `${(median / 1000).toFixed(1)}초`}</p><p>다음 복습은 저장 뒤 일정에 맞춰 표시됩니다.</p><TalkRecap chunks={content.chunks.filter((chunk) => practicedIds.includes(chunk.id))} /><button onClick={() => navigate("/talk")} type="button">Talk로 돌아가기</button></div></section>;
   }
-  if (entry.item.kind === "scene") return <SceneRunner chunks={content.chunks} onExit={() => { if (index + 1 < items.length) { setIndex((value) => value + 1); setStage("cue"); } else { setFinished(true); } }} profileId={profileId} scene={entry.item.scene} />;
+  if (entry.item.kind === "scene") return <SceneRunner {...playback} chunks={content.chunks} onExit={(ids) => { setPracticedIds((current) => [...current, ...ids]); if (index + 1 < items.length) { setIndex((value) => value + 1); setStage("cue"); } else { setFinished(true); } }} profileId={profileId} scene={entry.item.scene} />;
   if (entry.item.kind === "drill") {
     const template = entry.item.template;
     const rateDrill = (grade: ConversationGrade) => {
       enqueuePendingConversationAttempt(profileId, { clientAttemptId: attemptId(), chunkId: template.patternChunkId, templateId: template.id, role: "say", grade, answeredAt: Date.now(), loop: "drill", input: "tap" });
+      setPracticedIds((ids) => [...ids, template.patternChunkId]);
       setSpoken((value) => value + 1);
       if (index + 1 < items.length) { setIndex((value) => value + 1); setStage("cue"); } else { setFinished(true); }
     };
-    return <SlotDrillCard key={`${template.id}:${index}`} onRate={rateDrill} template={template} />;
+    return <SlotDrillCard {...playback} key={`${template.id}:${index}`} onRate={rateDrill} template={template} />;
   }
   if (!card) return <section className="talk-root talk-screen"><p>Talk 문장을 불러오는 중…</p></section>;
-  if (card.role === "hear") return <section className="talk-root talk-screen" data-talk-stage="listen"><header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {items.length}</span></header><p className="talk-screen__goal">{content.unit.goalKo}</p><ListenCard card={card} choices={content.chunks.filter((chunk) => chunk.role === "hear")} onNext={(grade, cardReplays, input) => rate(grade, input, cardReplays)} /></section>;
+  if (card.role === "hear") return <section className="talk-root talk-screen" data-talk-stage="listen"><header className="talk-screen__meta"><span>p.{content.unit.ord} · Talk</span><span>{index + 1} / {items.length}</span></header><p className="talk-screen__goal">{content.unit.goalKo}</p><ListenCard {...playback} card={card} choices={content.chunks.filter((chunk) => chunk.role === "hear")} onNext={(grade, cardReplays, input) => rate(grade, input, cardReplays)} /></section>;
 
   const canRate = stage === "rate";
   return <section className="talk-root talk-screen" data-talk-stage={stage}>
@@ -207,7 +216,7 @@ export function TalkScreen() {
         {card.noteKo && <small className="talk-screen__source talk-screen__note">{card.noteKo}</small>}
         <small className="talk-screen__source">출처 · <SourceAttribution source={card.sourceRef} sourceAuthor={card.sourceAuthor} /></small>
       </div>}
-      {shadowing && <ShadowPanel targets={[card.ja, card.kana]} onClose={() => setShadowing(false)} onPlayReference={playReference} onRate={(grade) => rate(grade, "voice", replays, "shadow")} />}
+      {shadowing && <ShadowPanel {...playback} targets={[card.ja, card.kana]} onClose={() => setShadowing(false)} onPlayReference={playReference} onRate={(grade) => rate(grade, "voice", replays, "shadow")} />}
       {!shadowing && <div className="talk-screen__attempt">
         <small>내 시도 · 기기 안에서만 측정</small>
         {recording.status === "recording" && <p>녹음 중… <button onClick={record} type="button">중지 <kbd>R</kbd></button></p>}

@@ -45,3 +45,9 @@
 .talk-screen__diff { font: 600 22px/1.6 var(--talk-font-jp); word-break: keep-all; }
 .talk-screen__diff-missing { background: var(--wrong-bg); color: var(--wrong-fg); text-decoration: underline dotted; }
 .talk-screen__diff-extra { background: var(--correct-bg); color: var(--ink); text-decoration: line-through; }
+.talk-screen .talk-speed, .talk-scene .talk-speed { border-radius: 8px; }
+.talk-screen__recap { word-break: keep-all; }
+.talk-screen__recap ul { padding-left: 1.5em; }
+.talk-screen__recap li { margin: 16px 0; }
+.talk-screen__recap strong, .talk-screen__recap span { display: block; }
+.talk-screen__recap p { margin: 4px 0; }

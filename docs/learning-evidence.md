@@ -35,3 +35,13 @@ or prose. It supports retrieval, corrective feedback, and spaced relearning as
 general principles. It does not validate this app's FSRS parameters, daily
 amount, retry position, self-check labels, or any guaranteed retention, exam,
 writing, reading, or speaking outcome.
+
+## Phrase learning
+
+Talk mode schedules Japanese chunks with FSRS. Saying a chunk and hearing it
+are tracked separately; success in one does not establish success in the other.
+Learners recall phrases, listen, repeat, and confirm their own ratings.
+On-device speech feedback compares a recognized transcript with the target text.
+It is a transcript diff, not a pronunciation score. Recognition errors can affect
+that comparison. There are no outcome studies of this Talk mode; it does not
+claim measured gains in conversation, pronunciation, or long-term retention.

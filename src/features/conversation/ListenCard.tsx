@@ -2,37 +2,37 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ConversationChunkPayload } from "../../../shared/api";
 import { apiUrl } from "../../platform/apiUrl";
 import { SourceAttribution } from "../source/SourceAttribution";
-import { hearGrade, SLOW_LISTEN_PLAYBACK_RATE } from "./listenCardModel";
+import { hearGrade } from "./listenCardModel";
+import { SpeedControl, type SpeedProps } from "./SpeedControl";
 
-type Props = {
+type Props = SpeedProps & {
   card: ConversationChunkPayload;
   choices: readonly ConversationChunkPayload[];
-  capstone?: boolean;
   onNext: (grade: ReturnType<typeof hearGrade>, replays: number, input: "keyboard" | "tap") => void;
 };
 
-export function ListenCard({ card, choices, capstone = false, onNext }: Props) {
+export function ListenCard({ card, choices, speed, changeSpeed, onNext }: Props) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [replays, setReplays] = useState(0);
   const [answered, setAnswered] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const play = useCallback((slow = false) => {
+  const play = useCallback(() => {
     audioRef.current?.pause();
     const audio = new Audio(apiUrl(card.audioUrl));
-    audio.playbackRate = slow ? SLOW_LISTEN_PLAYBACK_RATE : 1;
+    audio.playbackRate = speed;
     audioRef.current = audio;
     void audio.play().catch(() => undefined);
-  }, [card.audioUrl]);
+  }, [card.audioUrl, speed]);
 
   useEffect(() => {
     play();
     return () => audioRef.current?.pause();
   }, [play]);
 
-  const replay = useCallback((slow = false) => {
+  const replay = useCallback(() => {
     setReplays((value) => value + 1);
-    play(slow);
+    play();
   }, [play]);
 
   const confirm = useCallback((input: "keyboard" | "tap") => {
@@ -69,7 +69,7 @@ export function ListenCard({ card, choices, capstone = false, onNext }: Props) {
     </div>}
     <footer className="talk-screen__bar">
       <button onClick={() => replay()} type="button">다시 듣기 <kbd>Space</kbd></button>
-      <button disabled={capstone || replays === 0} onClick={() => replay(true)} type="button">느리게 {SLOW_LISTEN_PLAYBACK_RATE}×</button>
+      <SpeedControl speed={speed} changeSpeed={changeSpeed} />
       <button disabled={selectedId === null} onClick={() => confirm("tap")} type="button">{answered ? "다음 쪽" : "확인"} <kbd>Enter</kbd></button>
     </footer>
   </div>;
