@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion -- This spec predates the changed-file lint; it narrows Animation to CSSTransition after an instanceof check. */
 import { expect, test, type Page } from "@playwright/test";
 
 const profile = {
@@ -24,35 +25,37 @@ async function refreshProfile(page: Page) {
   await refreshed;
 }
 
-test("daily goal stays conic and sweeps through completion", async ({ page }) => {
+// The ring is an SVG arc: the last circle's stroke-dashoffset shrinks from the full circumference (0%) to 0 (100%).
+const CIRCUMFERENCE = 2 * Math.PI * 11.5;
+
+test("daily goal arc sweeps through completion", async ({ page }) => {
   const state = { todayXp: 20 };
   await mockProfile(page, state);
   await page.goto("/settings");
 
   const goal = page.locator(".daily-goal");
   const ring = page.locator(".daily-goal__ring");
+  const arc = ring.locator("circle").last();
   await expect(goal).toContainText("오늘 20/40 XP");
   await expect(goal).not.toHaveClass(/daily-goal--met/u);
   await expect(ring).toHaveAttribute("aria-label", "일일 목표 50% 달성");
-  expect(await ring.evaluate((node) => getComputedStyle(node).backgroundImage)).toContain("conic-gradient");
-  expect(await ring.evaluate((node) => {
+  expect(await arc.evaluate((node) => {
     node.getAnimations().forEach((animation) => animation.finish());
-    return node.style.getPropertyValue("--goal-degrees");
-  })).toBe("180deg");
+    return Number.parseFloat(getComputedStyle(node).strokeDashoffset);
+  })).toBeCloseTo(CIRCUMFERENCE / 2, 1);
 
-  await ring.evaluate((node) => {
+  await arc.evaluate((node) => {
     const observer = new MutationObserver(() => {
       requestAnimationFrame(() => {
-        const transition = node.getAnimations().find((animation) => animation instanceof CSSTransition && animation.transitionProperty === "--goal-degrees") as CSSTransition | undefined;
+        const transition = node.getAnimations().find((animation) => animation instanceof CSSTransition && animation.transitionProperty === "stroke-dashoffset") as CSSTransition | undefined;
         document.documentElement.dataset.goalTransition = JSON.stringify({
-          backgroundImage: getComputedStyle(node).backgroundImage,
           duration: transition?.effect?.getTiming().duration ?? 0,
           property: transition?.transitionProperty ?? "",
         });
         observer.disconnect();
       });
     });
-    observer.observe(node, { attributeFilter: ["style"], attributes: true });
+    observer.observe(node, { attributeFilter: ["stroke-dashoffset"], attributes: true });
   });
 
   state.todayXp = 40;
@@ -60,13 +63,14 @@ test("daily goal stays conic and sweeps through completion", async ({ page }) =>
   await expect(goal).toContainText("오늘 40/40 XP");
   await expect(goal).toHaveClass(/daily-goal--met/u);
   await page.waitForFunction(() => Boolean(document.documentElement.dataset.goalTransition));
-  const transition = await page.evaluate(() => JSON.parse(document.documentElement.dataset.goalTransition!) as { backgroundImage: string; duration: number; property: string });
-  expect(transition.backgroundImage).toContain("conic-gradient");
-  expect(transition.property).toBe("--goal-degrees");
+  const transition = await page.evaluate(() => JSON.parse(document.documentElement.dataset.goalTransition!) as { duration: number; property: string });
+  expect(transition.property).toBe("stroke-dashoffset");
   expect(transition.duration).toBe(700);
 
-  await ring.evaluate((node) => node.getAnimations().forEach((animation) => animation.finish()));
-  expect(await ring.evaluate((node) => getComputedStyle(node).backgroundImage)).toContain("conic-gradient");
+  expect(await arc.evaluate((node) => {
+    node.getAnimations().forEach((animation) => animation.finish());
+    return Number.parseFloat(getComputedStyle(node).strokeDashoffset);
+  })).toBeCloseTo(0, 1);
 });
 
 test("reduced motion keeps the completed ring visible without sweeping", async ({ page }) => {
@@ -76,14 +80,14 @@ test("reduced motion keeps the completed ring visible without sweeping", async (
   await page.goto("/settings");
 
   const goal = page.locator(".daily-goal");
-  const ring = page.locator(".daily-goal__ring");
+  const arc = page.locator(".daily-goal__ring circle").last();
   await expect(goal).toContainText("오늘 20/40 XP");
   state.todayXp = 40;
   await refreshProfile(page);
   await expect(goal).toHaveClass(/daily-goal--met/u);
-  await expect(ring).toHaveCSS("transition-property", "none");
-  expect(await ring.evaluate((node) => getComputedStyle(node).backgroundImage)).toContain("conic-gradient");
-  expect(await ring.evaluate((node) => node.getAnimations().some((animation) => animation instanceof CSSTransition && animation.transitionProperty === "--goal-degrees"))).toBe(false);
+  await expect(arc).toHaveCSS("transition-property", "none");
+  expect(await arc.evaluate((node) => Number.parseFloat(getComputedStyle(node).strokeDashoffset))).toBeCloseTo(0, 1);
+  expect(await arc.evaluate((node) => node.getAnimations().some((animation) => animation instanceof CSSTransition && animation.transitionProperty === "stroke-dashoffset"))).toBe(false);
 });
 
 test("profile updates avoid duplicate reads and reject stale or mismatched detail", async ({ page }) => {
