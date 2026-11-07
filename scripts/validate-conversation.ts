@@ -65,7 +65,8 @@ function unique(values: number[], path: string): void {
 function reviewDate(value: unknown, path: string): string | undefined {
   if (value === undefined) return undefined;
   const date = string(value, `${path}.ownerReviewed`);
-  if (!DATE.test(date)) throw new Error(`${path}.ownerReviewed: expected YYYY-MM-DD`);
+  const parsed = Date.parse(date);
+  if (!DATE.test(date) || Number.isNaN(parsed) || new Date(parsed).toISOString().slice(0, 10) !== date) throw new Error(`${path}.ownerReviewed: expected YYYY-MM-DD`);
   return date;
 }
 

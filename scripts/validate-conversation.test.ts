@@ -52,8 +52,10 @@ test("conversation validator rejects undated authored content and invalid source
   assert.throws(() => parseConversationSeed(input), /authoredOn/);
 
   const badReview = structuredClone(await sample());
-  badReview.chunks[0].ownerReviewed = "yesterday";
-  assert.throws(() => parseConversationSeed(badReview), /ownerReviewed: expected YYYY-MM-DD/);
+  for (const bad of ["yesterday", "2026-99-99", "2026-02-30"]) {
+    badReview.chunks[0].ownerReviewed = bad;
+    assert.throws(() => parseConversationSeed(badReview), /ownerReviewed: expected YYYY-MM-DD/);
+  }
   badReview.chunks[0].ownerReviewed = "2026-11-08";
   assert.equal(parseConversationSeed(badReview).chunks[0].ownerReviewed, "2026-11-08");
   assert.equal(parseConversationSeed(await sample()).chunks[0].ownerReviewed, undefined);
