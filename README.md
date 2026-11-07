@@ -82,6 +82,18 @@ only shows then), run `node scripts/capture-readme-screenshots.mjs`; usage is in
 the script header. Local D1 only; the microphone and speech recognition are
 stubbed so the shadowing panel can be captured headlessly.
 
+## Status and limits
+
+- About 160 authored Talk lines (listed in `data/conversation/audio-todo.json`)
+  have no generated audio yet; the card falls back to the browser's
+  `speechSynthesis` voice, which varies by device and can be absent.
+- Speech feedback compares the recognizer's transcript with the target line. It
+  is a text diff, not a pronunciation or pitch-accent score.
+- Guest accounts are per-visitor sandboxes: a fresh profile per browser, kept
+  7 days, never shared or merged.
+- The mobile wrappers build in CI but are not published to any store.
+- Open items are tracked in [GitHub issues](https://github.com/euisuh/hanja-trainer/issues).
+
 ## Tech stack
 
 - Cloudflare Workers (API and static assets), D1 (SQLite) and R2 (cached audio)
