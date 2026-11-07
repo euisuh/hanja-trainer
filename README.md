@@ -1,5 +1,7 @@
 # Hanja Trainer
 
+[![CI](https://github.com/euisuh/hanja-trainer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/euisuh/hanja-trainer/actions/workflows/ci.yml)
+
 ![Landing page on desktop next to the Talk shadowing panel on a phone](docs/screenshots/hero.webp)
 
 Spaced-repetition trainer for Chinese-origin characters, taught across three

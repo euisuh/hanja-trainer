@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-runtime-typeof -- This test predates the changed-file lint; it adapts node:sqlite rows to the D1 interface. */
 import { readFileSync, readdirSync } from "node:fs";
 import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import { expect, test } from "vitest";
@@ -37,12 +38,15 @@ function d1(sqlite: DatabaseSync, queries: Query[]): D1Database {
   return adapter;
 }
 
+// Parsed once: the three databases below get identical seed SQL.
+const SEED_SQL = readdirSync("data/characters").filter((file) => file.endsWith(".json")).sort()
+  .map((name) => emitSeedSql(parseSeed(JSON.parse(readFileSync(`data/characters/${name}`, "utf8")) as unknown)))
+  .join("\n");
+
 function setup(): DatabaseSync {
   const sqlite = new DatabaseSync(":memory:");
   applyMigrations(sqlite);
-  for (const name of readdirSync("data/characters").filter((file) => file.endsWith(".json")).sort()) {
-    sqlite.exec(emitSeedSql(parseSeed(JSON.parse(readFileSync(`data/characters/${name}`, "utf8")) as unknown)));
-  }
+  sqlite.exec(SEED_SQL);
   return sqlite;
 }
 
@@ -95,4 +99,5 @@ test("curriculum lookups use the character-first covering index", async () => {
     narrowed.close();
     dropped.close();
   }
-});
+  // Three full seeds take ~7s on a loaded 2-vCPU CI runner; the 5s default timed out.
+}, 30_000);
