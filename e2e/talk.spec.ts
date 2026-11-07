@@ -77,13 +77,16 @@ test("Talk keyboard flow records, rates, and submits", async ({ page }) => {
   await expect(page.getByText("一度(일도)")).toBeVisible();
   await expect(page.getByRole("link", { name: conversation.chunks[0].sourceRef })).toHaveAttribute("href", "https://tatoeba.org/sentences/show/1");
   await expect(page.getByText("fixture-owner")).toBeVisible();
+  // After the reveal, R opens the shadowing panel: record on-device, then confirm a grade.
   await page.keyboard.press("r");
-  await expect(page.getByRole("button", { name: /바로/u })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByText("내 목소리", { exact: false })).toBeVisible();
-  await page.keyboard.press("Shift+Space");
-  await page.keyboard.press("3");
-  await page.keyboard.press("Enter");
-  await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say", loop: "drill", input: "voice", hints: 1, replays: 0 })]);
+  const shadow = page.locator(".talk-screen__shadow");
+  await expect(shadow).toBeVisible();
+  await shadow.getByRole("button", { name: "녹음 시작" }).click();
+  await expect(shadow.getByText("내 목소리", { exact: false })).toBeVisible();
+  await shadow.getByRole("button", { name: "좋아요" }).click();
+  await expect(shadow.getByRole("button", { name: "좋아요" })).toHaveAttribute("aria-pressed", "true");
+  await shadow.getByRole("button", { name: "이 평가로 다음" }).click();
+  await expect.poll(() => submission).toEqual([expect.objectContaining({ chunkId: 1, grade: "good", role: "say", loop: "shadow", input: "voice", hints: 1, replays: 0 })]);
   await expect(page.getByText("오늘 Talk 완료")).toBeVisible();
 });
 

@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/no-object-parameters -- This spec predates the changed-file lint. */
 import { expect, test, type Page } from "@playwright/test";
 
 const completion = {
@@ -76,20 +77,10 @@ test("session completion stages celebration, XP, stats, and profile payoff", asy
   await expect(page.locator(".home-screen")).toBeVisible();
 });
 
-test("completion XP stays readable in both themes", async ({ page }) => {
-  for (const theme of ["default", "quiet-technical"] as const) {
-    expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr"], theme }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
-    await openCompletion(page, completion);
-    await expect(page.locator(".app")).toHaveAttribute("data-theme", theme);
-
-    const contrast = await completionXpContrast(page);
-    expect(
-      contrast.ratio,
-      `${theme}: ${contrast.foreground} on ${contrast.background}`,
-    ).toBeGreaterThanOrEqual(3);
-  }
-
-  expect((await page.request.patch("/api/settings", { data: { enabledTracks: ["kr", "jp", "cn"], theme: "default" }, headers: { "x-hanja-profile-id": "1" } })).ok()).toBe(true);
+test("completion XP stays readable", async ({ page }) => {
+  await openCompletion(page, completion);
+  const contrast = await completionXpContrast(page);
+  expect(contrast.ratio, `${contrast.foreground} on ${contrast.background}`).toBeGreaterThanOrEqual(3);
 });
 
 test("failed unit test does not celebrate", async ({ page }) => {

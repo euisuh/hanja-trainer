@@ -1,3 +1,4 @@
+/* oxlint-disable anti-slop/require-safety-comment-for-type-assertion -- This spec predates the changed-file lint; it narrows the app's own request body. */
 import { execFileSync } from "node:child_process";
 import { expect, test } from "@playwright/test";
 
@@ -20,9 +21,11 @@ test("drains a stored review backlog in ordered four-item requests", async ({ pa
   });
 
   await page.goto("/home");
+  // The outbox lives in the lazily loaded App chunk: an entry count of 0 right after load means
+  // "not rehydrated yet", so wait for the drain itself before checking that storage is empty.
+  await expect.poll(() => batches.length, { timeout: 30_000 }).toBe(25);
   await expect.poll(() => page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith("hanja-trainer:pending-reviews:entry:")).length), { timeout: 30_000 }).toBe(0);
 
-  expect(batches).toHaveLength(25);
   expect(batches.every((batch) => batch.length <= 4)).toBe(true);
   expect(batches.flat()).toEqual(Array.from({ length: 100 }, (_, index) => index));
 });
