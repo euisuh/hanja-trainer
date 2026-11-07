@@ -56,7 +56,7 @@ beforeEach(() => {
 afterEach(() => { act(() => root.unmount()); host.remove(); vi.unstubAllGlobals(); });
 
 async function openShadow(onRate: (grade: string) => void) {
-  await act(async () => { root.render(<SlotDrillCard onRate={onRate} template={template} />); });
+  await act(async () => { root.render(<SlotDrillCard speed={1} changeSpeed={vi.fn()} onRate={onRate} template={template} />); });
   await press("정답 공개");
   await press("따라 말하기");
   await press("녹음 시작");
@@ -67,7 +67,7 @@ describe("shadowing flow", () => {
   it("records, recognizes, preselects good, and reports only the confirmed rating", async () => {
     vi.stubGlobal("SpeechRecognition", FakeRecognition);
     const onRate = vi.fn();
-    await act(async () => { root.render(<SlotDrillCard onRate={onRate} template={template} />); });
+    await act(async () => { root.render(<SlotDrillCard speed={1} changeSpeed={vi.fn()} onRate={onRate} template={template} />); });
     await press("정답 공개");
     spokenText = host.querySelector("span[lang=ja]")!.textContent!;
     await press("따라 말하기");

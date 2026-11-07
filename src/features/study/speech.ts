@@ -335,10 +335,11 @@ export function useSpeechVoices(): SpeechSynthesisVoice[] {
 }
 
 // Reads text aloud with the browser voice; quietly does nothing where speech synthesis is missing.
-export function speakJapanese(text: string, voices: readonly SpeechSynthesisVoice[]): void {
+export function speakJapanese(text: string, voices: readonly SpeechSynthesisVoice[], rate = 1): void {
   if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = speechLanguages.jp;
+  utterance.rate = rate;
   const voice = matchingVoice(voices, "jp");
   if (voice) utterance.voice = voice;
   window.speechSynthesis.cancel();

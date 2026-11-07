@@ -1,8 +1,6 @@
 import type { ConversationGrade } from "../../../shared/api";
 import type { ConversationChunk } from "../../../shared/types";
 
-export const SLOW_LISTEN_PLAYBACK_RATE = 0.85;
-
 export function hearGrade(correct: boolean, replays: number): ConversationGrade {
   if (!correct) return "again";
   return replays >= 2 ? "hard" : "good";
