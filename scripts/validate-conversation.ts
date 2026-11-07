@@ -61,6 +61,15 @@ function unique(values: number[], path: string): void {
   if (new Set(values).size !== values.length) throw new Error(`${path}: duplicate ord`);
 }
 
+// Absent until the owner has read the line; generators never set it. See docs/talk-mode.md.
+function reviewDate(value: unknown, path: string): string | undefined {
+  if (value === undefined) return undefined;
+  const date = string(value, `${path}.ownerReviewed`);
+  const parsed = Date.parse(date);
+  if (!DATE.test(date) || Number.isNaN(parsed) || new Date(parsed).toISOString().slice(0, 10) !== date) throw new Error(`${path}.ownerReviewed: expected YYYY-MM-DD`);
+  return date;
+}
+
 function unit(value: unknown, index: number): SeedConversationUnit {
   const path = `units[${index}]`;
   const input = record(value, path);
@@ -72,13 +81,14 @@ function chunk(value: unknown, index: number): SeedConversationChunk {
   const input = record(value, path);
   const sourceKind = string(input.sourceKind, `${path}.sourceKind`);
   const sourceRef = input.sourceRef === undefined ? undefined : string(input.sourceRef, `${path}.sourceRef`);
-  const ownerApproved = input.ownerApproved === undefined ? undefined : string(input.ownerApproved, `${path}.ownerApproved`);
+  const authoredOn = input.authoredOn === undefined ? undefined : string(input.authoredOn, `${path}.authoredOn`);
+  const ownerReviewed = reviewDate(input.ownerReviewed, path);
   if (sourceKind === "authored") {
-    if (ownerApproved === undefined || !DATE.test(ownerApproved)) throw new Error(`${path}.ownerApproved: authored content requires YYYY-MM-DD approval`);
+    if (authoredOn === undefined || !DATE.test(authoredOn)) throw new Error(`${path}.authoredOn: authored content requires the YYYY-MM-DD date it was written`);
     if (input.reviewNote === undefined) throw new Error(`${path}.reviewNote: authored content requires a review note`);
     if (!CONVERSATION_AUTHORED_SCOPES.includes(input.authoredScope as ConversationAuthoredScope)) throw new Error(`${path}.authoredScope: expected npc or spoken`);
   } else if (sourceKind !== "corpus" && sourceKind !== "excerpt" && sourceKind !== "jmdict") {
-    throw new Error(`${path}.sourceKind: expected corpus, excerpt, jmdict, or owner-approved authored`);
+    throw new Error(`${path}.sourceKind: expected corpus, excerpt, jmdict, or authored`);
   } else if (sourceRef === undefined) {
     throw new Error(`${path}.sourceRef: required`);
   } else if ((sourceKind === "corpus" && !TATOEBA_REF.test(sourceRef))
@@ -105,15 +115,16 @@ function chunk(value: unknown, index: number): SeedConversationChunk {
   return {
     key: string(input.key, `${path}.key`), unitOrd: integer(input.unitOrd, `${path}.unitOrd`), ord: integer(input.ord, `${path}.ord`), text,
     kana, cueKo, register: register as SeedConversationChunk["register"],
-    role: role as SeedConversationChunk["role"], sourceKind: sourceKind as SeedConversationChunk["sourceKind"], ...(sourceRef === undefined ? {} : { sourceRef }), ...(ownerApproved === undefined ? {} : { ownerApproved }), ...(authoredScope === undefined ? {} : { authoredScope }), ...(reviewNote === undefined ? {} : { reviewNote }), ...(noteKo === undefined ? {} : { noteKo }), audioKey,
+    role: role as SeedConversationChunk["role"], sourceKind: sourceKind as SeedConversationChunk["sourceKind"], ...(sourceRef === undefined ? {} : { sourceRef }), ...(authoredOn === undefined ? {} : { authoredOn }), ...(ownerReviewed === undefined ? {} : { ownerReviewed }), ...(authoredScope === undefined ? {} : { authoredScope }), ...(reviewNote === undefined ? {} : { reviewNote }), ...(noteKo === undefined ? {} : { noteKo }), audioKey,
   };
 }
 
 function template(value: unknown, index: number): SeedConversationTemplate {
   const path = `templates[${index}]`;
   const input = record(value, path);
-  const ownerApproved = string(input.ownerApproved, `${path}.ownerApproved`);
-  if (!DATE.test(ownerApproved)) throw new Error(`${path}.ownerApproved: expected YYYY-MM-DD`);
+  const authoredOn = string(input.authoredOn, `${path}.authoredOn`);
+  if (!DATE.test(authoredOn)) throw new Error(`${path}.authoredOn: expected YYYY-MM-DD`);
+  const ownerReviewed = reviewDate(input.ownerReviewed, path);
   const jaTemplate = string(input.jaTemplate, `${path}.jaTemplate`);
   const kanaTemplate = string(input.kanaTemplate, `${path}.kanaTemplate`);
   const cueKo = string(input.cueKo, `${path}.cueKo`);
@@ -135,7 +146,7 @@ function template(value: unknown, index: number): SeedConversationTemplate {
   return {
     key: string(input.key, `${path}.key`), unitOrd: integer(input.unitOrd, `${path}.unitOrd`), ord: integer(input.ord, `${path}.ord`),
     jaTemplate, kanaTemplate, cueKo, register: register as SeedConversationChunk["register"],
-    patternChunkKey: string(input.patternChunkKey, `${path}.patternChunkKey`), ownerApproved, reviewNote: string(input.reviewNote, `${path}.reviewNote`), slots,
+    patternChunkKey: string(input.patternChunkKey, `${path}.patternChunkKey`), authoredOn, ...(ownerReviewed === undefined ? {} : { ownerReviewed }), reviewNote: string(input.reviewNote, `${path}.reviewNote`), slots,
   };
 }
 
@@ -189,7 +200,7 @@ export function parseConversationSeed(value: unknown): SeedConversationDocument 
   const identities = new Map<string, string>();
   for (const item of chunks) {
     const existing = keys.get(item.key);
-    if (existing && (existing.text !== item.text || existing.role !== item.role || existing.kana !== item.kana || existing.cueKo !== item.cueKo || existing.register !== item.register || existing.sourceKind !== item.sourceKind || existing.sourceRef !== item.sourceRef || existing.ownerApproved !== item.ownerApproved || existing.authoredScope !== item.authoredScope || existing.reviewNote !== item.reviewNote || existing.noteKo !== item.noteKo || existing.audioKey !== item.audioKey)) {
+    if (existing && (existing.text !== item.text || existing.role !== item.role || existing.kana !== item.kana || existing.cueKo !== item.cueKo || existing.register !== item.register || existing.sourceKind !== item.sourceKind || existing.sourceRef !== item.sourceRef || existing.authoredOn !== item.authoredOn || existing.authoredScope !== item.authoredScope || existing.reviewNote !== item.reviewNote || existing.noteKo !== item.noteKo || existing.audioKey !== item.audioKey)) {
       throw new Error(`conversation.chunks: inconsistent key ${item.key}`);
     }
     keys.set(item.key, item);

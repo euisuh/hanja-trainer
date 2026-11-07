@@ -17,7 +17,7 @@
       "register": "polite",
       "role": "say",
       "sourceKind": "authored",
-      "ownerApproved": "2026-10-06",
+      "authoredOn": "2026-10-06",
       "authoredScope": "spoken",
       "reviewNote": "fixture line",
       "audioKey": "c/ddd48bcb132a70f7"
@@ -32,7 +32,7 @@
       "register": "polite",
       "role": "say",
       "sourceKind": "authored",
-      "ownerApproved": "2026-10-06",
+      "authoredOn": "2026-10-06",
       "authoredScope": "spoken",
       "reviewNote": "fixture line",
       "audioKey": "c/fe14bfec146335df"
@@ -47,7 +47,7 @@
       "register": "keigo",
       "role": "say",
       "sourceKind": "authored",
-      "ownerApproved": "2026-10-06",
+      "authoredOn": "2026-10-06",
       "authoredScope": "spoken",
       "reviewNote": "fixture line",
       "audioKey": "c/ade02f6fda052d8f"
@@ -62,7 +62,7 @@
       "register": "polite",
       "role": "hear",
       "sourceKind": "authored",
-      "ownerApproved": "2026-10-06",
+      "authoredOn": "2026-10-06",
       "authoredScope": "spoken",
       "reviewNote": "fixture line",
       "audioKey": "c/1c708c6e6419164c"

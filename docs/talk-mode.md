@@ -49,7 +49,13 @@ practice a real till or restaurant exchange. A chunk may be `sourceKind: "author
 - it is an NPC/staff line (`authoredScope: "npc"`, role `hear`), or a spoken-register chunk
   or learner reply that is listed in `data/conversation/GAPS.md` (`authoredScope: "spoken"`);
 - it uses conservative, standard phrasing only (no slang, no invented idiom);
-- it carries `ownerApproved` (YYYY-MM-DD) and a non-empty `reviewNote` saying what was checked;
+- it carries `authoredOn` (YYYY-MM-DD, the date it was written or last checked by whoever wrote it)
+  and a non-empty `reviewNote` saying what was checked;
+- `ownerReviewed` (YYYY-MM-DD) is optional and stays absent until the owner has read the line.
+  Generators never set it. Before 2026-11-07 this date was named `ownerApproved` and was stamped
+  by the generator, which overstated what had happened; the rename records the honest meaning.
+  `npm run review:authored` writes `data/conversation/authored-review.md`, a checklist of every
+  authored line grouped by unit, for the owner to work through;
 - the UI shows it as "authored for this app" (`SourceAttribution`), never as Tatoeba.
 
 Caps, enforced by `npm run validate:conversation`: authored rows (deduped by key) are at most
