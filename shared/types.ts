@@ -113,7 +113,9 @@ export interface SeedConversationChunk {
   role: ConversationRole;
   sourceKind: ConversationSourceKind;
   sourceRef?: string;
-  ownerApproved?: string;
+  // Authored rows: date written or last checked by the author. ownerReviewed stays absent until the owner reads the line.
+  authoredOn?: string;
+  ownerReviewed?: string;
   authoredScope?: ConversationAuthoredScope;
   reviewNote?: string;
   noteKo?: string;
@@ -157,7 +159,8 @@ export interface SeedConversationTemplate {
   cueKo: string;
   register: ConversationRegister;
   patternChunkKey: string;
-  ownerApproved: string;
+  authoredOn: string;
+  ownerReviewed?: string;
   reviewNote: string;
   slots: SeedConversationSlot[];
 }

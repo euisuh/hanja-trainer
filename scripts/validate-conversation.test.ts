@@ -46,21 +46,28 @@ test("conversation validator rejects a missing source reference", async () => {
   assert.throws(() => parseConversationSeed(input), /sourceRef: required/);
 });
 
-test("conversation validator rejects unapproved authored content and invalid sources", async () => {
+test("conversation validator rejects undated authored content and invalid sources", async () => {
   const input = structuredClone(await sample());
-  delete input.chunks[0].ownerApproved;
-  assert.throws(() => parseConversationSeed(input), /ownerApproved/);
+  delete input.chunks[0].authoredOn;
+  assert.throws(() => parseConversationSeed(input), /authoredOn/);
+
+  const badReview = structuredClone(await sample());
+  badReview.chunks[0].ownerReviewed = "yesterday";
+  assert.throws(() => parseConversationSeed(badReview), /ownerReviewed: expected YYYY-MM-DD/);
+  badReview.chunks[0].ownerReviewed = "2026-11-08";
+  assert.equal(parseConversationSeed(badReview).chunks[0].ownerReviewed, "2026-11-08");
+  assert.equal(parseConversationSeed(await sample()).chunks[0].ownerReviewed, undefined);
 
   const unsupported = {
     ...input,
     chunks: input.chunks.map((chunk, index) => index === 0
-      ? { ...chunk, ownerApproved: "2026-10-06", sourceKind: "unsupported" }
+      ? { ...chunk, authoredOn: "2026-10-06", sourceKind: "unsupported" }
       : chunk),
   };
   assert.throws(() => parseConversationSeed(unsupported), /sourceKind/);
 
   const invalidReference = structuredClone(input);
-  invalidReference.chunks[0].ownerApproved = "2026-10-06";
+  invalidReference.chunks[0].authoredOn = "2026-10-06";
   invalidReference.chunks[0].sourceKind = "corpus";
   invalidReference.chunks[0].sourceRef = "Tatoeba 123";
   assert.throws(() => parseConversationSeed(invalidReference), /invalid corpus reference/);
