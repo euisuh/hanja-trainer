@@ -1,7 +1,7 @@
 /* oxlint-disable anti-slop/no-unknown-parameters, anti-slop/no-runtime-typeof, anti-slop/require-safety-comment-for-type-assertion, anti-slop/no-unsafe-dictionary-type -- Existing API config boundary parser predates changed-file lint; this additive request type must keep its shared contract. */
 import type { SlotDrillSlot } from "./slotDrill";
 import type { ConversationChunk, ConversationRegister, ConversationScene, ConversationSceneTurn, ConversationUnit, Track } from "./types";
-import type { AppearanceId, OnyomiScript, SoundMode, ThemeId } from "./settings";
+import type { OnyomiScript, SoundMode } from "./settings";
 
 // Four two-character word reviews use 37 SQL statements including profile resolution.
 export const MAX_REVIEW_BATCH_SIZE = 4;
@@ -298,8 +298,8 @@ export type PlacementAnswer = { characterKey: string; track: Track; correct: boo
 export type PlacementScoreResult = { track: Track; levelOrd: number; levelBadge: string; knownCount: number; totalSeen: number; accuracy: number; saturated: boolean; floored: boolean; detail: string };
 export type PlacementScoreResponse = { results: PlacementScoreResult[] };
 
-export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string; onyomiScript: OnyomiScript; soundMode: SoundMode; theme: ThemeId; appearance: AppearanceId; isAdmin: boolean };
-export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number; timezone?: string; onyomiScript?: OnyomiScript; soundMode?: SoundMode; theme?: ThemeId; appearance?: AppearanceId };
+export type SettingsResponse = { enabledTracks: Track[]; dailyGoal: number; timezone: string; onyomiScript: OnyomiScript; soundMode: SoundMode; isAdmin: boolean };
+export type PatchSettingsRequest = { enabledTracks?: Track[]; dailyGoal?: number; timezone?: string; onyomiScript?: OnyomiScript; soundMode?: SoundMode };
 export type OnboardingStateResponse = { onboarded: boolean };
 
 export type StatsCalendarDay = { date: string; count: number };
