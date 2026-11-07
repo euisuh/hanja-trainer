@@ -74,6 +74,9 @@ the per-unit NPC cap remains 50%. Unique authored share: 132/697 (18.94%) before
 that instruction after the learner asks again. This is content for a fast explanation,
 not a new playback-speed setting; audio remains pending in `audio-todo.json`.
 
+A second batch on 2026-11-07 adds 7 spoken-register and NPC lines to units 1, 6 and 16 (listed in
+`data/conversation/GAPS.md`), taking the unique authored share to 165/730 (22.60%). No scene changes.
+
 ## Branching scenes (variants)
 
 An NPC turn may carry 2-3 `variants`: `{ chunkOrd, replyOrd }` pairs. The runner plays one variant at
