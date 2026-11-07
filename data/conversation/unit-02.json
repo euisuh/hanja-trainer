@@ -253,6 +253,70 @@
       "sourceRef": "Tatoeba #3597438",
       "audioKey": "c/2f992b95d4bd2ae3",
       "key": "tatoeba-3597438-hear"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 20,
+      "text": "日本語で何て言いますか。",
+      "kana": "にほんごでなんていいますか。",
+      "cueKo": "일본어로 뭐라고 하는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked 何て as the standard spoken form of 何と in a polite language question. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "何て는 회화에서 쓰는 ‘뭐라고’. 何と言いますか보다 구어적이다.",
+      "audioKey": "c/76a5b4b3a59f7fd5",
+      "key": "authored-f5a94f42f0-say"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 21,
+      "text": "明日までに出すということですか。",
+      "kana": "あしたまでにだすということですか。",
+      "cueKo": "내일까지 제출하라는 뜻인지 확인하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked a complete plain-form clause before ということですか; confirms a deadline. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "までに는 제출 기한. ということですか로 이해한 내용을 확인한다.",
+      "audioKey": "c/3e15c85144136252",
+      "key": "authored-d58219f088-say"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 22,
+      "text": "ちょっと分かりません。",
+      "kana": "ちょっとわかりません。",
+      "cueKo": "설명이 잘 이해되지 않는다고 부드럽게 말하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked ちょっと as a spoken softener for not understanding, not a literal small quantity. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "ちょっと는 이해 부족의 양보다 말투를 부드럽게 하는 역할이다.",
+      "audioKey": "c/4fef646981fac838",
+      "key": "authored-c1061649ed-say"
+    },
+    {
+      "unitOrd": 2,
+      "ord": 23,
+      "text": "この紙に名前を書いて、明日までに出してください。",
+      "kana": "このかみになまえをかいて、あしたまでにだしてください。",
+      "cueKo": "이 종이에 이름을 쓰고 내일까지 내라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-07",
+      "authoredScope": "npc",
+      "reviewNote": "Checked a natural two-step instruction as the content-rich opener for the repair scene. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "書いて로 두 지시를 연결한다. までに는 ‘그때까지 완료’라는 기한이다.",
+      "audioKey": "c/c4d5a16663977cf8",
+      "key": "authored-4922719bcd-hear"
     }
   ],
   "scenes": [
@@ -260,11 +324,18 @@
       "unitOrd": 2,
       "ord": 1,
       "titleKo": "천천히, 한 번 더",
-      "settingKo": "회사나 수업에서 상대의 설명이 너무 빠를 때",
+      "settingKo": "회사나 수업에서 종이에 이름을 쓰고 내일까지 제출하라는 안내가 너무 빠를 때",
       "goalKo": "천천히 다시 말해 달라고 부탁하고, 이해했다고 답한다.",
       "turns": [
         {
           "ord": 1,
+          "speaker": "npc",
+          "chunkOrds": [
+            23
+          ]
+        },
+        {
+          "ord": 2,
           "speaker": "learner",
           "chunkOrds": [
             4,
@@ -272,14 +343,14 @@
           ]
         },
         {
-          "ord": 2,
+          "ord": 3,
           "speaker": "npc",
           "chunkOrds": [
             17
           ]
         },
         {
-          "ord": 3,
+          "ord": 4,
           "speaker": "learner",
           "chunkOrds": [
             1,
@@ -287,14 +358,14 @@
           ]
         },
         {
-          "ord": 4,
+          "ord": 5,
           "speaker": "npc",
           "chunkOrds": [
-            16
+            23
           ]
         },
         {
-          "ord": 5,
+          "ord": 6,
           "speaker": "learner",
           "chunkOrds": [
             14

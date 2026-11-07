@@ -660,6 +660,136 @@
       "audioKey": "c/f352383df2bd1b6d",
       "text": "少しまけていただけませんか。",
       "key": "authored-0949771338-say"
+    },
+    {
+      "audioKey": "c/76a5b4b3a59f7fd5",
+      "text": "日本語で何て言いますか。",
+      "key": "authored-f5a94f42f0-say"
+    },
+    {
+      "audioKey": "c/3e15c85144136252",
+      "text": "明日までに出すということですか。",
+      "key": "authored-d58219f088-say"
+    },
+    {
+      "audioKey": "c/4fef646981fac838",
+      "text": "ちょっと分かりません。",
+      "key": "authored-c1061649ed-say"
+    },
+    {
+      "audioKey": "c/c4d5a16663977cf8",
+      "text": "この紙に名前を書いて、明日までに出してください。",
+      "key": "authored-4922719bcd-hear"
+    },
+    {
+      "audioKey": "c/a01667e60c059be7",
+      "text": "玉ねぎ抜きでできますか。",
+      "key": "authored-45714d8815-say"
+    },
+    {
+      "audioKey": "c/7346383b3e5eaaca",
+      "text": "わさび抜きでできますか。",
+      "key": "authored-c6da1ff296-say"
+    },
+    {
+      "audioKey": "c/2b897b0e37d8cb44",
+      "text": "池袋で乗り換えですか。",
+      "key": "authored-f4da49d477-say"
+    },
+    {
+      "audioKey": "c/7679397a69c44322",
+      "text": "新宿で乗り換えですか。",
+      "key": "authored-3a375bdc0c-say"
+    },
+    {
+      "audioKey": "c/9c3540ad83fcd904",
+      "text": "山手線は何番線ですか。",
+      "key": "authored-b168b58ff0-say"
+    },
+    {
+      "audioKey": "c/f51805794e8c55f1",
+      "text": "東京行きは何番線ですか。",
+      "key": "authored-53cc71800b-say"
+    },
+    {
+      "audioKey": "c/489118ce2f2ea35b",
+      "text": "Mです。",
+      "key": "authored-96d302e97c-say"
+    },
+    {
+      "audioKey": "c/86a7cb04dd312530",
+      "text": "Lです。",
+      "key": "authored-aa2c9607f2-say"
+    },
+    {
+      "audioKey": "c/2c5f3592f78e6fb5",
+      "text": "二十四センチです。",
+      "key": "authored-00e7b9bf38-say"
+    },
+    {
+      "audioKey": "c/0a7dd64f9c04cb1e",
+      "text": "二十五センチです。",
+      "key": "authored-85e20834a9-say"
+    },
+    {
+      "audioKey": "c/b5d7194e49a9b345",
+      "text": "他の色はありますか。",
+      "key": "authored-a8dfc6da5c-say"
+    },
+    {
+      "audioKey": "c/56ef48224f54d8f4",
+      "text": "在庫はありますか。",
+      "key": "authored-99af600802-say"
+    },
+    {
+      "audioKey": "c/209a5027efe263b1",
+      "text": "取り置きをお願いします。",
+      "key": "authored-cc503c8004-say"
+    },
+    {
+      "audioKey": "c/0bb4ad4845b2d04c",
+      "text": "それはちょっと…。",
+      "key": "authored-bd0dbd5017-say"
+    },
+    {
+      "audioKey": "c/8afb6d38ce7c6651",
+      "text": "ちょっと難しいです。",
+      "key": "authored-aa779f5655-say"
+    },
+    {
+      "audioKey": "c/9521e91c21c1c9f0",
+      "text": "どうでしょう。",
+      "key": "authored-e0b8ee230c-say"
+    },
+    {
+      "audioKey": "c/570eec62b1823a34",
+      "text": "そうかもしれませんね。",
+      "key": "authored-5060cb5116-say"
+    },
+    {
+      "audioKey": "c/72e665737f0772fc",
+      "text": "そうかもしれませんが、私は少し違うと思います。",
+      "key": "authored-a8128a80ee-say"
+    },
+    {
+      "audioKey": "c/564f5ec78fbed9de",
+      "text": "私は違うと思います。",
+      "key": "authored-c53458cb8a-say"
+    },
+    {
+      "audioKey": "c/ca6cc11058088335",
+      "text": "もう少し考えたほうがいいと思います。",
+      "key": "authored-5e6d1c667e-say"
+    },
+    {
+      "audioKey": "c/e005eb337695cb0a",
+      "text": "そうですね、でも少し高いと思います。",
+      "key": "authored-1988ff1fbb-say"
+    },
+    {
+      "audioKey": "c/408ecb772d91eb33",
+      "text": "確かに便利ですが、少し高いと思います。",
+      "key": "authored-b6f06e469f-say"
     }
   ]
 }

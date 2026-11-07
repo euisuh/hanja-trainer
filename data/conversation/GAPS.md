@@ -28,24 +28,33 @@ Filled (authored, audio pending):
 - gaps/unit-08: 在庫を確認します (在庫を確認いたしますので、少々お待ちください。); こちらは〜になります (こちらは五千四百円になります。); 試着室へどうぞ (試着室はあちらです。, wording differs); gift wrapping offer (プレゼント用にお包みしましょうか？, new). Scene 3 uses them.
 - GAPS.md unit 3: 袋はご利用ですか, お箸はお付けしますか, 温めますか (お弁当は温めますか？), 〜円になります, お預かりします, お返し, 袋お願いします, 温めてください, 現金でお願いします.
 
-Still open (not authored, no Tatoeba hit): gaps/unit-05 〜抜きでできますか; gaps/unit-06 〜で乗り換えですか, 〜は何番線ですか, 〜線に乗り換えて, まっすぐ行って、右ですね; gaps/unit-08 他の色はありますか (exact), サイズの答え (Mです / 〜センチです), 在庫はありますか, 取り置きお願いします, ちょっと…似合いますか replies; every item in gaps/unit-07, 09, 10, 11, 12, 13, 14 and 16 (those files are unchanged); GAPS.md unit 1 and unit 2 items.
+## Filled by authored lines (2026-11-07)
 
-- Still open: 日本語で何て言いますか, 〜ということですか, ちょっと分かりません, fast NPC opener in unit 2, サイズ answers in unit 8, all unit 16 hedges (not authored yet).
+26 new unique chunks; audio pending in `audio-todo.json`. Each has a self-contained Korean cue, kana reading, review note and usage note. Unique authored share is 158/723 (21.85%), up from 132/697 (18.94%); overall cap is now 25%, per-unit NPC cap unchanged at 50%. The older 131/697 figure above describes the previous recorded snapshot, not the measured starting count for this addition.
 
-Chunks wanted by the curriculum with no natural Tatoeba sentence. Not invented.
+- Unit 2 (4): 日本語で何て言いますか; 明日までに出すということですか (〜ということですか); ちょっと分かりません; この紙に名前を書いて、明日までに出してください (NPC opener). Scene 1 now opens with the instruction and repeats it after the repair requests. The opener supplies content for the fast-explanation situation; no playback-speed setting is added.
+- Unit 5 (2): 玉ねぎ抜きでできますか; わさび抜きでできますか. Ingredient omission requests, not allergy-safety guarantees.
+- Unit 6 (4): 池袋で乗り換えですか; 新宿で乗り換えですか; 山手線は何番線ですか; 東京行きは何番線ですか. Learner station questions, with no route or platform answer asserted.
+- Unit 8 (7): Mです; Lです; 二十四センチです; 二十五センチです; 他の色はありますか; 在庫はありますか; 取り置きをお願いします. Letter sizes are for clothes; centimeter sizes are for shoes.
+- Unit 16 (9, all `authoredScope: "spoken"`): それはちょっと…; ちょっと難しいです; どうでしょう; そうかもしれませんね; そうかもしれませんが、私は少し違うと思います; 私は違うと思います; もう少し考えたほうがいいと思います; そうですね、でも少し高いと思います; 確かに便利ですが、少し高いと思います. These cover soft refusal, cautious response, concession and 〜と思います softeners. Scene 2 now uses the complete concession-and-disagreement reply in place of the weak 基本的には賛成です ending.
 
-## Unit 2
+## Still open
 
-- 日本語で何て言いますか: only an unrelated "この動物は日本語で何と言いますか" (#220315, noun-specific, stiff).
-- 〜ということですか: no standalone confirmation question; hits are noun-clause fragments.
-- ちょっと分かりません (soft "I don't quite get it"): no hit.
-- Fast NPC content line (any natural `hear` sentence) to open scene 1 so the repair request has something to repair: none in the unit (hear chunks are only repair replies). Scene 1 starts at the first honest turn until one is added.
-- ちょっと分かりません is the soft form of 分かりません (chunk 8 cue steers toward it); still no Tatoeba hit.
-- Retired from unit 2: もう一度ゆっくりお話しいただけますか？ (#9176323), a near-duplicate of すみません、もう一度言っていただけますか。 (#214201) and すみません、もう一度ゆっくり言ってください。 (#214202). すみません、何とおっしゃいましたか？ (#2929527) is now a `say` chunk (key tatoeba-2929527-say).
-- もう一回言って (casual repeat request): no hit.
-- すみません、早すぎましたか / もう少し速度を落として: no hit.
+Per-unit `gaps/unit-NN.md` files retain the original corpus-search results; filled items are recorded above.
 
-Chunks wanted by the curriculum that have no suitable Tatoeba sentence (CC BY 2.0 FR or CC0). Do not fill with invented Japanese.
+- Unit 2: もう一回言って (casual repeat request); すみません、早すぎましたか; もう少し速度を落として. Retained as unfilled corpus gaps; not needed for the scoped polite repair exchange.
+- Unit 5: no remaining item from this task's scope.
+- Unit 6: 〜線に乗り換えて; まっすぐ行って、右ですね (combined direction confirmation). Short direction confirmations already in unit 17 do not fill the combined unit 6 gap.
+- Unit 8: ちょっと…似合いますか replies. Fit judgments need clearer context; not authored here.
+- Unit 16: polite/mid-register っていうか; polite 逆に; 私もです; そうなんですよ; 一理あります; ごもっともです; additional opinion-opening NPC lines. The original per-unit owner-native-status check remains unchecked.
+- Units 7, 9, 10, 11, 12, 13 and 14: all original per-unit gaps remain outside this task.
+- Unit 1: items below remain outside this task.
+- Units 17–19: the unsure travel items listed above remain open; those units are unchanged.
+
+## Unit 2 corpus-search history
+
+- Retired: もう一度ゆっくりお話しいただけますか？ (#9176323), a near-duplicate of すみません、もう一度言っていただけますか。 (#214201) and すみません、もう一度ゆっくり言ってください。 (#214202). すみません、何とおっしゃいましたか？ (#2929527) is a `say` chunk (key tatoeba-2929527-say).
+- The authored additions above fill the original no-hit gaps for 日本語で何て言いますか, 〜ということですか, ちょっと分かりません and an NPC opener. They carry no Tatoeba attribution.
 
 ## Unit 1 (인사와 맞장구)
 

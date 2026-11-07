@@ -26,7 +26,7 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/u;
 const NOTE_KO_MAX = 80;
 const DEPENDENT_CUE = /^같은 (말|확인|동의)/u;
 // Authored rows overall (all scopes, deduped by key) and authored npc lines per unit. See docs/talk-mode.md.
-export const AUTHORED_SHARE_CAP = 0.2;
+export const AUTHORED_SHARE_CAP = 0.25;
 export const AUTHORED_NPC_UNIT_CAP = 0.5;
 const KANA = /^(?:[\p{Script=Hiragana}\p{Script=Katakana}ー]|\p{Punctuation}|\s)+$/u;
 

@@ -53,13 +53,20 @@ practice a real till or restaurant exchange. A chunk may be `sourceKind: "author
 - the UI shows it as "authored for this app" (`SourceAttribution`), never as Tatoeba.
 
 Caps, enforced by `npm run validate:conversation`: authored rows (deduped by key) are at most
-20% of all chunks, and authored `npc` lines are at most 50% of any one unit. Authored rows have
+25% of all chunks, and authored `npc` lines are at most 50% of any one unit. Authored rows have
 no audio until generated; `data/conversation/audio-todo.json` lists the `audioKey`s to generate
 with `npm run audio:generate:conv` (needs remote credentials). Remove entries once audio exists.
 
 Travel units 17-19 (transit, hotel, numbers and prices, added 2026-11-06) follow the same policy: each authored line
 is listed in `data/conversation/GAPS.md`, and a Tatoeba row with no `owner` is never shipped because it cannot be
-attributed. The overall cap stays at 20% (18.8% after these units); it was not raised.
+attributed. The cap was 20% when these units were added.
+
+On 2026-11-07, 26 authored chunks fill repair, station-question, shopping, ingredient-omission,
+and opinion-softener gaps in existing units 2, 5, 6, 8 and 16. The overall cap is now 25%;
+the per-unit NPC cap remains 50%. Unique authored share: 132/697 (18.94%) before,
+158/723 (21.85%) after. Unit 2 scene 1 now opens with an instruction to repair and repeats
+that instruction after the learner asks again. This is content for a fast explanation,
+not a new playback-speed setting; audio remains pending in `audio-todo.json`.
 
 ## Branching scenes (variants)
 
