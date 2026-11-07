@@ -667,6 +667,38 @@
       "noteKo": "持ち帰り는 테이크아웃. 매장 식사는 ここで食べます",
       "audioKey": "c/2eb0b8cfa4193040",
       "key": "authored-4767a1c896-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 50,
+      "text": "玉ねぎ抜きでできますか。",
+      "kana": "たまねぎぬきでできますか。",
+      "cueKo": "양파를 빼고 만들 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked ingredient + 抜きでできますか as a polite restaurant customization question. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "재료명 뒤에 抜きで를 붙인다. 알레르기 안전을 보장하는 표현은 아니다.",
+      "audioKey": "c/a01667e60c059be7",
+      "key": "authored-45714d8815-say"
+    },
+    {
+      "unitOrd": 5,
+      "ord": 51,
+      "text": "わさび抜きでできますか。",
+      "kana": "わさびぬきでできますか。",
+      "cueKo": "와사비를 빼고 만들 수 있는지 묻기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "ownerApproved": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked the standard わさび抜き request as a full polite question. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "抜き는 넣지 않는다는 뜻. 따로 달라는 요청과는 다르다.",
+      "audioKey": "c/7346383b3e5eaaca",
+      "key": "authored-c6da1ff296-say"
     }
   ],
   "scenes": [
