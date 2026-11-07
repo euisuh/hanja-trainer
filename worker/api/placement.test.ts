@@ -71,12 +71,12 @@ describe("profile, placement, and stats API", () => {
 
   it("persists validated settings without deleting review state", async () => {
     const fixture = setup(); databases.push(fixture.sqlite);
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", soundMode: "on", theme: "quiet-technical" });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toMatchObject({ onyomiScript: "katakana", soundMode: "on" });
     const character = fixture.sqlite.prepare("SELECT id FROM characters WHERE key = '金'").get() as { id: number };
     fixture.sqlite.prepare("INSERT INTO review_states VALUES (1, ?, 'kr', 8, 5, 1, 2, 0, 2, 0, 2, 0, 0, 1, 1)").run(character.id);
-    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", appearance: "notebook" }), fixture.env);
-    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", appearance: "notebook", isAdmin: true });
-    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", theme: "quiet-technical", appearance: "notebook", isAdmin: true });
+    const patched = await routeApiRequest(request("/api/settings", "PATCH", { enabledTracks: ["jp"], dailyGoal: 67, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off" }), fixture.env);
+    expect(await patched.json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", isAdmin: true });
+    expect(await (await routeApiRequest(request("/api/settings"), fixture.env)).json()).toEqual({ enabledTracks: ["jp"], dailyGoal: 70, timezone: "Asia/Seoul", onyomiScript: "hiragana", soundMode: "off", isAdmin: true });
     expect(fixture.sqlite.prepare("SELECT sound_mode FROM profile WHERE id = 1").get()).toEqual({ sound_mode: "off" });
     expect(() => fixture.sqlite.exec("UPDATE profile SET sound_mode = 'loud' WHERE id = 1")).toThrow();
     expect(fixture.sqlite.prepare("SELECT COUNT(*) AS count FROM review_states").get()).toEqual({ count: 1 });

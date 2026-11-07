@@ -256,18 +256,14 @@ p {
   font-size: var(--text-xs);
 }
 
-@property --goal-degrees {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
 .daily-goal__ring {
   width: 26px;
   height: 26px;
-  border-radius: 50%;
-  background: conic-gradient(var(--goal-ring-fill) var(--goal-degrees), var(--goal-remainder) 0);
-  transition: --goal-degrees 700ms cubic-bezier(.3, .9, .3, 1);
+  transform: rotate(-90deg);
+}
+
+.daily-goal__ring circle:last-child {
+  transition: stroke-dashoffset 700ms cubic-bezier(.3, .9, .3, 1);
 }
 
 .daily-goal--met {
@@ -277,7 +273,7 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .daily-goal__ring { transition: none; }
+  .daily-goal__ring circle:last-child { transition: none; }
 }
 
 .bottom-nav-shell {

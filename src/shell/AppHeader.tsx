@@ -40,7 +40,8 @@ export function AppHeader({ streak, xp, today, goal, onSwitch }: Props) {
   const dailyGoal = goal ?? profile?.goal ?? 40;
   const todayXp = today ?? profile?.todayXp ?? 0;
   const totalXp = xp ?? profile?.xp ?? 0;
-  const degrees = goalDegrees(todayXp, dailyGoal);
+  const progress = goalDegrees(todayXp, dailyGoal) / 360;
+  const circumference = 2 * Math.PI * 11.5;
   const currentStreak = streak ?? profile?.streak ?? 0;
   return (
     <header className="app-header" aria-label="오늘의 학습 현황">
@@ -57,7 +58,7 @@ export function AppHeader({ streak, xp, today, goal, onSwitch }: Props) {
         <strong>{totalXp.toLocaleString()}</strong><span>XP</span>
       </div>
       <div className={`daily-goal${todayXp >= dailyGoal ? " daily-goal--met" : ""}`}>
-        <span className="daily-goal__ring" role="img" aria-label={`일일 목표 ${Math.round(degrees / 3.6)}% 달성`} style={{ "--goal-degrees": `${degrees}deg` } as React.CSSProperties} />
+        <svg aria-label={`일일 목표 ${Math.round(progress * 100)}% 달성`} className="daily-goal__ring" role="img" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11.5" fill="none" stroke="var(--goal-remainder)" strokeWidth="3" /><circle cx="13" cy="13" r="11.5" fill="none" stroke="var(--goal-ring-fill)" strokeDasharray={circumference} strokeDashoffset={circumference * (1 - progress)} strokeLinecap="round" strokeWidth="3" /></svg>
         <strong>오늘 {todayXp}/{dailyGoal} XP</strong>
       </div>
     </header>

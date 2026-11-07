@@ -69,15 +69,15 @@ describe("settings", () => {
       if (fail) throw new Error("offline");
     });
 
-    saver.update(3, "theme", "default");
+    saver.update(3, "soundMode", "off");
     await vi.waitFor(() => expect(saver.status(3).error).toBe("offline"));
     const snapshot = saver.snapshot(3);
-    expect(snapshot.optimistic).toEqual({ theme: "default" });
+    expect(snapshot.optimistic).toEqual({ soundMode: "off" });
     fail = false;
     await saver.flush(3);
     expect(calls).toEqual([
-      { profileId: 3, patch: { theme: "default" } },
-      { profileId: 3, patch: { theme: "default" } },
+      { profileId: 3, patch: { soundMode: "off" } },
+      { profileId: 3, patch: { soundMode: "off" } },
     ]);
     expect(saver.status(3)).toEqual({ saving: false, error: "" });
   });
@@ -117,14 +117,14 @@ describe("settings", () => {
     const storage = memoryStorage();
     let release!: () => void;
     const older = createSettingsSaver(() => new Promise<void>((resolve) => { release = resolve; }), undefined, storage);
-    older.update(1, "theme", "default");
+    older.update(1, "soundMode", "on");
     const newer = createSettingsSaver(() => new Promise<void>(() => undefined), undefined, storage);
-    newer.update(1, "theme", "quiet-technical");
+    newer.update(1, "soundMode", "off");
     release();
     await older.flush(1);
 
     const restored = createSettingsSaver(async () => undefined, undefined, storage);
-    expect(restored.snapshot(1).optimistic).toEqual({ theme: "quiet-technical" });
+    expect(restored.snapshot(1).optimistic).toEqual({ soundMode: "off" });
   });
 
   it("merges independent fields written by separate tabs", () => {
@@ -141,7 +141,7 @@ describe("settings", () => {
   it("ignores corrupt and unsupported persisted settings", () => {
     const storage = memoryStorage();
     storage.setItem("hanja-trainer:pending-settings:1", JSON.stringify({ version: 1, fields: { dailyGoal: { revision: "bad", value: "lots" } } }));
-    storage.setItem("hanja-trainer:pending-settings:2", JSON.stringify({ version: 2, fields: { theme: { revision: "bad", value: "default" } } }));
+    storage.setItem("hanja-trainer:pending-settings:2", JSON.stringify({ version: 2, fields: { soundMode: { revision: "bad", value: "invalid" } } }));
     const saver = createSettingsSaver(async () => undefined, undefined, storage);
     expect(saver.snapshot(1).optimistic).toEqual({});
     expect(saver.snapshot(2).optimistic).toEqual({});
