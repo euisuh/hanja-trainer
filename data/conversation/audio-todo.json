@@ -790,6 +790,41 @@
       "audioKey": "c/408ecb772d91eb33",
       "text": "確かに便利ですが、少し高いと思います。",
       "key": "authored-b6f06e469f-say"
+    },
+    {
+      "audioKey": "c/0de840e36de5a957",
+      "text": "そうなんですね。",
+      "key": "authored-9bdfadd609-say"
+    },
+    {
+      "audioKey": "c/48efcc2eaafc7cf0",
+      "text": "よかったです。",
+      "key": "authored-cdbcbfe58a-say"
+    },
+    {
+      "audioKey": "c/af5c293c55452842",
+      "text": "次の駅で山手線に乗り換えてください。",
+      "key": "authored-f0110f51d2-hear"
+    },
+    {
+      "audioKey": "c/e1dae394f4b063a0",
+      "text": "まっすぐ行って、右ですね。",
+      "key": "authored-bbe3a1ea93-say"
+    },
+    {
+      "audioKey": "c/962e1c2e484fa42f",
+      "text": "私もです。",
+      "key": "authored-e12ee0967a-say"
+    },
+    {
+      "audioKey": "c/4cee4e7df495f1e5",
+      "text": "そうなんですよ。",
+      "key": "authored-7d67061ae5-say"
+    },
+    {
+      "audioKey": "c/fec61121be52bc21",
+      "text": "一理ありますね。",
+      "key": "authored-c5e2ef8023-say"
     }
   ]
 }

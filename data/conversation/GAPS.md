@@ -38,17 +38,25 @@ Filled (authored, audio pending):
 - Unit 8 (7): Mです; Lです; 二十四センチです; 二十五センチです; 他の色はありますか; 在庫はありますか; 取り置きをお願いします. Letter sizes are for clothes; centimeter sizes are for shoes.
 - Unit 16 (9, all `authoredScope: "spoken"`): それはちょっと…; ちょっと難しいです; どうでしょう; そうかもしれませんね; そうかもしれませんが、私は少し違うと思います; 私は違うと思います; もう少し考えたほうがいいと思います; そうですね、でも少し高いと思います; 確かに便利ですが、少し高いと思います. These cover soft refusal, cautious response, concession and 〜と思います softeners. Scene 2 now uses the complete concession-and-disagreement reply in place of the weak 基本的には賛成です ending.
 
+## Filled by authored lines (2026-11-07, second batch)
+
+7 new unique chunks, no scene changes; audio pending in `audio-todo.json`. Unique authored share is 165/730 (22.60%), under the 25% cap; unit 6 authored npc lines are 3 of 45. Rows carry `authoredOn`, not an owner review; see `authored-review.md`.
+
+- Unit 1 (2, spoken): そうなんですね (aizuchi for new information); よかったです (relief reply after 元気です).
+- Unit 6 (2): 次の駅で山手線に乗り換えてください (npc; 〜線に乗り換えて with a named line); まっすぐ行って、右ですね (spoken; combined direction confirmation).
+- Unit 16 (3, spoken): 私もです; そうなんですよ; 一理ありますね (partial concession; shipped with ね rather than the bare 一理あります).
+
 ## Still open
 
 Per-unit `gaps/unit-NN.md` files retain the original corpus-search results; filled items are recorded above.
 
 - Unit 2: もう一回言って (casual repeat request); すみません、早すぎましたか; もう少し速度を落として. Retained as unfilled corpus gaps; not needed for the scoped polite repair exchange.
 - Unit 5: no remaining item from this task's scope.
-- Unit 6: 〜線に乗り換えて; まっすぐ行って、右ですね (combined direction confirmation). Short direction confirmations already in unit 17 do not fill the combined unit 6 gap.
+- Unit 6: filled on 2026-11-07 (second batch, below).
 - Unit 8: ちょっと…似合いますか replies. Fit judgments need clearer context; not authored here.
-- Unit 16: polite/mid-register っていうか; polite 逆に; 私もです; そうなんですよ; 一理あります; ごもっともです; additional opinion-opening NPC lines. The original per-unit owner-native-status check remains unchecked.
+- Unit 16: polite/mid-register っていうか; polite 逆に; ごもっともです (service-register, out of place in an opinion unit); additional opinion-opening NPC lines. 私もです, そうなんですよ and 一理ありますね were filled on 2026-11-07 (second batch, below). The original per-unit owner-native-status check remains unchecked.
 - Units 7, 9, 10, 11, 12, 13 and 14: all original per-unit gaps remain outside this task.
-- Unit 1: items below remain outside this task.
+- Unit 1: そうなんですね and よかったです were filled on 2026-11-07 (second batch, below). あ、どうぞ (casual NPC offer) stays open: unit 1 ships no casual register. すみません as thanks and どうも alone stay open as noted in the unit 1 section.
 - Units 17–19: the unsure travel items listed above remain open; those units are unchanged.
 
 ## Unit 2 corpus-search history

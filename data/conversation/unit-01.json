@@ -279,6 +279,38 @@
       "sourceRef": "Tatoeba #3495032",
       "audioKey": "c/6c60afe73e366218",
       "key": "tatoeba-3495032-hear"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 22,
+      "text": "そうなんですね。",
+      "kana": "そうなんですね。",
+      "cueKo": "상대 이야기를 듣고 ‘그렇군요’ 하고 맞장구치기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "authoredOn": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked そうなんですね as the standard polite aizuchi acknowledging new information; falling intonation. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "そうですか보다 부드럽게 납득을 나타내는 맞장구. 억양을 내려 말한다.",
+      "audioKey": "c/0de840e36de5a957",
+      "key": "authored-9bdfadd609-say"
+    },
+    {
+      "unitOrd": 1,
+      "ord": 23,
+      "text": "よかったです。",
+      "kana": "よかったです。",
+      "cueKo": "상대가 잘 지낸다는 말을 듣고 다행이라고 답하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "authoredOn": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked よかったです as the standard polite reply of relief after good news (reply to 元気です). Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "상대 소식에 안도를 나타낸다. 과거형이지만 ‘다행이네요’라는 뜻이다.",
+      "audioKey": "c/48efcc2eaafc7cf0",
+      "key": "authored-cdbcbfe58a-say"
     }
   ],
   "scenes": [

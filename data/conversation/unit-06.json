@@ -596,6 +596,38 @@
       "noteKo": "목적지 뒤 行き는 여기서 ゆき. 何番線은 なんばんせん이다.",
       "audioKey": "c/f51805794e8c55f1",
       "key": "authored-53cc71800b-say"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 45,
+      "text": "次の駅で山手線に乗り換えてください。",
+      "kana": "つぎのえきでやまのてせんにのりかえてください。",
+      "cueKo": "다음 역에서 야마노테선으로 갈아타라는 안내 듣기",
+      "register": "polite",
+      "role": "hear",
+      "sourceKind": "authored",
+      "authoredOn": "2026-11-07",
+      "authoredScope": "npc",
+      "reviewNote": "Staff/passerby instruction naming a line with 〜に乗り換えてください; standard polite phrasing. Authored for this app; gap listed in GAPS.md (〜線に乗り換えて).",
+      "noteKo": "〜に乗り換えて로 갈아탈 노선을 말한다. 〜で는 갈아타는 장소.",
+      "audioKey": "c/af5c293c55452842",
+      "key": "authored-f0110f51d2-hear"
+    },
+    {
+      "unitOrd": 6,
+      "ord": 46,
+      "text": "まっすぐ行って、右ですね。",
+      "kana": "まっすぐいって、みぎですね。",
+      "cueKo": "똑바로 가서 오른쪽이라는 길 안내를 들은 대로 되묻어 확인하기",
+      "register": "polite",
+      "role": "say",
+      "sourceKind": "authored",
+      "authoredOn": "2026-11-07",
+      "authoredScope": "spoken",
+      "reviewNote": "Checked the combined direction confirmation まっすぐ行って、右ですね as standard spoken Japanese. Authored for this app; gap listed in GAPS.md.",
+      "noteKo": "ですね로 들은 안내를 확인한다. 右に曲がる를 右만으로 짧게 받는다.",
+      "audioKey": "c/e1dae394f4b063a0",
+      "key": "authored-bbe3a1ea93-say"
     }
   ],
   "scenes": [
