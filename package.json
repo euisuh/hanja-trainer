@@ -43,7 +43,7 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",
-    "ts-fsrs": "^5.4.1"
+    "ts-fsrs": "^6.0.0"
   },
   "devDependencies": {
     "@capacitor/android": "8.5.2",
