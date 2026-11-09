@@ -11,13 +11,16 @@ npm run seed:local
 npm run dev
 ```
 
-See the README for the full local setup, the Worker/SPA layout and deployment notes.
+See [development](docs/development.md) for local setup and checks,
+[architecture](docs/architecture.md) for the Worker/SPA layout, and
+[deployment](docs/deployment.md) for operations.
 
 ## Before opening a pull request
 
 Run the same checks CI runs:
 
 ```sh
+node scripts/check-docs-links.mjs
 npm run lint && npm run typecheck && npm run lint:colors && npm test
 npm run validate:conversation   # when data/conversation changes
 npm run e2e                     # when UI or API behavior changes
