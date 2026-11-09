@@ -23,8 +23,9 @@ work through situation scenes (ordering at a cafe, asking someone to repeat),
 say each line from a Korean cue, and shadow it. Talk sentences are
 Tatoeba-sourced; a small number of staff lines are authored for this app and
 labeled "authored for this app" on the card. Speech feedback runs in the
-browser (recording and recognition stay on the device) and stores nothing; it
-compares what was heard with the line and does not score pronunciation.
+browser (local recording, browser-provided recognition); the app stores no audio
+or transcript. It compares what was heard with the line and does not score
+pronunciation.
 
 ## Screenshots
 
@@ -75,13 +76,6 @@ Mobile (390 px wide):
   </tr>
 </table>
 
-The stats screens use made-up study history for the local guest profile, inserted into local D1 by the script as a fixture.
-
-To regenerate: start the local dev server with an admin PIN set (the landing page
-only shows then), run `node scripts/capture-readme-screenshots.mjs`; usage is in
-the script header. Local D1 only; the microphone and speech recognition are
-stubbed so the shadowing panel can be captured headlessly.
-
 ## Status and limits
 
 - About 160 authored Talk lines (listed in `data/conversation/audio-todo.json`)
@@ -104,21 +98,12 @@ stubbed so the shadowing panel can be captured headlessly.
 
 ## Architecture
 
-- `src/` is the SPA; `worker/` is the Worker API; `shared/` holds types used by both.
-- The SPA and API share one origin. `npm run dev` builds the SPA, then runs `wrangler dev`.
-- Learner state (reviews, FSRS cards, session summaries) lives in D1; `migrations/` is append-only.
-- Character, curriculum and sentence datasets are checked in under `data/` and loaded by an idempotent seed script.
-- Reading audio is generated offline and cached in R2.
-- Queued offline reviews keep the answer timestamp so delayed sync schedules from the original event.
-- The native apps load the same SPA and call the deployed Worker with bearer tokens.
-- Product spec: `design-prompt.md`; wireframe reference: `design/`.
+The React SPA and Worker API share one origin. D1 holds content and learner
+state; R2 serves generated audio. Capacitor wraps the same SPA, and an offline
+write queue retries answers with their original timestamps. See
+[architecture](docs/architecture.md) for diagrams, tables and request flow.
 
-## Licenses and data sources
-
-Code is MIT (`LICENSE`). Data keeps its source licenses: see `NOTICE` and
-`data/SOURCES.md`.
-
-## Development
+## Quick start
 
 ```sh
 npm install
@@ -127,246 +112,28 @@ npm run seed:local
 npm run dev
 ```
 
-`npm run dev` builds the SPA, then starts `wrangler dev`. The SPA and API share
-one origin; verify the Worker with `curl http://localhost:8787/api/health`.
+## Design decisions
 
-### Profile list privacy and guest accounts
+- [FSRS scheduling](docs/decisions.md#fsrs-scheduling) keeps due state on the server.
+- [One origin](docs/decisions.md#one-origin-for-spa-and-api) serves the SPA and API.
+- [Corpus-first Talk content](docs/decisions.md#corpus-first-talk-content) caps authored lines.
+- [Device-side speech feedback](docs/decisions.md#device-side-speech-feedback) keeps recordings out of D1.
+- [Guest sandboxes](docs/decisions.md#per-visitor-guest-sandboxes) separate visitor progress.
+- [One Quiet theme](docs/decisions.md#one-quiet-theme) shares design tokens across screens.
+- [Offline writes](docs/decisions.md#offline-write-queue) preserve answer times during retries.
 
-`GET /api/profiles` returns real profile names only to a caller that holds a
-real session, carries the `hanja_device` cookie (set by a successful PIN unlock
-or recovery in that browser, 400 days, rotated with the PIN), or when the only
-profile has no PIN. Everyone else, guests included, gets one nameless
-admin entry (`관리자`) so the owner can still unlock on a new device; family
-members on a new device appear after the admin unlocks there once. Native
-clients get no device cookie, so after their token expires they also see only
-the admin entry. The same trust (real session, device cookie, or the flag
-below) is required to select a PIN-less non-admin profile, so a hidden profile
-cannot be entered by guessing its id (`403 device_not_trusted`).
+## Documentation
 
-The lone PIN-less profile still signs in automatically without a device
-cookie. That setup is public by design (see "Optional profile PIN"): nothing
-else exists to protect, and gating it would lock a PIN-less owner out with no
-way to earn the cookie. Set an admin PIN before exposing the site. A rejected
-session cookie never falls back to it unless the cookie was for that same
-profile, so an expired guest cookie gets `401` and is cleared.
+- [Documentation index](docs/README.md)
+- [Components, schema and request flow](docs/architecture.md)
+- [Design decisions](docs/decisions.md)
+- [Local setup, checks, tests and e2e](docs/development.md)
+- [Deploy, migrations, PINs and backups](docs/deployment.md)
+- [Capacitor setup and builds](docs/mobile.md)
+- [Mobile roadmap](docs/mobile-roadmap.md)
+- [Internal store distribution](docs/store-release.md)
+- [Talk content and practice rules](docs/talk-mode.md)
+- [Learning design evidence and limits](docs/learning-evidence.md)
+- [Speaking practice scope](docs/speaking-practice-scope.md)
 
-To list every profile anonymously, as before, start the Worker
-with `--var ALLOW_PROFILE_LIST:true` (e2e does) or set it in `vars`; it defaults
-to off.
-
-Visitors can continue as a guest: "Continue as guest" on the landing page, the
-"게스트" tile in the profile picker, or "게스트로 둘러보기" on the unlock screen.
-Each calls `POST /api/demo/session`. Every guest gets a private profile named
-`게스트` (`is_demo = 1`, no PIN, onboarded, Japanese track only). Guests never
-share an account, never see each other, and never see real profiles.
-
-- A guest session lasts 7 days after the last activity, and never more than
-  30 days after creation. Every guest request atomically checks and moves the
-  server-owned `demo_active_at` (migration 0034, written only from the Worker
-  clock, never from client data or `updated_at`) and renews the cookie to
-  expire at the same moment. An expired guest is rejected and then deleted,
-  with its data, by the next guest create.
-- Calling the endpoint again from a browser that still holds a valid guest
-  session resumes that same profile and its progress; otherwise it creates a
-  new one.
-- Limits: 5 creates per client IP per hour (hashed `CF-Connecting-IP`), 200
-  live guest profiles, 2,000 writes per guest profile.
-- Guests cannot change a PIN, manage profiles, or be selected by id. Guest rows
-  do not count toward the five-profile limit. Settings shows guests a notice
-  that progress stays on this browser for 7 days, with a link to sign in, which
-  ends the guest session.
-
-## Mobile (Capacitor)
-
-`android/` and `ios/` wrap the same SPA; see `docs/mobile-roadmap.md`. The app
-talks to the deployed Worker at `https://hanja.uiseoya.com`, so native sign-in
-needs a Worker that includes bearer tokens and Capacitor CORS.
-
-Requirements: Node 22+, Xcode for iOS, Android Studio with JDK 21 for Android.
-
-```sh
-npm run ios       # builds with VITE_API_ORIGIN, syncs, opens Xcode
-npm run android   # builds with VITE_API_ORIGIN, syncs, opens Android Studio
-```
-
-`npm run build:mobile` only builds and runs `cap sync`. Rerun it after every web
-change; the native projects copy `dist/client` and do not watch it. Inspect the
-WebView with Safari → Develop (iOS) or `chrome://inspect` (Android). Compile
-check without signing:
-
-```sh
-xcodebuild -project ios/App/App.xcodeproj -scheme App -sdk iphonesimulator \
-  -configuration Debug -packageAuthorizationProvider netrc CODE_SIGNING_ALLOWED=NO build
-cd android && ./gradlew assembleDebug
-```
-
-From a non-interactive shell (agents, CI), keep `-packageAuthorizationProvider netrc`:
-the default keychain lookup for github.com can wait forever on an invisible prompt
-while Swift Package Manager downloads the Capacitor binary frameworks.
-
-Native builds mirror pending and rejected reviews/session summaries to
-Capacitor Preferences and restore missing localStorage entries before loading
-the app. Existing local values win, and entries from older builds are backed
-up at startup. Web builds keep localStorage only. The mirror is asynchronous:
-an abrupt process kill before a write finishes, or a native storage failure,
-can leave only the localStorage copy. This does not provide offline card
-downloads or persist the sign-in token (tracked separately in #288).
-
-## Checks and build
-
-```sh
-npm run typecheck
-npm run lint
-npm run lint:colors
-npm test
-npx playwright install chromium
-npm run e2e
-npm run build
-npx wrangler deploy --dry-run
-```
-
-The Playwright suite resets the local profile and learning history, reseeds the
-local D1 database, and drives all happy paths with keyboard events. Responsive
-screenshots are written under `test-results/`.
-
-## D1 migrations
-
-```sh
-npx wrangler d1 migrations apply hanja --local
-npm run seed:local
-```
-
-The seed is idempotent and loads all checked-in character, curriculum, and
-sentence datasets.
-
-Migration files are append-only once they reach a shared environment. Never
-edit, delete, or rename one; add the next numbered migration for every fix.
-For structural changes, test both a fresh database and an upgrade from the
-previous schema with representative learner rows.
-
-CI compares pull requests with `main`, so it cannot detect a migration applied
-remotely before it was merged. Do not apply production migrations before
-merge. If an emergency requires it, record the exact filename and contents,
-and put any correction in another new file even while the pull request is open.
-
-For `0024_idempotent_session_summaries.sql`, merge first, then apply the
-migration before deploying the dependent Worker. Its XP trigger ignores legacy
-rows whose `client_session_id` is NULL, so the previous Worker's unkeyed credit
-path remains compatible during rollout. Only keyed summary requests are safe
-to replay.
-
-## D1 query diagnostics
-
-When Cloudflare D1 analytics reports an expensive query, identify the exact SQL
-and bindings, then inspect that statement with `EXPLAIN QUERY PLAN` in a local,
-throwaway database. The curriculum lookup's `cum` step should use the
-character-first covering index `idx_curriculum_unit_members_character`.
-Compare `meta.rows_read` and `meta.rows_written` from real D1 responses before
-and after the change under equivalent inputs. Test adapters return constant-zero
-metadata, and local SQLite plans show structure rather than billed production
-rows; neither is a production cost measurement.
-
-## Offline review times
-
-Queued reviews retain the instant the learner answered, so delayed sync keeps
-the original history day and schedules from that event. A late event older than
-the current FSRS state is applied to that current state without moving
-`last_review` backward; history still records the original answer time rather
-than rebuilding later events. Legacy queued reviews without an answer time use
-receipt time. The server rejects timestamps over five minutes in the future and
-clamps smaller clock skew to receipt time.
-
-## Deploy
-
-```sh
-npx wrangler whoami
-npx wrangler d1 migrations apply hanja --remote
-npm run seed:remote
-npm run deploy
-curl -i https://hanja.uiseoya.com/api/health
-curl -i https://hanja.uiseoya.com/detail/%E4%B8%80
-```
-
-Run remote migrations and the seed before deploying Worker code that depends
-on them. Only apply reviewed, merged migrations. Before deploying dependent
-Worker code, verify the expected remote schema with read-only checks such as
-`PRAGMA table_info(table_name)` or a query of `sqlite_schema`. Then verify the
-root SPA, one deep link, and `/api/health` after deploy.
-`hanja.uiseoya.com` is deliberately public so it works on remote devices
-without a Cloudflare login. Cloudflare Access is off, and the app does not
-implement Internet account authentication. Use read-only checks from a shell
-with no existing app session:
-
-```sh
-curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/          # 200
-curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/api/profiles # 200
-curl -s -o /dev/null -w "%{http_code}\n" https://hanja.uiseoya.com/api/health   # 401 until a profile is selected
-```
-
-### Cached reading audio
-
-The committed curriculum produces 3,866 unique character clips: 1,000 Korean,
-2,211 Japanese, and 655 Chinese. `npm run audio:generate` also generates 503
-unique example-sentence clips for the speaking screen (236 Japanese, 267
-Chinese, keyed by Tatoeba sentence id) — Korean has no speaking screen and
-is skipped.
-
-First-time setup must deploy the audio route before generation. The generator
-uses `HEAD /api/audio/...` to skip clips already stored in R2; the old API
-router does not expose that route.
-
-1. Enable R2 in the Cloudflare dashboard.
-2. Create the bound bucket: `npx wrangler r2 bucket create hanja-audio`.
-3. Deploy the Worker and empty audio route: `npm run deploy`.
-4. Configure Google ADC with a quota project, or set
-   `GOOGLE_CLOUD_ACCESS_TOKEN` and `GOOGLE_CLOUD_PROJECT`.
-5. Only if an operator later enables Access for the audio path, set
-   `CF_ACCESS_CLIENT_ID` and `CF_ACCESS_CLIENT_SECRET` from a service token
-   authorized for `hanja.uiseoya.com/api/audio/*`. Never bypass all `/api/*`.
-6. Generate and upload missing clips: `npm run audio:generate`.
-
-Future runs of `npm run audio:generate` issue `HEAD` checks through the audio
-route, which runs before profile-session middleware, and synthesize only missing
-character keys. `--force` skips those checks; use it only when every selected
-clip must be regenerated.
-
-## Optional profile PIN
-
-Each learner profile can use a four-digit PIN on unattended or shared screens.
-The signed session identifies the selected learner and keeps profile data
-separate. Without a PIN, anyone who can open the public hostname can select that
-profile and view or change its learning data. A four-digit PIN has only 10,000
-possibilities and is not strong Internet account security or protection for
-copied D1 contents, so Worker-side throttling applies independently to each profile.
-Activity extends a two-hour session window, while closing the browser clears
-the session.
-
-Native clients cannot use the `SameSite=Strict` cookie. They send
-`x-hanja-session-transport: bearer` to `POST /api/profiles/select`,
-`/api/pin/unlock`, or `/api/pin/recover` and receive the same signed token as
-`sessionToken` in the JSON body, then authenticate with
-`Authorization: Bearer <token>`. Bearer-authenticated responses return the
-renewed token in `x-hanja-session`. Any `Authorization` header is treated as a
-bearer attempt: an invalid token is rejected and never falls back to the cookie
-or to the lone PIN-less profile. A cookie session is never exchanged for a
-readable token, and changing a PIN rotates the secret that signs both.
-
-The Capacitor origins `capacitor://localhost` and `https://localhost` are the
-only cross-origin callers the API allows (no credentials mode). Requests from
-them are bearer-only: cookies are ignored, the lone PIN-less profile is never
-auto-selected, and sign-in always returns `sessionToken` in the body. Every
-other origin gets no CORS headers, and cross-site browser writes stay rejected.
-Audio needs no CORS because the app plays it through media elements.
-
-The admin profile has a one-time recovery code. It is shown once, when the admin
-first sets a PIN or, for an admin PIN set before recovery codes existed, after
-the next successful unlock. On the admin unlock screen, "PIN을 잊으셨나요?"
-accepts that code (with the same lockout as PIN attempts), clears the admin PIN
-and its code, and signs in; the admin can then set a new PIN, which issues a new
-code. Recovery codes exist only for the admin, and the admin cannot reset
-another profile's PIN.
-
-For a non-admin profile, or an admin whose code is lost, use an audited operator
-credential reset for only the affected profile, preserving its learner tables. Rotate rather than clear `pin_secret` so existing sessions
-are invalidated without making the profile unusable. The admin PIN must remain
-set whenever multiple profiles exist.
+[Contributing](CONTRIBUTING.md) · [MIT license](LICENSE) · [Data sources](data/SOURCES.md) · [Notices](NOTICE)
